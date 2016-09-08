@@ -44,7 +44,7 @@
             });
 
             layout_west_tree = $('#layout_west_tree').tree({
-                url: '${path }/resource/tree',
+                url: '${path}/resource/tree',
                 parentField: 'pid',
                 lines: true,
                 onClick: function (node) {
@@ -56,7 +56,7 @@
                             iconCls: node.iconCls
                         });
                     } else if (node.attributes) {
-                        var url = '${path }' + node.attributes;
+                        var url = '${path}' + node.attributes;
                         addTab({
                             url: url,
                             title: node.text,

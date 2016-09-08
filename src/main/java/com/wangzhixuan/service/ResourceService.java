@@ -22,6 +22,14 @@ public interface ResourceService {
     List<Tree> findTree(User currentUser);
 
     /**
+     * 根据用户查询树形菜单列表不限层数
+     *
+     * @param currentUser
+     * @return
+     */
+    List<Tree> findTree2(User currentUser);
+
+    /**
      * 查询所有资源
      *
      * @return

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,73 @@ public class ResourceServiceImpl implements ResourceService {
     private ResourceMapper resourceMapper;
     @Autowired
     private RoleMapper roleMapper;
+
+
+    private List<Tree> buildSubTree(Tree tree){
+
+        if (tree == null)
+            return null;
+
+        List<Resource> subTreeResources = resourceMapper.findResourceAllByTypeAndPid(Config.RESOURCE_MENU, tree.getId());
+
+        if (subTreeResources == null){
+            return null;
+        }
+
+        List<Tree> subTreeList = new ArrayList<>();
+
+        for(Resource resource:subTreeResources){
+
+            Tree subTree = new Tree();
+
+            subTree.setId(resource.getId());
+            subTree.setText(resource.getName());
+            subTree.setIconCls(resource.getIcon());
+            subTree.setAttributes(resource.getUrl());
+
+            List<Tree> nextLevelTrees = buildSubTree(subTree);
+
+            if (nextLevelTrees != null){
+                subTree.setChildren(nextLevelTrees);
+            }else{
+                subTree.setState("closed");
+            }
+
+            subTreeList.add(subTree);
+        }
+
+        return subTreeList;
+    }
+
+
+    @Override
+    public List<Tree> findTree2(User user){
+        List<Tree> trees = Lists.newArrayList();
+        if (user.getLoginname().equals("admin")){
+            List<Resource> rootResourceList = resourceMapper.findResourceAllByTypeAndPidNull(Config.RESOURCE_MENU);
+            if (rootResourceList == null){
+                return null;
+            }
+
+            for(Resource rootResource: rootResourceList){
+                Tree rootTree = new Tree();
+                rootTree.setId(rootResource.getId());
+                rootTree.setText(rootResource.getName());
+                rootTree.setIconCls(rootResource.getIcon());
+                rootTree.setAttributes(rootResource.getUrl());
+
+                List<Tree> subTree = this.buildSubTree(rootTree);
+
+                if (subTree != null){
+                    rootTree.setChildren(subTree);
+                }
+
+                trees.add(rootTree);
+            }
+        }
+
+        return trees;
+    }
 
     @Override
     public List<Tree> findTree(User user) {
