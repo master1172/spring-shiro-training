@@ -31,6 +31,16 @@ public class PeopleController extends BaseController{
     private PeopleService peopleService;
 
     /**
+     * 人员管理页
+     *
+     * @return
+     */
+    @RequestMapping(value = "/manager", method = RequestMethod.GET)
+    public String manager() {
+        return "/admin/people/people";
+    }
+
+    /**
      * 人员管理列表
      *
      * @param people

@@ -163,12 +163,16 @@
             <table>
                 <tr>
                     <th>姓名:</th>
-                    <td><input name="name" placeholder="请输入人员姓名"/></td>
+                    <td>
+                        <input name="name" placeholder="请输入人员姓名"/>
+                    </td>
                     <th>性别:</th>
-                    <select name="sex">
-                        <option value="0">男</option>
-                        <option value="1">女</option>
-                    </select>
+                    <td>
+                        <select name="sex">
+                            <option value="0">男</option>
+                            <option value="1">女</option>
+                        </select>
+                    </td>
                     <th>出生日期</th>
                     <td>
                         <input name="birthdayStart" placeholder="点击选择时间"
@@ -189,11 +193,6 @@
 
     <div data-options="region:'center',border:true,title:'人员列表'">
         <table id="dataGrid" data-options="fit:true,border:false"></table>
-    </div>
-
-    <div data-options="region:'west',border:true,split:false,title:'组织机构'" style="width:150px;overflow: hidden; ">
-        <ul id="organizationTree" style="width:160px;margin: 10px 10px 10px 10px">
-        </ul>
     </div>
 
     <div id="toolbar" style="display: none;">
