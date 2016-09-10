@@ -16,6 +16,7 @@
         <typeAlias type="com.wangzhixuan.model.Role" alias="Role"/>
         <typeAlias type="com.wangzhixuan.model.Organization" alias="Organization"/>
         <typeAlias type="com.wangzhixuan.model.SysLog" alias="SysLog"/>
+        <typeAlias type="com.wangzhixuan.model.People" alias="People" />
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
@@ -30,5 +31,6 @@
         <mapper resource="sqlMapperXml/UserRoleMapper.xml"/>
         <mapper resource="sqlMapperXml/RoleResourceMapper.xml"/>
         <mapper resource="sqlMapperXml/SysLogMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleMapper.xml"/>
     </mappers>
 </configuration> 

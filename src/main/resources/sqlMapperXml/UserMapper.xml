@@ -38,7 +38,7 @@
     <sql id="Base_Column_List">
     id, loginname, name, password, sex, age, usertype, status, organization_id, createdate, 
     phone
-  </sql>
+    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
@@ -152,9 +152,9 @@
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Long">
-    delete from user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+      delete from user
+      where id = #{id,jdbcType=BIGINT}
+    </delete>
 
     <insert id="insert" parameterType="com.wangzhixuan.model.User">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
@@ -171,11 +171,11 @@
     </insert>
 
     <update id="updateUserPwdById">
-    update user
-    set password = #{pwd,jdbcType=VARCHAR},
-    createdate = now()
-    where id = #{userId,jdbcType=BIGINT}
-  </update>
+      update user
+      set password = #{pwd,jdbcType=VARCHAR},
+      createdate = now()
+      where id = #{userId,jdbcType=BIGINT}
+    </update>
 
     <update id="updateUser" parameterType="com.wangzhixuan.model.User">
         update user

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeopleMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.People">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="age" property="age" jdbcType="TINYINT"/>
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+        <result column="job" property="job" jdbcType="VARCHAR" />
+        <result column="salary" property="salary" jdbcType="DOUBLE" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, sex, birthday, job, salary
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people
+        where id = #{id}
+    </select>
+
+    <select id="findPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from people
+        where name = #{name}
+    </select>
+
+    <select id="findPeoplePageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
+        SELECT
+        id,
+        t.name,
+        sex,
+        birthday,
+        job,
+        salary,
+        FROM
+        people t
+        <where>
+            <if test=" condition.name != null and condition.name != '' ">
+                t.name = #{condition.name}
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from people t
+        <where>
+            <if test=" condition.name != null and condition.name != '' ">
+                t.name = #{condition.name}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from people
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.People">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into people (name, sex, birthday, job, salary)
+        values (
+          #{name,jdbcType=VARCHAR},
+          #{sex,jdbcType=TINYINT},
+          #{birthday,jdbcType=TIMESTAMP},
+          #{job, jdbcType=VARCHAR},
+          #{salary,jdbcType=DOUBLE}
+         )
+    </insert>
+
+    <update id="updatePeople" parameterType="com.wangzhixuan.model.People">
+        update user
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="job != null">
+                job = #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                salary = #{salary,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
