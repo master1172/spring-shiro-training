@@ -22,6 +22,9 @@ import java.util.Set;
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
+    private static String ICON_FOLDER = "icon-folder";
+    private static String ICON_COMPANY = "icon-company";
+
     private static Logger LOGGER = LoggerFactory.getLogger(ResourceServiceImpl.class);
 
     @Autowired
@@ -32,7 +35,7 @@ public class ResourceServiceImpl implements ResourceService {
     private RoleMapper roleMapper;
 
 
-    private List<Tree> buildSubTree(Tree tree){
+    private List<Tree> buildSubTree(Tree tree, boolean displaySubTreeOnly){
 
         if (tree == null)
             return null;
@@ -47,22 +50,44 @@ public class ResourceServiceImpl implements ResourceService {
 
         for(Resource resource:subTreeResources){
 
-            Tree subTree = new Tree();
+            if (displaySubTreeOnly){
+                if (resource.getIcon().equals(ICON_COMPANY) || resource.getIcon().equals(ICON_FOLDER)){
+                    Tree subTree = new Tree();
 
-            subTree.setId(resource.getId());
-            subTree.setText(resource.getName());
-            subTree.setIconCls(resource.getIcon());
-            subTree.setAttributes(resource.getUrl());
+                    subTree.setId(resource.getId());
+                    subTree.setText(resource.getName());
+                    subTree.setIconCls(resource.getIcon());
+                    subTree.setAttributes(resource.getUrl());
 
-            List<Tree> nextLevelTrees = buildSubTree(subTree);
+                    List<Tree> nextLevelTrees = buildSubTree(subTree,displaySubTreeOnly);
 
-            if (nextLevelTrees != null){
-                subTree.setChildren(nextLevelTrees);
+                    if (nextLevelTrees != null){
+                        subTree.setChildren(nextLevelTrees);
+                    }else{
+                        subTree.setState("closed");
+                    }
+
+                    subTreeList.add(subTree);
+                }
             }else{
-                subTree.setState("closed");
+                Tree subTree = new Tree();
+
+                subTree.setId(resource.getId());
+                subTree.setText(resource.getName());
+                subTree.setIconCls(resource.getIcon());
+                subTree.setAttributes(resource.getUrl());
+
+                List<Tree> nextLevelTrees = buildSubTree(subTree,displaySubTreeOnly);
+
+                if (nextLevelTrees != null){
+                    subTree.setChildren(nextLevelTrees);
+                }else{
+                    subTree.setState("closed");
+                }
+
+                subTreeList.add(subTree);
             }
 
-            subTreeList.add(subTree);
         }
 
         return subTreeList;
@@ -70,7 +95,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 
     @Override
-    public List<Tree> findTree2(User user){
+    public List<Tree> findTree2(User user, boolean displayMenuOnly){
         List<Tree> trees = Lists.newArrayList();
         if (user.getLoginname().equals("admin")){
             List<Resource> rootResourceList = resourceMapper.findResourceAllByTypeAndPidNull(Config.RESOURCE_MENU);
@@ -79,19 +104,21 @@ public class ResourceServiceImpl implements ResourceService {
             }
 
             for(Resource rootResource: rootResourceList){
-                Tree rootTree = new Tree();
-                rootTree.setId(rootResource.getId());
-                rootTree.setText(rootResource.getName());
-                rootTree.setIconCls(rootResource.getIcon());
-                rootTree.setAttributes(rootResource.getUrl());
 
-                List<Tree> subTree = this.buildSubTree(rootTree);
+                if (rootResource.getIcon().equals(ICON_COMPANY)  || rootResource.getIcon().equals(ICON_FOLDER)){
+                    Tree rootTree = new Tree();
+                    rootTree.setId(rootResource.getId());
+                    rootTree.setText(rootResource.getName());
+                    rootTree.setIconCls(rootResource.getIcon());
+                    rootTree.setAttributes(rootResource.getUrl());
 
-                if (subTree != null){
-                    rootTree.setChildren(subTree);
+                    List<Tree> subTree = this.buildSubTree(rootTree,displayMenuOnly);
+
+                    if (subTree != null){
+                        rootTree.setChildren(subTree);
+                    }
+                    trees.add(rootTree);
                 }
-
-                trees.add(rootTree);
             }
         }
 

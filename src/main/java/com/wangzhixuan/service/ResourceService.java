@@ -27,7 +27,7 @@ public interface ResourceService {
      * @param currentUser
      * @return
      */
-    List<Tree> findTree2(User currentUser);
+    List<Tree> findTree2(User currentUser, boolean displayMenuOnly);
 
     /**
      * 查询所有资源
