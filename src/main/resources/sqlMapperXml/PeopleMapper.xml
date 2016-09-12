@@ -38,12 +38,12 @@
 
     <select id="findPeoplePageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
         SELECT
-        id,
+        t.id,
         t.name,
-        sex,
-        birthday,
-        job,
-        salary,
+        t.sex,
+        t.birthday,
+        t.job,
+        t.salary
         FROM
         people t
         <where>

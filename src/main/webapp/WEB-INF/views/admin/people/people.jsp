@@ -8,9 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>人员管理</title>
     <script type="text/javascript">
-
         var dataGrid;
-        var organizationTree;
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
@@ -169,7 +167,7 @@
                     <th>性别:</th>
                     <td>
                         <select name="sex">
-                            <option value="0">男</option>
+                            <option value="0" selected>男</option>
                             <option value="1">女</option>
                         </select>
                     </td>
