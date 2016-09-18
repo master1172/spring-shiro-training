@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -52,7 +53,7 @@ public class PeopleController extends BaseController{
      */
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(People people, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, People people, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = Maps.newHashMap();
 
@@ -67,6 +68,14 @@ public class PeopleController extends BaseController{
 
         if (people.getSex() != null){
             condition.put("sex", people.getSex());
+        }
+
+        if (StringUtils.isNoneBlank(request.getParameter("birthdayStart"))){
+            condition.put("birthdayStart",request.getParameter("birthdayStart"));
+        }
+
+        if(StringUtils.isNoneBlank(request.getParameter("birthdayEnd"))){
+            condition.put("birthdayEnd",request.getParameter("birthdayEnd"));
         }
 
         pageInfo.setCondition(condition);

@@ -56,17 +56,18 @@
         FROM
         people t
         <where>
+            '1' = '1'
             <if test=" condition.name != null and condition.name != '' ">
-                t.name LIKE "%"#{condition.name}"%"
+                and t.name LIKE "%"#{condition.name}"%"
             </if>
             <if test=" condition.sex != null and condition.sex != ''">
-                t.sex = #{condition.sex}
+                and t.sex = #{condition.sex}
             </if>
             <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
-                <![CDATA[t.birthday >= #{condition.birthdayStart} ]]>
+                <![CDATA[ and t.birthday >= #{condition.birthdayStart} ]]>
             </if>
             <if test=" condition.birthdayEnd != null and condition.birthdayEnd != ''">
-                <![CDATA[t.birthday <= #{condition.birthdayEnd} ]]>
+                <![CDATA[ and t.birthday <= #{condition.birthdayEnd} ]]>
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -78,17 +79,18 @@
         select count(*) count
         from people t
         <where>
+            '1' = '1'
             <if test=" condition.name != null and condition.name != '' ">
-                t.name LIKE "%"#{condition.name}"%"
+                and t.name LIKE "%"#{condition.name}"%"
             </if>
             <if test=" condition.sex != null and condition.sex != ''">
-                t.sex = #{condition.sex}
+                and t.sex = #{condition.sex}
             </if>
             <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
-                <![CDATA[t.birthday >= #{condition.birthdayStart} ]]>
+                <![CDATA[ and t.birthday >= #{condition.birthdayStart} ]]>
             </if>
             <if test=" condition.birthdayEnd != null and condition.birthdayEnd != ''">
-                <![CDATA[t.birthday <= #{condition.birthdayEnd} ]]>
+                <![CDATA[ and t.birthday <= #{condition.birthdayEnd} ]]>
             </if>
         </where>
     </select>
@@ -113,7 +115,7 @@
     </insert>
 
     <update id="updatePeople" parameterType="com.wangzhixuan.model.People">
-        update user
+        update people
         <set>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
