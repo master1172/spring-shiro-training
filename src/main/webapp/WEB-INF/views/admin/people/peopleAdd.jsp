@@ -50,6 +50,14 @@
                         <input type="text" name="salary" placeholder="请输入数字" class="easyui-numberbox"/>
                     </td>
                 </tr>
+                <tr>
+                    <td>出生日期</td>
+                    <td>
+                        <input name="birthday" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                </tr>
             </table>
         </form>
     </div>

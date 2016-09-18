@@ -3,7 +3,6 @@ package com.wangzhixuan.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by liushaoyang on 2016/9/8.
@@ -19,7 +18,7 @@ public class People implements Serializable {
     private Integer sex;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+    private String birthday;
 
     private String job;
 
@@ -49,11 +48,11 @@ public class People implements Serializable {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
