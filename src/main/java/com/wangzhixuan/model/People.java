@@ -18,7 +18,7 @@ public class People implements Serializable {
 
     private Integer sex;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     private String job;

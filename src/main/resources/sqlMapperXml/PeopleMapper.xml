@@ -6,7 +6,7 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="age" property="age" jdbcType="TINYINT"/>
-        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+        <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="job" property="job" jdbcType="VARCHAR" />
         <result column="salary" property="salary" jdbcType="DOUBLE" />
     </resultMap>
@@ -33,10 +33,11 @@
         select
         <include refid="Base_Column_List" />
         from people
-        where name = #{name}
+        where name LIKE "%"#{name}"%"
     </select>
 
     <select id="findPeoplePageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
+
         SELECT
         t.id,
         t.name,
@@ -48,18 +49,32 @@
         people t
         <where>
             <if test=" condition.name != null and condition.name != '' ">
-                t.name = #{condition.name}
+                t.name LIKE "%"#{condition.name}"%"
+            </if>
+            <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
+                <![CDATA[t.birthday >= #{condition.birthdayStart} ]]>
+            </if>
+            <if test=" condition.birthdayEnd != null and condition.birthdayEnd != ''">
+                <![CDATA[t.birthday <= #{condition.birthdayEnd} ]]>
             </if>
         </where>
         LIMIT #{from}, #{size}
+
     </select>
 
     <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+
         select count(*) count
         from people t
         <where>
             <if test=" condition.name != null and condition.name != '' ">
-                t.name = #{condition.name}
+                t.name LIKE "%"#{condition.name}"%"
+            </if>
+            <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
+                <![CDATA[t.birthday >= #{condition.birthdayStart} ]]>
+            </if>
+            <if test=" condition.birthdayEnd != null and condition.birthdayEnd != ''">
+                <![CDATA[t.birthday <= #{condition.birthdayEnd} ]]>
             </if>
         </where>
     </select>
@@ -77,7 +92,7 @@
         values (
           #{name,jdbcType=VARCHAR},
           #{sex,jdbcType=TINYINT},
-          #{birthday,jdbcType=TIMESTAMP},
+          #{birthday,jdbcType=DATE},
           #{job, jdbcType=VARCHAR},
           #{salary,jdbcType=DOUBLE}
          )
@@ -93,7 +108,7 @@
                 sex = #{sex,jdbcType=TINYINT},
             </if>
             <if test="birthday != null">
-                birthday = #{birthday,jdbcType=TIMESTAMP},
+                birthday = #{birthday,jdbcType=DATE},
             </if>
             <if test="job != null">
                 job = #{job,jdbcType=VARCHAR},

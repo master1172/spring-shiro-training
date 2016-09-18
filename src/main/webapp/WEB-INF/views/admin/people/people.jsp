@@ -174,10 +174,10 @@
                     <th>出生日期</th>
                     <td>
                         <input name="birthdayStart" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>至
                         <input name="birthdayEnd" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                         <a href="javascript:void(0);" class="easyui-linkbutton"
                            data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>

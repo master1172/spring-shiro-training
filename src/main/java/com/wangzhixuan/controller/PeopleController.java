@@ -64,7 +64,6 @@ public class PeopleController extends BaseController{
             condition.put("job",people.getJob());
         }
 
-
         condition.put("sex",people.getSex());
 
         pageInfo.setCondition(condition);
