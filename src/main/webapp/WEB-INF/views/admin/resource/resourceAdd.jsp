@@ -4,7 +4,7 @@
     $(function() {
 
         $('#pid').combotree({
-            url : '${path }/resource/allTree',
+            url : '${path }/resource/tree',
             parentField : 'pid',
             lines : true,
             panelHeight : 'auto'
