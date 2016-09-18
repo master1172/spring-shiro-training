@@ -121,6 +121,19 @@ public class ResourceController extends BaseController {
     }
 
     /**
+     * 全部资源树
+     *
+     * @return
+     */
+    @RequestMapping(value = "/allTrees2", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Tree> allTrees2() {
+        //return resourceService.findAllTrees();
+        return resourceService.findAllTrees2();
+    }
+
+
+    /**
      * 编辑资源页
      *
      * @param request

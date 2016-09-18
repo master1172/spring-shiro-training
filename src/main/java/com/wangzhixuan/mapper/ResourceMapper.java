@@ -31,6 +31,14 @@ public interface ResourceMapper {
      */
     List<Resource> findResourceAllByTypeAndPid(@Param("resourceType") Integer resourceType, @Param("pid") Long pid);
 
+
+    /**
+     * 查询父亲资源
+     *
+     * @param pid
+     * @return
+     */
+    List<Resource> findResourceAllByPid(@Param("pid") Long pid);
     /**
      * 查询所有资源
      *

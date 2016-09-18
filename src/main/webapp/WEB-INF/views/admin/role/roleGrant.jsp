@@ -4,7 +4,7 @@
     var resourceTree;
     $(function() {
         resourceTree = $('#resourceTree').tree({
-            url : '${path }/resource/allTrees',
+            url : '${path }/resource/allTrees2',
             parentField : 'pid',
             lines : true,
             checkbox : true,

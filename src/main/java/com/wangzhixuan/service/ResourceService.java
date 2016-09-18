@@ -58,6 +58,13 @@ public interface ResourceService {
     List<Tree> findAllTrees();
 
     /**
+     * 查询全部树
+     *
+     * @return
+     */
+    List<Tree> findAllTrees2();
+
+    /**
      * 更新资源
      *
      * @param resource
