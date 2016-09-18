@@ -40,7 +40,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     public String manager() {
-        return "/admin/role";
+        return "/admin/role/role";
     }
 
     /**
@@ -82,7 +82,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(value = "/addPage", method = RequestMethod.GET)
     public String addPage() {
-        return "/admin/roleAdd";
+        return "/admin/role/roleAdd";
     }
 
     /**
@@ -140,7 +140,7 @@ public class RoleController extends BaseController {
     public String editPage(HttpServletRequest request, Long id) {
         Role role = roleService.findRoleById(id);
         request.setAttribute("role", role);
-        return "/admin/roleEdit";
+        return "/admin/role/roleEdit";
     }
 
     /**
@@ -176,7 +176,7 @@ public class RoleController extends BaseController {
     @RequestMapping("/grantPage")
     public String grantPage(HttpServletRequest request, Long id, Model model) {
         model.addAttribute("id", id);
-        return "/admin/roleGrant";
+        return "/admin/role/roleGrant";
     }
 
     /**

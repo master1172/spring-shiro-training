@@ -51,7 +51,7 @@ public class ResourceController extends BaseController {
      */
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     public String manager() {
-        return "admin/resource";
+        return "admin/resource/resource";
     }
 
     /**
@@ -73,7 +73,7 @@ public class ResourceController extends BaseController {
      */
     @RequestMapping("/addPage")
     public String addPage() {
-        return "/admin/resourceAdd";
+        return "/admin/resource/resourceAdd";
     }
 
     /**
@@ -131,7 +131,7 @@ public class ResourceController extends BaseController {
     public String editPage(HttpServletRequest request, Long id) {
         Resource resource = resourceService.findResourceById(id);
         request.setAttribute("resource", resource);
-        return "/admin/resourceEdit";
+        return "/admin/resource/resourceEdit";
     }
 
     /**
