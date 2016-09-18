@@ -36,7 +36,7 @@ public class OrganizationController extends BaseController {
      */
     @RequestMapping("/manager")
     public String manager() {
-        return "/admin/organization";
+        return "/admin/organization/organization";
     }
 
     /**
@@ -70,7 +70,7 @@ public class OrganizationController extends BaseController {
      */
     @RequestMapping("/addPage")
     public String addPage() {
-        return "/admin/organizationAdd";
+        return "/admin/organization/organizationAdd";
     }
 
     /**
@@ -106,7 +106,7 @@ public class OrganizationController extends BaseController {
     public String editPage(HttpServletRequest request, Long id) {
         Organization organization = organizationService.findOrganizationById(id);
         request.setAttribute("organization", organization);
-        return "/admin/organizationEdit";
+        return "/admin/organization/organizationEdit";
     }
 
     /**
