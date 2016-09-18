@@ -5,7 +5,15 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
-        <result column="age" property="age" jdbcType="TINYINT"/>
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+        <result column="job" property="job" jdbcType="VARCHAR" />
+        <result column="salary" property="salary" jdbcType="DOUBLE" />
+    </resultMap>
+
+    <resultMap id="peopleVoResultMap" type="com.wangzhixuan.vo.PeopleVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT" />
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="job" property="job" jdbcType="VARCHAR" />
         <result column="salary" property="salary" jdbcType="DOUBLE" />
@@ -51,6 +59,9 @@
             <if test=" condition.name != null and condition.name != '' ">
                 t.name LIKE "%"#{condition.name}"%"
             </if>
+            <if test=" condition.sex != null and condition.sex != ''">
+                t.sex = #{condition.sex}
+            </if>
             <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
                 <![CDATA[t.birthday >= #{condition.birthdayStart} ]]>
             </if>
@@ -69,6 +80,9 @@
         <where>
             <if test=" condition.name != null and condition.name != '' ">
                 t.name LIKE "%"#{condition.name}"%"
+            </if>
+            <if test=" condition.sex != null and condition.sex != ''">
+                t.sex = #{condition.sex}
             </if>
             <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
                 <![CDATA[t.birthday >= #{condition.birthdayStart} ]]>

@@ -56,15 +56,18 @@ public class PeopleController extends BaseController{
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = Maps.newHashMap();
 
+
         if(StringUtils.isNoneBlank(people.getName())){
             condition.put("name", people.getName());
         }
 
         if(StringUtils.isNoneBlank(people.getJob())){
-            condition.put("job",people.getJob());
+            condition.put("job", people.getJob());
         }
 
-        condition.put("sex",people.getSex());
+        if (people.getSex() != null){
+            condition.put("sex", people.getSex());
+        }
 
         pageInfo.setCondition(condition);
         peopleService.findDataGrid(pageInfo);

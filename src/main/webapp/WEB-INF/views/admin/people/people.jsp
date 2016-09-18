@@ -19,7 +19,7 @@
                 pagination: true,
                 singleSelect: true,
                 idField: 'id',
-                sortName: 'createdate',
+                sortName: 'id',
                 sortOrder: 'asc',
                 pageSize: 20,
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
@@ -167,7 +167,8 @@
                     <th>性别:</th>
                     <td>
                         <select name="sex">
-                            <option value="0" selected>男</option>
+                            <option value="" selected>请选择</option>
+                            <option value="0">男</option>
                             <option value="1">女</option>
                         </select>
                     </td>
