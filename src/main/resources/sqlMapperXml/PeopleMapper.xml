@@ -41,11 +41,10 @@
         select
         <include refid="Base_Column_List" />
         from people
-        where name LIKE "%"#{name}"%"
+        where name LIKE #{name}
     </select>
 
     <select id="findPeoplePageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
-
         SELECT
         t.id,
         t.name,
@@ -56,9 +55,8 @@
         FROM
         people t
         <where>
-            '1' = '1'
             <if test=" condition.name != null and condition.name != '' ">
-                and t.name LIKE "%"#{condition.name}"%"
+                and t.name LIKE #{condition.name}
             </if>
             <if test=" condition.sex != null and condition.sex != ''">
                 and t.sex = #{condition.sex}
@@ -71,17 +69,14 @@
             </if>
         </where>
         LIMIT #{from}, #{size}
-
     </select>
 
     <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
-
         select count(*) count
         from people t
         <where>
-            '1' = '1'
             <if test=" condition.name != null and condition.name != '' ">
-                and t.name LIKE "%"#{condition.name}"%"
+                and t.name LIKE #{condition.name}
             </if>
             <if test=" condition.sex != null and condition.sex != ''">
                 and t.sex = #{condition.sex}
