@@ -7,6 +7,7 @@ import com.wangzhixuan.service.CategoryService;
 import com.wangzhixuan.vo.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,22 +15,29 @@ import java.util.List;
  */
 public class CategoryServiceImpl implements CategoryService {
 
+    private static String ICON_FOLDER = "icon-folder";
+
     @Autowired
     private CategoryMapper categoryMapper;
 
     @Override
     public Category findCategoryByid(Long id) {
-        return null;
+        return categoryMapper.findCategoryById(id);
     }
 
     @Override
     public void deleteCategoryByid(Long id) {
-
+        categoryMapper.deleteCategoryById(id);
     }
 
     @Override
     public void updateCategory(Category category) {
+        categoryMapper.updateCategory(category);
+    }
 
+    @Override
+    public void addCategory(Category category){
+        categoryMapper.insert(category);
     }
 
     @Override
@@ -43,10 +51,49 @@ public class CategoryServiceImpl implements CategoryService {
                 Tree tree = new Tree();
                 tree.setId(categoryNode.getId());
                 tree.setText(categoryNode.getName());
-                //tree.setIconCls();
+                tree.setIconCls(ICON_FOLDER);
+
+                List<Tree> subTree = buildFullSubTree(tree);
+
+                if (subTree != null){
+                    tree.setChildren(subTree);
+                }else{
+                    tree.setState("closed");
+                }
             }
         }
 
         return trees;
+    }
+
+    private List<Tree> buildFullSubTree(Tree rootNodeTree){
+        if (rootNodeTree == null){
+            return null;
+        }
+
+        List<Category> subTreeCategorys = categoryMapper.findCategoryAllByPid(rootNodeTree.getId());
+
+        if(subTreeCategorys == null)
+            return null;
+
+        List<Tree> subTreeList = new ArrayList();
+
+        for(Category category: subTreeCategorys){
+            Tree subTree = new Tree();
+            subTree.setId(category.getId());
+            subTree.setText(category.getName());
+            subTree.setIconCls(ICON_FOLDER);
+
+            List<Tree> nextLevelTrees = buildFullSubTree(subTree);
+            if(nextLevelTrees != null){
+                subTree.setChildren(nextLevelTrees);
+            }else{
+                subTree.setState("closed");
+            }
+
+            subTreeList.add(subTree);
+        }
+
+        return subTreeList;
     }
 }

@@ -13,5 +13,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CategoryController extends BaseController{
     private static Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
-
 }

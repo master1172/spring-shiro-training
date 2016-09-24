@@ -17,7 +17,5 @@ public interface CategoryMapper {
 
     List<Category> findCategoryAllByPid(Long pid);
 
-    List<Category> findAllCategory();
-
     Category findCategoryById(Long id);
 }
