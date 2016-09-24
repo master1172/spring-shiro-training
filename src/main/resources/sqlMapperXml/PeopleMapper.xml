@@ -41,7 +41,7 @@
         select
         <include refid="Base_Column_List" />
         from people
-        where name LIKE #{name}
+        where name LIKE concat('%'，#{name},'%')
     </select>
 
     <select id="findPeoplePageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
@@ -56,9 +56,9 @@
         people t
         <where>
             <if test=" condition.name != null and condition.name != '' ">
-                and t.name LIKE #{condition.name}
+                and t.name LIKE concat('%',#{condition.name},'%')
             </if>
-            <if test=" condition.sex != null and condition.sex != ''">
+            <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
             <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
@@ -76,7 +76,7 @@
         from people t
         <where>
             <if test=" condition.name != null and condition.name != '' ">
-                and t.name LIKE #{condition.name}
+                and t.name LIKE concat('%',#{condition.name},'%')
             </if>
             <if test=" condition.sex != null and condition.sex != ''">
                 and t.sex = #{condition.sex}

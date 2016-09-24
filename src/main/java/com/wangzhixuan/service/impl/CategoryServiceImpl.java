@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findCategoryByid(Long id) {
-
+        return null;
     }
 
     @Override
@@ -43,8 +43,10 @@ public class CategoryServiceImpl implements CategoryService {
                 Tree tree = new Tree();
                 tree.setId(categoryNode.getId());
                 tree.setText(categoryNode.getName());
-                tree.setIconCls();
+                //tree.setIconCls();
             }
         }
+
+        return trees;
     }
 }
