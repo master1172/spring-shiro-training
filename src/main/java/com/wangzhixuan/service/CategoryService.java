@@ -19,4 +19,6 @@ public interface CategoryService {
     void updateCategory(Category category);
 
     List<Tree> findAllTrees();
+
+    List<Category> findTreeGrid();
 }

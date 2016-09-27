@@ -5,16 +5,32 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="pid" property="pid" jdbcType="BIGINT"/>
         <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="seq" property="seq" jdbcType="TINYINT"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,pid,name
+        id,pid,name,seq,icon
     </sql>
+
+    <select id="findCategoryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from article_category order by seq
+    </select>
+
     <select id="findCategoryById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         SELECT
         <include refid="Base_Column_List"/>
         from article_category
         where id=#{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findCategoryAllByPidNull" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from article_category
+        where pid is null
     </select>
 
     <select id="findCategoryAllByPid" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -36,8 +52,8 @@
         </selectKey>
         INSERT
         INTO  article_category
-        (pid,name)
-        values(#{pid, jdbcType=BIGINT}, #{name, jdbcType=VARCHAR})
+        (pid,name,seq)
+        values(#{pid, jdbcType=BIGINT}, #{name, jdbcType=VARCHAR}, #{seq, jdbcType=TINYINT})
     </insert>
 
     <update id="updateCategory" parameterType="com.wangzhixuan.model.Category">
@@ -49,7 +65,11 @@
             <if test= "name != null and name != ''">
                 name = #{name, jdbcType=VARCHAR},
             </if>
+            <if test= " seq != null and seq != ''">
+                seq = #{seq, jdbcType=TINYINT}
+            </if>
         </set>
+        where id = #{id, jdbcType=BIGINT}
     </update>
 
 </mapper>

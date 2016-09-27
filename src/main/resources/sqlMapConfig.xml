@@ -34,5 +34,6 @@
         <mapper resource="sqlMapperXml/RoleResourceMapper.xml"/>
         <mapper resource="sqlMapperXml/SysLogMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleMapper.xml"/>
+        <mapper resource="sqlMapperXml/CategoryMapper.xml"/>
     </mappers>
 </configuration> 

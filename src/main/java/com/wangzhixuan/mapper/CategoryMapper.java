@@ -15,7 +15,11 @@ public interface CategoryMapper {
 
     int updateCategory(Category category);
 
+    List<Category> findCategoryAllByPidNull();
+
     List<Category> findCategoryAllByPid(Long pid);
 
     Category findCategoryById(Long id);
+
+    List<Category> findCategoryAll();
 }

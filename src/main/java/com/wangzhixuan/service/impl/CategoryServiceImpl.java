@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.wangzhixuan.mapper.CategoryMapper;
 import com.wangzhixuan.model.Category;
 import com.wangzhixuan.service.CategoryService;
+import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
 /**
  * Created by liushaoyang on 2016/9/18.
  */
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     private static String ICON_FOLDER = "icon-folder";
@@ -27,6 +30,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategoryByid(Long id) {
+        List<Category> categorySubLists = categoryMapper.findCategoryAllByPid(id);
+
+        if(categorySubLists != null){
+            for(Category categoryNode: categorySubLists){
+                deleteCategoryByid(categoryNode.getId());
+            }
+        }
         categoryMapper.deleteCategoryById(id);
     }
 
@@ -41,10 +51,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> findTreeGrid() {
+        return categoryMapper.findCategoryAll();
+    }
+
+    @Override
     public List<Tree> findAllTrees() {
         List<Tree> trees = Lists.newArrayList();
 
-        List<Category> categoryRootNodes = categoryMapper.findCategoryAllByPid(null);
+        List<Category> categoryRootNodes = categoryMapper.findCategoryAllByPidNull();
 
         if (categoryRootNodes != null){
             for(Category categoryNode: categoryRootNodes){
@@ -60,14 +75,20 @@ public class CategoryServiceImpl implements CategoryService {
                 }else{
                     tree.setState("closed");
                 }
+                trees.add(tree);
             }
         }
 
         return trees;
     }
 
+
     private List<Tree> buildFullSubTree(Tree rootNodeTree){
         if (rootNodeTree == null){
+            return null;
+        }
+
+        if (rootNodeTree.getId() == null){
             return null;
         }
 

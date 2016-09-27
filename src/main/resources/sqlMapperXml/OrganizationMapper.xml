@@ -12,8 +12,8 @@
         <result column="createdate" property="createdate" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, address, code, icon, pid, seq, createDate
-  </sql>
+      id, name, address, code, icon, pid, seq, createDate
+    </sql>
 
     <select id="findOrganizationAllByPidNull" resultMap="BaseResultMap">
         select distinct
