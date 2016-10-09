@@ -43,6 +43,7 @@ public class UserVo implements Serializable {
     private String roleIds;
 
     private Date createdateStart;
+
     private Date createdateEnd;
 
     private static final long serialVersionUID = 1L;

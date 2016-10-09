@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.Article">
+        <id column="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="category_id" property="category_id" jdbcType="BIGINT"/>
+        <result column="publish_time" property="publish_time" jdbcType="TIMESTAMP"/>
+        <result column="attachment" property="attachment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="articleVoResultMap" type="com.wangzhixuan.vo.ArticleVo">
+        <id column="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="category_id" property="category_id" jdbcType="BIGINT"/>
+        <result column="publish_time" property="publish_time" jdbcType="TIMESTAMP"/>
+        <result column="attachment" property="attachment" jdbcType="VARCHAR"/>
+        <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, title, author, content, category_id, publish_time, attachment
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findArticleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where id = #{id}
+    </select>
+
+    <select id="findArticleByTitle" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where title LIKE concat('%',#{title},'%')
+    </select>
+
+    <select id="findArticlePageCondition" resultMap="articleVoResultMap" parameterType="PageInfo">
+        SELECT
+        id,
+        title,
+        author,
+        content,
+        category_id,
+        publish_time,
+        attachment,
+        c.`name` as categoryName,
+        FROM
+        article t
+        LEFT JOIN article_category s ON s.id = t.category_id
+        <where>
+            <if test=" condition.title != null and condition.title != '' ">
+                t.title LIKE concat('%',#{condition.title},'%')
+            </if>
+            <if test=" condition.categoryId != null ">
+                t.category_id = #{condition.categoryId}
+            </if>
+            <if test="condition.startTime != null">
+                <![CDATA[
+                  and t.publish_time >= #{condition.startTime}
+                ]]>
+            </if>
+            <if test="condition.endTime != null">
+                <![CDATA[
+                  and t.publish_time <= #{condition.endTime}
+                ]]>
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findArticlePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from article t
+        <where>
+            <if test=" condition.title != null and condition.title != ''">
+                t.title LIKE concat('%',#{condition.title},'%')
+            </if>
+            <if test=" condition.categoryId != null">
+                t.category_id = #{condition.categoryId}
+            </if>
+            <if test="condition.startTime != null">
+                <![CDATA[
+                  and t.publish_time >= #{condition.startTime}
+                ]]>
+            </if>
+            <if test="condition.endTime != null">
+                <![CDATA[
+                  and t.publish_time <= #{condition.endTime}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="findArticleVoById" resultMap="articleVoResultMap" parameterType="java.lang.Long">
+        SELECT
+          t.id,
+          t.title,
+          t.author,
+          t.content,
+          t.category_id,
+          t.publish_time,
+          t.attachment,
+          s.`name` AS categoryName,
+        FROM
+        article t
+        LEFT JOIN article_category s ON s.id = t.category_id
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from article
+        where id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.Article">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into article(title, author, content, category_id, publish_time, attachment)
+        values
+        (#{title,jdbcType=VARCHAR}, #{author, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{category_id, jdbcType=BIGINT}, now(), #{attachment, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateArticle" parameterType="com.wangzhixuan.model.Article">
+        update article
+        <set>
+            <if test = "title != null">
+                title = #{title, jdbcType=VARCHAR},
+            </if>
+            <if test = "author != null">
+                author = #{author, jdbcType=VARCHAR},
+            </if>
+            <if test = "content != null">
+                content = #{content, jdbcType=VARCHAR},
+            </if>
+            <if test = "categoryId != null">
+                category_id = #{categoryId, jdbcType=VARCHAR},
+            </if>
+            <if test = "publishTime != null">
+                publish_time = #{publishTime, jdbcType = TIMESTAMP},
+            </if>
+            <if test = "attachment != null">
+                attachment = #{attachment, jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+</mapper>
+
