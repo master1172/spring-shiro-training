@@ -49,14 +49,14 @@
 
     <select id="findArticlePageCondition" resultMap="articleVoResultMap" parameterType="PageInfo">
         SELECT
-        id,
+        t.id,
         title,
         author,
         content,
         category_id,
         publish_time,
         attachment,
-        c.`name` as categoryName,
+        s.`name` as categoryName
         FROM
         article t
         LEFT JOIN article_category s ON s.id = t.category_id
@@ -113,7 +113,7 @@
           t.category_id,
           t.publish_time,
           t.attachment,
-          s.`name` AS categoryName,
+          s.`name` AS categoryName
         FROM
         article t
         LEFT JOIN article_category s ON s.id = t.category_id

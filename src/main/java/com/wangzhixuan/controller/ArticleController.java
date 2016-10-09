@@ -45,6 +45,9 @@ public class ArticleController extends BaseController{
             condition.put("categoryId", articleVo.getCategoryId());
         }
 
+        condition.put("startTime",null);
+        condition.put("endTime",null);
+
         pageInfo.setCondition(condition);
         articleService.findDataGrid(pageInfo);
 

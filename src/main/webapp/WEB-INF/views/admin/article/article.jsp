@@ -48,7 +48,7 @@
                 }, {
                     width: '80',
                     title: '所属分类',
-                    field: 'categoryId',
+                    field: 'categoryName',
                     hidden: true
                 }, {
                     width: '130s',
@@ -62,18 +62,18 @@
                         formatter: function (value, row, index) {
                             var str = '';
                             <shiro:hasPermission name="/article/edit">
-                            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
+                            str += $.formatString('<a href="javascript:void(0)" class="article-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
                             </shiro:hasPermission>
                             <shiro:hasPermission name="/article/delete">
                             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
+                            str += $.formatString('<a href="javascript:void(0)" class="article-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
                             </shiro:hasPermission>
                             return str;
                         }
                     }]],
                 onLoadSuccess: function (data) {
-                    $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
-                    $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
+                    $('.article-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
+                    $('.article-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
                 },
                 toolbar: '#toolbar'
             });
@@ -89,7 +89,7 @@
                     text: '添加',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#userAddForm');
+                        var f = parent.$.modalDialog.handler.find('#articleAddForm');
                         f.submit();
                     }
                 }]
@@ -136,7 +136,7 @@
                     text: '确定',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#userEditForm');
+                        var f = parent.$.modalDialog.handler.find('#articleEditForm');
                         f.submit();
                     }
                 }]
