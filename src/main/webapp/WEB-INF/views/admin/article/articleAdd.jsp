@@ -44,14 +44,17 @@
                     <td><input name="author" type="text" placeholder="请输入文章作者姓名" class="easyui-validatebox" data-options="required:true" value=""></td>
                 </tr>
                 <tr>
-                    <td>文章内容</td>
-                    <td>
-                        <input name="content" type="text" placeholder="请输入文章内容" class="easyui-validatebox" data-options="required:true">
+                    <td colspan="4"> 文章内容</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <textarea name="content" placeholder="请输入文章内容" rows="4" cols="80">
+                        </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>所属分类</td>
-                    <td>
+                    <td colspan="3">
                         <select id="categoryId" name="categoryId" style="width: 140px; height: 29px;" class="easyui-validatebox" data-options="required:true"></select>
                     </td>
                 </tr>
