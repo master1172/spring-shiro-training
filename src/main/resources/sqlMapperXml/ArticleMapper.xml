@@ -64,8 +64,11 @@
             <if test=" condition.title != null and condition.title != '' ">
                 t.title LIKE concat('%',#{condition.title},'%')
             </if>
-            <if test=" condition.categoryId != null ">
-                t.category_id = #{condition.categoryId}
+            <if test=" condition.categoryIdList != null ">
+                t.category_id in
+                <foreach collection="condition.categoryIdList" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="condition.startTime != null">
                 <![CDATA[
@@ -88,8 +91,11 @@
             <if test=" condition.title != null and condition.title != ''">
                 t.title LIKE concat('%',#{condition.title},'%')
             </if>
-            <if test=" condition.categoryId != null">
-                t.category_id = #{condition.categoryId}
+            <if test=" condition.categoryIdList != null ">
+                t.category_id in
+                <foreach collection="condition.categoryIdList" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="condition.startTime != null">
                 <![CDATA[

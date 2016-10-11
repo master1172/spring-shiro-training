@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.Article;
 import com.wangzhixuan.service.ArticleService;
+import com.wangzhixuan.service.CategoryService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.ArticleVo;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +31,9 @@ public class ArticleController extends BaseController{
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @RequestMapping(value="/manager", method = RequestMethod.GET)
     public String manager(){
@@ -45,7 +51,14 @@ public class ArticleController extends BaseController{
         }
 
         if(articleVo.getCategoryId() != null){
-            condition.put("categoryId", articleVo.getCategoryId());
+
+            Long categoryId = articleVo.getCategoryId();
+            List<Long> categoryIdList   = categoryService.findAllSubCategoryIds(categoryId);
+            if (categoryIdList == null){
+                categoryIdList = new ArrayList<>();
+            }
+            categoryIdList.add(categoryId);
+            condition.put("categoryIdList", categoryIdList);
         }
 
         condition.put("startTime",null);

@@ -21,4 +21,8 @@ public interface CategoryService {
     List<Tree> findAllTrees();
 
     List<Category> findTreeGrid();
+
+    List<Category> findAllSubCategorys(Long parentId);
+
+    List<Long> findAllSubCategoryIds(Long parentId);
 }

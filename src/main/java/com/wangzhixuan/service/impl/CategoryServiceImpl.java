@@ -56,6 +56,49 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> findAllSubCategorys(Long parentId){
+
+        List<Category> resultList = new ArrayList<>();
+
+        List<Category> categoryList = categoryMapper.findCategoryAllByPid(parentId);
+
+        for (Category categoryItem:categoryList){
+            if (categoryItem == null || categoryItem.getId() == null)
+                continue;
+
+            resultList.add(categoryItem);
+
+            List<Category> categorySubList = this.findAllSubCategorys(categoryItem.getId());
+
+            if (categorySubList != null && categorySubList.size() > 0){
+                for (Category categorySubItem : categorySubList){
+                    resultList.add(categorySubItem);
+                }
+            }
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public List<Long> findAllSubCategoryIds(Long parentId){
+        List<Category> categoryList = this.findAllSubCategorys(parentId);
+        if (categoryList == null || categoryList.size() < 1)
+            return null;
+
+        List<Long> resultList = new ArrayList<Long>();
+
+        for(Category categoryItem:categoryList){
+            if (categoryItem == null || categoryItem.getId() == null)
+                continue;
+
+            resultList.add(categoryItem.getId());
+        }
+
+        return resultList;
+    }
+
+    @Override
     public List<Tree> findAllTrees() {
         List<Tree> trees = Lists.newArrayList();
 
@@ -63,18 +106,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         if (categoryRootNodes != null){
             for(Category categoryNode: categoryRootNodes){
-                Tree tree = new Tree();
-                tree.setId(categoryNode.getId());
-                tree.setText(categoryNode.getName());
-                tree.setIconCls(ICON_FOLDER);
-
-                List<Tree> subTree = buildFullSubTree(tree);
-
-                if (subTree != null){
-                    tree.setChildren(subTree);
-                }else{
-                    tree.setState("closed");
-                }
+                Tree tree = buildSubTree(categoryNode);
                 trees.add(tree);
             }
         }
@@ -100,21 +132,27 @@ public class CategoryServiceImpl implements CategoryService {
         List<Tree> subTreeList = new ArrayList();
 
         for(Category category: subTreeCategorys){
-            Tree subTree = new Tree();
-            subTree.setId(category.getId());
-            subTree.setText(category.getName());
-            subTree.setIconCls(ICON_FOLDER);
-
-            List<Tree> nextLevelTrees = buildFullSubTree(subTree);
-            if(nextLevelTrees != null){
-                subTree.setChildren(nextLevelTrees);
-            }else{
-                subTree.setState("closed");
-            }
+            Tree subTree = buildSubTree(category);
 
             subTreeList.add(subTree);
         }
 
         return subTreeList;
+    }
+
+    private Tree buildSubTree(Category categoryNode) {
+        Tree tree = new Tree();
+        tree.setId(categoryNode.getId());
+        tree.setText(categoryNode.getName());
+        tree.setIconCls(ICON_FOLDER);
+
+        List<Tree> subTree = buildFullSubTree(tree);
+
+        if (subTree != null){
+            tree.setChildren(subTree);
+        }else{
+            tree.setState("closed");
+        }
+        return tree;
     }
 }
