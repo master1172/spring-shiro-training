@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,6 +74,45 @@ public class ArticleController extends BaseController{
             return result;
         }catch(Exception exp){
             Logger.error("添加文章失败:{}",exp);
+            result.setMsg(exp.getMessage());
+            return result;
+        }
+    }
+
+    @RequestMapping(value="/editPage", method = RequestMethod.GET)
+    public String editPage(Long id, Model model){
+        Article article = articleService.findArticleById(id);
+        model.addAttribute("article",article);
+        return "/admin/article/articleEdit";
+    }
+
+    @RequestMapping(value="/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public Result edit(Article article){
+        Result result = new Result();
+        try{
+            articleService.updateArticle(article);
+            result.setSuccess(true);
+            result.setMsg("修改文章成功");
+            return result;
+        }catch(Exception exp){
+            Logger.error("修改文章失败{}",exp);
+            result.setMsg(exp.getMessage());
+            return result;
+        }
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Result delete(Long id){
+        Result result = new Result();
+        try{
+            articleService.deleteArticleById(id);
+            result.setSuccess(true);
+            result.setMsg("删除文章成功");
+            return result;
+        }catch(Exception exp){
+            Logger.error("删除文章失败:{}",exp);
             result.setMsg(exp.getMessage());
             return result;
         }

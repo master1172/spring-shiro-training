@@ -105,7 +105,6 @@
             }
             parent.$.messager.confirm('询问', '您是否要删除当前文章？', function (b) {
                 if (b) {
-
                     progressLoad();
                     $.post('${path}/article/delete', {
                             id: id
