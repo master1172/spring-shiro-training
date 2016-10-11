@@ -12,7 +12,7 @@
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path }/people/dataGrid',
+                url: '${path}/people/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,

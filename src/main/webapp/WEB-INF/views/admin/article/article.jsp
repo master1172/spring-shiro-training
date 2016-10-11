@@ -12,6 +12,7 @@
         var categoryTree;
 
         $(function () {
+
             categoryTree = $('#categoryTree').tree({
                 url: '${path }/category/tree',
                 parentField: 'pid',
@@ -24,14 +25,14 @@
             });
 
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path }/article/dataGrid',
+                url: '${path}/article/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
                 pagination: true,
                 singleSelect: true,
                 idField: 'id',
-                sortName: 'createdate',
+                sortName: 'id',
                 sortOrder: 'asc',
                 pageSize: 20,
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
@@ -49,34 +50,34 @@
                     width: '80',
                     title: '所属分类',
                     field: 'categoryName',
-                    hidden: true
+                    sortable: true
                 }, {
-                    width: '130s',
+                    width: '130',
                     title: '发布时间',
                     field: 'publishTime',
                     sortable: true
                 }, {
-                        field: 'action',
-                        title: '操作',
-                        width: 130,
-                        formatter: function (value, row, index) {
+                    field: 'action',
+                    title: '操作',
+                    width: '130',
+                    formatter: function (value, row, index) {
                             var str = '';
                             <shiro:hasPermission name="/article/edit">
-                            str += $.formatString('<a href="javascript:void(0)" class="article-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
+                                str += $.formatString('<a href="javascript:void(0)" class="article-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
                             </shiro:hasPermission>
                             <shiro:hasPermission name="/article/delete">
-                            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                            str += $.formatString('<a href="javascript:void(0)" class="article-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
+                                str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+                                str += $.formatString('<a href="javascript:void(0)" class="article-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
                             </shiro:hasPermission>
                             return str;
                         }
                     }]],
-                onLoadSuccess: function (data) {
-                    $('.article-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
-                    $('.article-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
-                },
-                toolbar: '#toolbar'
-            });
+                    onLoadSuccess: function (data) {
+                        $('.article-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
+                        $('.article-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
+                    },
+                    toolbar: '#toolbar'
+                });
         });
 
         function addFun() {
@@ -175,7 +176,7 @@
         </table>
     </form>
 </div>
-<div data-options="region:'center',border:true,title:'用户列表'">
+<div data-options="region:'center',border:true,title:'文章列表'">
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
 <div data-options="region:'west',border:true,split:false,title:'文章分类'" style="width:150px;overflow: hidden; ">
