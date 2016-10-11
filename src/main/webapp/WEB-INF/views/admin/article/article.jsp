@@ -180,7 +180,7 @@
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
 <div data-options="region:'west',border:true,split:false,title:'文章分类'" style="width:150px;overflow: hidden; ">
-    <ul id="organizationTree" style="width:160px;margin: 10px 10px 10px 10px">
+    <ul id="categoryTree" style="width:160px;margin: 10px 10px 10px 10px">
     </ul>
 </div>
 <div id="toolbar" style="display: none;">

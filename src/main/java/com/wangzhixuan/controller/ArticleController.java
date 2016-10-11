@@ -1,6 +1,8 @@
 package com.wangzhixuan.controller;
 
 import com.google.common.collect.Maps;
+import com.wangzhixuan.code.Result;
+import com.wangzhixuan.model.Article;
 import com.wangzhixuan.service.ArticleService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.ArticleVo;
@@ -53,6 +55,27 @@ public class ArticleController extends BaseController{
 
         return pageInfo;
 
+    }
+
+    @RequestMapping(value="/addPage", method = RequestMethod.GET)
+    public String addPage(){
+        return "/admin/article/articleAdd";
+    }
+
+    @RequestMapping(value="/add", method = RequestMethod.POST)
+    @ResponseBody
+    public Result add(Article article){
+        Result result = new Result();
+        try{
+            articleService.addArticle(article);
+            result.setSuccess(true);
+            result.setMsg("添加成功");
+            return result;
+        }catch(Exception exp){
+            Logger.error("添加文章失败:{}",exp);
+            result.setMsg(exp.getMessage());
+            return result;
+        }
     }
 
 }

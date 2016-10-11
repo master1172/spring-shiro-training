@@ -6,8 +6,8 @@
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="author" property="author" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
-        <result column="category_id" property="category_id" jdbcType="BIGINT"/>
-        <result column="publish_time" property="publish_time" jdbcType="TIMESTAMP"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
         <result column="attachment" property="attachment" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -16,8 +16,8 @@
         <result column="title" property="title" jdbcType="VARCHAR" />
         <result column="author" property="author" jdbcType="VARCHAR" />
         <result column="content" property="content" jdbcType="VARCHAR"/>
-        <result column="category_id" property="category_id" jdbcType="BIGINT"/>
-        <result column="publish_time" property="publish_time" jdbcType="TIMESTAMP"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
         <result column="attachment" property="attachment" jdbcType="VARCHAR"/>
         <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
     </resultMap>
@@ -133,7 +133,7 @@
         </selectKey>
         insert into article(title, author, content, category_id, publish_time, attachment)
         values
-        (#{title,jdbcType=VARCHAR}, #{author, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{category_id, jdbcType=BIGINT}, now(), #{attachment, jdbcType=VARCHAR})
+        (#{title,jdbcType=VARCHAR}, #{author, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{categoryId, jdbcType=BIGINT}, now(), #{attachment, jdbcType=VARCHAR})
     </insert>
 
     <update id="updateArticle" parameterType="com.wangzhixuan.model.Article">

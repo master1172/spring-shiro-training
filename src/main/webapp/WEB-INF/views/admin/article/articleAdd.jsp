@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/commons/global.jsp" %>
+<script type="text/javascript">
+    $(function() {
+        $('#categoryId').combotree({
+            url : '${path}/category/tree',
+            parentField : 'pid',
+            lines : true,
+            panelHeight : 'auto'
+        });
+
+        $('#articleAddForm').form({
+            url : '${path}/article/add',
+            onSubmit : function() {
+                progressLoad();
+                var isValid = $(this).form('validate');
+                if (!isValid) {
+                    progressClose();
+                }
+                return isValid;
+            },
+            success : function(result) {
+                progressClose();
+                result = $.parseJSON(result);
+                if (result.success) {
+                    parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为article.jsp页面预定义好了
+                    parent.$.modalDialog.handler.dialog('close');
+                } else {
+                    parent.$.messager.alert('提示', result.msg, 'warning');
+                }
+            }
+        });
+
+    });
+</script>
+<div class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+        <form id="articleAddForm" method="post">
+            <table class="grid">
+                <tr>
+                    <td>文章标题</td>
+                    <td><input name="title"  type="text" placeholder="请输入文章标题"    class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td>文章作者</td>
+                    <td><input name="author" type="text" placeholder="请输入文章作者姓名" class="easyui-validatebox" data-options="required:true" value=""></td>
+                </tr>
+                <tr>
+                    <td>文章内容</td>
+                    <td>
+                        <input name="content" type="text" placeholder="请输入文章内容" class="easyui-validatebox" data-options="required:true">
+                    </td>
+                </tr>
+                <tr>
+                    <td>所属分类</td>
+                    <td>
+                        <select id="categoryId" name="categoryId" style="width: 140px; height: 29px;" class="easyui-validatebox" data-options="required:true"></select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
