@@ -83,8 +83,8 @@
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
-                width: 500,
-                height: 300,
+                width: 900,
+                height: 500,
                 href: '${path }/article/addPage',
                 buttons: [{
                     text: '添加',
@@ -129,8 +129,8 @@
             }
             parent.$.modalDialog({
                 title: '编辑',
-                width: 500,
-                height: 300,
+                width: 900,
+                height: 500,
                 href: '${path }/article/editPage?id=' + id,
                 buttons: [{
                     text: '确定',

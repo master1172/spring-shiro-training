@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
+<script src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 <script type="text/javascript">
     $(function() {
         $('#categoryId').combotree({
@@ -33,6 +37,7 @@
 
     });
 </script>
+
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="articleAddForm" method="post">
@@ -48,8 +53,9 @@
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <textarea name="content" placeholder="请输入文章内容" rows="4" cols="77">
-                        </textarea>
+                        <script id="container" name="content" type="text/plain">
+                            请输入文章内容
+                        </script>
                     </td>
                 </tr>
                 <tr>
@@ -62,3 +68,6 @@
         </form>
     </div>
 </div>
+<script>
+    var editor = UE.getEditor("container");
+</script>

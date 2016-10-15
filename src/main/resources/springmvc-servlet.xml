@@ -41,6 +41,8 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+
+
     <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 设置上传文件总大小限制 -->

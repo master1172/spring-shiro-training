@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
+<script src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     $(function() {
 
@@ -55,9 +58,9 @@
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <textarea name="content" placeholder="请输入文章内容" rows="4" cols="77">
+                        <script id="container" name="content" type="text/plain">
                             ${article.content}
-                        </textarea>
+                        </script>
                     </td>
                 </tr>
                 <tr>
@@ -70,3 +73,7 @@
         </form>
     </div>
 </div>
+
+<script>
+    var editor = UE.getEditor("container");
+</script>
