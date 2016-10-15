@@ -7,6 +7,7 @@ import com.wangzhixuan.service.ArticleService;
 import com.wangzhixuan.service.CategoryService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.ArticleVo;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,9 @@ public class ArticleController extends BaseController{
     public Result add(Article article){
         Result result = new Result();
         try{
+            if (article != null){
+                article.setContent(StringEscapeUtils.unescapeHtml4(article.getContent()));
+            }
             articleService.addArticle(article);
             result.setSuccess(true);
             result.setMsg("添加成功");
@@ -104,6 +108,10 @@ public class ArticleController extends BaseController{
     public Result edit(Article article){
         Result result = new Result();
         try{
+            if (article != null){
+                article.setContent(StringEscapeUtils.unescapeHtml4(article.getContent()));
+            }
+            
             articleService.updateArticle(article);
             result.setSuccess(true);
             result.setMsg("修改文章成功");
