@@ -32,11 +32,17 @@
                 pagination: true,
                 singleSelect: true,
                 idField: 'id',
+                singleSelect: false,
+                selectOnCheck: false,
+                checkOnSelect: true,
                 sortName: 'id',
                 sortOrder: 'asc',
                 pageSize: 20,
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
                 columns: [[{
+                    field: 'ck',
+                    checkbox:true
+                }    ,{
                     width: '80',
                     title: '文章标题',
                     field: 'title',
@@ -143,6 +149,30 @@
             });
         }
 
+        function batchDel(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要删除所选文章？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/article/batchDel', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+
+        }
+
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -187,6 +217,10 @@
     <shiro:hasPermission name="/article/add">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="/article/batchDel">
+        <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-del'">批量删除</a>
     </shiro:hasPermission>
 </div>
 </body>

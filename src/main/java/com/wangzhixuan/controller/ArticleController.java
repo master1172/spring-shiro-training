@@ -111,7 +111,7 @@ public class ArticleController extends BaseController{
             if (article != null){
                 article.setContent(StringEscapeUtils.unescapeHtml4(article.getContent()));
             }
-            
+
             articleService.updateArticle(article);
             result.setSuccess(true);
             result.setMsg("修改文章成功");
@@ -134,6 +134,30 @@ public class ArticleController extends BaseController{
             return result;
         }catch(Exception exp){
             Logger.error("删除文章失败:{}",exp);
+            result.setMsg(exp.getMessage());
+            return result;
+        }
+    }
+
+    @RequestMapping("/batchDel")
+    @ResponseBody
+    public Result batchDel(String ids){
+        Result result = new Result();
+
+        if (StringUtils.isEmpty(ids)){
+            result.setSuccess(true);
+            result.setMsg("请选择至少一篇文章");
+            return result;
+        }
+
+        try{
+            String[] idList = ids.split(",");
+            articleService.batchDeleteArticleByIds(idList);
+            result.setSuccess(true);
+            result.setMsg("批量删除文章成功");
+            return result;
+        }catch(Exception exp){
+            Logger.error("批量删除文章失败:{}",exp);
             result.setMsg(exp.getMessage());
             return result;
         }

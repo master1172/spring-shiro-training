@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface ArticleMapper {
 
+    int batchDeleteByIds(String[] ids);
+
     int deleteById(Long id);
 
     int insert(Article article);

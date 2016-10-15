@@ -23,4 +23,6 @@ public interface ArticleService {
     void updateArticle(Article article);
 
     void deleteArticleById(Long id);
+
+    void batchDeleteArticleByIds(String[] ids);
 }

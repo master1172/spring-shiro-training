@@ -85,4 +85,9 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteArticleById(Long id) {
         articleMapper.deleteById(id);
     }
+
+    @Override
+    public void batchDeleteArticleByIds(String[] ids){
+        articleMapper.batchDeleteByIds(ids);
+    }
 }
