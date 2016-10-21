@@ -42,7 +42,7 @@
                 columns: [[{
                     field: 'ck',
                     checkbox:true
-                }    ,{
+                }, {
                     width: '80',
                     title: '文章标题',
                     field: 'title',
@@ -170,7 +170,6 @@
                     }, 'JSON');
                 }
             });
-
         }
 
         function searchFun() {

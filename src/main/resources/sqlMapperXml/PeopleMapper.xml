@@ -95,6 +95,15 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete from people
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
     <insert id="insert" parameterType="com.wangzhixuan.model.People">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()

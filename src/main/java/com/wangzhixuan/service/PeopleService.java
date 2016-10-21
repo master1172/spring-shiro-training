@@ -54,4 +54,6 @@ public interface PeopleService {
      * @param id
      */
     void deletePeopleById(Long id);
+
+    void batchDeletePeopleByIds(String[] ids);
 }

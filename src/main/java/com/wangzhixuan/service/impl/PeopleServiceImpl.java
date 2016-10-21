@@ -44,4 +44,9 @@ public class PeopleServiceImpl implements PeopleService{
     public void deletePeopleById(Long id) {
         peopleMapper.deleteById(id);
     }
+
+    @Override
+    public void batchDeletePeopleByIds(String[] ids){
+        peopleMapper.batchDeleteByIds(ids);
+    }
 }

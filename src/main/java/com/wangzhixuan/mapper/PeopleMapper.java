@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface PeopleMapper {
 
+    int batchDeleteByIds(String[] ids);
     /**
      * 删除人员
      *
