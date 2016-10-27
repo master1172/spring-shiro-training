@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="/static/ckeditor/ckeditor.js" />
+<script type="text/javascript" src="/static/ckfinder/ckfinder.js" />
 
 <script type="text/javascript">
     $(function() {
@@ -66,5 +67,6 @@
     </div>
 </div>
 <script>
-    CKEDITOR.replace('content');
+    var editor = CKEDITOR.replace('content');
+    CKFinder.setupCKEditor(editor,'/static/ckfinder');
 </script>
