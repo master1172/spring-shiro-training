@@ -89,9 +89,9 @@
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
-                width: 900,
-                height: 500,
-                href: '${path }/article/addPage',
+                width: 1000,
+                height: 800,
+                href: '${path}/article/addPage',
                 buttons: [{
                     text: '添加',
                     handler: function () {
@@ -135,9 +135,9 @@
             }
             parent.$.modalDialog({
                 title: '编辑',
-                width: 900,
-                height: 500,
-                href: '${path }/article/editPage?id=' + id,
+                width: 1000,
+                height: 800,
+                href: '${path}/article/editPage?id=' + id,
                 buttons: [{
                     text: '确定',
                     handler: function () {
