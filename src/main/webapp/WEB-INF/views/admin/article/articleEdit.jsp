@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
-<script type="text/javascript" src="/static/ckeditor/ckeditor.js" />
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     $(function() {
 
@@ -56,9 +58,9 @@
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <textarea name="content" id="content" rows="10" cols="78">
+                        <script id="container" name="content" type="text/plain">
                             ${article.content}
-                        </textarea>
+                        </script>
                     </td>
                 </tr>
                 <tr>
@@ -73,5 +75,5 @@
 </div>
 
 <script>
-    CKEDITOR.replace('content');
+    var editor = UE.getEditor("container");
 </script>
