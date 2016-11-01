@@ -65,8 +65,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
         List<Long> roleList = shiroUser.roleList;
-
         Set<String> urlSet = Sets.newHashSet();
+        Set<String> roleSet = Sets.newHashSet();
         for (Long roleId : roleList) {
             List<Map<Long, String>> roleResourceList = roleService.findRoleResourceListByRoleId(roleId);
             if (roleResourceList != null) {
@@ -76,9 +76,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
                     }
                 }
             }
+            roleSet.add(String.valueOf(roleId));
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(urlSet);
+        //这儿暂时这样写，最好是在role表中加入编号字段 
+        info.addRoles(roleSet);
         return info;
     }
 }

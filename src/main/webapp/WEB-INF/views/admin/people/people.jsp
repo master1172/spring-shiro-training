@@ -26,7 +26,7 @@
                 sortOrder: 'asc',
                 pageSize: 20,
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-                columns: [[{
+               /*  columns: [[{
                     field: 'ck',
                     checkbox:true
                 },{
@@ -67,7 +67,7 @@
                     title: '操作',
                     width: '130',
                         formatter: function (value, row, index) {
-                            var str = '';
+                        	var str = '';
                             <shiro:hasPermission name="/people/edit">
                                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
                             </shiro:hasPermission>
@@ -77,7 +77,7 @@
                             </shiro:hasPermission>
                             return str;
                         }
-                    }]],
+                    }]], */
                     onLoadSuccess: function (data) {
                         $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
                         $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
@@ -181,6 +181,27 @@
             $('#searchForm input').val('');
             dataGrid.datagrid('load', {});
         }
+        
+        function sexFormatter(value,row,index){
+        	switch (value) {
+            case 0:
+                return '男';
+            case 1:
+                return '女';
+        	}
+        }
+        
+        function operateFormatter(value,row,index){
+        	 var str = '';
+             <shiro:hasPermission name="/people/edit">
+                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
+             </shiro:hasPermission>
+             <shiro:hasPermission name="/people/delete">
+                 str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
+             </shiro:hasPermission>
+             return str;
+        }
     </script>
 </head>
 
@@ -220,7 +241,22 @@
     </div>
 
     <div data-options="region:'center',border:true,title:'人员列表'">
-        <table id="dataGrid" data-options="fit:true,border:false"></table>
+        <table id="dataGrid" data-options="fit:true,border:false">
+        	<thead>
+            <tr>
+                <th field="ck" data-options="checkbox:true"></th>
+                <th field="name" data-options="sortable:true" width="80">姓名</th>
+                <th field="sex" data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
+                <th field="birthday" data-options="sortable:true" width="130">生日</th>
+                <th field="job" data-options="sortable:true" width="80">工作</th>
+                <!-- code01为角色编号 -->
+                <shiro:hasRole name="code01">                	
+                	<th field="salary" data-options="sortable:true" width="80">薪资</th>
+                </shiro:hasRole>
+                <th field="id" data-options="sortable:true,formatter:operateFormatter" width="80">操作</th>
+            </tr>
+        </thead>
+        </table>
     </div>
 
     <div id="toolbar" style="display: none;">
