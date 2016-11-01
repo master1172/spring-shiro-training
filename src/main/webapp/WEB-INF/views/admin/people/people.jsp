@@ -181,6 +181,18 @@
             $('#searchForm input').val('');
             dataGrid.datagrid('load', {});
         }
+
+        function importExcel(){
+
+        }
+
+        function exportExcel(){
+
+        }
+
+        function exportWord(){
+
+        }
     </script>
 </head>
 
@@ -231,6 +243,18 @@
         <shiro:hasPermission name="/people/batchDel">
             <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-del'">批量删除</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="/people/import">
+            <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">导入</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="/people/exportExcel">
+            <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="/people/exportWord">
+            <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">导出Word</a>
         </shiro:hasPermission>
     </div>
 </body>
