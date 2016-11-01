@@ -244,7 +244,7 @@
             <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-del'">批量删除</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="/people/import">
+        <shiro:hasPermission name="/people/importExcel">
             <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">导入</a>
         </shiro:hasPermission>
