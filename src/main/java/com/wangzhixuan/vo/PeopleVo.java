@@ -27,6 +27,8 @@ public class PeopleVo implements Serializable{
 
     private Date birthdayEnd;
 
+    private String photo;
+
     public Long getId() {
         return id;
     }
@@ -90,5 +92,9 @@ public class PeopleVo implements Serializable{
     public void setBirthdayEnd(Date birthdayEnd) {
         this.birthdayEnd = birthdayEnd;
     }
+
+    public String getPhoto() {return photo;}
+
+    public void setPhoto(String photo) {this.photo = photo;}
 
 }
