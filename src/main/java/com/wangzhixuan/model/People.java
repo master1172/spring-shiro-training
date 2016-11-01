@@ -24,6 +24,8 @@ public class People implements Serializable {
 
     private double salary;
 
+    private String photo;
+
     public Long getId() {
         return id;
     }
@@ -70,6 +72,12 @@ public class People implements Serializable {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public String getPhoto(){return photo;}
+
+    public void setPhoto(String photo){
+        this.photo = photo;
     }
 
     @Override

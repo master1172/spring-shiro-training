@@ -8,6 +8,7 @@
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="job" property="job" jdbcType="VARCHAR" />
         <result column="salary" property="salary" jdbcType="DOUBLE" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="peopleVoResultMap" type="com.wangzhixuan.vo.PeopleVo">
@@ -17,10 +18,11 @@
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="job" property="job" jdbcType="VARCHAR" />
         <result column="salary" property="salary" jdbcType="DOUBLE" />
+        <result column="photo"  property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, name, sex, birthday, job, salary
+        id, name, sex, birthday, job, salary, photo
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -108,13 +110,14 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people (name, sex, birthday, job, salary)
+        insert into people (name, sex, birthday, job, salary, photo)
         values (
           #{name,jdbcType=VARCHAR},
           #{sex,jdbcType=TINYINT},
           #{birthday,jdbcType=DATE},
           #{job, jdbcType=VARCHAR},
-          #{salary,jdbcType=DOUBLE}
+          #{salary,jdbcType=DOUBLE},
+          #{photo, jdbcType=VARCHAR}
          )
     </insert>
 
@@ -135,6 +138,9 @@
             </if>
             <if test="salary != null">
                 salary = #{salary,jdbcType=DOUBLE},
+            </if>
+            <if test="photo != null">
+                photo = #{photo, jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
