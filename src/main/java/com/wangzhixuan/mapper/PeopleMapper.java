@@ -66,4 +66,16 @@ public interface PeopleMapper {
      * @return
      */
     int findPeoplePageCount(PageInfo pageInfo);
+    /**
+     * 根据ID查询人员列表
+     * @param ids
+     * @return
+     */
+    List selectPeopleByIds(String[] ids);
+    /**
+     * 批量添加人员
+     * @param list
+     * @return
+     */
+    int insertByImport(List<People> list);
 }

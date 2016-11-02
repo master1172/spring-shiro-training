@@ -6,6 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>主页</title>
+	<script type="text/javascript" src="${staticPath }/static/easyui/plugins/jquery-form.js" charset="utf-8"></script>
     <script type="text/javascript">
         var index_layout;
         var index_tabs;
@@ -114,7 +115,27 @@
                 }]
             });
         }
+        //异步提交表单-可携带文件提交
+        function SYS_SUBMIT_FORM(form,url,fn){
+        	url='${path}'+url;
+        	$(function() {
+        		var ajaxFormOption = {
+        			type : "post", // 提交方式
+        			dataType : "json", // 数据类型
+        			url : url, // 请求url
+        			success : function(data) { // 提交成功的回调函数
+        				if(fn!=null&&typeof(fn)=="function"){
+        					fn(data);
+        				}
+        			},
+        			error : function(data, s) {
 
+        			}
+        		};
+        		$(form).ajaxSubmit(ajaxFormOption);
+        		return false;
+        	});
+        }
     </script>
 </head>
 <body>

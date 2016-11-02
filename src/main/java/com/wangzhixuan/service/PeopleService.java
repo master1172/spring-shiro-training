@@ -1,5 +1,11 @@
 package com.wangzhixuan.service;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.PageInfo;
 
@@ -37,7 +43,7 @@ public interface PeopleService {
      *
      * @param people
      */
-    void addPeople(People people);
+    void addPeople(People people,CommonsMultipartFile file);
 
 
 
@@ -56,4 +62,24 @@ public interface PeopleService {
     void deletePeopleById(Long id);
 
     void batchDeletePeopleByIds(String[] ids);
+    /**
+     * 数据导入
+     * @param list
+     */
+    public boolean insertByImport(CommonsMultipartFile[] files);
+    /**
+     * 导出Excel
+     * @param response
+     * @param id
+     * @return
+     */
+    void exportExcel(HttpServletResponse response,String id);
+    /**
+     * 导出Word
+     * @param request
+     * @param response
+     * @param id
+     * @return
+     */
+    void exportWord(HttpServletResponse response,String id);
 }

@@ -120,7 +120,19 @@
           #{photo, jdbcType=VARCHAR}
          )
     </insert>
-
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into people (name, sex, birthday, job, salary)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+	      #{item.name,jdbcType=VARCHAR},
+	      #{item.sex,jdbcType=TINYINT},
+	      #{item.birthday,jdbcType=DATE},
+	      #{item.job, jdbcType=VARCHAR},
+	      #{item.salary,jdbcType=DOUBLE}
+	      )  
+        </foreach>
+    </insert>
     <update id="updatePeople" parameterType="com.wangzhixuan.model.People">
         update people
         <set>
@@ -145,4 +157,13 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+    <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        select 
+        	t.id,t.name,t.sex,t.birthday,t.job,t.salary
+        from people t
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

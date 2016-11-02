@@ -96,8 +96,19 @@
                     text: '添加',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#peopleAddForm');
-                        f.submit();
+                        var f = parent.$.modalDialog.handler.find("#peopleAddForm");
+                        //f.submit();
+                        if(parent.checkForm()){
+                        	parent.SYS_SUBMIT_FORM(f,"/people/add",function(data){
+                    			if(!data["success"]){
+                    				parent.$.messager.alert("提示", data["msg"], "warning");
+                    			}else{
+                    				parent.progressClose();
+                    				dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                    			}
+                    		});
+                        }
                     }
                 }]
             });
@@ -181,18 +192,65 @@
             $('#searchForm input').val('');
             dataGrid.datagrid('load', {});
         }
-
+        //导入Excel
         function importExcel(){
-            alert('导入');
+        	parent.$.modalDialog({
+                title: '数据导入',
+                width: 500,
+                height: 300,
+                href: '${path}/people/importExcelPage',
+                buttons: [{
+                    text: '导入',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#importExcelForm");
+                        //f.submit();
+                        if(parent.checkForm()){
+                        	parent.SYS_SUBMIT_FORM(f,"/people/importExcel",function(data){
+                    			if(!data["success"]){
+                    				parent.$.messager.alert("提示", data["msg"], "warning");
+                    			}else{
+                    				parent.progressClose();
+                    				dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                    			}
+                    		});
+                        }
+                    }
+                }]
+            });
         }
-
+	//导出Excel
         function exportExcel(){
-            alert('导出excel');
+        	var checkedItems = $("#dataGrid").datagrid("getChecked");
+        	if(checkedItems.length>0){
+        		var ids="";
+        		$.each(checkedItems, function(index,item){
+                    if(ids.length>0)ids+=",";
+                    ids+=item["id"];
+                });
+				var form=$("#downLoadForm");
+				form.find("input[name='ids']").val(ids);
+				form.attr("action",'${path}'+"/people/exportExcel");
+				$("#downLoadForm").submit();
+			}else{
+				parent.$.messager.alert("提示", "请选择有效数据", "warning");
+			}
         }
-
+        //导出Word
         function exportWord(){
-            alert('导出word');
+			var checkedItems = $("#dataGrid").datagrid("getChecked");
+			if(checkedItems.length==1){
+				var id=checkedItems[0]["id"];
+				var form=$("#downLoadForm");
+				form.find("input[name='ids']").val(id);
+				form.attr("action",'${path}'+"/people/exportWord");
+				$("#downLoadForm").submit();
+			}else{
+				parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+			}
         }
+	
         function sexFormatter(value,row,index){
         	switch (value) {
             case 0:
@@ -291,6 +349,8 @@
             <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">导出Word</a>
         </shiro:hasPermission>
+        <!-- 附件下载使用 -->
+    	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
     </div>
 </body>
 </html>
