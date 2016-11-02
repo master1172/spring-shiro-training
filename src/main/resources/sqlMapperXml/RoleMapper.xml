@@ -7,10 +7,11 @@
         <result column="seq" property="seq" jdbcType="TINYINT"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, seq, description, status
-  </sql>
+      id, name, seq, description, status, code
+    </sql>
 
     <select id="findRolePageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
         select
@@ -29,7 +30,8 @@
     <select id="findRoleAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from role order by seq
+        from role
+        order by seq
     </select>
 
     <select id="findRoleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -98,9 +100,14 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into role (name, seq, description, status)
-        values (#{name,jdbcType=VARCHAR}, #{seq,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR},
-        #{status,jdbcType=TINYINT})
+        insert into role (name, seq, description, status, code)
+        values (
+          #{name,jdbcType=VARCHAR},
+          #{seq,jdbcType=TINYINT},
+          #{description,jdbcType=VARCHAR},
+          #{status,jdbcType=TINYINT},
+          #{code,jdbcType=VARCHAR}
+        )
     </insert>
 
     <update id="updateRole" parameterType="com.wangzhixuan.model.Role">
@@ -118,13 +125,16 @@
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
             </if>
+            <if test="code != null">
+                code = #{code, jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-
     <delete id="deleteRoleById" parameterType="java.lang.Long">
-    delete from role
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+      delete
+      from role
+      where id = #{id,jdbcType=BIGINT}
+    </delete>
 </mapper>

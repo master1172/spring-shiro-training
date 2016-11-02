@@ -21,6 +21,8 @@ public class Role implements Serializable {
 
     private Integer status;
 
+    private String code;
+
     public Long getId() {
         return id;
     }
@@ -61,6 +63,10 @@ public class Role implements Serializable {
         this.status = status;
     }
 
+    public String getCode() {return code;}
+
+    public void setCode(String code){this.code = code;}
+
     @Override
     public String toString() {
         return "Role{" +
@@ -69,6 +75,7 @@ public class Role implements Serializable {
                 ", seq=" + seq +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", code=" + code +
                 '}';
     }
 }

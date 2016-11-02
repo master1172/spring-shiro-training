@@ -41,6 +41,10 @@
                 field : 'description'
             } , {
                 width : '60',
+                title : '编码',
+                field : 'code'
+            } , {
+                width : '60',
                 title : '状态',
                 field : 'status',
                 sortable : true,

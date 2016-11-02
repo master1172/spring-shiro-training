@@ -52,6 +52,12 @@
 	                </td>
                 </tr>
                 <tr>
+                    <td>编码</td>
+                    <td>
+                        <input name="code" type="text" class="easyui-validatebox" data-options="required:false" value="${role.code}">
+                    </td>
+                </tr>
+                <tr>
                     <td>备注</td>
                     <td colspan="3"><textarea id="description" name="description" rows="" cols="" ></textarea></td>
                 </tr>
