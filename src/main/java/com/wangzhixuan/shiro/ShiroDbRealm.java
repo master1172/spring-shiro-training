@@ -1,6 +1,7 @@
 package com.wangzhixuan.shiro;
 
 import com.google.common.collect.Sets;
+import com.wangzhixuan.model.Role;
 import com.wangzhixuan.model.User;
 import com.wangzhixuan.service.RoleService;
 import com.wangzhixuan.service.UserService;
@@ -76,7 +77,13 @@ public class ShiroDbRealm extends AuthorizingRealm {
                     }
                 }
             }
-            roleSet.add(String.valueOf(roleId));
+
+            Role role = roleService.findRoleById(roleId);
+            if (role != null){
+                String code = role.getCode();
+                if (StringUtils.isNotEmpty(code))
+                    roleSet.add(String.valueOf(role.getCode()));
+            }
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(urlSet);
