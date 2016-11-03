@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -203,7 +204,7 @@ public class PeopleServiceImpl implements PeopleService{
     		try {
     			workBook = new XSSFWorkbook();
     			XSSFSheet sheet= workBook.createSheet("在编人员信息");
-    			XSSFCellStyle setBorder=setCellStyle(workBook);
+    			XSSFCellStyle setBorder=setCellStyle(workBook,true);
     			//创建表头
     			XSSFRow row=sheet.createRow(0);
     			row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
@@ -212,6 +213,7 @@ public class PeopleServiceImpl implements PeopleService{
     			row.createCell(3).setCellValue("出生日期");row.getCell(3).setCellStyle(setBorder);
     			row.createCell(4).setCellValue("工作");row.getCell(4).setCellStyle(setBorder);
     			row.createCell(5).setCellValue("薪水");row.getCell(5).setCellStyle(setBorder);
+    			setBorder=setCellStyle(workBook,false);
         		for(int i=0;i<list.size();i++){
         			row=sheet.createRow(i+1);
         			People p=(People)list.get(i);
@@ -283,15 +285,19 @@ public class PeopleServiceImpl implements PeopleService{
      * @param workBook
      * @return
      */
-	private static XSSFCellStyle setCellStyle(XSSFWorkbook workBook){
+	private static XSSFCellStyle setCellStyle(XSSFWorkbook workBook,boolean blob){
 		XSSFCellStyle setBorder = workBook.createCellStyle();
 		setBorder.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
 		setBorder.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
 		setBorder.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
 		setBorder.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+		setBorder.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中 
 		XSSFFont font = workBook.createFont();
 		font.setFontName("宋体");
 		font.setFontHeightInPoints((short) 12);//设置字体大小
+		if(blob){
+			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//加粗
+		}
 		setBorder.setFont(font);//选择需要用到的字体格式
 		return setBorder;
 	}
