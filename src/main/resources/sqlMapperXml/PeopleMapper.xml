@@ -7,7 +7,7 @@
         <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="job" property="job" jdbcType="VARCHAR" />
-        <result column="salary" property="salary" jdbcType="DOUBLE" />
+        <result column="salary" property="salary" jdbcType="DECIMAL" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
@@ -17,7 +17,7 @@
         <result column="sex" property="sex" jdbcType="TINYINT" />
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="job" property="job" jdbcType="VARCHAR" />
-        <result column="salary" property="salary" jdbcType="DOUBLE" />
+        <result column="salary" property="salary" jdbcType="DECIMAL" />
         <result column="photo"  property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
@@ -116,7 +116,7 @@
           #{sex,jdbcType=TINYINT},
           #{birthday,jdbcType=DATE},
           #{job, jdbcType=VARCHAR},
-          #{salary,jdbcType=DOUBLE},
+          #{salary,jdbcType=DECIMAL},
           #{photo, jdbcType=VARCHAR}
          )
     </insert>
@@ -124,12 +124,12 @@
         insert into people (name, sex, birthday, job, salary)
         values
         <foreach item="item" index="index" collection="list" separator=",">
-            (
-	      #{item.name,jdbcType=VARCHAR},
-	      #{item.sex,jdbcType=TINYINT},
-	      #{item.birthday,jdbcType=DATE},
-	      #{item.job, jdbcType=VARCHAR},
-	      #{item.salary,jdbcType=DOUBLE}
+          (
+	        #{item.name,jdbcType=VARCHAR},
+	        #{item.sex,jdbcType=TINYINT},
+	        #{item.birthday,jdbcType=DATE},
+	        #{item.job, jdbcType=VARCHAR},
+	        #{item.salary,jdbcType=DECIMAL}
 	      )  
         </foreach>
     </insert>
@@ -149,7 +149,7 @@
                 job = #{job,jdbcType=VARCHAR},
             </if>
             <if test="salary != null">
-                salary = #{salary,jdbcType=DOUBLE},
+                salary = #{salary,jdbcType=DECIMAL},
             </if>
             <if test="photo != null">
                 photo = #{photo, jdbcType=VARCHAR},

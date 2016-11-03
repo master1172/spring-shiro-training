@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -150,7 +151,7 @@ public class PeopleServiceImpl implements PeopleService{
 	    		if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
 	    			String salary=row.getCell(5).toString().trim();
 	    			try {
-						Double amount=Double.valueOf(salary);
+						BigDecimal amount = BigDecimal.valueOf(Double.valueOf(salary));
 		    			p.setSalary(amount);
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
@@ -229,7 +230,7 @@ public class PeopleServiceImpl implements PeopleService{
         			row.createCell(2).setCellValue(p.getSex()==0?"男":"女");row.getCell(2).setCellStyle(setBorder);
         			row.createCell(3).setCellValue(p.getBirthday());row.getCell(3).setCellStyle(setBorder);
         			row.createCell(4).setCellValue(p.getJob());row.getCell(4).setCellStyle(setBorder);
-        			row.createCell(5).setCellValue(p.getSalary());row.getCell(5).setCellStyle(setBorder);
+        			row.createCell(5).setCellValue(p.getSalary().toString());row.getCell(5).setCellStyle(setBorder);
         			row.setHeight((short) 400);
         		}
         		sheet.setDefaultRowHeightInPoints(21);

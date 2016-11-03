@@ -35,7 +35,7 @@
                     <td><input type="text" name="job"></td>
                     <td>薪资</td>
                     <td>
-                        <input type="text" name="salary" placeholder="请输入数字" class="easyui-numberbox"/>
+                        <input type="text" name="salary" placeholder="请输入数字" />
                     </td>
                 </tr>
                 <tr>

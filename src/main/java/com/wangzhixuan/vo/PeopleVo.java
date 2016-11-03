@@ -3,6 +3,7 @@ package com.wangzhixuan.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,7 +22,7 @@ public class PeopleVo implements Serializable{
 
     private String Job;
 
-    private double salary;
+    private BigDecimal salary;
 
     private Date birthdayStart;
 
@@ -69,11 +70,11 @@ public class PeopleVo implements Serializable{
         Job = job;
     }
 
-    public double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 

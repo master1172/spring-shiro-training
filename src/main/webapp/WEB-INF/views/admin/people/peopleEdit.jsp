@@ -40,7 +40,7 @@
                     </td>
                     <td>薪资</td>
                     <td>
-                        <input type="text" name="salary" value="${people.salary}" class="easyui-numberbox"/>
+                        <input type="text" name="salary" value="${people.salary}"/>
                     </td>
                 </tr>
                 <tr>

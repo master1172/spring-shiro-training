@@ -3,6 +3,7 @@ package com.wangzhixuan.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by liushaoyang on 2016/9/8.
@@ -22,7 +23,7 @@ public class People implements Serializable {
 
     private String job;
 
-    private double salary;
+    private BigDecimal salary;
 
     private String photo;
 
@@ -66,11 +67,11 @@ public class People implements Serializable {
         this.job = job;
     }
 
-    public double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
