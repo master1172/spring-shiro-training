@@ -6,6 +6,11 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>主页</title>
+    <style type="text/css">
+    	.panel.window{z-index: 999 !important;}
+    	.window-shadow{z-index: 998 !important;}
+    	.window-mask{z-index: 996 !important;}
+    </style>
 	<script type="text/javascript" src="${staticPath }/static/easyui/plugins/jquery-form.js" charset="utf-8"></script>
     <script type="text/javascript">
         var index_layout;

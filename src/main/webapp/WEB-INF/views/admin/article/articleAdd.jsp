@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
-<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.js"></script>
-<script type="text/javascript" charset="utf-8" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${staticPath }/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${staticPath }/static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="${staticPath }/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 
 <script type="text/javascript">
-    $(function() {
+   /*  $(function() {
         $('#categoryId').combotree({
             url : '${path}/category/tree',
             parentField : 'pid',
@@ -35,7 +35,8 @@
             }
         });
 
-    });
+    }); */
+    
 </script>
 
 <div class="easyui-layout" data-options="fit:true,border:false">
