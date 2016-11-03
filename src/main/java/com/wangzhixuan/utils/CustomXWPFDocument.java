@@ -1,4 +1,4 @@
-package com.wangzhixuan.model;
+package com.wangzhixuan.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

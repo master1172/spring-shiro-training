@@ -36,12 +36,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.wangzhixuan.mapper.PeopleMapper;
-import com.wangzhixuan.model.CustomXWPFDocument;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.service.PeopleService;
+import com.wangzhixuan.utils.CustomXWPFDocument;
 import com.wangzhixuan.utils.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 
 @Service
@@ -204,7 +202,7 @@ public class PeopleServiceImpl implements PeopleService{
         	InputStream is = null;
     		XSSFWorkbook workBook = null;
     		OutputStream os = null;
-        	String filePath=this.getClass().getResource("/custInfo.xlsx").getPath();
+        	String filePath=this.getClass().getResource("/template/custInfo.xlsx").getPath();
         	String newFileName="在编人员信息.xlsx";
     		try {
     			is = new FileInputStream(filePath);
@@ -245,7 +243,7 @@ public class PeopleServiceImpl implements PeopleService{
     	if(p!=null){
         	XWPFDocument doc = null;
     		OutputStream os = null;
-        	String filePath=this.getClass().getResource("/custInfo.docx").getPath();
+        	String filePath=this.getClass().getResource("/template/custInfo.docx").getPath();
         	String newFileName="在编人员信息.docx";
     		try {
     			Map<String,Object> params = new HashMap<String,Object>();
