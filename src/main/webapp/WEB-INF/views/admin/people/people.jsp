@@ -26,58 +26,7 @@
                 sortOrder: 'asc',
                 pageSize: 20,
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-                /* columns: [[{
-                    field: 'ck',
-                    checkbox:true
-                },{
-                    width: '80',
-                    title: '姓名',
-                    field: 'name',
-                    sortable: true
-                }, {
-                    width: '40',
-                    title: '性别',
-                    field: 'sex',
-                    sortable: true,
-                    formatter: function (value, row, index) {
-                        switch (value) {
-                            case 0:
-                                return '男';
-                            case 1:
-                                return '女';
-                        }
-                    }
-                }, {
-                    width: '130s',
-                    title: '生日',
-                    field: 'birthday',
-                    sortable: true
-                }, {
-                    width: '80',
-                    title: '工作',
-                    field: 'job',
-                    sortable: true
-                }, {
-                    width: '80',
-                    title: '薪资',
-                    field: 'salary',
-                    sortable: true
-                }, {
-                    field: 'action',
-                    title: '操作',
-                    width: '130',
-                        formatter: function (value, row, index) {
-                            var str = '';
-                            <shiro:hasPermission name="/people/edit">
-                                str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
-                            </shiro:hasPermission>
-                            <shiro:hasPermission name="/people/delete">
-                                str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                                str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
-                            </shiro:hasPermission>
-                            return str;
-                        }
-                    }]], */
+
                     onLoadSuccess: function (data) {
                         $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
                         $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
@@ -220,7 +169,7 @@
                 }]
             });
         }
-	//导出Excel
+	    //导出Excel
         function exportExcel(){
         	var checkedItems = $("#dataGrid").datagrid("getChecked");
         	if(checkedItems.length>0){
