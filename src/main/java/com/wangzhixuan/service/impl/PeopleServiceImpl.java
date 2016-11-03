@@ -46,6 +46,7 @@ import com.wangzhixuan.utils.PageInfo;
 @Service
 public class PeopleServiceImpl implements PeopleService{
 
+	private final String UPLOAD_PATH = "/static/upload/head/";
     @Autowired
     private PeopleMapper peopleMapper;
 
@@ -314,7 +315,7 @@ public class PeopleServiceImpl implements PeopleService{
 		try {
 			//获取头像上传路径
 			String classPath = this.getClass().getResource("/").getPath();//路径
-			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) + "static/upload/";
+			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
 
 			String oldFileName = file.getOriginalFilename();//原始文件名称
 
@@ -323,14 +324,14 @@ public class PeopleServiceImpl implements PeopleService{
 				String fileExt=oldFileName.substring(oldFileName.lastIndexOf(".")+1);//文件后缀
 
 				StringBuffer newFileName=new StringBuffer(UUID.randomUUID().toString().replaceAll("-", "")+"."+fileExt);//新文件名称
-				StringBuffer upLoadFilePath=new StringBuffer(filePath+"/head");//上传附件路径
-				StringBuffer downLoadFilePath=new StringBuffer("/head");//下载附件路径
+				StringBuffer upLoadFilePath=new StringBuffer(filePath + UPLOAD_PATH);//上传附件路径
+				StringBuffer downLoadFilePath=new StringBuffer(UPLOAD_PATH);//下载附件路径
 				File f = new File(upLoadFilePath.toString());
 				if (!f.exists()) {
 					f.mkdirs();
 				}
-				upLoadFilePath.append("/").append(newFileName);
-				downLoadFilePath.append("/").append(newFileName);
+				upLoadFilePath.append(newFileName);
+				downLoadFilePath.append(newFileName);
 				os = new FileOutputStream(upLoadFilePath.toString());
 				//拿到上传文件的输入流
 				in = file.getInputStream();

@@ -54,7 +54,7 @@
                     <td>头像上传</td>
                     <td colspan="3">
                         <div id="imgdiv" style="height:100px;width:100px;">
-                            <img id="imgShow" style="height:100px;width:100px;" src="${people.photo}"/>
+                            <img id="imgShow" style="height:100px;width:100px;" src="${staticPath}/${people.photo}"/>
                         </div>
                         <input type="file" id="up_img" name="fileName"/>
                     </td>
