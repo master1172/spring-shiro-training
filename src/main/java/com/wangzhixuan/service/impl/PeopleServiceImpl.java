@@ -145,22 +145,20 @@ public class PeopleServiceImpl implements PeopleService{
 						Double amount=Double.valueOf(salary);
 		    			p.setSalary(amount);
 					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 	    		}
 	    		list.add(p);
 	    	}
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     	return list;
     }
     //附件上传--批量导入
     private String fileUpload(CommonsMultipartFile file){
-    	FileOutputStream os=null;
-		FileInputStream in=null;
+    	OutputStream os=null;
+    	InputStream in=null;
 		StringBuffer upLoadFilePath=new StringBuffer();
 		try {
 			String filePath=this.getClass().getResource("/").getPath();//文件临时路径
@@ -177,7 +175,7 @@ public class PeopleServiceImpl implements PeopleService{
 					upLoadFilePath.append("/").append(newFileName);
 					os = new FileOutputStream(upLoadFilePath.toString());
 					//拿到上传文件的输入流
-					in = (FileInputStream) file.getInputStream();
+					in = file.getInputStream();
 					//写入文件
 					int b = 0;
 					while((b=in.read()) != -1){
@@ -199,19 +197,23 @@ public class PeopleServiceImpl implements PeopleService{
     public void exportExcel(HttpServletResponse response,String ids){
     	List list=peopleMapper.selectPeopleByIds(ids.split(","));
     	if(list!=null&&list.size()>0){
-        	InputStream is = null;
     		XSSFWorkbook workBook = null;
     		OutputStream os = null;
-        	String filePath=this.getClass().getResource("/template/custInfo.xlsx").getPath();
         	String newFileName="在编人员信息.xlsx";
     		try {
-    			is = new FileInputStream(filePath);
-    			workBook = new XSSFWorkbook(is);
-    			XSSFSheet sheet = workBook.getSheetAt(0);
-
+    			workBook = new XSSFWorkbook();
+    			XSSFSheet sheet= workBook.createSheet("在编人员信息");
     			XSSFCellStyle setBorder=setCellStyle(workBook);
+    			//创建表头
+    			XSSFRow row=sheet.createRow(0);
+    			row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
+    			row.createCell(1).setCellValue("姓名");row.getCell(1).setCellStyle(setBorder);
+    			row.createCell(2).setCellValue("性别");row.getCell(2).setCellStyle(setBorder);
+    			row.createCell(3).setCellValue("出生日期");row.getCell(3).setCellStyle(setBorder);
+    			row.createCell(4).setCellValue("工作");row.getCell(4).setCellStyle(setBorder);
+    			row.createCell(5).setCellValue("薪水");row.getCell(5).setCellStyle(setBorder);
         		for(int i=0;i<list.size();i++){
-        			XSSFRow row=sheet.createRow(i+1);
+        			row=sheet.createRow(i+1);
         			People p=(People)list.get(i);
         			row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
         			row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
@@ -225,12 +227,9 @@ public class PeopleServiceImpl implements PeopleService{
     			response.reset();
     	        os = response.getOutputStream();
     	        response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
-    	        response.setContentType("application/ms-excel");
-    			os.flush();
     			workBook.write(os);
     		    os.close();
     		}catch (IOException e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}finally{
     			
@@ -274,7 +273,6 @@ public class PeopleServiceImpl implements PeopleService{
     			doc.write(os);
     		    os.close();
     		}catch (IOException e) {
-    			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}finally{
     		}
@@ -305,8 +303,8 @@ public class PeopleServiceImpl implements PeopleService{
 	 * @return
 	 */
 	private boolean fileUpLoad(People people,CommonsMultipartFile file){
-		FileOutputStream os=null;
-		FileInputStream in=null;
+		OutputStream os=null;
+    	InputStream in=null;
 		try {
 			String filePath=this.getClass().getResource("/").getPath();//路径
 			String oldFileName = file.getOriginalFilename();//原始文件名称
@@ -323,7 +321,7 @@ public class PeopleServiceImpl implements PeopleService{
 				downLoadFilePath.append("/").append(newFileName);
 				os = new FileOutputStream(upLoadFilePath.toString());
 				//拿到上传文件的输入流
-				in = (FileInputStream) file.getInputStream();
+				in = file.getInputStream();
 				//写入文件
 				int b = 0;
 				while((b=in.read()) != -1){
@@ -427,22 +425,25 @@ public class PeopleServiceImpl implements PeopleService{
                                     int picType = getPictureType(pic.get("type").toString());  
                                     byte[] byteArray = (byte[]) pic.get("content");  
                                     ByteArrayInputStream byteInputStream = new ByteArrayInputStream(byteArray);  
-                                    try {  
+                                    try {
                                         int ind = doc.addPicture(byteInputStream,picType);  
                                         doc.createPicture(ind, width , height,paragraph);  
                                     } catch (Exception e) {  
                                         e.printStackTrace();  
-                                    }  
-                                }  
-                            }  
-                        }  
+                                    }
+                                }
+                            }
+                        }
+                    	if(text.equals("Ⅵ")&&!isSetText){
+                    		run.setText("",0);
+                    	}
                         if(isSetText){  
                             run.setText(text,0);  
-                        }  
-                    }  
-                }  
-            }  
-        }  
+                        }
+                    }
+                }
+            }
+        }
     }
     /**
      * 根据图片类型，取得对应的图片类型代码
