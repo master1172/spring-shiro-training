@@ -63,6 +63,41 @@
             });
         }
 
+        function editFun(id) {
+            if (id == undefined) {
+                var rows = dataGrid.datagrid('getSelections');
+                id = rows[0].id;
+            } else {
+                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            }
+
+            parent.$.modalDialog({
+                title: '修改',
+                width: 500,
+                height: 350,
+                href: '${path}/people/editPage?id='+id,
+                buttons: [{
+                    text: '修改',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#peopleEditForm");
+                        //f.submit();
+                        if(parent.checkForm()){
+                            parent.SYS_SUBMIT_FORM(f,"/people/edit",function(data){
+                                if(!data["success"]){
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                }else{
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
         function deleteFun(id) {
             if (id == undefined) {//点击右键菜单才会触发这个
                 var rows = dataGrid.datagrid('getSelections');
@@ -83,30 +118,6 @@
                         progressClose();
                     }, 'JSON');
                 }
-            });
-        }
-
-        function editFun(id) {
-            if (id == undefined) {
-                var rows = dataGrid.datagrid('getSelections');
-                id = rows[0].id;
-            } else {
-                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-            }
-
-            parent.$.modalDialog({
-                title: '编辑',
-                width: 500,
-                height: 300,
-                href: '${path }/people/editPage?id=' + id,
-                buttons: [{
-                    text: '确定',
-                    handler: function () {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#peopleEditForm');
-                        f.submit();
-                    }
-                }]
             });
         }
 
@@ -169,6 +180,7 @@
                 }]
             });
         }
+
 	    //导出Excel
         function exportExcel(){
         	var checkedItems = $("#dataGrid").datagrid("getChecked");
@@ -271,7 +283,7 @@
                 <shiro:hasRole name="code01">                	
                 	<th field="salary" data-options="sortable:true" width="80">薪资</th>
                 </shiro:hasRole>
-                <th field="id" data-options="sortable:true,formatter:operateFormatter" width="80">操作</th>
+                <th field="id" data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
         </thead>
         </table>

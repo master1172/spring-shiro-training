@@ -303,20 +303,26 @@ public class PeopleServiceImpl implements PeopleService{
 	}
 	/**
 	 * 附件上传-头像
-	 * @param ps
-	 * @param files
-	 * @param path
+	 * @param people
+	 * @param file
 	 * @return
 	 */
 	private boolean fileUpLoad(People people,CommonsMultipartFile file){
 		OutputStream os=null;
     	InputStream in=null;
+
 		try {
-			String filePath=this.getClass().getResource("/").getPath();//路径
+			//获取头像上传路径
+			String classPath = this.getClass().getResource("/").getPath();//路径
+			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) + "static/upload/";
+
 			String oldFileName = file.getOriginalFilename();//原始文件名称
+
 			if(!file.isEmpty()){
-				String fileFix=oldFileName.substring(oldFileName.lastIndexOf(".")+1);//文件后缀
-				StringBuffer newFileName=new StringBuffer(UUID.randomUUID().toString().replaceAll("-", "")+"."+fileFix);//新文件名称
+
+				String fileExt=oldFileName.substring(oldFileName.lastIndexOf(".")+1);//文件后缀
+
+				StringBuffer newFileName=new StringBuffer(UUID.randomUUID().toString().replaceAll("-", "")+"."+fileExt);//新文件名称
 				StringBuffer upLoadFilePath=new StringBuffer(filePath+"/head");//上传附件路径
 				StringBuffer downLoadFilePath=new StringBuffer("/head");//下载附件路径
 				File f = new File(upLoadFilePath.toString());

@@ -2,34 +2,23 @@
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript">
     $(function() {
-        $('#peopleEditForm').form({
-            url : '${path }/people/edit',
-            onSubmit : function() {
-                progressLoad();
-                var isValid = $(this).form('validate');
-                if (!isValid) {
-                    progressClose();
-                }
-                return isValid;
-            },
-            success : function(result) {
-                progressClose();
-                result = $.parseJSON(result);
-                if (result.success) {
-                    parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
-                    parent.$.modalDialog.handler.dialog('close');
-                } else {
-                    parent.$.messager.alert('错误', result.msg, 'error');
-                }
-            }
-        });
+        new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
         $("#sex").val('${people.sex}');
-
     });
+
+    function checkForm(){
+        progressLoad();
+        var isValid = $("#peopleEditForm").form("validate");
+        if (!isValid) {
+            progressClose();
+            return false;
+        }
+        return true;
+    }
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
-        <form id="peopleEditForm" method="post">
+        <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${people.id}">
             <table class="grid">
                 <tr>
@@ -59,6 +48,15 @@
                         <input name="birthday" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly" value="${people.birthday}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>头像上传</td>
+                    <td colspan="3">
+                        <div id="imgdiv" style="height:100px;width:100px;">
+                            <img id="imgShow" style="height:100px;width:100px;" src="${people.photo}"/>
+                        </div>
+                        <input type="file" id="up_img" name="fileName"/>
                     </td>
                 </tr>
             </table>
