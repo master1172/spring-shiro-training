@@ -52,7 +52,7 @@ public interface PeopleService {
      *
      * @param people
      */
-    void updatePeople(People people);
+    void updatePeople(People people, CommonsMultipartFile file);
 
     /**
      * 删除人员

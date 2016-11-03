@@ -78,8 +78,14 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
     @Override
-    public void updatePeople(People people) {
-        peopleMapper.updatePeople(people);
+    public void updatePeople(People people, CommonsMultipartFile file) {
+		if (file != null){
+			if(fileUpLoad(people,file)){
+				peopleMapper.insert(people);
+			}
+		}else{
+			peopleMapper.updatePeople(people);
+		}
     }
 
     @Override

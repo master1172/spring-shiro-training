@@ -128,10 +128,10 @@ public class PeopleController extends BaseController{
 
     @RequestMapping("/edit")
     @ResponseBody
-    public Result edit(People people){
+    public Result edit(People people, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
         Result result = new Result();
         try{
-            peopleService.updatePeople(people);
+            peopleService.updatePeople(people,file);
             result.setSuccess(true);
             result.setMsg("修改成功!");
             return result;

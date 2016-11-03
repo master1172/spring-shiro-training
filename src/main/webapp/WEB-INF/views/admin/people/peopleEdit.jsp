@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
+<script type="text/javascript" src="${staticPath}/static/easyui/plugins/uploadPreview.min.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
@@ -20,7 +21,7 @@
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${people.id}">
-            <table class="grid">
+            <table class="grid" border="1">
                 <tr>
                     <td>姓名</td>
                     <td>
@@ -33,7 +34,7 @@
                     </select></td>
                 </tr>
                 <tr>
-                    <td>工作</td>
+                    <td>职业</td>
                     <td>
                         <input name="job" type="text" value="${people.job}">
                     </td>
