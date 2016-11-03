@@ -39,7 +39,7 @@
             parent.$.modalDialog({
                 title: '添加',
                 width: 500,
-                height: 300,
+                height: 350,
                 href: '${path}/people/addPage',
                 buttons: [{
                     text: '添加',

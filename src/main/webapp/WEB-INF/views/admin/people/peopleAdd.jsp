@@ -47,13 +47,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>头像上传</td>
                 	<td colspan="3">
                 		<div id="imgdiv" style="height:100px;width:100px;">
                 			<img id="imgShow" style="height:100px;width:100px;"/>
                 		</div>
-                	</td>
-                	<td>
-                		<input type="file" id="up_img" name="fileName"/>
+                        <input type="file" id="up_img" name="fileName"/>
                 	</td>
                 </tr>
             </table>
