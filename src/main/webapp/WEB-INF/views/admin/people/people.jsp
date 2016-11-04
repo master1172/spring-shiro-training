@@ -274,16 +274,13 @@
         <table id="dataGrid" data-options="fit:true,border:false">
         	<thead>
             <tr>
-                <th field="ck" data-options="checkbox:true"></th>
-                <th field="name" data-options="sortable:true" width="80">姓名</th>
-                <th field="sex" data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
+                <th field="ck"       data-options="checkbox:true"></th>
+                <th field="name"     data-options="sortable:true" width="80">姓名</th>
+                <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
                 <th field="birthday" data-options="sortable:true" width="130">生日</th>
-                <th field="job" data-options="sortable:true" width="80">工作</th>
-                <!-- code01为角色编号 -->
-                <shiro:hasRole name="code01">                	
-                	<th field="salary" data-options="sortable:true" width="80">薪资</th>
-                </shiro:hasRole>
-                <th field="id" data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+                <th field="job"      data-options="sortable:true" width="80">工作</th>
+                <th field="salary"   data-options="sortable:true" width="80">薪资</th>
+                <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
         </thead>
         </table>
