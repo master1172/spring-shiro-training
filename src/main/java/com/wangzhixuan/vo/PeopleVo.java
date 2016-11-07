@@ -30,6 +30,10 @@ public class PeopleVo implements Serializable{
 
     private String photo;
 
+    private Integer degreeId;
+
+    private String degreeName;
+
     public Long getId() {
         return id;
     }
@@ -98,4 +102,19 @@ public class PeopleVo implements Serializable{
 
     public void setPhoto(String photo) {this.photo = photo;}
 
+    public Integer getDegreeId() {
+        return degreeId;
+    }
+
+    public void setDegreeId(Integer degreeId) {
+        this.degreeId = degreeId;
+    }
+
+    public String getDegreeName() {
+        return degreeName;
+    }
+
+    public void setDegreeName(String degreeName) {
+        this.degreeName = degreeName;
+    }
 }

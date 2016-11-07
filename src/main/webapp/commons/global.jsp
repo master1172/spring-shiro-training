@@ -9,8 +9,8 @@
 
 <%--basePath --%>
 <c:set var="base" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}" />
-<%--静态文件目录 --%>
-<c:set var="path" value="${base}" />
 <%--项目路径 --%>
+<c:set var="path" value="${base}" />
+<%--静态文件目录 --%>
 <c:set var="staticPath" value="${base}" />
 

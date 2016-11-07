@@ -9,6 +9,7 @@
         <result column="job" property="job" jdbcType="VARCHAR" />
         <result column="salary" property="salary" jdbcType="DECIMAL" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="degree_id" property="degreeId" jdbcType="INTEGER" />
     </resultMap>
 
     <resultMap id="peopleVoResultMap" type="com.wangzhixuan.vo.PeopleVo">
@@ -19,6 +20,8 @@
         <result column="job" property="job" jdbcType="VARCHAR" />
         <result column="salary" property="salary" jdbcType="DECIMAL" />
         <result column="photo"  property="photo" jdbcType="VARCHAR" />
+        <result column="degree_id" property="degreeId" jdbcType="INTEGER" />
+        <result column="degreeName" property="degreeName" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -30,6 +33,25 @@
         <include refid="Base_Column_List"/>
         from people
         where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeopleVoById" resultMap="peopleVoResultMap" parameterMap="java.lang.Long">
+        SELECT
+          t.id,
+          t.name,
+          t.sex,
+          t.birthday,
+          t.job,
+          t.salary,
+          t.degree_id,
+          s.name as degreeName,
+        FROM
+          people t
+        LEFT JOIN
+          dict_degree s ON s.id = t.degree_id
+        <where>
+            t.id = #{id}
+        </where>
     </select>
 
     <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -46,16 +68,20 @@
         where name LIKE concat('%',#{name},'%')
     </select>
 
-    <select id="findPeoplePageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
+    <select id="findPeoplePageCondition" resultMap="peopleVoResultMap" parameterType="PageInfo">
         SELECT
         t.id,
         t.name,
         t.sex,
         t.birthday,
         t.job,
-        t.salary
+        t.salary,
+        t.degree_id,
+        s.name as degreeName,
         FROM
         people t
+        LEFT JOIN
+        dict_degree s ON s.id = t.degree_id
         <where>
             <if test=" condition.name != null and condition.name != '' ">
                 and t.name LIKE concat('%',#{condition.name},'%')
@@ -110,14 +136,15 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people (name, sex, birthday, job, salary, photo)
+        insert into people (name, sex, birthday, job, salary, photo, degree_id)
         values (
           #{name,jdbcType=VARCHAR},
           #{sex,jdbcType=TINYINT},
           #{birthday,jdbcType=DATE},
           #{job, jdbcType=VARCHAR},
           #{salary,jdbcType=DECIMAL},
-          #{photo, jdbcType=VARCHAR}
+          #{photo, jdbcType=VARCHAR},
+          #{degreeId, jdbcType=INTEGER}
          )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
@@ -153,6 +180,9 @@
             </if>
             <if test="photo != null">
                 photo = #{photo, jdbcType=VARCHAR},
+            </if>
+            <if test="degreeId != null">
+                degree_id = #{degreeId, jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}

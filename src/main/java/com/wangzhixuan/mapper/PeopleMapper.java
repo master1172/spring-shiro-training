@@ -2,6 +2,7 @@ package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleVo;
 
 import java.util.List;
 
@@ -78,4 +79,7 @@ public interface PeopleMapper {
      * @return
      */
     int insertByImport(List<People> list);
+
+
+    PeopleVo findPeopleVoById(Long id);
 }

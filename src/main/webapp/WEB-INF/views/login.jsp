@@ -43,7 +43,7 @@
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
         }
         .u_logo {
-            background: url("${staticPath }/static/style/images/username.png") no-repeat;
+            background: url("${staticPath}/static/style/images/username.png") no-repeat;
             padding: 10px 10px;
             position: absolute;
             top: 43px;
@@ -51,7 +51,7 @@
 
         }
         .p_logo {
-            background: url("${staticPath }/static/style/images/password.png") no-repeat;
+            background: url("${staticPath}/static/style/images/password.png") no-repeat;
             padding: 10px 10px;
             position: absolute;
             top: 12px;
@@ -61,7 +61,7 @@
             text-decoration: none;
         }
         .tou {
-            background: url("${staticPath }/static/style/images/tou.png") no-repeat;
+            background: url("${staticPath}/static/style/images/tou.png") no-repeat;
             width: 97px;
             height: 92px;
             position: absolute;

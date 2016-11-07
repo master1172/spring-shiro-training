@@ -27,6 +27,8 @@ public class People implements Serializable {
 
     private String photo;
 
+    private Integer degreeId;
+
     public Long getId() {
         return id;
     }
@@ -71,9 +73,11 @@ public class People implements Serializable {
         return salary;
     }
 
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
-    }
+    public void setSalary(BigDecimal salary) { this.salary = salary;}
+
+    public Integer getDegreeId() { return degreeId;}
+
+    public void setDegreeId(Integer degreeId) {this.degreeId = degreeId;}
 
     public String getPhoto(){return photo;}
 

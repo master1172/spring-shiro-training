@@ -160,14 +160,20 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into user (loginname, name, password,
-        sex, age, usertype,
-        status, organization_id, createdate,
-        phone)
-        values (#{loginname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT}, #{age,jdbcType=TINYINT}, #{usertype,jdbcType=TINYINT},
-        #{status,jdbcType=TINYINT}, #{organizationId,jdbcType=INTEGER}, now(),
-        #{phone,jdbcType=VARCHAR})
+        insert into user (loginname, name, password, sex, age, usertype,
+                status, organization_id, createdate, phone)
+        values (
+          #{loginname,jdbcType=VARCHAR},
+          #{name,jdbcType=VARCHAR},
+          #{password,jdbcType=VARCHAR},
+          #{sex,jdbcType=TINYINT},
+          #{age,jdbcType=TINYINT},
+          #{usertype,jdbcType=TINYINT},
+          #{status,jdbcType=TINYINT},
+          #{organizationId,jdbcType=INTEGER},
+          now(),
+          #{phone,jdbcType=VARCHAR}
+        )
     </insert>
 
     <update id="updateUserPwdById">
