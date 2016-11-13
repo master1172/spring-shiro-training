@@ -35,7 +35,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleVoById" resultMap="peopleVoResultMap" parameterMap="java.lang.Long">
+    <select id="findPeopleVoById" resultMap="peopleVoResultMap" parameterType="java.lang.Long">
         SELECT
           t.id,
           t.name,
@@ -44,7 +44,7 @@
           t.job,
           t.salary,
           t.degree_id,
-          s.name as degreeName,
+          s.name as degreeName
         FROM
           people t
         LEFT JOIN
