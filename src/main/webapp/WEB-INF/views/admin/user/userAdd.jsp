@@ -4,21 +4,21 @@
     $(function() {
 
         $('#organizationId').combotree({
-            url : '${path }/organization/tree',
+            url : '${path}/organization/tree',
             parentField : 'pid',
             lines : true,
             panelHeight : 'auto'
         });
 
         $('#roleIds').combotree({
-            url: '${path }/role/tree',
+            url: '${path}/role/tree',
             multiple: true,
             required: true,
             panelHeight : 'auto'
         });
 
         $('#userAddForm').form({
-            url : '${path }/user/add',
+            url : '${path}/user/add',
             onSubmit : function() {
                 progressLoad();
                 var isValid = $(this).form('validate');
@@ -77,7 +77,11 @@
                     <td>部门</td>
                     <td><select id="organizationId" name="organizationId" style="width: 140px; height: 29px;" class="easyui-validatebox" data-options="required:true"></select></td>
                     <td>角色</td>
-                    <td><select id="roleIds" name="roleIds" style="width: 140px; height: 29px;"></select></td>
+                    <td>
+                        <select id="roleIds" name="roleIds" style="width: 140px; height: 29px;">
+
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>电话</td>
