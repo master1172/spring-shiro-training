@@ -25,7 +25,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, name, sex, birthday, job, salary, photo
+        id, name, sex, birthday, job, salary, photo, degree_id
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -77,7 +77,7 @@
         t.job,
         t.salary,
         t.degree_id,
-        s.name as degreeName,
+        s.name as degreeName
         FROM
         people t
         LEFT JOIN

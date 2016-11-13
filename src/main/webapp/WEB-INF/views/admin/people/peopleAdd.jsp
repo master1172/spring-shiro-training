@@ -49,7 +49,7 @@
                 <tr>
                     <td>学历</td>
                     <td>
-                        <input id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name">
+                        <input class="easyui-combobox" id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>

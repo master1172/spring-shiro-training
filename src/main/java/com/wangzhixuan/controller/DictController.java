@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class DictController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(DictController.class);
 
-    @RequestMapping(value="/degree", method = RequestMethod.GET)
+    @RequestMapping(value="/degree", method = RequestMethod.POST)
+    @ResponseBody
     public List<Dict> degreeDict(){
         List<Dict> degreeList = Lists.newArrayList();
 

@@ -5,6 +5,7 @@
     $(function() {
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
         $("#sex").val('${people.sex}');
+        $('#degreeId').val('${people.degreeId}');
     });
 
     function checkForm(){
@@ -49,6 +50,13 @@
                         <input name="birthday" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly" value="${people.birthday}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>学历</td>
+                    <td>
+                        <input class="easyui-combobox" id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                 </tr>
                 <tr>

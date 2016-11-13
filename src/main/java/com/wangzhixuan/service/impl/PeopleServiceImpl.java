@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -69,6 +70,14 @@ public class PeopleServiceImpl implements PeopleService{
 
     @Override
     public void addPeople(People people,CommonsMultipartFile file) {
+
+		//当birthday不为空，而是""的时候，需要修改为null，否则插入会有错误
+		if (people != null){
+			if (StringUtils.isEmpty(people.getBirthday())){
+				people.setBirthday(null);
+			}
+		}
+
     	if(file!=null){//上传附件
     		if(fileUpLoad(people,file)){
     			peopleMapper.insert(people);
@@ -80,9 +89,17 @@ public class PeopleServiceImpl implements PeopleService{
 
     @Override
     public void updatePeople(People people, CommonsMultipartFile file) {
+
+		//当birthday不为空，而是""的时候，需要修改为null，否则插入会有错误
+		if (people != null){
+			if (StringUtils.isEmpty(people.getBirthday())){
+				people.setBirthday(null);
+			}
+		}
+
 		if (file != null){
 			if(fileUpLoad(people,file)){
-				peopleMapper.insert(people);
+				peopleMapper.updatePeople(people);
 			}
 		}else{
 			peopleMapper.updatePeople(people);
@@ -250,8 +267,8 @@ public class PeopleServiceImpl implements PeopleService{
     public void exportWord(HttpServletResponse response,String id){
     	People p=peopleMapper.findPeopleById(Long.valueOf(id));
     	if(p!=null){
-        	XWPFDocument doc = null;
-    		OutputStream os = null;
+        	XWPFDocument doc;
+    		OutputStream os;
         	String filePath=this.getClass().getResource("/template/custInfo.docx").getPath();
         	String newFileName="在编人员信息.docx";
     		try {
@@ -316,8 +333,8 @@ public class PeopleServiceImpl implements PeopleService{
 	 * @return
 	 */
 	private boolean fileUpLoad(People people,CommonsMultipartFile file){
-		OutputStream os=null;
-    	InputStream in=null;
+		OutputStream os;
+    	InputStream in;
 
 		try {
 			//获取头像上传路径
