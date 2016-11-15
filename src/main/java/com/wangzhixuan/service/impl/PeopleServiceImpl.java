@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +49,7 @@ import static com.wangzhixuan.utils.WordUtil.generateWord;
 @Service
 public class PeopleServiceImpl implements PeopleService{
 
-	private final String UPLOAD_PATH = "/static/upload/head/";
+
     @Autowired
     private PeopleMapper peopleMapper;
 
@@ -79,7 +80,11 @@ public class PeopleServiceImpl implements PeopleService{
 		}
 
     	if(file!=null){//上传附件
-    		if(fileUpLoad(people,file)){
+			//获取头像上传路径
+			String classPath = this.getClass().getResource("/").getPath();//路径
+			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
+			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
+    		if(StringUtils.isNotEmpty(uploadPath) ){
     			peopleMapper.insert(people);
     		}
     	}else{
@@ -98,7 +103,11 @@ public class PeopleServiceImpl implements PeopleService{
 		}
 
 		if (file != null){
-			if(fileUpLoad(people,file)){
+			//获取头像上传路径
+			String classPath = this.getClass().getResource("/").getPath();//路径
+			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
+			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
+			if(StringUtils.isNotEmpty(uploadPath)){
 				peopleMapper.updatePeople(people);
 			}
 		}else{
@@ -115,14 +124,21 @@ public class PeopleServiceImpl implements PeopleService{
     public void batchDeletePeopleByIds(String[] ids){
         peopleMapper.batchDeleteByIds(ids);
     }
+
     @Override
     public boolean insertByImport(CommonsMultipartFile[] files){
     	boolean flag=false;
-    	if(files!=null&&files.length>0){
-        	List<People> list=new ArrayList<People>();
-    		for(int i=0;i<files.length;i++){
-    			String path=fileUpload(files[i]);
-    			if(path!=null&&path.length()>0){
+    	if(files!=null && files.length>0){
+
+			List<People> list = new ArrayList<People>();
+
+			String filePath = this.getClass().getResource("/").getPath();//文件临时路径
+
+    		for(int i=0; i<files.length; i++){
+
+    			String path= UploadUtil.fileUpload(filePath, files[i]);
+
+				if( path!=null && path.length() > 0){
         			list=getPeopleInfoByExcel(list,path);
     			}
     		}
@@ -139,11 +155,9 @@ public class PeopleServiceImpl implements PeopleService{
      * @return
      */
     private List<People> getPeopleInfoByExcel(List<People> list,String path){
-    	XSSFWorkbook xwb=null;
-    	XSSFSheet sheet=null;
 		try {
-			xwb = new XSSFWorkbook(path);
-	    	sheet = xwb.getSheetAt(0);
+			XSSFWorkbook xwb = new XSSFWorkbook(path);
+			XSSFSheet sheet = xwb.getSheetAt(0);
 	    	XSSFRow row;
 	    	for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
 	    	    row = sheet.getRow(i);
@@ -174,6 +188,7 @@ public class PeopleServiceImpl implements PeopleService{
 						e.printStackTrace();
 					}
 	    		}
+
 	    		list.add(p);
 	    	}
 		} catch (IOException e1) {
@@ -181,45 +196,6 @@ public class PeopleServiceImpl implements PeopleService{
 		}
     	return list;
     }
-    //附件上传--批量导入
-    private String fileUpload(CommonsMultipartFile file){
-    	OutputStream os=null;
-    	InputStream in=null;
-		StringBuffer upLoadFilePath=new StringBuffer();
-		try {
-			String filePath=this.getClass().getResource("/").getPath();//文件临时路径
-			String oldFileName = file.getOriginalFilename();//原始文件名称
-			if(!file.isEmpty()){
-				String fileFix=oldFileName.substring(oldFileName.lastIndexOf(".")+1);//文件后缀
-				if(fileFix.equals("xlsx")){
-					StringBuffer newFileName=new StringBuffer(UUID.randomUUID().toString().replaceAll("-", "")+"."+fileFix);//新文件名称
-					upLoadFilePath=new StringBuffer(filePath+"/temporary");//上传附件路径
-					File f = new File(upLoadFilePath.toString());
-					if (!f.exists()) {
-						f.mkdirs();
-					}
-					upLoadFilePath.append("/").append(newFileName);
-					os = new FileOutputStream(upLoadFilePath.toString());
-					//拿到上传文件的输入流
-					in = file.getInputStream();
-					//写入文件
-					int b = 0;
-					while((b=in.read()) != -1){
-						os.write(b);
-					}
-					os.flush();
-					os.close();
-					in.close();
-				}
-			}
-		}catch (IOException e) {
-			
-		}finally{
-			
-		}
-		return upLoadFilePath.toString();
-    }
-
 
 	//导出excel
     @Override
@@ -336,55 +312,5 @@ public class PeopleServiceImpl implements PeopleService{
 		setBorder.setFont(font);//选择需要用到的字体格式
 		return setBorder;
 	}
-	/**
-	 * 附件上传-头像
-	 * @param people
-	 * @param file
-	 * @return
-	 */
-	private boolean fileUpLoad(People people,CommonsMultipartFile file){
-		OutputStream os;
-    	InputStream in;
 
-		try {
-			//获取头像上传路径
-			String classPath = this.getClass().getResource("/").getPath();//路径
-			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
-
-			String oldFileName = file.getOriginalFilename();//原始文件名称
-
-			if(!file.isEmpty()){
-
-				String fileExt=oldFileName.substring(oldFileName.lastIndexOf(".")+1);//文件后缀
-
-				StringBuffer newFileName=new StringBuffer(UUID.randomUUID().toString().replaceAll("-", "")+"."+fileExt);//新文件名称
-				StringBuffer upLoadFilePath=new StringBuffer(filePath + UPLOAD_PATH);//上传附件路径
-				StringBuffer downLoadFilePath=new StringBuffer(UPLOAD_PATH);//下载附件路径
-				File f = new File(upLoadFilePath.toString());
-				if (!f.exists()) {
-					f.mkdirs();
-				}
-				upLoadFilePath.append(newFileName);
-				downLoadFilePath.append(newFileName);
-				os = new FileOutputStream(upLoadFilePath.toString());
-				//拿到上传文件的输入流
-				in = file.getInputStream();
-				//写入文件
-				int b = 0;
-				while((b=in.read()) != -1){
-					os.write(b);
-				}
-				os.flush();
-				os.close();
-				in.close();
-				people.setPhoto(downLoadFilePath.toString());
-				return true;
-			}
-		}catch (IOException e) {
-			return false;
-		}finally{
-			
-		}
-		return true;
-	}
 }
