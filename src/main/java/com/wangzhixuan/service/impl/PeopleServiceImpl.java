@@ -1,12 +1,6 @@
 package com.wangzhixuan.service.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,11 +12,14 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.usermodel.Range;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -44,6 +41,8 @@ import com.wangzhixuan.model.People;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.CustomXWPFDocument;
 import com.wangzhixuan.utils.PageInfo;
+
+import static com.wangzhixuan.utils.WordUtil.generateWord;
 
 
 @Service
@@ -220,9 +219,12 @@ public class PeopleServiceImpl implements PeopleService{
 		}
 		return upLoadFilePath.toString();
     }
+
+
+	//导出excel
     @Override
     public void exportExcel(HttpServletResponse response,String ids){
-    	List list=peopleMapper.selectPeopleByIds(ids.split(","));
+    	List list=peopleMapper.selectPeopleVoByIds(ids.split(","));
     	if(list!=null&&list.size()>0){
     		XSSFWorkbook workBook;
     		OutputStream os;
@@ -247,7 +249,7 @@ public class PeopleServiceImpl implements PeopleService{
         			row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
         			row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
         			row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
-        			row.createCell(3).setCellValue(p.getBirthday());row.getCell(3).setCellStyle(setBorder);
+        			row.createCell(3).setCellValue(p.getBirthday().toString());row.getCell(3).setCellStyle(setBorder);
         			row.createCell(4).setCellValue(p.getJob());row.getCell(4).setCellStyle(setBorder);
         			row.createCell(5).setCellValue(p.getSalary().toString());row.getCell(5).setCellStyle(setBorder);
 					row.createCell(6).setCellValue(p.getDegreeName());row.getCell(6).setCellStyle(setBorder);
@@ -266,9 +268,11 @@ public class PeopleServiceImpl implements PeopleService{
     		}
     	}
     }
+
+	//导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-    	People p=peopleMapper.findPeopleById(Long.valueOf(id));
+		PeopleVo p= peopleMapper.findPeopleVoById(Long.valueOf(id));
     	if(p!=null){
         	XWPFDocument doc;
     		OutputStream os;
@@ -276,26 +280,29 @@ public class PeopleServiceImpl implements PeopleService{
         	String newFileName="在编人员信息.docx";
     		try {
     			Map<String,Object> params = new HashMap<String,Object>();
-                params.put("Ⅰ",p.getName());
-                params.put("Ⅱ",p.getSex()==0?"男":"女");
-                params.put("Ⅲ",p.getBirthday());
-                params.put("Ⅳ",p.getJob());
-                params.put("Ⅴ",p.getSalary()+"");
+                params.put("${name}",p.getName());
+                params.put("${sex}",p.getSex()==0?"男":"女");
+                params.put("${birthday}",p.getBirthday());
+                params.put("${job}",p.getJob());
+                params.put("${salary}",p.getSalary()+"");
+				params.put("${degree}",p.getDegreeName());
+
                 //判断是否有头像
                 if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 	String headPath=this.getClass().getResource("/").getPath();
+					headPath = headPath.substring(0,headPath.indexOf("/WEB-INF"));
                 	File file=new File(headPath+p.getPhoto());
                 	if(file.exists()){
                 		headPath=headPath+p.getPhoto();
                 		Map<String,Object> header = new HashMap<String, Object>();  
-                        header.put("width", 100);  
-                        header.put("height", 150);
+                        header.put("width", 80);
+                        header.put("height", 120);
                         header.put("type", "jpg");
-                        header.put("content", inputStream2ByteArray(new FileInputStream(headPath), true));
-                        params.put("Ⅵ",header);  
+                        header.put("content", WordUtil.inputStream2ByteArray(new FileInputStream(headPath), true));
+                        params.put("${photo}",header);
                 	}
                 }
-                doc = generateWord(params, filePath);
+                doc = WordUtil.generateWord(params, filePath);
     			response.reset();
     	        os = response.getOutputStream();
     	        response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
@@ -380,131 +387,4 @@ public class PeopleServiceImpl implements PeopleService{
 		}
 		return true;
 	}
-	/** 
-     * 将输入流中的数据写入字节数组 
-     * @param in 
-     * @return 
-     */  
-    public static byte[] inputStream2ByteArray(InputStream in,boolean isClose){  
-        byte[] byteArray = null;  
-        try {  
-            int total = in.available();  
-            byteArray = new byte[total];  
-            in.read(byteArray);  
-        } catch (IOException e) {  
-            e.printStackTrace();  
-        }finally{  
-            if(isClose){  
-                try {  
-                    in.close();  
-                } catch (Exception e2) {  
-                    System.out.println("关闭流失败");  
-                }  
-            }  
-        }  
-        return byteArray;  
-    }
-    /**
-     * 根据指定的参数值、模板，生成 word 文档
-     * @param param 需要替换的变量
-     * @param template 模板
-     */
-    private CustomXWPFDocument generateWord(Map<String, Object> param, String template) {
-        CustomXWPFDocument doc = null;
-        try {
-            OPCPackage pack = POIXMLDocument.openPackage(template);
-            doc = new CustomXWPFDocument(pack);
-            if (param != null && param.size() > 0) {
-                //处理段落
-                List<XWPFParagraph> paragraphList = doc.getParagraphs();
-                processParagraphs(paragraphList, param, doc);
-                //处理表格
-                Iterator<XWPFTable> it = doc.getTablesIterator();
-                while (it.hasNext()) {
-                    XWPFTable table = it.next();
-                    int rcount = table.getNumberOfRows();
-                    for(int i =0 ;i < rcount;i++){
-                    	XWPFTableRow row = table.getRow(i);
-                    	List<XWPFTableCell> cells =  row.getTableCells();
-                    	for (XWPFTableCell cell : cells){
-                            List<XWPFParagraph> paragraphListTable =  cell.getParagraphs();
-                            processParagraphs(paragraphListTable, param, doc);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return doc;
-    }
-    /** 
-     * 处理段落
-     * @param paragraphList
-     */
-    public  void processParagraphs(List<XWPFParagraph> paragraphList,Map<String, Object> param,CustomXWPFDocument doc){  
-        if(paragraphList != null && paragraphList.size() > 0){  
-            for(XWPFParagraph paragraph:paragraphList){  
-                List<XWPFRun> runs = paragraph.getRuns();  
-                for (XWPFRun run : runs) {  
-                    String text = run.getText(0);  
-                    if(text != null){  
-                        boolean isSetText = false;  
-                        for (Entry<String, Object> entry : param.entrySet()) {  
-                            String key = entry.getKey();  
-                            if(text.indexOf(key) != -1){  
-                                isSetText = true;  
-                                Object value = entry.getValue();  
-                                if (value instanceof String) {//文本替换  
-                                    text = text.replace(key, value.toString());  
-                                } else if (value instanceof Map) {//图片替换  
-                                    text = text.replace(key, "");  
-                                    Map pic = (Map)value;  
-                                    int width = Integer.parseInt(pic.get("width").toString());  
-                                    int height = Integer.parseInt(pic.get("height").toString());  
-                                    int picType = getPictureType(pic.get("type").toString());  
-                                    byte[] byteArray = (byte[]) pic.get("content");  
-                                    ByteArrayInputStream byteInputStream = new ByteArrayInputStream(byteArray);  
-                                    try {
-                                        int ind = doc.addPicture(byteInputStream,picType);  
-                                        doc.createPicture(ind, width , height,paragraph);  
-                                    } catch (Exception e) {  
-                                        e.printStackTrace();  
-                                    }
-                                }
-                            }
-                        }
-                    	if(text.equals("Ⅵ")&&!isSetText){
-                    		run.setText("",0);
-                    	}
-                        if(isSetText){  
-                            run.setText(text,0);  
-                        }
-                    }
-                }
-            }
-        }
-    }
-    /**
-     * 根据图片类型，取得对应的图片类型代码
-     * @param picType
-     * @return int
-     */
-    private int getPictureType(String picType){
-        int res = CustomXWPFDocument.PICTURE_TYPE_PICT;
-        if(picType != null){
-            if(picType.equalsIgnoreCase("png")){
-                res = CustomXWPFDocument.PICTURE_TYPE_PNG;
-            }else if(picType.equalsIgnoreCase("dib")){
-                res = CustomXWPFDocument.PICTURE_TYPE_DIB;
-            }else if(picType.equalsIgnoreCase("emf")){
-                res = CustomXWPFDocument.PICTURE_TYPE_EMF;
-            }else if(picType.equalsIgnoreCase("jpg") || picType.equalsIgnoreCase("jpeg")){
-                res = CustomXWPFDocument.PICTURE_TYPE_JPEG;
-            }else if(picType.equalsIgnoreCase("wmf")){
-                res = CustomXWPFDocument.PICTURE_TYPE_WMF;
-            }
-        }
-        return res;
-    }
 }

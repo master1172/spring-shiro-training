@@ -18,7 +18,7 @@ public class PeopleVo implements Serializable{
     private Integer sex;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+    private String birthday;
 
     private String Job;
 
@@ -58,11 +58,11 @@ public class PeopleVo implements Serializable{
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

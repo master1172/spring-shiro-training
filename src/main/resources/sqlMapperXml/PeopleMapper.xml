@@ -43,6 +43,7 @@
           t.birthday,
           t.job,
           t.salary,
+          t.photo,
           t.degree_id,
           s.name as degreeName
         FROM
@@ -199,7 +200,7 @@
 
     <select id="selectPeopleVoByIds" resultMap="peopleVoResultMap" parameterType="java.util.ArrayList">
         select
-          t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,s.degreeName
+          t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,s.name as degreeName
         from people t
         left join
         dict_degree s ON s.id = t.degree_id
