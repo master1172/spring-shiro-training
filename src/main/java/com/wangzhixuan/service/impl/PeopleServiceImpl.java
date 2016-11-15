@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -223,8 +224,8 @@ public class PeopleServiceImpl implements PeopleService{
     public void exportExcel(HttpServletResponse response,String ids){
     	List list=peopleMapper.selectPeopleByIds(ids.split(","));
     	if(list!=null&&list.size()>0){
-    		XSSFWorkbook workBook = null;
-    		OutputStream os = null;
+    		XSSFWorkbook workBook;
+    		OutputStream os;
         	String newFileName="在编人员信息.xlsx";
     		try {
     			workBook = new XSSFWorkbook();
@@ -238,16 +239,18 @@ public class PeopleServiceImpl implements PeopleService{
     			row.createCell(3).setCellValue("出生日期");row.getCell(3).setCellStyle(setBorder);
     			row.createCell(4).setCellValue("工作");row.getCell(4).setCellStyle(setBorder);
     			row.createCell(5).setCellValue("薪水");row.getCell(5).setCellStyle(setBorder);
+				row.createCell(6).setCellValue("学历");row.getCell(6).setCellStyle(setBorder);
     			setBorder=setCellStyle(workBook,false);
         		for(int i=0;i<list.size();i++){
         			row=sheet.createRow(i+1);
-        			People p=(People)list.get(i);
+        			PeopleVo p=(PeopleVo)list.get(i);
         			row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
         			row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
-        			row.createCell(2).setCellValue(p.getSex()==0?"男":"女");row.getCell(2).setCellStyle(setBorder);
+        			row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
         			row.createCell(3).setCellValue(p.getBirthday());row.getCell(3).setCellStyle(setBorder);
         			row.createCell(4).setCellValue(p.getJob());row.getCell(4).setCellStyle(setBorder);
         			row.createCell(5).setCellValue(p.getSalary().toString());row.getCell(5).setCellStyle(setBorder);
+					row.createCell(6).setCellValue(p.getDegreeName());row.getCell(6).setCellStyle(setBorder);
         			row.setHeight((short) 400);
         		}
         		sheet.setDefaultRowHeightInPoints(21);

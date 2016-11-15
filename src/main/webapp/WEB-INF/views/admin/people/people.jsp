@@ -280,6 +280,7 @@
                 <th field="birthday" data-options="sortable:true" width="130">生日</th>
                 <th field="job"      data-options="sortable:true" width="80">工作</th>
                 <th field="salary"   data-options="sortable:true" width="80">薪资</th>
+                <th field="degreeName" data-options="sortable:true" width="80">学历</th>
                 <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
         </thead>

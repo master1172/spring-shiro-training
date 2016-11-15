@@ -6,6 +6,7 @@
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
         $("#sex").val('${people.sex}');
         $('#degreeId').val('${people.degreeId}');
+        $('#imgShow').attr('src','${staticPath}/${people.photo}');
     });
 
     function checkForm(){
@@ -63,7 +64,7 @@
                     <td>头像上传</td>
                     <td colspan="3">
                         <div id="imgdiv" style="height:100px;width:100px;">
-                            <img id="imgShow" style="height:100px;width:100px;" src="${staticPath}/${people.photo}"/>
+                            <img id="imgShow" style="height:100px;width:100px;"/>
                         </div>
                         <input type="file" id="up_img" name="fileName"/>
                     </td>

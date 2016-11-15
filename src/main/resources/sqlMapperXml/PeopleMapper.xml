@@ -189,9 +189,21 @@
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select 
-        	t.id,t.name,t.sex,t.birthday,t.job,t.salary
+        	t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id
         from people t
         where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectPeopleVoByIds" resultMap="peopleVoResultMap" parameterType="java.util.ArrayList">
+        select
+          t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,s.degreeName
+        from people t
+        left join
+        dict_degree s ON s.id = t.degree_id
+        where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
         </foreach>
