@@ -149,7 +149,7 @@
          )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people (name, sex, birthday, job, salary)
+        insert into people (name, sex, birthday, job, salary, degree_id)
         values
         <foreach item="item" index="index" collection="list" separator=",">
           (
@@ -157,7 +157,8 @@
 	        #{item.sex,jdbcType=TINYINT},
 	        #{item.birthday,jdbcType=DATE},
 	        #{item.job, jdbcType=VARCHAR},
-	        #{item.salary,jdbcType=DECIMAL}
+	        #{item.salary,jdbcType=DECIMAL},
+            #{item.degreeId,jdbcType=INTEGER}
 	      )  
         </foreach>
     </insert>
