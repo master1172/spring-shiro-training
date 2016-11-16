@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,29 +59,37 @@ public class PeopleController extends BaseController{
      */
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(HttpServletRequest request, People people, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, PeopleVo peoplevo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = Maps.newHashMap();
 
 
-        if(StringUtils.isNoneBlank(people.getName())){
-            condition.put("name", people.getName());
+        if(StringUtils.isNoneBlank(peoplevo.getName())){
+            condition.put("name", peoplevo.getName());
         }
 
-        if(StringUtils.isNoneBlank(people.getJob())){
-            condition.put("job", people.getJob());
+        if(StringUtils.isNoneBlank(peoplevo.getJob())){
+            condition.put("job", peoplevo.getJob());
         }
 
-        if (people.getSex() != null){
-            condition.put("sex", people.getSex());
+        if (peoplevo.getSex() != null){
+            condition.put("sex", peoplevo.getSex());
         }
 
-        if (StringUtils.isNoneBlank(request.getParameter("birthday_min"))){
-            condition.put("birthdayMin",request.getParameter("birthday_min"));
+        if (StringUtils.isNoneBlank(peoplevo.getBirthdayMin())){
+            condition.put("birthdayMin",peoplevo.getBirthdayMin());
         }
 
-        if(StringUtils.isNoneBlank(request.getParameter("birthday_max"))){
-            condition.put("birthdayMax",request.getParameter("birthday_max"));
+        if (StringUtils.isNoneBlank(peoplevo.getBirthdayMax())){
+            condition.put("birthdayMax",peoplevo.getBirthdayMax());
+        }
+
+        if (peoplevo.getSalaryMin() != null){
+            condition.put("salaryMin", peoplevo.getSalaryMin());
+        }
+
+        if (peoplevo.getSalaryMax() != null){
+            condition.put("salaryMax", peoplevo.getSalaryMax());
         }
 
         pageInfo.setCondition(condition);

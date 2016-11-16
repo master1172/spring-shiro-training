@@ -24,9 +24,15 @@ public class PeopleVo implements Serializable{
 
     private BigDecimal salary;
 
-    private Date birthdayMin;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String birthdayMin;
 
-    private Date birthdayMax;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String birthdayMax;
+
+    private BigDecimal salaryMin;
+
+    private BigDecimal salaryMax;
 
     private String photo;
 
@@ -82,19 +88,17 @@ public class PeopleVo implements Serializable{
         this.salary = salary;
     }
 
-    public Date getBirthdayMin() {
+    public String getBirthdayMin() {
         return birthdayMin;
     }
 
-    public void setBirthdayMin(Date birthdayMin) {
+    public void setBirthdayMin(String birthdayMin) {
         this.birthdayMin = birthdayMin;
     }
 
-    public Date getBirthdayMax() {
-        return birthdayMax;
-    }
+    public String getBirthdayMax() { return birthdayMax;}
 
-    public void setBirthdayMax(Date birthdayMax) {
+    public void setBirthdayMax(String birthdayMax) {
         this.birthdayMax = birthdayMax;
     }
 
@@ -116,5 +120,21 @@ public class PeopleVo implements Serializable{
 
     public void setDegreeName(String degreeName) {
         this.degreeName = degreeName;
+    }
+
+    public BigDecimal getSalaryMin() {
+        return salaryMin;
+    }
+
+    public void setSalaryMin(BigDecimal salaryMin) {
+        this.salaryMin = salaryMin;
+    }
+
+    public BigDecimal getSalaryMax() {
+        return salaryMax;
+    }
+
+    public void setSalaryMax(BigDecimal salaryMax) {
+        this.salaryMax = salaryMax;
     }
 }
