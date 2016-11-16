@@ -32,4 +32,8 @@ public class Dict implements Serializable {
         this.id = id;
         this.name = name;
     }
+
+    public Dict(){
+
+    }
 }

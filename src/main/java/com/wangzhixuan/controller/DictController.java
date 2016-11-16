@@ -1,9 +1,11 @@
 package com.wangzhixuan.controller;
 
 import com.google.common.collect.Lists;
+import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.model.Dict;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,17 +22,13 @@ public class DictController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(DictController.class);
 
+    @Autowired
+    private DictMapper dictMapper;
+
     @RequestMapping(value="/degree", method = RequestMethod.POST)
     @ResponseBody
     public List<Dict> degreeDict(){
-        List<Dict> degreeList = Lists.newArrayList();
-
-        degreeList.add(new Dict(1,"本科"));
-        degreeList.add(new Dict(2,"硕士"));
-        degreeList.add(new Dict(3,"博士"));
-
+        List<Dict> degreeList = dictMapper.findDegreeDict();
         return degreeList;
     }
-
-
 }

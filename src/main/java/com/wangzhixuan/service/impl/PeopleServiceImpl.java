@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleVo;
@@ -52,6 +53,9 @@ public class PeopleServiceImpl implements PeopleService{
 
     @Autowired
     private PeopleMapper peopleMapper;
+
+	@Autowired
+	private DictMapper dictMapper;
 
     @Override
     public People findPeopleById(Long id) {
@@ -162,32 +166,55 @@ public class PeopleServiceImpl implements PeopleService{
 	    	for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
 	    	    row = sheet.getRow(i);
 	    	    People p=new People();
-	    	    if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
-	    			break;
+
+				//姓名
+				if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
+	    			continue;
 	    		}
 	    		String name=row.getCell(1).toString().trim();
 	    		p.setName(name);
+
+				//性别
 	    		if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
 	    			String sex=row.getCell(2).toString().trim();
 	    			p.setSex(sex.equals("女")?1:0);
 	    		}
+
+				//生日
 	    		if(row.getCell(3)!=null&&!row.getCell(3).toString().trim().equals("")){
 	    			String birthday=row.getCell(3).toString().trim();
 	    			p.setBirthday(birthday);
 	    		}
+
+				//工作
 	    		if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
 	    			String job=row.getCell(4).toString().trim();
 	    			p.setJob(job);
 	    		}
+
+				//薪水
 	    		if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
 	    			String salary=row.getCell(5).toString().trim();
 	    			try {
 						BigDecimal amount = BigDecimal.valueOf(Double.valueOf(salary));
 		    			p.setSalary(amount);
 					} catch (NumberFormatException e) {
-						e.printStackTrace();
 					}
 	    		}
+
+				//学历
+				if(row.getCell(6) != null && !row.getCell(6).toString().trim().equals("")){
+					String degreeName = row.getCell(6).toString().trim();
+
+					try{
+						Integer degreeId = dictMapper.findDegreeIdByName(degreeName);
+						if (degreeId != null){
+							p.setDegreeId(degreeId);
+						}
+					}catch(Exception exp){
+
+					}
+				}
 
 	    		list.add(p);
 	    	}

@@ -36,5 +36,6 @@
         <mapper resource="sqlMapperXml/PeopleMapper.xml"/>
         <mapper resource="sqlMapperXml/CategoryMapper.xml"/>
         <mapper resource="sqlMapperXml/ArticleMapper.xml"/>
+        <mapper resource="sqlMapperXml/DictMapper.xml"/>
     </mappers>
 </configuration> 
