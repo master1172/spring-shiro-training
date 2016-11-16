@@ -90,11 +90,11 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
-                <![CDATA[ and t.birthday >= #{condition.birthdayStart} ]]>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>
-            <if test=" condition.birthdayEnd != null and condition.birthdayEnd != ''">
-                <![CDATA[ and t.birthday <= #{condition.birthdayEnd} ]]>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -110,11 +110,11 @@
             <if test=" condition.sex != null ">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.birthdayStart != null and condition.birthdayStart != ''">
-                <![CDATA[ and t.birthday >= #{condition.birthdayStart} ]]>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>
-            <if test=" condition.birthdayEnd != null and condition.birthdayEnd != ''">
-                <![CDATA[ and t.birthday <= #{condition.birthdayEnd} ]]>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
             </if>
         </where>
     </select>

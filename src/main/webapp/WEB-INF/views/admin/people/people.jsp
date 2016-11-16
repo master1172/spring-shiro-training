@@ -35,6 +35,27 @@
             });
         });
 
+        function advSearch(){
+            parent.$.modalDialog({
+                title: '高级查询',
+                width: 500,
+                height: 350,
+                href: '${path}/people/advSearchPage',
+                buttons:[{
+                    text: '提交',
+                    handler: function(){
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;
+                        if(parent.checkForm()){
+                            parent.progressClose();
+                            var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                            dataGrid.datagrid("load",$.serializeObject(f));
+                            parent.$.modalDialog.handler.dialog("close");
+                        }
+                    }
+                }]
+            });
+        }
+
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
@@ -254,10 +275,10 @@
                     </td>
                     <th>出生日期</th>
                     <td>
-                        <input name="birthdayStart" placeholder="点击选择起始时间"
+                        <input name="birthday_min" placeholder="点击选择起始时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>至
-                        <input name="birthdayEnd" placeholder="点击选择结束时间"
+                        <input name="birthday_max" placeholder="点击选择结束时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                         <a href="javascript:void(0);" class="easyui-linkbutton"
@@ -307,6 +328,10 @@
         <shiro:hasPermission name="/people/exportWord">
             <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">导出Word</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="/people/advSearch">
+            <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">高级查询</a>
         </shiro:hasPermission>
         <!-- 附件下载使用 -->
     	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>

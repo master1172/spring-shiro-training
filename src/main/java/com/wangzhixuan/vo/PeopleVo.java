@@ -24,9 +24,9 @@ public class PeopleVo implements Serializable{
 
     private BigDecimal salary;
 
-    private Date birthdayStart;
+    private Date birthdayMin;
 
-    private Date birthdayEnd;
+    private Date birthdayMax;
 
     private String photo;
 
@@ -82,20 +82,20 @@ public class PeopleVo implements Serializable{
         this.salary = salary;
     }
 
-    public Date getBirthdayStart() {
-        return birthdayStart;
+    public Date getBirthdayMin() {
+        return birthdayMin;
     }
 
-    public void setBirthdayStart(Date birthdayStart) {
-        this.birthdayStart = birthdayStart;
+    public void setBirthdayMin(Date birthdayMin) {
+        this.birthdayMin = birthdayMin;
     }
 
-    public Date getBirthdayEnd() {
-        return birthdayEnd;
+    public Date getBirthdayMax() {
+        return birthdayMax;
     }
 
-    public void setBirthdayEnd(Date birthdayEnd) {
-        this.birthdayEnd = birthdayEnd;
+    public void setBirthdayMax(Date birthdayMax) {
+        this.birthdayMax = birthdayMax;
     }
 
     public String getPhoto() {return photo;}

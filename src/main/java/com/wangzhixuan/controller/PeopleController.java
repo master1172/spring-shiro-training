@@ -75,18 +75,23 @@ public class PeopleController extends BaseController{
             condition.put("sex", people.getSex());
         }
 
-        if (StringUtils.isNoneBlank(request.getParameter("birthdayStart"))){
-            condition.put("birthdayStart",request.getParameter("birthdayStart"));
+        if (StringUtils.isNoneBlank(request.getParameter("birthday_min"))){
+            condition.put("birthdayMin",request.getParameter("birthday_min"));
         }
 
-        if(StringUtils.isNoneBlank(request.getParameter("birthdayEnd"))){
-            condition.put("birthdayEnd",request.getParameter("birthdayEnd"));
+        if(StringUtils.isNoneBlank(request.getParameter("birthday_max"))){
+            condition.put("birthdayMax",request.getParameter("birthday_max"));
         }
 
         pageInfo.setCondition(condition);
         peopleService.findDataGrid(pageInfo);
 
         return pageInfo;
+    }
+
+    @RequestMapping(value="/advSearchPage", method = RequestMethod.GET)
+    public String advSearchPage(){
+        return "admin/people/peopleSearch";
     }
 
     @RequestMapping(value="/addPage", method=RequestMethod.GET)
@@ -182,9 +187,7 @@ public class PeopleController extends BaseController{
         }
     }
     /**
-     * 批量调入
-     * @param file
-     * @return
+     * 批量调入W
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
    	@ResponseBody
@@ -204,8 +207,6 @@ public class PeopleController extends BaseController{
     }
     /**
      * 导出Excel
-     * @param id
-     * @return
      */
     @RequestMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response,String ids){
@@ -222,8 +223,6 @@ public class PeopleController extends BaseController{
     }
     /**
      * 导出Word
-     * @param id
-     * @return
      */
     @RequestMapping("/exportWord")
     public void exportWord(HttpServletResponse response,String ids){
