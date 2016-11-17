@@ -103,7 +103,7 @@
                 <![CDATA[ and t.salary >= #{condition.salaryMin} ]]>
             </if>
             <if test=" condition.salaryMax != null">
-                <![CDATA[ and t.salary >= #{condition.salaryMax} ]]>
+                <![CDATA[ and t.salary <= #{condition.salaryMax} ]]>
             </if>
             <if test=" condition.degreeId != null">
                 and t.degree_id = #{condition.degreeId}
@@ -135,7 +135,7 @@
                 <![CDATA[ and t.salary >= #{condition.salaryMin} ]]>
             </if>
             <if test=" condition.salaryMax != null">
-                <![CDATA[ and t.salary >= #{condition.salaryMax} ]]>
+                <![CDATA[ and t.salary <= #{condition.salaryMax} ]]>
             </if>
             <if test=" condition.degreeId != null">
                 and t.degree_id = #{condition.degreeId}

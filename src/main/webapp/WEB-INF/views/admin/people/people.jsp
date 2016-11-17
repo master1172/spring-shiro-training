@@ -58,11 +58,11 @@
 
         function exportSearch(){
             parent.$.modalDialog({
-                title: '查询导出',
+                title: '导出',
                 width: 500,
                 height: 350,
                 href: '${path}/people/exportSearchPage',
-                button:[{
+                buttons:[{
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
@@ -360,7 +360,7 @@
             <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">高级查询</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="/people/exportSearchPage">
+        <shiro:hasPermission name="/people/exportSearch">
             <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         </shiro:hasPermission>

@@ -74,7 +74,7 @@ public class PeopleController extends BaseController{
     }
 
     @RequestMapping(value="/exportSearchPage", method = RequestMethod.GET)
-    public String exportSearchPage() { return "admin/people/exportSearch";}
+    public String exportSearchPage() { return "admin/people/peopleSearch";}
 
     @RequestMapping(value="/exportSearch", method = RequestMethod.POST)
     public void exportSearch(HttpServletResponse response, PeopleVo peoplevo) {
