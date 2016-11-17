@@ -30,7 +30,6 @@
                 <tr>
                     <td>职业</td>
                     <td><input type="text" name="job"></td>
-
                 </tr>
                 <tr>
                     <td>薪资范围</td>

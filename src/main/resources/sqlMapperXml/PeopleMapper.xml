@@ -90,11 +90,23 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
+            <if test=" condition.job != null and condition.job != ''">
+                and t.job LIKE concat('%',#{condition.job},'%')
+            </if>
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>
             <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
                 <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.salaryMin != null">
+                <![CDATA[ and t.salary >= #{condition.salaryMin} ]]>
+            </if>
+            <if test=" condition.salaryMax != null">
+                <![CDATA[ and t.salary >= #{condition.salaryMax} ]]>
+            </if>
+            <if test=" condition.degreeId != null">
+                and t.degree_id = #{condition.degreeId}
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -110,11 +122,23 @@
             <if test=" condition.sex != null ">
                 and t.sex = #{condition.sex}
             </if>
+            <if test=" condition.job != null and condition.job != ''">
+                and t.job LIKE concat('%',#{condition.job},'%')
+            </if>
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>
             <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
                 <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.salaryMin != null">
+                <![CDATA[ and t.salary >= #{condition.salaryMin} ]]>
+            </if>
+            <if test=" condition.salaryMax != null">
+                <![CDATA[ and t.salary >= #{condition.salaryMax} ]]>
+            </if>
+            <if test=" condition.degreeId != null">
+                and t.degree_id = #{condition.degreeId}
             </if>
         </where>
     </select>

@@ -226,8 +226,8 @@ public class PeopleServiceImpl implements PeopleService{
 
 	//导出excel
     @Override
-    public void exportExcel(HttpServletResponse response,String ids){
-    	List list=peopleMapper.selectPeopleVoByIds(ids.split(","));
+    public void exportExcel(HttpServletResponse response,String[] idList){
+    	List list=peopleMapper.selectPeopleVoByIds(idList);
     	if(list!=null&&list.size()>0){
     		XSSFWorkbook workBook;
     		OutputStream os;
@@ -318,7 +318,23 @@ public class PeopleServiceImpl implements PeopleService{
     		}
     	}
     }
-    /**
+
+	@Override
+	public String[] findPeopleByCondition(PageInfo pageInfo) {
+		pageInfo.setFrom(0);
+		pageInfo.setSize(100000);
+		List<PeopleVo> peopleList = peopleMapper.findPeoplePageCondition(pageInfo);
+		if (peopleList == null || peopleList.size() < 1)
+			return new String[0];
+		String[] idList = new String[peopleList.size()];
+		for(int i=0; i<peopleList.size(); i++){
+			idList[i] = peopleList.get(i).getId().toString();
+		}
+
+		return idList;
+	}
+
+	/**
      * 单元格样式-excel
      * @param workBook
      * @return

@@ -5,6 +5,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liushaoyang on 2016/9/8.
@@ -88,5 +89,10 @@ public interface PeopleMapper {
     int insertByImport(List<People> list);
 
 
+    /**
+     * 搜索用户信息根据用户ID
+     * @param id
+     * @return
+     */
     PeopleVo findPeopleVoById(Long id);
 }

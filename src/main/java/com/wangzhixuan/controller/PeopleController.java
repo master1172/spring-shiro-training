@@ -61,37 +61,7 @@ public class PeopleController extends BaseController{
     @ResponseBody
     public PageInfo dataGrid(HttpServletRequest request, PeopleVo peoplevo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String, Object> condition = Maps.newHashMap();
-
-
-        if(StringUtils.isNoneBlank(peoplevo.getName())){
-            condition.put("name", peoplevo.getName());
-        }
-
-        if(StringUtils.isNoneBlank(peoplevo.getJob())){
-            condition.put("job", peoplevo.getJob());
-        }
-
-        if (peoplevo.getSex() != null){
-            condition.put("sex", peoplevo.getSex());
-        }
-
-        if (StringUtils.isNoneBlank(peoplevo.getBirthdayMin())){
-            condition.put("birthdayMin",peoplevo.getBirthdayMin());
-        }
-
-        if (StringUtils.isNoneBlank(peoplevo.getBirthdayMax())){
-            condition.put("birthdayMax",peoplevo.getBirthdayMax());
-        }
-
-        if (peoplevo.getSalaryMin() != null){
-            condition.put("salaryMin", peoplevo.getSalaryMin());
-        }
-
-        if (peoplevo.getSalaryMax() != null){
-            condition.put("salaryMax", peoplevo.getSalaryMax());
-        }
-
+        Map<String,Object> condition = PeopleVo.CreateCondition(peoplevo);
         pageInfo.setCondition(condition);
         peopleService.findDataGrid(pageInfo);
 
@@ -101,6 +71,28 @@ public class PeopleController extends BaseController{
     @RequestMapping(value="/advSearchPage", method = RequestMethod.GET)
     public String advSearchPage(){
         return "admin/people/peopleSearch";
+    }
+
+    @RequestMapping(value="/exportSearchPage", method = RequestMethod.GET)
+    public String exportSearchPage() { return "admin/people/exportSearch";}
+
+    @RequestMapping(value="/exportSearch", method = RequestMethod.POST)
+    public void exportSearch(HttpServletResponse response, PeopleVo peoplevo) {
+
+        Map<String,Object> condition = PeopleVo.CreateCondition(peoplevo);
+
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setCondition(condition);
+        String[] idList = peopleService.findPeopleByCondition(pageInfo);
+
+        if (idList == null || idList.length < 1){
+            LOGGER.error("Excel:{}","无有效数据");
+        }
+        try{
+            peopleService.exportExcel(response,idList);
+        }catch(Exception exp){
+            LOGGER.error("导出Excel失败:{}",exp);
+        }
     }
 
     @RequestMapping(value="/addPage", method=RequestMethod.GET)
@@ -220,14 +212,13 @@ public class PeopleController extends BaseController{
     @RequestMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response,String ids){
 
-        if (StringUtils.isEmpty(ids)){
-        	 LOGGER.error("导出Word:{}","请选择有效数据!");
+        if (StringUtils.isBlank(ids)){
+        	 LOGGER.error("Excel:{}","请选择有效数据!");
         }
         try{
-            String[] idList = ids.split(",");
-            peopleService.exportExcel(response,ids);
+            peopleService.exportExcel(response,ids.split(","));
         }catch(Exception exp){
-            LOGGER.error("导出Word:{}",exp);
+            LOGGER.error("导出Excel失败:{}",exp);
         }
     }
     /**
@@ -245,4 +236,5 @@ public class PeopleController extends BaseController{
             LOGGER.error("导出Word:{}",exp);
         }
     }
+
 }

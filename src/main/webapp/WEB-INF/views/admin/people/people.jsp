@@ -56,6 +56,33 @@
             });
         }
 
+        function exportSearch(){
+            parent.$.modalDialog({
+                title: '查询导出',
+                width: 500,
+                height: 350,
+                href: '${path}/people/exportSearchPage',
+                button:[{
+                    text:'导出',
+                    handler: function(){
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;
+                        var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                        if(parent.checkForm()){
+                            parent.SYS_SUBMIT_FORM(f, "/people/exportSearch",function(data){
+                                if(!data["success"]){
+                                    parent.$.messager.alert("提示",data["msg"],"warning");
+                                }else{
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
@@ -332,6 +359,10 @@
         <shiro:hasPermission name="/people/advSearch">
             <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="/people/exportSearchPage">
+            <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         </shiro:hasPermission>
         <!-- 附件下载使用 -->
     	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>

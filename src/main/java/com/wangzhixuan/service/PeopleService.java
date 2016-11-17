@@ -1,6 +1,7 @@
 package com.wangzhixuan.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -73,7 +74,7 @@ public interface PeopleService {
      * @param id
      * @return
      */
-    void exportExcel(HttpServletResponse response,String id);
+    void exportExcel(HttpServletResponse response,String[] idList);
     /**
      * 导出Word
      * @param request
@@ -82,4 +83,13 @@ public interface PeopleService {
      * @return
      */
     void exportWord(HttpServletResponse response,String id);
+
+    /**
+     * 根据条件搜索ids
+     * @param request
+     * @param response
+     * @param id
+     * @return
+     */
+    String[] findPeopleByCondition(PageInfo pageInfo);
 }

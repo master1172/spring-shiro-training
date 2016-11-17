@@ -1,10 +1,13 @@
 package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by liushaoyang on 2016/9/18.
@@ -136,5 +139,43 @@ public class PeopleVo implements Serializable{
 
     public void setSalaryMax(BigDecimal salaryMax) {
         this.salaryMax = salaryMax;
+    }
+
+    public static Map<String,Object> CreateCondition(PeopleVo peoplevo){
+        Map<String, Object> condition = Maps.newHashMap();
+
+        if(StringUtils.isNoneBlank(peoplevo.getName())){
+            condition.put("name", peoplevo.getName());
+        }
+
+        if(StringUtils.isNoneBlank(peoplevo.getJob())){
+            condition.put("job", peoplevo.getJob());
+        }
+
+        if (peoplevo.getSex() != null){
+            condition.put("sex", peoplevo.getSex());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getBirthdayMin())){
+            condition.put("birthdayMin",peoplevo.getBirthdayMin());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getBirthdayMax())){
+            condition.put("birthdayMax",peoplevo.getBirthdayMax());
+        }
+
+        if (peoplevo.getSalaryMin() != null){
+            condition.put("salaryMin", peoplevo.getSalaryMin());
+        }
+
+        if (peoplevo.getSalaryMax() != null){
+            condition.put("salaryMax", peoplevo.getSalaryMax());
+        }
+
+        if (peoplevo.getDegreeId() != null){
+            condition.put("degreeId", peoplevo.getDegreeId());
+        }
+
+        return condition;
     }
 }
