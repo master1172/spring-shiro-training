@@ -77,22 +77,32 @@ public class PeopleController extends BaseController{
     public String exportSearchPage() { return "admin/people/peopleSearch";}
 
     @RequestMapping(value="/exportSearch", method = RequestMethod.POST)
-    public void exportSearch(HttpServletResponse response, PeopleVo peoplevo) {
+    @ResponseBody
+    public Result exportSearch(HttpServletResponse response, PeopleVo peoplevo) {
+
+        Result result = new Result();
 
         Map<String,Object> condition = PeopleVo.CreateCondition(peoplevo);
 
         PageInfo pageInfo = new PageInfo();
         pageInfo.setCondition(condition);
-        String[] idList = peopleService.findPeopleByCondition(pageInfo);
+        String ids = peopleService.findPeopleIDsByCondition(pageInfo);
 
-        if (idList == null || idList.length < 1){
+        if (StringUtils.isBlank(ids)){
+            result.setSuccess(false);
+            result.setMsg("未找到有效数据");
             LOGGER.error("Excel:{}","无有效数据");
         }
         try{
-            peopleService.exportExcel(response,idList);
+            result.setSuccess(true);
+            result.setObj(ids);
         }catch(Exception exp){
+            result.setSuccess(false);
+            result.setMsg("导出Excel失败");
             LOGGER.error("导出Excel失败:{}",exp);
         }
+
+        return result;
     }
 
     @RequestMapping(value="/addPage", method=RequestMethod.GET)

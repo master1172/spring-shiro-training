@@ -91,5 +91,5 @@ public interface PeopleService {
      * @param id
      * @return
      */
-    String[] findPeopleByCondition(PageInfo pageInfo);
+    String findPeopleIDsByCondition(PageInfo pageInfo);
 }

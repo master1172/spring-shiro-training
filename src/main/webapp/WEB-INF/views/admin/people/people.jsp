@@ -73,8 +73,13 @@
                                     parent.$.messager.alert("提示",data["msg"],"warning");
                                 }else{
                                     parent.progressClose();
-                                    dataGrid.datagrid("reload");
                                     parent.$.modalDialog.handler.dialog("close");
+                                    var ids = data["obj"];
+                                    alert(ids);
+                                    var form=$("#downLoadForm");
+                                    form.find("input[name='ids']").val(ids);
+                                    form.attr("action",'${path}'+"/people/exportExcel");
+                                    $("#downLoadForm").submit();
                                 }
                             });
                         }

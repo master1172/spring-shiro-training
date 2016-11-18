@@ -320,18 +320,23 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
 	@Override
-	public String[] findPeopleByCondition(PageInfo pageInfo) {
+	public String findPeopleIDsByCondition(PageInfo pageInfo) {
+		String ids = "";
 		pageInfo.setFrom(0);
 		pageInfo.setSize(100000);
 		List<PeopleVo> peopleList = peopleMapper.findPeoplePageCondition(pageInfo);
 		if (peopleList == null || peopleList.size() < 1)
-			return new String[0];
-		String[] idList = new String[peopleList.size()];
+			return ids;
+
+
 		for(int i=0; i<peopleList.size(); i++){
-			idList[i] = peopleList.get(i).getId().toString();
+			ids = ids + peopleList.get(i).getId().toString() + ",";
 		}
 
-		return idList;
+		//刪除最後一個逗号
+		ids = ids.substring(0, ids.lastIndexOf(','));
+
+		return ids;
 	}
 
 	/**
