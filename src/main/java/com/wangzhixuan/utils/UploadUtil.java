@@ -1,6 +1,7 @@
 package com.wangzhixuan.utils;
 
 import com.wangzhixuan.model.People;
+import org.apache.poi.xssf.usermodel.XSSFPictureData;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.*;
@@ -96,5 +97,32 @@ public class UploadUtil {
 
         }
         return "";
+    }
+
+    //存储从Excel来的图片，返回存储图片路径
+    public static String pictureUpLoad(String filePath, XSSFPictureData pictureData){
+        String fileExt = pictureData.suggestFileExtension();
+        byte[] data = pictureData.getData();
+
+        StringBuffer newFileName=new StringBuffer(UUID.randomUUID().toString().replaceAll("-", "")+"."+fileExt);//新文件名称
+        StringBuffer upLoadFilePath=new StringBuffer(filePath + UPLOAD_PATH);//上传附件路径
+        StringBuffer downLoadFilePath=new StringBuffer(UPLOAD_PATH);//下载附件路径
+        File f = new File(upLoadFilePath.toString());
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        upLoadFilePath.append(newFileName);
+        downLoadFilePath.append(newFileName);
+
+        try{
+            OutputStream os = new FileOutputStream(upLoadFilePath.toString());
+            os.write(data);
+            os.flush();
+            os.close();
+        }catch (Exception exp){
+            return "";
+        }
+
+        return downLoadFilePath.toString();
     }
 }

@@ -13,8 +13,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
@@ -23,11 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.Range;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -41,8 +36,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.service.PeopleService;
-import com.wangzhixuan.utils.CustomXWPFDocument;
-import com.wangzhixuan.utils.PageInfo;
 
 import static com.wangzhixuan.utils.WordUtil.generateWord;
 
@@ -85,8 +78,7 @@ public class PeopleServiceImpl implements PeopleService{
 
     	if(file!=null){//上传附件
 			//获取头像上传路径
-			String classPath = this.getClass().getResource("/").getPath();//路径
-			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
+			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
     		if(StringUtils.isNotEmpty(uploadPath) ){
     			peopleMapper.insert(people);
@@ -108,8 +100,7 @@ public class PeopleServiceImpl implements PeopleService{
 
 		if (file != null){
 			//获取头像上传路径
-			String classPath = this.getClass().getResource("/").getPath();//路径
-			String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
+			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
 			if(StringUtils.isNotEmpty(uploadPath)){
 				peopleMapper.updatePeople(people);
@@ -162,10 +153,24 @@ public class PeopleServiceImpl implements PeopleService{
 		try {
 			XSSFWorkbook xwb = new XSSFWorkbook(path);
 			XSSFSheet sheet = xwb.getSheetAt(0);
+			//
+			List<XSSFPictureData> pictureList = xwb.getAllPictures();
+
 	    	XSSFRow row;
 	    	for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
 	    	    row = sheet.getRow(i);
 	    	    People p=new People();
+
+				//将Excel中的图片插入到数据库中
+				if (pictureList != null && pictureList.size() > 0){
+					XSSFPictureData picture = pictureList.get(0);
+					String filePath = StringUtilExtra.getPictureUploadPath();
+					String uploadPath = UploadUtil.pictureUpLoad(filePath,picture);
+
+					if (StringUtils.isNotBlank(uploadPath)){
+						p.setPhoto(uploadPath);
+					}
+				}
 
 				//姓名
 				if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){

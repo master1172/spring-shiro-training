@@ -18,4 +18,11 @@ public class StringUtilExtra {
             return "";
         }
     }
+
+    public static String getPictureUploadPath(){
+        String classPath = StringUtilExtra.class.getClass().getResource("/").getPath();//路径
+        String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
+
+        return filePath;
+    }
 }
