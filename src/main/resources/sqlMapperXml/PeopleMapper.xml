@@ -10,6 +10,7 @@
         <result column="salary" property="salary" jdbcType="DECIMAL" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
         <result column="degree_id" property="degreeId" jdbcType="INTEGER" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="peopleVoResultMap" type="com.wangzhixuan.vo.PeopleVo">
@@ -22,10 +23,11 @@
         <result column="photo"  property="photo" jdbcType="VARCHAR" />
         <result column="degree_id" property="degreeId" jdbcType="INTEGER" />
         <result column="degreeName" property="degreeName" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, name, sex, birthday, job, salary, photo, degree_id
+        id, name, sex, birthday, job, salary, photo, degree_id, address
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -45,7 +47,8 @@
           t.salary,
           t.photo,
           t.degree_id,
-          s.name as degreeName
+          s.name as degreeName,
+          t.address
         FROM
           people t
         LEFT JOIN
@@ -78,7 +81,8 @@
         t.job,
         t.salary,
         t.degree_id,
-        s.name as degreeName
+        s.name as degreeName,
+        t.address
         FROM
         people t
         LEFT JOIN
@@ -107,6 +111,9 @@
             </if>
             <if test=" condition.degreeId != null">
                 and t.degree_id = #{condition.degreeId}
+            </if>
+            <if test=" condition.address != null and condition.address != ''">
+                and t.address LIKE concat('%',#{condition.address},'%')
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -140,6 +147,9 @@
             <if test=" condition.degreeId != null">
                 and t.degree_id = #{condition.degreeId}
             </if>
+            <if test=" condition.address != null and condition.address != ''">
+                and t.address LIKE concat('%',#{condition.address},'%')
+            </if>
         </where>
     </select>
 
@@ -161,7 +171,7 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people (name, sex, birthday, job, salary, photo, degree_id)
+        insert into people (name, sex, birthday, job, salary, photo, degree_id, address)
         values (
           #{name,jdbcType=VARCHAR},
           #{sex,jdbcType=TINYINT},
@@ -169,11 +179,12 @@
           #{job, jdbcType=VARCHAR},
           #{salary,jdbcType=DECIMAL},
           #{photo, jdbcType=VARCHAR},
-          #{degreeId, jdbcType=INTEGER}
+          #{degreeId, jdbcType=INTEGER},
+          #{address, jdbcType=VARCHAR}
          )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people (name, sex, birthday, job, salary, degree_id)
+        insert into people (name, sex, birthday, job, salary, degree_id, address)
         values
         <foreach item="item" index="index" collection="list" separator=",">
           (
@@ -182,7 +193,8 @@
 	        #{item.birthday,jdbcType=DATE},
 	        #{item.job, jdbcType=VARCHAR},
 	        #{item.salary,jdbcType=DECIMAL},
-            #{item.degreeId,jdbcType=INTEGER}
+            #{item.degreeId,jdbcType=INTEGER},
+            #{item.address, jdbcType=VARCHAR}
 	      )  
         </foreach>
     </insert>
@@ -210,12 +222,15 @@
             <if test="degreeId != null">
                 degree_id = #{degreeId, jdbcType=INTEGER},
             </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select 
-        	t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id
+        	t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,t.address
         from people t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -225,7 +240,7 @@
 
     <select id="selectPeopleVoByIds" resultMap="peopleVoResultMap" parameterType="java.util.ArrayList">
         select
-          t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,s.name as degreeName
+          t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,s.name as degreeName,t.address
         from people t
         left join
         dict_degree s ON s.id = t.degree_id

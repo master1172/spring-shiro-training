@@ -29,6 +29,8 @@ public class People implements Serializable {
 
     private Integer degreeId;
 
+    private String address;
+
     public Long getId() {
         return id;
     }
@@ -84,6 +86,10 @@ public class People implements Serializable {
     public void setPhoto(String photo){
         this.photo = photo;
     }
+
+    public String getAddress() { return address; }
+
+    public void setAddress(String address) { this.address = address;}
 
     @Override
     public String toString(){

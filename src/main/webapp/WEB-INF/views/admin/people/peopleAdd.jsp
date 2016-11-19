@@ -40,11 +40,13 @@
                 </tr>
                 <tr>
                     <td>出生日期</td>
-                    <td colspan="3">
+                    <td>
                         <input name="birthday" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
+                    <td>住址</td>
+                    <td><input type="test" name="address"></td>
                 </tr>
                 <tr>
                     <td>学历</td>

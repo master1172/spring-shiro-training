@@ -52,6 +52,10 @@
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly" value="${people.birthday}"/>
                     </td>
+                    <td>住址</td>
+                    <td>
+                        <input name="address" type="text" value="${people.address}">
+                    </td>
                 </tr>
                 <tr>
                     <td>学历</td>

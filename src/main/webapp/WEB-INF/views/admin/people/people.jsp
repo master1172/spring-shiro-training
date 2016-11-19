@@ -313,6 +313,10 @@
                         <input name="birthdayMax" placeholder="点击选择结束时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
+                    </td>
+                    <th>住址</th>
+                    <td>
+                        <input name="address" placeholder="请输入住址"/>
                         <a href="javascript:void(0);" class="easyui-linkbutton"
                            data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
                         <a href="javascript:void(0);" class="easyui-linkbutton"
@@ -334,6 +338,7 @@
                 <th field="job"      data-options="sortable:true" width="80">工作</th>
                 <th field="salary"   data-options="sortable:true" width="80">薪资</th>
                 <th field="degreeName" data-options="sortable:true" width="80">学历</th>
+                <th field="address"  data-options="sortable:true" width="130">住址</th>
                 <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
         </thead>

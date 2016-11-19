@@ -30,6 +30,8 @@
                 <tr>
                     <td>职业</td>
                     <td><input type="text" name="job"></td>
+                    <td>住址</td>
+                    <td><input type="text" name="address"></td>
                 </tr>
                 <tr>
                     <td>薪资范围</td>

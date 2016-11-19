@@ -221,6 +221,12 @@ public class PeopleServiceImpl implements PeopleService{
 					}
 				}
 
+				//住址
+				if(row.getCell(7) != null && !row.getCell(7).toString().trim().equals("")){
+					String address = row.getCell(7).toString().trim();
+					p.setAddress(address);
+				}
+
 	    		list.add(p);
 	    	}
 		} catch (IOException e1) {
@@ -250,6 +256,7 @@ public class PeopleServiceImpl implements PeopleService{
     			row.createCell(4).setCellValue("工作");row.getCell(4).setCellStyle(setBorder);
     			row.createCell(5).setCellValue("薪水");row.getCell(5).setCellStyle(setBorder);
 				row.createCell(6).setCellValue("学历");row.getCell(6).setCellStyle(setBorder);
+				row.createCell(7).setCellValue("住址");row.getCell(7).setCellStyle(setBorder);
     			setBorder=setCellStyle(workBook,false);
         		for(int i=0;i<list.size();i++){
         			row=sheet.createRow(i+1);
@@ -261,6 +268,7 @@ public class PeopleServiceImpl implements PeopleService{
         			row.createCell(4).setCellValue(p.getJob());row.getCell(4).setCellStyle(setBorder);
         			row.createCell(5).setCellValue(p.getSalary().toString());row.getCell(5).setCellStyle(setBorder);
 					row.createCell(6).setCellValue(p.getDegreeName());row.getCell(6).setCellStyle(setBorder);
+					row.createCell(7).setCellValue(p.getAddress());row.getCell(7).setCellStyle(setBorder);
         			row.setHeight((short) 400);
         		}
         		sheet.setDefaultRowHeightInPoints(21);
@@ -294,6 +302,7 @@ public class PeopleServiceImpl implements PeopleService{
                 params.put("${job}",p.getJob());
                 params.put("${salary}",p.getSalary()+"");
 				params.put("${degree}",p.getDegreeName());
+				params.put("${address}",p.getAddress());
 
                 //判断是否有头像
                 if(p.getPhoto()!=null&&p.getPhoto().length()>0){

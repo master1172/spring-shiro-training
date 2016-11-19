@@ -43,6 +43,8 @@ public class PeopleVo implements Serializable{
 
     private String degreeName;
 
+    private String address;
+
     public Long getId() {
         return id;
     }
@@ -141,6 +143,10 @@ public class PeopleVo implements Serializable{
         this.salaryMax = salaryMax;
     }
 
+    public String getAddress() { return address; }
+
+    public void setAddress(String address) { this.address = address; }
+
     public static Map<String,Object> CreateCondition(PeopleVo peoplevo){
         Map<String, Object> condition = Maps.newHashMap();
 
@@ -176,6 +182,12 @@ public class PeopleVo implements Serializable{
             condition.put("degreeId", peoplevo.getDegreeId());
         }
 
+        if (peoplevo.getAddress() != null){
+            condition.put("address", peoplevo.getAddress());
+        }
+
         return condition;
     }
+
+
 }
