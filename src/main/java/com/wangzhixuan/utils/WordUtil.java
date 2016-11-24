@@ -1,7 +1,12 @@
 package com.wangzhixuan.utils;
 
 import org.apache.poi.POIXMLDocument;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.ByteArrayInputStream;
@@ -139,5 +144,27 @@ public class WordUtil {
             }
         }
         return byteArray;
+    }
+
+    /**
+     * 单元格样式-excel
+     * @param workBook
+     * @return
+     */
+    public static XSSFCellStyle setCellStyle(XSSFWorkbook workBook, boolean blob){
+        XSSFCellStyle setBorder = workBook.createCellStyle();
+        setBorder.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+        setBorder.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+        setBorder.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+        setBorder.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+        setBorder.setAlignment(HSSFCellStyle.ALIGN_CENTER);//左右居中
+        XSSFFont font = workBook.createFont();
+        font.setFontName("宋体");
+        font.setFontHeightInPoints((short) 12);//设置字体大小
+        if(blob){
+            font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//加粗
+        }
+        setBorder.setFont(font);//选择需要用到的字体格式
+        return setBorder;
     }
 }

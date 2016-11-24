@@ -67,7 +67,7 @@ public interface PeopleService {
      * 数据导入
      * @param list
      */
-    public boolean insertByImport(CommonsMultipartFile[] files);
+    boolean insertByImport(CommonsMultipartFile[] files);
     /**
      * 导出Excel
      * @param response

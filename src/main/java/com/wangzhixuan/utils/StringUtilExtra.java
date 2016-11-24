@@ -1,5 +1,8 @@
 package com.wangzhixuan.utils;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,5 +27,13 @@ public class StringUtilExtra {
         String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
 
         return filePath;
+    }
+
+    public static boolean isBlank(XSSFCell cell){
+        if (cell == null)
+            return true;
+
+        String cellValue = cell.toString();
+        return StringUtils.isBlank(cellValue);
     }
 }
