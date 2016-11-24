@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeopleDeathMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleDeath">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national" property="national" jdbcType="INTEGER"/>
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+        <result column="school_date" property="school_date" jdbcType="DATE"/>
+        <result column="category" property="category" jdbcType="VARCHAR" />
+        <result column="job_level_id" property="job_level_id" jdbcType="INTEGER" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="death_date" property="death_date" jdbcType="DATE" />
+        <result column="death_reason" property="death_reason" jdbcType="VARCHAR" />
+        <result column="comment" property="comment" jdbcType="VARCHAR" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="peopleDeathVoResultMap" type="com.wangzhixuan.vo.PeopleDeathVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national" property="national" jdbcType="INTEGER"/>
+        <result column="nationalName" property="nationalName" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+        <result column="school_date" property="school_date" jdbcType="DATE"/>
+        <result column="category" property="category" jdbcType="VARCHAR" />
+        <result column="job_level_id" property="job_level_id" jdbcType="INTEGER" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="death_date" property="death_date" jdbcType="DATE" />
+        <result column="death_reason" property="death_reason" jdbcType="VARCHAR" />
+        <result column="comment" property="comment" jdbcType="VARCHAR" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people_death
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeopleVoById" resultMap="peopleDeathVoResultMap" parameterType="java.lang.Long">
+        SELECT
+        t.id,
+        t.code,
+        t.sex,
+        t.national,
+        s.name as nationalName,
+        t.birthday,
+        t.school_date,
+        t.category,
+        t.job_level_id,
+        t.department,
+        t.death_date,
+        t.death_reason,
+        t.comment,
+        t.photo
+        FROM
+        people_death t
+        LEFT JOIN
+        dict_national s ON s.id = t.national
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people_death
+        where id = #{id}
+    </select>
+
+    <select id="findPeoplePageCondition" resultMap="peopleDeathVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.code,
+        t.sex,
+        t.national,
+        s.name as nationalName,
+        t.birthday,
+        t.school_date,
+        t.category,
+        t.job_level_id,
+        t.department,
+        t.death_date,
+        t.death_reason,
+        t.comment,
+        t.photo
+        FROM
+        people_death t
+        LEFT JOIN
+        dict_national s ON s.id = t.national
+        <where>
+            <if test=" condition.code != null">
+                and t.code = #{condition.code}
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.national != null">
+                and t.national = #{condition.national}
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.school_dateMin != null and condition.school_dateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.school_dateMin} ]]>
+            </if>
+            <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
+            </if>
+            <if test=" condition.category != null and condition.category != ''">
+                and t.category LIKE concat('%',#{condition.category},'%')
+            </if>
+            <if test=" condition.jobe_level_id != null">
+                and t.jobe_level_id = #{condition.jobe_level_id}
+            </if>
+            <if test=" condition.department != null and condition.department != ''">
+                and t.department LIKE concat('%',#{condition.department},'%')
+            </if>
+            <if test=" condition.death_dateMin != null and condition.death_dateMin != ''">
+                <![CDATA[ and t.death_date >= #{condition.death_dateMin} ]]>
+            </if>
+            <if test=" condition.death_dateMax != null and condition.death_dateMax != ''">
+                <![CDATA[ and t.death_date <= #{condition.death_dateMax} ]]>
+            </if>
+            <if test=" condition.death_reason != null and condition.death_reason != ''">
+                and t.death_reason LIKE concat('%',#{condition.death_reason},'%')
+            </if>
+            <if test=" condition.comment != null and condition.comment != ''">
+                and t.comment LIKE concat('%',#{condition.comment},'%')
+            </if>
+            <if test=" condition.photo != null and condition.photo != ''">
+                and t.photo LIKE concat('%',#{condition.photo},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from people_death t
+        <where>
+            <if test=" condition.code != null">
+                and t.code = #{condition.code}
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.national != null">
+                and t.national = #{condition.national}
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.school_dateMin != null and condition.school_dateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.school_dateMin} ]]>
+            </if>
+            <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
+            </if>
+            <if test=" condition.category != null and condition.category != ''">
+                and t.job_name LIKE concat('%',#{condition.job_name},'%')
+            </if>
+            <if test=" condition.jobe_level_id != null">
+                and t.jobe_level_id = #{condition.jobe_level_id}
+            </if>
+            <if test=" condition.department != null and condition.department != ''">
+                and t.department LIKE concat('%',#{condition.department},'%')
+            </if>
+            <if test=" condition.death_dateMin != null and condition.death_dateMin != ''">
+                <![CDATA[ and t.death_date >= #{condition.death_dateMin} ]]>
+            </if>
+            <if test=" condition.death_dateMax != null and condition.death_dateMax != ''">
+                <![CDATA[ and t.death_date <= #{condition.death_dateMax} ]]>
+            </if>
+            <if test=" condition.death_reason != null and condition.death_reason != ''">
+                and t.death_reason LIKE concat('%',#{condition.death_reason},'%')
+            </if>
+            <if test=" condition.comment != null and condition.comment != ''">
+                and t.comment LIKE concat('%',#{condition.comment},'%')
+            </if>
+            <if test=" condition.photo != null and condition.photo != ''">
+                and t.photo LIKE concat('%',#{condition.photo},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from people_death
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete from people_death
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleDeath">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into people_death (code, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
+        values (
+        #{code,jdbcType=VARCHAR},
+        #{sex,jdbcType=TINYINT},
+        #{national,jdbcType=INTEGER},
+        #{birthday,jdbcType=DATE},
+        #{school_date,jdbcType=DATE},
+        #{category,jdbcType=VARCHAR},
+        #{job_level_id, jdbcType=INTEGER},
+        #{department,jdbcType=VARCHAR},
+        #{death_date, jdbcType=DATE},
+        #{death_reason,jdbcType=VARCHAR},
+        #{comment, jdbcType=VARCHAR},
+        #{photo, jdbcType=VARCHAR},
+        )
+    </insert>
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into people_death (code, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{code,jdbcType=VARCHAR},
+            #{sex,jdbcType=TINYINT},
+            #{national,jdbcType=INTEGER},
+            #{birthday,jdbcType=DATE},
+            #{school_date,jdbcType=DATE},
+            #{category,jdbcType=VARCHAR},
+            #{job_level_id, jdbcType=INTEGER},
+            #{department,jdbcType=VARCHAR},
+            #{death_date, jdbcType=DATE},
+            #{death_reason,jdbcType=VARCHAR},
+            #{comment, jdbcType=VARCHAR},
+            #{photo, jdbcType=VARCHAR},
+            )
+        </foreach>
+    </insert>
+    <update id="updatePeople" parameterType="com.wangzhixuan.model.PeopleDeath">
+        update people_death
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="national != null">
+                national = #{national,jdbcType=INTEGER},
+            </if>
+            <if test="school_date != null">
+                school_date = #{school_date,jdbcType=DATE},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="job_level_id != null">
+                job_level_id = #{job_level_id, jdbcType=INTEGER},
+            </if>
+            <if test="department != null">
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="death_date != null">
+                death_date = #{death_date, jdbcType=DATE},
+            </if>
+            <if test="death_reason != null">
+                death_reason = #{death_reason,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                comment = #{comment, jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo = #{photo, jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        select
+        t.id,t.code,t.sex,t.national,t.birthday,t.school_date,t.category,t.job_level_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
+        from people_death t
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectPeopleVoByIds" resultMap="peopleDeathVoResultMap" parameterType="java.util.ArrayList">
+        select
+        t.id,t.code,t.sex,t.national,s.name as nationalName,t.birthday,t.school_date,t.category,t.job_level_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
+        from people_death t
+        left join
+        dict_national s ON s.id = t.national
+        where t.id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

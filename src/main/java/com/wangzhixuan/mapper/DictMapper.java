@@ -11,4 +11,8 @@ public interface DictMapper {
     Integer findDegreeIdByName(String degreeName);
 
     List<Dict> findDegreeDict();
+
+    Integer findNationalByName(String nationalName);
+
+    Integer findJobIdByName(String category);
 }

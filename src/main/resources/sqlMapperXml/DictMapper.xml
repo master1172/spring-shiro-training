@@ -23,5 +23,19 @@
         from dict_degree
         where name = #{name}
     </select>
+
+    <select id="findNationalByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        id
+        from dict_national
+        where name = #{name}
+    </select>
+
+    <select id="findJobIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        id
+        from job
+        where job_name = #{name}
+    </select>
 </mapper>
 
