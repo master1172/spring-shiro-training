@@ -7,41 +7,57 @@ import java.io.Serializable;
 /**
  * Created by sterm on 2016/11/22.
  */
-public class PeopleDaily implements Serializable{
+public class PeopleDaily extends PeopleBase implements Serializable{
     private static final long serialVersionUID = -5321613594382537343L;
 
+    //id key
     private Long id;
 
+    //编码
     private String code;
 
+    //姓名
     private String name;
 
+    //性别 男、女
     private Integer sex;
 
+    //民族
     private Integer nationalId;
 
+    //来自省
     private String province;
 
+    //来自市
     private String city;
 
+    //生日
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String birthday;
 
-    private Integer educationId;
+    //文化程度
+    private String educationName;
 
-    private Integer politicalId;
+    //政治面貌
+    private String politicalName;
 
+    //来院日期
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String schoolDate;
 
+    //联系电话
     private String mobile;
 
-    private Integer departmentId;
+    //部门
+    private String departmentName;
 
+    //工种
     private String jobName;
 
+    //备注
     private String comment;
 
+    //照片
     private String photo;
 
     public Long getId() {
@@ -108,20 +124,20 @@ public class PeopleDaily implements Serializable{
         this.birthday = birthday;
     }
 
-    public Integer getEducationId() {
-        return educationId;
+    public String getEducationName() {
+        return educationName;
     }
 
-    public void setEducationId(Integer educationId) {
-        this.educationId = educationId;
+    public void setEducationName(String educationName) {
+        this.educationName = educationName;
     }
 
-    public Integer getPoliticalId() {
-        return politicalId;
+    public String getPoliticalName() {
+        return politicalName;
     }
 
-    public void setPoliticalId(Integer politicalId) {
-        this.politicalId = politicalId;
+    public void setPoliticalName(String politicalName) {
+        this.politicalName = politicalName;
     }
 
     public String getSchoolDate() {
@@ -140,12 +156,12 @@ public class PeopleDaily implements Serializable{
         this.mobile = mobile;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getJobName() {
@@ -164,9 +180,13 @@ public class PeopleDaily implements Serializable{
         this.comment = comment;
     }
 
-    public String getPhoto() {return photo;}
+    public String getPhoto() {
+        return photo;
+    }
 
-    public void setPhoto(String photo) {this.photo = photo;}
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     @Override
     public String toString(){

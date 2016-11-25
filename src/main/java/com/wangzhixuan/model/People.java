@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 /**
  * Created by liushaoyang on 2016/9/8.
  */
-public class People implements Serializable {
+public class People extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -5321613594382537423L;
 
@@ -25,11 +25,11 @@ public class People implements Serializable {
 
     private BigDecimal salary;
 
-    private String photo;
-
     private Integer degreeId;
 
     private String address;
+
+    private String photo;
 
     public Long getId() {
         return id;
@@ -81,15 +81,13 @@ public class People implements Serializable {
 
     public void setDegreeId(Integer degreeId) {this.degreeId = degreeId;}
 
-    public String getPhoto(){return photo;}
-
-    public void setPhoto(String photo){
-        this.photo = photo;
-    }
-
     public String getAddress() { return address; }
 
     public void setAddress(String address) { this.address = address;}
+
+    public String getPhoto() {return photo;}
+
+    public void setPhoto(String photo) {this.photo = photo;}
 
     @Override
     public String toString(){

@@ -1,8 +1,11 @@
 package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by sterm on 2016/11/22.
@@ -28,11 +31,7 @@ public class PeopleDailyVo implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String birthday;
 
-    private Integer educationId;
-
     private String educationName;
-
-    private Integer politicalId;
 
     private String politicalName;
 
@@ -40,8 +39,6 @@ public class PeopleDailyVo implements Serializable{
     private String schoolDate;
 
     private String mobile;
-
-    private Integer departmentId;
 
     private String departmentName;
 
@@ -123,28 +120,12 @@ public class PeopleDailyVo implements Serializable{
         this.birthday = birthday;
     }
 
-    public Integer getEducationId() {
-        return educationId;
-    }
-
-    public void setEducationId(Integer educationId) {
-        this.educationId = educationId;
-    }
-
     public String getEducationName() {
         return educationName;
     }
 
     public void setEducationName(String educationName) {
         this.educationName = educationName;
-    }
-
-    public Integer getPoliticalId() {
-        return politicalId;
-    }
-
-    public void setPoliticalId(Integer politicalId) {
-        this.politicalId = politicalId;
     }
 
     public String getPoliticalName() {
@@ -171,14 +152,6 @@ public class PeopleDailyVo implements Serializable{
         this.mobile = mobile;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
-    }
-
     public String getDepartmentName() {
         return departmentName;
     }
@@ -203,11 +176,26 @@ public class PeopleDailyVo implements Serializable{
         this.comment = comment;
     }
 
-    public String getPhoto() {return photo;}
+    public String getPhoto() {
+        return photo;
+    }
 
-    public void setPhoto(String photo) {this.photo = photo;}
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public String toString(){
         return "id = " + id;
+    }
+
+    public static Map<String,Object> CreateCondition(PeopleDailyVo peopleDailyVo) {
+
+        Map<String, Object> condition = Maps.newHashMap();
+
+        if(StringUtils.isNoneBlank(peopleDailyVo.getName())){
+            condition.put("name", peopleDailyVo.getName());
+        }
+
+        return condition;
     }
 }

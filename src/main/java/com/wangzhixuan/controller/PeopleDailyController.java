@@ -1,6 +1,8 @@
 package com.wangzhixuan.controller;
 
+import com.wangzhixuan.service.PeopleDailyService;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleDailyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,7 @@ public class PeopleDailyController extends BaseController{
 
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(HttpServletRequest PeopleDailyVo peopleDailyVo, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, PeopleDailyVo peopleDailyVo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = PeopleDailyVo.CreateCondition(peopleDailyVo);
         pageInfo.setCondition(condition);

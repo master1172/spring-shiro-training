@@ -2,6 +2,7 @@ package com.wangzhixuan.service.impl;
 
 
 import com.wangzhixuan.mapper.DictMapper;
+import com.wangzhixuan.mapper.PeopleDailyMapper;
 import com.wangzhixuan.model.PeopleDaily;
 import com.wangzhixuan.service.PeopleDailyService;
 import com.wangzhixuan.utils.PageInfo;
@@ -13,15 +14,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sterm on 2016/11/22.
@@ -42,7 +45,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 
     @Override
     public PeopleDaily findPeopleDailyByName(String name) {
-        return peopleDailyMapper.findPeopleDailyById(id);
+        return peopleDailyMapper.findPeopleDailyByName(name);
     }
 
     @Override
@@ -56,6 +59,9 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
         if (peopleDaily != null){
             if(StringUtils.isEmpty(peopleDaily.getBirthday())){
                 peopleDaily.setBirthday(null);
+            }
+            if(StringUtils.isEmpty(peopleDaily.getSchoolDate())){
+                peopleDaily.setSchoolDate(null);
             }
         }
 
@@ -72,9 +78,13 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 
     @Override
     public void updatePeopleDaily(PeopleDaily peopleDaily, CommonsMultipartFile file) {
+
         if (peopleDaily != null){
             if(StringUtils.isEmpty(peopleDaily.getBirthday())){
                 peopleDaily.setBirthday(null);
+            }
+            if(StringUtils.isEmpty(peopleDaily.getSchoolDate())){
+                peopleDaily.setSchoolDate(null);
             }
         }
 
@@ -158,14 +168,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                 //部门
                 if(!StringUtilExtra.isBlank(row.getCell(2))) {
                     String departmentName = row.getCell(2).toString().trim();
-                    try {
-                        Integer departmentId = dictMapper.findDepartmentIdByName(departmentName);
-                        if (departmentId != null) {
-                            p.setDepartmentId(departmentId);
-                        }
-                    } catch (Exception exp) {
-
-                    }
+                    p.setDepartmentName(departmentName);
                 }
 
                 //工种
@@ -214,27 +217,13 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                 //学历信息/文化程度
                 if(!StringUtilExtra.isBlank(row.getCell(9))){
                     String educationName = row.getCell(9).toString().trim();
-                    try{
-                        Integer educationId = dictMapper.findEducationIdByName(educationName);
-                        if(educationId != null){
-                            p.setEducationId(educationId);
-                        }
-                    }catch(Exception exp){
-
-                    }
+                    p.setEducationName(educationName);
                 }
 
                 //政治面目
                 if(!StringUtilExtra.isBlank(row.getCell(10))){
                     String politicaName = row.getCell(10).toString().trim();
-                    try{
-                        Integer politicalId = dictMapper.findPoliticalIdByName(politicaName);
-                        if(politicalId != null){
-                            p.setPoliticalId(politicalId);
-                        }
-                    }catch(Exception exp){
-
-                    }
+                    p.setPoliticalName(politicaName);
                 }
 
                 //到院时间
@@ -266,6 +255,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     //导出Excel
     @Override
     public void exportExcel(HttpServletResponse response, String[] idList) {
+
         List list=peopleDailyMapper.selectPeopleDailyVoByIds(idList);
         if(list!=null&&list.size()>0){
             XSSFWorkbook workBook;
@@ -328,7 +318,40 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     @Override
     public void exportWord(HttpServletResponse response, String id) {
 
+        PeopleDailyVo p= peopleDailyMapper.findPeopleDailyVoById(Long.valueOf(id));
+
+        if(p!=null){
+
+            String filePath=this.getClass().getResource("/template/peopleDailyInfo.docx").getPath();
+            String newFileName="日工资人员信息.docx";
+
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("${name}",           p.getName());
+            params.put("${department}",     p.getDepartmentName());
+            params.put("${jobName}",        p.getJobName());
+            params.put("${sex}",            p.getSex()==0?"男":"女");
+            params.put("${nationalName}",   p.getNationalName());
+            params.put("${province}",       p.getProvince());
+            params.put("${city}",           p.getCity());
+            params.put("${birthday}",       p.getBirthday());
+            params.put("${education}",      p.getEducationName());
+            params.put("${political}",      p.getPoliticalName());
+            params.put("${schoolDate}",     p.getSchoolDate());
+            params.put("${mobile}",         p.getMobile());
+            params.put("${comment}",        p.getComment());
+
+            //判断是否有头像
+            if(StringUtils.isNotBlank(p.getPhoto())){
+                Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
+                params.put("${photo}",header);
+            }
+
+            WordUtil.OutputWord(response, filePath, newFileName, params);
+        }
     }
+
+
+
 
     @Override
     public String findPeopleDailyIDsByCondition(PageInfo pageInfo) {

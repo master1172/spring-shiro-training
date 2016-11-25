@@ -295,42 +295,23 @@ public class PeopleServiceImpl implements PeopleService{
     		OutputStream os;
         	String filePath=this.getClass().getResource("/template/custInfo.docx").getPath();
         	String newFileName="在编人员信息.docx";
-    		try {
-    			Map<String,Object> params = new HashMap<String,Object>();
-                params.put("${name}",p.getName());
-                params.put("${sex}",p.getSex()==0?"男":"女");
-                params.put("${birthday}",p.getBirthday());
-                params.put("${job}",p.getJob());
-                params.put("${salary}",p.getSalary()+"");
-				params.put("${degree}",p.getDegreeName());
-				params.put("${address}",p.getAddress());
 
-                //判断是否有头像
-                if(p.getPhoto()!=null&&p.getPhoto().length()>0){
-                	String headPath=this.getClass().getResource("/").getPath();
-					headPath = headPath.substring(0,headPath.indexOf("/WEB-INF"));
-                	File file=new File(headPath+p.getPhoto());
-                	if(file.exists()){
-                		headPath=headPath+p.getPhoto();
-                		Map<String,Object> header = new HashMap<String, Object>();  
-                        header.put("width", 80);
-                        header.put("height", 120);
-                        header.put("type", "jpg");
-                        header.put("content", WordUtil.inputStream2ByteArray(new FileInputStream(headPath), true));
-                        params.put("${photo}",header);
-                	}
-                }
-                doc = WordUtil.generateWord(params, filePath);
-    			response.reset();
-    	        os = response.getOutputStream();
-    	        response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
-    			os.flush();
-    			doc.write(os);
-    		    os.close();
-    		}catch (IOException e) {
-    			e.printStackTrace();
-    		}finally{
-    		}
+			Map<String,Object> params = new HashMap<String,Object>();
+			params.put("${name}",p.getName());
+			params.put("${sex}",p.getSex()==0?"男":"女");
+			params.put("${birthday}",p.getBirthday());
+			params.put("${job}",p.getJob());
+			params.put("${salary}",p.getSalary()+"");
+			params.put("${degree}",p.getDegreeName());
+			params.put("${address}",p.getAddress());
+
+			//判断是否有头像
+			if(p.getPhoto()!=null&&p.getPhoto().length()>0){
+				Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
+				params.put("${photo}",header);
+			}
+
+			WordUtil.OutputWord(response, filePath, newFileName, params);
     	}
     }
 

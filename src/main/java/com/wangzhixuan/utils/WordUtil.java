@@ -1,5 +1,6 @@
 package com.wangzhixuan.utils;
 
+import com.wangzhixuan.model.PeopleBase;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -9,9 +10,9 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -166,5 +167,48 @@ public class WordUtil {
         }
         setBorder.setFont(font);//选择需要用到的字体格式
         return setBorder;
+    }
+
+
+    public static Map<String,Object> PutPhotoIntoWordParameter(String photoPath){
+
+        String headPath = StringUtilExtra.getPictureUploadPath();
+        File file=new File(headPath+photoPath);
+        Map<String,Object> header = new HashMap<String, Object>();
+
+        if(file.exists()){
+            headPath=headPath+photoPath;
+
+            header.put("width", 80);
+            header.put("height", 120);
+            header.put("type", "jpg");
+            try {
+                header.put("content", WordUtil.inputStream2ByteArray(new FileInputStream(headPath), true));
+            } catch (FileNotFoundException e) {
+                return null;
+            }
+        }else{
+            header = null;
+        }
+
+        return header;
+    }
+
+    public static void OutputWord(HttpServletResponse response, String filePath, String newFileName, Map<String, Object> params) {
+        XWPFDocument doc;
+        OutputStream os;
+        try {
+            doc = WordUtil.generateWord(params, filePath);
+            response.reset();
+            os = response.getOutputStream();
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+            os.flush();
+            doc.write(os);
+            os.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+
+        }
     }
 }
