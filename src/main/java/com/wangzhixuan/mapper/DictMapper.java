@@ -12,7 +12,7 @@ public interface DictMapper {
 
     List<Dict> findDegreeDict();
 
-    Integer findNationalByName(String nationalName);
+    Integer findNationalIdByName(String nationalName);
 
     Integer findJobIdByName(String category);
 }

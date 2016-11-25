@@ -178,7 +178,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     String nationalName = row.getCell(3).toString().trim();
 
                     try{
-                        Integer national = dictMapper.findNationalByName(nationalName);
+                        Integer national = dictMapper.findNationalIdByName(nationalName);
                         if (national != null){
                             p.setNational(national);
                         }
