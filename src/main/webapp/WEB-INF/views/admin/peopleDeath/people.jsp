@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>人员管理</title>
+    <title>死亡人员管理</title>
     <script type="text/javascript">
         var dataGrid;
 
@@ -295,7 +295,7 @@
             <tr>
                 <th>部门:</th>
                 <td>
-                    <input name="department" placeholder="请输入人员姓名"/>
+                    <input name="department" placeholder="请输入部门名称"/>
                 </td>
                 <th>性别:</th>
                 <td>
@@ -332,13 +332,13 @@
             <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
             <th field="nationalName" data-options="sortable:true" width="40">民族</th>
             <th field="birthday" data-options="sortable:true" width="80">生日</th>
-            <th field="school_date"   data-options="sortable:true" width="80">到院工作日期</th>
+            <th field="school_date"   data-options="sortable:true" width="100">到院工作日期</th>
             <th field="category"      data-options="sortable:true" width="80">职务</th>
             <th field="job_level_id"   data-options="sortable:true" width="80">职级</th>
             <th field="department"   data-options="sortable:true" width="80">部门</th>
             <th field="death_date"   data-options="sortable:true" width="80">死亡日期</th>
             <th field="death_reason"   data-options="sortable:true" width="80">死亡原因</th>
-            <th field="comment"  data-options="sortable:true" width="80">备注</th>
+            <th field="comment"  data-options="sortable:true" width="130">备注</th>
             <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>

@@ -19,6 +19,9 @@
 
         <typeAlias type="com.wangzhixuan.model.People" alias="People" />
         <typeAlias type="com.wangzhixuan.vo.PeopleVo" alias="PeopleVo" />
+
+        <typeAlias type="com.wangzhixuan.model.PeopleDeath" alias="PeopleDeath" />
+        <typeAlias type="com.wangzhixuan.vo.PeopleDeathVo" alias="PeopleDeathVo" />
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->

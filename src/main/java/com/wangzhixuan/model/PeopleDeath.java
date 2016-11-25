@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class PeopleDeath implements Serializable {
 
+    private static final long serialVersionUID = -3874035833405975520L;
+
     private Long id;
 
     private String code;

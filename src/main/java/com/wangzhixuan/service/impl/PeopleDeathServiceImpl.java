@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import java.util.Map;
 /**
  * Created by administrator_cernet on 2016/11/24.
  */
+@Service
 public class PeopleDeathServiceImpl implements PeopleDeathService {
 
     @Autowired
