@@ -11,16 +11,13 @@ import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleDailyVo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.math.BigDecimal;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +37,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 
     @Override
     public PeopleDaily findPeopleDailyById(Long id) {
-        return null;
+        return peopleDailyMapper.findPeopleDailyById(id);
     }
 
     @Override
@@ -350,12 +347,24 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
         }
     }
 
-
-
-
     @Override
     public String findPeopleDailyIDsByCondition(PageInfo pageInfo) {
-        return null;
+        String ids = "";
+        pageInfo.setFrom(0);
+        pageInfo.setSize(100000);
+        List<PeopleDailyVo> peopleList = peopleDailyMapper.findPeopleDailyPageCondition(pageInfo);
+        if (peopleList == null || peopleList.size() < 1)
+            return ids;
+
+
+        for(int i=0; i<peopleList.size(); i++){
+            ids = ids + peopleList.get(i).getId().toString() + ",";
+        }
+
+        //刪除最後一個逗号
+        ids = ids.substring(0, ids.lastIndexOf(','));
+
+        return ids;
     }
 
 }
