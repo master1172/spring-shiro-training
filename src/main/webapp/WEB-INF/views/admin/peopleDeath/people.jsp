@@ -276,13 +276,13 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-            <shiro:hasPermission name="/peopleDeath/edit">
+            <shiro:lacksPermission name="/peopleDeath/edit">
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
-            </shiro:hasPermission>
-            <shiro:hasPermission name="/peopleDeath/delete">
+            </shiro:lacksPermission>
+            <shiro:lacksPermission name="/peopleDeath/delete">
             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
-            </shiro:hasPermission>
+            </shiro:lacksPermission>
             return str;
         }
     </script>
@@ -334,7 +334,7 @@
             <th field="birthday" data-options="sortable:true" width="80">生日</th>
             <th field="school_date"   data-options="sortable:true" width="100">到院工作日期</th>
             <th field="category"      data-options="sortable:true" width="80">职务</th>
-            <th field="job_level_id"   data-options="sortable:true" width="80">职级</th>
+            <th field="job_level_name"   data-options="sortable:true" width="80">职级</th>
             <th field="department"   data-options="sortable:true" width="80">部门</th>
             <th field="death_date"   data-options="sortable:true" width="80">死亡日期</th>
             <th field="death_reason"   data-options="sortable:true" width="80">死亡原因</th>
@@ -346,34 +346,34 @@
 </div>
 
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/peopleDeath/add">
+    <shiro:lacksPermission name="/peopleDeath/add">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/batchDel">
+    </shiro:lacksPermission>
+    <shiro:lacksPermission name="/peopleDeath/batchDel">
         <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-del'">批量删除</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/importExcel">
+    </shiro:lacksPermission>
+    <shiro:lacksPermission name="/peopleDeath/importExcel">
         <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导入</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/exportExcel">
+    </shiro:lacksPermission>
+    <shiro:lacksPermission name="/peopleDeath/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/exportWord">
+    </shiro:lacksPermission>
+    <shiro:lacksPermission name="/peopleDeath/exportWord">
         <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Word</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/advSearch">
+    </shiro:lacksPermission>
+    <shiro:lacksPermission name="/peopleDeath/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/exportSearch">
+    </shiro:lacksPermission>
+    <shiro:lacksPermission name="/peopleDeath/exportSearch">
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
-    </shiro:hasPermission>
+    </shiro:lacksPermission>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

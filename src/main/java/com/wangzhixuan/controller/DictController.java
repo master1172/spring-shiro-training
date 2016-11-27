@@ -31,4 +31,18 @@ public class DictController {
         List<Dict> degreeList = dictMapper.findDegreeDict();
         return degreeList;
     }
+
+    @RequestMapping(value="/national", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> nationalDict(){
+        List<Dict> nationalList = dictMapper.findNationalDict();
+        return nationalList;
+    }
+
+    @RequestMapping(value="/job", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> JobLevelDict(){
+        List<Dict> jobLevelList = dictMapper.findJobLevelDict();
+        return jobLevelList;
+    }
 }

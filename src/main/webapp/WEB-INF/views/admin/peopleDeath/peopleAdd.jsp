@@ -58,7 +58,7 @@
                 <tr>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="job_level_id" name="job_level_id" url="${path}/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="job_level_id" name="job_level_id" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                     <td>部门</td>

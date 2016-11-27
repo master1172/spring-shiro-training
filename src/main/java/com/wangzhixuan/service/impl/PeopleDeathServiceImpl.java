@@ -207,12 +207,12 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
 
                 //职级
                 if(row.getCell(7) != null && !row.getCell(7).toString().trim().equals("")){
-                    String category = row.getCell(7).toString().trim();
+                    String job_level_name = row.getCell(7).toString().trim();
 
                     try{
-                        Integer job_level_id = dictMapper.findJobIdByName(category);
+                        Integer job_level_id = dictMapper.findJobLevelIdByName(job_level_name);
                         if (job_level_id != null){
-                            p.setNational(job_level_id);
+                            p.setJob_level_id(job_level_id);
                         }
                     }catch(Exception exp){
 
@@ -287,11 +287,11 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     row.createCell(4).setCellValue(p.getBirthday().toString());row.getCell(4).setCellStyle(setBorder);
                     row.createCell(5).setCellValue(p.getSchool_date().toString());row.getCell(5).setCellStyle(setBorder);
                     row.createCell(6).setCellValue(p.getCategory());row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getJob_level_id().toString());row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getJob_level_name());row.getCell(7).setCellStyle(setBorder);
                     row.createCell(8).setCellValue(p.getDepartment());row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getDeath_date().toString());row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getDeath_date());row.getCell(9).setCellStyle(setBorder);
                     row.createCell(10).setCellValue(p.getDeath_reason());row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getComment());row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getComment());row.getCell(11).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
@@ -308,54 +308,36 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
         }
     }
 
+    //导出word
     @Override
-    public void exportWord(HttpServletResponse response, String id) {
+    public void exportWord(HttpServletResponse response,String id){
         PeopleDeathVo p= peopleDeathMapper.findPeopleVoById(Long.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;
             String filePath=this.getClass().getResource("/template/custInfoDeath.docx").getPath();
             String newFileName="死亡人员信息.docx";
-            try {
-                Map<String,Object> params = new HashMap<String,Object>();
-                params.put("${code}",p.getCode());
-                params.put("${sex}",p.getSex()==0?"男":"女");
-                params.put("${national}",p.getNationalName());
-                params.put("${birthday}",p.getBirthday());
-                params.put("${school_date}",p.getSchool_date());
-                params.put("${category}",p.getCategory());
-                params.put("${job_level_id}",p.getJob_level_id());
-                params.put("${department}",p.getDepartment());
-                params.put("${death_date}",p.getDeath_date());
-                params.put("${death_reason}",p.getDeath_reason());
-                params.put("${comment}",p.getComment());
 
-                //判断是否有头像
-                if(p.getPhoto()!=null&&p.getPhoto().length()>0){
-                    String headPath=this.getClass().getResource("/").getPath();
-                    headPath = headPath.substring(0,headPath.indexOf("/WEB-INF"));
-                    File file=new File(headPath+p.getPhoto());
-                    if(file.exists()){
-                        headPath=headPath+p.getPhoto();
-                        Map<String,Object> header = new HashMap<String, Object>();
-                        header.put("width", 80);
-                        header.put("height", 120);
-                        header.put("type", "jpg");
-                        header.put("content", WordUtil.inputStream2ByteArray(new FileInputStream(headPath), true));
-                        params.put("${photo}",header);
-                    }
-                }
-                doc = WordUtil.generateWord(params, filePath);
-                response.reset();
-                os = response.getOutputStream();
-                response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
-                os.flush();
-                doc.write(os);
-                os.close();
-            }catch (IOException e) {
-                e.printStackTrace();
-            }finally{
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("${code}",p.getCode());
+            params.put("${sex}",p.getSex()==0?"男":"女");
+            params.put("${national}",p.getNationalName());
+            params.put("${birthday}",p.getBirthday());
+            params.put("${school_date}",p.getSchool_date());
+            params.put("${category}",p.getCategory());
+            params.put("${job_level_name}",p.getJob_level_name());
+            params.put("${department}",p.getDepartment());
+            params.put("${death_date}",p.getDeath_date());
+            params.put("${death_reason}",p.getDeath_reason());
+            params.put("${comment}",p.getComment());
+
+            //判断是否有头像
+            if(p.getPhoto()!=null&&p.getPhoto().length()>0){
+                Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
+                params.put("${photo}",header);
             }
+
+            WordUtil.OutputWord(response, filePath, newFileName, params);
         }
     }
 

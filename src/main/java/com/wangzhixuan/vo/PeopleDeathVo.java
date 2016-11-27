@@ -44,6 +44,8 @@ public class PeopleDeathVo implements Serializable {
 
     private Integer job_level_id;
 
+    private String job_level_name;
+
     private String department;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -283,4 +285,11 @@ public class PeopleDeathVo implements Serializable {
         return condition;
     }
 
+    public String getJob_level_name() {
+        return job_level_name;
+    }
+
+    public void setJob_level_name(String job_level_name) {
+        this.job_level_name = job_level_name;
+    }
 }

@@ -16,8 +16,8 @@
         <form id="peopleSearchForm" method="post">
             <table class="grid" border=1>
                 <tr>
-                    <td>姓名</td>
-                    <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" value=""></td>
+                    <td>人员编码</td>
+                    <td><input name="code" type="text" placeholder="请输入人员编码"></td>
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -28,17 +28,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>职业</td>
-                    <td><input type="text" name="job"></td>
-                    <td>住址</td>
-                    <td><input type="text" name="address"></td>
-                </tr>
-                <tr>
-                    <td>薪资范围</td>
-                    <td colspan="3">
-                        <input type="text" name="salaryMin" placeholder="请输入最小薪资"/>
-                        ~
-                        <input type="text" name="salaryMax" placeholder="请输入最大薪资"/>
+                    <td>民族</td>
+                    <td>
+                        <input class="easyui-combobox" id="national" name="national" url="${path}/dict/national" valueField="id" textField="name" editable="false">
+                        </input>
+                    </td>
+                    <td>职务</td>
+                    <td>
+                        <input type="text" name="category" placeholder="请输入职务" />
                     </td>
                 </tr>
                 <tr>
@@ -54,10 +51,42 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>学历</td>
+                    <td>到院工作日期范围</td>
+                    <td colspan="3">
+                        <input name="school_dateMin" placeholder="点击选择起始时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                        ~
+                        <input name="school_dateMax" placeholder="点击选择结束时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="job_level_id" name="job_level_id" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
+                    </td>
+                    <td>部门</td>
+                    <td><input type="test" name="department"></td>
+                </tr>
+                <tr>
+                    <td>死亡日期范围</td>
+                    <td colspan="3">
+                        <input name="death_dateMin" placeholder="点击选择起始时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                        ~
+                        <input name="death_dateMax" placeholder="点击选择结束时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>死亡原因</td>
+                    <td>
+                        <input type="text" name="death_reason"/>
                     </td>
                 </tr>
             </table>
