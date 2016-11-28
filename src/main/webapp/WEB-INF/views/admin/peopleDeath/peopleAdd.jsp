@@ -16,7 +16,7 @@
     }
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+    <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleAddForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
                 <tr>
