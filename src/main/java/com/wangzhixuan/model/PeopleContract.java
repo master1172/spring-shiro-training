@@ -19,7 +19,7 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     private Integer sex;
 
-    private Integer national_id;
+    private Integer nationalId;
 
     private String province;
 
@@ -28,32 +28,36 @@ public class PeopleContract extends PeopleBase implements Serializable {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private String birthday;
 
-    private String education_name;
+    private String educationName;
 
-    private String political_name;
+    private String politicalName;
 
     private String speciality;
 
     private String height;
 
-    private Integer marriage_id;
+    private Integer marriageId;
 
     private Integer hukou;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
-    private String school_date;
+    private String schoolDate;
 
     private String mobile;
 
     private String address;
 
-    private String department_name;
+    private String departmentName;
 
-    private String job_name;
+    private String jobName;
 
     private String comment;
 
     private String photo;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public Long getId() {
         return id;
@@ -87,12 +91,12 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.sex = sex;
     }
 
-    public Integer getNational_id() {
-        return national_id;
+    public Integer getNationalId() {
+        return nationalId;
     }
 
-    public void setNational_id(Integer national_id) {
-        this.national_id = national_id;
+    public void setNationalId(Integer nationalId) {
+        this.nationalId = nationalId;
     }
 
     public String getProvince() {
@@ -119,20 +123,28 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.birthday = birthday;
     }
 
-    public String getEducation_name() {
-        return education_name;
+    public String getEducationName() {
+        return educationName;
     }
 
-    public void setEducation_name(String education_name) {
-        this.education_name = education_name;
+    public void setEducationName(String educationName) {
+        this.educationName = educationName;
     }
 
-    public String getPolitical_name() {
-        return political_name;
+    public String getPoliticalName() {
+        return politicalName;
     }
 
-    public void setPolitical_name(String political_name) {
-        this.political_name = political_name;
+    public void setPoliticalName(String politicalName) {
+        this.politicalName = politicalName;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 
     public String getHeight() {
@@ -143,12 +155,12 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.height = height;
     }
 
-    public Integer getMarriage_id() {
-        return marriage_id;
+    public Integer getMarriageId() {
+        return marriageId;
     }
 
-    public void setMarriage_id(Integer marriage_id) {
-        this.marriage_id = marriage_id;
+    public void setMarriageId(Integer marriageId) {
+        this.marriageId = marriageId;
     }
 
     public Integer getHukou() {
@@ -159,12 +171,12 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.hukou = hukou;
     }
 
-    public String getSchool_date() {
-        return school_date;
+    public String getSchoolDate() {
+        return schoolDate;
     }
 
-    public void setSchool_date(String school_date) {
-        this.school_date = school_date;
+    public void setSchoolDate(String schoolDate) {
+        this.schoolDate = schoolDate;
     }
 
     public String getMobile() {
@@ -175,20 +187,28 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.mobile = mobile;
     }
 
-    public String getDepartment_name() {
-        return department_name;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDepartment_name(String department_name) {
-        this.department_name = department_name;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getJob_name() {
-        return job_name;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setJob_name(String job_name) {
-        this.job_name = job_name;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     public String getComment() {
@@ -207,19 +227,10 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.photo = photo;
     }
 
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    @Override
+    public String toString(){
+        return "People{" +
+                "id=" + id +
+                "}";
     }
 }

@@ -45,4 +45,11 @@ public class DictController {
         List<Dict> jobLevelList = dictMapper.findJobLevelDict();
         return jobLevelList;
     }
+
+    @RequestMapping(value="/marriage", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> MarriageDict(){
+        List<Dict> marriageList = dictMapper.findMarriageDict();
+        return marriageList;
+    }
 }

@@ -46,7 +46,7 @@ public class PeopleContractController extends BaseController{
     /**
      * 人员管理列表
      *
-     * @param people
+     * @param peopleContract
      * @param page
      * @param rows
      * @param sort
@@ -82,7 +82,7 @@ public class PeopleContractController extends BaseController{
 
         PageInfo pageInfo = new PageInfo();
         pageInfo.setCondition(condition);
-        String ids = peopleContractService.findPeopleIDsByCondition(pageInfo);
+        String ids = peopleContractService.findPeopleContractIDsByCondition(pageInfo);
 
         if (StringUtils.isBlank(ids)){
             result.setSuccess(false);
@@ -112,15 +112,15 @@ public class PeopleContractController extends BaseController{
     /**
      * 添加用户
      *
-     * @param people
+     * @param peopleContract
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public Result add(PeopleContract people,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
+    public Result add(PeopleContract peopleContract,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
         Result result = new Result();
         try {
-            peopleContractService.addPeople(people,file);
+            peopleContractService.addPeopleContract(peopleContract,file);
             result.setSuccess(true);
             result.setMsg("添加成功");
             return result;
@@ -133,17 +133,17 @@ public class PeopleContractController extends BaseController{
 
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
-        PeopleContract people = peopleContractService.findPeopleById(id);
+        PeopleContract people = peopleContractService.findPeopleContractById(id);
         model.addAttribute("people",people);
         return "/admin/peopleContract/peopleEdit";
     }
 
     @RequestMapping("/edit")
     @ResponseBody
-    public Result edit(PeopleContract people, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
+    public Result edit(PeopleContract peopleContract, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
         Result result = new Result();
         try{
-            peopleContractService.updatePeople(people,file);
+            peopleContractService.updatePeopleContract(peopleContract,file);
             result.setSuccess(true);
             result.setMsg("修改成功!");
             return result;
@@ -159,7 +159,7 @@ public class PeopleContractController extends BaseController{
     public Result delete(Long id){
         Result result = new Result();
         try{
-            peopleContractService.deletePeopleById(id);
+            peopleContractService.deletePeopleContractById(id);
             result.setMsg("删除成功！");
             result.setSuccess(true);
             return result;
@@ -183,7 +183,7 @@ public class PeopleContractController extends BaseController{
 
         try{
             String[] idList = ids.split(",");
-            peopleContractService.batchDeletePeopleByIds(idList);
+            peopleContractService.batchDeletePeopleContractByIds(idList);
             result.setSuccess(true);
             result.setMsg("批量删除人员成功");
             return result;

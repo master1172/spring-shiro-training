@@ -21,9 +21,9 @@ public class PeopleContractVo implements Serializable {
 
     private Integer sex;
 
-    private Integer national_id;
+    private Integer nationalId;
 
-    private String national_name;
+    private String nationalName;
 
     private String province;
 
@@ -38,36 +38,36 @@ public class PeopleContractVo implements Serializable {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private String birthdayMax;
 
-    private String education_name;
+    private String educationName;
 
-    private String political_name;
+    private String politicalName;
 
     private String speciality;
 
     private String height;
 
-    private Integer marriage_id;
+    private Integer marriageId;
 
-    private String marriage_name;
+    private String marriageName;
 
     private Integer hukou;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
-    private String school_date;
+    private String schoolDate;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
-    private String school_dateMix;
+    private String schoolDateMix;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
-    private String school_dateMax;
+    private String schoolDateMax;
 
     private String mobile;
 
     private String address;
 
-    private String department_name;
+    private String departmentName;
 
-    private String job_name;
+    private String jobName;
 
     private String comment;
 
@@ -105,12 +105,12 @@ public class PeopleContractVo implements Serializable {
         this.sex = sex;
     }
 
-    public Integer getNational_id() {
-        return national_id;
+    public Integer getNationalId() {
+        return nationalId;
     }
 
-    public void setNational_id(Integer national_id) {
-        this.national_id = national_id;
+    public void setNationalId(Integer nationalId) {
+        this.nationalId = nationalId;
     }
 
     public String getProvince() {
@@ -153,20 +153,20 @@ public class PeopleContractVo implements Serializable {
         this.birthdayMax = birthdayMax;
     }
 
-    public String getEducation_name() {
-        return education_name;
+    public String getEducationName() {
+        return educationName;
     }
 
-    public void setEducation_name(String education_name) {
-        this.education_name = education_name;
+    public void setEducationName(String educationName) {
+        this.educationName = educationName;
     }
 
-    public String getPolitical_name() {
-        return political_name;
+    public String getPoliticalName() {
+        return politicalName;
     }
 
-    public void setPolitical_name(String political_name) {
-        this.political_name = political_name;
+    public void setPoliticalName(String politicalName) {
+        this.politicalName = politicalName;
     }
 
     public String getHeight() {
@@ -177,12 +177,12 @@ public class PeopleContractVo implements Serializable {
         this.height = height;
     }
 
-    public Integer getMarriage_id() {
-        return marriage_id;
+    public Integer getMarriageId() {
+        return marriageId;
     }
 
-    public void setMarriage_id(Integer marriage_id) {
-        this.marriage_id = marriage_id;
+    public void setMarriageId(Integer marriageId) {
+        this.marriageId = marriageId;
     }
 
     public Integer getHukou() {
@@ -193,28 +193,28 @@ public class PeopleContractVo implements Serializable {
         this.hukou = hukou;
     }
 
-    public String getSchool_date() {
-        return school_date;
+    public String getSchoolDate() {
+        return schoolDate;
     }
 
-    public void setSchool_date(String school_date) {
-        this.school_date = school_date;
+    public void setSchoolDate(String schoolDate) {
+        this.schoolDate = schoolDate;
     }
 
-    public String getSchool_dateMix() {
-        return school_dateMix;
+    public String getSchoolDateMix() {
+        return schoolDateMix;
     }
 
-    public void setSchool_dateMix(String school_dateMix) {
-        this.school_dateMix = school_dateMix;
+    public void setSchoolDateMix(String schoolDateMix) {
+        this.schoolDateMix = schoolDateMix;
     }
 
-    public String getSchool_dateMax() {
-        return school_dateMax;
+    public String getSchoolDateMax() {
+        return schoolDateMax;
     }
 
-    public void setSchool_dateMax(String school_dateMax) {
-        this.school_dateMax = school_dateMax;
+    public void setSchoolDateMax(String schoolDateMax) {
+        this.schoolDateMax = schoolDateMax;
     }
 
     public String getMobile() {
@@ -225,20 +225,20 @@ public class PeopleContractVo implements Serializable {
         this.mobile = mobile;
     }
 
-    public String getDepartment_name() {
-        return department_name;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setDepartment_name(String department_name) {
-        this.department_name = department_name;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
-    public String getJob_name() {
-        return job_name;
+    public String getJobName() {
+        return jobName;
     }
 
-    public void setJob_name(String job_name) {
-        this.job_name = job_name;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     public String getComment() {
@@ -272,8 +272,8 @@ public class PeopleContractVo implements Serializable {
             condition.put("sex", peopleContractvo.getSex());
         }
 
-        if (peopleContractvo.getNational_id() != null){
-            condition.put("national_id", peopleContractvo.getNational_id());
+        if (peopleContractvo.getNationalId() != null){
+            condition.put("nationalId", peopleContractvo.getNationalId());
         }
 
         if(StringUtils.isNoneBlank(peopleContractvo.getProvince())){
@@ -296,12 +296,12 @@ public class PeopleContractVo implements Serializable {
             condition.put("birthdayMax", peopleContractvo.getBirthdayMax());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getEducation_name())){
-            condition.put("education_name", peopleContractvo.getEducation_name());
+        if(StringUtils.isNoneBlank(peopleContractvo.getEducationName())){
+            condition.put("educationName", peopleContractvo.getEducationName());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getPolitical_name())){
-            condition.put("political_name", peopleContractvo.getPolitical_name());
+        if(StringUtils.isNoneBlank(peopleContractvo.getPoliticalName())){
+            condition.put("politicalName", peopleContractvo.getPoliticalName());
         }
 
         if(StringUtils.isNoneBlank(peopleContractvo.getSpeciality())){
@@ -312,24 +312,24 @@ public class PeopleContractVo implements Serializable {
             condition.put("height", peopleContractvo.getHeight());
         }
 
-        if (peopleContractvo.getMarriage_id() != null){
-            condition.put("marriage_id", peopleContractvo.getMarriage_id());
+        if (peopleContractvo.getMarriageId() != null){
+            condition.put("marriageId", peopleContractvo.getMarriageId());
         }
 
         if (peopleContractvo.getHukou() != null){
             condition.put("hukou", peopleContractvo.getHukou());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getSchool_date())){
-            condition.put("school_date", peopleContractvo.getSchool_date());
+        if(StringUtils.isNoneBlank(peopleContractvo.getSchoolDate())){
+            condition.put("schoolDate", peopleContractvo.getSchoolDate());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getSchool_dateMix())){
-            condition.put("school_dateMin", peopleContractvo.getSchool_dateMix());
+        if(StringUtils.isNoneBlank(peopleContractvo.getSchoolDateMix())){
+            condition.put("schoolDateMin", peopleContractvo.getSchoolDateMix());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getSchool_dateMax())){
-            condition.put("school_dateMax", peopleContractvo.getSchool_dateMax());
+        if(StringUtils.isNoneBlank(peopleContractvo.getSchoolDateMax())){
+            condition.put("schoolDateMax", peopleContractvo.getSchoolDateMax());
         }
 
         if(StringUtils.isNoneBlank(peopleContractvo.getMobile())){
@@ -340,12 +340,12 @@ public class PeopleContractVo implements Serializable {
             condition.put("address", peopleContractvo.getAddress());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getDepartment_name())){
-            condition.put("department_name", peopleContractvo.getDepartment_name());
+        if(StringUtils.isNoneBlank(peopleContractvo.getDepartmentName())){
+            condition.put("departmentName", peopleContractvo.getDepartmentName());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getJob_name())){
-            condition.put("job_name", peopleContractvo.getJob_name());
+        if(StringUtils.isNoneBlank(peopleContractvo.getJobName())){
+            condition.put("jobName", peopleContractvo.getJobName());
         }
 
         if(StringUtils.isNoneBlank(peopleContractvo.getComment())){
@@ -375,19 +375,19 @@ public class PeopleContractVo implements Serializable {
         this.address = address;
     }
 
-    public String getNational_name() {
-        return national_name;
+    public String getNationalName() {
+        return nationalName;
     }
 
-    public void setNational_name(String national_name) {
-        this.national_name = national_name;
+    public void setNationalName(String nationalName) {
+        this.nationalName = nationalName;
     }
 
-    public String getMarriage_name() {
-        return marriage_name;
+    public String getMarriageName() {
+        return marriageName;
     }
 
-    public void setMarriage_name(String marriage_name) {
-        this.marriage_name = marriage_name;
+    public void setMarriageName(String marriageName) {
+        this.marriageName = marriageName;
     }
 }

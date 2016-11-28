@@ -26,7 +26,7 @@ public interface PeopleContractMapper {
      * @param people
      * @return
      */
-    int insert(PeopleContract people);
+    int insert(PeopleContract peopleContract);
 
     /**
      * 修改人员
@@ -34,7 +34,7 @@ public interface PeopleContractMapper {
      * @param people
      * @return
      */
-    int updatePeople(PeopleContract people);
+    int updatePeopleContract(PeopleContract peopleContract);
 
     /**
      * 根据人员名查询人员
@@ -42,7 +42,7 @@ public interface PeopleContractMapper {
      * @param name
      * @return
      */
-    PeopleContract findPeopleByName(String name);
+    PeopleContract findPeopleContractByName(String name);
 
     /**
      * 根据人员id查询人员
@@ -50,7 +50,7 @@ public interface PeopleContractMapper {
      * @param id
      * @return
      */
-    PeopleContract findPeopleById(Long id);
+    PeopleContract findPeopleContractById(Long id);
 
     /**
      * 人员列表
@@ -58,7 +58,7 @@ public interface PeopleContractMapper {
      * @param pageInfo
      * @return
      */
-    List findPeoplePageCondition(PageInfo pageInfo);
+    List findPeopleContractPageCondition(PageInfo pageInfo);
 
     /**
      * 统计人员
@@ -66,20 +66,20 @@ public interface PeopleContractMapper {
      * @param pageInfo
      * @return
      */
-    int findPeoplePageCount(PageInfo pageInfo);
+    int findPeopleContractPageCount(PageInfo pageInfo);
     /**
      * 根据ID查询人员列表
      * @param ids
      * @return
      */
-    List selectPeopleByIds(String[] ids);
+    List selectPeopleContractByIds(String[] ids);
 
     /**
      * 根据ID查询人员列表
      * @param ids
      * @return
      */
-    List selectPeopleVoByIds(String[] ids);
+    List selectPeopleContractVoByIds(String[] ids);
     /**
      * 批量添加人员
      * @param list
@@ -93,5 +93,5 @@ public interface PeopleContractMapper {
      * @param id
      * @return
      */
-    PeopleContractVo findPeopleVoById(Long id);
+    PeopleContractVo findPeopleContractVoById(Long id);
 }

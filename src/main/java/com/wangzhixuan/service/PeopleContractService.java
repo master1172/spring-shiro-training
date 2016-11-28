@@ -21,7 +21,7 @@ public interface PeopleContractService {
      * @param id
      * @return
      */
-    PeopleContract findPeopleById(Long id);
+    PeopleContract findPeopleContractById(Long id);
 
     /**
      * 根据人员姓名查询人员
@@ -29,7 +29,7 @@ public interface PeopleContractService {
      * @param name
      * @return
      */
-    PeopleContract findPeopleByName(String name);
+    PeopleContract findPeopleContractByName(String name);
 
 
     /**
@@ -42,27 +42,27 @@ public interface PeopleContractService {
     /**
      * 添加人员
      *
-     * @param people
+     * @param peopleContract
      */
-    void addPeople(PeopleContract people,CommonsMultipartFile file);
+    void addPeopleContract(PeopleContract peopleContract,CommonsMultipartFile file);
 
 
 
     /**
      * 修改人员
      *
-     * @param people
+     * @param peopleContract
      */
-    void updatePeople(PeopleContract people, CommonsMultipartFile file);
+    void updatePeopleContract(PeopleContract peopleContract, CommonsMultipartFile file);
 
     /**
      * 删除人员
      *
      * @param id
      */
-    void deletePeopleById(Long id);
+    void deletePeopleContractById(Long id);
 
-    void batchDeletePeopleByIds(String[] ids);
+    void batchDeletePeopleContractByIds(String[] ids);
     /**
      * 数据导入
      * @param list
@@ -91,6 +91,6 @@ public interface PeopleContractService {
      * @param id
      * @return
      */
-    String findPeopleIDsByCondition(PageInfo pageInfo);
+    String findPeopleContractIDsByCondition(PageInfo pageInfo);
 }
 

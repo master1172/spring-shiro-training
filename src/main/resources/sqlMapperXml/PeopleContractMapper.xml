@@ -6,21 +6,21 @@
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
-        <result column="national_id" property="national_Id" jdbcType="INTEGER" />
+        <result column="national_id" property="nationalId" jdbcType="INTEGER" />
         <result column="province" property="province" jdbcType="VARCHAR"/>
         <result column="city" property="city" jdbcType="VARCHAR"/>
         <result column="birthday" property="birthday" jdbcType="DATE" />
-        <result column="education_name" property="education_name" jdbcType="VARCHAR"/>
-        <result column="political_name" property="political_name" jdbcType="VARCHAR"/>
+        <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
         <result column="speciality" property="speciality" jdbcType="VARCHAR"/>
         <result column="height" property="height" jdbcType="VARCHAR"/>
-        <result column="marriage_id" property="marriage_Id" jdbcType="INTEGER" />
+        <result column="marriage_id" property="marriageId" jdbcType="INTEGER" />
         <result column="hukou" property="hukou" jdbcType="TINYINT"/>
-        <result column="school_date" property="school_date" jdbcType="DATE" />
+        <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
-        <result column="department_name" property="department_name" jdbcType="VARCHAR" />
-        <result column="job_name" property="job_name" jdbcType="VARCHAR" />
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
@@ -30,23 +30,23 @@
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
-        <result column="national_id" property="national_Id" jdbcType="INTEGER" />
-        <result column="national_name" property="national_name" jdbcType="VARCHAR"/>
+        <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+        <result column="national_name" property="nationalName" jdbcType="VARCHAR"/>
         <result column="province" property="province" jdbcType="VARCHAR"/>
         <result column="city" property="city" jdbcType="VARCHAR"/>
         <result column="birthday" property="birthday" jdbcType="DATE" />
-        <result column="education_name" property="education_name" jdbcType="VARCHAR"/>
-        <result column="political_name" property="political_name" jdbcType="VARCHAR"/>
+        <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
         <result column="speciality" property="speciality" jdbcType="VARCHAR"/>
         <result column="height" property="height" jdbcType="VARCHAR"/>
-        <result column="marriage_id" property="marriage_Id" jdbcType="INTEGER" />
-        <result column="marriage_name" property="marriage_name" jdbcType="VARCHAR"/>
+        <result column="marriage_id" property="marriageId" jdbcType="INTEGER" />
+        <result column="marriage_name" property="marriageName" jdbcType="VARCHAR"/>
         <result column="hukou" property="hukou" jdbcType="TINYINT"/>
-        <result column="school_date" property="school_date" jdbcType="DATE" />
+        <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
-        <result column="department_name" property="department_name" jdbcType="VARCHAR" />
-        <result column="job_name" property="job_name" jdbcType="VARCHAR" />
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
@@ -62,7 +62,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleVoById" resultMap="peopleContractVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleContractVoById" resultMap="peopleContractVoResultMap" parameterType="java.lang.Long">
         SELECT
         t.id,
         t.code,
@@ -73,7 +73,7 @@
         t.province,
         t.city,
         t.birthday,
-        t.educationa_name,
+        t.education_name,
         t.political_name,
         t.speciality,
         t.height,
@@ -98,21 +98,21 @@
         </where>
     </select>
 
-    <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleContractById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
         from people_contract
         where id = #{id}
     </select>
 
-    <select id="findPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="findPeopleContractByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
         from people_contract
         where name LIKE concat('%',#{name},'%')
     </select>
 
-    <select id="findPeoplePageCondition" resultMap="peopleContractVoResultMap" parameterType="PageInfo">
+    <select id="findPeopleContractPageCondition" resultMap="peopleContractVoResultMap" parameterType="PageInfo">
         SELECT
         t.id,
         t.code,
@@ -123,7 +123,7 @@
         t.province,
         t.city,
         t.birthday,
-        t.educationa_name,
+        t.education_name,
         t.political_name,
         t.speciality,
         t.height,
@@ -153,8 +153,8 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.national_id != null">
-                and t.national_id = #{condition.national_id}
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
             </if>
             <if test=" condition.province != null and condition.province != ''">
                 and t.province LIKE concat('%',#{condition.province},'%')
@@ -168,11 +168,11 @@
             <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
                 <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
             </if>
-            <if test=" condition.education_name != null and condition.education_name != ''">
-                and t.education_name LIKE concat('%',#{condition.education_name},'%')
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%',#{condition.educationName},'%')
             </if>
-            <if test=" condition.political_name != null and condition.political_name != ''">
-                and t.political_name LIKE concat('%',#{condition.political_name},'%')
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%',#{condition.politicalName},'%')
             </if>
             <if test=" condition.speciality != null and condition.speciality != ''">
                 and t.speciality LIKE concat('%',#{condition.speciality},'%')
@@ -180,17 +180,17 @@
             <if test=" condition.height != null and condition.height != ''">
                 and t.height LIKE concat('%',#{condition.height},'%')
             </if>
-            <if test=" condition.marriage_id != null">
-                and t.marriage_id = #{condition.marriage_id}
+            <if test=" condition.marriageId != null">
+                and t.marriage_id = #{condition.marriageId}
             </if>
             <if test=" condition.hukou != null">
                 and t.hukou = #{condition.hukou}
             </if>
-            <if test=" condition.school_dateMin != null and condition.school_dateMin != ''">
-                <![CDATA[ and t.school_date >= #{condition.school_dateMin} ]]>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
             </if>
-            <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
-                <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
             </if>
             <if test=" condition.mobile != null and condition.mobile != ''">
                 and t.mobile LIKE concat('%',#{condition.mobile},'%')
@@ -198,11 +198,11 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.department_name != null and condition.department_name != ''">
-                and t.department_name LIKE concat('%',#{condition.department_name},'%')
+            <if test=" condition.departmentName != null and condition.departmentName != ''">
+                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
             </if>
-            <if test=" condition.job_name != null and condition.job_name != ''">
-                and t.job_name LIKE concat('%',#{condition.job_name},'%')
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
             </if>
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
@@ -211,7 +211,7 @@
         LIMIT #{from}, #{size}
     </select>
 
-    <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+    <select id="findPeopleContractPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
         from people_contract t
         <where>
@@ -224,8 +224,8 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.national_id != null">
-                and t.national_id = #{condition.national_id}
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
             </if>
             <if test=" condition.province != null and condition.province != ''">
                 and t.province LIKE concat('%',#{condition.province},'%')
@@ -239,11 +239,11 @@
             <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
                 <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
             </if>
-            <if test=" condition.education_name != null and condition.education_name != ''">
-                and t.education_name LIKE concat('%',#{condition.education_name},'%')
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%',#{condition.educationName},'%')
             </if>
-            <if test=" condition.political_name != null and condition.political_name != ''">
-                and t.political_name LIKE concat('%',#{condition.political_name},'%')
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%',#{condition.politicalName},'%')
             </if>
             <if test=" condition.speciality != null and condition.speciality != ''">
                 and t.speciality LIKE concat('%',#{condition.speciality},'%')
@@ -251,17 +251,17 @@
             <if test=" condition.height != null and condition.height != ''">
                 and t.height LIKE concat('%',#{condition.height},'%')
             </if>
-            <if test=" condition.marriage_id != null">
-                and t.marriage_id = #{condition.marriage_id}
+            <if test=" condition.marriageId != null">
+                and t.marriage_id = #{condition.marriageId}
             </if>
             <if test=" condition.hukou != null">
                 and t.hukou = #{condition.hukou}
             </if>
-            <if test=" condition.school_dateMin != null and condition.school_dateMin != ''">
-                <![CDATA[ and t.school_date >= #{condition.school_dateMin} ]]>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
             </if>
-            <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
-                <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
             </if>
             <if test=" condition.mobile != null and condition.mobile != ''">
                 and t.mobile LIKE concat('%',#{condition.mobile},'%')
@@ -269,11 +269,11 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.department_name != null and condition.department_name != ''">
-                and t.department_name LIKE concat('%',#{condition.department_name},'%')
+            <if test=" condition.departmentName != null and condition.departmentName != ''">
+                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
             </if>
-            <if test=" condition.job_name != null and condition.job_name != ''">
-                and t.job_name LIKE concat('%',#{condition.job_name},'%')
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
             </if>
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
@@ -299,66 +299,147 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_contract (name, sex, birthday, job, salary, photo, degree_id, address)
+        insert into people_contract (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
         values (
+        #{code,jdbcType=VARCHAR},
         #{name,jdbcType=VARCHAR},
         #{sex,jdbcType=TINYINT},
+        #{nationalId, jdbcType=INTEGER},
+        #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR},
         #{birthday,jdbcType=DATE},
-        #{job, jdbcType=VARCHAR},
-        #{salary,jdbcType=DECIMAL},
-        #{photo, jdbcType=VARCHAR},
-        #{degreeId, jdbcType=INTEGER},
-        #{address, jdbcType=VARCHAR}
+        #{educationName,jdbcType=VARCHAR},
+        #{politicalName,jdbcType=VARCHAR},
+        #{speciality,jdbcType=VARCHAR},
+        #{height,jdbcType=VARCHAR},
+        #{marriageId, jdbcType=INTEGER},
+        #{hukou, jdbcType=TINYINT},
+        #{schoolDate,jdbcType=DATE},
+        #{mobile, jdbcType=VARCHAR},
+        #{address, jdbcType=VARCHAR},
+        #{departmentName, jdbcType=VARCHAR},
+        #{jobName, jdbcType=VARCHAR},
+        #{comment, jdbcType=VARCHAR},
+        #{photo, jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_contract (name, sex, birthday, job, salary, degree_id, address)
+        insert into people_contract (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
+            #{item.code,jdbcType=VARCHAR},
             #{item.name,jdbcType=VARCHAR},
             #{item.sex,jdbcType=TINYINT},
+            #{item.nationalId, jdbcType=INTEGER},
+            #{item.province,jdbcType=VARCHAR},
+            #{item.city,jdbcType=VARCHAR},
             #{item.birthday,jdbcType=DATE},
-            #{item.job, jdbcType=VARCHAR},
-            #{item.salary,jdbcType=DECIMAL},
-            #{item.degreeId,jdbcType=INTEGER},
-            #{item.address, jdbcType=VARCHAR}
+            #{item.educationName,jdbcType=VARCHAR},
+            #{item.politicalName,jdbcType=VARCHAR},
+            #{item.speciality,jdbcType=VARCHAR},
+            #{item.height,jdbcType=VARCHAR},
+            #{item.marriageId, jdbcType=INTEGER},
+            #{item.hukou, jdbcType=TINYINT},
+            #{item.schoolDate,jdbcType=DATE},
+            #{item.mobile, jdbcType=VARCHAR},
+            #{item.address, jdbcType=VARCHAR},
+            #{item.departmentName, jdbcType=VARCHAR},
+            #{item.jobName, jdbcType=VARCHAR},
+            #{item.comment, jdbcType=VARCHAR},
+            #{item.photo, jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
-    <update id="updatePeople" parameterType="com.wangzhixuan.model.PeopleContract">
-        update peopleContract
+    <update id="updatePeopleContract" parameterType="com.wangzhixuan.model.PeopleContract">
+        update people_Contract
         <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="sex != null">
                 sex = #{sex,jdbcType=TINYINT},
             </if>
+            <if test="nationalId != null">
+                national_id = #{nationalId,jdbcType=INTEGER},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
             <if test="birthday != null">
                 birthday = #{birthday,jdbcType=DATE},
             </if>
-            <if test="job != null">
-                job = #{job,jdbcType=VARCHAR},
+            <if test="educationName != null">
+                education_name = #{educationName,jdbcType=VARCHAR},
             </if>
-            <if test="salary != null">
-                salary = #{salary,jdbcType=DECIMAL},
+            <if test="politicalName != null">
+                political_name = #{politicalName,jdbcType=VARCHAR},
+            </if>
+            <if test="speciality != null">
+                speciality = #{speciality,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null">
+                height = #{height,jdbcType=VARCHAR},
+            </if>
+            <if test="marriageId != null">
+                marriage_id = #{marriageId, jdbcType=INTEGER},
+            </if>
+            <if test="hukou != null">
+                hukou = #{hukou, jdbcType=TINYINT},
+            </if>
+            <if test="schoolDate != null">
+                school_date = #{schoolDate,jdbcType=DATE},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile, jdbcType=VARCHAR},
+            </if>
+            <if test="address!= null">
+                address = #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName, jdbcType=VARCHAR},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName, jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                comment = #{comment, jdbcType=VARCHAR},
             </if>
             <if test="photo != null">
-                photo = #{photo, jdbcType=VARCHAR},
-            </if>
-            <if test="degreeId != null">
-                degree_id = #{degreeId, jdbcType=INTEGER},
-            </if>
-            <if test="address != null">
-                address = #{address,jdbcType=VARCHAR},
+                photo = #{photo,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+    <select id="selectPeopleContractByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-        t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,t.address
+        t.id,
+        t.code,
+        t.name,
+        t.sex,
+        t.national_id,
+        t.province,
+        t.city,
+        t.birthday,
+        t.education_name,
+        t.political_name,
+        t.speciality,
+        t.height,
+        t.marriage_id,
+        t.hukou,
+        t.school_date,
+        t.mobile,
+        t.address,
+        t.department_name,
+        t.job_name,
+        t.comment,
+        t.photo
         from people_contract t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -366,12 +447,37 @@
         </foreach>
     </select>
 
-    <select id="selectPeopleVoByIds" resultMap="peopleContractVoResultMap" parameterType="java.util.ArrayList">
-        select
-        t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,s.name as degreeName,t.address
-        from people_contract t
-        left join
-        dict_degree s ON s.id = t.degree_id
+    <select id="selectPeopleContractVoByIds" resultMap="peopleContractVoResultMap" parameterType="java.util.ArrayList">
+        SELECT
+        t.id,
+        t.code,
+        t.name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.province,
+        t.city,
+        t.birthday,
+        t.education_name,
+        t.political_name,
+        t.speciality,
+        t.height,
+        t.marriage_id,
+        m.name as marriage_name,
+        t.hukou,
+        t.school_date,
+        t.mobile,
+        t.address,
+        t.department_name,
+        t.job_name,
+        t.comment,
+        t.photo
+        FROM
+        people_contract t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        dict_marriage m ON m.id = t.marriage_id
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
