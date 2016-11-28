@@ -284,12 +284,12 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     row.createCell(1).setCellValue(p.getCode());row.getCell(1).setCellStyle(setBorder);
                     row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
                     row.createCell(3).setCellValue(p.getNationalName());row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getBirthday().toString());row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getSchool_date().toString());row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getSchool_date()==null?"":(p.getSchool_date().toString()));row.getCell(5).setCellStyle(setBorder);
                     row.createCell(6).setCellValue(p.getCategory());row.getCell(6).setCellStyle(setBorder);
                     row.createCell(7).setCellValue(p.getJob_level_name());row.getCell(7).setCellStyle(setBorder);
                     row.createCell(8).setCellValue(p.getDepartment());row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getDeath_date());row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getDeath_date()==null?"":(p.getDeath_date().toString()));row.getCell(9).setCellStyle(setBorder);
                     row.createCell(10).setCellValue(p.getDeath_reason());row.getCell(10).setCellStyle(setBorder);
                     row.createCell(11).setCellValue(p.getComment());row.getCell(11).setCellStyle(setBorder);
                     row.setHeight((short) 400);
