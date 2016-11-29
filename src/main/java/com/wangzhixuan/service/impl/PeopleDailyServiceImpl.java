@@ -43,13 +43,8 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     }
 
     @Override
-    public PeopleDaily findPeopleDailyByName(String name) {
-        return peopleDailyMapper.findPeopleDailyByName(name);
-    }
-
-    @Override
     public void findDataGrid(PageInfo pageInfo) {
-        pageInfo.setRows(peopleDailyMapper.findPeoplePageDailyCondition(pageInfo));
+        pageInfo.setRows(peopleDailyMapper.findPeopleDailyPageCondition(pageInfo));
         pageInfo.setTotal(peopleDailyMapper.findPeopleDailyPageCount(pageInfo));
     }
 

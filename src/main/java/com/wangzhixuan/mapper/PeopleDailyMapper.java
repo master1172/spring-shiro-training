@@ -13,9 +13,7 @@ public interface PeopleDailyMapper {
 
     PeopleDaily findPeopleDailyById(Long id);
 
-    PeopleDaily findPeopleDailyByName(String name);
-
-    List findPeoplePageDailyCondition(PageInfo pageInfo);
+    List<PeopleDailyVo> findPeopleDailyPageCondition(PageInfo pageInfo);
 
     int findPeopleDailyPageCount(PageInfo pageInfo);
 
@@ -32,6 +30,4 @@ public interface PeopleDailyMapper {
     PeopleDailyVo findPeopleDailyVoById(Long aLong);
 
     List selectPeopleDailyVoByIds(String[] idList);
-
-    List<PeopleDailyVo> findPeopleDailyPageCondition(PageInfo pageInfo);
 }

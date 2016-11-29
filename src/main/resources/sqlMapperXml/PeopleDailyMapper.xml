@@ -110,7 +110,7 @@
         FROM
           people_daily t
         LEFT JOIN
-          dict_national s ON s.id = t.national
+          dict_national s ON s.id = t.national_id
         <where>
             <if test=" condition.code != null">
                 and t.code = #{condition.code}
@@ -121,8 +121,8 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.national != null">
-                and t.national = #{condition.national}
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
             </if>
             <if test=" condition.province != null and condition.province != ''">
                 and t.province LIKE concat('%', #{condition.province}, '%')
@@ -174,8 +174,8 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.national != null">
-                and t.national = #{condition.national}
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
             </if>
             <if test=" condition.province != null and condition.province != ''">
                 and t.province LIKE concat('%', #{condition.province}, '%')
