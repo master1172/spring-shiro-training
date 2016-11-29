@@ -1,14 +1,10 @@
 package com.wangzhixuan.service;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.PageInfo;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by liushaoyang on 2016/9/8.

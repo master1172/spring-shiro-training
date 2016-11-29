@@ -13,6 +13,7 @@ import com.wangzhixuan.vo.PeopleDailyVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ import java.util.Map;
 /**
  * Created by sterm on 2016/11/22.
  */
+@Service
 public class PeopleDailyServiceImpl implements PeopleDailyService {
 
     @Autowired
