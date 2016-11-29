@@ -21,7 +21,7 @@
     }
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+    <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${people.id}">
             <table class="grid" border="1">
@@ -64,7 +64,7 @@
                 <tr>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="job_level_id" name="job_level_id" url="${path}/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="job_level_id" name="job_level_id" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                     <td>部门</td>

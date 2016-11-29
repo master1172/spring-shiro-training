@@ -6,13 +6,13 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>死亡人员管理</title>
+    <title>人员管理</title>
     <script type="text/javascript">
         var dataGrid;
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/peopleDeath/dataGrid',
+                url: '${path}/peopleContract/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -40,7 +40,7 @@
                 title: '高级查询',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleDeath/advSearchPage',
+                href: '${path}/peopleContract/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
@@ -61,14 +61,14 @@
                 title: '导出',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleDeath/exportSearchPage',
+                href: '${path}/peopleContract/exportSearchPage',
                 buttons:[{
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/peopleDeath/exportSearch",function(data){
+                            parent.SYS_SUBMIT_FORM(f, "/peopleContract/exportSearch",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示",data["msg"],"warning");
                                 }else{
@@ -78,7 +78,7 @@
                                     alert(ids);
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/peopleDeath/exportExcel");
+                                    form.attr("action",'${path}'+"/peopleContract/exportExcel");
                                     $("#downLoadForm").submit();
                                 }
                             });
@@ -93,7 +93,7 @@
                 title: '添加',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleDeath/addPage',
+                href: '${path}/peopleContract/addPage',
                 buttons: [{
                     text: '添加',
                     handler: function () {
@@ -101,7 +101,7 @@
                         var f = parent.$.modalDialog.handler.find("#peopleAddForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleDeath/add",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleContract/add",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -128,7 +128,7 @@
                 title: '修改',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleDeath/editPage?id='+id,
+                href: '${path}/peopleContract/editPage?id='+id,
                 buttons: [{
                     text: '修改',
                     handler: function () {
@@ -136,7 +136,7 @@
                         var f = parent.$.modalDialog.handler.find("#peopleEditForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleDeath/edit",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleContract/edit",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -161,7 +161,7 @@
             parent.$.messager.confirm('询问', '您是否要删除当前人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/peopleDeath/delete',{
+                    $.post('${path}/peopleContract/delete',{
                         id: id
                     }, function (result) {
                         if (result.success) {
@@ -184,7 +184,7 @@
             parent.$.messager.confirm('询问', '您是否要删除所选人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/peopleDeath/batchDel', {
+                    $.post('${path}/peopleContract/batchDel', {
                         ids: ids.join(",")
                     }, function (result) {
                         if (result.success) {
@@ -211,7 +211,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
-                href: '${path}/peopleDeath/importExcelPage',
+                href: '${path}/peopleContract/importExcelPage',
                 buttons: [{
                     text: '导入',
                     handler: function () {
@@ -219,7 +219,7 @@
                         var f = parent.$.modalDialog.handler.find("#importExcelForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleDeath/importExcel",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleContract/importExcel",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -245,7 +245,7 @@
                 });
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids);
-                form.attr("action",'${path}'+"/peopleDeath/exportExcel");
+                form.attr("action",'${path}'+"/peopleContract/exportExcel");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择有效数据", "warning");
@@ -258,7 +258,7 @@
                 var id=checkedItems[0]["id"];
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(id);
-                form.attr("action",'${path}'+"/peopleDeath/exportWord");
+                form.attr("action",'${path}'+"/peopleContract/exportWord");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
@@ -274,12 +274,21 @@
             }
         }
 
+        function hukouFormatter(value,row,index){
+            switch (value) {
+                case 0:
+                    return '非农业';
+                case 1:
+                    return '农业';
+            }
+        }
+
         function operateFormatter(value,row,index){
             var str = '';
-            <shiro:hasPermission name="/peopleDeath/edit">
+            <shiro:hasPermission name="/peopleContract/edit">
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
             </shiro:hasPermission>
-            <shiro:hasPermission name="/peopleDeath/delete">
+            <shiro:hasPermission name="/peopleContract/delete">
             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
             </shiro:hasPermission>
@@ -293,9 +302,9 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>部门:</th>
+                <th>姓名:</th>
                 <td>
-                    <input name="department" placeholder="请输入部门名称"/>
+                    <input name="name" placeholder="请输入人员姓名"/>
                 </td>
                 <th>性别:</th>
                 <td>
@@ -329,16 +338,24 @@
         <tr>
             <th field="ck"       data-options="checkbox:true"></th>
             <th field="code"     data-options="sortable:true" width="80">人员编码</th>
+            <th field="name"     data-options="sortable:true" width="80">姓名</th>
             <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
-            <th field="nationalName" data-options="sortable:true" width="40">民族</th>
+            <th field="nationalName"     data-options="sortable:true" width="80">民族</th>
+            <th field="province"     data-options="sortable:true" width="80">来自省</th>
+            <th field="city"     data-options="sortable:true" width="80">来自市/区</th>
             <th field="birthday" data-options="sortable:true" width="80">生日</th>
-            <th field="school_date"   data-options="sortable:true" width="100">到院工作日期</th>
-            <th field="category"      data-options="sortable:true" width="80">职务</th>
-            <th field="job_level_name"   data-options="sortable:true" width="80">职级</th>
-            <th field="department"   data-options="sortable:true" width="80">部门</th>
-            <th field="death_date"   data-options="sortable:true" width="80">死亡日期</th>
-            <th field="death_reason"   data-options="sortable:true" width="80">死亡原因</th>
-            <th field="comment"  data-options="sortable:true" width="130">备注</th>
+            <th field="educationName"     data-options="sortable:true" width="80">文化程度</th>
+            <th field="politicalName"     data-options="sortable:true" width="80">政治面貌</th>
+            <th field="speciality"     data-options="sortable:true" width="80">特长</th>
+            <th field="height"     data-options="sortable:true" width="80">身高</th>
+            <th field="marriageName"     data-options="sortable:true" width="80">婚姻状况</th>
+            <th field="hukou"      data-options="sortable:true,formatter:hukouFormatter" width="40">户籍</th>
+            <th field="schoolDate"     data-options="sortable:true" width="80">来院日期</th>
+            <th field="mobile"     data-options="sortable:true" width="80">联系电话</th>
+            <th field="address"  data-options="sortable:true" width="130">现住址</th>
+            <th field="departmentName"     data-options="sortable:true" width="80">部门</th>
+            <th field="jobName"     data-options="sortable:true" width="80">工种</th>
+            <th field="comment"     data-options="sortable:true" width="130">备注</th>
             <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
@@ -346,31 +363,31 @@
 </div>
 
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/peopleDeath/add">
+    <shiro:hasPermission name="/peopleContract/add">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/batchDel">
+    <shiro:hasPermission name="/peopleContract/batchDel">
         <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-del'">批量删除</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/importExcel">
+    <shiro:hasPermission name="/peopleContract/importExcel">
         <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导入</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/exportExcel">
+    <shiro:hasPermission name="/peopleContract/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/exportWord">
+    <shiro:hasPermission name="/peopleContract/exportWord">
         <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Word</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/advSearch">
+    <shiro:hasPermission name="/peopleContract/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleDeath/exportSearch">
+    <shiro:hasPermission name="/peopleContract/exportSearch">
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>

@@ -22,6 +22,9 @@
 
         <typeAlias type="com.wangzhixuan.model.PeopleDeath" alias="PeopleDeath" />
         <typeAlias type="com.wangzhixuan.vo.PeopleDeathVo" alias="PeopleDeathVo" />
+
+        <typeAlias type="com.wangzhixuan.model.PeopleContract" alias="PeopleContract" />
+        <typeAlias type="com.wangzhixuan.vo.PeopleContractVo" alias="PeopleContractVo" />
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
@@ -41,5 +44,6 @@
         <mapper resource="sqlMapperXml/ArticleMapper.xml"/>
         <mapper resource="sqlMapperXml/DictMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleDeathMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleContractMapper.xml"/>
     </mappers>
 </configuration> 

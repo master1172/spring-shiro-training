@@ -21,7 +21,11 @@
             <table class="grid" border=1>
                 <tr>
                     <td>人员编码</td>
-                    <td><input name="code" type="text" placeholder="请输入人员编码" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td><input name="code" type="text" placeholder="" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td>姓名</td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                <tr>
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -29,57 +33,86 @@
                             <option value="1" >女</option>
                         </select>
                     </td>
-                </tr>
                 <tr>
                     <td>民族</td>
                     <td>
-                        <input class="easyui-combobox" id="national" name="national" url="${path}/dict/national" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>来自省</td>
+                    <td><input type="text" name="province"></td>
+                    <td>来自市/区</td>
+                    <td>
+                        <input type="text" name="city"/>
+                    </td>
+                </tr>
+                <tr>
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
+                    <td>文化程度</td>
+                    <td><input type="test" name="educationName"></td>
                 </tr>
                 <tr>
-                    <td>到院工作日期</td>
+                    <td>政治面貌</td>
+                    <td><input type="text" name="politicalName"></td>
+                    <td>特长</td>
                     <td>
-                        <input name="school_date" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                    <td>职务</td>
-                    <td>
-                        <input type="text" name="category" placeholder="请输入职务" />
+                        <input type="text" name="speciality"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>职级</td>
+                    <td>身高</td>
                     <td>
-                        <input class="easyui-combobox" id="job_level_id" name="job_level_id" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input type="text" name="height"/>
+                    </td>
+                    <td>婚姻状况</td>
+                    <td>
+                        <input class="easyui-combobox" id="marriageId" name="marriageId" url="${path}/dict/marriage" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                    <td>部门</td>
-                    <td><input type="test" name="department"></td>
                 </tr>
                 <tr>
-                    <td>死亡日期</td>
+                    <td>户籍</td>
                     <td>
-                        <input name="death_date" placeholder="点击选择时间"
+                        <select name="hukou" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="0" selected="selected">非农业</option>
+                            <option value="1" >农业</option>
+                        </select>
+                    </td>
+                    <td>来院日期</td>
+                    <td>
+                        <input name="schoolDate" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
-                    <td>死亡原因</td>
+                </tr>
+                <tr>
+                    <td>联系电话</td>
+                    <td><input type="text" name="mobile"></td>
+                    <td>现住址</td>
                     <td>
-                        <input type="text" name="death_reason"/>
+                        <input type="text" name="address"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>部门</td>
+                    <td><input type="text" name="departmentName"></td>
+                    <td>工种</td>
+                    <td>
+                        <input type="text" name="jobName"/>
                     </td>
                 </tr>
                 <tr>
                     <td>备注</td>
-                    <td>
-                        <input name="text" name="comment"/>
+                    <td colspan="3">
+                        <input type="text" name="comment"/>
                     </td>
                 </tr>
                 <tr>

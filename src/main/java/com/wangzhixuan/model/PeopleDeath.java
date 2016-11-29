@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by administrator_cernet on 2016/11/22.
  */
-public class PeopleDeath implements Serializable {
+public class PeopleDeath extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -3874035833405975520L;
 
@@ -142,5 +142,12 @@ public class PeopleDeath implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public String toString(){
+        return "People{" +
+                "id=" + id +
+                "}";
     }
 }

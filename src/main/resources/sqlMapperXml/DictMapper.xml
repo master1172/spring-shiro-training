@@ -6,6 +6,11 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="JobResultMap" type="com.wangzhixuan.model.Dict">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="job_level" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <sql id="Dict_Column_List">
         id, name
     </sql>
@@ -24,6 +29,13 @@
         where name = #{name}
     </select>
 
+    <select id="findNationalDict" resultMap="DictResultMap">
+        select
+        <include refid="Dict_Column_List"/>
+        from dict_national
+        order by id
+    </select>
+
     <select id="findNationalIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
         select
         id
@@ -31,11 +43,32 @@
         where name = #{name}
     </select>
 
-    <select id="findJobIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+    <select id="findJobLevelDict" resultMap="JobResultMap">
+        select
+        id, job_level
+        from job
+        order by id
+    </select>
+
+    <select id="findJobLevelIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
         select
         id
         from job
-        where job_name = #{name}
+        where job_level = #{job_level}
+    </select>
+
+    <select id="findMarriageDict" resultMap="DictResultMap">
+        select
+        <include refid="Dict_Column_List"/>
+        from dict_marriage
+        order by id
+    </select>
+
+    <select id="findMarriageIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        id
+        from dict_marriage
+        where name = #{name}
     </select>
 </mapper>
 

@@ -265,9 +265,9 @@ public class PeopleServiceImpl implements PeopleService{
         			row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
         			row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
         			row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
-        			row.createCell(3).setCellValue(p.getBirthday().toString());row.getCell(3).setCellStyle(setBorder);
+        			row.createCell(3).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));row.getCell(3).setCellStyle(setBorder);
         			row.createCell(4).setCellValue(p.getJob());row.getCell(4).setCellStyle(setBorder);
-        			row.createCell(5).setCellValue(p.getSalary().toString());row.getCell(5).setCellStyle(setBorder);
+        			row.createCell(5).setCellValue(p.getSalary()==null?"":(p.getSalary().toString()));row.getCell(5).setCellStyle(setBorder);
 					row.createCell(6).setCellValue(p.getDegreeName());row.getCell(6).setCellStyle(setBorder);
 					row.createCell(7).setCellValue(p.getAddress());row.getCell(7).setCellStyle(setBorder);
         			row.setHeight((short) 400);
