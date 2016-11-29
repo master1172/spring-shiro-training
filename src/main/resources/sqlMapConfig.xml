@@ -26,13 +26,11 @@
         <typeAlias type="com.wangzhixuan.model.PeopleContract" alias="PeopleContract" />
         <typeAlias type="com.wangzhixuan.vo.PeopleContractVo" alias="PeopleContractVo" />
 
-<<<<<<< HEAD
         <typeAlias type="com.wangzhixuan.model.PeopleTemp" alias="PeopleTemp" />
         <typeAlias type="com.wangzhixuan.vo.PeopleTempVo" alias="PeopleTempVo" />
-=======
+
         <typeAlias type="com.wangzhixuan.model.PeopleDaily" alias="PeopleDaily"/>
         <typeAlias type="com.wangzhixuan.vo.PeopleDailyVo" alias="PeopleDailyVo"/>
->>>>>>> 1b3fb5fe6789505c4dc49bcf927b10097839a9e7
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
@@ -53,10 +51,8 @@
         <mapper resource="sqlMapperXml/DictMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleDeathMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleContractMapper.xml"/>
-<<<<<<< HEAD
         <mapper resource="sqlMapperXml/PeopleTempMapper.xml"/>
-=======
         <mapper resource="sqlMapperXml/PeopleDailyMapper.xml"/>
->>>>>>> 1b3fb5fe6789505c4dc49bcf927b10097839a9e7
+
     </mappers>
 </configuration> 
