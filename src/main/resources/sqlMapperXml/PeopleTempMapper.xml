@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wangzhixuan.mapper.PeopleContractMapper">
-    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleContract">
+<mapper namespace="com.wangzhixuan.mapper.PeopleTempMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleTemp">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
-    <resultMap id="peopleContractVoResultMap" type="com.wangzhixuan.vo.PeopleContractVo">
+    <resultMap id="peopleTempVoResultMap" type="com.wangzhixuan.vo.PeopleTempVo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
@@ -58,11 +58,11 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
-        from people_contract
+        from people_Temp
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleContractVoById" resultMap="peopleContractVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleTempVoById" resultMap="peopleTempVoResultMap" parameterType="java.lang.Long">
         SELECT
         t.id,
         t.code,
@@ -88,7 +88,7 @@
         t.comment,
         t.photo
         FROM
-        people_contract t
+        people_Temp t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -98,21 +98,21 @@
         </where>
     </select>
 
-    <select id="findPeopleContractById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleTempById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
-        from people_contract
+        from people_Temp
         where id = #{id}
     </select>
 
-    <select id="findPeopleContractByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="findPeopleTempByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from people_contract
+        from people_Temp
         where name LIKE concat('%',#{name},'%')
     </select>
 
-    <select id="findPeopleContractPageCondition" resultMap="peopleContractVoResultMap" parameterType="PageInfo">
+    <select id="findPeopleTempPageCondition" resultMap="peopleTempVoResultMap" parameterType="PageInfo">
         SELECT
         t.id,
         t.code,
@@ -138,7 +138,7 @@
         t.comment,
         t.photo
         FROM
-        people_contract t
+        people_Temp t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -211,9 +211,9 @@
         LIMIT #{from}, #{size}
     </select>
 
-    <select id="findPeopleContractPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+    <select id="findPeopleTempPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_contract t
+        from people_Temp t
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -282,12 +282,12 @@
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_contract
+        delete from people_Temp
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_contract
+        delete from people_Temp
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -295,11 +295,11 @@
     </delete>
 
 
-    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleContract">
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTemp">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_contract (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_Temp (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
         values (
         #{code,jdbcType=VARCHAR},
         #{name,jdbcType=VARCHAR},
@@ -324,7 +324,7 @@
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_contract (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_Temp (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
@@ -351,8 +351,8 @@
             )
         </foreach>
     </insert>
-    <update id="updatePeopleContract" parameterType="com.wangzhixuan.model.PeopleContract">
-        update people_Contract
+    <update id="updatePeopleTemp" parameterType="com.wangzhixuan.model.PeopleTemp">
+        update people_Temp
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -417,7 +417,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="selectPeopleContractByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+    <select id="selectPeopleTempByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
         t.id,
         t.code,
@@ -440,14 +440,14 @@
         t.job_name,
         t.comment,
         t.photo
-        from people_contract t
+        from people_Temp t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
 
-    <select id="selectPeopleContractVoByIds" resultMap="peopleContractVoResultMap" parameterType="java.util.ArrayList">
+    <select id="selectPeopleTempVoByIds" resultMap="peopleTempVoResultMap" parameterType="java.util.ArrayList">
         SELECT
         t.id,
         t.code,
@@ -473,7 +473,7 @@
         t.comment,
         t.photo
         FROM
-        people_contract t
+        people_Temp t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN

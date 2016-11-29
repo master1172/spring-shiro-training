@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by administrator_cernet on 2016/11/27.
  */
-public class PeopleContract extends PeopleBase implements Serializable {
+public class PeopleTemp extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -6771435680301413458L;
 
@@ -234,3 +234,4 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.schoolDate = schoolDate;
     }
 }
+
