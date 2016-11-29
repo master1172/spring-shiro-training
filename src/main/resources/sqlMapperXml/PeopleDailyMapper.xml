@@ -12,9 +12,9 @@
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
         <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
-        <result column="school_date" property="schoolDate" jdbcType="INTEGER" />
+        <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="DATE" />
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
@@ -32,9 +32,9 @@
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
         <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
-        <result column="school_date" property="schoolDate" jdbcType="INTEGER" />
+        <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="DATE" />
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
@@ -80,35 +80,37 @@
     </select>
 
     <select id="findPeopleDailyById" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from people_daily
-        where id = #{id}
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM
+          people_daily
+        WHERE
+          id = #{id}
     </select>
 
     <select id="findPeopleDailyPageCondition" resultMap="peopleDailyVoResultMap" parameterType="PageInfo">
         SELECT
-        t.id,
-        t.code,
-        t.name,
-        t.sex,
-        t.national_id,
-        s.name as national_name,
-        t.province,
-        t.city,
-        t.birthday,
-        t.education_name,
-        t.political_name,
-        t.school_date,
-        t.mobile,
-        t.department_name,
-        t.job_name,
-        t.comment,
-        t.photo
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            s.name as national_name,
+            t.province,
+            t.city,
+            t.birthday,
+            t.education_name,
+            t.political_name,
+            t.school_date,
+            t.mobile,
+            t.department_name,
+            t.job_name,
+            t.comment,
+            t.photo
         FROM
-        people_daily t
+          people_daily t
         LEFT JOIN
-        dict_national s ON s.id = t.national
+          dict_national s ON s.id = t.national
         <where>
             <if test=" condition.code != null">
                 and t.code = #{condition.code}
@@ -140,20 +142,26 @@
             <if test=" condition.politicalName != null and condition.politicalName != ''">
                 and t.political_name LIKE concat('%', #{condition.politicalName}, '%')
             </if>
-            <if test=" condition.school_dateMin != null and condition.school_dateMin != ''">
-                <![CDATA[ and t.school_date >= #{condition.school_dateMin} ]]>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
             </if>
-            <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
-                <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
             </if>
             <if test=" condition.mobile != null and condition.mobile != ''">
                 and t.mobile LIKE concat('%',#{condition.mobile},'%')
             </if>
+            <if test=" condition.departmentName != null and condition.departmentName != ''">
+                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
         </where>
-        LIMIT #{from}, #{size}
+          LIMIT #{from}, #{size}
     </select>
 
-    <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+    <select id="findPeopleDailyPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
         from people_daily t
         <where>
@@ -187,25 +195,35 @@
             <if test=" condition.politicalName != null and condition.politicalName != ''">
                 and t.political_name LIKE concat('%', #{condition.politicalName}, '%')
             </if>
-            <if test=" condition.school_dateMin != null and condition.school_dateMin != ''">
-                <![CDATA[ and t.school_date >= #{condition.school_dateMin} ]]>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
             </if>
-            <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
-                <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
             </if>
             <if test=" condition.mobile != null and condition.mobile != ''">
                 and t.mobile LIKE concat('%',#{condition.mobile},'%')
+            </if>
+            <if test=" condition.departmentName != null and condition.departmentName != ''">
+                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
             </if>
         </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_daily
+        delete
+        from
+          people_daily
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_daily
+        delete
+        from
+          people_daily
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -217,7 +235,22 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into people_daily (
-          code, name, sex, national_id, province, city, birthday, education_name, political_name, school_date, mobile, department_name, job_name, comment, photo)
+          code,
+          name,
+          sex,
+          national_id,
+          province,
+          city,
+          birthday,
+          education_name,
+          political_name,
+          school_date,
+          mobile,
+          department_name,
+          job_name,
+          comment,
+          photo
+        )
         values (
             #{code,     jdbcType=VARCHAR},
             #{name,     jdbcType=VARCHAR},
@@ -238,7 +271,22 @@
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
         insert into people_daily (
-          code, name, sex, national_id, province, city, birthday, education_name, political_name, school_date, mobile, department_name, job_name, comment, photo)
+          code,
+          name,
+          sex,
+          national_id,
+          province,
+          city,
+          birthday,
+          education_name,
+          political_name,
+          school_date,
+          mobile,
+          department_name,
+          job_name,
+          comment,
+          photo
+        )
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
@@ -256,10 +304,11 @@
                 #{departmentName, jdbcType=VARCHAR},
                 #{jobName,  jdbcType=VARCHAR},
                 #{comment,  jdbcType=VARCHAR},
-                #{photo,  jdbcType=VARCHAR}
+                #{photo,    jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
+
     <update id="updatePeopleDaily" parameterType="com.wangzhixuan.model.PeopleDaily">
         update people_daily
         <set>
@@ -313,23 +362,9 @@
     </update>
     <select id="selectPeopleDailyByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-          t.id,
-          t.code,
-          t.name,
-          t.sex,
-          t.national_id,
-          t.province,
-          t.city,
-          t.birthday,
-          t.education_name,
-          t.political_name,
-          t.school_date,
-          t.mobile,
-          t.department_name,
-          t.job_name,
-          t.comment,
-          t.photo
-        from people_daily t
+          <include refid="Base_Column_List"/>
+        FROM
+          people_daily
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -343,7 +378,7 @@
         t.name,
         t.sex,
         t.national_id,
-        s.name as nationalName
+        s.name as national_name
         t.province,
         t.city,
         t.birthday,
@@ -357,7 +392,7 @@
         t.photo
         from people_daily t
         left join
-        dict_national s ON s.id = t.national_id
+          dict_national s ON s.id = t.national_id
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
