@@ -13,8 +13,6 @@ public interface PeopleDailyService {
 
     PeopleDaily findPeopleDailyById(Long id);
 
-    PeopleDaily findPeopleDailyByName(String name);
-
     void findDataGrid(PageInfo pageInfo);
 
     void addPeopleDaily(PeopleDaily peopleDaily, CommonsMultipartFile file);

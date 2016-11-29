@@ -13,6 +13,7 @@ import com.wangzhixuan.vo.PeopleDailyVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ import java.util.Map;
 /**
  * Created by sterm on 2016/11/22.
  */
+@Service
 public class PeopleDailyServiceImpl implements PeopleDailyService {
 
     @Autowired
@@ -41,13 +43,8 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     }
 
     @Override
-    public PeopleDaily findPeopleDailyByName(String name) {
-        return peopleDailyMapper.findPeopleDailyByName(name);
-    }
-
-    @Override
     public void findDataGrid(PageInfo pageInfo) {
-        pageInfo.setRows(peopleDailyMapper.findPeoplePageDailyCondition(pageInfo));
+        pageInfo.setRows(peopleDailyMapper.findPeopleDailyPageCondition(pageInfo));
         pageInfo.setTotal(peopleDailyMapper.findPeopleDailyPageCount(pageInfo));
     }
 
