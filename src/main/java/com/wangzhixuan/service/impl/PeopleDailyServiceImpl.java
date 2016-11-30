@@ -63,6 +63,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleDaily.setPhoto(uploadPath);
                 peopleDailyMapper.insert(peopleDaily);
             }
         }else{
@@ -86,6 +87,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath, file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleDaily.setPhoto(uploadPath);
                 peopleDailyMapper.updatePeopleDaily(peopleDaily);
             }
         }else{

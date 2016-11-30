@@ -81,6 +81,7 @@ public class PeopleServiceImpl implements PeopleService{
 			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
     		if(StringUtils.isNotEmpty(uploadPath) ){
+				people.setPhoto(uploadPath);
     			peopleMapper.insert(people);
     		}
     	}else{
@@ -104,6 +105,7 @@ public class PeopleServiceImpl implements PeopleService{
 			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
 			if(StringUtils.isNotEmpty(uploadPath)){
+				people.setPhoto(uploadPath);
 				peopleMapper.updatePeople(people);
 			}
 		}else{

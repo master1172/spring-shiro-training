@@ -23,7 +23,7 @@ public class StringUtilExtra {
     }
 
     public static String getPictureUploadPath(){
-        String classPath = StringUtilExtra.class.getClass().getResource("/").getPath();//路径
+        String classPath = StringUtilExtra.class.getResource("/").getPath();//路径
         String filePath = classPath.substring(0,classPath.lastIndexOf("WEB-INF")) ;
 
         return filePath;
