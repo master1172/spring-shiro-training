@@ -12,7 +12,7 @@
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/peopledaily/dataGrid',
+                url: '${path}/peopleDaily/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -40,7 +40,7 @@
                 title: '高级查询',
                 width: 500,
                 height: 350,
-                href: '${path}/peopledaily/advSearchPage',
+                href: '${path}/peopleDaily/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
@@ -61,14 +61,14 @@
                 title: '导出',
                 width: 500,
                 height: 350,
-                href: '${path}/peopledaily/exportSearchPage',
+                href: '${path}/peopleDaily/exportSearchPage',
                 buttons:[{
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/peopledaily/exportSearch",function(data){
+                            parent.SYS_SUBMIT_FORM(f, "/peopleDaily/exportSearch",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示",data["msg"],"warning");
                                 }else{
@@ -78,7 +78,7 @@
                                     alert(ids);
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/peopledaily/exportExcel");
+                                    form.attr("action",'${path}'+"/peopleDaily/exportExcel");
                                     $("#downLoadForm").submit();
                                 }
                             });
@@ -92,8 +92,8 @@
             parent.$.modalDialog({
                 title: '添加',
                 width: 500,
-                height: 350,
-                href: '${path}/peopledaily/addPage',
+                height: 450,
+                href: '${path}/peopleDaily/addPage',
                 buttons: [{
                     text: '添加',
                     handler: function () {
@@ -101,7 +101,7 @@
                         var f = parent.$.modalDialog.handler.find("#peopleAddForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopledaily/add",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleDaily/add",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -127,8 +127,8 @@
             parent.$.modalDialog({
                 title: '修改',
                 width: 500,
-                height: 350,
-                href: '${path}/peopledaily/editPage?id='+id,
+                height: 450,
+                href: '${path}/peopleDaily/editPage?id='+id,
                 buttons: [{
                     text: '修改',
                     handler: function () {
@@ -136,7 +136,7 @@
                         var f = parent.$.modalDialog.handler.find("#peopleEditForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopledaily/edit",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleDaily/edit",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -161,7 +161,7 @@
             parent.$.messager.confirm('询问', '您是否要删除当前人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/peopledaily/delete',{
+                    $.post('${path}/peopleDaily/delete',{
                         id: id
                     }, function (result) {
                         if (result.success) {
@@ -184,7 +184,7 @@
             parent.$.messager.confirm('询问', '您是否要删除所选人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/peopledaily/batchDel', {
+                    $.post('${path}/peopleDaily/batchDel', {
                         ids: ids.join(",")
                     }, function (result) {
                         if (result.success) {
@@ -211,7 +211,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
-                href: '${path}/peopledaily/importExcelPage',
+                href: '${path}/peopleDaily/importExcelPage',
                 buttons: [{
                     text: '导入',
                     handler: function () {
@@ -219,7 +219,7 @@
                         var f = parent.$.modalDialog.handler.find("#importExcelForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopledaily/importExcel",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleDaily/importExcel",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -245,7 +245,7 @@
                 });
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids);
-                form.attr("action",'${path}'+"/peopledaily/exportExcel");
+                form.attr("action",'${path}'+"/peopleDaily/exportExcel");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择有效数据", "warning");
@@ -258,7 +258,7 @@
                 var id=checkedItems[0]["id"];
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(id);
-                form.attr("action",'${path}'+"/peopledaily/exportWord");
+                form.attr("action",'${path}'+"/peopleDaily/exportWord");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
@@ -276,10 +276,10 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-            <shiro:hasPermission name="/peopledaily/edit">
+            <shiro:hasPermission name="/peopleDaily/edit">
                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
             </shiro:hasPermission>
-            <shiro:hasPermission name="/peopledaily/delete">
+            <shiro:hasPermission name="/peopleDaily/delete">
                 str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
             </shiro:hasPermission>
@@ -342,31 +342,31 @@
 </div>
 
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/peopledaily/add">
+    <shiro:hasPermission name="/peopleDaily/add">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopledaily/batchDel">
+    <shiro:hasPermission name="/peopleDaily/batchDel">
         <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-del'">批量删除</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopledaily/importExcel">
+    <shiro:hasPermission name="/peopleDaily/importExcel">
         <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导入</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopledaily/exportExcel">
+    <shiro:hasPermission name="/peopleDaily/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopledaily/exportWord">
+    <shiro:hasPermission name="/peopleDaily/exportWord">
         <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Word</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopledaily/advSearch">
+    <shiro:hasPermission name="/peopleDaily/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopledaily/exportSearch">
+    <shiro:hasPermission name="/peopleDaily/exportSearch">
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>

@@ -25,7 +25,7 @@ import java.util.Map;
  * Created by sterm on 2016/11/22.
  */
 @Controller
-@RequestMapping("/peopledaily")
+@RequestMapping("/peopleDaily")
 public class PeopleDailyController extends BaseController{
 
     private static Logger LOGGER = LoggerFactory.getLogger(PeopleDailyController.class);
@@ -35,7 +35,7 @@ public class PeopleDailyController extends BaseController{
 
     @RequestMapping(value="/manager", method=RequestMethod.GET)
     public String manager(){
-        return "/admin/peopledaily/people";
+        return "/admin/peopleDaily/people";
     }
 
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
@@ -51,12 +51,12 @@ public class PeopleDailyController extends BaseController{
 
     @RequestMapping(value="/advSearchPage", method = RequestMethod.GET)
     public String advSearchPage(){
-        return "admin/peopledaily/peopleSearch";
+        return "admin/peopleDaily/peopleSearch";
     }
 
     @RequestMapping(value="/exportSearchPage", method = RequestMethod.GET)
     public String exportSearchPage(){
-        return "admin/peopledaily/peopleSearch";
+        return "admin/peopleDaily/peopleSearch";
     }
 
     @RequestMapping(value="/exportSearch", method = RequestMethod.POST)
@@ -90,10 +90,10 @@ public class PeopleDailyController extends BaseController{
 
     @RequestMapping(value="/addPage",method = RequestMethod.GET)
     public String addPage(){
-        return "admin/peopledaily/peopleAdd";
+        return "admin/peopleDaily/peopleAdd";
     }
 
-    @RequestMapping(value="/add", method=RequestMethod.POST, headers="Accept=application/json")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public Result add(PeopleDaily peopleDaily, @RequestParam(value="fileName", required = false)CommonsMultipartFile file){
 
@@ -116,7 +116,7 @@ public class PeopleDailyController extends BaseController{
     public String editPage(Long id, Model model){
         PeopleDaily peopleDaily = peopleDailyService.findPeopleDailyById(id);
         model.addAttribute("people",peopleDaily);
-        return "/admin/peopledaily/peopleEdit";
+        return "/admin/peopleDaily/peopleEdit";
     }
 
     @RequestMapping("/edit")
@@ -175,7 +175,7 @@ public class PeopleDailyController extends BaseController{
 
     @RequestMapping(value="/importExcelPage", method = RequestMethod.GET)
     public String importExcelPage(){
-        return "admin/peopledaily/importExcelPage";
+        return "admin/peopleDaily/importExcelPage";
     }
 
     @RequestMapping(value="/importExcel", method = RequestMethod.POST, headers="Accept=application/json")
