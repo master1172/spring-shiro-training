@@ -50,11 +50,11 @@
                 <tr>
                     <td>来自省</td>
                     <td>
-                        <select id="selectProvince" name="province" value="${people.province}" onchange="provinceChange();"></select>
+                        <input type="text" name="province" value="${people.province}">
                     </td>
                     <td>来自市(区)</td>
                     <td>
-                        <select id="selCity" name="city" value="${people.city}"></select>
+                        <input type="text" name="city" value="${people.city}">
                     </td>
                 </tr>
                 <tr>

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath}/static/easyui/plugins/uploadPreview.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="${staticPath}/static/province.js"></script>
 <script type="text/javascript">
     $(function() {
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
     });
+
     function checkForm(){
         progressLoad();
         var isValid = $("#peopleAddForm").form("validate");
@@ -47,11 +47,11 @@
                 <tr>
                     <td>来自省</td>
                     <td>
-                        <select id="selectProvince" name="province" onchange="provinceChange();"></select>
+                        <input type="text" name="province">
                     </td>
                     <td>来自市(区)</td>
                     <td>
-                        <select id="selCity" name="city"></select>
+                        <input type="text" name="city">
                     </td>
                 </tr>
                 <tr>
