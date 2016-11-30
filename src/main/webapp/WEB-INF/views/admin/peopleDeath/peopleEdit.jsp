@@ -68,7 +68,7 @@
                         </input>
                     </td>
                     <td>部门</td>
-                    <td><input type="test" name="department" value="${people.department}"></td>
+                    <td><input type="text" name="department" value="${people.department}"></td>
                 </tr>
                 <tr>
                     <td>死亡日期</td>

@@ -73,7 +73,7 @@
                     </td>
                     <td>文化程度</td>
                     <td>
-                        <input type="test" name="educationName" value="${peopleContract.educationName}">
+                        <input type="text" name="educationName" value="${peopleContract.educationName}">
                     </td>
                 </tr>
                 <tr>
