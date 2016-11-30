@@ -35,7 +35,9 @@ public class PeopleDailyController extends BaseController{
 
     @RequestMapping(value="/manager", method=RequestMethod.GET)
     public String manager(){
-        return "/admin/peopleDaily/people";
+
+        return "admin/peopleDaily/people";
+
     }
 
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
