@@ -393,7 +393,7 @@
             <if test="hukou != null">
                 hukou = #{hukou, jdbcType=TINYINT},
             </if>
-            <if test="schoolDate != null and schoolDate != ''">
+            <if test="schoolDate != null">
                 school_date = #{schoolDate,jdbcType=DATE},
             </if>
             <if test="mobile != null">

@@ -93,6 +93,13 @@ public class PeopleContractServiceImpl implements PeopleContractService{
             }
         }
 
+        //当schoolDate不为空，而是""的时候，需要修改为null，否则插入会有错误
+        if (peopleContract != null){
+            if (StringUtils.isEmpty(peopleContract.getSchoolDate())){
+                peopleContract.setSchoolDate(null);
+            }
+        }
+
 
         if (file != null){
             //获取头像上传路径
