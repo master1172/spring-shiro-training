@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath}/static/easyui/plugins/uploadPreview.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="${staticPath}/static/province.js"></script>
 <script type="text/javascript">
     $(function() {
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
@@ -28,9 +27,9 @@
                     <td><input name="name" type="text" class="easyui-validatebox" data-options="required:true" value="${people.name}"></td>
                     <td>性别</td>
                     <td>
-                        <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0" selected="selected">男</option>
-                            <option value="1" >女</option>
+                        <select name="sex" id="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="0">男</option>
+                            <option value="1">女</option>
                         </select>
                     </td>
                 </tr>
@@ -40,11 +39,20 @@
                         <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
+
+                </tr>
+                <tr>
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly" value="${people.birthday}"/>
+                    </td>
+                    <td>来院日期</td>
+                    <td>
+                        <input name="schoolDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly" value="${people.schoolDate}"/>
                     </td>
                 </tr>
                 <tr>

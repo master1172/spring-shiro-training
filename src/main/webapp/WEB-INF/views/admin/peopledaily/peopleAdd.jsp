@@ -37,9 +37,17 @@
                         <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
+                </tr>
+                <tr>
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                    <td>来院日期</td>
+                    <td>
+                        <input name="schoolDate" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
