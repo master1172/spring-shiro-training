@@ -7,17 +7,27 @@
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
         $("#sex").val('${peopleTemp.sex}');
         $('#hukou').val('${peopleTemp.hukou}');
-        $('#province').val('${peopleTemp.province}');
-        $('#city').val('${peopleTemp.city}');
         $('#marriageId').val('${peopleTemp.marriageId}');
         $('#nationalId').val('${peopleTemp.nationalId}');
         $('#imgShow').attr('src','${staticPath}/${peopleTemp.photo}');
     });
     $(function(){
-        $("#city_1").citySelect({
-            nodata:"none",
-            required:false
-        });
+        if("${peopleTemp.province}" == ""){
+            $("#city_1").citySelect({
+                nodata: "none",
+                required: false
+            });
+        } else if("${peopleTemp.city}" == ""){
+            $("#city_1").citySelect({
+                prov: "${peopleTemp.province}",
+                required:false
+            });
+        } else {
+            $("#city_1").citySelect({
+                prov: "${peopleTemp.province}",
+                city: "${peopleTemp.city}"
+            });
+        }
     });
     function checkForm(){
         progressLoad();
