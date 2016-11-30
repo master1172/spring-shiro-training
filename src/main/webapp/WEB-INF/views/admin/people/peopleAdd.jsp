@@ -46,7 +46,7 @@
                                readonly="readonly"/>
                     </td>
                     <td>住址</td>
-                    <td><input type="test" name="address"></td>
+                    <td><input type="text" name="address"></td>
                 </tr>
                 <tr>
                     <td>学历</td>

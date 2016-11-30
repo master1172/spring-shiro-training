@@ -64,7 +64,7 @@
                                readonly="readonly"/>
                     </td>
                     <td>文化程度</td>
-                    <td><input type="test" name="educationName"></td>
+                    <td><input type="text" name="educationName"></td>
                 </tr>
                 <tr>
                     <td>政治面貌</td>

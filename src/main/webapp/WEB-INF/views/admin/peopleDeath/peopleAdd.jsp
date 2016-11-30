@@ -62,7 +62,9 @@
                         </input>
                     </td>
                     <td>部门</td>
-                    <td><input type="test" name="department"></td>
+                    <td>
+                        <input type="text" name="department">
+                    </td>
                 </tr>
                 <tr>
                     <td>死亡日期</td>
@@ -79,7 +81,7 @@
                 <tr>
                     <td>备注</td>
                     <td>
-                        <input name="text" name="comment"/>
+                        <input type="text" name="comment"/>
                     </td>
                 </tr>
                 <tr>
