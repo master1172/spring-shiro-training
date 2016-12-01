@@ -328,7 +328,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
             params.put("${departmentName}", p.getDepartmentName());
             params.put("${jobName}",        p.getJobName());
             params.put("${sex}",            p.getSex()==0?"男":"女");
-            params.put("${nationalName}",   p.getNationalName());
+            params.put("${nation}",         p.getNationalName());
             params.put("${province}",       p.getProvince());
             params.put("${city}",           p.getCity());
             params.put("${birthday}",       p.getBirthday());
