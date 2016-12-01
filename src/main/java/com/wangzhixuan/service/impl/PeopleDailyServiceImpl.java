@@ -269,13 +269,14 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                 row.createCell(3).setCellValue("工种");           row.getCell(3).setCellStyle(setBorder);
                 row.createCell(4).setCellValue("性别");           row.getCell(4).setCellStyle(setBorder);
                 row.createCell(5).setCellValue("民族");           row.getCell(5).setCellStyle(setBorder);
-                row.createCell(6).setCellValue("来自省(区,市)");   row.getCell(6).setCellStyle(setBorder);
-                row.createCell(7).setCellValue("出生年月");        row.getCell(7).setCellStyle(setBorder);
-                row.createCell(8).setCellValue("文化程度");         row.getCell(8).setCellStyle(setBorder);
-                row.createCell(9).setCellValue("政治面貌");         row.getCell(9).setCellStyle(setBorder);
-                row.createCell(10).setCellValue("来院日期");        row.getCell(10).setCellStyle(setBorder);
-                row.createCell(11).setCellValue("联系电话");        row.getCell(11).setCellStyle(setBorder);
-                row.createCell(12).setCellValue("备注");              row.getCell(12).setCellStyle(setBorder);
+                row.createCell(6).setCellValue("来自省");         row.getCell(6).setCellStyle(setBorder);
+                row.createCell(7).setCellValue("来自市(区)");     row.getCell(7).setCellStyle(setBorder);
+                row.createCell(8).setCellValue("出生年月");       row.getCell(8).setCellStyle(setBorder);
+                row.createCell(9).setCellValue("文化程度");       row.getCell(9).setCellStyle(setBorder);
+                row.createCell(10).setCellValue("政治面貌");      row.getCell(10).setCellStyle(setBorder);
+                row.createCell(11).setCellValue("来院日期");      row.getCell(11).setCellStyle(setBorder);
+                row.createCell(12).setCellValue("联系电话");      row.getCell(12).setCellStyle(setBorder);
+                row.createCell(13).setCellValue("备注");          row.getCell(13).setCellStyle(setBorder);
 
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
@@ -287,13 +288,14 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                     row.createCell(3).setCellValue(p.getJobName());         row.getCell(3).setCellStyle(setBorder);
                     row.createCell(4).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女")); row.getCell(4).setCellStyle(setBorder);
                     row.createCell(5).setCellValue(p.getNationalName());    row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getProvince() + p.getCity()); row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getBirthday());        row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getEducationName());   row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getPoliticalName());   row.getCell(9).setCellStyle(setBorder);
-                    row.createCell(10).setCellValue(p.getSchoolDate());      row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getMobile());         row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getComment());        row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getProvince());        row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getCity());            row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(p.getBirthday());        row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getEducationName());   row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getPoliticalName());  row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getSchoolDate());     row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getMobile());         row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(13).setCellValue(p.getComment());        row.getCell(13).setCellStyle(setBorder);
 
                     row.setHeight((short) 400);
                 }

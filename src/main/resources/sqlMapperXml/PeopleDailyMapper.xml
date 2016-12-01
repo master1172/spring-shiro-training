@@ -378,7 +378,7 @@
         t.name,
         t.sex,
         t.national_id,
-        s.name as national_name
+        s.name as national_name,
         t.province,
         t.city,
         t.birthday,
