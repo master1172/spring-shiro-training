@@ -314,26 +314,26 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     }
 
     @Override
-    public void exportWord(HttpServletResponse response, String id) {
+    public void exportWord(HttpServletResponse response, String ids) {
 
-        PeopleDailyVo p= peopleDailyMapper.findPeopleDailyVoById(Long.valueOf(id));
+        PeopleDailyVo p= peopleDailyMapper.findPeopleDailyVoById(Long.valueOf(ids));
 
         if(p!=null){
 
-            String filePath=this.getClass().getResource("/template/peopleDailyInfo.docx").getPath();
+            String filePath=this.getClass().getResource("/template/custInfoDaily.docx").getPath();
             String newFileName="日工资人员信息.docx";
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${name}",           p.getName());
-            params.put("${department}",     p.getDepartmentName());
+            params.put("${departmentName}", p.getDepartmentName());
             params.put("${jobName}",        p.getJobName());
             params.put("${sex}",            p.getSex()==0?"男":"女");
             params.put("${nationalName}",   p.getNationalName());
             params.put("${province}",       p.getProvince());
             params.put("${city}",           p.getCity());
             params.put("${birthday}",       p.getBirthday());
-            params.put("${education}",      p.getEducationName());
-            params.put("${political}",      p.getPoliticalName());
+            params.put("${educationName}",  p.getEducationName());
+            params.put("${politicalName}",  p.getPoliticalName());
             params.put("${schoolDate}",     p.getSchoolDate());
             params.put("${mobile}",         p.getMobile());
             params.put("${comment}",        p.getComment());
@@ -342,6 +342,8 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
             if(StringUtils.isNotBlank(p.getPhoto())){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);

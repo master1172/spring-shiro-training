@@ -213,12 +213,12 @@ public class PeopleDailyController extends BaseController{
     }
 
     @RequestMapping("/exportWord")
-    public void exportWord(HttpServletResponse response, String id){
-        if(StringUtils.isBlank(id)){
+    public void exportWord(HttpServletResponse response, String ids){
+        if(StringUtils.isBlank(ids)){
             LOGGER.error("导出Word:{}","请选择至少一条有效数据");
         }
         try{
-            peopleDailyService.exportWord(response,id);
+            peopleDailyService.exportWord(response,ids);
         }catch(Exception exp){
             LOGGER.error("导出Word:{}",exp);
         }
