@@ -1,10 +1,10 @@
 package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.PeopleContract;
-import com.wangzhixuan.service.PeopleContractService;
+import com.wangzhixuan.model.PeopleRehire;
+import com.wangzhixuan.service.PeopleRehireService;
 import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleContractVo;
+import com.wangzhixuan.vo.PeopleRehireVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +25,12 @@ import java.util.Map;
  * Created by administrator_cernet on 2016/11/22.
  */
 @Controller
-@RequestMapping("/peopleContract")
-public class PeopleContractController extends BaseController{
-    private static Logger LOGGER = LoggerFactory.getLogger(PeopleContractController.class);
+@RequestMapping("/peopleRehire")
+public class PeopleRehireController extends BaseController{
+    private static Logger LOGGER = LoggerFactory.getLogger(PeopleRehireController.class);
 
     @Autowired
-    private PeopleContractService peopleContractService;
+    private PeopleRehireService peopleRehireService;
 
     /**
      * 人员管理页
@@ -39,13 +39,13 @@ public class PeopleContractController extends BaseController{
      */
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     public String manager() {
-        return "/admin/peopleContract/people";
+        return "/admin/peopleRehire/people";
     }
 
     /**
      * 人员管理列表
      *
-     * @param peopleContract
+     * @param peopleRehire
      * @param page
      * @param rows
      * @param sort
@@ -54,34 +54,34 @@ public class PeopleContractController extends BaseController{
      */
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleContractvo, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, PeopleRehireVo peopleRehirevo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String,Object> condition = PeopleContractVo.CreateCondition(peopleContractvo);
+        Map<String,Object> condition = PeopleRehireVo.CreateCondition(peopleRehirevo);
         pageInfo.setCondition(condition);
-        peopleContractService.findDataGrid(pageInfo);
+        peopleRehireService.findDataGrid(pageInfo);
 
         return pageInfo;
     }
 
     @RequestMapping(value="/advSearchPage", method = RequestMethod.GET)
     public String advSearchPage(){
-        return "admin/peopleContract/peopleSearch";
+        return "admin/peopleRehire/peopleSearch";
     }
 
     @RequestMapping(value="/exportSearchPage", method = RequestMethod.GET)
-    public String exportSearchPage() { return "admin/peopleContract/peopleSearch";}
+    public String exportSearchPage() { return "admin/peopleRehire/peopleSearch";}
 
     @RequestMapping(value="/exportSearch", method = RequestMethod.POST)
     @ResponseBody
-    public Result exportSearch(HttpServletResponse response, PeopleContractVo peopleContractvo) {
+    public Result exportSearch(HttpServletResponse response, PeopleRehireVo peopleRehirevo) {
 
         Result result = new Result();
 
-        Map<String,Object> condition = PeopleContractVo.CreateCondition(peopleContractvo);
+        Map<String,Object> condition = PeopleRehireVo.CreateCondition(peopleRehirevo);
 
         PageInfo pageInfo = new PageInfo();
         pageInfo.setCondition(condition);
-        String ids = peopleContractService.findPeopleContractIDsByCondition(pageInfo);
+        String ids = peopleRehireService.findPeopleRehireIDsByCondition(pageInfo);
 
         if (StringUtils.isBlank(ids)){
             result.setSuccess(false);
@@ -102,24 +102,24 @@ public class PeopleContractController extends BaseController{
 
     @RequestMapping(value="/addPage", method=RequestMethod.GET)
     public String addPage(){
-        return "admin/peopleContract/peopleAdd";
+        return "admin/peopleRehire/peopleAdd";
     }
     @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
     public String importExcelPage(){
-        return "admin/peopleContract/importExcelPage";
+        return "admin/peopleRehire/importExcelPage";
     }
     /**
      * 添加用户
      *
-     * @param peopleContract
+     * @param peopleRehire
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public Result add(PeopleContract peopleContract,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
+    public Result add(PeopleRehire peopleRehire,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
         Result result = new Result();
         try {
-            peopleContractService.addPeopleContract(peopleContract,file);
+            peopleRehireService.addPeopleRehire(peopleRehire,file);
             result.setSuccess(true);
             result.setMsg("添加成功");
             return result;
@@ -132,17 +132,17 @@ public class PeopleContractController extends BaseController{
 
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
-        PeopleContract peopleContract = peopleContractService.findPeopleContractById(id);
-        model.addAttribute("peopleContract",peopleContract);
-        return "/admin/peopleContract/peopleEdit";
+        PeopleRehire peopleRehire = peopleRehireService.findPeopleRehireById(id);
+        model.addAttribute("peopleRehire",peopleRehire);
+        return "/admin/peopleRehire/peopleEdit";
     }
 
     @RequestMapping("/edit")
     @ResponseBody
-    public Result edit(PeopleContract peopleContract, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
+    public Result edit(PeopleRehire peopleRehire, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
         Result result = new Result();
         try{
-            peopleContractService.updatePeopleContract(peopleContract,file);
+            peopleRehireService.updatePeopleRehire(peopleRehire,file);
             result.setSuccess(true);
             result.setMsg("修改成功!");
             return result;
@@ -158,7 +158,7 @@ public class PeopleContractController extends BaseController{
     public Result delete(Long id){
         Result result = new Result();
         try{
-            peopleContractService.deletePeopleContractById(id);
+            peopleRehireService.deletePeopleRehireById(id);
             result.setMsg("删除成功！");
             result.setSuccess(true);
             return result;
@@ -182,7 +182,7 @@ public class PeopleContractController extends BaseController{
 
         try{
             String[] idList = ids.split(",");
-            peopleContractService.batchDeletePeopleContractByIds(idList);
+            peopleRehireService.batchDeletePeopleRehireByIds(idList);
             result.setSuccess(true);
             result.setMsg("批量删除人员成功");
             return result;
@@ -200,7 +200,7 @@ public class PeopleContractController extends BaseController{
     public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files){
         Result result = new Result();
         if(files!=null&&files.length>0){
-            boolean flag=peopleContractService.insertByImport(files);
+            boolean flag=peopleRehireService.insertByImport(files);
             result.setSuccess(flag);
             if(!flag){
                 result.setMsg("系统繁忙，请稍后再试！");
@@ -221,7 +221,7 @@ public class PeopleContractController extends BaseController{
             LOGGER.error("Excel:{}","请选择有效数据!");
         }
         try{
-            peopleContractService.exportExcel(response,ids.split(","));
+            peopleRehireService.exportExcel(response,ids.split(","));
         }catch(Exception exp){
             LOGGER.error("导出Excel失败:{}",exp);
         }
@@ -236,7 +236,7 @@ public class PeopleContractController extends BaseController{
             LOGGER.error("导出Word:{}","请选择一条有效数据!");
         }
         try{
-            peopleContractService.exportWord(response,ids);
+            peopleRehireService.exportWord(response,ids);
         }catch(Exception exp){
             LOGGER.error("导出Word:{}",exp);
         }

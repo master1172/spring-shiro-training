@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class PeopleTemp extends PeopleBase implements Serializable {
 
-    private static final long serialVersionUID = -6771435680301413458L;
+    private static final long serialVersionUID = 407002500615373950L;
 
     private Long id;
 
@@ -54,10 +54,6 @@ public class PeopleTemp extends PeopleBase implements Serializable {
     private String comment;
 
     private String photo;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public Long getId() {
         return id;
@@ -221,7 +217,7 @@ public class PeopleTemp extends PeopleBase implements Serializable {
 
     @Override
     public String toString(){
-        return "People{" +
+        return "PeopleTemp{" +
                 "id=" + id +
                 "}";
     }

@@ -5,7 +5,6 @@ import com.wangzhixuan.model.PeopleTemp;
 import com.wangzhixuan.service.PeopleTempService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleTempVo;
-import com.wangzhixuan.vo.PeopleDeathVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

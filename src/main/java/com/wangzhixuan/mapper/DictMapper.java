@@ -23,4 +23,12 @@ public interface DictMapper {
     Integer findMarriageIdByName(String marriageName);
 
     List<Dict> findMarriageDict();
+
+    Integer findDepartmentIdByName(String DepartmentName);
+
+    List<Dict> findDepartmentDict();
+
+    Integer findJobIdByName(String jobName);
+
+    List<Dict> findJobNameDict();
 }

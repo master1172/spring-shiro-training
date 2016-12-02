@@ -55,10 +55,6 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     private String photo;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public Long getId() {
         return id;
     }
@@ -221,7 +217,7 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     @Override
     public String toString(){
-        return "People{" +
+        return "PeopleContract{" +
                 "id=" + id +
                 "}";
     }

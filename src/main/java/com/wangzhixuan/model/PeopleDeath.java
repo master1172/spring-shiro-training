@@ -146,7 +146,7 @@ public class PeopleDeath extends PeopleBase implements Serializable {
 
     @Override
     public String toString(){
-        return "People{" +
+        return "PeopleDeath{" +
                 "id=" + id +
                 "}";
     }

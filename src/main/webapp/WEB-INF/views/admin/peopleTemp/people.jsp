@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>人员管理</title>
+    <title>临时聘用人员管理</title>
     <script type="text/javascript">
         var dataGrid;
 

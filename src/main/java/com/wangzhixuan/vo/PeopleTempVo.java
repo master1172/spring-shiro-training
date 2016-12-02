@@ -284,10 +284,6 @@ public class PeopleTempVo implements Serializable {
             condition.put("city", peopleTempvo.getCity());
         }
 
-        if(StringUtils.isNoneBlank(peopleTempvo.getBirthday())){
-            condition.put("birthday", peopleTempvo.getBirthday());
-        }
-
         if(StringUtils.isNoneBlank(peopleTempvo.getBirthdayMin())){
             condition.put("birthdayMin", peopleTempvo.getBirthdayMin());
         }
@@ -320,10 +316,6 @@ public class PeopleTempVo implements Serializable {
             condition.put("hukou", peopleTempvo.getHukou());
         }
 
-        if(StringUtils.isNoneBlank(peopleTempvo.getSchoolDate())){
-            condition.put("schoolDate", peopleTempvo.getSchoolDate());
-        }
-
         if(StringUtils.isNoneBlank(peopleTempvo.getSchoolDateMix())){
             condition.put("schoolDateMin", peopleTempvo.getSchoolDateMix());
         }
@@ -350,10 +342,6 @@ public class PeopleTempVo implements Serializable {
 
         if(StringUtils.isNoneBlank(peopleTempvo.getComment())){
             condition.put("comment", peopleTempvo.getComment());
-        }
-
-        if(StringUtils.isNoneBlank(peopleTempvo.getPhoto())){
-            condition.put("photo", peopleTempvo.getPhoto());
         }
 
         return condition;

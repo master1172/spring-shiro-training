@@ -52,4 +52,18 @@ public class DictController {
         List<Dict> marriageList = dictMapper.findMarriageDict();
         return marriageList;
     }
+
+    @RequestMapping(value="/jobName", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> JobNameDict(){
+        List<Dict> jobNameList = dictMapper.findJobNameDict();
+        return jobNameList;
+    }
+
+    @RequestMapping(value="/department", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> departmentDict(){
+        List<Dict> departmentList = dictMapper.findDepartmentDict();
+        return departmentList;
+    }
 }
