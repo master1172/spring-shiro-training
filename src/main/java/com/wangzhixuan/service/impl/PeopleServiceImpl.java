@@ -196,19 +196,11 @@ public class PeopleServiceImpl implements PeopleService{
 
 				//工作
 	    		if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
-	    			String job=row.getCell(4).toString().trim();
-	    			p.setJob(job);
+	    			String jobName=row.getCell(4).toString().trim();
+	    			p.setJobName(jobName);
 	    		}
 
-				//薪水
-	    		if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
-	    			String salary=row.getCell(5).toString().trim();
-	    			try {
-						BigDecimal amount = BigDecimal.valueOf(Double.valueOf(salary));
-		    			p.setSalary(amount);
-					} catch (NumberFormatException e) {
-					}
-	    		}
+
 
 				//学历
 				if(row.getCell(6) != null && !row.getCell(6).toString().trim().equals("")){
@@ -268,9 +260,8 @@ public class PeopleServiceImpl implements PeopleService{
         			row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
         			row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
         			row.createCell(3).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));row.getCell(3).setCellStyle(setBorder);
-        			row.createCell(4).setCellValue(p.getJob());row.getCell(4).setCellStyle(setBorder);
-        			row.createCell(5).setCellValue(p.getSalary()==null?"":(p.getSalary().toString()));row.getCell(5).setCellStyle(setBorder);
-					row.createCell(6).setCellValue(p.getDegreeName());row.getCell(6).setCellStyle(setBorder);
+        			row.createCell(4).setCellValue(p.getJobName());row.getCell(4).setCellStyle(setBorder);
+        			row.createCell(6).setCellValue(p.getDegreeName());row.getCell(6).setCellStyle(setBorder);
 					row.createCell(7).setCellValue(p.getAddress());row.getCell(7).setCellStyle(setBorder);
         			row.setHeight((short) 400);
         		}
@@ -302,8 +293,7 @@ public class PeopleServiceImpl implements PeopleService{
 			params.put("${name}",p.getName());
 			params.put("${sex}",p.getSex()==0?"男":"女");
 			params.put("${birthday}",p.getBirthday());
-			params.put("${job}",p.getJob());
-			params.put("${salary}",p.getSalary()+"");
+			params.put("${jobName}",p.getJobName());
 			params.put("${degree}",p.getDegreeName());
 			params.put("${address}",p.getAddress());
 
