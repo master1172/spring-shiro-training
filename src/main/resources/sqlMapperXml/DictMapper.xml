@@ -103,5 +103,19 @@
         from job
         where job_category = #{job_category}
     </select>
+
+    <select id="findIdentityDict" resultMap="DictResultMap">
+        select
+        <include refid="Dict_Column_List"/>
+        from dict_identity
+        order by id
+    </select>
+
+    <select id="findIdentityIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT
+        id
+        FROM dict_identity
+        WHERE name = #{name}
+    </select>
 </mapper>
 
