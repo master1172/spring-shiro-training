@@ -540,7 +540,6 @@ public class PeopleServiceImpl implements PeopleService{
 					row.createCell(36).setCellValue(p.getFamilyInfo4());
 					row.createCell(37).setCellValue(p.getIdentityName());
 
-
 					for(int j=0; j<38; j++){
 						row.getCell(j).setCellStyle(setBorder);
 					}
@@ -560,8 +559,7 @@ public class PeopleServiceImpl implements PeopleService{
     	}
     }
 
-
-
+	
 	//导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
@@ -575,10 +573,57 @@ public class PeopleServiceImpl implements PeopleService{
 			Map<String,Object> params = new HashMap<String,Object>();
 			params.put("${name}",p.getName());
 			params.put("${sex}",p.getSex()==0?"男":"女");
+			params.put("${nationalName}",p.getNationalName());
 			params.put("${birthday}",p.getBirthday());
+			params.put("${nativeName}",p.getNativeName());
+			params.put("${educationName}",p.getEducationName());
+			params.put("${degreeName}",p.getDegreeName());
+			params.put("${politicalName}",p.getPoliticalName());
+			params.put("${partyDate}",p.getPartyDate());
+			params.put("${workDate}",p.getWorkDate());
+			params.put("${schoolDate}",p.getSchoolDate());
 			params.put("${jobName}",p.getJobName());
-			params.put("${degree}",p.getDegreeName());
+			params.put("${jobCategory}",p.getJobCategory());
+			params.put("${jobLevelName}",p.getJobLevelName());
+			params.put("${jobDate}",p.getJobDate());
+			params.put("${age}",p.getAge()==null?"":p.getAge().toString());
+			params.put("${virtualAge}",p.getVirtualAge()==null?"":p.getVirtualAge().toString());
+			params.put("${workAge}",p.getWorkAge()==null?"":p.getWorkAge().toString());
+			params.put("${formation}",p.getFormation());
+			params.put("${mobile}",p.getMobile());
+			params.put("${marriageName}",p.getMarriageName());
+			params.put("${photoId}",p.getPhotoId());
 			params.put("${address}",p.getAddress());
+			params.put("${hukou}",p.getHukou());
+			params.put("${hukouAddress}",p.getHukouAddress());
+			params.put("${finalEducationName}",p.getFinalEducationName());
+			params.put("${major}",p.getMajor());
+			params.put("${graduateSchool}",p.getGraduateSchool());
+			params.put("${contact}",p.getContact());
+			params.put("${relationship}",p.getRelationship());
+			params.put("${contactNumber}",p.getContactNumber());
+
+			params.put("${familyInfo1Title}",p.getFamilyInfo1Title());
+			params.put("${familyInfo1Name}",p.getFamilyInfo1Name());
+			params.put("${familyInfo1Job}",p.getFamilyInfo1Job());
+			params.put("${familyInfo1Contact}",p.getFamilyInfo1Contact());
+
+			params.put("${familyInfo2Title}",p.getFamilyInfo2Title());
+			params.put("${familyInfo2Name}",p.getFamilyInfo2Name());
+			params.put("${familyInfo2Job}",p.getFamilyInfo2Job());
+			params.put("${familyInfo2Contact}",p.getFamilyInfo2Contact());
+
+			params.put("${familyInfo3Title}",p.getFamilyInfo3Title());
+			params.put("${familyInfo3Name}",p.getFamilyInfo3Name());
+			params.put("${familyInfo3Job}",p.getFamilyInfo3Job());
+			params.put("${familyInfo3Contact}",p.getFamilyInfo3Contact());
+
+			params.put("${familyInfo4Title}",p.getFamilyInfo4Title());
+			params.put("${familyInfo4Name}",p.getFamilyInfo4Name());
+			params.put("${familyInfo4Job}",p.getFamilyInfo4Job());
+			params.put("${familyInfo4Contact}",p.getFamilyInfo4Contact());
+
+			params.put("${identityName}",p.getIdentityName());
 
 			//判断是否有头像
 			if(p.getPhoto()!=null&&p.getPhoto().length()>0){
