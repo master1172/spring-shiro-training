@@ -21,7 +21,7 @@ public class DateUtil {
             String birthMonth = birthday.substring(5,7);
             String birthDate  = birthday.substring(8);
 
-            LocalDate localBirthday = new LocalDate(birthYear,birthMonth,birthDate);
+            LocalDate localBirthday = new LocalDate(Integer.valueOf(birthYear),Integer.valueOf(birthMonth),Integer.valueOf(birthDate));
 
             Years age =  Years.yearsBetween(localBirthday,now);
             return age.getYears();
@@ -38,8 +38,7 @@ public class DateUtil {
         try{
             LocalDate now = new LocalDate();
             String birthYear  = birthday.substring(0,4);
-
-            LocalDate localBirthday = new LocalDate(birthYear,1,1);
+            LocalDate localBirthday = new LocalDate(Integer.valueOf(birthYear),1,1);
 
             Years age =  Years.yearsBetween(localBirthday,now);
             return age.getYears();
