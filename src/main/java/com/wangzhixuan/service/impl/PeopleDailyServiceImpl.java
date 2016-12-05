@@ -5,10 +5,7 @@ import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleDailyMapper;
 import com.wangzhixuan.model.PeopleDaily;
 import com.wangzhixuan.service.PeopleDailyService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleDailyVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
@@ -262,21 +259,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                 XSSFSheet sheet= workBook.createSheet("日工资人员信息");
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
-                XSSFRow row=sheet.createRow(0);
-                row.createCell(0).setCellValue("序号");           row.getCell(0).setCellStyle(setBorder);
-                row.createCell(1).setCellValue("姓名");           row.getCell(1).setCellStyle(setBorder);
-                row.createCell(2).setCellValue("部门");           row.getCell(2).setCellStyle(setBorder);
-                row.createCell(3).setCellValue("工种");           row.getCell(3).setCellStyle(setBorder);
-                row.createCell(4).setCellValue("性别");           row.getCell(4).setCellStyle(setBorder);
-                row.createCell(5).setCellValue("民族");           row.getCell(5).setCellStyle(setBorder);
-                row.createCell(6).setCellValue("来自省");         row.getCell(6).setCellStyle(setBorder);
-                row.createCell(7).setCellValue("来自市(区)");     row.getCell(7).setCellStyle(setBorder);
-                row.createCell(8).setCellValue("出生年月");       row.getCell(8).setCellStyle(setBorder);
-                row.createCell(9).setCellValue("文化程度");       row.getCell(9).setCellStyle(setBorder);
-                row.createCell(10).setCellValue("政治面貌");      row.getCell(10).setCellStyle(setBorder);
-                row.createCell(11).setCellValue("来院日期");      row.getCell(11).setCellStyle(setBorder);
-                row.createCell(12).setCellValue("联系电话");      row.getCell(12).setCellStyle(setBorder);
-                row.createCell(13).setCellValue("备注");          row.getCell(13).setCellStyle(setBorder);
+                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet,setBorder,ConstUtil.getPeopleDailyHeaders());
 
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){

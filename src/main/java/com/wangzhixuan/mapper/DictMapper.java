@@ -31,4 +31,8 @@ public interface DictMapper {
     Integer findJobIdByName(String jobName);
 
     List<Dict> findJobNameDict();
+
+    List<Dict> findIdentityDict();
+
+    Integer findIdentityIdByName(String identityName);
 }
