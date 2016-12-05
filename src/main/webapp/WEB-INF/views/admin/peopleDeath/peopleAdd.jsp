@@ -25,7 +25,8 @@
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0" selected="selected">男</option>
+                            <option value="">请选择</option>
+                            <option value="0" >男</option>
                             <option value="1" >女</option>
                         </select>
                     </td>

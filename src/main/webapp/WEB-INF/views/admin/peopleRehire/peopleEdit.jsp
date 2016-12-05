@@ -97,7 +97,7 @@
                     </td>
                     <td>返聘前岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="beforeJobName" name="beforeJobName" url="${path}/dict/jobName" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="beforeJobName" name="beforeJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>
@@ -116,7 +116,7 @@
                 <tr>
                     <td>拟返聘岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="afterJobName" name="afterJobName" url="${path}/dict/jobName" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="afterJobName" name="afterJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
                         </input>
                     </td>
                     <td>拟返聘职级</td>

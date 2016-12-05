@@ -66,7 +66,7 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
-        from people_Rehire
+        from people_rehire
         where id = #{id,jdbcType=BIGINT}
     </select>
 
@@ -101,7 +101,7 @@
         t.photo,
         t.category
         FROM
-        people_Rehire t
+        people_rehire t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -120,14 +120,14 @@
     <select id="findPeopleRehireById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
-        from people_Rehire
+        from people_rehire
         where id = #{id}
     </select>
 
     <select id="findPeopleRehireByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from people_Rehire
+        from people_rehire
         where name LIKE concat('%',#{name},'%')
     </select>
 
@@ -162,7 +162,7 @@
         t.photo,
         t.category
         FROM
-        people_Rehire t
+        people_rehire t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -252,7 +252,7 @@
 
     <select id="findPeopleRehirePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_Rehire t
+        from people_rehire t
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -330,12 +330,12 @@
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_Rehire
+        delete from people_rehire
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_Rehire
+        delete from people_rehire
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -347,7 +347,7 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_Rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
+        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
         values (
         #{code,jdbcType=VARCHAR},
         #{name,jdbcType=VARCHAR},
@@ -375,7 +375,7 @@
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_Rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
+        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
@@ -406,7 +406,7 @@
         </foreach>
     </insert>
     <update id="updatePeopleRehire" parameterType="com.wangzhixuan.model.PeopleRehire">
-        update people_Rehire
+        update people_rehire
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -506,7 +506,7 @@
         t.hukou_address,
         t.photo,
         t.category
-        from people_Rehire t
+        from people_rehire t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -544,7 +544,7 @@
         t.photo,
         t.category
         FROM
-        people_Rehire t
+        people_rehire t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN

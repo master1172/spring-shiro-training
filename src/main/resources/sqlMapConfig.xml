@@ -34,6 +34,9 @@
 
         <typeAlias type="com.wangzhixuan.model.PeopleRehire" alias="PeopleRehire"/>
         <typeAlias type="com.wangzhixuan.vo.PeopleRehireVo" alias="PeopleRehireVo"/>
+
+        <typeAlias type="com.wangzhixuan.model.PeopleRetire" alias="PeopleRetire"/>
+        <typeAlias type="com.wangzhixuan.vo.PeopleRetireVo" alias="PeopleRetireVo"/>
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
@@ -57,6 +60,7 @@
         <mapper resource="sqlMapperXml/PeopleTempMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleDailyMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleRehireMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleRetireMapper.xml"/>
 
     </mappers>
 </configuration> 
