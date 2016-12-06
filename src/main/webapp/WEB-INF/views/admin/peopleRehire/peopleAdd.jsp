@@ -29,7 +29,8 @@
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0" selected="selected">男</option>
+                            <option value="">请选择</option>
+                            <option value="0" >男</option>
                             <option value="1" >女</option>
                         </select>
                     </td>
@@ -88,31 +89,31 @@
                     </td>
                     <td>返聘前岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="beforeJobName" name="beforeJobName" url="${path}/dict/jobName" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="beforeJobName" name="beforeJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>
                 <tr>
                     <td>返聘前职级</td>
                     <td>
-                        <input class="easyui-combobox" id="beforeJobLevelName" name="beforeJobLevelName" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="beforeJobLevelId" name="beforeJobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                     <td>拟返聘工作部门</td>
                     <td>
-                        <input class="easyui-combobox" id="AfterDepartmentName" name="AfterDepartmentName" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="AfterDepartmentId" name="AfterDepartmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>
                 <tr>
                     <td>拟返聘岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="afterJobName" name="afterJobName" url="${path}/dict/jobName" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="afterJobName" name="afterJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
                         </input>
                     </td>
                     <td>拟返聘职级</td>
                     <td>
-                        <input class="easyui-combobox" id="afterJobLevelName" name="afterJobLevelName" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="afterJobLevelId" name="afterJobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>

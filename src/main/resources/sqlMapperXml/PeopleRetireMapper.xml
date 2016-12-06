@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeopleRetireMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleRetire">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="retire_job_name" property="retireJobName" jdbcType="VARCHAR"/>
+        <result column="retire_job_level_id" property="retireJobLevelId" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+        <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
+        <result column="work_date" property="workDate" jdbcType="DATE"/>
+        <result column="retire_date" property="retireDate" jdbcType="DATE"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="contact" property="contact" jdbcType="VARCHAR"/>
+        <result column="contact_number" property="contactNumber" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="peopleRetireVoResultMap" type="com.wangzhixuan.vo.PeopleRetireVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="retire_job_name" property="retireJobName" jdbcType="VARCHAR"/>
+        <result column="retire_job_level_id" property="retireJobLevelId" jdbcType="INTEGER"/>
+        <result column="retire_job_level_name" property="retireJobLevelName" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+        <result column="national_name" property="nationalName" jdbcType="VARCHAR"/>
+        <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
+        <result column="work_date" property="workDate" jdbcType="DATE"/>
+        <result column="retire_date" property="retireDate" jdbcType="DATE"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="contact" property="contact" jdbcType="VARCHAR"/>
+        <result column="contact_number" property="contactNumber" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people_retire
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeopleRetireVoById" resultMap="peopleRetireVoResultMap" parameterType="java.lang.Long">
+        SELECT
+        t.id,
+        t.code,
+        t.retire_job_name,
+        t.retire_job_level_id,
+        m.job_level as retire_job_level_name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.education_name,
+        t.birthday,
+        t.political_name,
+        t.work_date,
+        t.retire_date,
+        t.address,
+        t.mobile,
+        t.contact,
+        t.contact_number,
+        t.status,
+        t.comment,
+        t.photo
+        FROM
+        people_retire t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        job m
+        ON m.id = t.retire_job_level_id
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findPeopleRetireById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people_retire
+        where id = #{id}
+    </select>
+
+    <select id="findPeopleRetireByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from people_retire
+        where name LIKE concat('%',#{name},'%')
+    </select>
+
+    <select id="findPeopleRetirePageCondition" resultMap="peopleRetireVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.code,
+        t.retire_job_name,
+        t.retire_job_level_id,
+        j.job_level as retire_job_level_name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.education_name,
+        t.birthday,
+        t.political_name,
+        t.work_date,
+        t.retire_date,
+        t.address,
+        t.mobile,
+        t.contact,
+        t.contact_number,
+        t.status,
+        t.comment,
+        t.photo
+        FROM
+        people_retire t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        job j ON j.id = t.retire_job_level_id
+        <where>
+            <if test=" condition.code != null and condition.code != '' ">
+                and t.code LIKE concat('%',#{condition.code},'%')
+            </if>
+            <if test=" condition.retireJobName != null and condition.retireJobName != '' ">
+                and t.retire_job_name LIKE concat('%',#{condition.retireJobName},'%')
+            </if>
+            <if test=" condition.retireJobLevelId != null">
+                and t.retire_job_level_id = #{condition.retireJobLevelId}
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
+            </if>
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%',#{condition.educationName},'%')
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%',#{condition.politicalName},'%')
+            </if>
+            <if test=" condition.workDateMin != null and condition.workDateMin != ''">
+                <![CDATA[ and t.work_date >= #{condition.workDateMin} ]]>
+            </if>
+            <if test=" condition.workDateMax != null and condition.workDateMax != ''">
+                <![CDATA[ and t.work_date <= #{condition.workDateMax} ]]>
+            </if>
+            <if test=" condition.retireDateMin != null and condition.retireDateMin != ''">
+                <![CDATA[ and t.retire_date >= #{condition.retireDateMin} ]]>
+            </if>
+            <if test=" condition.retireDateMax != null and condition.retireDateMax != ''">
+                <![CDATA[ and t.retire_date <= #{condition.retireDateMax} ]]>
+            </if>
+            <if test=" condition.address != null and condition.address != ''">
+                and t.address LIKE concat('%',#{condition.address},'%')
+            </if>
+            <if test=" condition.mobile != null and condition.mobile != ''">
+                and t.mobile LIKE concat('%',#{condition.mobile},'%')
+            </if>
+            <if test=" condition.contact != null and condition.contact != ''">
+                and t.contact LIKE concat('%',#{condition.contact},'%')
+            </if>
+            <if test=" condition.contactNumber != null and condition.contactNumber != ''">
+                and t.contact_number LIKE concat('%',#{condition.contactNumber},'%')
+            </if>
+            <if test=" condition.status != null">
+                and t.status = #{condition.status}
+            </if>
+            <if test=" condition.comment != null and condition.comment != ''">
+                and t.comment LIKE concat('%',#{condition.comment},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeopleRetirePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from people_retire t
+        <where>
+            <if test=" condition.code != null and condition.code != '' ">
+                and t.code LIKE concat('%',#{condition.code},'%')
+            </if>
+            <if test=" condition.retireJobName != null and condition.retireJobName != '' ">
+                and t.retire_job_name LIKE concat('%',#{condition.retireJobName},'%')
+            </if>
+            <if test=" condition.retireJobLevelId != null">
+                and t.retire_job_level_id = #{condition.retireJobLevelId}
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
+            </if>
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%',#{condition.educationName},'%')
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%',#{condition.politicalName},'%')
+            </if>
+            <if test=" condition.workDateMin != null and condition.workDateMin != ''">
+                <![CDATA[ and t.work_date >= #{condition.workDateMin} ]]>
+            </if>
+            <if test=" condition.workDateMax != null and condition.workDateMax != ''">
+                <![CDATA[ and t.work_date <= #{condition.workDateMax} ]]>
+            </if>
+            <if test=" condition.retireDateMin != null and condition.retireDateMin != ''">
+                <![CDATA[ and t.retire_date >= #{condition.retireDateMin} ]]>
+            </if>
+            <if test=" condition.retireDateMax != null and condition.retireDateMax != ''">
+                <![CDATA[ and t.retire_date <= #{condition.retireDateMax} ]]>
+            </if>
+            <if test=" condition.address != null and condition.address != ''">
+                and t.address LIKE concat('%',#{condition.address},'%')
+            </if>
+            <if test=" condition.mobile != null and condition.mobile != ''">
+                and t.mobile LIKE concat('%',#{condition.mobile},'%')
+            </if>
+            <if test=" condition.contact != null and condition.contact != ''">
+                and t.contact LIKE concat('%',#{condition.contact},'%')
+            </if>
+            <if test=" condition.contactNumber != null and condition.contactNumber != ''">
+                and t.contact_number LIKE concat('%',#{condition.contactNumber},'%')
+            </if>
+            <if test=" condition.status != null">
+                and t.status = #{condition.status}
+            </if>
+            <if test=" condition.comment != null and condition.comment != ''">
+                and t.comment LIKE concat('%',#{condition.comment},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from people_retire
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete from people_retire
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleRetire">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into people_retire (code, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo)
+        values (
+        #{code,jdbcType=VARCHAR},
+        #{retireJobName,jdbcType=VARCHAR},
+        #{retireJobLevelId, jdbcType=INTEGER},
+        #{sex,jdbcType=TINYINT},
+        #{nationalId, jdbcType=INTEGER},
+        #{educationName,jdbcType=VARCHAR},
+        #{birthday,jdbcType=DATE},
+        #{politicalName,jdbcType=VARCHAR},
+        #{workDate,jdbcType=DATE},
+        #{retireDate,jdbcType=DATE},
+        #{address,jdbcType=VARCHAR},
+        #{mobile, jdbcType=VARCHAR},
+        #{contact, jdbcType=VARCHAR},
+        #{contactNumber, jdbcType=VARCHAR},
+        #{status, jdbcType=TINYINT},
+        #{comment, jdbcType=VARCHAR},
+        #{photo, jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into people_retire (code, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{item.code,jdbcType=VARCHAR},
+            #{item.retireJobName,jdbcType=VARCHAR},
+            #{item.retireJobLevelId, jdbcType=INTEGER},
+            #{item.sex,jdbcType=TINYINT},
+            #{item.nationalId, jdbcType=INTEGER},
+            #{item.educationName,jdbcType=VARCHAR},
+            #{item.birthday,jdbcType=DATE},
+            #{item.politicalName,jdbcType=VARCHAR},
+            #{item.workDate,jdbcType=DATE},
+            #{item.retireDate,jdbcType=DATE},
+            #{item.address,jdbcType=VARCHAR},
+            #{item.mobile, jdbcType=VARCHAR},
+            #{item.contact, jdbcType=VARCHAR},
+            #{item.contactNumber, jdbcType=VARCHAR},
+            #{item.status, jdbcType=TINYINT},
+            #{item.comment, jdbcType=VARCHAR},
+            #{item.photo, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updatePeopleRetire" parameterType="com.wangzhixuan.model.PeopleRetire">
+        update people_retire
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="retireJobName != null">
+                retire_job_name = #{retireJobName,jdbcType=VARCHAR},
+            </if>
+            <if test="retireJobLevelId != null">
+                retire_job_level_id = #{retireJobLevelId, jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="nationalId != null">
+                national_id = #{nationalId,jdbcType=INTEGER},
+            </if>
+            <if test="educationName != null">
+                education_name = #{educationName,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="politicalName != null">
+                political_name = #{politicalName,jdbcType=VARCHAR},
+            </if>
+            <if test="workDate != null">
+                work_date = #{workDate,jdbcType=VARCHAR},
+            </if>
+            <if test="retireDate != null">
+                retire_date = #{retireDate,jdbcType=DATE},
+            </if>
+            <if test="address != null">
+                address = #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile, jdbcType=VARCHAR},
+            </if>
+            <if test="contact != null">
+                contact = #{contact, jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber != null">
+                contact_number = #{contactNumber, jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status, jdbcType=INTEGER},
+            </if>
+            <if test="comment != null">
+                comment = #{comment, jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectPeopleRetireByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        select
+        t.id,
+        t.code,
+        t.retire_job_name,
+        t.retire_job_level_id,
+        t.sex,
+        t.national_id,
+        t.education_name,
+        t.birthday,
+        t.political_name,
+        t.work_date,
+        t.retire_date,
+        t.address,
+        t.mobile,
+        t.contact,
+        t.contact_number,
+        t.status,
+        t.comment,
+        t.photo
+        FROM
+        people_retire t
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectPeopleRetireVoByIds" resultMap="peopleRetireVoResultMap" parameterType="java.util.ArrayList">
+        SELECT
+        t.id,
+        t.code,
+        t.retire_job_name,
+        t.retire_job_level_id,
+        m.job_level as retire_job_level_name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.education_name,
+        t.birthday,
+        t.political_name,
+        t.work_date,
+        t.retire_date,
+        t.address,
+        t.mobile,
+        t.contact,
+        t.contact_number,
+        t.status,
+        t.comment,
+        t.photo
+        FROM
+        people_retire t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        job m
+        ON m.id = t.retire_job_level_id
+        where t.id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
+

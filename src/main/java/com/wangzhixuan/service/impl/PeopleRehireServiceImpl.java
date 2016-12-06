@@ -358,7 +358,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             String newFileName="返聘人员信息.xlsx";
             try {
                 workBook = new XSSFWorkbook();
-                XSSFSheet sheet= workBook.createSheet("合同制人员信息");
+                XSSFSheet sheet= workBook.createSheet("返聘人员信息");
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
                 XSSFRow row=sheet.createRow(0);

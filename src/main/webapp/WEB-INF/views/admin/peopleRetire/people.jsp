@@ -12,7 +12,7 @@
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/peopleRehire/dataGrid',
+                url: '${path}/peopleRetire/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -40,7 +40,7 @@
                 title: '高级查询',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleRehire/advSearchPage',
+                href: '${path}/peopleRetire/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
@@ -61,14 +61,14 @@
                 title: '导出',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleRehire/exportSearchPage',
+                href: '${path}/peopleRetire/exportSearchPage',
                 buttons:[{
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/peopleRehire/exportSearch",function(data){
+                            parent.SYS_SUBMIT_FORM(f, "/peopleRetire/exportSearch",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示",data["msg"],"warning");
                                 }else{
@@ -78,7 +78,7 @@
                                     alert(ids);
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/peopleRehire/exportExcel");
+                                    form.attr("action",'${path}'+"/peopleRetire/exportExcel");
                                     $("#downLoadForm").submit();
                                 }
                             });
@@ -93,7 +93,7 @@
                 title: '添加',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleRehire/addPage',
+                href: '${path}/peopleRetire/addPage',
                 buttons: [{
                     text: '添加',
                     handler: function () {
@@ -101,7 +101,7 @@
                         var f = parent.$.modalDialog.handler.find("#peopleAddForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleRehire/add",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleRetire/add",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -128,7 +128,7 @@
                 title: '修改',
                 width: 500,
                 height: 350,
-                href: '${path}/peopleRehire/editPage?id='+id,
+                href: '${path}/peopleRetire/editPage?id='+id,
                 buttons: [{
                     text: '修改',
                     handler: function () {
@@ -136,7 +136,7 @@
                         var f = parent.$.modalDialog.handler.find("#peopleEditForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleRehire/edit",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleRetire/edit",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -161,7 +161,7 @@
             parent.$.messager.confirm('询问', '您是否要删除当前人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/peopleRehire/delete',{
+                    $.post('${path}/peopleRetire/delete',{
                         id: id
                     }, function (result) {
                         if (result.success) {
@@ -184,7 +184,7 @@
             parent.$.messager.confirm('询问', '您是否要删除所选人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/peopleRehire/batchDel', {
+                    $.post('${path}/peopleRetire/batchDel', {
                         ids: ids.join(",")
                     }, function (result) {
                         if (result.success) {
@@ -211,7 +211,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
-                href: '${path}/peopleRehire/importExcelPage',
+                href: '${path}/peopleRetire/importExcelPage',
                 buttons: [{
                     text: '导入',
                     handler: function () {
@@ -219,7 +219,7 @@
                         var f = parent.$.modalDialog.handler.find("#importExcelForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleRehire/importExcel",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleRetire/importExcel",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -245,7 +245,7 @@
                 });
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids);
-                form.attr("action",'${path}'+"/peopleRehire/exportExcel");
+                form.attr("action",'${path}'+"/peopleRetire/exportExcel");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择有效数据", "warning");
@@ -258,7 +258,7 @@
                 var id=checkedItems[0]["id"];
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(id);
-                form.attr("action",'${path}'+"/peopleRehire/exportWord");
+                form.attr("action",'${path}'+"/peopleRetire/exportWord");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
@@ -274,12 +274,21 @@
             }
         }
 
+        function statusFormatter(value,row,index){
+            switch (value) {
+                case 0:
+                    return '退休';
+                case 1:
+                    return '返聘';
+            }
+        }
+
         function operateFormatter(value,row,index){
             var str = '';
-            <shiro:hasPermission name="/peopleRehire/edit">
+            <shiro:hasPermission name="/peopleRetire/edit">
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
             </shiro:hasPermission>
-            <shiro:hasPermission name="/peopleRehire/delete">
+            <shiro:hasPermission name="/peopleRetire/delete">
             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
             </shiro:hasPermission>
@@ -293,9 +302,9 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>姓名:</th>
+                <th>人员编码:</th>
                 <td>
-                    <input name="name" placeholder="请输入人员姓名"/>
+                    <input name="code"/>
                 </td>
                 <th>性别:</th>
                 <td>
@@ -329,27 +338,21 @@
         <tr>
             <th field="ck"       data-options="checkbox:true"></th>
             <th field="code"     data-options="sortable:true" width="80">人员编码</th>
-            <th field="name"     data-options="sortable:true" width="80">姓名</th>
+            <th field="retireJobName"     data-options="sortable:true" width="80">退休时职务</th>
+            <th field="retireJobLevelName"  data-options="sortable:true" width="80">退休时职级</th>
             <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
             <th field="nationalName"     data-options="sortable:true" width="80">民族</th>
-            <th field="nativeName"     data-options="sortable:true" width="80">籍贯</th>
-            <th field="birthPlace"     data-options="sortable:true" width="80">出生地</th>
+            <th field="educationName"     data-options="sortable:true" width="80">学历</th>
             <th field="birthday" data-options="sortable:true" width="80">生日</th>
-            <th field="educationName"     data-options="sortable:true" width="80">文化程度</th>
             <th field="politicalName"     data-options="sortable:true" width="80">政治面貌</th>
-            <th field="healthStatus"     data-options="sortable:true" width="80">健康状况</th>
+            <th field="workDate"     data-options="sortable:true" width="80">工作日期</th>
             <th field="retireDate"     data-options="sortable:true" width="80">退休日期</th>
-            <th field="speciality"     data-options="sortable:true" width="130">专业技术及专长</th>
-            <th field="beforeDepartment"     data-options="sortable:true" width="80">返聘前工作部门</th>
-            <th field="beforeJobName"     data-options="sortable:true" width="80">返聘前岗位</th>
-            <th field="beforeJobLevelName"      data-options="sortable:true" width="40">返聘前职级</th>
-            <th field="afterDepartmentName"     data-options="sortable:true" width="80">拟返聘工作部门</th>
-            <th field="afterJobName"     data-options="sortable:true" width="80">拟反聘岗位</th>
-            <th field="afterJobLevelName"  data-options="sortable:true" width="130">拟返聘职级</th>
-            <th field="photoId"     data-options="sortable:true" width="80">身份证号</th>
             <th field="address"     data-options="sortable:true" width="80">家庭住址</th>
-            <th field="hukouAddress"     data-options="sortable:true" width="80">户籍所在地</th>
-            <th field="category"       data-options="sortable:true" width="130">返聘人员类型</th>
+            <th field="mobile"     data-options="sortable:true" width="80">联系电话</th>
+            <th field="contact"     data-options="sortable:true" width="80">固定联系人</th>
+            <th field="contactNumber"     data-options="sortable:true" width="80">联系人电话</th>
+            <th field="status"      data-options="sortable:true,formatter:statusFormatter" width="80">当前状态</th>
+            <th field="comment"       data-options="sortable:true" width="130">备注</th>
             <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
@@ -357,31 +360,31 @@
 </div>
 
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/peopleRehire/add">
+    <shiro:hasPermission name="/peopleRetire/add">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleRehire/batchDel">
+    <shiro:hasPermission name="/peopleRetire/batchDel">
         <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-del'">批量删除</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleRehire/importExcel">
+    <shiro:hasPermission name="/peopleRetire/importExcel">
         <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导入</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleRehire/exportExcel">
+    <shiro:hasPermission name="/peopleRetire/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleRehire/exportWord">
+    <shiro:hasPermission name="/peopleRetire/exportWord">
         <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Word</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleRehire/advSearch">
+    <shiro:hasPermission name="/peopleRetire/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleRehire/exportSearch">
+    <shiro:hasPermission name="/peopleRetire/exportSearch">
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>
