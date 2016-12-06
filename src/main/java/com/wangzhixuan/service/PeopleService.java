@@ -2,6 +2,7 @@ package com.wangzhixuan.service;
 
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -38,18 +39,18 @@ public interface PeopleService {
     /**
      * 添加人员
      *
-     * @param people
+     * @param peoplevo
      */
-    void addPeople(People people,CommonsMultipartFile file);
+    void addPeople(PeopleVo peoplevo,CommonsMultipartFile file);
 
 
 
     /**
      * 修改人员
      *
-     * @param people
+     * @param peoplevo
      */
-    void updatePeople(People people, CommonsMultipartFile file);
+    void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file);
 
     /**
      * 删除人员

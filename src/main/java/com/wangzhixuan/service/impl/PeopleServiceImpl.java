@@ -65,36 +65,17 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
     @Override
-    public void addPeople(People people,CommonsMultipartFile file) {
+    public void addPeople(PeopleVo peoplevo,CommonsMultipartFile file) {
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
-		if (people != null){
-			if (StringUtils.isBlank(people.getBirthday())){
-				people.setBirthday(null);
-			}
-			if (StringUtils.isBlank(people.getPartyDate())){
-				people.setPartyDate(null);
-			}
-			if (StringUtils.isBlank(people.getWorkDate())){
-				people.setWorkDate(null);
-			}
-			if (StringUtils.isBlank(people.getSchoolDate())){
-				people.setSchoolDate(null);
-			}
-			if (StringUtils.isBlank(people.getJobDate())){
-				people.setJobDate(null);
-			}
-			if (StringUtils.isBlank(people.getJobLevelDate())){
-				people.setJobLevelDate(null);
-			}
-		}
+		UpdatePeopleDate(peoplevo);
 
-    	if(file!=null){//上传附件
+		if(file!=null){//上传附件
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
     		if(StringUtils.isNotEmpty(uploadPath) ){
-				people.setPhoto(uploadPath);
+				peoplevo.setPhoto(uploadPath);
     			peopleMapper.insert(people);
     		}
     	}else{
@@ -103,36 +84,17 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
     @Override
-    public void updatePeople(People people, CommonsMultipartFile file) {
+    public void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file) {
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
-		if (people != null){
-			if (StringUtils.isBlank(people.getBirthday())){
-				people.setBirthday(null);
-			}
-			if (StringUtils.isBlank(people.getPartyDate())){
-				people.setPartyDate(null);
-			}
-			if (StringUtils.isBlank(people.getWorkDate())){
-				people.setWorkDate(null);
-			}
-			if (StringUtils.isBlank(people.getSchoolDate())){
-				people.setSchoolDate(null);
-			}
-			if (StringUtils.isBlank(people.getJobDate())){
-				people.setJobDate(null);
-			}
-			if (StringUtils.isBlank(people.getJobLevelDate())){
-				people.setJobLevelDate(null);
-			}
-		}
+		UpdatePeopleDate(peoplevo);
 
 		if (file != null){
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
 			if(StringUtils.isNotEmpty(uploadPath)){
-				people.setPhoto(uploadPath);
+				peoplevo.setPhoto(uploadPath);
 				peopleMapper.updatePeople(people);
 			}
 		}else{
@@ -140,7 +102,7 @@ public class PeopleServiceImpl implements PeopleService{
 		}
     }
 
-    @Override
+	@Override
     public void deletePeopleById(Long id) {
         peopleMapper.deleteById(id);
     }
@@ -559,7 +521,7 @@ public class PeopleServiceImpl implements PeopleService{
     	}
     }
 
-	
+
 	//导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
@@ -653,5 +615,28 @@ public class PeopleServiceImpl implements PeopleService{
 		ids = ids.substring(0, ids.lastIndexOf(','));
 
 		return ids;
+	}
+
+	private void UpdatePeopleDate(PeopleVo people) {
+		if (people != null){
+			if (StringUtils.isBlank(people.getBirthday())){
+				people.setBirthday(null);
+			}
+			if (StringUtils.isBlank(people.getPartyDate())){
+				people.setPartyDate(null);
+			}
+			if (StringUtils.isBlank(people.getWorkDate())){
+				people.setWorkDate(null);
+			}
+			if (StringUtils.isBlank(people.getSchoolDate())){
+				people.setSchoolDate(null);
+			}
+			if (StringUtils.isBlank(people.getJobDate())){
+				people.setJobDate(null);
+			}
+			if (StringUtils.isBlank(people.getJobLevelDate())){
+				people.setJobLevelDate(null);
+			}
+		}
 	}
 }
