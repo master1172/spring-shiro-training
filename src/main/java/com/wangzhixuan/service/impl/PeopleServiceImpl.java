@@ -70,12 +70,15 @@ public class PeopleServiceImpl implements PeopleService{
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
 		UpdatePeopleDate(peoplevo);
 
+		People people = new People();
+		//将peoplevo里分散的familyInfo放入people实体中
+		UpdatePeopleFamilyInfo(peoplevo,people);
 		if(file!=null){//上传附件
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
     		if(StringUtils.isNotEmpty(uploadPath) ){
-				peoplevo.setPhoto(uploadPath);
+				people.setPhoto(uploadPath);
     			peopleMapper.insert(people);
     		}
     	}else{
@@ -88,13 +91,15 @@ public class PeopleServiceImpl implements PeopleService{
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
 		UpdatePeopleDate(peoplevo);
-
+		People people = new People();
+		//将peoplevo里分散的familyInfo放入people实体中
+		UpdatePeopleFamilyInfo(peoplevo,people);
 		if (file != null){
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
 			String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
 			if(StringUtils.isNotEmpty(uploadPath)){
-				peoplevo.setPhoto(uploadPath);
+				people.setPhoto(uploadPath);
 				peopleMapper.updatePeople(people);
 			}
 		}else{
@@ -638,5 +643,30 @@ public class PeopleServiceImpl implements PeopleService{
 				people.setJobLevelDate(null);
 			}
 		}
+	}
+
+	private void UpdatePeopleFamilyInfo(PeopleVo peopleVo, People people){
+		if (people == null || peopleVo == null)
+			return;
+		String familyInfo1 = peopleVo.getFamilyInfo1Name()   + "|" + peopleVo.getFamilyInfo1Job() + "|" +
+							 peopleVo.getFamilyInfo1Title()  + "|" + peopleVo.getFamilyInfo1Contact() + "|" +
+							 peopleVo.getFamilyInfo1WorkAddress();
+
+		String familyInfo2 = peopleVo.getFamilyInfo2Name()   + "|" + peopleVo.getFamilyInfo2Job() + "|" +
+							 peopleVo.getFamilyInfo2Title()  + "|" + peopleVo.getFamilyInfo2Contact() + "|" +
+							 peopleVo.getFamilyInfo2WorkAddress();
+
+		String familyInfo3 = peopleVo.getFamilyInfo3Name()   + "|" + peopleVo.getFamilyInfo3Job() + "|" +
+							 peopleVo.getFamilyInfo3Title()  + "|" + peopleVo.getFamilyInfo3Contact() + "|" +
+							 peopleVo.getFamilyInfo3WorkAddress();
+
+		String familyInfo4 = peopleVo.getFamilyInfo4Name()   + "|" + peopleVo.getFamilyInfo4Job() + "|" +
+							 peopleVo.getFamilyInfo4Title()  + "|" + peopleVo.getFamilyInfo4Contact() + "|" +
+							 peopleVo.getFamilyInfo4WorkAddress();
+
+		people.setFamilyInfo1(familyInfo1);
+		people.setFamilyInfo2(familyInfo2);
+		people.setFamilyInfo3(familyInfo3);
+		people.setFamilyInfo4(familyInfo4);
 	}
 }
