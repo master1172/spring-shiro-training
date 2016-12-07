@@ -2,21 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangzhixuan.mapper.PeopleMapper">
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.People">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="sex" property="sex" jdbcType="TINYINT"/>
-        <result column="birthday" property="birthday" jdbcType="DATE" />
-        <result column="job" property="job" jdbcType="VARCHAR" />
-        <result column="salary" property="salary" jdbcType="DECIMAL" />
-        <result column="photo" property="photo" jdbcType="VARCHAR" />
-        <result column="degree_id" property="degreeId" jdbcType="INTEGER" />
-        <result column="address" property="address" jdbcType="VARCHAR" />
+        <id     column="id"             property="id" jdbcType="BIGINT"/>
+        <result column="code"           property="code" jdbcType="VARCHAR" />
+        <result column="name"           property="name" jdbcType="VARCHAR"/>
+        <result column="sex"            property="sex" jdbcType="TINYINT"/>
+        <result column="national_id"    property="nationalId" jdbcType="INTEGER"/>
+        <result column="birthday"       property="birthday" jdbcType="DATE" />
+        <result column="native_id"      property="nativeId" jdbcType="INTEGER"/>
+        <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
+        <result column="degree_id"      property="degreeId" jdbcType="VARCHAR"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
+        <result column="party_date"     property="partyDate" jdbcType="DATE"/>
+        <result column="work_date"      property="workDate"  jdbcType="DATE"/>
+        <result column="school_date"    property="schoolDate" jdbcType="DATE"/>
+        <result column="job_name"       property="jobName"  jdbcType="VARCHAR"/>
+        <result column="job_category"   property="jobCategory" jdbcType="VARCHAR"/>
+        <result column="job_level_id"   property="jobLevelId"  jdbcType="INTEGER"/>
+        <result column="job_date"       property="jobDate"  jdbcType="DATE"/>
+        <result column="job_level_date" property="jobLevelDate" jdbcType="DATE"/>
+        <result column="age"            property="age"  jdbcType="INTEGER"/>
+        <result column="virtual_age"    property="virtualAge" jdbcType="INTEGER"/>
+        <result column="work_age"       property="workAge"  jdbcType="INTEGER"/>
+        <result column="formation"      property="formation"  jdbcType="VARCHAR"/>
+        <result column="mobile"         property="mobile" jdbcType="VARCHAR"/>
+        <result column="marriage_id"    property="marriageId" jdbcType="INTEGER" />
+        <result column="photoId"        property="photoId"  jdbcType="VARCHAR" />
+        <result column="address"        property="address" jdbcType="VARCHAR"/>
+        <result column="hukou"          property="hukou"   jdbcType="VARCHAR"/>
+        <result column="hukou_address"  property="hukouAddress"  jdbcType="VARCHAR"/>
+        <result column="final_education_name" property="finalEducationName" jdbcType="VARCHAR"/>
+        <result column="major"          property="major" jdbcType="VARCHAR"/>
+        <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR"/>
+        <result column="contact"        property="contact" jdbcType="VARCHAR"/>
+        <result column="relationship"   property="relationship" jdbcType="VARCHAR"/>
+        <result column="contact_number" property="contactNumber" jdbcType="VARCHAR"/>
+        <result column="family_info_1"  property="familyInfo1" jdbcType="VARCHAR"/>
+        <result column="family_info_2"  property="familyInfo2"  jdbcType="VARCHAR"/>
+        <result column="family_info_3"  property="familyInfo3"  jdbcType="VARCHAR"/>
+        <result column="family_info_4"  property="familyInfo4"  jdbcType="VARCHAR"/>
+        <result column="photo"          property="photo" jdbcType="VARCHAR" />
+        <result column="identity_id"    property="identityId"   jdbcType="INTEGER"/>
+        <result column="status"         property="status"       jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap id="peopleVoResultMap" type="com.wangzhixuan.vo.PeopleVo">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="sex" property="sex" jdbcType="TINYINT" />
+        <result column="code"           property="code" jdbcType="VARCHAR"/>
+        <result column="name"           property="name" jdbcType="VARCHAR"/>
+        <result column="sex"            property="sex" jdbcType="TINYINT" />
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="job" property="job" jdbcType="VARCHAR" />
         <result column="salary" property="salary" jdbcType="DECIMAL" />
