@@ -4,13 +4,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.model.PeopleRehire;
+import com.wangzhixuan.model.PeopleParty;
 import com.wangzhixuan.utils.PageInfo;
 
 /**
  * Created by liushaoyang on 2016/9/8.
  */
-public interface PeopleRehireService {
+public interface PeoplePartyService {
 
     /**
      * 根据人员id查询人员
@@ -18,7 +18,7 @@ public interface PeopleRehireService {
      * @param id
      * @return
      */
-    PeopleRehire findPeopleRehireById(Long id);
+    PeopleParty findPeoplePartyById(Long id);
 
     /**
      * 根据人员姓名查询人员
@@ -26,7 +26,7 @@ public interface PeopleRehireService {
      * @param name
      * @return
      */
-    PeopleRehire findPeopleRehireByName(String name);
+    PeopleParty findPeoplePartyByName(String name);
 
 
     /**
@@ -39,27 +39,27 @@ public interface PeopleRehireService {
     /**
      * 添加人员
      *
-     * @param peopleRehire
+     * @param peopleParty
      */
-    void addPeopleRehire(PeopleRehire peopleRehire,CommonsMultipartFile file);
+    void addPeopleParty(PeopleParty peopleParty,CommonsMultipartFile file);
 
 
 
     /**
      * 修改人员
      *
-     * @param peopleRehire
+     * @param peopleParty
      */
-    void updatePeopleRehire(PeopleRehire peopleRehire, CommonsMultipartFile file);
+    void updatePeopleParty(PeopleParty peopleParty, CommonsMultipartFile file);
 
     /**
      * 删除人员
      *
      * @param id
      */
-    void deletePeopleRehireById(Long id);
+    void deletePeoplePartyById(Long id);
 
-    void batchDeletePeopleRehireByIds(String[] ids);
+    void batchDeletePeoplePartyByIds(String[] ids);
     /**
      * 数据导入
      * @param list
@@ -88,7 +88,9 @@ public interface PeopleRehireService {
      * @param id
      * @return
      */
-    String findPeopleRehireIDsByCondition(PageInfo pageInfo);
+    String findPeoplePartyIDsByCondition(PageInfo pageInfo);
 }
+
+
 
 

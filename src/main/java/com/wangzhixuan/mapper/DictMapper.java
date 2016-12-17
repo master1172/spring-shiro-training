@@ -35,4 +35,12 @@ public interface DictMapper {
     List<Dict> findIdentityDict();
 
     Integer findIdentityIdByName(String identityName);
+
+    Integer findBranchIdByName(String branchName);
+
+    List<Dict> findBranchDict();
+
+    List<Dict> findPartyStatusDict();
+
+    Integer findPartyStatusIdByName(String partyStatusName);
 }

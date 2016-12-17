@@ -66,4 +66,18 @@ public class DictController {
         List<Dict> departmentList = dictMapper.findDepartmentDict();
         return departmentList;
     }
+
+    @RequestMapping(value="/branch", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> branchDict(){
+        List<Dict> branchList = dictMapper.findBranchDict();
+        return branchList;
+    }
+
+    @RequestMapping(value="/partyStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> partyStatusDict(){
+        List<Dict> partyStatusList = dictMapper.findPartyStatusDict();
+        return partyStatusList;
+    }
 }

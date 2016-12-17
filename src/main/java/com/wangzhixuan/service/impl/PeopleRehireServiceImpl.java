@@ -287,7 +287,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                     String afterDepartmentName = row.getCell(16).toString().trim();
 
                     try{
-                        Integer afterDepartmentId = dictMapper.findJobIdByName(afterDepartmentName);
+                        Integer afterDepartmentId = dictMapper.findDepartmentIdByName(afterDepartmentName);
                         if (afterDepartmentId != null){
                             p.setAfterDepartmentId(afterDepartmentId);
                         }

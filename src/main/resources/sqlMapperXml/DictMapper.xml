@@ -117,5 +117,33 @@
         FROM dict_identity
         WHERE name = #{name}
     </select>
+
+    <select id="findBranchDict" resultMap="DictResultMap">
+        select
+        <include refid="Dict_Column_List"/>
+        from dict_branch
+        order by id
+    </select>
+
+    <select id="findBranchIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        id
+        from dict_branch
+        where name = #{name}
+    </select>
+
+    <select id="findPartyStatusDict" resultMap="DictResultMap">
+        select
+        <include refid="Dict_Column_List"/>
+        from dict_party_status
+        order by id
+    </select>
+
+    <select id="findPartyStatusIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        id
+        from dict_party_status
+        where name = #{name}
+    </select>
 </mapper>
 

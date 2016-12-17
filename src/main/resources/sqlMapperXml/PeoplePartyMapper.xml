@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeoplePartyMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleParty">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
+        <result column="people_type" property="peopleType" jdbcType="VARCHAR"/>
+        <result column="people_name" property="peopleName" jdbcType="VARCHAR"/>
+        <result column="branch_id" property="branchId" jdbcType="INTEGER"/>
+        <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="native" property="nativeName" jdbcType="VARCHAR"/>
+        <result column="party_status_id" property="partyStatusId" jdbcType="INTEGER"/>
+        <result column="party_date" property="partyDate" jdbcType="DATE"/>
+        <result column="degree_id" property="degreeId" jdbcType="INTEGER"/>
+        <result column="work_date" property="workDate" jdbcType="DATE"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="job_level_id" property="jobLevelId" jdbcType="INTEGER"/>
+        <result column="job_date" property="jobDate" jdbcType="DATE"/>
+        <result column="formation" property="formation" jdbcType="VARCHAR"/>
+        <result column="party_in_date" property="partyInDate" jdbcType="DATE"/>
+        <result column="party_out_date" property="partyOutDate" jdbcType="DATE"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="peoplePartyVoResultMap" type="com.wangzhixuan.vo.PeoplePartyVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
+        <result column="people_type" property="peopleType" jdbcType="VARCHAR"/>
+        <result column="people_name" property="peopleName" jdbcType="VARCHAR"/>
+        <result column="branch_id" property="branchId" jdbcType="INTEGER"/>
+        <result column="branch_name" property="branchName" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+        <result column="national_name" property="nationalName" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="native" property="nativeName" jdbcType="VARCHAR"/>
+        <result column="party_status_id" property="partyStatusId" jdbcType="INTEGER"/>
+        <result column="party_status_name" property="partyStatusName" jdbcType="VARCHAR"/>
+        <result column="party_date" property="partyDate" jdbcType="DATE"/>
+        <result column="degree_id" property="degreeId" jdbcType="INTEGER"/>
+        <result column="degree_name" property="degreeName" jdbcType="VARCHAR"/>
+        <result column="work_date" property="workDate" jdbcType="DATE"/>
+        <result column="job_name" property="jobName" jdbcType="VARCHAR"/>
+        <result column="job_level_id" property="jobLevelId" jdbcType="INTEGER"/>
+        <result column="job_level_name" property="jobLevelName" jdbcType="VARCHAR"/>
+        <result column="job_date" property="jobDate" jdbcType="DATE"/>
+        <result column="formation" property="formation" jdbcType="VARCHAR"/>
+        <result column="party_in_date" property="partyInDate" jdbcType="DATE"/>
+        <result column="party_out_date" property="partyOutDate" jdbcType="DATE"/>
+        <result column="photo" property="photo" jdbcType="VARCHAR"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, people_code, people_type, people_name, branch_id, department_id, sex, national_id, birthday, native, party_status_id, party_date, degree_id, work_date, job_name, job_level_id, job_date, formation, party_in_date, party_out_date, photo, comment
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people_Party
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeoplePartyVoById" resultMap="peoplePartyVoResultMap" parameterType="java.lang.Long">
+        SELECT
+        t.id,
+        t.people_code,
+        t.people_type,
+        t.people_name,
+        t.branch_id,
+        b.name as branch_name,
+        t.department_id,
+        d.name as department_name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.birthday,
+        t.native,
+        t.party_status_id,
+        p.name as party_status_name,
+        t.party_date,
+        t.degree_id,
+        g.name as degree_name,
+        t.work_date,
+        t.job_name,
+        t.job_level_id,
+        m.job_level as job_level_name,
+        t.job_date,
+        t.formation,
+        t.party_in_date,
+        t.party_out_date,
+        t.photo,
+        t.comment
+        FROM
+        people_party t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        job m ON m.id = t.job_level_id
+        LEFT JOIN
+        dict_branch b ON b.id = t.branch_id
+        LEFT JOIN
+        dict_department d ON d.id = t.department_id
+        LEFT JOIN
+        dict_party_status p ON p.id = t.party_status_id
+        LEFT JOIN
+        dict_degree g ON g.id = t.degree_id
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findPeoplePartyById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people_party
+        where id = #{id}
+    </select>
+
+    <select id="findPeoplePartyByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from people_party
+        where name LIKE concat('%',#{name},'%')
+    </select>
+
+    <select id="findPeoplePartyPageCondition" resultMap="peoplePartyVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.people_code,
+        t.people_type,
+        t.people_name,
+        t.branch_id,
+        b.name as branch_name,
+        t.department_id,
+        d.name as department_name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.birthday,
+        t.native,
+        t.party_status_id,
+        p.name as party_status_name,
+        t.party_date,
+        t.degree_id,
+        g.name as degree_name,
+        t.work_date,
+        t.job_name,
+        t.job_level_id,
+        m.job_level as job_level_name,
+        t.job_date,
+        t.formation,
+        t.party_in_date,
+        t.party_out_date,
+        t.photo,
+        t.comment
+        FROM
+        people_party t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        job m ON m.id = t.job_level_id
+        LEFT JOIN
+        dict_branch b ON b.id = t.branch_id
+        LEFT JOIN
+        dict_department d ON d.id = t.department_id
+        LEFT JOIN
+        dict_party_status p ON p.id = t.party_status_id
+        LEFT JOIN
+        dict_degree g ON g.id = t.degree_id
+        <where>
+            <if test=" condition.peopleCode != null and condition.peopleCode != '' ">
+                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
+            </if>
+            <if test=" condition.peopleType != null and condition.peopleType != '' ">
+                and t.people_type LIKE concat('%',#{condition.peopleType},'%')
+            </if>
+            <if test=" condition.peopleName != null and condition.peopleName != '' ">
+                and t.people_name LIKE concat('%',#{condition.peopleName},'%')
+            </if>
+            <if test=" condition.branchId != null">
+                and t.branch_id = #{condition.branchId}
+            </if>
+            <if test=" condition.departmentId != null">
+                and t.department_id = #{condition.departmentId}
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.nativeName != null and condition.nativeName != ''">
+                and t.native LIKE concat('%',#{condition.nativeName},'%')
+            </if>
+            <if test=" condition.partyStatusId != null">
+                and t.party_status_id = #{condition.partyStatusId}
+            </if>
+            <if test=" condition.partyDateMin != null and condition.partyDateMin != ''">
+                <![CDATA[ and t.party_date >= #{condition.partyDateMin} ]]>
+            </if>
+            <if test=" condition.partyDateMax != null and condition.partyDateMax != ''">
+                <![CDATA[ and t.party_date <= #{condition.partyDateMax} ]]>
+            </if>
+            <if test=" condition.degreeId != null">
+                and t.degree_id = #{condition.degreeId}
+            </if>
+            <if test=" condition.workDateMin != null and condition.workDateMin != ''">
+                <![CDATA[ and t.work_date >= #{condition.workDateMin} ]]>
+            </if>
+            <if test=" condition.workDateMax != null and condition.workDateMax != ''">
+                <![CDATA[ and t.work_date <= #{condition.workDateMax} ]]>
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
+            <if test=" condition.jobLevelId != null">
+                and t.job_level_id = #{condition.jobLevelId}
+            </if>
+            <if test=" condition.jobDateMin != null and condition.jobDateMin != ''">
+                <![CDATA[ and t.job_date >= #{condition.jobDateMin} ]]>
+            </if>
+            <if test=" condition.jobDateMax != null and condition.jobDateMax != ''">
+                <![CDATA[ and t.job_date <= #{condition.jobDateMax} ]]>
+            </if>
+            <if test=" condition.formation != null and condition.formation != ''">
+                and t.formation LIKE concat('%',#{condition.formation},'%')
+            </if>
+            <if test=" condition.partyInDateMin != null and condition.partyInDateMin != ''">
+                <![CDATA[ and t.party_in_date >= #{condition.partyInDateMin} ]]>
+            </if>
+            <if test=" condition.partyInDateMax != null and condition.partyInDateMax != ''">
+                <![CDATA[ and t.party_in_date <= #{condition.partyInDateMax} ]]>
+            </if>
+            <if test=" condition.partyOutDateMin != null and condition.partyOutDateMin != ''">
+                <![CDATA[ and t.party_out_date >= #{condition.partyOutDateMin} ]]>
+            </if>
+            <if test=" condition.partyOutDateMax != null and condition.partyOutDateMax != ''">
+                <![CDATA[ and t.party_out_date <= #{condition.partyOutDateMax} ]]>
+            </if>
+            <if test=" condition.comment != null and condition.comment != ''">
+                and t.comment LIKE concat('%',#{condition.comment},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeoplePartyPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from people_party t
+        <where>
+            <if test=" condition.peopleCode != null and condition.peopleCode != '' ">
+                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
+            </if>
+            <if test=" condition.peopleType != null and condition.peopleType != '' ">
+                and t.people_type LIKE concat('%',#{condition.peopleType},'%')
+            </if>
+            <if test=" condition.peopleName != null and condition.peopleName != '' ">
+                and t.people_name LIKE concat('%',#{condition.peopleName},'%')
+            </if>
+            <if test=" condition.branchId != null">
+                and t.branch_id = #{condition.branchId}
+            </if>
+            <if test=" condition.departmentId != null">
+                and t.department_id = #{condition.departmentId}
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.nativeName != null and condition.nativeName != ''">
+                and t.native LIKE concat('%',#{condition.nativeName},'%')
+            </if>
+            <if test=" condition.partyStatusId != null">
+                and t.party_status_id = #{condition.partyStatusId}
+            </if>
+            <if test=" condition.partyDateMin != null and condition.partyDateMin != ''">
+                <![CDATA[ and t.party_date >= #{condition.partyDateMin} ]]>
+            </if>
+            <if test=" condition.partyDateMax != null and condition.partyDateMax != ''">
+                <![CDATA[ and t.party_date <= #{condition.partyDateMax} ]]>
+            </if>
+            <if test=" condition.degreeId != null">
+                and t.degree_id = #{condition.degreeId}
+            </if>
+            <if test=" condition.workDateMin != null and condition.workDateMin != ''">
+                <![CDATA[ and t.work_date >= #{condition.workDateMin} ]]>
+            </if>
+            <if test=" condition.workDateMax != null and condition.workDateMax != ''">
+                <![CDATA[ and t.work_date <= #{condition.workDateMax} ]]>
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
+            <if test=" condition.jobLevelId != null">
+                and t.job_level_id = #{condition.jobLevelId}
+            </if>
+            <if test=" condition.jobDateMin != null and condition.jobDateMin != ''">
+                <![CDATA[ and t.job_date >= #{condition.jobDateMin} ]]>
+            </if>
+            <if test=" condition.jobDateMax != null and condition.jobDateMax != ''">
+                <![CDATA[ and t.job_date <= #{condition.jobDateMax} ]]>
+            </if>
+            <if test=" condition.formation != null and condition.formation != ''">
+                and t.formation LIKE concat('%',#{condition.formation},'%')
+            </if>
+            <if test=" condition.partyInDateMin != null and condition.partyInDateMin != ''">
+                <![CDATA[ and t.party_in_date >= #{condition.partyInDateMin} ]]>
+            </if>
+            <if test=" condition.partyInDateMax != null and condition.partyInDateMax != ''">
+                <![CDATA[ and t.party_in_date <= #{condition.partyInDateMax} ]]>
+            </if>
+            <if test=" condition.partyOutDateMin != null and condition.partyOutDateMin != ''">
+                <![CDATA[ and t.party_out_date >= #{condition.partyOutDateMin} ]]>
+            </if>
+            <if test=" condition.partyOutDateMax != null and condition.partyOutDateMax != ''">
+                <![CDATA[ and t.party_out_date <= #{condition.partyOutDateMax} ]]>
+            </if>
+            <if test=" condition.comment != null and condition.comment != ''">
+                and t.comment LIKE concat('%',#{condition.comment},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from people_party
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete from people_party
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleParty">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into people_party (people_code, people_type, people_name, branch_id, department_id, sex, national_id, birthday, native, party_status_id, party_date, degree_id, work_date, job_name, job_level_id, job_date, formation, party_in_date, party_out_date, photo, comment)
+        values (
+        #{peopleCode,jdbcType=VARCHAR},
+        #{peopleType,jdbcType=VARCHAR},
+        #{peopleName,jdbcType=VARCHAR},
+        #{branchId, jdbcType=INTEGER},
+        #{departmentId, jdbcType=INTEGER},
+        #{sex,jdbcType=TINYINT},
+        #{nationalId, jdbcType=INTEGER},
+        #{birthday,jdbcType=DATE},
+        #{nativeName,jdbcType=VARCHAR},
+        #{partyStatusId, jdbcType=INTEGER},
+        #{partyDate,jdbcType=DATE},
+        #{degreeId, jdbcType=INTEGER},
+        #{workDate,jdbcType=DATE},
+        #{jobName,jdbcType=VARCHAR},
+        #{jobLevelId, jdbcType=INTEGER},
+        #{jobDate,jdbcType=DATE},
+        #{formation, jdbcType=VARCHAR},
+        #{partyInDate,jdbcType=DATE},
+        #{partyOutDate,jdbcType=DATE},
+        #{photo, jdbcType=VARCHAR},
+        #{comment, jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into people_party (people_code, people_type, people_name, branch_id, department_id, sex, national_id, birthday, native, party_status_id, party_date, degree_id, work_date, job_name, job_level_id, job_date, formation, party_in_date, party_out_date, photo, comment)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{item.peopleCode,jdbcType=VARCHAR},
+            #{item.peopleType,jdbcType=VARCHAR},
+            #{item.peopleName,jdbcType=VARCHAR},
+            #{item.branchId, jdbcType=INTEGER},
+            #{item.departmentId, jdbcType=INTEGER},
+            #{item.sex,jdbcType=TINYINT},
+            #{item.nationalId, jdbcType=INTEGER},
+            #{item.birthday,jdbcType=DATE},
+            #{item.nativeName,jdbcType=VARCHAR},
+            #{item.partyStatusId, jdbcType=INTEGER},
+            #{item.partyDate,jdbcType=DATE},
+            #{item.degreeId, jdbcType=INTEGER},
+            #{item.workDate,jdbcType=DATE},
+            #{item.jobName,jdbcType=VARCHAR},
+            #{item.jobLevelId, jdbcType=INTEGER},
+            #{item.jobDate,jdbcType=DATE},
+            #{item.formation, jdbcType=VARCHAR},
+            #{item.partyInDate,jdbcType=DATE},
+            #{item.partyOutDate,jdbcType=DATE},
+            #{item.photo, jdbcType=VARCHAR},
+            #{item.comment, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updatePeopleParty" parameterType="com.wangzhixuan.model.PeopleParty">
+        update people_party
+        <set>
+            <if test="peopleCode != null">
+                people_code = #{peopleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="peopleType != null">
+                people_type = #{peopleType,jdbcType=VARCHAR},
+            </if>
+            <if test="peopleName != null">
+                people_name = #{peopleName,jdbcType=VARCHAR},
+            </if>
+            <if test="branchId != null">
+                branch_id = #{branchId, jdbcType=INTEGER},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId, jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="nationalId != null">
+                national_id = #{nationalId,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="nativeName != null">
+                native = #{nativeName,jdbcType=VARCHAR},
+            </if>
+            <if test="partyStatusId != null">
+                party_status_id = #{partyStatusId, jdbcType=INTEGER},
+            </if>
+            <if test="partyDate != null">
+                party_date = #{partyDate,jdbcType=DATE},
+            </if>
+            <if test="degreeId != null">
+                degree_id = #{degreeId, jdbcType=INTEGER},
+            </if>
+            <if test="workDate != null">
+                work_date = #{workDate,jdbcType=VARCHAR},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobLevelId != null">
+                job_level_id = #{jobLevelId, jdbcType=INTEGER},
+            </if>
+            <if test="jobDate != null">
+                job_date = #{jobDate,jdbcType=DATE},
+            </if>
+            <if test="formation != null">
+                formation = #{formation, jdbcType=VARCHAR},
+            </if>
+            <if test="partyInDate != null">
+                party_in_date = #{partyInDate,jdbcType=DATE},
+            </if>
+            <if test="partyOutDate != null">
+                party_out_date = #{partyOutDate,jdbcType=DATE},
+            </if>
+            <if test="photo != null">
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                comment = #{comment, jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectPeoplePartyByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        t.id,
+        t.people_code,
+        t.people_type,
+        t.people_name,
+        t.branch_id,
+        t.department_id,
+        t.sex,
+        t.national_id,
+        t.birthday,
+        t.native,
+        t.party_status_id,
+        t.party_date,
+        t.degree_id,
+        t.work_date,
+        t.job_name,
+        t.job_level_id,
+        t.job_date,
+        t.formation,
+        t.party_in_date,
+        t.party_out_date,
+        t.photo,
+        t.comment
+        FROM
+        people_party t
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectPeoplePartyVoByIds" resultMap="peoplePartyVoResultMap" parameterType="java.util.ArrayList">
+        SELECT
+        t.id,
+        t.people_code,
+        t.people_type,
+        t.people_name,
+        t.branch_id,
+        b.name as branch_name,
+        t.department_id,
+        d.name as department_name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.birthday,
+        t.native,
+        t.party_status_id,
+        p.name as party_status_name,
+        t.party_date,
+        t.degree_id,
+        g.name as degree_name,
+        t.work_date,
+        t.job_name,
+        t.job_level_id,
+        m.job_level as job_level_name,
+        t.job_date,
+        t.formation,
+        t.party_in_date,
+        t.party_out_date,
+        t.photo,
+        t.comment
+        FROM
+        people_party t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        job m ON m.id = t.job_level_id
+        LEFT JOIN
+        dict_branch b ON b.id = t.branch_id
+        LEFT JOIN
+        dict_department d ON d.id = t.department_id
+        LEFT JOIN
+        dict_party_status p ON p.id = t.party_status_id
+        LEFT JOIN
+        dict_degree g ON g.id = t.degree_id
+        where t.id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
+

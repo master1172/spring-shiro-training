@@ -1,15 +1,15 @@
 package com.wangzhixuan.mapper;
 
-import com.wangzhixuan.model.PeopleRetire;
+import com.wangzhixuan.model.PeopleParty;
 import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleRetireVo;
+import com.wangzhixuan.vo.PeoplePartyVo;
 
 import java.util.List;
 
 /**
  * Created by administrator_cernet on 2016/11/27.
  */
-public interface PeopleRetireMapper {
+public interface PeoplePartyMapper {
 
     int batchDeleteByIds(String[] ids);
     /**
@@ -23,18 +23,18 @@ public interface PeopleRetireMapper {
     /**
      * 添加人员
      *
-     * @param peopleRetire
+     * @param peopleParty
      * @return
      */
-    int insert(PeopleRetire peopleRetire);
+    int insert(PeopleParty peopleParty);
 
     /**
      * 修改人员
      *
-     * @param peopleRetire
+     * @param peopleParty
      * @return
      */
-    int updatePeopleRetire(PeopleRetire peopleRetire);
+    int updatePeopleParty(PeopleParty peopleParty);
 
     /**
      * 根据人员名查询人员
@@ -42,7 +42,7 @@ public interface PeopleRetireMapper {
      * @param name
      * @return
      */
-    PeopleRetire findPeopleRetireByName(String name);
+    PeopleParty findPeoplePartyByName(String name);
 
     /**
      * 根据人员id查询人员
@@ -50,7 +50,7 @@ public interface PeopleRetireMapper {
      * @param id
      * @return
      */
-    PeopleRetire findPeopleRetireById(Long id);
+    PeopleParty findPeoplePartyById(Long id);
 
     /**
      * 人员列表
@@ -58,7 +58,7 @@ public interface PeopleRetireMapper {
      * @param pageInfo
      * @return
      */
-    List findPeopleRetirePageCondition(PageInfo pageInfo);
+    List findPeoplePartyPageCondition(PageInfo pageInfo);
 
     /**
      * 统计人员
@@ -66,26 +66,26 @@ public interface PeopleRetireMapper {
      * @param pageInfo
      * @return
      */
-    int findPeopleRetirePageCount(PageInfo pageInfo);
+    int findPeoplePartyPageCount(PageInfo pageInfo);
     /**
      * 根据ID查询人员列表
      * @param ids
      * @return
      */
-    List selectPeopleRetireByIds(String[] ids);
+    List selectPeoplePartyByIds(String[] ids);
 
     /**
      * 根据ID查询人员列表
      * @param ids
      * @return
      */
-    List selectPeopleRetireVoByIds(String[] ids);
+    List selectPeoplePartyVoByIds(String[] ids);
     /**
      * 批量添加人员
      * @param list
      * @return
      */
-    int insertByImport(List<PeopleRetire> list);
+    int insertByImport(List<PeopleParty> list);
 
 
     /**
@@ -93,6 +93,7 @@ public interface PeopleRetireMapper {
      * @param id
      * @return
      */
-    PeopleRetireVo findPeopleRetireVoById(Long id);
+    PeoplePartyVo findPeoplePartyVoById(Long id);
 }
+
 
