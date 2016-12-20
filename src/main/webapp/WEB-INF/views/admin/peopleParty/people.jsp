@@ -274,15 +274,6 @@
             }
         }
 
-        function formationFormatter(value,row,index){
-            switch (value) {
-                case 学校:
-                    return '学校';
-                case 招待所:
-                    return '招待所';
-            }
-        }
-
         function operateFormatter(value,row,index){
             var str = '';
             <shiro:hasPermission name="/peopleParty/edit">
@@ -302,9 +293,9 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>人员编码:</th>
+                <th>人员姓名:</th>
                 <td>
-                    <input name="peopleCode"/>
+                    <input name="peopleName"/>
                 </td>
                 <th>性别:</th>
                 <td>
@@ -353,7 +344,7 @@
             <th field="jobName"     data-options="sortable:true" width="80">职务岗位</th>
             <th field="jobLevelName"     data-options="sortable:true" width="80">职级</th>
             <th field="jobDate"     data-options="sortable:true" width="120">现任职级日期</th>
-            <th field="formation"      data-options="sortable:true,formatter:formationFormatter" width="80">编制</th>
+            <th field="formation"      data-options="sortable:true" width="80">编制</th>
             <th field="partyInDate"     data-options="sortable:true" width="120">党组织关系转入日期</th>
             <th field="partyOutDate"     data-options="sortable:true" width="120">党组织关系转出日期</th>
             <th field="comment"       data-options="sortable:true" width="130">备注</th>

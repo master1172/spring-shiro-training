@@ -452,7 +452,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                     row.createCell(3).setCellValue(p.getPeopleName());row.getCell(3).setCellStyle(setBorder);
                     row.createCell(4).setCellValue(p.getBranchName());row.getCell(4).setCellStyle(setBorder);
                     row.createCell(5).setCellValue(p.getDepartmentName());row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getSex());row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(6).setCellStyle(setBorder);
                     row.createCell(7).setCellValue(p.getNationalName());row.getCell(7).setCellStyle(setBorder);
                     row.createCell(8).setCellValue(p.getBirthday());row.getCell(8).setCellStyle(setBorder);
                     row.createCell(9).setCellValue(p.getNativeName());row.getCell(9).setCellStyle(setBorder);
@@ -497,22 +497,22 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
             params.put("${peopleCode}",p.getPeopleCode());
             params.put("${peopleType}",p.getPeopleType());
             params.put("${peopleName}",p.getPeopleName());
-            params.put("${branchName}",p.getBranchName());
-            params.put("${departmentName}",p.getDepartmentName());
+            params.put("${branchName}",p.getBranchName()==null?"":p.getBranchName());
+            params.put("${departmentName}",p.getDepartmentName()==null?"":p.getDepartmentName());
             params.put("${sex}",p.getSex()==0?"男":"女");
-            params.put("${nationalName}",p.getNationalName());
-            params.put("${birthday}",p.getBirthday());
+            params.put("${nationalName}",p.getNationalName()==null?"":p.getNationalName());
+            params.put("${birthday}",p.getBirthday()==null?"":p.getBirthday());
             params.put("${nativeName}",p.getNativeName());
-            params.put("${partyStatusName}",p.getPartyStatusName());
-            params.put("${partyDate}",p.getPartyDate());
-            params.put("${degreeName}",p.getDegreeName());
-            params.put("${workDate}",p.getWorkDate());
+            params.put("${partyStatusName}",p.getPartyStatusName()==null?"":p.getPartyStatusName());
+            params.put("${partyDate}",p.getPartyDate()==null?"":p.getPartyDate());
+            params.put("${degreeName}",p.getDegreeName()==null?"":p.getDegreeName());
+            params.put("${workDate}",p.getWorkDate()==null?"":p.getWorkDate());
             params.put("${jobName}",p.getJobName());
-            params.put("${jobLevelName}",p.getJobLevelName());
-            params.put("${jobDate}",p.getJobDate());
+            params.put("${jobLevelName}",p.getJobLevelName()==null?"":p.getJobLevelName());
+            params.put("${jobDate}",p.getJobDate()==null?"":p.getJobDate());
             params.put("${formation}",p.getFormation());
-            params.put("${partyInDate}",p.getPartyInDate());
-            params.put("${partyOutDate}",p.getPartyOutDate());
+            params.put("${partyInDate}",p.getPartyInDate()==null?"":p.getPartyInDate());
+            params.put("${partyOutDate}",p.getPartyOutDate()==null?"":p.getPartyOutDate());
             params.put("${comment}",p.getComment());
 
             //判断是否有头像
@@ -520,6 +520,8 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
             }
+            else
+                params.put("${photo}","");
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
         }

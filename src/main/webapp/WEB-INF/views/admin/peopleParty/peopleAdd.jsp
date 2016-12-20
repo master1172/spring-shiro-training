@@ -41,13 +41,12 @@
                 <tr>
                     <td>部门</td>
                     <td>
-                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="name" textField="name" editable="false">
+                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="">请选择</option>
                             <option value="0" >男</option>
                             <option value="1" >女</option>
                         </select>
@@ -120,7 +119,6 @@
                     <td>编制</td>
                     <td>
                         <select name="formation" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="">请选择</option>
                             <option value="学校" >学校</option>
                             <option value="招待所" >招待所</option>
                         </select>

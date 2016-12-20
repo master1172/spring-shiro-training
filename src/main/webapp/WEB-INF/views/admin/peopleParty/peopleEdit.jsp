@@ -56,8 +56,7 @@
                     </td>
                     <td>性别</td>
                     <td>
-                        <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="">请选择</option>
+                        <select name="sex" id="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value="0" >男</option>
                             <option value="1" >女</option>
                         </select>
@@ -129,8 +128,7 @@
                 <tr>
                     <td>编制</td>
                     <td>
-                        <select name="formation" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="">请选择</option>
+                        <select name="formation" id="formation" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value="学校" >学校</option>
                             <option value="招待所" >招待所</option>
                         </select>

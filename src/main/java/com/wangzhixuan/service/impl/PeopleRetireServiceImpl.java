@@ -360,7 +360,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                     row.createCell(12).setCellValue(p.getMobile());row.getCell(12).setCellStyle(setBorder);
                     row.createCell(13).setCellValue(p.getContact());row.getCell(13).setCellStyle(setBorder);
                     row.createCell(14).setCellValue(p.getContactNumber());row.getCell(14).setCellStyle(setBorder);
-                    row.createCell(15).setCellValue(p.getStatus()==null?"":(p.getSex()==0?"退休":"返聘"));row.getCell(15).setCellStyle(setBorder);
+                    row.createCell(15).setCellValue(p.getStatus()==null?"":(p.getStatus()==0?"退休":"返聘"));row.getCell(15).setCellStyle(setBorder);
                     row.createCell(16).setCellValue(p.getComment());row.getCell(16).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }

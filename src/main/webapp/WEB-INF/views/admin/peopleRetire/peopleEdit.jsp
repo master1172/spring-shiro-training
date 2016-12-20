@@ -31,9 +31,9 @@
                     <td><input name="code" type="text" value="${peopleRetire.code}"></td>
                     <td>性别</td>
                     <td>
-                        <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0" >男</option>
-                            <option value="1" >女</option>
+                        <select name="sex" id="sex"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="0">男</option>
+                            <option value="1">女</option>
                         </select>
                     </td>
                 </tr>
@@ -108,7 +108,7 @@
                 <tr>
                     <td>当前状态</td>
                     <td>
-                        <select name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                        <select name="status" id="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value="0" >退休</option>
                             <option value="1" >返聘</option>
                         </select>
