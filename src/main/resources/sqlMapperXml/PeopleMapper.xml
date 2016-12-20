@@ -47,20 +47,80 @@
 
     <resultMap id="peopleVoResultMap" type="com.wangzhixuan.vo.PeopleVo">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="code"           property="code" jdbcType="VARCHAR"/>
-        <result column="name"           property="name" jdbcType="VARCHAR"/>
-        <result column="sex"            property="sex" jdbcType="TINYINT" />
-        <result column="birthday" property="birthday" jdbcType="DATE" />
-        <result column="job" property="job" jdbcType="VARCHAR" />
-        <result column="salary" property="salary" jdbcType="DECIMAL" />
+        <result column="code"           property="code"         jdbcType="VARCHAR"/>
+        <result column="name"           property="name"         jdbcType="VARCHAR"/>
+        <result column="sex"            property="sex"          jdbcType="TINYINT" />
+        <result column="national_id"    property="nationalId"   jdbcType="INTEGER"/>
+        <result column="national_name"  property="nationalName" jdbcType="VARCHAR"/>
+        <result column="birthday"       property="birthday"     jdbcType="DATE" />
+        <result column="native_id"      property="nativeId"     jdbcType="INTEGER"/>
+        <result column="native_name"    property="nativeName"   jdbcType="VARCHAR"/>
+        <result column="education_name" property="educationName"    jdbcType="VARCHAR"/>
+        <result column="degree_id"      property="degreeId"     jdbcType="INTEGER"/>
+        <result column="degree_name"    property="degreeName"   jdbcType="VARCHAR"/>
+        <result column="political_name" property="politicalName"    jdbcType="VARCHAR"/>
+        <result column="party_date"     property="partyDate"    jdbcType="DATE"/>
+        <result column="work_date"      property="workDate"     jdbcType="DATE"/>
+        <result column="school_date"    property="schoolDate"   jdbcType="DATE"/>
+        <result column="job_name"       property="jobName"      jdbcType="VARCHAR"/>
+        <result column="job_category"   property="jobCategory"  jdbcType="VARCHAR"/>
+        <result column="job_level_id"   property="jobLevelId"   jdbcType="INTEGER"/>
+        <result column="job_level_name" property="jobLevelName" jdbcType="VARCHAR"/>
+        <result column="job_date"       property="jobDate"      jdbcType="DATE"/>
+        <result column="job_level_date" property="jobLevelDate" jdbcType="DATE"/>
+        <result column="age"            property="age"          jdbcType="INTEGER"/>
+        <result column="virtual_age"    property="virtualAge"   jdbcType="INTEGER"/>
+        <result column="work_age"       property="workAge"      jdbcType="INTEGER"/>
+        <result column="formation"      property="formation"    jdbcType="VARCHAR"/>
+        <result column="mobile"         property="mobile"       jdbcType="VARCHAR"/>
+        <result column="marriage_id"    property="marriageId"   jdbcType="INTEGER"/>
+        <result column="marriage_name"  property="marriageName" jdbcType="VARCHAR"/>
+        <result column="photo_id"       property="photoId"      jdbcType="VARCHAR"/>
+        <result column="address"        property="address"      jdbcType="VARCHAR"/>
+        <result column="hukou"          property="hukou"        jdbcType="VARCHAR"/>
+        <result column="hukou_address"  property="hukouAddress" jdbcType="VARCHAR"/>
+        <result column="final_education_name" property="finalEducationName" jdbcType="VARCHAR"/>
+        <result column="major"          property="major"        jdbcType="VARCHAR"/>
+        <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR"/>
+        <result column="contact"        property="contact"      jdbcType="VARCHAR"/>
+        <result column="relationship"   property="relationship" jdbcType="VARCHAR"/>
+        <result column="contact_number" property="contactNumber" jdbcType="VARCHAR"/>
+        <result column="family_info_1"  property="familyInfo1"  jdbcType="VARCHAR"/>
+        <result column="family_info_1_title" property="familyInfo1Title" jdbcType="VARCHAR"/>
+        <result column="family_info_1_name"  property="familyInfo1Name"  jdbcType="VARCHAR"/>
+        <result column="family_info_1_work_address" property="familyInfo1WorkAddress" jdbcType="VARCHAR"/>
+        <result column="family_info_1_job"  property="familyInfo1Job"   jdbcType="VARCHAR"/>
+        <result column="family_info_1_contact" property="familyInfo1Contact" jdbcType="VARCHAR"/>
+        <result column="family_info_2"  property="familyInfo2"  jdbcType="VARCHAR"/>
+        <result column="family_info_2_title" property="familyInfo2Title" jdbcType="VARCHAR"/>
+        <result column="family_info_2_name"  property="familyInfo2Name"  jdbcType="VARCHAR"/>
+        <result column="family_info_2_work_address" property="familyInfo2WorkAddress" jdbcType="VARCHAR"/>
+        <result column="family_info_2_job"  property="familyInfo2Job"   jdbcType="VARCHAR"/>
+        <result column="family_info_2_contact" property="familyInfo2Contact" jdbcType="VARCHAR"/>
+        <result column="family_info_3"  property="familyInfo3"  jdbcType="VARCHAR"/>
+        <result column="family_info_3_title" property="familyInfo3Title" jdbcType="VARCHAR"/>
+        <result column="family_info_3_name"  property="familyInfo3Name"  jdbcType="VARCHAR"/>
+        <result column="family_info_3_work_address" property="familyInfo3WorkAddress" jdbcType="VARCHAR"/>
+        <result column="family_info_3_job"  property="familyInfo3Job"   jdbcType="VARCHAR"/>
+        <result column="family_info_3_contact" property="familyInfo3Contact" jdbcType="VARCHAR"/>
+        <result column="family_info_4"  property="familyInfo4"  jdbcType="VARCHAR"/>
+        <result column="family_info_4_title" property="familyInfo4Title" jdbcType="VARCHAR"/>
+        <result column="family_info_4_name"  property="familyInfo4Name"  jdbcType="VARCHAR"/>
+        <result column="family_info_4_work_address" property="familyInfo4WorkAddress" jdbcType="VARCHAR"/>
+        <result column="family_info_4_job"  property="familyInfo4Job"   jdbcType="VARCHAR"/>
+        <result column="family_info_4_contact" property="familyInfo4Contact" jdbcType="VARCHAR"/>
         <result column="photo"  property="photo" jdbcType="VARCHAR" />
-        <result column="degree_id" property="degreeId" jdbcType="INTEGER" />
-        <result column="degreeName" property="degreeName" jdbcType="VARCHAR" />
-        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="identity_id" property="identityId" jdbcType="INTEGER"/>
+        <result column="identity_name" property="identityName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, name, sex, birthday, job, salary, photo, degree_id, address
+        id, code, name, sex, national_id, birthday, native_id, education_name, degree_id, political_name,
+        party_date, work_date, school_date, job_name, job_category, job_level_id, job_date, job_level_date,
+        age, virtual_age, work_age, formation, mobile, marriage_id, photo_id, address, hukou, hukou_address,
+        final_education_name, major, graduate_school, contact, relationship, contact_number, family_info_1,
+        family_info_2, family_info_3, family_info_4, photo, identity_id, status
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -73,19 +133,66 @@
     <select id="findPeopleVoById" resultMap="peopleVoResultMap" parameterType="java.lang.Long">
         SELECT
           t.id,
+          t.code,
           t.name,
           t.sex,
+          t.national_id,
+          n.name as national_name,
           t.birthday,
-          t.job,
-          t.salary,
-          t.photo,
+          t.native_id,
+          na.name as native_name,
+          t.education_name,
           t.degree_id,
-          s.name as degreeName,
-          t.address
+          de.name as degree_name,
+          t.political_name,
+          t.party_date,
+          t.work_date,
+          t.school_date,
+          t.job_name,
+          t.job_category,
+          t.job_level_id,
+          j.job_level as job_level_name,
+          t.job_date,
+          t.job_level_date,
+          t.age,
+          t.virtual_age,
+          t.work_age,
+          t.formation,
+          t.mobile,
+          t.marriage_id,
+          m.name as marriage_name,
+          t.photo_id,
+          t.address,
+          t.hukou,
+          t.hukou_address,
+          t.final_education_name,
+          t.major,
+          t.graduate_school,
+          t.contact,
+          t.relationship,
+          t.contact_number,
+          t.family_info_1,
+          t.family_info_2,
+          t.family_info_3,
+          t.family_info_4,
+          t.photo,
+          t.identity_id,
+          i.name as identity_name,
+          t.status
         FROM
           people t
         LEFT JOIN
-          dict_degree s ON s.id = t.degree_id
+          dict_national n ON n.id = t.national_id
+        LEFT JOIN
+          dict_native na ON na.id = t.native_id
+        LEFT JOIN
+          dict_degree de ON de.id = t.degree_id
+        LEFT JOIN
+          job j ON j.id = t.job_level_id
+        LEFT JOIN
+          dict_marriage m ON m.id = t.degree_id
+        LEFT JOIN
+          dict_identity i ON i.id = t.identity_id
         <where>
             t.id = #{id}
         </where>
@@ -107,19 +214,67 @@
 
     <select id="findPeoplePageCondition" resultMap="peopleVoResultMap" parameterType="PageInfo">
         SELECT
-        t.id,
-        t.name,
-        t.sex,
-        t.birthday,
-        t.job,
-        t.salary,
-        t.degree_id,
-        s.name as degreeName,
-        t.address
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            n.name as national_name,
+            t.birthday,
+            t.native_id,
+            na.name as native_name,
+            t.education_name,
+            t.degree_id,
+            de.name as degree_name,
+            t.political_name,
+            t.party_date,
+            t.work_date,
+            t.school_date,
+            t.job_name,
+            t.job_category,
+            t.job_level_id,
+            j.job_level as job_level_name,
+            t.job_date,
+            t.job_level_date,
+            t.age,
+            t.virtual_age,
+            t.work_age,
+            t.formation,
+            t.mobile,
+            t.marriage_id,
+            m.name as marriage_name,
+            t.photo_id,
+            t.address,
+            t.hukou,
+            t.hukou_address,
+            t.final_education_name,
+            t.major,
+            t.graduate_school,
+            t.contact,
+            t.relationship,
+            t.contact_number,
+            t.family_info_1,
+            t.family_info_2,
+            t.family_info_3,
+            t.family_info_4,
+            t.photo,
+            t.identity_id,
+            i.name as identity_name,
+            t.status
         FROM
-        people t
+          people t
         LEFT JOIN
-        dict_degree s ON s.id = t.degree_id
+          dict_national n ON n.id = t.national_id
+        LEFT JOIN
+          dict_native na ON na.id = t.native_id
+        LEFT JOIN
+          dict_degree de ON de.id = t.degree_id
+        LEFT JOIN
+          job j ON j.id = t.job_level_id
+        LEFT JOIN
+          dict_marriage m ON m.id = t.degree_id
+        LEFT JOIN
+          dict_identity i ON i.id = t.identity_id
         <where>
             <if test=" condition.name != null and condition.name != '' ">
                 and t.name LIKE concat('%',#{condition.name},'%')
@@ -127,26 +282,14 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.job != null and condition.job != ''">
-                and t.job LIKE concat('%',#{condition.job},'%')
-            </if>
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>
             <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
                 <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
             </if>
-            <if test=" condition.salaryMin != null">
-                <![CDATA[ and t.salary >= #{condition.salaryMin} ]]>
-            </if>
-            <if test=" condition.salaryMax != null">
-                <![CDATA[ and t.salary <= #{condition.salaryMax} ]]>
-            </if>
             <if test=" condition.degreeId != null">
                 and t.degree_id = #{condition.degreeId}
-            </if>
-            <if test=" condition.address != null and condition.address != ''">
-                and t.address LIKE concat('%',#{condition.address},'%')
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -162,26 +305,14 @@
             <if test=" condition.sex != null ">
                 and t.sex = #{condition.sex}
             </if>
-            <if test=" condition.job != null and condition.job != ''">
-                and t.job LIKE concat('%',#{condition.job},'%')
-            </if>
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>
             <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
                 <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
             </if>
-            <if test=" condition.salaryMin != null">
-                <![CDATA[ and t.salary >= #{condition.salaryMin} ]]>
-            </if>
-            <if test=" condition.salaryMax != null">
-                <![CDATA[ and t.salary <= #{condition.salaryMax} ]]>
-            </if>
             <if test=" condition.degreeId != null">
                 and t.degree_id = #{condition.degreeId}
-            </if>
-            <if test=" condition.address != null and condition.address != ''">
-                and t.address LIKE concat('%',#{condition.address},'%')
             </if>
         </where>
     </select>
@@ -204,30 +335,108 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people (name, sex, birthday, job, salary, photo, degree_id, address)
+        insert into people (
+          code, name, sex, national_id, birthday, native_id, education_name, degree_id,
+          political_name, party_date, work_date, school_date, job_name, job_category, job_level_id,
+          job_date, job_level_date, age, virtual_age, work_age, formation, mobile, marriage_id,
+          photo_id, address, hukou, hukou_address, final_education_name, major, graduate_school,
+          contact, relationship, contact_number, family_info_1, family_info_2, family_info_3,
+          family_info_4, photo, identity_id, status)
         values (
-          #{name,jdbcType=VARCHAR},
-          #{sex,jdbcType=TINYINT},
+          #{code, jdbcType=VARCHAR},
+          #{name, jdbcType=VARCHAR},
+          #{sex,  jdbcType=TINYINT},
+          #{nationalId, jdbcType=INTEGER},
           #{birthday,jdbcType=DATE},
-          #{job, jdbcType=VARCHAR},
-          #{salary,jdbcType=DECIMAL},
-          #{photo, jdbcType=VARCHAR},
+          #{nativeId, jdbcType=INTEGER},
+          #{educationName, jdbcType=VARCHAR},
           #{degreeId, jdbcType=INTEGER},
-          #{address, jdbcType=VARCHAR}
+          #{politicalName, jdbcType=VARCHAR},
+          #{partyDate, jdbcType=DATE},
+          #{workDate, jdbcType=DATE},
+          #{schoolDate, jdbcType=DATE},
+          #{jobName, jdbcType=VARCHAR},
+          #{jobCategory, jdbcType=VARCHAR},
+          #{jobLevelId, jdbcType=INTEGER},
+          #{jobDate, jdbcType=DATE},
+          #{jobLevelDate, jdbcType=DATE},
+          #{age, jdbcType=INTEGER},
+          #{virtualAge, jdbcType=INTEGER},
+          #{workAge, jdbcType=INTEGER},
+          #{formation, jdbcType=VARCHAR},
+          #{mobile, jdbcType=VARCHAR},
+          #{marriageId, jdbcType=INTEGER},
+          #{photoId, jdbcType=VARCHAR},
+          #{address, jdbcType=VARCHAR},
+          #{hukou, jdbcType=VARCHAR},
+          #{hukouAddress, jdbcType=VARCHAR},
+          #{finalEducationName, jdbcType=VARCHAR},
+          #{major,  jdbcType=VARCHAR},
+          #{graduateSchool, jdbcType=VARCHAR},
+          #{contact, jdbcType=VARCHAR},
+          #{relationship, jdbcType=VARCHAR},
+          #{contactNumber, jdbcType=VARCHAR},
+          #{familyInfo1, jdbcType=VARCHAR},
+          #{familyInfo2, jdbcType=VARCHAR},
+          #{familyInfo3, jdbcType=VARCHAR},
+          #{familyInfo4, jdbcType=VARCHAR},
+          #{photo, jdbcType=VARCHAR},
+          #{identityId, jdbcType=INTEGER},
+          #{status, jdbcType=INTEGER}
          )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people (name, sex, birthday, job, salary, degree_id, address)
+        insert into people (
+          code, name, sex, national_id, birthday, native_id, education_name, degree_id,
+          political_name, party_date, work_date, school_date, job_name, job_category, job_level_id,
+          job_date, job_level_date, age, virtual_age, work_age, formation, mobile, marriage_id,
+          photo_id, address, hukou, hukou_address, final_education_name, major, graduate_school,
+          contact, relationship, contact_number, family_info_1, family_info_2, family_info_3,
+          family_info_4, photo, identity_id, status
+        )
         values
         <foreach item="item" index="index" collection="list" separator=",">
           (
-	        #{item.name,jdbcType=VARCHAR},
-	        #{item.sex,jdbcType=TINYINT},
-	        #{item.birthday,jdbcType=DATE},
-	        #{item.job, jdbcType=VARCHAR},
-	        #{item.salary,jdbcType=DECIMAL},
-            #{item.degreeId,jdbcType=INTEGER},
-            #{item.address, jdbcType=VARCHAR}
+            #{item.code, jdbcType=VARCHAR},
+            #{item.name, jdbcType=VARCHAR},
+            #{item.sex,  jdbcType=TINYINT},
+            #{item.nationalId, jdbcType=INTEGER},
+            #{item.birthday,jdbcType=DATE},
+            #{item.nativeId, jdbcType=INTEGER},
+            #{item.educationName, jdbcType=VARCHAR},
+            #{item.degreeId, jdbcType=INTEGER},
+            #{item.politicalName, jdbcType=VARCHAR},
+            #{item.partyDate, jdbcType=DATE},
+            #{item.workDate, jdbcType=DATE},
+            #{item.schoolDate, jdbcType=DATE},
+            #{item.jobName, jdbcType=VARCHAR},
+            #{item.jobCategory, jdbcType=VARCHAR},
+            #{item.jobLevelId, jdbcType=INTEGER},
+            #{item.jobDate, jdbcType=DATE},
+            #{item.jobLevelDate, jdbcType=DATE},
+            #{item.age, jdbcType=INTEGER},
+            #{item.virtualAge, jdbcType=INTEGER},
+            #{item.workAge, jdbcType=INTEGER},
+            #{item.formation, jdbcType=VARCHAR},
+            #{item.mobile, jdbcType=VARCHAR},
+            #{item.marriageId, jdbcType=INTEGER},
+            #{item.photoId, jdbcType=VARCHAR},
+            #{item.address, jdbcType=VARCHAR},
+            #{item.hukou, jdbcType=VARCHAR},
+            #{item.hukouAddress, jdbcType=VARCHAR},
+            #{item.finalEducationName, jdbcType=VARCHAR},
+            #{item.major,  jdbcType=VARCHAR},
+            #{item.graduateSchool, jdbcType=VARCHAR},
+            #{item.contact, jdbcType=VARCHAR},
+            #{item.relationship, jdbcType=VARCHAR},
+            #{item.contactNumber, jdbcType=VARCHAR},
+            #{item.familyInfo1, jdbcType=VARCHAR},
+            #{item.familyInfo2, jdbcType=VARCHAR},
+            #{item.familyInfo3, jdbcType=VARCHAR},
+            #{item.familyInfo4, jdbcType=VARCHAR},
+            #{item.photo, jdbcType=VARCHAR},
+            #{item.identityId, jdbcType=INTEGER},
+            #{item.status, jdbcType=INTEGER}
 	      )  
         </foreach>
     </insert>
@@ -240,20 +449,60 @@
             <if test="sex != null">
                 sex = #{sex,jdbcType=TINYINT},
             </if>
+            <if test="nationalId != null">
+                national_id = #{nationalId, jdbcType=INTEGER},
+            </if>
             <if test="birthday != null">
                 birthday = #{birthday,jdbcType=DATE},
             </if>
-            <if test="job != null">
-                job = #{job,jdbcType=VARCHAR},
+            <if test="nativeId != null">
+                native_id = #{nativeId, jdbcType=INTEGER},
             </if>
+
+            education_name = #{educationName, jdbcType=VARCHAR},
+
+            <if test="degreeId != null">
+                degree_id = #{degreeId, jdbcType=INTEGER},
+            </if>
+
+            political_name = #{politicalName, jdbcType=VARCHAR},
+
+            <if test="partyDate != null">
+                party_date  = #{partyDate, jdbcType=DATE},
+            </if>
+
+            <if test="workDate != null">
+                work_date  = #{workDate, jdbcType=DATE},
+            </if>
+
+            <if test="schoolDate != null">
+                school_date = #{schoolDate, jdbcType=DATE},
+            </if>
+
+            job_name = #{jobName, jdbcType=VARCHAR},
+            job_category = #{jobCategory,jdbcType=VARCHAR},
+
+            <if test="jobLevelId != null">
+                job_level_id = #{jobLevelId, jdbcType=INTEGER},
+            </if>
+
+            <if test="jobDate != null">
+                job_date = #{jobDate, jdbcType=DATE},
+            </if>
+
+            <if test="jogLevelDate != null">
+                job_level_date = #{jobLevelDate, jdbcType=DATE},
+            </if>
+
+            <if test="age != null">
+                age = #{age, jdbcType=INTEGER},
+            </if>
+
             <if test="salary != null">
                 salary = #{salary,jdbcType=DECIMAL},
             </if>
             <if test="photo != null">
                 photo = #{photo, jdbcType=VARCHAR},
-            </if>
-            <if test="degreeId != null">
-                degree_id = #{degreeId, jdbcType=INTEGER},
             </if>
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
@@ -262,9 +511,9 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
-        select 
-        	t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,t.address
-        from people t
+        select
+        <include refid="Base_Column_List" />
+        from people
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -273,13 +522,70 @@
 
     <select id="selectPeopleVoByIds" resultMap="peopleVoResultMap" parameterType="java.util.ArrayList">
         select
-          t.id,t.name,t.sex,t.birthday,t.job,t.salary,t.degree_id,s.name as degreeName,t.address
-        from people t
-        left join
-        dict_degree s ON s.id = t.degree_id
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            n.name as national_name,
+            t.birthday,
+            t.native_id,
+            na.name as native_name,
+            t.education_name,
+            t.degree_id,
+            de.name as degree_name,
+            t.political_name,
+            t.party_date,
+            t.work_date,
+            t.school_date,
+            t.job_name,
+            t.job_category,
+            t.job_level_id,
+            j.job_level as job_level_name,
+            t.job_date,
+            t.job_level_date,
+            t.age,
+            t.virtual_age,
+            t.work_age,
+            t.formation,
+            t.mobile,
+            t.marriage_id,
+            m.name as marriage_name,
+            t.photo_id,
+            t.address,
+            t.hukou,
+            t.hukou_address,
+            t.final_education_name,
+            t.major,
+            t.graduate_school,
+            t.contact,
+            t.relationship,
+            t.contact_number,
+            t.family_info_1,
+            t.family_info_2,
+            t.family_info_3,
+            t.family_info_4,
+            t.photo,
+            t.identity_id,
+            i.name as identity_name,
+            t.status
+        FROM
+          people t
+        LEFT JOIN
+          dict_national n ON n.id = t.national_id
+        LEFT JOIN
+          dict_native na ON na.id = t.native_id
+        LEFT JOIN
+          dict_degree de ON de.id = t.degree_id
+        LEFT JOIN
+          job j ON j.id = t.job_level_id
+        LEFT JOIN
+          dict_marriage m ON m.id = t.degree_id
+        LEFT JOIN
+          dict_identity i ON i.id = t.identity_id
         where t.id in
-        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+          <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
-        </foreach>
+          </foreach>
     </select>
 </mapper>

@@ -122,10 +122,11 @@ public class PeopleController extends BaseController{
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
-    public Result add(People people,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
+    public Result add(PeopleVo peoplevo,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
         Result result = new Result();
         try {
-            peopleService.addPeople(people,file);
+
+            peopleService.addPeople(peoplevo,file);
             result.setSuccess(true);
             result.setMsg("添加成功");
             return result;
@@ -145,10 +146,10 @@ public class PeopleController extends BaseController{
 
     @RequestMapping("/edit")
     @ResponseBody
-    public Result edit(People people, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
+    public Result edit(PeopleVo peoplevo, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
         Result result = new Result();
         try{
-            peopleService.updatePeople(people,file);
+            peopleService.updatePeople(peoplevo,file);
             result.setSuccess(true);
             result.setMsg("修改成功!");
             return result;
