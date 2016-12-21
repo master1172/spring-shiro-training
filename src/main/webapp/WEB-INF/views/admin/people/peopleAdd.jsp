@@ -31,11 +31,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>职业</td>
-                    <td><input type="text" name="job"></td>
-                    <td>薪资</td>
+                    <td>民族</td>
                     <td>
-                        <input type="text" name="salary" placeholder="请输入数字" />
+                        <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
+                        </input>
+                    </td>
+                    <td>籍贯</td>
+                    <td>
+                        <input class="easyui-combobox" id="nativeId" name="nativeId" url="${path}/dict/native" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                 </tr>
                 <tr>
@@ -45,14 +49,183 @@
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
-                    <td>住址</td>
-                    <td><input type="text" name="address"></td>
+                    <td>政治面貌</td>
+                    <td>
+                        <input type="text" name="politicalName">
+                    </td>
                 </tr>
                 <tr>
                     <td>学历</td>
                     <td>
+                        <input type="text" name="educationName">
+                    </td>
+                    <td>学位</td>
+                    <td>
                         <input class="easyui-combobox" id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name" editable="false">
                         </input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>入党日期</td>
+                    <td>
+                        <input name="partyDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                    <td>参加工作日期</td>
+                    <td>
+                        <input name="workDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>来院日期</td>
+                    <td>
+                        <input name="schoolDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                    <td>职务</td>
+                    <td>
+                        <input type="text" name="jobName">
+                    </td>
+                </tr>
+                <tr>
+                    <td>人员类别</td>
+                    <td>
+                        <select name="jobCategory" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="管理类">管理类</option>
+                            <option value="专业类">专业类</option>
+                            <option value="工勤类">工勤类</option>
+                        </select>
+                    </td>
+                    <td>职级</td>
+                    <td>
+                        <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="jobLevel" editable="false">
+                        </input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>任现职日期</td>
+                    <td>
+                        <input name="jobDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                    <td>任现职级日期</td>
+                    <td>
+                        <input name="jobLevelDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>年龄</td>
+                    <td>
+                        <input type="text" name="age">
+                    </td>
+                    <td>虚岁</td>
+                    <td>
+                        <input type="text" name="virtualAge">
+                    </td>
+                </tr>
+                <tr>
+                    <td>工龄</td>
+                    <td>
+                        <input type="text" name="workAge">
+                    </td>
+                    <td>编制</td>
+                    <td>
+                        <input type="text" name="formation">
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机号</td>
+                    <td>
+                        <input type="text" name="mobile">
+                    </td>
+                    <td>婚姻状况</td>
+                    <td>
+                        <input class="easyui-combobox" id="marriageId" name="marriageId" url="${path}/dict/marriage" valueField="id" textField="jobLevel" editable="false">
+                        </input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>身份证号码</td>
+                    <td>
+                        <input type="text" name="photoId">
+                    </td>
+                </tr>
+                <tr>
+                    <td>现家庭住址</td>
+                    <td>
+                        <input type="text" name="address">
+                    </td>
+                    <td>户籍</td>
+                    <td>
+                        <input type="text" name="hukou">
+                    </td>
+                </tr>
+                <tr>
+                    <td>户籍地址</td>
+                    <td>
+                        <input type="text" name="hukouAddress">
+                    </td>
+                    <td>最终学历</td>
+                    <td>
+                        <input type="text" name="finalEducationName">
+                    </td>
+                </tr>
+                <tr>
+                    <td>所学专业</td>
+                    <td>
+                        <input type="text" name="major">
+                    </td>
+                    <td>毕业院校</td>
+                    <td>
+                        <input type="text" name="graduateSchool">
+                    </td>
+                </tr>
+                <tr>
+                    <td>紧急联系人</td>
+                    <td>
+                        <input type="text" name="contact">
+                    </td>
+                    <td>与本人关系</td>
+                    <td>
+                        <input type="text" name="relationship">
+                    </td>
+                </tr>
+                <tr>
+                    <td>联系人电话</td>
+                    <td>
+                        <input type="text" name="contactNumber">
+                    </td>
+                    <td>身份</td>
+                    <td>
+                        <input class="easyui-combobox" id="identityId" name="identityId" url="${path}/dict/identity" valueField="id" textField="name" editable="false">
+                        </input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>家庭成员1</td>
+                    <td>
+                        <input type="text" name="familyInfo1">
+                    </td>
+                    <td>家庭成员2</td>
+                    <td>
+                        <input type="text" name="familyInfo2">
+                    </td>
+                </tr>
+                <tr>
+                    <td>家庭成员3</td>
+                    <td>
+                        <input type="text" name="familyInfo3">
+                    </td>
+                    <td>家庭成员4</td>
+                    <td>
+                        <input type="text" name="familyInfo4">
                     </td>
                 </tr>
                 <tr>

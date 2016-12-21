@@ -39,6 +39,20 @@ public class DictController {
         return nationalList;
     }
 
+    @RequestMapping(value="/native", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> nativeDict(){
+        List<Dict> nativeList = dictMapper.findNativeDict();
+        return nativeList;
+    }
+
+    @RequestMapping(value="identity", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> identityDict(){
+        List<Dict> identityList = dictMapper.findNativeDict();
+        return identityList;
+    }
+
     @RequestMapping(value="/job", method = RequestMethod.POST)
     @ResponseBody
     public List<Dict> JobLevelDict(){

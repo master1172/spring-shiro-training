@@ -18,6 +18,8 @@ public interface DictMapper {
 
     List<Dict> findNationalDict();
 
+    List<Dict> findNativeDict();
+
     List<Dict> findJobLevelDict();
 
     Integer findMarriageIdByName(String marriageName);

@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>人员管理</title>
+    <title>在编人员管理</title>
     <script type="text/javascript">
         var dataGrid;
 
@@ -327,17 +327,20 @@
         <table id="dataGrid" data-options="fit:true,border:false">
         	<thead>
             <tr>
-                <th field="ck"       data-options="checkbox:true"></th>
-                <th field="name"     data-options="sortable:true" width="80">姓名</th>
-                <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
-                <th field="birthday" data-options="sortable:true" width="130">生日</th>
-                <th field="job"      data-options="sortable:true" width="80">工作</th>
-                <th field="salary"   data-options="sortable:true" width="80">薪资</th>
-                <th field="degreeName" data-options="sortable:true" width="80">学历</th>
-                <th field="address"  data-options="sortable:true" width="130">住址</th>
-                <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+                <th field="ck"            data-options="checkbox:true"></th>
+                <th field="name"          data-options="sortable:true" width="80">姓名</th>
+                <th field="sex"           data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
+                <th field="nationalName"  data-options="sortable:true" width="80">民族</th>
+                <th field="birthday"      data-options="sortable:true" width="130">生日</th>
+                <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
+                <th field="educationName" data-options="sortable:true" width="80">薪资</th>
+                <th field="degreeName"    data-options="sortable:true" width="80">学历</th>
+                <th field="jobName"       data-options="sortable:true" width="80">职务</th>
+                <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
+                <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
+                <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
-        </thead>
+            </thead>
         </table>
     </div>
 
