@@ -43,6 +43,7 @@ import static com.wangzhixuan.utils.WordUtil.generateWord;
 @Service
 public class PeopleServiceImpl implements PeopleService{
 
+	@Autowired
     private PeopleMapper peopleMapper;
 
 	@Autowired

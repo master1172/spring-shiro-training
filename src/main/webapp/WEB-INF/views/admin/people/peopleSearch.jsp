@@ -28,17 +28,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>职业</td>
-                    <td><input type="text" name="job"></td>
-                    <td>住址</td>
-                    <td><input type="text" name="address"></td>
-                </tr>
-                <tr>
-                    <td>薪资范围</td>
-                    <td colspan="3">
-                        <input type="text" name="salaryMin" placeholder="请输入最小薪资"/>
-                        ~
-                        <input type="text" name="salaryMax" placeholder="请输入最大薪资"/>
+                    <td>民族</td>
+                    <td>
+                        <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
+                        </input>
+                    </td>
+                    <td>籍贯</td>
+                    <td>
+                        <input class="easyui-combobox" id="nativeId" name="nativeId" url="${path}/dict/native" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                 </tr>
                 <tr>
@@ -51,6 +49,12 @@
                         <input name="birthdayMax" placeholder="点击选择结束时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>政治面貌</td>
+                    <td>
+                        <input type="text" name="politicalName">
                     </td>
                 </tr>
                 <tr>
