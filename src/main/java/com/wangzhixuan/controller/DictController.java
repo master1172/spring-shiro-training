@@ -49,7 +49,7 @@ public class DictController {
     @RequestMapping(value="identity", method = RequestMethod.POST)
     @ResponseBody
     public List<Dict> identityDict(){
-        List<Dict> identityList = dictMapper.findNativeDict();
+        List<Dict> identityList = dictMapper.findIdentityDict();
         return identityList;
     }
 

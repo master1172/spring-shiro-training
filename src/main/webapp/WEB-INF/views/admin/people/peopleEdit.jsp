@@ -113,7 +113,7 @@
                     </td>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="jobLevel" editable="false">
+                        <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>

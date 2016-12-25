@@ -130,7 +130,7 @@ public class PeopleController extends BaseController{
             result.setSuccess(true);
             result.setMsg("添加成功");
             return result;
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             LOGGER.error("添加用户失败：{}", e);
             result.setMsg(e.getMessage());
             return result;
@@ -153,7 +153,7 @@ public class PeopleController extends BaseController{
             result.setSuccess(true);
             result.setMsg("修改成功!");
             return result;
-        }catch(RuntimeException e){
+        }catch(Exception e){
             LOGGER.error("修改人员失败：{}",e);
             result.setMsg(e.getMessage());
             return result;

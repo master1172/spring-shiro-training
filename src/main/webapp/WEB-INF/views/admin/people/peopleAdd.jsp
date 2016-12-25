@@ -29,8 +29,6 @@
                             <option value="1" >女</option>
                         </select>
                     </td>
-                </tr>
-                <tr>
                     <td>民族</td>
                     <td>
                         <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
@@ -53,8 +51,6 @@
                     <td>
                         <input type="text" name="politicalName">
                     </td>
-                </tr>
-                <tr>
                     <td>学历</td>
                     <td>
                         <input type="text" name="educationName">
@@ -78,8 +74,6 @@
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
-                </tr>
-                <tr>
                     <td>来院日期</td>
                     <td>
                         <input name="schoolDate" placeholder="点击选择时间"
@@ -95,18 +89,16 @@
                     <td>人员类别</td>
                     <td>
                         <select name="jobCategory" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="管理类">管理类</option>
+                            <option value="管理类" selected="selected">管理类</option>
                             <option value="专业类">专业类</option>
                             <option value="工勤类">工勤类</option>
                         </select>
                     </td>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="jobLevel" editable="false">
+                        <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>任现职日期</td>
                     <td>
                         <input name="jobDate" placeholder="点击选择时间"
@@ -129,8 +121,6 @@
                     <td>
                         <input type="text" name="virtualAge">
                     </td>
-                </tr>
-                <tr>
                     <td>工龄</td>
                     <td>
                         <input type="text" name="workAge">
@@ -147,11 +137,9 @@
                     </td>
                     <td>婚姻状况</td>
                     <td>
-                        <input class="easyui-combobox" id="marriageId" name="marriageId" url="${path}/dict/marriage" valueField="id" textField="jobLevel" editable="false">
+                        <input class="easyui-combobox" id="marriageId" name="marriageId" url="${path}/dict/marriage" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>身份证号码</td>
                     <td>
                         <input type="text" name="photoId">
@@ -176,8 +164,6 @@
                     <td>
                         <input type="text" name="finalEducationName">
                     </td>
-                </tr>
-                <tr>
                     <td>所学专业</td>
                     <td>
                         <input type="text" name="major">
@@ -196,8 +182,6 @@
                     <td>
                         <input type="text" name="relationship">
                     </td>
-                </tr>
-                <tr>
                     <td>联系人电话</td>
                     <td>
                         <input type="text" name="contactNumber">
@@ -217,8 +201,6 @@
                     <td>
                         <input type="text" name="familyInfo2">
                     </td>
-                </tr>
-                <tr>
                     <td>家庭成员3</td>
                     <td>
                         <input type="text" name="familyInfo3">

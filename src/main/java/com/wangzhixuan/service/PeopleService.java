@@ -6,6 +6,7 @@ import com.wangzhixuan.vo.PeopleVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by liushaoyang on 2016/9/8.
@@ -41,7 +42,7 @@ public interface PeopleService {
      *
      * @param peoplevo
      */
-    void addPeople(PeopleVo peoplevo,CommonsMultipartFile file);
+    void addPeople(PeopleVo peoplevo,CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
 
 
@@ -50,7 +51,7 @@ public interface PeopleService {
      *
      * @param peoplevo
      */
-    void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file);
+    void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
 
     /**
      * 删除人员

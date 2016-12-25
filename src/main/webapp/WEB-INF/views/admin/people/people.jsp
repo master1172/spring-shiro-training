@@ -91,8 +91,8 @@
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
-                width: 500,
-                height: 350,
+                width: 1000,
+                height: 600,
                 href: '${path}/people/addPage',
                 buttons: [{
                     text: '添加',

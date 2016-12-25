@@ -1,6 +1,7 @@
 package com.wangzhixuan.service.impl;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleVo;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -66,14 +69,15 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
     @Override
-    public void addPeople(PeopleVo peoplevo,CommonsMultipartFile file) {
+    public void addPeople(PeopleVo peoplevo,CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
 		UpdatePeopleDate(peoplevo);
 
 		People people = new People();
+		BeanUtils.copyProperties(people,peoplevo);
 		//将peoplevo里分散的familyInfo放入people实体中
-		UpdatePeopleFamilyInfo(peoplevo,people);
+		//UpdatePeopleFamilyInfo(peoplevo,people);
 		if(file!=null){//上传附件
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
@@ -88,13 +92,14 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
     @Override
-    public void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file) {
+    public void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException {
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
 		UpdatePeopleDate(peoplevo);
 		People people = new People();
+		BeanUtils.copyProperties(people,peoplevo);
 		//将peoplevo里分散的familyInfo放入people实体中
-		UpdatePeopleFamilyInfo(peoplevo,people);
+		//UpdatePeopleFamilyInfo(peoplevo,people);
 		if (file != null){
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
