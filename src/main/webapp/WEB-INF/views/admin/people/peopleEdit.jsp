@@ -36,12 +36,12 @@
                         <input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true" value="${people.name}">
                     </td>
                     <td>性别</td>
-                    <td><select name="sex" id="sex"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                        <option value="0">男</option>
-                        <option value="1">女</option>
-                    </select></td>
-                </tr>
-                <tr>
+                    <td>
+                        <select name="sex" id="sex"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="0">男</option>
+                            <option value="1">女</option>
+                        </select>
+                    </td>
                     <td>民族</td>
                     <td>
                         <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
@@ -64,8 +64,6 @@
                     <td>
                         <input type="text" name="politicalName" value="${people.politicalName}">
                     </td>
-                </tr>
-                <tr>
                     <td>学历</td>
                     <td>
                         <input type="text" name="educationName" value="${people.educationName}">
@@ -89,8 +87,6 @@
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly" value="${people.workDate}"/>
                     </td>
-                </tr>
-                <tr>
                     <td>来院日期</td>
                     <td>
                         <input name="schoolDate" placeholder="点击选择时间"
@@ -116,8 +112,6 @@
                         <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>任现职日期</td>
                     <td>
                         <input name="jobDate" placeholder="点击选择时间"
@@ -140,8 +134,6 @@
                     <td>
                         <input type="text" name="virtualAge" value="${people.virtualAge}">
                     </td>
-                </tr>
-                <tr>
                     <td>工龄</td>
                     <td>
                         <input type="text" name="workAge" value="${people.workAge}">
@@ -158,11 +150,9 @@
                     </td>
                     <td>婚姻状况</td>
                     <td>
-                        <input class="easyui-combobox" id="marriageId" name="marriageId" url="${path}/dict/marriage" valueField="id" textField="jobLevel" editable="false">
+                        <input class="easyui-combobox" id="marriageId" name="marriageId" url="${path}/dict/marriage" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>身份证号码</td>
                     <td>
                         <input type="text" name="photoId" value="${people.photoId}">
@@ -187,8 +177,6 @@
                     <td>
                         <input type="text" name="finalEducationName" value="${people.finalEducationName}">
                     </td>
-                </tr>
-                <tr>
                     <td>所学专业</td>
                     <td>
                         <input type="text" name="major" value="${people.major}">
@@ -207,11 +195,9 @@
                     <td>
                         <input type="text" name="relationship" value="${people.relationship}">
                     </td>
-                </tr>
-                <tr>
                     <td>联系人电话</td>
                     <td>
-                        <input type="text" name="contactNumber" name="${people.contactNumber}">
+                        <input type="text" name="contactNumber" value="${people.contactNumber}">
                     </td>
                     <td>身份</td>
                     <td>
@@ -228,8 +214,6 @@
                     <td>
                         <input type="text" name="familyInfo2" value="${people.familyInfo2}">
                     </td>
-                </tr>
-                <tr>
                     <td>家庭成员3</td>
                     <td>
                         <input type="text" name="familyInfo3" value="${people.familyInfo3}">
@@ -239,17 +223,6 @@
                         <input type="text" name="familyInfo4" value="${people.familyInfo4}">
                     </td>
                 </tr>
-                <tr>
-                    <td>职业</td>
-                    <td>
-                        <input name="job" type="text" value="${people.job}">
-                    </td>
-                    <td>薪资</td>
-                    <td>
-                        <input type="text" name="salary" value="${people.salary}"/>
-                    </td>
-                </tr>
-
                 <tr>
                     <td>头像上传</td>
                     <td colspan="3">

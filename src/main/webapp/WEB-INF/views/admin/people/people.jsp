@@ -126,8 +126,8 @@
 
             parent.$.modalDialog({
                 title: '修改',
-                width: 500,
-                height: 350,
+                width: 1000,
+                height: 600,
                 href: '${path}/people/editPage?id='+id,
                 buttons: [{
                     text: '修改',

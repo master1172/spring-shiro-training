@@ -26,7 +26,7 @@
         <result column="formation"      property="formation"  jdbcType="VARCHAR"/>
         <result column="mobile"         property="mobile" jdbcType="VARCHAR"/>
         <result column="marriage_id"    property="marriageId" jdbcType="INTEGER" />
-        <result column="photoId"        property="photoId"  jdbcType="VARCHAR" />
+        <result column="photo_id"       property="photoId"  jdbcType="VARCHAR" />
         <result column="address"        property="address" jdbcType="VARCHAR"/>
         <result column="hukou"          property="hukou"   jdbcType="VARCHAR"/>
         <result column="hukou_address"  property="hukouAddress"  jdbcType="VARCHAR"/>
@@ -490,23 +490,50 @@
                 job_date = #{jobDate, jdbcType=DATE},
             </if>
 
-            <if test="jogLevelDate != null">
+            <if test="jobLevelDate != null">
                 job_level_date = #{jobLevelDate, jdbcType=DATE},
             </if>
 
             <if test="age != null">
                 age = #{age, jdbcType=INTEGER},
             </if>
-
-            <if test="salary != null">
-                salary = #{salary,jdbcType=DECIMAL},
+            <if test="virtualAge != null">
+                virtual_age = #{virtualAge, jdbcType=INTEGER},
             </if>
+            <if test="workAge != null">
+                work_age = #{workAge, jdbcType=INTEGER},
+            </if>
+
+            formation = #{formation, jdbcType=VARCHAR},
+            mobile    = #{mobile, jdbcType=VARCHAR},
+
+            <if test="marriageId != null">
+                marriage_id = #{marriageId, jdbcType=INTEGER},
+            </if>
+
+            photo_id  = #{photoId, jdbcType=VARCHAR},
+            address   = #{address, jdbcType=VARCHAR},
+            hukou     = #{hukou,   jdbcType=VARCHAR},
+            hukou_address = #{hukouAddress, jdbcType=VARCHAR},
+            final_education_name = #{finalEducationName, jdbcType=VARCHAR},
+            major     = #{major,  jdbcType=VARCHAR},
+            graduate_school = #{graduateSchool, jdbcType=VARCHAR},
+            contact   = #{contact, jdbcType=VARCHAR},
+            relationship = #{relationship, jdbcType=VARCHAR},
+            contact_number = #{contactNumber, jdbcType=VARCHAR},
+            family_info_1 = #{familyInfo1, jdbcType=VARCHAR},
+            family_info_2 = #{familyInfo2, jdbcType=VARCHAR},
+            family_info_3 = #{familyInfo3, jdbcType=VARCHAR},
+            family_info_4 = #{familyInfo4, jdbcType=VARCHAR},
+
+            <if test="identityId != null">
+                identity_id = #{identityId, jdbcType=INTEGER},
+            </if>
+
             <if test="photo != null">
                 photo = #{photo, jdbcType=VARCHAR},
             </if>
-            <if test="address != null">
-                address = #{address,jdbcType=VARCHAR},
-            </if>
+
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
