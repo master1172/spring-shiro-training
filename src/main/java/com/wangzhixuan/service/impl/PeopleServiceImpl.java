@@ -551,7 +551,7 @@ public class PeopleServiceImpl implements PeopleService{
 			params.put("${nativeName}",p.getNativeName());
 			params.put("${educationName}",p.getEducationName());
 			params.put("${degreeName}",p.getDegreeName());
-			params.put("${politicalName}",p.getPoliticalName());
+			params.put("${political}",p.getPoliticalName());
 			params.put("${partyDate}",p.getPartyDate());
 			params.put("${workDate}",p.getWorkDate());
 			params.put("${schoolDate}",p.getSchoolDate());
@@ -564,7 +564,7 @@ public class PeopleServiceImpl implements PeopleService{
 			params.put("${workAge}",p.getWorkAge()==null?"":p.getWorkAge().toString());
 			params.put("${formation}",p.getFormation());
 			params.put("${mobile}",p.getMobile());
-			params.put("${marriageName}",p.getMarriageName());
+			params.put("${marriage}",p.getMarriageName());
 			params.put("${photoId}",p.getPhotoId());
 			params.put("${address}",p.getAddress());
 			params.put("${hukou}",p.getHukou());
@@ -574,7 +574,7 @@ public class PeopleServiceImpl implements PeopleService{
 			params.put("${graduateSchool}",p.getGraduateSchool());
 			params.put("${contact}",p.getContact());
 			params.put("${relationship}",p.getRelationship());
-			params.put("${contactNumber}",p.getContactNumber());
+			params.put("${contactnumber}",p.getContactNumber());
 
 			params.put("${familyInfo1Title}",p.getFamilyInfo1Title());
 			params.put("${familyInfo1Name}",p.getFamilyInfo1Name());
@@ -602,6 +602,8 @@ public class PeopleServiceImpl implements PeopleService{
 			if(p.getPhoto()!=null&&p.getPhoto().length()>0){
 				Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
 				params.put("${photo}",header);
+			}else{
+				params.put("${photo}","");
 			}
 
 			WordUtil.OutputWord(response, filePath, newFileName, params);
