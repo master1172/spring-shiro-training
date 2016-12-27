@@ -2,8 +2,8 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleContract2Mapper;
-import com.wangzhixuan.mapper.PeopleContractMapper;
 import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.service.PeopleContract2Service;
 import com.wangzhixuan.service.PeopleContractService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.utils.StringUtilExtra;
@@ -20,7 +20,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +29,7 @@ import java.util.Map;
  * Created by administrator_cernet on 2016/11/27.
  */
 @Service
-public class PeopleContract2ServiceImpl implements PeopleContractService{
+public class PeopleContract2ServiceImpl implements PeopleContract2Service {
 
 
     @Autowired
