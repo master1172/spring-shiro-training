@@ -60,6 +60,7 @@
         <mapper resource="sqlMapperXml/DictMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleDeathMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleContractMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleContract2Mapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleTempMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleDailyMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleRehireMapper.xml"/>
