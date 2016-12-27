@@ -41,6 +41,13 @@
         order by id
     </select>
 
+    <select id="findNationalIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        id
+        from dict_national
+        where name = #{name}
+    </select>
+
     <select id="findNativeDict" resultMap="DictResultMap">
         SELECT
         <include refid="Dict_Column_List"/>
@@ -48,12 +55,13 @@
         order by id
     </select>
 
-    <select id="findNationalIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
-        select
+    <select id="findNativeIdByName" resultMap="java.lang.Integer" parameterType="java.lang.String">
+        SELECT
         id
-        from dict_national
+        from dict_native
         where name = #{name}
     </select>
+
 
     <select id="findJobLevelDict" resultMap="JobResultMap">
         select

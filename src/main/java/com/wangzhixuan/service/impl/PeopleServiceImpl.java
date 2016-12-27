@@ -212,7 +212,7 @@ public class PeopleServiceImpl implements PeopleService{
 				if(row.getCell(5)!=null && !row.getCell(5).toString().trim().equals("")){
 					String nativeName = row.getCell(5).toString().trim();
 					try{
-						Integer nativeId = dictMapper.findNationalIdByName(nativeName);
+						Integer nativeId = dictMapper.findNativeIdByName(nativeName);
 						if (nativeId != null){
 							p.setNativeId(nativeId);
 						}
@@ -279,9 +279,11 @@ public class PeopleServiceImpl implements PeopleService{
 
 				//职级
 				if(row.getCell(14) != null && !row.getCell(14).toString().trim().equals("")){
-					String jobLevelId = row.getCell(14).toString().trim();
-					//// TODO: 2016/12/2
-					p.setJobLevelId(null);
+					String jobLevelName = row.getCell(14).toString().trim();
+
+					Integer jobLevelId = dictMapper.findJobLevelIdByName(jobLevelName);
+					if (jobLevelId != null)
+						p.setJobLevelId(null);
 				}
 
 				//现职务时间
