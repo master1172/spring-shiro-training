@@ -3,6 +3,7 @@ package com.wangzhixuan.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -60,7 +61,7 @@ public class PeopleVo implements Serializable{
     private String workDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private String workdDateMin;
+    private String workDateMin;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String workDateMax;
@@ -354,12 +355,10 @@ public class PeopleVo implements Serializable{
         this.workDate = workDate;
     }
 
-    public String getWorkdDateMin() {
-        return workdDateMin;
-    }
+    public String getWorkDateMin() { return workDateMin;}
 
-    public void setWorkdDateMin(String workdDateMin) {
-        this.workdDateMin = workdDateMin;
+    public void setWorkDateMin(String workDateMin) {
+        this.workDateMin = workDateMin;
     }
 
     public String getWorkDateMax() {
@@ -901,12 +900,68 @@ public class PeopleVo implements Serializable{
             condition.put("birthdayMax",peoplevo.getBirthdayMax());
         }
 
+        if (StringUtils.isNoneBlank(peoplevo.getPoliticalName())){
+            condition.put("politicalName", peoplevo.getPoliticalName());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getEducationName())){
+            condition.put("educationName", peoplevo.getEducationName());
+        }
+
         if (peoplevo.getDegreeId() != null){
             condition.put("degreeId", peoplevo.getDegreeId());
         }
 
-        if (peoplevo.getAddress() != null){
-            condition.put("address", peoplevo.getAddress());
+        if (StringUtils.isNoneBlank(peoplevo.getPartyDateMin())){
+            condition.put("partyDateMin", peoplevo.getPartyDateMin());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getPartyDateMax())){
+            condition.put("partyDateMax", peoplevo.getPartyDateMax());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getWorkDateMin())){
+            condition.put("workDateMin", peoplevo.getWorkDateMin());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getWorkDateMax())){
+            condition.put("workDateMax", peoplevo.getWorkDateMax());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getSchoolDateMin())){
+            condition.put("schoolDateMin", peoplevo.getSchoolDateMin());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getSchoolDateMax())){
+            condition.put("schoolDateMax", peoplevo.getSchoolDateMax());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getJobName())){
+            condition.put("jobName", peoplevo.getJobName());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getJobCategory())){
+            condition.put("jobCategory",peoplevo.getJobCategory());
+        }
+
+        if (peoplevo.getJobLevelId() != null){
+            condition.put("jobLevelId", peoplevo.getJobLevelId());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getJobDateMin())){
+            condition.put("jobDateMin", peoplevo.getJobDateMin());
+        }
+
+        if(StringUtils.isNoneBlank(peoplevo.getJobDateMax())){
+            condition.put("jobDateMax", peoplevo.getJobDateMax());
+        }
+
+        if(StringUtils.isNoneBlank(peoplevo.getJobLevelDateMin())){
+            condition.put("jobLevelDateMin",peoplevo.getJobLevelDateMin());
+        }
+
+        if(StringUtils.isNoneBlank(peoplevo.getJobLevelDateMax())){
+            condition.put("jobLevelDateMax", peoplevo.getJobLevelDateMax());
         }
 
         return condition;

@@ -283,7 +283,7 @@ public class PeopleServiceImpl implements PeopleService{
 
 					Integer jobLevelId = dictMapper.findJobLevelIdByName(jobLevelName);
 					if (jobLevelId != null)
-						p.setJobLevelId(null);
+						p.setJobLevelId(jobLevelId);
 				}
 
 				//现职务时间

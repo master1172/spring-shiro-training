@@ -104,7 +104,8 @@
                     <td>人员类别</td>
                     <td>
                         <select name="jobCategory" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="管理类" selected="selected">管理类</option>
+                            <option value="" selected="selected"></option>
+                            <option value="管理类">管理类</option>
                             <option value="专业类">专业类</option>
                             <option value="工勤类">工勤类</option>
                         </select>
