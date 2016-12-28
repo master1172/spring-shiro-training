@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeopleDispatchMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleDispatch">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national_id" property="nationalId" jdbcType="INTEGER"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+        <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
+        <result column="school_date" property="schoolDate" jdbcType="DATE" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="comment" property="comment" jdbcType="VARCHAR" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="peopleDispatchVoResultMap" type="com.wangzhixuan.vo.PeopleDispatchVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="national_id" property="nationalId" jdbcType="INTEGER"/>
+        <result column="national_name" property="nationalName" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+        <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
+        <result column="school_date" property="schoolDate" jdbcType="DATE" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="comment" property="comment" jdbcType="VARCHAR" />
+        <result column="photo" property="photo" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, school_date, mobile, department_name, job_name, comment, photo
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from people_dispatch
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeopleDispatchVoById" resultMap="peopleDispatchVoResultMap" parameterType="java.lang.Long">
+        SELECT
+        t.id,
+        t.code,
+        t.name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.province,
+        t.city,
+        t.birthday,
+        t.education_name,
+        t.political_name,
+        t.school_date,
+        t.mobile,
+        t.department_name,
+        t.job_name,
+        t.comment,
+        t.photo
+        FROM
+          people_dispatch t
+        LEFT JOIN
+          dict_national s ON s.id = t.national_id
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findPeopleDispatchById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+          people_dispatch
+        WHERE
+          id = #{id}
+    </select>
+
+    <select id="findPeopleDispatchPageCondition" resultMap="peopleDispatchVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.code,
+        t.name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.province,
+        t.city,
+        t.birthday,
+        t.education_name,
+        t.political_name,
+        t.school_date,
+        t.mobile,
+        t.department_name,
+        t.job_name,
+        t.comment,
+        t.photo
+        FROM
+        people_dispatch t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        <where>
+            <if test=" condition.code != null">
+                and t.code = #{condition.code}
+            </if>
+            <if test=" condition.name != null and condition.name != ''">
+                and t.name LIKE concat('%', #{condition.name}, '%')
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
+            </if>
+            <if test=" condition.province != null and condition.province != ''">
+                and t.province LIKE concat('%', #{condition.province}, '%')
+            </if>
+            <if test=" condition.city != null and condition.city != ''">
+                and t.city LIKE concat('%', #{condition.city}, '%')
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%', #{condition.educationName}, '%')
+            </if>
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%', #{condition.politicalName}, '%')
+            </if>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
+            </if>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
+            </if>
+            <if test=" condition.mobile != null and condition.mobile != ''">
+                and t.mobile LIKE concat('%',#{condition.mobile},'%')
+            </if>
+            <if test=" condition.departmentName != null and condition.departmentName != ''">
+                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeopleDispatchPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from people_dispatch t
+        <where>
+            <if test=" condition.code != null">
+                and t.code = #{condition.code}
+            </if>
+            <if test=" condition.name != null and condition.name != ''">
+                and t.name LIKE concat('%', #{condition.name}, '%')
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.nationalId != null">
+                and t.national_id = #{condition.nationalId}
+            </if>
+            <if test=" condition.province != null and condition.province != ''">
+                and t.province LIKE concat('%', #{condition.province}, '%')
+            </if>
+            <if test=" condition.city != null and condition.city != ''">
+                and t.city LIKE concat('%', #{condition.city}, '%')
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%', #{condition.educationName}, '%')
+            </if>
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%', #{condition.politicalName}, '%')
+            </if>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
+            </if>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
+            </if>
+            <if test=" condition.mobile != null and condition.mobile != ''">
+                and t.mobile LIKE concat('%',#{condition.mobile},'%')
+            </if>
+            <if test=" condition.departmentName != null and condition.departmentName != ''">
+                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete
+        from
+        people_dispatch
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete
+        from
+        people_dispatch
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleDispatch">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into people_dispatch (
+        code,
+        name,
+        sex,
+        national_id,
+        province,
+        city,
+        birthday,
+        education_name,
+        political_name,
+        school_date,
+        mobile,
+        department_name,
+        job_name,
+        comment,
+        photo
+        )
+        values (
+        #{code,     jdbcType=VARCHAR},
+        #{name,     jdbcType=VARCHAR},
+        #{sex,      jdbcType=TINYINT},
+        #{nationalId, jdbcType=INTEGER},
+        #{province, jdbcType=VARCHAR},
+        #{city,     jdbcType=VARCHAR},
+        #{birthday, jdbcType=DATE},
+        #{educationName, jdbcType=VARCHAR},
+        #{politicalName, jdbcType=VARCHAR},
+        #{schoolDate, jdbcType=DATE},
+        #{mobile,     jdbcType=VARCHAR},
+        #{departmentName, jdbcType=VARCHAR},
+        #{jobName,  jdbcType=VARCHAR},
+        #{comment,  jdbcType=VARCHAR},
+        #{photo,  jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into people_dispatch (
+        code,
+        name,
+        sex,
+        national_id,
+        province,
+        city,
+        birthday,
+        education_name,
+        political_name,
+        school_date,
+        mobile,
+        department_name,
+        job_name,
+        comment,
+        photo
+        )
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{code,     jdbcType=VARCHAR},
+            #{name,     jdbcType=VARCHAR},
+            #{sex,      jdbcType=TINYINT},
+            #{nationalId, jdbcType=INTEGER},
+            #{province, jdbcType=VARCHAR},
+            #{city,     jdbcType=VARCHAR},
+            #{birthday, jdbcType=DATE},
+            #{educationName, jdbcType=VARCHAR},
+            #{politicalName, jdbcType=VARCHAR},
+            #{schoolDate, jdbcType=DATE},
+            #{mobile,     jdbcType=VARCHAR},
+            #{departmentName, jdbcType=VARCHAR},
+            #{jobName,  jdbcType=VARCHAR},
+            #{comment,  jdbcType=VARCHAR},
+            #{photo,    jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updatePeopleDispatch" parameterType="com.wangzhixuan.model.PeopleDispatch">
+        update people_dispatch
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name, jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="nationalId != null">
+                national_id = #{nationalId,jdbcType=INTEGER},
+            </if>
+            <if test="province != null">
+                province = #{province, jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city, jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday, jdbcType=DATE},
+            </if>
+            <if test="educationName != null">
+                education_name = #{educationName, jdbcType=VARCHAR},
+            </if>
+            <if test="politicalName != null">
+                political_name = #{politicalName, jdbcType=VARCHAR},
+            </if>
+            <if test="schoolDate != null">
+                school_date = #{schoolDate,jdbcType=DATE},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName, jdbcType=VARCHAR},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                comment = #{comment, jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo = #{photo, jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectPeopleDispatchByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        select
+        <include refid="Base_Column_List"/>
+        FROM
+        people_dispatch
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectPeopleDispatchVoByIds" resultMap="peopleDispatchVoResultMap" parameterType="java.util.ArrayList">
+        select
+        t.id,
+        t.code,
+        t.name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.province,
+        t.city,
+        t.birthday,
+        t.education_name,
+        t.political_name,
+        t.school_date,
+        t.mobile,
+        t.department_name,
+        t.job_name,
+        t.comment,
+        t.photo
+        from people_dispatch t
+        left join
+        dict_national s ON s.id = t.national_id
+        where t.id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
