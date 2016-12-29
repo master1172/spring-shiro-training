@@ -67,7 +67,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
         //当partyTransferDate不为空，而是""的时候，需要修改为null，否则插入会有错误
         if (peopleTransfer != null){
             if (StringUtils.isEmpty(peopleTransfer.getPartyTransferDate())){
-                peopleTransfer.setTransferDate(null);
+                peopleTransfer.setPartyTransferDate(null);
             }
         }
 
@@ -96,7 +96,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
         //当partyTransferDate不为空，而是""的时候，需要修改为null，否则插入会有错误
         if (peopleTransfer != null){
             if (StringUtils.isEmpty(peopleTransfer.getPartyTransferDate())){
-                peopleTransfer.setTransferDate(null);
+                peopleTransfer.setPartyTransferDate(null);
             }
         }
 

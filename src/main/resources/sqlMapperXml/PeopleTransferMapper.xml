@@ -109,7 +109,7 @@
             </if>
             <if test=" condition.salaryEndDate != null and condition.salaryEndDate != ''">
                 and t.salary_end_date LIKE concat('%',#{condition.salaryEndDate},'%')
-            </if>>
+            </if>
             <if test=" condition.partyTransferDateMin != null and condition.partyTransferDateMin != ''">
                 <![CDATA[ and t.party_transfer_date >= #{condition.party_transferDateMin} ]]>
             </if>
@@ -147,7 +147,7 @@
             </if>
             <if test=" condition.salaryEndDate != null and condition.salaryEndDate != ''">
                 and t.salary_end_date LIKE concat('%',#{condition.salaryEndDate},'%')
-            </if>>
+            </if>
             <if test=" condition.partyTransferDateMin != null and condition.partyTransferDateMin != ''">
                 <![CDATA[ and t.party_transfer_date >= #{condition.party_transferDateMin} ]]>
             </if>
@@ -161,7 +161,7 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_transfer (id, people_code, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo)
+        insert into people_transfer (people_code, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo)
         values (
         #{peopleCode,jdbcType=VARCHAR},
         #{peopleType,jdbcType=VARCHAR},
@@ -175,7 +175,7 @@
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_transfer (id, people_code, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo)
+        insert into people_transfer (people_code, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
