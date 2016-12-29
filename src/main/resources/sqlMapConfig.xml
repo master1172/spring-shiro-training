@@ -41,7 +41,7 @@
         <typeAlias type="com.wangzhixuan.model.PeopleParty" alias="PeopleParty"/>
         <typeAlias type="com.wangzhixuan.vo.PeoplePartyVo" alias="PeoplePartyVo"/>
 
-        <typeAlias type="com.wangzhixuan.model.PeopleDispatch" alias="PeopleParty"/>
+        <typeAlias type="com.wangzhixuan.model.PeopleDispatch" alias="PeopleDispatch"/>
         <typeAlias type="com.wangzhixuan.vo.PeopleDispatchVo" alias="PeopleDispatchVo"/>
     </typeAliases>
 
