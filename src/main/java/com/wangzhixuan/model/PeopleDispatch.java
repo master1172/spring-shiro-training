@@ -5,59 +5,54 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 
 /**
- * Created by sterm on 2016/11/22.
+ * Created by administrator_cernet on 2016/11/27.
  */
-public class PeopleDispatch extends PeopleBase implements Serializable{
-    private static final long serialVersionUID = -5321613594382537343L;
+public class PeopleDispatch extends PeopleBase implements Serializable {
 
-    //id key
+    private static final long serialVersionUID = 407002500615373950L;
+
     private Long id;
 
-    //编码
     private String code;
 
-    //姓名
     private String name;
 
-    //性别 男、女
     private Integer sex;
 
-    //民族
     private Integer nationalId;
 
-    //来自省
     private String province;
 
-    //来自市
     private String city;
 
-    //生日
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private String birthday;
 
-    //文化程度
     private String educationName;
 
-    //政治面貌
     private String politicalName;
 
-    //来院日期
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String speciality;
+
+    private String height;
+
+    private Integer marriageId;
+
+    private Integer hukou;
+
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private String schoolDate;
 
-    //联系电话
     private String mobile;
 
-    //部门
+    private String address;
+
     private String departmentName;
 
-    //工种
     private String jobName;
 
-    //备注
     private String comment;
 
-    //照片
     private String photo;
 
     public Long getId() {
@@ -140,12 +135,36 @@ public class PeopleDispatch extends PeopleBase implements Serializable{
         this.politicalName = politicalName;
     }
 
-    public String getSchoolDate() {
-        return schoolDate;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSchoolDate(String schoolDate) {
-        this.schoolDate = schoolDate;
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public Integer getMarriageId() {
+        return marriageId;
+    }
+
+    public void setMarriageId(Integer marriageId) {
+        this.marriageId = marriageId;
+    }
+
+    public Integer getHukou() {
+        return hukou;
+    }
+
+    public void setHukou(Integer hukou) {
+        this.hukou = hukou;
     }
 
     public String getMobile() {
@@ -154,6 +173,14 @@ public class PeopleDispatch extends PeopleBase implements Serializable{
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getDepartmentName() {
@@ -190,6 +217,17 @@ public class PeopleDispatch extends PeopleBase implements Serializable{
 
     @Override
     public String toString(){
-        return "PeopleDaily(" + "ids" + id + ")";
+        return "PeopleDispatch{" +
+                "id=" + id +
+                "}";
+    }
+
+    public String getSchoolDate() {
+        return schoolDate;
+    }
+
+    public void setSchoolDate(String schoolDate) {
+        this.schoolDate = schoolDate;
     }
 }
+

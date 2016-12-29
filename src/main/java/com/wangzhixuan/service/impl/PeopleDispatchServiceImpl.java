@@ -2,12 +2,20 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleDispatchMapper;
+import com.wangzhixuan.mapper.PeopleTempMapper;
 import com.wangzhixuan.model.PeopleDispatch;
+import com.wangzhixuan.model.PeopleTemp;
 import com.wangzhixuan.service.PeopleDispatchService;
-import com.wangzhixuan.utils.*;
+import com.wangzhixuan.service.PeopleTempService;
+import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.utils.StringUtilExtra;
+import com.wangzhixuan.utils.UploadUtil;
+import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleDispatchVo;
+import com.wangzhixuan.vo.PeopleTempVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -15,14 +23,18 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Created by administrator_cernet on 2016/11/27.
+ */
 @Service
 public class PeopleDispatchServiceImpl implements PeopleDispatchService {
+
 
     @Autowired
     private PeopleDispatchMapper peopleDispatchMapper;
@@ -30,10 +42,14 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
     @Autowired
     private DictMapper dictMapper;
 
-
     @Override
     public PeopleDispatch findPeopleDispatchById(Long id) {
         return peopleDispatchMapper.findPeopleDispatchById(id);
+    }
+
+    @Override
+    public PeopleDispatch findPeopleDispatchByName(String name) {
+        return peopleDispatchMapper.findPeopleDispatchByName(name);
     }
 
     @Override
@@ -43,21 +59,27 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
     }
 
     @Override
-    public void addPeopleDispatch(PeopleDispatch peopleDispatch, CommonsMultipartFile file) {
+    public void addPeopleDispatch(PeopleDispatch peopleDispatch,CommonsMultipartFile file) {
+
+        //当birthday不为空，而是""的时候，需要修改为null，否则插入会有错误
         if (peopleDispatch != null){
-            if(StringUtils.isEmpty(peopleDispatch.getBirthday())){
+            if (StringUtils.isEmpty(peopleDispatch.getBirthday())){
                 peopleDispatch.setBirthday(null);
             }
-            if(StringUtils.isEmpty(peopleDispatch.getSchoolDate())){
+        }
+
+        //当schoolDate不为空，而是""的时候，需要修改为null，否则插入会有错误
+        if (peopleDispatch != null){
+            if (StringUtils.isEmpty(peopleDispatch.getSchoolDate())){
                 peopleDispatch.setSchoolDate(null);
             }
         }
 
-        if (file!=null){
+        if(file!=null){//上传附件
+            //获取头像上传路径
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
-            if(StringUtils.isNotEmpty(uploadPath)){
-                peopleDispatch.setPhoto(uploadPath);
+            if(StringUtils.isNotEmpty(uploadPath) ){
                 peopleDispatchMapper.insert(peopleDispatch);
             }
         }else{
@@ -68,26 +90,31 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
     @Override
     public void updatePeopleDispatch(PeopleDispatch peopleDispatch, CommonsMultipartFile file) {
 
+        //当birthday不为空，而是""的时候，需要修改为null，否则插入会有错误
         if (peopleDispatch != null){
-            if(StringUtils.isEmpty(peopleDispatch.getBirthday())){
+            if (StringUtils.isEmpty(peopleDispatch.getBirthday())){
                 peopleDispatch.setBirthday(null);
             }
-            if(StringUtils.isEmpty(peopleDispatch.getSchoolDate())){
+        }
+
+        //当schoolDate不为空，而是""的时候，需要修改为null，否则插入会有错误
+        if (peopleDispatch != null){
+            if (StringUtils.isEmpty(peopleDispatch.getSchoolDate())){
                 peopleDispatch.setSchoolDate(null);
             }
         }
 
-        if(file != null){
+
+        if (file != null){
+            //获取头像上传路径
             String filePath = StringUtilExtra.getPictureUploadPath();
-            String uploadPath = UploadUtil.pictureUpLoad(filePath, file);
+            String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
-                peopleDispatch.setPhoto(uploadPath);
                 peopleDispatchMapper.updatePeopleDispatch(peopleDispatch);
             }
         }else{
             peopleDispatchMapper.updatePeopleDispatch(peopleDispatch);
         }
-
     }
 
     @Override
@@ -96,12 +123,12 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
     }
 
     @Override
-    public void batchDeletePeopleDispatchByIds(String[] ids) {
+    public void batchDeletePeopleDispatchByIds(String[] ids){
         peopleDispatchMapper.batchDeleteByIds(ids);
     }
 
     @Override
-    public boolean insertByImport(CommonsMultipartFile[] files) {
+    public boolean insertByImport(CommonsMultipartFile[] files){
         boolean flag=false;
         if(files!=null && files.length>0){
 
@@ -122,10 +149,14 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
             }
         }
         return flag;
-
     }
-
-    private List<PeopleDispatch> getPeopleDispatchInfoByExcel(List<PeopleDispatch> list, String path){
+    /**
+     * 文件读取
+     * @param list
+     * @param path
+     * @return
+     */
+    private List<PeopleDispatch> getPeopleDispatchInfoByExcel(List<PeopleDispatch> list,String path){
         try {
             XSSFWorkbook xwb = new XSSFWorkbook(path);
             XSSFSheet sheet = xwb.getSheetAt(0);
@@ -148,89 +179,134 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
                     }
                 }
 
-                //姓名
+                //人员编码
                 if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
                     continue;
                 }
-                String name=row.getCell(1).toString().trim();
-                p.setName(name);
+                String code=row.getCell(1).toString().trim();
+                p.setCode(code);
 
-                //部门
-                if(!StringUtilExtra.isBlank(row.getCell(2))) {
-                    String departmentName = row.getCell(2).toString().trim();
-                    p.setDepartmentName(departmentName);
-                }
-
-                //工种
-                if(!StringUtilExtra.isBlank(row.getCell(3))) {
-                    String jobName = row.getCell(3).toString().trim();
-                    p.setJobName(jobName);
+                //姓名
+                if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
+                    String name=row.getCell(2).toString().trim();
+                    p.setName(name);
                 }
 
                 //性别
-                if(!StringUtilExtra.isBlank(row.getCell(4))){
-                    String sex=row.getCell(4).toString().trim();
+                if(row.getCell(3)!=null&&!row.getCell(3).toString().trim().equals("")){
+                    String sex=row.getCell(3).toString().trim();
                     p.setSex(sex.equals("女")?1:0);
                 }
 
                 //民族
-                if(!StringUtilExtra.isBlank(row.getCell(5))) {
-                    String nationalName = row.getCell(5).toString().trim();
-                    try {
+                if(row.getCell(4) != null && !row.getCell(4).toString().trim().equals("")){
+                    String nationalName = row.getCell(4).toString().trim();
+
+                    try{
                         Integer nationalId = dictMapper.findNationalIdByName(nationalName);
-                        if (nationalId != null) {
+                        if (nationalId != null){
                             p.setNationalId(nationalId);
                         }
-                    } catch (Exception exp) {
+                    }catch(Exception exp){
 
                     }
                 }
 
-                //所在省
-                if(!StringUtilExtra.isBlank(row.getCell(6))){
-                    String province = row.getCell(6).toString().trim();
+                //来自省
+                if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
+                    String province=row.getCell(5).toString().trim();
                     p.setProvince(province);
                 }
 
-                //所在市
-                if(!StringUtilExtra.isBlank(row.getCell(7))){
-                    String city = row.getCell(7).toString().trim();
+                //来自市/区
+                if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
+                    String city=row.getCell(6).toString().trim();
                     p.setCity(city);
                 }
 
-                //生日
-                if(!StringUtilExtra.isBlank(row.getCell(8))){
-                    String birthday=row.getCell(8).toString().trim();
+                //出生日期
+                if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
+                    String birthday=row.getCell(7).toString().trim();
                     p.setBirthday(birthday);
                 }
 
-                //学历信息/文化程度
-                if(!StringUtilExtra.isBlank(row.getCell(9))){
-                    String educationName = row.getCell(9).toString().trim();
+                //文化程度
+                if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
+                    String educationName=row.getCell(8).toString().trim();
                     p.setEducationName(educationName);
                 }
 
-                //政治面目
-                if(!StringUtilExtra.isBlank(row.getCell(10))){
-                    String politicaName = row.getCell(10).toString().trim();
-                    p.setPoliticalName(politicaName);
+                //政治面貌
+                if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
+                    String politicalName=row.getCell(9).toString().trim();
+                    p.setPoliticalName(politicalName);
                 }
 
-                //到院时间
-                if(!StringUtilExtra.isBlank(row.getCell(11))){
-                    String schoolDate=row.getCell(11).toString().trim();
+                //特长
+                if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
+                    String speciality=row.getCell(10).toString().trim();
+                    p.setSpeciality(speciality);
+                }
+
+                //身高
+                if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
+                    String height=row.getCell(11).toString().trim();
+                    p.setHeight(height);
+                }
+
+                //婚姻状况
+                if(row.getCell(12) != null && !row.getCell(12).toString().trim().equals("")){
+                    String marriageName = row.getCell(12).toString().trim();
+
+                    try{
+                        Integer marriageId = dictMapper.findMarriageIdByName(marriageName);
+                        if (marriageId != null){
+                            p.setMarriageId(marriageId);
+                        }
+                    }catch(Exception exp){
+
+                    }
+                }
+
+                //户籍
+                if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
+                    String hukou=row.getCell(13).toString().trim();
+                    p.setHukou(hukou.equals("农业")?1:0);
+                }
+
+                //来院日期
+                if(row.getCell(14)!=null&&!row.getCell(14).toString().trim().equals("")){
+                    String schoolDate=row.getCell(14).toString().trim();
                     p.setSchoolDate(schoolDate);
                 }
 
                 //联系电话
-                if(!StringUtilExtra.isBlank(row.getCell(12))){
-                    String mobile=row.getCell(12).toString().trim();
+                if(row.getCell(15)!=null&&!row.getCell(15).toString().trim().equals("")){
+                    String mobile=row.getCell(15).toString().trim();
                     p.setMobile(mobile);
                 }
 
+                //现住址
+                if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
+                    String address=row.getCell(16).toString().trim();
+                    p.setAddress(address);
+                }
+
+                //部门
+                if(row.getCell(17)!=null&&!row.getCell(17).toString().trim().equals("")){
+                    String departmentName=row.getCell(17).toString().trim();
+                    p.setDepartmentName(departmentName);
+                }
+
+                //工种
+                if(row.getCell(18)!=null&&!row.getCell(18).toString().trim().equals("")){
+                    String jobName=row.getCell(18).toString().trim();
+                    p.setJobName(jobName);
+                }
+
                 //备注
-                if(!StringUtilExtra.isBlank(row.getCell(13))){
-                    String comment=row.getCell(13).toString().trim();
+                if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")){
+                    String comment=row.getCell(19).toString().trim();
                     p.setComment(comment);
                 }
 
@@ -242,10 +318,9 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
         return list;
     }
 
-    //导出Excel
+    //导出excel
     @Override
-    public void exportExcel(HttpServletResponse response, String[] idList) {
-
+    public void exportExcel(HttpServletResponse response,String[] idList){
         List list=peopleDispatchMapper.selectPeopleDispatchVoByIds(idList);
         if(list!=null&&list.size()>0){
             XSSFWorkbook workBook;
@@ -256,27 +331,51 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
                 XSSFSheet sheet= workBook.createSheet("派遣人员信息");
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
-                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet,setBorder,ConstUtil.getPeopleDailyHeaders());
-
+                XSSFRow row=sheet.createRow(0);
+                row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
+                row.createCell(1).setCellValue("人员编码");row.getCell(1).setCellStyle(setBorder);
+                row.createCell(2).setCellValue("姓名");row.getCell(2).setCellStyle(setBorder);
+                row.createCell(3).setCellValue("性别");row.getCell(3).setCellStyle(setBorder);
+                row.createCell(4).setCellValue("民族");row.getCell(4).setCellStyle(setBorder);
+                row.createCell(5).setCellValue("来自省");row.getCell(5).setCellStyle(setBorder);
+                row.createCell(6).setCellValue("来自市/区");row.getCell(6).setCellStyle(setBorder);
+                row.createCell(7).setCellValue("出生日期");row.getCell(7).setCellStyle(setBorder);
+                row.createCell(8).setCellValue("文化程度");row.getCell(8).setCellStyle(setBorder);
+                row.createCell(9).setCellValue("政治面貌");row.getCell(9).setCellStyle(setBorder);
+                row.createCell(10).setCellValue("特长");row.getCell(10).setCellStyle(setBorder);
+                row.createCell(11).setCellValue("身高");row.getCell(11).setCellStyle(setBorder);
+                row.createCell(12).setCellValue("婚姻状况");row.getCell(12).setCellStyle(setBorder);
+                row.createCell(13).setCellValue("户籍");row.getCell(13).setCellStyle(setBorder);
+                row.createCell(14).setCellValue("来院日期");row.getCell(14).setCellStyle(setBorder);
+                row.createCell(15).setCellValue("联系电话");row.getCell(15).setCellStyle(setBorder);
+                row.createCell(16).setCellValue("现住址");row.getCell(16).setCellStyle(setBorder);
+                row.createCell(17).setCellValue("部门");row.getCell(17).setCellStyle(setBorder);
+                row.createCell(18).setCellValue("工种");row.getCell(18).setCellStyle(setBorder);
+                row.createCell(19).setCellValue("备注");row.getCell(19).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
                     PeopleDispatchVo p=(PeopleDispatchVo)list.get(i);
-                    row.createCell(0).setCellValue(i+1);                    row.getCell(0).setCellStyle(setBorder);
-                    row.createCell(1).setCellValue(p.getName());            row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getDepartmentName());  row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getJobName());         row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女")); row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getNationalName());    row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getProvince());        row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getCity());            row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getBirthday());        row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getEducationName());   row.getCell(9).setCellStyle(setBorder);
-                    row.createCell(10).setCellValue(p.getPoliticalName());  row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getSchoolDate());     row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getMobile());         row.getCell(12).setCellStyle(setBorder);
-                    row.createCell(13).setCellValue(p.getComment());        row.getCell(13).setCellStyle(setBorder);
-
+                    row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
+                    row.createCell(1).setCellValue(p.getCode());row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getName());row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getNationalName());row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getProvince());row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getCity());row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(p.getEducationName());row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getPoliticalName());row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getSpeciality());row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getHeight());row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getMarriageName());row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(13).setCellValue(p.getHukou()==null?"":(p.getHukou()==0?"非农业":"农业"));row.getCell(13).setCellStyle(setBorder);
+                    row.createCell(14).setCellValue(p.getSchoolDate()==null?"":(p.getBirthday().toString()));row.getCell(14).setCellStyle(setBorder);
+                    row.createCell(15).setCellValue(p.getMobile());row.getCell(15).setCellStyle(setBorder);
+                    row.createCell(16).setCellValue(p.getAddress());row.getCell(16).setCellStyle(setBorder);
+                    row.createCell(17).setCellValue(p.getDepartmentName());row.getCell(17).setCellStyle(setBorder);
+                    row.createCell(18).setCellValue(p.getJobName());row.getCell(18).setCellStyle(setBorder);
+                    row.createCell(19).setCellValue(p.getComment());row.getCell(19).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
@@ -293,37 +392,41 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
         }
     }
 
+    //导出word
     @Override
-    public void exportWord(HttpServletResponse response, String ids) {
-
-        PeopleDispatchVo p= peopleDispatchMapper.findPeopleDispatchVoById(Long.valueOf(ids));
-
+    public void exportWord(HttpServletResponse response,String id){
+        PeopleDispatchVo p= peopleDispatchMapper.findPeopleDispatchVoById(Long.valueOf(id));
         if(p!=null){
-
+            XWPFDocument doc;
+            OutputStream os;
             String filePath=this.getClass().getResource("/template/custInfoDispatch.docx").getPath();
             String newFileName="派遣人员信息.docx";
 
             Map<String,Object> params = new HashMap<String,Object>();
-            params.put("${name}",           p.getName());
-            params.put("${departmentName}", p.getDepartmentName());
-            params.put("${jobName}",        p.getJobName());
-            params.put("${sex}",            p.getSex()==0?"男":"女");
-            params.put("${nation}",         p.getNationalName());
-            params.put("${province}",       p.getProvince());
-            params.put("${city}",           p.getCity());
-            params.put("${birthday}",       p.getBirthday());
-            params.put("${educationName}",  p.getEducationName());
-            params.put("${politicalName}",  p.getPoliticalName());
-            params.put("${schoolDate}",     p.getSchoolDate());
-            params.put("${mobile}",         p.getMobile());
-            params.put("${comment}",        p.getComment());
+            params.put("${code}",p.getCode());
+            params.put("${name}",p.getName());
+            params.put("${sex}",p.getSex()==0?"男":"女");
+            params.put("${nationalName}",p.getNationalName());
+            params.put("${province}",p.getProvince());
+            params.put("${city}",p.getCity());
+            params.put("${birthday}",p.getBirthday());
+            params.put("${educationName}",p.getEducationName());
+            params.put("${politicalName}",p.getPoliticalName());
+            params.put("${speciality}",p.getSpeciality());
+            params.put("${height}",p.getHeight());
+            params.put("${marriageName}",p.getMarriageName());
+            params.put("${hukou}",p.getSex()==0?"非农业":"农业");
+            params.put("${schoolDate}",p.getSchoolDate());
+            params.put("${mobile}",p.getMobile());
+            params.put("${address}",p.getAddress());
+            params.put("${departmentName}",p.getDepartmentName());
+            params.put("${jobName}",p.getJobName());
+            params.put("${comment}",p.getComment());
 
             //判断是否有头像
-            if(StringUtils.isNotBlank(p.getPhoto())){
+            if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
-            }else{
-                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
@@ -335,13 +438,13 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
         String ids = "";
         pageInfo.setFrom(0);
         pageInfo.setSize(100000);
-        List<PeopleDispatchVo> peopleList = peopleDispatchMapper.findPeopleDispatchPageCondition(pageInfo);
-        if (peopleList == null || peopleList.size() < 1)
+        List<PeopleDispatchVo> peopleDispatchList = peopleDispatchMapper.findPeopleDispatchPageCondition(pageInfo);
+        if (peopleDispatchList == null || peopleDispatchList.size() < 1)
             return ids;
 
 
-        for(int i=0; i<peopleList.size(); i++){
-            ids = ids + peopleList.get(i).getId().toString() + ",";
+        for(int i=0; i<peopleDispatchList.size(); i++){
+            ids = ids + peopleDispatchList.get(i).getId().toString() + ",";
         }
 
         //刪除最後一個逗号
@@ -349,5 +452,5 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
 
         return ids;
     }
-
 }
+

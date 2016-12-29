@@ -2,15 +2,17 @@ package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
+import com.wangzhixuan.model.PeopleDispatch;
+import com.wangzhixuan.model.PeopleTemp;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Created by sterm on 2016/11/22.
+ * Created by administrator_cernet on 2016/11/27.
  */
-public class PeopleDispatchVo implements Serializable{
+public class PeopleDispatchVo implements Serializable {
 
     private Long id;
 
@@ -28,25 +30,41 @@ public class PeopleDispatchVo implements Serializable{
 
     private String city;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private String birthday;
 
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private String birthdayMin;
 
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private String birthdayMax;
 
     private String educationName;
 
     private String politicalName;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String speciality;
+
+    private String height;
+
+    private Integer marriageId;
+
+    private String marriageName;
+
+    private Integer hukou;
+
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private String schoolDate;
 
-    private String schoolDateMin;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private String schoolDateMix;
 
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private String schoolDateMax;
 
     private String mobile;
+
+    private String address;
 
     private String departmentName;
 
@@ -96,14 +114,6 @@ public class PeopleDispatchVo implements Serializable{
         this.nationalId = nationalId;
     }
 
-    public String getNationalName() {
-        return nationalName;
-    }
-
-    public void setNationalName(String nationalName) {
-        this.nationalName = nationalName;
-    }
-
     public String getProvince() {
         return province;
     }
@@ -128,6 +138,22 @@ public class PeopleDispatchVo implements Serializable{
         this.birthday = birthday;
     }
 
+    public String getBirthdayMin() {
+        return birthdayMin;
+    }
+
+    public void setBirthdayMin(String birthdayMin) {
+        this.birthdayMin = birthdayMin;
+    }
+
+    public String getBirthdayMax() {
+        return birthdayMax;
+    }
+
+    public void setBirthdayMax(String birthdayMax) {
+        this.birthdayMax = birthdayMax;
+    }
+
     public String getEducationName() {
         return educationName;
     }
@@ -144,12 +170,52 @@ public class PeopleDispatchVo implements Serializable{
         this.politicalName = politicalName;
     }
 
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public Integer getMarriageId() {
+        return marriageId;
+    }
+
+    public void setMarriageId(Integer marriageId) {
+        this.marriageId = marriageId;
+    }
+
+    public Integer getHukou() {
+        return hukou;
+    }
+
+    public void setHukou(Integer hukou) {
+        this.hukou = hukou;
+    }
+
     public String getSchoolDate() {
         return schoolDate;
     }
 
     public void setSchoolDate(String schoolDate) {
         this.schoolDate = schoolDate;
+    }
+
+    public String getSchoolDateMix() {
+        return schoolDateMix;
+    }
+
+    public void setSchoolDateMix(String schoolDateMix) {
+        this.schoolDateMix = schoolDateMix;
+    }
+
+    public String getSchoolDateMax() {
+        return schoolDateMax;
+    }
+
+    public void setSchoolDateMax(String schoolDateMax) {
+        this.schoolDateMax = schoolDateMax;
     }
 
     public String getMobile() {
@@ -192,90 +258,126 @@ public class PeopleDispatchVo implements Serializable{
         this.photo = photo;
     }
 
-    public String getBirthdayMin() {
-        return birthdayMin;
-    }
-
-    public void setBirthdayMin(String birthdayMin) {
-        this.birthdayMin = birthdayMin;
-    }
-
-    public String getBirthdayMax() {
-        return birthdayMax;
-    }
-
-    public void setBirthdayMax(String birthdayMax) {
-        this.birthdayMax = birthdayMax;
-    }
-
-    public String getSchoolDateMin() {
-        return schoolDateMin;
-    }
-
-    public void setSchoolDateMin(String schoolDateMin) {
-        this.schoolDateMin = schoolDateMin;
-    }
-
-    public String getSchoolDateMax() {
-        return schoolDateMax;
-    }
-
-    public void setSchoolDateMax(String schoolDateMax) {
-        this.schoolDateMax = schoolDateMax;
-    }
-
-    public String toString(){
-        return "id = " + id;
-    }
-
-    public static Map<String,Object> CreateCondition(PeopleDispatchVo peopleDispatchVo) {
-
+    public static Map<String,Object> CreateCondition(PeopleDispatchVo peopleDispatchvo){
         Map<String, Object> condition = Maps.newHashMap();
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getName())){
-            condition.put("name", peopleDispatchVo.getName());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getCode())){
+            condition.put("code", peopleDispatchvo.getCode());
         }
 
-        if(peopleDispatchVo.getSex() != null){
-            condition.put("sex",peopleDispatchVo.getSex());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getName())){
+            condition.put("name", peopleDispatchvo.getName());
         }
 
-        if(peopleDispatchVo.getNationalId() != null){
-            condition.put("nationalId", peopleDispatchVo.getNationalId());
+        if (peopleDispatchvo.getSex() != null){
+            condition.put("sex", peopleDispatchvo.getSex());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getBirthdayMin())){
-            condition.put("birthdayMin", peopleDispatchVo.getBirthdayMin());
+        if (peopleDispatchvo.getNationalId() != null){
+            condition.put("nationalId", peopleDispatchvo.getNationalId());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getBirthdayMax())){
-            condition.put("birthdayMax", peopleDispatchVo.getBirthdayMax());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getProvince())){
+            condition.put("province", peopleDispatchvo.getProvince());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getEducationName())){
-            condition.put("educationName", peopleDispatchVo.getEducationName());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getCity())){
+            condition.put("city", peopleDispatchvo.getCity());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getPoliticalName())){
-            condition.put("politicalName", peopleDispatchVo.getPoliticalName());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getBirthdayMin())){
+            condition.put("birthdayMin", peopleDispatchvo.getBirthdayMin());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getSchoolDateMin())){
-            condition.put("schoolDateMin",peopleDispatchVo.getSchoolDateMin());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getBirthdayMax())){
+            condition.put("birthdayMax", peopleDispatchvo.getBirthdayMax());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getSchoolDateMax())){
-            condition.put("schoolDateMax", peopleDispatchVo.getSchoolDateMax());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getEducationName())){
+            condition.put("educationName", peopleDispatchvo.getEducationName());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getDepartmentName())){
-            condition.put("departmentName", peopleDispatchVo.getDepartmentName());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getPoliticalName())){
+            condition.put("politicalName", peopleDispatchvo.getPoliticalName());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchVo.getJobName())){
-            condition.put("jobName", peopleDispatchVo.getJobName());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getSpeciality())){
+            condition.put("speciality", peopleDispatchvo.getSpeciality());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getHeight())){
+            condition.put("height", peopleDispatchvo.getHeight());
+        }
+
+        if (peopleDispatchvo.getMarriageId() != null){
+            condition.put("marriageId", peopleDispatchvo.getMarriageId());
+        }
+
+        if (peopleDispatchvo.getHukou() != null){
+            condition.put("hukou", peopleDispatchvo.getHukou());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getSchoolDateMix())){
+            condition.put("schoolDateMin", peopleDispatchvo.getSchoolDateMix());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getSchoolDateMax())){
+            condition.put("schoolDateMax", peopleDispatchvo.getSchoolDateMax());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getMobile())){
+            condition.put("mobile", peopleDispatchvo.getMobile());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getAddress())){
+            condition.put("address", peopleDispatchvo.getAddress());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getDepartmentName())){
+            condition.put("departmentName", peopleDispatchvo.getDepartmentName());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getJobName())){
+            condition.put("jobName", peopleDispatchvo.getJobName());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getComment())){
+            condition.put("comment", peopleDispatchvo.getComment());
         }
 
         return condition;
     }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNationalName() {
+        return nationalName;
+    }
+
+    public void setNationalName(String nationalName) {
+        this.nationalName = nationalName;
+    }
+
+    public String getMarriageName() {
+        return marriageName;
+    }
+
+    public void setMarriageName(String marriageName) {
+        this.marriageName = marriageName;
+    }
 }
+
