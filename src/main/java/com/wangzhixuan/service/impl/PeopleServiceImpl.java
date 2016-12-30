@@ -576,7 +576,7 @@ public class PeopleServiceImpl implements PeopleService{
 			params.put("${graduateSchool}",p.getGraduateSchool());
 			params.put("${contact}",p.getContact());
 			params.put("${relationship}",p.getRelationship());
-			params.put("${contactnumber}",p.getContactNumber());
+			params.put("${cnumber}",p.getContactNumber());
 
 			params.put("${familyInfo1Title}",p.getFamilyInfo1Title());
 			params.put("${familyInfo1Name}",p.getFamilyInfo1Name());
