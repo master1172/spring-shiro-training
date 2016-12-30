@@ -282,6 +282,11 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
+
+            <if test=" condition.nationalIdList != null">
+                and n.id in (#{condition.nationalIdList})
+            </if>
+
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>

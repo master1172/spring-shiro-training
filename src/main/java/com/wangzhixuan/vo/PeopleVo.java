@@ -27,6 +27,8 @@ public class PeopleVo implements Serializable{
 
     private String nationalName;
 
+    private String nationalIdList;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String birthday;
 
@@ -250,6 +252,10 @@ public class PeopleVo implements Serializable{
     public void setNationalName(String nationalName) {
         this.nationalName = nationalName;
     }
+
+    public String getNationalIdList() {return nationalIdList;}
+
+    public void setNationalIdList(String nationalIdList) {this.nationalIdList = nationalIdList;}
 
     public String getBirthday() {
         return birthday;
@@ -890,6 +896,10 @@ public class PeopleVo implements Serializable{
 
         if (peoplevo.getSex() != null){
             condition.put("sex", peoplevo.getSex());
+        }
+
+        if (StringUtils.isNoneBlank(peoplevo.getNationalIdList())){
+            condition.put("nationalIdList",peoplevo.getNationalIdList());
         }
 
         if (StringUtils.isNoneBlank(peoplevo.getBirthdayMin())){

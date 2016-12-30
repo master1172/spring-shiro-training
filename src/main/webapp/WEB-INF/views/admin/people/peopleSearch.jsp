@@ -28,7 +28,7 @@
                     </td>
                     <td>民族</td>
                     <td>
-                        <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="nationalIdList" name="nationalIdList" url="${path}/dict/national" valueField="id" textField="name" editable="false" multiple="true">
                         </input>
                     </td>
                     <td>籍贯</td>
