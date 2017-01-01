@@ -5,6 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by liushaoyang on 2016/9/18.
@@ -35,5 +36,9 @@ public class StringUtilExtra {
 
         String cellValue = cell.toString();
         return StringUtils.isBlank(cellValue);
+    }
+
+    public static String generateUUID(){
+        return UUID.randomUUID().toString().replace("-","");
     }
 }

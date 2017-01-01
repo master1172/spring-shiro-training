@@ -77,6 +77,7 @@ public class PeopleServiceImpl implements PeopleService{
 		People people = new People();
 		BeanUtils.copyProperties(people,peoplevo);
 		//将peoplevo里分散的familyInfo放入people实体中
+		people.setCode(StringUtilExtra.generateUUID());
 		//UpdatePeopleFamilyInfo(peoplevo,people);
 		if(file!=null){//上传附件
 			//获取头像上传路径
@@ -164,6 +165,8 @@ public class PeopleServiceImpl implements PeopleService{
 	    	for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
 	    	    row = sheet.getRow(i);
 	    	    People p=new People();
+
+				p.setCode(StringUtilExtra.generateUUID());
 
 				//将Excel中的图片插入到数据库中
 				if (pictureList != null && pictureList.size() > 0){
