@@ -33,7 +33,7 @@
                     </td>
                     <td>籍贯</td>
                     <td>
-                        <input class="easyui-combobox" id="nativeId" name="nativeId" url="${path}/dict/native" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="nativeIdList" name="nativeIdList" url="${path}/dict/native" valueField="id" textField="name" editable="false" multiple="true">
                         </input>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
                 <tr>
                     <td>学位</td>
                     <td>
-                        <input class="easyui-combobox" id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="degreeIdList" name="degreeIdList" url="${path}/dict/degree" valueField="id" textField="name" editable="false" multiple="true">
                         </input>
                     </td>
                     <td>入党日期范围</td>
@@ -103,7 +103,7 @@
                     </td>
                     <td>人员类别</td>
                     <td>
-                        <select name="jobCategory" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                        <select name="jobCategoryList" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'" multiple="true">
                             <option value="" selected="selected"></option>
                             <option value="管理类">管理类</option>
                             <option value="专业类">专业类</option>
@@ -112,7 +112,7 @@
                     </td>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="jobLevelIdList" name="jobLevelIdList" url="${path}/dict/job" valueField="id" textField="name" editable="false" multiple="true">
                         </input>
                     </td>
                 </tr>
@@ -138,7 +138,6 @@
                                readonly="readonly"/>
                     </td>
                 </tr>
-
             </table>
         </form>
     </div>
