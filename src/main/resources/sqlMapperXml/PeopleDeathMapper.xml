@@ -46,6 +46,13 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
+    <select id="findPeopleByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM people_death
+        where code = #{code, jdbcType=VARCHAR}
+    </select>
+
     <select id="findPeopleVoById" resultMap="peopleDeathVoResultMap" parameterType="java.lang.Long">
         SELECT
         t.id,

@@ -72,6 +72,8 @@ public interface PeopleDeathMapper  {
      * @return
      */
     List selectPeopleVoByIds(String[] ids);
+
+
     /**
      * 批量添加人员
      * @param list
@@ -86,4 +88,6 @@ public interface PeopleDeathMapper  {
      * @return
      */
     PeopleDeathVo findPeopleVoById(Long id);
+
+    PeopleDeath findPeopleByCode(String code);
 }

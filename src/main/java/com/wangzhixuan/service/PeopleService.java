@@ -64,6 +64,10 @@ public interface PeopleService {
     void deletePeopleById(Long id);
 
     void batchDeletePeopleByIds(String[] ids);
+
+    void batchRetirePeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException;
+
+    void batchDeathPeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException;
     /**
      * 数据导入
      * @param list

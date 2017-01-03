@@ -3,20 +3,20 @@ package com.wangzhixuan.service.impl;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.tools.internal.jxc.ap.Const;
 import com.wangzhixuan.mapper.DictMapper;
+import com.wangzhixuan.mapper.PeopleDeathMapper;
+import com.wangzhixuan.mapper.PeopleRetireMapper;
+import com.wangzhixuan.model.PeopleDeath;
+import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.utils.*;
+import com.wangzhixuan.vo.PeopleDeathVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -53,6 +53,12 @@ public class PeopleServiceImpl implements PeopleService{
 
 	@Autowired
 	private DictMapper dictMapper;
+
+	@Autowired
+	private PeopleDeathMapper peopleDeathMapper;
+
+	@Autowired
+	private PeopleRetireMapper peopleRetireMapper;
 
     @Override
     public People findPeopleById(Long id) {
@@ -144,6 +150,133 @@ public class PeopleServiceImpl implements PeopleService{
         peopleMapper.batchDeleteByIds(ids);
     }
 
+	@Override
+	public void batchRetirePeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException {
+		List<PeopleVo> peopleVoList = peopleMapper.selectPeopleVoByIds(ids);
+
+		if ((peopleVoList == null) || (peopleVoList.size() < 1))
+			return;
+
+		for (PeopleVo peopleVo: peopleVoList) {
+			if (peopleVo == null)
+				continue;
+			int status = peopleVo.getStatus();
+
+			if (status != ConstUtil.PEOPLE_NORMAL)
+				continue;
+			String code = peopleVo.getCode();
+
+			if (StringUtils.isNoneBlank(code)){
+				//在将在编人员转入退休人员库之前，需要先判断该人是否已经在退休人员库中有记录了。
+				//如果有，那么只需要更新该人的信息就可以了
+				PeopleRetire oldPeopleRetire = peopleRetireMapper.findPeopleRetireByCode(code);
+
+				if (oldPeopleRetire != null){
+					oldPeopleRetire.setRetireJobName(peopleVo.getJobName());
+					oldPeopleRetire.setRetireJobLevelId(peopleVo.getJobLevelId());
+					oldPeopleRetire.setSex(peopleVo.getSex());
+					oldPeopleRetire.setNationalId(peopleVo.getNationalId());
+					oldPeopleRetire.setEducationName(peopleVo.getEducationName());
+					oldPeopleRetire.setBirthday(peopleVo.getBirthday());
+					oldPeopleRetire.setPoliticalName(peopleVo.getPoliticalName());
+					oldPeopleRetire.setWorkDate(peopleVo.getWorkDate());
+					oldPeopleRetire.setRetireDate(DateUtil.GetDate(new Date()));
+					oldPeopleRetire.setAddress(peopleVo.getAddress());
+					oldPeopleRetire.setMobile(peopleVo.getMobile());
+					oldPeopleRetire.setContact(peopleVo.getContact());
+					oldPeopleRetire.setContactNumber(peopleVo.getContactNumber());
+					oldPeopleRetire.setStatus(ConstUtil.PEOPLE_RETIRE_RETIRE);
+					oldPeopleRetire.setPhoto(peopleVo.getPhoto());
+					peopleRetireMapper.updatePeopleRetire(oldPeopleRetire);
+				}else{
+					//在退休人员数据库中没有查到，插入一条新的记录
+					PeopleRetire peopleRetire = new PeopleRetire();
+
+					peopleRetire.setCode(peopleVo.getCode());
+					peopleRetire.setRetireJobName(peopleVo.getJobName());
+					peopleRetire.setRetireJobLevelId(peopleVo.getJobLevelId());
+					peopleRetire.setSex(peopleVo.getSex());
+					peopleRetire.setNationalId(peopleVo.getNationalId());
+					peopleRetire.setEducationName(peopleVo.getEducationName());
+					peopleRetire.setBirthday(peopleVo.getBirthday());
+					peopleRetire.setPoliticalName(peopleVo.getPoliticalName());
+					peopleRetire.setWorkDate(peopleVo.getWorkDate());
+					peopleRetire.setRetireDate(DateUtil.GetDate(new Date()));
+					peopleRetire.setAddress(peopleVo.getAddress());
+					peopleRetire.setMobile(peopleVo.getMobile());
+					peopleRetire.setContact(peopleVo.getContact());
+					peopleRetire.setContactNumber(peopleVo.getContactNumber());
+					peopleRetire.setStatus(ConstUtil.PEOPLE_RETIRE_RETIRE);
+					peopleRetire.setPhoto(peopleVo.getPhoto());
+
+					peopleRetireMapper.insert(peopleRetire);
+				}
+
+				//更新在编人员数据库，将其状态改为退休
+				People people = new People();
+				BeanUtils.copyProperties(people,peopleVo);
+				people.setStatus(ConstUtil.PEOPLE_RETIRE);
+				peopleMapper.updatePeople(people);
+			}
+		}
+	}
+
+	@Override
+	public void batchDeathPeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException {
+
+		List<PeopleVo> peopleVoList = peopleMapper.selectPeopleVoByIds(ids);
+
+		if ((peopleVoList == null) || (peopleVoList.size() < 1))
+			return;
+
+		for (PeopleVo peopleVo: peopleVoList) {
+			if (peopleVo == null)
+				continue;
+			int status = peopleVo.getStatus();
+
+			if (status != ConstUtil.PEOPLE_NORMAL)
+				continue;
+			String code = peopleVo.getCode();
+
+			if (StringUtils.isNoneBlank(code)){
+				//在将在编人员转入已故人员库之前，需要先判断该人是否已经在已故人员库中有记录了。如果有，那么只需要更新该人的信息就可以了
+				PeopleDeath oldPeopleDeath = peopleDeathMapper.findPeopleByCode(code);
+
+				if (oldPeopleDeath != null){
+					oldPeopleDeath.setSex(peopleVo.getSex());
+					oldPeopleDeath.setNational(peopleVo.getNationalId());
+					oldPeopleDeath.setBirthday(peopleVo.getBirthday());
+					oldPeopleDeath.setSchool_date(peopleVo.getSchoolDate());
+					oldPeopleDeath.setCategory(peopleVo.getJobCategory());
+					oldPeopleDeath.setJob_level_id(peopleVo.getJobLevelId());
+					oldPeopleDeath.setPhoto(peopleVo.getPhoto());
+					oldPeopleDeath.setDeath_date(DateUtil.GetDate(new Date()));
+					peopleDeathMapper.updatePeople(oldPeopleDeath);
+				}else{
+					//在已故人员数据库中没有查到，插入一条新的记录
+					PeopleDeath peopleDeath = new PeopleDeath();
+
+					peopleDeath.setCode(peopleVo.getCode());
+					peopleDeath.setSex(peopleVo.getSex());
+					peopleDeath.setNational(peopleVo.getNationalId());
+					peopleDeath.setBirthday(peopleVo.getBirthday());
+					peopleDeath.setSchool_date(peopleVo.getSchoolDate());
+					peopleDeath.setCategory(peopleVo.getJobCategory());
+					peopleDeath.setJob_level_id(peopleVo.getJobLevelId());
+					peopleDeath.setPhoto(peopleVo.getPhoto());
+					peopleDeath.setDeath_date(DateUtil.GetDate(new Date()));
+					peopleDeathMapper.insert(peopleDeath);
+				}
+
+				//更新在编人员数据库，将其状态改为死亡
+				People people = new People();
+				BeanUtils.copyProperties(people,peopleVo);
+				people.setStatus(ConstUtil.PEOPLE_DEATH);
+				peopleMapper.updatePeople(people);
+			}
+		}
+	}
+
     @Override
     public boolean insertByImport(CommonsMultipartFile[] files){
     	boolean flag=false;
@@ -187,6 +320,7 @@ public class PeopleServiceImpl implements PeopleService{
 	    	    People p=new People();
 
 				p.setCode(StringUtilExtra.generateUUID());
+				p.setStatus(ConstUtil.PEOPLE_NORMAL);
 
 				//将Excel中的图片插入到数据库中
 				if (pictureList != null && pictureList.size() > 0){
@@ -199,7 +333,7 @@ public class PeopleServiceImpl implements PeopleService{
 					}
 				}
 
-				p.setStatus(ConstUtil.PEOPLE_NORMAL);
+
 
 				//姓名
 				if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){

@@ -6,11 +6,25 @@ import org.joda.time.Years;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by sterm on 2016/12/2.
  */
 public class DateUtil {
+
+    public static String GetDate(Date date){
+
+        if (date == null)
+            return "";
+        try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            return format.format(date);
+        }catch (Exception exp){
+            return "";
+        }
+    }
+
     public static Integer GetAgeByBirthday(String birthday){
         if (StringUtils.isBlank(birthday))
             return null;

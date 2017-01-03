@@ -52,6 +52,8 @@ public interface PeopleRetireMapper {
      */
     PeopleRetire findPeopleRetireById(Long id);
 
+    PeopleRetire findPeopleRetireByCode(String code);
+
     /**
      * 人员列表
      *

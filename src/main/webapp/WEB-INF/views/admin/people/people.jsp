@@ -197,6 +197,52 @@
             });
         }
 
+        function goRetire(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要将所选人员转入退休库？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/people/batchRetire', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+        }
+
+        function goDeath(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要将所选人员转入逝世库？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/people/batchDeath', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+        }
+
         function nearRetire(){
             $('#searchForm input').val('');
             dataGrid.datagrid('load', {"nearRetire":"1"});
@@ -381,6 +427,12 @@
 
         <a onclick="nearRetire();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">临近退休人员</a>
+
+        <a onclick="goRetire();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">转入退休人员</a>
+
+        <a onclick="goDeath();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">转入已故人员</a>
 
         <!-- 附件下载使用 -->
     	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
