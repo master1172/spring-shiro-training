@@ -88,69 +88,6 @@
             });
         }
 
-        function addFun() {
-            parent.$.modalDialog({
-                title: '添加',
-                width: 500,
-                height: 350,
-                href: '${path}/peopleTransfer/addPage',
-                buttons: [{
-                    text: '添加',
-                    handler: function () {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#peopleAddForm");
-                        //f.submit();
-                        if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/add",function(data){
-                                if(!data["success"]){
-                                    parent.$.messager.alert("提示", data["msg"], "warning");
-                                }else{
-                                    parent.progressClose();
-                                    dataGrid.datagrid("reload");
-                                    parent.$.modalDialog.handler.dialog("close");
-                                }
-                            });
-                        }
-                    }
-                }]
-            });
-        }
-
-        function editFun(id) {
-            if (id == undefined) {
-                var rows = dataGrid.datagrid('getSelections');
-                id = rows[0].id;
-            } else {
-                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-            }
-
-            parent.$.modalDialog({
-                title: '修改',
-                width: 500,
-                height: 350,
-                href: '${path}/peopleTransfer/editPage?id='+id,
-                buttons: [{
-                    text: '修改',
-                    handler: function () {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#peopleEditForm");
-                        //f.submit();
-                        if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/edit",function(data){
-                                if(!data["success"]){
-                                    parent.$.messager.alert("提示", data["msg"], "warning");
-                                }else{
-                                    parent.progressClose();
-                                    dataGrid.datagrid("reload");
-                                    parent.$.modalDialog.handler.dialog("close");
-                                }
-                            });
-                        }
-                    }
-                }]
-            });
-        }
-
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -158,34 +95,6 @@
         function cleanFun() {
             $('#searchForm input').val('');
             dataGrid.datagrid('load', {});
-        }
-        //导入Excel
-        function importExcel(){
-            parent.$.modalDialog({
-                title: '数据导入',
-                width: 500,
-                height: 300,
-                href: '${path}/peopleTransfer/importExcelPage',
-                buttons: [{
-                    text: '导入',
-                    handler: function () {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#importExcelForm");
-                        //f.submit();
-                        if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/importExcel",function(data){
-                                if(!data["success"]){
-                                    parent.$.messager.alert("提示", data["msg"], "warning");
-                                }else{
-                                    parent.progressClose();
-                                    dataGrid.datagrid("reload");
-                                    parent.$.modalDialog.handler.dialog("close");
-                                }
-                            });
-                        }
-                    }
-                }]
-            });
         }
 
         //导出Excel
@@ -205,24 +114,11 @@
                 parent.$.messager.alert("提示", "请选择有效数据", "warning");
             }
         }
-        //导出Word
-        function exportWord(){
-            var checkedItems = $("#dataGrid").datagrid("getChecked");
-            if(checkedItems.length==1){
-                var id=checkedItems[0]["id"];
-                var form=$("#downLoadForm");
-                form.find("input[name='ids']").val(id);
-                form.attr("action",'${path}'+"/peopleTransfer/exportWord");
-                $("#downLoadForm").submit();
-            }else{
-                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
-            }
-        }
 
         function operateFormatter(value,row,index){
             var str = '';
-            <shiro:hasPermission name="/peopleTransfer/edit">
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
+            <shiro:hasPermission name="/people/transferList">
+                str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="transferList(\'{0}\');" >调动记录</a>', row.id);
             </shiro:hasPermission>
             return str;
         }
@@ -234,9 +130,9 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>人员编码:</th>
+                <th>人员姓名:</th>
                 <td>
-                    <input name="peopleCode"/>
+                    <input name="peopleName"/>
                 </td>
                 <th>人员类型:</th>
                 <td>
@@ -264,37 +160,21 @@
     <table id="dataGrid" data-options="fit:true,border:false">
         <thead>
         <tr>
-            <th field="ck"       data-options="checkbox:true"></th>
-            <th field="peopleCode"     data-options="sortable:true" width="80">人员编码</th>
-            <th field="peopleType"     data-options="sortable:true" width="80">退休时职务</th>
-            <th field="fromSchool"  data-options="sortable:true" width="80">退休时职级</th>
-            <th field="toSchool"      data-options="sortable:true" width="80">性别</th>
-            <th field="transferDate"     data-options="sortable:true" width="80">民族</th>
-            <th field="refLetterNo"     data-options="sortable:true" width="80">学历</th>
-            <th field="salaryEndDate" data-options="sortable:true" width="80">生日</th>
-            <th field="partyTransferDate"     data-options="sortable:true" width="80">政治面貌</th>
-            <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="ck"            data-options="checkbox:true"></th>
+            <th field="peopleName"    data-options="sortable:true"  width="80">姓名</th>
+            <th field="fromSchool"    data-options="sortable:false" width="80">调出前单位</th>
+            <th field="toSchool"      data-options="sortable:false" width="80">调往单位</th>
+            <th field="transferDate"  data-options="sortable:false" width="80">调动日期</th>
+            <th field="peopleCode"    data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
 </div>
 
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/peopleTransfer/add">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">添加</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleTransfer/importExcel">
-        <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导入</a>
-    </shiro:hasPermission>
     <shiro:hasPermission name="/peopleTransfer/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleTransfer/exportWord">
-        <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导出Word</a>
     </shiro:hasPermission>
     <shiro:hasPermission name="/peopleTransfer/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"

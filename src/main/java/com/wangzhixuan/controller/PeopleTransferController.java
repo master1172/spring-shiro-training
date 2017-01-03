@@ -100,21 +100,19 @@ public class PeopleTransferController extends BaseController{
         return result;
     }
 
-    @RequestMapping(value="/addPage", method=RequestMethod.GET)
+    @RequestMapping(value="/transferPage", method=RequestMethod.GET)
     public String addPage(){
-        return "admin/peopleTransfer/peopleAdd";
+        return "admin/peopleTransfer/peopleTransfer";
     }
-    @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
-    public String importExcelPage(){
-        return "admin/peopleTransfer/importExcelPage";
-    }
+
+
     /**
      * 添加用户
      *
      * @param peopleTransfer
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/transfer", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public Result add(PeopleTransfer peopleTransfer,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
         Result result = new Result();

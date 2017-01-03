@@ -2,9 +2,6 @@
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath}/static/easyui/plugins/uploadPreview.min.js" charset="utf-8"></script>
 <script type="text/javascript">
-    $(function() {
-        new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
-    });
     function checkForm(){
         progressLoad();
         var isValid = $("#peopleAddForm").form("validate");
@@ -19,14 +16,7 @@
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleAddForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
-                <tr>
-                    <td>人员编码</td>
-                    <td><input name="peopleCode" type="text" placeholder="" class="easyui-validatebox" data-options="required:true" value=""></td>
-                    <td>人员类型</td>
-                    <td>
-                        <input type="text" name="peopleType">
-                    </td>
-                </tr>
+                <input type="hidden" name="code" value="${peopleTransfer.peopleCode}">
                 <tr>
                     <td>调出前单位</td>
                     <td>
@@ -59,15 +49,6 @@
                     <td>工资止薪日期</td>
                     <td>
                         <input type="text" name="salaryEndDate" placeholder="XX年XX月">
-                    </td>
-                </tr>
-                <tr>
-                    <td>头像上传</td>
-                    <td colspan="3">
-                        <div id="imgdiv" style="height:100px;width:100px;">
-                            <img id="imgShow" style="height:100px;width:100px;"/>
-                        </div>
-                        <input type="file" id="up_img" name="fileName"/>
                     </td>
                 </tr>
             </table>

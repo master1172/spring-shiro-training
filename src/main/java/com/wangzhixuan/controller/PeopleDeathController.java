@@ -241,5 +241,4 @@ public class PeopleDeathController extends BaseController{
             LOGGER.error("导出Word:{}",exp);
         }
     }
-
 }

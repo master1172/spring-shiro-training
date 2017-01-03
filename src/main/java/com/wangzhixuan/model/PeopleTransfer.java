@@ -15,6 +15,8 @@ public class PeopleTransfer extends PeopleBase implements Serializable {
 
     private String peopleCode;
 
+    private String peopleName;
+
     private String peopleType;
 
     private String fromSchool;
@@ -55,6 +57,14 @@ public class PeopleTransfer extends PeopleBase implements Serializable {
 
     public void setPeopleCode(String peopleCode) {
         this.peopleCode = peopleCode;
+    }
+
+    public String getPeopleName() {
+        return peopleName;
+    }
+
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
     }
 
     public String getPeopleType() {

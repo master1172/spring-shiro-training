@@ -1,5 +1,6 @@
 package com.wangzhixuan.service.impl;
 
+import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleTransferMapper;
 import com.wangzhixuan.model.PeopleTransfer;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Condition;
 
 /**
  * Created by administrator_cernet on 2016/11/27.
@@ -50,8 +52,21 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
     @Override
     public void findDataGrid(PageInfo pageInfo) {
+        List<PeopleTransferVo> peopleTransferList = peopleTransferMapper.findPeopleTransferCodeListByConditions(pageInfo);
+
+        List<String> peopleCodeList = new ArrayList<>();
+
+        if (peopleTransferList != null && peopleTransferList.size() > 0){
+            for (PeopleTransferVo peopleTransferVo: peopleTransferList) {
+                peopleCodeList.add(peopleTransferVo.getPeopleCode());
+            }
+        }
+
+        Map<String,Object> condition = Maps.newHashMap();
+        condition.put("peopleCodeList",peopleCodeList);
+        pageInfo.setCondition(condition);
         pageInfo.setRows(peopleTransferMapper.findPeopleTransferPageCondition(pageInfo));
-        pageInfo.setTotal(peopleTransferMapper.findPeopleTransferPageCount(pageInfo));
+        pageInfo.setTotal(peopleCodeList.size());
     }
 
     @Override

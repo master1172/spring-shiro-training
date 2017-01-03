@@ -3,12 +3,13 @@
 <mapper namespace="com.wangzhixuan.mapper.PeopleTransferMapper">
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleTransfer">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
-        <result column="people_type" property="peopleType" jdbcType="VARCHAR"/>
-        <result column="from_school" property="fromSchool" jdbcType="VARCHAR"/>
-        <result column="to_school" property="toSchool" jdbcType="VARCHAR"/>
-        <result column="transfer_date" property="transferDate" jdbcType="DATE"/>
-        <result column="ref_letter_no" property="refLetterNo" jdbcType="VARCHAR"/>
+        <result column="people_code"     property="peopleCode" jdbcType="VARCHAR"/>
+        <result column="people_name"     property="peopleName" jdbcType="VARCHAR"/>
+        <result column="people_type"     property="peopleType" jdbcType="VARCHAR"/>
+        <result column="from_school"     property="fromSchool" jdbcType="VARCHAR"/>
+        <result column="to_school"       property="toSchool" jdbcType="VARCHAR"/>
+        <result column="transfer_date"   property="transferDate" jdbcType="DATE"/>
+        <result column="ref_letter_no"   property="refLetterNo" jdbcType="VARCHAR"/>
         <result column="salary_end_date" property="salaryEndDate" jdbcType="VARCHAR"/>
         <result column="party_transfer_date" property="partyTransferDate" jdbcType="DATE"/>
         <result column="photo" property="photo" jdbcType="VARCHAR"/>
@@ -17,6 +18,7 @@
     <resultMap id="PeopleTransferVoResultMap" type="com.wangzhixuan.vo.PeopleTransferVo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
+        <result column="people_name" property="peopleName" jdbcType="VARCHAR"/>
         <result column="people_type" property="peopleType" jdbcType="VARCHAR"/>
         <result column="from_school" property="fromSchool" jdbcType="VARCHAR"/>
         <result column="to_school" property="toSchool" jdbcType="VARCHAR"/>
@@ -28,7 +30,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, people_code, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo
+        id, people_code, people_name, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo
         </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -40,18 +42,11 @@
 
     <select id="findPeopleTransferVoById" resultMap="PeopleTransferVoResultMap" parameterType="java.lang.Long">
         SELECT
-        t.id,
-        t.people_code,
-        t.people_type,
-        t.from_school,
-        t.to_school,
-        t.transfer_date,
-        t.ref_letter_no,
-        t.salary_end_date,
-        t.party_transfer_date,
-        t.photo
+          code as people_code,
+          name as people_name
         FROM
-        people_transfer t
+          people p
+
         <where>
             t.id = #{id}
         </where>
@@ -71,23 +66,18 @@
         where name LIKE concat('%',#{name},'%')
     </select>
 
-    <select id="findPeopleTransferPageCondition" resultMap="PeopleTransferVoResultMap" parameterType="PageInfo">
+    <select id="findPeopleTransferCodeListByConditions" resultMap="PeopleTransferVoResultMap" parameterType="PageInfo">
         SELECT
-        t.id,
-        t.people_code,
-        t.people_type,
-        t.from_school,
-        t.to_school,
-        t.transfer_date,
-        t.ref_letter_no,
-        t.salary_end_date,
-        t.party_transfer_date,
-        t.photo
+          distinct people_code
         FROM
-        people_transfer t
+          people_transfer t
+        LEFT JOIN
+          people p
+        ON
+          t.people_code = p.code
         <where>
-            <if test=" condition.peopleCode != null and condition.peopleCode != '' ">
-                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
+            <if test=" condition.peopleName != null and condition.peopleName != '' ">
+                and p.name LIKE concat('%', #{condition.peopleName},'%')
             </if>
             <if test=" condition.peopleType != null and condition.peopleType != '' ">
                 and t.people_type LIKE concat('%',#{condition.peopleType},'%')
@@ -117,45 +107,29 @@
                 <![CDATA[ and t.party_transfer_date <= #{condition.partyTransferDateMax} ]]>
             </if>
         </where>
+    </select>
+
+    <select id="findPeopleTransferPageCondition" resultMap="PeopleTransferVoResultMap" parameterType="PageInfo">
+        SELECT
+            id,
+            people_code,
+            people_name,
+            from_school,
+            to_school,
+            transfer_date
+        FROM
+          (SELECT * from people_transfer order by transfer_date desc) as b
+        <where>
+            people_code in
+            <foreach item="item" index="index" collection="condition.peopleCodeList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+        group by people_code
         LIMIT #{from}, #{size}
     </select>
 
-    <select id="findPeopleTransferPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
-        select count(*) count
-        from people_transfer t
-        <where>
-            <if test=" condition.peopleCode != null and condition.peopleCode != '' ">
-                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
-            </if>
-            <if test=" condition.peopleType != null and condition.peopleType != '' ">
-                and t.people_type LIKE concat('%',#{condition.peopleType},'%')
-            </if>
-            <if test=" condition.fromSchool != null and condition.fromSchool != ''">
-                and t.from_school LIKE concat('%',#{condition.fromSchool},'%')
-            </if>
-            <if test=" condition.toSchool != null and condition.toSchool != ''">
-                and t.to_school LIKE concat('%',#{condition.toSchool},'%')
-            </if>
-            <if test=" condition.transferDateMin != null and condition.transferDateMin != ''">
-                <![CDATA[ and t.transfer_date >= #{condition.transferDateMin} ]]>
-            </if>
-            <if test=" condition.transferDateMax != null and condition.transferDateMax != ''">
-                <![CDATA[ and t.transfer_date <= #{condition.transferDateMax} ]]>
-            </if>
-            <if test=" condition.refLetterNo != null and condition.refLetterNo != ''">
-                and t.ref_letter_no LIKE concat('%',#{condition.refLetterNo},'%')
-            </if>
-            <if test=" condition.salaryEndDate != null and condition.salaryEndDate != ''">
-                and t.salary_end_date LIKE concat('%',#{condition.salaryEndDate},'%')
-            </if>
-            <if test=" condition.partyTransferDateMin != null and condition.partyTransferDateMin != ''">
-                <![CDATA[ and t.party_transfer_date >= #{condition.party_transferDateMin} ]]>
-            </if>
-            <if test=" condition.partyTransferDateMax != null and condition.partyTransferDateMax != ''">
-                <![CDATA[ and t.party_transfer_date <= #{condition.partyTransferDateMax} ]]>
-            </if>
-        </where>
-    </select>
+
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTransfer">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">

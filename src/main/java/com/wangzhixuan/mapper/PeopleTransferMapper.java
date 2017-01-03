@@ -43,6 +43,7 @@ public interface PeopleTransferMapper {
      */
     PeopleTransfer findPeopleTransferById(Long id);
 
+    List findPeopleTransferCodeListByConditions(PageInfo pageInfo);
     /**
      * 人员列表
      *

@@ -15,6 +15,8 @@ public class PeopleTransferVo implements Serializable {
 
     private Long id;
 
+    private String peopleName;
+
     private String peopleCode;
 
     private String peopleType;
@@ -61,6 +63,14 @@ public class PeopleTransferVo implements Serializable {
 
     public void setPeopleCode(String peopleCode) {
         this.peopleCode = peopleCode;
+    }
+
+    public String getPeopleName() {
+        return peopleName;
+    }
+
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
     }
 
     public String getPeopleType() {
