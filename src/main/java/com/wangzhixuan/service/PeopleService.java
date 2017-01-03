@@ -5,6 +5,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 
@@ -37,7 +38,7 @@ public interface PeopleService {
      *
      * @param pageInfo
      */
-    void findDataGrid(PageInfo pageInfo);
+    void findDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
     /**
      * 添加人员

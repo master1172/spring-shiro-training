@@ -20,4 +20,9 @@ public class ConstUtil {
                 "来院日期","联系电话","备注"
         };
     }
+
+    public static int PEOPLE_NORMAL = 0;
+    public static int PEOPLE_RETIRE = 1;
+    public static int PEOPLE_DEATH  = 2;
+
 }

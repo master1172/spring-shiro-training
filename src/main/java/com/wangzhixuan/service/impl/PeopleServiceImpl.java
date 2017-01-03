@@ -11,8 +11,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.tools.internal.jxc.ap.Const;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleVo;
@@ -70,9 +72,16 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
     @Override
-    public void findDataGrid(PageInfo pageInfo) {
-        pageInfo.setRows(peopleMapper.findPeoplePageCondition(pageInfo));
-        pageInfo.setTotal(peopleMapper.findPeoplePageCount(pageInfo));
+    public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		String nearRetire = request.getParameter("nearRetire");
+
+		if (StringUtils.isNoneBlank(nearRetire)){
+			pageInfo.setRows(peopleMapper.findPeopleNearRetirePageCondition(pageInfo));
+			pageInfo.setTotal(peopleMapper.findPeopleNearRetirePageCount(pageInfo));
+		}else{
+			pageInfo.setRows(peopleMapper.findPeoplePageCondition(pageInfo));
+			pageInfo.setTotal(peopleMapper.findPeoplePageCount(pageInfo));
+		}
     }
 
     @Override
@@ -83,8 +92,11 @@ public class PeopleServiceImpl implements PeopleService{
 
 		People people = new People();
 		BeanUtils.copyProperties(people,peoplevo);
-		//将peoplevo里分散的familyInfo放入people实体中
+
 		people.setCode(StringUtilExtra.generateUUID());
+		people.setStatus(ConstUtil.PEOPLE_NORMAL);
+
+		//将peoplevo里分散的familyInfo放入people实体中
 		UpdatePeopleFamilyInfo(peoplevo,people);
 		if(file!=null){//上传附件
 			//获取头像上传路径
@@ -106,6 +118,7 @@ public class PeopleServiceImpl implements PeopleService{
 		UpdatePeopleDate(peoplevo);
 		People people = new People();
 		BeanUtils.copyProperties(people,peoplevo);
+		people.setStatus(ConstUtil.PEOPLE_NORMAL);
 		//将peoplevo里分散的familyInfo放入people实体中
 		UpdatePeopleFamilyInfo(peoplevo,people);
 		if (file != null){
@@ -185,6 +198,8 @@ public class PeopleServiceImpl implements PeopleService{
 						p.setPhoto(uploadPath);
 					}
 				}
+
+				p.setStatus(ConstUtil.PEOPLE_NORMAL);
 
 				//姓名
 				if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){

@@ -64,7 +64,7 @@ public class PeopleController extends BaseController{
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String,Object> condition = PeopleVo.CreateCondition(peoplevo);
         pageInfo.setCondition(condition);
-        peopleService.findDataGrid(pageInfo);
+        peopleService.findDataGrid(pageInfo, request);
 
         return pageInfo;
     }

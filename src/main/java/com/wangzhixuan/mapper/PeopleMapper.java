@@ -68,6 +68,12 @@ public interface PeopleMapper {
      * @return
      */
     int findPeoplePageCount(PageInfo pageInfo);
+
+    List findPeopleNearRetirePageCondition(PageInfo pageInfo);
+
+    int findPeopleNearRetirePageCount(PageInfo pageInfo);
+
+
     /**
      * 根据ID查询人员列表
      * @param ids

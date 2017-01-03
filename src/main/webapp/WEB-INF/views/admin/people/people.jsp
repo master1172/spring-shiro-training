@@ -197,6 +197,11 @@
             });
         }
 
+        function nearRetire(){
+            $('#searchForm input').val('');
+            dataGrid.datagrid('load', {"nearRetire":"1"});
+        }
+
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -373,6 +378,10 @@
             <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         </shiro:hasPermission>
+
+        <a onclick="nearRetire();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">临近退休人员</a>
+
         <!-- 附件下载使用 -->
     	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
     </div>
