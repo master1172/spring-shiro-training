@@ -57,6 +57,13 @@ public class PeopleServiceImpl implements PeopleService{
         return peopleMapper.findPeopleById(id);
     }
 
+	@Override
+	public PeopleVo findPeopleVoById(Long id){
+		PeopleVo peopleVo = peopleMapper.findPeopleVoById(id);
+		SplitFamilyInfo(peopleVo);
+		return peopleVo;
+	}
+
     @Override
     public People findPeopleByName(String name) {
         return peopleMapper.findPeopleByName(name);
@@ -78,7 +85,7 @@ public class PeopleServiceImpl implements PeopleService{
 		BeanUtils.copyProperties(people,peoplevo);
 		//将peoplevo里分散的familyInfo放入people实体中
 		people.setCode(StringUtilExtra.generateUUID());
-		//UpdatePeopleFamilyInfo(peoplevo,people);
+		UpdatePeopleFamilyInfo(peoplevo,people);
 		if(file!=null){//上传附件
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
@@ -100,7 +107,7 @@ public class PeopleServiceImpl implements PeopleService{
 		People people = new People();
 		BeanUtils.copyProperties(people,peoplevo);
 		//将peoplevo里分散的familyInfo放入people实体中
-		//UpdatePeopleFamilyInfo(peoplevo,people);
+		UpdatePeopleFamilyInfo(peoplevo,people);
 		if (file != null){
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
@@ -658,24 +665,78 @@ public class PeopleServiceImpl implements PeopleService{
 		}
 	}
 
+	private void SplitFamilyInfo(PeopleVo peopleVo){
+		if (peopleVo == null)
+			return;
+
+		String familyInfo1 = peopleVo.getFamilyInfo1();
+		String familyInfo2 = peopleVo.getFamilyInfo2();
+		String familyInfo3 = peopleVo.getFamilyInfo3();
+		String familyInfo4 = peopleVo.getFamilyInfo4();
+
+		if (!StringUtils.isNoneBlank(familyInfo1)){
+			String[] familyInfo1List = familyInfo1.split("|");
+			if (familyInfo1List != null && familyInfo1.length() > 4){
+				peopleVo.setFamilyInfo1Title(familyInfo1List[0]);
+				peopleVo.setFamilyInfo1Name(familyInfo1List[1]);
+				peopleVo.setFamilyInfo1WorkAddress(familyInfo1List[2]);
+				peopleVo.setFamilyInfo1Job(familyInfo1List[3]);
+				peopleVo.setFamilyInfo1Contact(familyInfo1List[4]);
+			}
+		}
+
+		if (!StringUtils.isNoneBlank(familyInfo2)){
+			String[] familyInfo2List = familyInfo2.split("|");
+			if (familyInfo2List != null && familyInfo2.length() > 4){
+				peopleVo.setFamilyInfo2Title(familyInfo2List[0]);
+				peopleVo.setFamilyInfo2Name(familyInfo2List[1]);
+				peopleVo.setFamilyInfo2WorkAddress(familyInfo2List[2]);
+				peopleVo.setFamilyInfo2Job(familyInfo2List[3]);
+				peopleVo.setFamilyInfo2Contact(familyInfo2List[4]);
+			}
+		}
+
+		if (!StringUtils.isNoneBlank(familyInfo3)){
+			String[] familyInfo3List = familyInfo3.split("|");
+			if (familyInfo3List != null && familyInfo3.length() > 4){
+				peopleVo.setFamilyInfo3Title(familyInfo3List[0]);
+				peopleVo.setFamilyInfo3Name(familyInfo3List[1]);
+				peopleVo.setFamilyInfo3WorkAddress(familyInfo3List[2]);
+				peopleVo.setFamilyInfo3Job(familyInfo3List[3]);
+				peopleVo.setFamilyInfo3Contact(familyInfo3List[4]);
+			}
+		}
+
+		if (!StringUtils.isNoneBlank(familyInfo4)){
+			String[] familyInfo4List = familyInfo4.split("|");
+			if (familyInfo4List != null && familyInfo4.length() > 4){
+				peopleVo.setFamilyInfo4Title(familyInfo4List[0]);
+				peopleVo.setFamilyInfo4Name(familyInfo4List[1]);
+				peopleVo.setFamilyInfo4WorkAddress(familyInfo4List[2]);
+				peopleVo.setFamilyInfo4Job(familyInfo4List[3]);
+				peopleVo.setFamilyInfo4Contact(familyInfo4List[4]);
+			}
+		}
+	}
+
 	private void UpdatePeopleFamilyInfo(PeopleVo peopleVo, People people){
 		if (people == null || peopleVo == null)
 			return;
-		String familyInfo1 = peopleVo.getFamilyInfo1Name()   + "|" + peopleVo.getFamilyInfo1Job() + "|" +
-							 peopleVo.getFamilyInfo1Title()  + "|" + peopleVo.getFamilyInfo1Contact() + "|" +
-							 peopleVo.getFamilyInfo1WorkAddress();
+		String familyInfo1 = peopleVo.getFamilyInfo1Title() + "|" + peopleVo.getFamilyInfo1Name() + "|" +
+							 peopleVo.getFamilyInfo1WorkAddress() + "|" + peopleVo.getFamilyInfo1Job()   + "|" +
+							 peopleVo.getFamilyInfo1Contact() ;
 
-		String familyInfo2 = peopleVo.getFamilyInfo2Name()   + "|" + peopleVo.getFamilyInfo2Job() + "|" +
-							 peopleVo.getFamilyInfo2Title()  + "|" + peopleVo.getFamilyInfo2Contact() + "|" +
-							 peopleVo.getFamilyInfo2WorkAddress();
+		String familyInfo2 = peopleVo.getFamilyInfo2Title()   + "|" + peopleVo.getFamilyInfo2Name() + "|" +
+							 peopleVo.getFamilyInfo2WorkAddress()  + "|" + peopleVo.getFamilyInfo2Job() + "|" +
+							 peopleVo.getFamilyInfo2Contact();
 
-		String familyInfo3 = peopleVo.getFamilyInfo3Name()   + "|" + peopleVo.getFamilyInfo3Job() + "|" +
-							 peopleVo.getFamilyInfo3Title()  + "|" + peopleVo.getFamilyInfo3Contact() + "|" +
-							 peopleVo.getFamilyInfo3WorkAddress();
+		String familyInfo3 = peopleVo.getFamilyInfo3Title()   + "|" + peopleVo.getFamilyInfo3Name() + "|" +
+							 peopleVo.getFamilyInfo3WorkAddress()  + "|" + peopleVo.getFamilyInfo3Job() + "|" +
+							 peopleVo.getFamilyInfo3Contact();
 
-		String familyInfo4 = peopleVo.getFamilyInfo4Name()   + "|" + peopleVo.getFamilyInfo4Job() + "|" +
-							 peopleVo.getFamilyInfo4Title()  + "|" + peopleVo.getFamilyInfo4Contact() + "|" +
-							 peopleVo.getFamilyInfo4WorkAddress();
+		String familyInfo4 = peopleVo.getFamilyInfo4Title()   + "|" + peopleVo.getFamilyInfo4Name() + "|" +
+							 peopleVo.getFamilyInfo4WorkAddress()  + "|" + peopleVo.getFamilyInfo4Job() + "|" +
+							 peopleVo.getFamilyInfo4Contact();
 
 		people.setFamilyInfo1(familyInfo1);
 		people.setFamilyInfo2(familyInfo2);

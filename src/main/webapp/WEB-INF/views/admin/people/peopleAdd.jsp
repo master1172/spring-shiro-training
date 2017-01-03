@@ -39,14 +39,14 @@
                         <input class="easyui-combobox" id="nativeId" name="nativeId" url="${path}/dict/native" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
+                </tr>
+                <tr>
                     <td>政治面貌</td>
                     <td>
                         <input type="text" name="politicalName">
@@ -60,14 +60,14 @@
                         <input class="easyui-combobox" id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>入党日期</td>
                     <td>
                         <input name="partyDate" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
+                </tr>
+                <tr>
                     <td>参加工作日期</td>
                     <td>
                         <input name="workDate" placeholder="点击选择时间"
@@ -84,8 +84,6 @@
                     <td>
                         <input type="text" name="jobName">
                     </td>
-                </tr>
-                <tr>
                     <td>人员类别</td>
                     <td>
                         <select name="jobCategory" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -99,6 +97,8 @@
                         <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
+                </tr>
+                <tr>
                     <td>任现职日期</td>
                     <td>
                         <input name="jobDate" placeholder="点击选择时间"
@@ -111,8 +111,6 @@
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
-                </tr>
-                <tr>
                     <td>年龄</td>
                     <td>
                         <input type="text" name="age">
@@ -125,12 +123,12 @@
                     <td>
                         <input type="text" name="workAge">
                     </td>
+                </tr>
+                <tr>
                     <td>编制</td>
                     <td>
                         <input type="text" name="formation">
                     </td>
-                </tr>
-                <tr>
                     <td>手机号</td>
                     <td>
                         <input type="text" name="mobile">
@@ -144,18 +142,16 @@
                     <td>
                         <input type="text" name="photoId">
                     </td>
-                </tr>
-                <tr>
                     <td>现家庭住址</td>
                     <td>
                         <input type="text" name="address">
                     </td>
+                </tr>
+                <tr>
                     <td>户籍</td>
                     <td>
                         <input type="text" name="hukou">
                     </td>
-                </tr>
-                <tr>
                     <td>户籍地址</td>
                     <td>
                         <input type="text" name="hukouAddress">
@@ -194,20 +190,94 @@
                 </tr>
                 <tr>
                     <td>家庭成员1</td>
+                    <td>称谓</td>
                     <td>
-                        <input type="text" name="familyInfo1">
+                        <input type="text" name="familyInfo1Title">
                     </td>
+                    <td>姓名</td>
+                    <td>
+                        <input type="text" name="familyInfo1Name">
+                    </td>
+                    <td>工作单位</td>
+                    <td>
+                        <input type="text" name="familyInfo1WorkAddress">
+                    </td>
+                    <td>职务及职位</td>
+                    <td>
+                        <input type="text" name="familyInfo1Job">
+                    </td>
+                    <td>联系方式</td>
+                    <td>
+                        <input type="text" name="familyInfo1Contact">
+                    </td>
+                </tr>
+                <tr>
                     <td>家庭成员2</td>
+                    <td>称谓</td>
                     <td>
-                        <input type="text" name="familyInfo2">
+                        <input type="text" name="familyInfo2Title">
                     </td>
+                    <td>姓名</td>
+                    <td>
+                        <input type="text" name="familyInfo2Name">
+                    </td>
+                    <td>工作单位</td>
+                    <td>
+                        <input type="text" name="familyInfo2WorkAddress">
+                    </td>
+                    <td>职务及职位</td>
+                    <td>
+                        <input type="text" name="familyInfo2Job">
+                    </td>
+                    <td>联系方式</td>
+                    <td>
+                        <input type="text" name="familyInfo2Contact">
+                    </td>
+                </tr>
+                <tr>
                     <td>家庭成员3</td>
+                    <td>称谓</td>
                     <td>
-                        <input type="text" name="familyInfo3">
+                        <input type="text" name="familyInfo3Title">
                     </td>
-                    <td>家庭成员4</td>
+                    <td>姓名</td>
                     <td>
-                        <input type="text" name="familyInfo4">
+                        <input type="text" name="familyInfo3Name">
+                    </td>
+                    <td>工作单位</td>
+                    <td>
+                        <input type="text" name="familyInfo3WorkAddress">
+                    </td>
+                    <td>职务及职位</td>
+                    <td>
+                        <input type="text" name="familyInfo3Job">
+                    </td>
+                    <td>联系方式</td>
+                    <td>
+                        <input type="text" name="familyInfo3Contact">
+                    </td>
+                </tr>
+                <tr>
+                    <td>家庭成员4</td>
+                    <td>称谓</td>
+                    <td>
+                        <input type="text" name="familyInfo4Title">
+                    </td>
+                    <td>姓名</td>
+                    <td>
+                        <input type="text" name="familyInfo4Name">
+                    </td>
+                    <td>工作单位</td>
+                    <td>
+                        <input type="text" name="familyInfo4WorkAddress">
+                    </td>
+                    <td>职务及职位</td>
+                    <td>
+                        <input type="text" name="familyInfo4Job">
+                    </td>
+                    <td>联系方式</td>
+                    <td>
+                        <input type="text" name="familyInfo4Contact">
                     </td>
                 </tr>
                 <tr>

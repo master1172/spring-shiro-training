@@ -21,6 +21,8 @@ public interface PeopleService {
      */
     People findPeopleById(Long id);
 
+    PeopleVo findPeopleVoById(Long id);
+
     /**
      * 根据人员姓名查询人员
      *

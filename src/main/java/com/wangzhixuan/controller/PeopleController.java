@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.vo.PeopleVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class PeopleController extends BaseController{
     /**
      * 人员管理列表
      *
-     * @param people
+     * @param
      * @param page
      * @param rows
      * @param sort
@@ -117,7 +118,7 @@ public class PeopleController extends BaseController{
     /**
      * 添加用户
      *
-     * @param people
+     * @param
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -139,8 +140,8 @@ public class PeopleController extends BaseController{
 
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
-        People people = peopleService.findPeopleById(id);
-        model.addAttribute("people",people);
+        PeopleVo peopleVo = peopleService.findPeopleVoById(id);
+        model.addAttribute("peopleVo",peopleVo);
         return "/admin/people/peopleEdit";
     }
 
