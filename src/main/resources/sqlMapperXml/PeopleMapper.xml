@@ -781,6 +781,9 @@
             <if test="photo != null">
                 photo = #{photo, jdbcType=VARCHAR},
             </if>
+            <if test="status != null">
+                status = #{status, jdbcType=INTEGER},
+            </if>
 
         </set>
         where id = #{id,jdbcType=BIGINT}
