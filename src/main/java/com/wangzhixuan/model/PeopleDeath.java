@@ -15,6 +15,10 @@ public class PeopleDeath extends PeopleBase implements Serializable {
 
     private String code;
 
+
+
+    private String name;
+
     private Integer sex;
 
     private Integer national;
@@ -54,6 +58,14 @@ public class PeopleDeath extends PeopleBase implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getSex() {

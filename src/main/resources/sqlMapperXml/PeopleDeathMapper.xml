@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleDeath">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="national" property="national" jdbcType="INTEGER"/>
         <result column="birthday" property="birthday" jdbcType="DATE" />
@@ -20,6 +21,7 @@
     <resultMap id="peopleDeathVoResultMap" type="com.wangzhixuan.vo.PeopleDeathVo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="national" property="national" jdbcType="INTEGER"/>
         <result column="nationalName" property="nationalName" jdbcType="VARCHAR"/>
@@ -36,7 +38,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo
+        id, code, name, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -57,6 +59,7 @@
         SELECT
         t.id,
         t.code,
+        t.name,
         t.sex,
         t.national,
         s.name as nationalName,
@@ -92,6 +95,7 @@
         SELECT
         t.id,
         t.code,
+        t.name,
         t.sex,
         t.national,
         s.name as nationalName,
@@ -112,6 +116,9 @@
         <where>
             <if test=" condition.code != null">
                 and t.code = #{condition.code}
+            </if>
+            <if test=" condition.name != null and condition.name !=''">
+                and t.name LIKE concat('%', #{condition.name},'%')
             </if>
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
@@ -162,6 +169,9 @@
         <where>
             <if test=" condition.code != null">
                 and t.code = #{condition.code}
+            </if>
+            <if test=" condition.name != null and condition.name !=''">
+                and t.name LIKE concat('%', #{condition.name},'%')
             </if>
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
@@ -223,9 +233,10 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_death (code, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
+        insert into people_death (code, name, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
         values (
         #{code,jdbcType=VARCHAR},
+        #{name, jdbcType=VARCHAR},
         #{sex,jdbcType=TINYINT},
         #{national,jdbcType=INTEGER},
         #{birthday,jdbcType=DATE},
@@ -240,11 +251,12 @@
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_death (code, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
+        insert into people_death (code, name, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
             #{item.code,jdbcType=VARCHAR},
+            #{item.name, jdbcType=VARCHAR},
             #{item.sex,jdbcType=TINYINT},
             #{item.national,jdbcType=INTEGER},
             #{item.birthday,jdbcType=DATE},
@@ -264,6 +276,9 @@
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test=" name != null">
+                name = #{name, jdbcType=VARCHAR},
             </if>
             <if test="sex != null">
                 sex = #{sex,jdbcType=TINYINT},
@@ -300,7 +315,7 @@
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-        t.id,t.code,t.sex,t.national,t.birthday,t.school_date,t.category,t.job_level_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
+        t.id,t.code,t.name, t.sex,t.national,t.birthday,t.school_date,t.category,t.job_level_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
         from people_death t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -310,7 +325,7 @@
 
     <select id="selectPeopleVoByIds" resultMap="peopleDeathVoResultMap" parameterType="java.util.ArrayList">
         select
-        t.id,t.code,t.sex,t.national,s.name as nationalName,t.birthday,t.school_date,t.category,t.job_level_id,j.job_level as job_level_name,t.department,t.death_date,t.death_reason,t.comment,t.photo
+        t.id,t.code,t.name, t.sex,t.national,s.name as nationalName,t.birthday,t.school_date,t.category,t.job_level_id,j.job_level as job_level_name,t.department,t.death_date,t.death_reason,t.comment,t.photo
         from people_death t
         left join
         dict_national s ON s.id = t.national

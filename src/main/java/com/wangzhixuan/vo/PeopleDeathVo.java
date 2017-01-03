@@ -16,6 +16,8 @@ public class PeopleDeathVo implements Serializable {
 
     private String code;
 
+    private String name;
+
     private Integer sex;
 
     private Integer national;
@@ -78,6 +80,10 @@ public class PeopleDeathVo implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getName() {return name;}
+
+    public void setName(String name) {this.name = name;}
 
     public Integer getSex() {
         return sex;
@@ -228,6 +234,10 @@ public class PeopleDeathVo implements Serializable {
 
         if(StringUtils.isNoneBlank(peopleDeathvo.getCode())){
             condition.put("code", peopleDeathvo.getCode());
+        }
+
+        if(StringUtils.isNoneBlank(peopleDeathvo.getName())){
+            condition.put("name", peopleDeathvo.getName());
         }
 
         if (peopleDeathvo.getSex() != null){

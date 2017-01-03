@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>死亡人员管理</title>
+    <title>已故人员管理</title>
     <script type="text/javascript">
         var dataGrid;
 
@@ -328,7 +328,7 @@
         <thead>
         <tr>
             <th field="ck"       data-options="checkbox:true"></th>
-            <th field="code"     data-options="sortable:true" width="80">人员编码</th>
+            <th field="name"     data-options="sortable:true" width="80">人员姓名</th>
             <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
             <th field="nationalName" data-options="sortable:true" width="40">民族</th>
             <th field="birthday" data-options="sortable:true" width="80">生日</th>

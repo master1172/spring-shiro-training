@@ -65,6 +65,8 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             }
         }
 
+        people.setCode(StringUtilExtra.generateUUID());
+
         if(file!=null){//上传附件
             //获取头像上传路径
             String filePath = StringUtilExtra.getPictureUploadPath();
@@ -150,6 +152,8 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 row = sheet.getRow(i);
                 PeopleDeath p=new PeopleDeath();
 
+                p.setCode(StringUtilExtra.generateUUID());
+
                 //将Excel中的图片插入到数据库中
                 if (pictureList != null && pictureList.size() > 0){
                     XSSFPictureData picture = pictureList.get(0);
@@ -161,10 +165,10 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     }
                 }
 
-                //code
+                //name
                 if(row.getCell(1)!=null&&!row.getCell(1).toString().trim().equals("")){
-                    String code=row.getCell(1).toString().trim();
-                    p.setCode(code);
+                    String name=row.getCell(1).toString().trim();
+                    p.setName(name);
                 }
 
                 //性别
@@ -257,7 +261,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
         if(list!=null&&list.size()>0){
             XSSFWorkbook workBook;
             OutputStream os;
-            String newFileName="死亡人员信息.xlsx";
+            String newFileName="去世人员信息.xlsx";
             try {
                 workBook = new XSSFWorkbook();
                 XSSFSheet sheet= workBook.createSheet("死亡人员信息");
@@ -265,7 +269,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 //创建表头
                 XSSFRow row=sheet.createRow(0);
                 row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
-                row.createCell(1).setCellValue("人员编码");row.getCell(1).setCellStyle(setBorder);
+                row.createCell(1).setCellValue("人员姓名");row.getCell(1).setCellStyle(setBorder);
                 row.createCell(2).setCellValue("性别");row.getCell(2).setCellStyle(setBorder);
                 row.createCell(3).setCellValue("民族");row.getCell(3).setCellStyle(setBorder);
                 row.createCell(4).setCellValue("出生日期");row.getCell(4).setCellStyle(setBorder);
@@ -281,7 +285,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     row=sheet.createRow(i+1);
                     PeopleDeathVo p=(PeopleDeathVo)list.get(i);
                     row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
-                    row.createCell(1).setCellValue(p.getCode());row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
                     row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
                     row.createCell(3).setCellValue(p.getNationalName());row.getCell(3).setCellStyle(setBorder);
                     row.createCell(4).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));row.getCell(4).setCellStyle(setBorder);
@@ -320,6 +324,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
+            params.put("${name}",p.getName());
             params.put("${sex}",p.getSex()==0?"男":"女");
             params.put("${national}",p.getNationalName());
             params.put("${birthday}",p.getBirthday());

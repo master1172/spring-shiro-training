@@ -20,8 +20,8 @@
         <form id="peopleAddForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="code" type="text" placeholder="请输入人员编码" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td>人员姓名</td>
+                    <td><input name="name" type="text" placeholder="请输入人员姓名" class="easyui-validatebox" data-options="required:true" value=""></td>
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
