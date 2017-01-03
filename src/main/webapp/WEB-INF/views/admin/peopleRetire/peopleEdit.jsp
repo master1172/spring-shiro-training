@@ -23,11 +23,12 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
-            <input type="hidden" name="id" value="${peopleRetire.id}">
+            <input type="hidden" name="id"   value="${peopleRetire.id}">
+            <input type="hidden" name="code" value="${peopleRetire.code}">
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="code" type="text" value="${peopleRetire.code}"></td>
+                    <td>人员姓名</td>
+                    <td><input name="name" type="text" value="${peopleRetire.name}"></td>
                     <td>性别</td>
                     <td>
                         <select name="sex" id="sex"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">

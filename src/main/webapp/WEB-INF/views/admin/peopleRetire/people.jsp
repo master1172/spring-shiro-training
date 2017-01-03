@@ -302,7 +302,7 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>人员编码:</th>
+                <th>人员姓名:</th>
                 <td>
                     <input name="code"/>
                 </td>
@@ -337,7 +337,7 @@
         <thead>
         <tr>
             <th field="ck"       data-options="checkbox:true"></th>
-            <th field="code"     data-options="sortable:true" width="80">人员编码</th>
+            <th field="name"     data-options="sortable:true" width="80">人员姓名</th>
             <th field="retireJobName"     data-options="sortable:true" width="80">退休时职务</th>
             <th field="retireJobLevelName"  data-options="sortable:true" width="80">退休时职级</th>
             <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>

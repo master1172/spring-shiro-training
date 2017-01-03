@@ -4,10 +4,7 @@ import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleRetireMapper;
 import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.service.PeopleRetireService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleRetireVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
@@ -77,6 +74,9 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                 peopleRetire.setRetireDate(null);
             }
         }
+
+        //自动生成code
+        peopleRetire.setCode(StringUtilExtra.generateUUID());
 
         if(file!=null){//上传附件
             //获取头像上传路径
@@ -189,12 +189,17 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                     }
                 }
 
-                //人员编码
+                //code自动生成
+                p.setCode(StringUtilExtra.generateUUID());
+                //导入的都是退休的
+                p.setStatus(ConstUtil.PEOPLE_RETIRE_RETIRE);
+
+                //人员姓名
                 if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
                     continue;
                 }
-                String code=row.getCell(1).toString().trim();
-                p.setCode(code);
+                String name=row.getCell(1).toString().trim();
+                p.setName(name);
 
                 //退休时职务
                 if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
@@ -290,15 +295,9 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                     p.setContactNumber(contactNumber);
                 }
 
-                //当前状态
-                if(row.getCell(15) != null && !row.getCell(15).toString().trim().equals("")){
-                    String status=row.getCell(15).toString().trim();
-                    p.setStatus(status.equals("返聘")?1:0);
-                }
-
                 //备注
-                if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
-                    String comment=row.getCell(16).toString().trim();
+                if(row.getCell(15)!=null&&!row.getCell(15).toString().trim().equals("")){
+                    String comment=row.getCell(15).toString().trim();
                     p.setComment(comment);
                 }
 
@@ -326,42 +325,44 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                 XSSFRow row=sheet.createRow(0);
                 row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
                 row.createCell(1).setCellValue("人员编码");row.getCell(1).setCellStyle(setBorder);
-                row.createCell(2).setCellValue("退休时职务");row.getCell(2).setCellStyle(setBorder);
-                row.createCell(3).setCellValue("退休时职级");row.getCell(3).setCellStyle(setBorder);
-                row.createCell(4).setCellValue("性别");row.getCell(4).setCellStyle(setBorder);
-                row.createCell(5).setCellValue("民族");row.getCell(5).setCellStyle(setBorder);
-                row.createCell(6).setCellValue("学历");row.getCell(6).setCellStyle(setBorder);
-                row.createCell(7).setCellValue("出生日期");row.getCell(7).setCellStyle(setBorder);
-                row.createCell(8).setCellValue("政治面貌");row.getCell(8).setCellStyle(setBorder);
-                row.createCell(9).setCellValue("工作日期");row.getCell(9).setCellStyle(setBorder);
-                row.createCell(10).setCellValue("退休日期");row.getCell(10).setCellStyle(setBorder);
-                row.createCell(11).setCellValue("家庭住址");row.getCell(11).setCellStyle(setBorder);
-                row.createCell(12).setCellValue("联系电话");row.getCell(12).setCellStyle(setBorder);
-                row.createCell(13).setCellValue("固定联系人");row.getCell(13).setCellStyle(setBorder);
-                row.createCell(14).setCellValue("联系人电话");row.getCell(14).setCellStyle(setBorder);
-                row.createCell(15).setCellValue("当前状态");row.getCell(15).setCellStyle(setBorder);
+                row.createCell(2).setCellValue("姓名");    row.getCell(2).setCellStyle(setBorder);
+                row.createCell(3).setCellValue("退休时职务");row.getCell(3).setCellStyle(setBorder);
+                row.createCell(4).setCellValue("退休时职级");row.getCell(4).setCellStyle(setBorder);
+                row.createCell(5).setCellValue("性别");row.getCell(5).setCellStyle(setBorder);
+                row.createCell(6).setCellValue("民族");row.getCell(6).setCellStyle(setBorder);
+                row.createCell(7).setCellValue("学历");row.getCell(7).setCellStyle(setBorder);
+                row.createCell(8).setCellValue("出生日期");row.getCell(8).setCellStyle(setBorder);
+                row.createCell(9).setCellValue("政治面貌");row.getCell(9).setCellStyle(setBorder);
+                row.createCell(10).setCellValue("工作日期");row.getCell(10).setCellStyle(setBorder);
+                row.createCell(11).setCellValue("退休日期");row.getCell(11).setCellStyle(setBorder);
+                row.createCell(12).setCellValue("家庭住址");row.getCell(12).setCellStyle(setBorder);
+                row.createCell(13).setCellValue("联系电话");row.getCell(13).setCellStyle(setBorder);
+                row.createCell(14).setCellValue("固定联系人");row.getCell(14).setCellStyle(setBorder);
+                row.createCell(15).setCellValue("联系人电话");row.getCell(15).setCellStyle(setBorder);
                 row.createCell(16).setCellValue("备注");row.getCell(16).setCellStyle(setBorder);
+                row.createCell(17).setCellValue("当前状态");row.getCell(17).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
                     PeopleRetireVo p=(PeopleRetireVo)list.get(i);
                     row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
                     row.createCell(1).setCellValue(p.getCode());row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getRetireJobName());row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getRetireJobLevelName());row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getNationalName());row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getEducationName());row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getBirthday());row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getPoliticalName());row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getWorkDate());row.getCell(9).setCellStyle(setBorder);
-                    row.createCell(10).setCellValue(p.getRetireDate());row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getAddress());row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getMobile());row.getCell(12).setCellStyle(setBorder);
-                    row.createCell(13).setCellValue(p.getContact());row.getCell(13).setCellStyle(setBorder);
-                    row.createCell(14).setCellValue(p.getContactNumber());row.getCell(14).setCellStyle(setBorder);
-                    row.createCell(15).setCellValue(p.getStatus()==null?"":(p.getStatus()==0?"退休":"返聘"));row.getCell(15).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getName());row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getRetireJobName());row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getRetireJobLevelName());row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getNationalName());row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getEducationName());row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(p.getBirthday());row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getPoliticalName());row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getWorkDate());row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getRetireDate());row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getAddress());row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(13).setCellValue(p.getMobile());row.getCell(13).setCellStyle(setBorder);
+                    row.createCell(14).setCellValue(p.getContact());row.getCell(14).setCellStyle(setBorder);
+                    row.createCell(15).setCellValue(p.getContactNumber());row.getCell(15).setCellStyle(setBorder);
                     row.createCell(16).setCellValue(p.getComment());row.getCell(16).setCellStyle(setBorder);
+                    row.createCell(17).setCellValue(p.getStatus()==null?"":(p.getStatus()==0?"退休":"返聘"));row.getCell(17).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
@@ -390,6 +391,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
+            params.put("${name}",p.getName());
             params.put("${retireJobName}",p.getRetireJobName());
             params.put("${afterJobLevelName}",p.getRetireJobLevelName());
             params.put("${sex}",p.getSex()==0?"男":"女");

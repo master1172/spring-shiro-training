@@ -17,6 +17,8 @@ public class PeopleRetireVo implements Serializable {
 
     private String code;
 
+    private String name;
+
     private String retireJobName;
 
     private Integer retireJobLevelId;
@@ -89,6 +91,10 @@ public class PeopleRetireVo implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getName() {return name;}
+
+    public void setName(String name) {this.name = name;}
 
     public String getRetireJobName() {
         return retireJobName;
@@ -287,6 +293,10 @@ public class PeopleRetireVo implements Serializable {
 
         if(StringUtils.isNoneBlank(peopleRetirevo.getCode())){
             condition.put("code", peopleRetirevo.getCode());
+        }
+
+        if(StringUtils.isNoneBlank(peopleRetirevo.getName())){
+            condition.put("name", peopleRetirevo.getName());
         }
 
         if(StringUtils.isNoneBlank(peopleRetirevo.getRetireJobName())){

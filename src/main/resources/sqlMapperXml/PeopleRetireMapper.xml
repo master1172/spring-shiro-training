@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleRetire">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="retire_job_name" property="retireJobName" jdbcType="VARCHAR"/>
         <result column="retire_job_level_id" property="retireJobLevelId" jdbcType="INTEGER"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
@@ -25,6 +26,7 @@
     <resultMap id="peopleRetireVoResultMap" type="com.wangzhixuan.vo.PeopleRetireVo">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="retire_job_name" property="retireJobName" jdbcType="VARCHAR"/>
         <result column="retire_job_level_id" property="retireJobLevelId" jdbcType="INTEGER"/>
         <result column="retire_job_level_name" property="retireJobLevelName" jdbcType="VARCHAR"/>
@@ -46,7 +48,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo
+        id, code, name, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -67,6 +69,7 @@
         SELECT
         t.id,
         t.code,
+        t.name,
         t.retire_job_name,
         t.retire_job_level_id,
         m.job_level as retire_job_level_name,
@@ -115,6 +118,7 @@
         SELECT
         t.id,
         t.code,
+        t.name,
         t.retire_job_name,
         t.retire_job_level_id,
         j.job_level as retire_job_level_name,
@@ -142,6 +146,9 @@
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
+            </if>
+            <if test=" condition.name != null and condition.name != ''">
+                and t.name LIKE concat('%',#{condition.name}, '%')
             </if>
             <if test=" condition.retireJobName != null and condition.retireJobName != '' ">
                 and t.retire_job_name LIKE concat('%',#{condition.retireJobName},'%')
@@ -207,6 +214,9 @@
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
+            </if>
+            <if test=" condition.name != null and condition.name != ''">
+                and t.name LIKE concat('%',#{condition.name},'%')
             </if>
             <if test=" condition.retireJobName != null and condition.retireJobName != '' ">
                 and t.retire_job_name LIKE concat('%',#{condition.retireJobName},'%')
@@ -283,9 +293,10 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_retire (code, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo)
+        insert into people_retire (code, name,retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo)
         values (
         #{code,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
         #{retireJobName,jdbcType=VARCHAR},
         #{retireJobLevelId, jdbcType=INTEGER},
         #{sex,jdbcType=TINYINT},
@@ -305,11 +316,12 @@
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_retire (code, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo)
+        insert into people_retire (code, name, retire_job_name, retire_job_level_id, sex, national_id, education_name, birthday, political_name, work_date, retire_date, address, mobile, contact, contact_number, status, comment, photo)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
             #{item.code,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
             #{item.retireJobName,jdbcType=VARCHAR},
             #{item.retireJobLevelId, jdbcType=INTEGER},
             #{item.sex,jdbcType=TINYINT},
@@ -334,6 +346,9 @@
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name, jdbcType=VARCHAR},
             </if>
             <if test="retireJobName != null">
                 retire_job_name = #{retireJobName,jdbcType=VARCHAR},
@@ -390,6 +405,7 @@
         select
         t.id,
         t.code,
+        t.name,
         t.retire_job_name,
         t.retire_job_level_id,
         t.sex,
@@ -418,6 +434,7 @@
         SELECT
         t.id,
         t.code,
+        t.name,
         t.retire_job_name,
         t.retire_job_level_id,
         m.job_level as retire_job_level_name,
