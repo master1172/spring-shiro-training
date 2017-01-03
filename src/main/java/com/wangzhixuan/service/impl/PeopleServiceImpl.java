@@ -674,47 +674,67 @@ public class PeopleServiceImpl implements PeopleService{
 		String familyInfo3 = peopleVo.getFamilyInfo3();
 		String familyInfo4 = peopleVo.getFamilyInfo4();
 
-		if (!StringUtils.isNoneBlank(familyInfo1)){
-			String[] familyInfo1List = familyInfo1.split("|");
-			if (familyInfo1List != null && familyInfo1.length() > 4){
-				peopleVo.setFamilyInfo1Title(familyInfo1List[0]);
-				peopleVo.setFamilyInfo1Name(familyInfo1List[1]);
-				peopleVo.setFamilyInfo1WorkAddress(familyInfo1List[2]);
-				peopleVo.setFamilyInfo1Job(familyInfo1List[3]);
-				peopleVo.setFamilyInfo1Contact(familyInfo1List[4]);
+		if (StringUtils.isNoneBlank(familyInfo1)){
+			String[] familyInfo1List = familyInfo1.split("\\|");
+			if (familyInfo1List != null){
+				if (familyInfo1List.length > 0)
+					peopleVo.setFamilyInfo1Title(familyInfo1List[0]);
+				if (familyInfo1List.length > 1)
+					peopleVo.setFamilyInfo1Name(familyInfo1List[1]);
+				if (familyInfo1List.length > 2)
+					peopleVo.setFamilyInfo1WorkAddress(familyInfo1List[2]);
+				if (familyInfo1List.length > 3)
+					peopleVo.setFamilyInfo1Job(familyInfo1List[3]);
+				if (familyInfo1List.length > 4)
+					peopleVo.setFamilyInfo1Contact(familyInfo1List[4]);
 			}
 		}
 
-		if (!StringUtils.isNoneBlank(familyInfo2)){
-			String[] familyInfo2List = familyInfo2.split("|");
-			if (familyInfo2List != null && familyInfo2.length() > 4){
-				peopleVo.setFamilyInfo2Title(familyInfo2List[0]);
-				peopleVo.setFamilyInfo2Name(familyInfo2List[1]);
-				peopleVo.setFamilyInfo2WorkAddress(familyInfo2List[2]);
-				peopleVo.setFamilyInfo2Job(familyInfo2List[3]);
-				peopleVo.setFamilyInfo2Contact(familyInfo2List[4]);
+		if (StringUtils.isNoneBlank(familyInfo2)){
+			String[] familyInfo2List = familyInfo2.split("\\|");
+			if (familyInfo2List != null){
+				if (familyInfo2List.length > 0)
+					peopleVo.setFamilyInfo2Title(familyInfo2List[0]);
+				if (familyInfo2List.length > 1)
+					peopleVo.setFamilyInfo2Name(familyInfo2List[1]);
+				if (familyInfo2List.length > 2)
+					peopleVo.setFamilyInfo2WorkAddress(familyInfo2List[2]);
+				if (familyInfo2List.length > 3)
+					peopleVo.setFamilyInfo2Job(familyInfo2List[3]);
+				if (familyInfo2List.length > 4)
+					peopleVo.setFamilyInfo2Contact(familyInfo2List[4]);
 			}
 		}
 
-		if (!StringUtils.isNoneBlank(familyInfo3)){
-			String[] familyInfo3List = familyInfo3.split("|");
+		if (StringUtils.isNoneBlank(familyInfo3)){
+			String[] familyInfo3List = familyInfo3.split("\\|");
 			if (familyInfo3List != null && familyInfo3.length() > 4){
-				peopleVo.setFamilyInfo3Title(familyInfo3List[0]);
-				peopleVo.setFamilyInfo3Name(familyInfo3List[1]);
-				peopleVo.setFamilyInfo3WorkAddress(familyInfo3List[2]);
-				peopleVo.setFamilyInfo3Job(familyInfo3List[3]);
-				peopleVo.setFamilyInfo3Contact(familyInfo3List[4]);
+				if (familyInfo3List.length > 0)
+					peopleVo.setFamilyInfo3Title(familyInfo3List[0]);
+				if (familyInfo3List.length > 1)
+					peopleVo.setFamilyInfo3Name(familyInfo3List[1]);
+				if (familyInfo3List.length > 2)
+					peopleVo.setFamilyInfo3WorkAddress(familyInfo3List[2]);
+				if (familyInfo3List.length > 3)
+					peopleVo.setFamilyInfo3Job(familyInfo3List[3]);
+				if (familyInfo3List.length > 4)
+					peopleVo.setFamilyInfo3Contact(familyInfo3List[4]);
 			}
 		}
 
-		if (!StringUtils.isNoneBlank(familyInfo4)){
-			String[] familyInfo4List = familyInfo4.split("|");
+		if (StringUtils.isNoneBlank(familyInfo4)){
+			String[] familyInfo4List = familyInfo4.split("\\|");
 			if (familyInfo4List != null && familyInfo4.length() > 4){
-				peopleVo.setFamilyInfo4Title(familyInfo4List[0]);
-				peopleVo.setFamilyInfo4Name(familyInfo4List[1]);
-				peopleVo.setFamilyInfo4WorkAddress(familyInfo4List[2]);
-				peopleVo.setFamilyInfo4Job(familyInfo4List[3]);
-				peopleVo.setFamilyInfo4Contact(familyInfo4List[4]);
+				if (familyInfo4List.length > 0)
+					peopleVo.setFamilyInfo4Title(familyInfo4List[0]);
+				if (familyInfo4List.length > 1)
+					peopleVo.setFamilyInfo4Name(familyInfo4List[1]);
+				if (familyInfo4List.length > 2)
+					peopleVo.setFamilyInfo4WorkAddress(familyInfo4List[2]);
+				if (familyInfo4List.length > 3)
+					peopleVo.setFamilyInfo4Job(familyInfo4List[3]);
+				if (familyInfo4List.length > 4)
+					peopleVo.setFamilyInfo4Contact(familyInfo4List[4]);
 			}
 		}
 	}

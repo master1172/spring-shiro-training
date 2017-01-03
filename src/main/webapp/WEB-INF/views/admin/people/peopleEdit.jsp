@@ -61,7 +61,6 @@
                     </td>
                 </tr>
                 <tr>
-
                     <td>政治面貌</td>
                     <td>
                         <input type="text" name="politicalName" value="${peopleVo.politicalName}">
@@ -204,7 +203,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>家庭成员1</td>
                     <td>称谓</td>
                     <td>
                         <input type="text" name="familyInfo1Title" value="${peopleVo.familyInfo1Title}">
@@ -227,7 +225,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>家庭成员2</td>
                     <td>称谓</td>
                     <td>
                         <input type="text" name="familyInfo2Title" value="${peopleVo.familyInfo2Title}">
@@ -250,7 +247,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>家庭成员3</td>
                     <td>称谓</td>
                     <td>
                         <input type="text" name="familyInfo3Title" value="${peopleVo.familyInfo3Title}">
@@ -273,7 +269,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>家庭成员4</td>
                     <td>称谓</td>
                     <td>
                         <input type="text" name="familyInfo4Title" value="${peopleVo.familyInfo4Title}">
