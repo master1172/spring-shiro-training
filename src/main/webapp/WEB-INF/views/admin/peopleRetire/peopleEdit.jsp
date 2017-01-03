@@ -6,7 +6,6 @@
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
         $("#sex").val('${peopleRetire.sex}');
         $('#nationalId').val('${peopleRetire.nationalId}');
-        $('#retireJobName').val('${peopleRetire.retireJobName}');
         $('#retireJobLevelId').val('${peopleRetire.retireJobLevelId}');
         $('#status').val('${peopleRetire.status}');
         $('#imgShow').attr('src','${staticPath}/${peopleRetire.photo}');
@@ -40,8 +39,7 @@
                 <tr>
                     <td>退休时职务</td>
                     <td>
-                        <input class="easyui-combobox" id="retireJobName" name="retireJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
-                        </input>
+                        <input type="text" id="retireJobName" name="retireJobName" value="${peopleRetire.retireJobName}">
                     </td>
                     <td>退休时职级</td>
                     <td>
