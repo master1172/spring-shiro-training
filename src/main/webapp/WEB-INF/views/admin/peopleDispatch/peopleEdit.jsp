@@ -43,10 +43,9 @@
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${peopleDispatch.id}">
+            <input type="hidden" name="code" value="${peopleDispatch.code}">
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="code" type="text" value="${peopleDispatch.code}" class="easyui-validatebox" data-options="required:true" value=""></td>
                     <td>姓名</td>
                     <td><input type="text" name="name"></td>
                 </tr>
