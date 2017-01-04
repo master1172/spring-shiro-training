@@ -38,8 +38,8 @@
         function advSearch(){
             parent.$.modalDialog({
                 title: '高级查询',
-                width: 500,
-                height: 350,
+                width: 1000,
+                height: 700,
                 href: '${path}/peopleContract2/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -59,8 +59,8 @@
         function exportSearch(){
             parent.$.modalDialog({
                 title: '导出',
-                width: 500,
-                height: 350,
+                width: 1000,
+                height: 700,
                 href: '${path}/peopleContract2/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -93,8 +93,8 @@
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
-                width: 500,
-                height: 350,
+                width: 1000,
+                height: 700,
                 href: '${path}/peopleContract2/addPage',
                 buttons: [{
                     text: '添加',
@@ -128,8 +128,8 @@
 
             parent.$.modalDialog({
                 title: '修改',
-                width: 500,
-                height: 350,
+                width: 1000,
+                height: 700,
                 href: '${path}/peopleContract2/editPage?id='+id,
                 buttons: [{
                     text: '修改',
@@ -339,7 +339,6 @@
         <thead>
         <tr>
             <th field="ck"       data-options="checkbox:true"></th>
-            <th field="code"     data-options="sortable:true" width="80">人员编码</th>
             <th field="name"     data-options="sortable:true" width="80">姓名</th>
             <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
             <th field="nationalName"     data-options="sortable:true" width="80">民族</th>

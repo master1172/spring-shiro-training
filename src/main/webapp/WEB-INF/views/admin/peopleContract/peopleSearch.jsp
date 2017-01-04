@@ -23,12 +23,8 @@
         <form id="peopleSearchForm" method="post">
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="code" type="text"></td>
                     <td>姓名</td>
                     <td><input type="text" name="name"></td>
-                </tr>
-                <tr>
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -52,8 +48,6 @@
                     <td>
                         <select name="city" class="city" disabled="disabled"></select>
                     </td>
-                </tr>
-                <tr>
                     <td>户籍</td>
                     <td>
                         <select name="hukou" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -72,8 +66,6 @@
                     <td>
                         <input type="text" name="speciality"/>
                     </td>
-                </tr>
-                <tr>
                     <td>身高</td>
                     <td>
                         <input type="text" name="height"/>
@@ -116,8 +108,6 @@
                     <td>
                         <input type="text" name="address"/>
                     </td>
-                </tr>
-                <tr>
                     <td>部门</td>
                     <td><input type="text" name="departmentName"></td>
                     <td>工种</td>

@@ -27,12 +27,8 @@
         <form id="peopleAddForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="code" type="text" placeholder="" class="easyui-validatebox" data-options="required:true" value=""></td>
                     <td>姓名</td>
                     <td><input type="text" name="name"></td>
-                </tr>
-                <tr>
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -55,8 +51,6 @@
                     <td>
                         <select name="city" class="city" disabled="disabled"></select>
                     </td>
-                </tr>
-                <tr>
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
@@ -75,8 +69,6 @@
                     <td>
                         <input type="text" name="speciality"/>
                     </td>
-                </tr>
-                <tr>
                     <td>身高</td>
                     <td>
                         <input type="text" name="height"/>
@@ -101,8 +93,6 @@
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
-                </tr>
-                <tr>
                     <td>联系电话</td>
                     <td><input type="text" name="mobile"></td>
                     <td>现住址</td>
@@ -117,8 +107,6 @@
                     <td>
                         <input type="text" name="jobName"/>
                     </td>
-                </tr>
-                <tr>
                     <td>备注</td>
                     <td colspan="3">
                         <input type="text" name="comment"/>
