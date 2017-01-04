@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>合同制人员管理</title>
+    <title>党员信息管理</title>
     <script type="text/javascript">
         var dataGrid;
 
@@ -70,6 +70,8 @@
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f, "/peopleParty/exportSearch",function(data){
                                 if(!data["success"]){
+                                    parent.progressClose();
+                                    parent.$.modalDialog.handler.dialog("close");
                                     parent.$.messager.alert("提示",data["msg"],"warning");
                                 }else{
                                     parent.progressClose();

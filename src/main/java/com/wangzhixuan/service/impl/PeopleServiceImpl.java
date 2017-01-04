@@ -172,6 +172,7 @@ public class PeopleServiceImpl implements PeopleService{
 				PeopleRetire oldPeopleRetire = peopleRetireMapper.findPeopleRetireByCode(code);
 
 				if (oldPeopleRetire != null){
+					oldPeopleRetire.setName(peopleVo.getName());
 					oldPeopleRetire.setRetireJobName(peopleVo.getJobName());
 					oldPeopleRetire.setRetireJobLevelId(peopleVo.getJobLevelId());
 					oldPeopleRetire.setSex(peopleVo.getSex());
@@ -193,6 +194,7 @@ public class PeopleServiceImpl implements PeopleService{
 					PeopleRetire peopleRetire = new PeopleRetire();
 
 					peopleRetire.setCode(peopleVo.getCode());
+					peopleRetire.setName(peopleVo.getName());
 					peopleRetire.setRetireJobName(peopleVo.getJobName());
 					peopleRetire.setRetireJobLevelId(peopleVo.getJobLevelId());
 					peopleRetire.setSex(peopleVo.getSex());
@@ -243,6 +245,7 @@ public class PeopleServiceImpl implements PeopleService{
 				PeopleDeath oldPeopleDeath = peopleDeathMapper.findPeopleByCode(code);
 
 				if (oldPeopleDeath != null){
+					oldPeopleDeath.setName(peopleVo.getName());
 					oldPeopleDeath.setSex(peopleVo.getSex());
 					oldPeopleDeath.setNational(peopleVo.getNationalId());
 					oldPeopleDeath.setBirthday(peopleVo.getBirthday());
@@ -256,6 +259,7 @@ public class PeopleServiceImpl implements PeopleService{
 					//在已故人员数据库中没有查到，插入一条新的记录
 					PeopleDeath peopleDeath = new PeopleDeath();
 
+					peopleDeath.setName(peopleVo.getName());
 					peopleDeath.setCode(peopleVo.getCode());
 					peopleDeath.setSex(peopleVo.getSex());
 					peopleDeath.setNational(peopleVo.getNationalId());

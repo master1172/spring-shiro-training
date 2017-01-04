@@ -70,6 +70,8 @@
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f, "/peopleDeath/exportSearch",function(data){
                                 if(!data["success"]){
+                                    parent.progressClose();
+                                    parent.$.modalDialog.handler.dialog("close");
                                     parent.$.messager.alert("提示",data["msg"],"warning");
                                 }else{
                                     parent.progressClose();
