@@ -88,6 +88,41 @@
             });
         }
 
+        function transferFun(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var codes = [];
+            $.each(checkedItems, function(index,item){
+                codes.push(item.code);
+            });
+
+            parent.$.modalDialog({
+                title: '人员调动',
+                width: 500,
+                height: 300,
+                href: '${path}/peopleTransfer/editPage',
+
+                buttons: [{
+                    text: '修改',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#peopleTransferForm");
+                        //f.submit();
+                        if(parent.checkForm()){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/transfer",function(data){
+                                if(!data["success"]){
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                }else{
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -118,7 +153,7 @@
         function operateFormatter(value,row,index){
             var str = '';
             <shiro:hasPermission name="/people/transferList">
-                str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="transferList(\'{0}\');" >调动记录</a>', row.id);
+                str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="transferList(\'{0}\');" >调动记录列表</a>', row.id);
             </shiro:hasPermission>
             return str;
         }
@@ -165,13 +200,17 @@
             <th field="fromSchool"    data-options="sortable:false" width="80">调出前单位</th>
             <th field="toSchool"      data-options="sortable:false" width="80">调往单位</th>
             <th field="transferDate"  data-options="sortable:false" width="80">调动日期</th>
-            <th field="peopleCode"    data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="id"    data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
 </div>
 
 <div id="toolbar" style="display: none;">
+    <shiro:hasPermission name="/peopleTransfer/transfer">
+        <a onclick="transferFun();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">人员调动</a>
+    </shiro:hasPermission>
     <shiro:hasPermission name="/peopleTransfer/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
