@@ -22,6 +22,7 @@
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${people.id}">
+            <input type="hidden" name="code" value="${people.code}">
             <table class="grid" border=1>
                 <tr>
                     <td>姓名</td>

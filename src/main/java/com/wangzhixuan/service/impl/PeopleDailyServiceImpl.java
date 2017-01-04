@@ -56,6 +56,8 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
             }
         }
 
+        peopleDaily.setCode(StringUtilExtra.generateUUID());
+
         if (file!=null){
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
@@ -139,6 +141,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
             for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
                 row = sheet.getRow(i);
                 PeopleDaily p=new PeopleDaily();
+                p.setCode(StringUtilExtra.generateUUID());
 
                 //将Excel中的图片插入到数据库中
                 if (pictureList != null && pictureList.size() > 0){
