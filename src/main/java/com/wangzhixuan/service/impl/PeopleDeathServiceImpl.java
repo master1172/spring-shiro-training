@@ -261,10 +261,10 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
         if(list!=null&&list.size()>0){
             XSSFWorkbook workBook;
             OutputStream os;
-            String newFileName="去世人员信息.xlsx";
+            String newFileName="已故人员信息.xlsx";
             try {
                 workBook = new XSSFWorkbook();
-                XSSFSheet sheet= workBook.createSheet("死亡人员信息");
+                XSSFSheet sheet= workBook.createSheet("已故人员信息");
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
                 XSSFRow row=sheet.createRow(0);
@@ -320,7 +320,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             XWPFDocument doc;
             OutputStream os;
             String filePath=this.getClass().getResource("/template/custInfoDeath.docx").getPath();
-            String newFileName="死亡人员信息.docx";
+            String newFileName="已故人员信息.docx";
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
@@ -340,6 +340,8 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
