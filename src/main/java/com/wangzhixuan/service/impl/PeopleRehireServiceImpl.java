@@ -71,6 +71,8 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             }
         }
 
+        peopleRehire.setCode(StringUtilExtra.generateUUID());
+
         if(file!=null){//上传附件
             //获取头像上传路径
             String filePath = StringUtilExtra.getPictureUploadPath();
@@ -175,28 +177,23 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                     }
                 }
 
-                //人员编码
-                if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
-                    continue;
-                }
-                String code=row.getCell(1).toString().trim();
-                p.setCode(code);
+                p.setCode(StringUtilExtra.generateUUID());
 
                 //姓名
-                if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
-                    String name=row.getCell(2).toString().trim();
+                if(row.getCell(1)!=null&&!row.getCell(1).toString().trim().equals("")){
+                    String name=row.getCell(1).toString().trim();
                     p.setName(name);
                 }
 
                 //性别
-                if(row.getCell(3)!=null&&!row.getCell(3).toString().trim().equals("")){
-                    String sex=row.getCell(3).toString().trim();
+                if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
+                    String sex=row.getCell(2).toString().trim();
                     p.setSex(sex.equals("女")?1:0);
                 }
 
                 //民族
-                if(row.getCell(4) != null && !row.getCell(4).toString().trim().equals("")){
-                    String nationalName = row.getCell(4).toString().trim();
+                if(row.getCell(3) != null && !row.getCell(3).toString().trim().equals("")){
+                    String nationalName = row.getCell(3).toString().trim();
 
                     try{
                         Integer nationalId = dictMapper.findNationalIdByName(nationalName);
@@ -209,68 +206,68 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 }
 
                 //籍贯
-                if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
-                    String nativeName=row.getCell(5).toString().trim();
+                if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
+                    String nativeName=row.getCell(4).toString().trim();
                     p.setNativeName(nativeName);
                 }
 
                 //出生地
-                if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
-                    String birthPlace=row.getCell(6).toString().trim();
+                if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
+                    String birthPlace=row.getCell(5).toString().trim();
                     p.setBirthPlace(birthPlace);
                 }
 
                 //出生日期
-                if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
-                    String birthday=row.getCell(7).toString().trim();
+                if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
+                    String birthday=row.getCell(6).toString().trim();
                     p.setBirthday(birthday);
                 }
 
                 //文化程度
-                if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
-                    String educationName=row.getCell(8).toString().trim();
+                if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
+                    String educationName=row.getCell(7).toString().trim();
                     p.setEducationName(educationName);
                 }
 
                 //政治面貌
-                if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
-                    String politicalName=row.getCell(9).toString().trim();
+                if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
+                    String politicalName=row.getCell(8).toString().trim();
                     p.setPoliticalName(politicalName);
                 }
 
                 //健康状况
-                if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
-                    String healthStatus=row.getCell(10).toString().trim();
+                if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
+                    String healthStatus=row.getCell(9).toString().trim();
                     p.setHealthStatus(healthStatus);
                 }
 
                 //退休日期
-                if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
-                    String retireDate=row.getCell(11).toString().trim();
+                if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
+                    String retireDate=row.getCell(10).toString().trim();
                     p.setRetireDate(retireDate);
                 }
 
                 //专业技术及专长
-                if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
-                    String speciality=row.getCell(12).toString().trim();
+                if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
+                    String speciality=row.getCell(11).toString().trim();
                     p.setSpeciality(speciality);
                 }
 
                 //返聘前工作部门
-                if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
-                    String beforeDepartment=row.getCell(13).toString().trim();
+                if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
+                    String beforeDepartment=row.getCell(12).toString().trim();
                     p.setBeforeDepartment(beforeDepartment);
                 }
 
                 //返聘前岗位
-                if(row.getCell(14)!=null&&!row.getCell(14).toString().trim().equals("")){
-                    String beforeJobName=row.getCell(14).toString().trim();
+                if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
+                    String beforeJobName=row.getCell(13).toString().trim();
                     p.setBeforeJobName(beforeJobName);
                 }
 
                 //返聘前职级
-                if(row.getCell(15) != null && !row.getCell(15).toString().trim().equals("")){
-                    String beforeJobLevelName = row.getCell(15).toString().trim();
+                if(row.getCell(14) != null && !row.getCell(14).toString().trim().equals("")){
+                    String beforeJobLevelName = row.getCell(14).toString().trim();
 
                     try{
                         Integer beforeJobLevelId = dictMapper.findJobIdByName(beforeJobLevelName);
@@ -283,8 +280,8 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 }
 
                 //拟返聘工作部门
-                if(row.getCell(16) != null && !row.getCell(16).toString().trim().equals("")){
-                    String afterDepartmentName = row.getCell(16).toString().trim();
+                if(row.getCell(15) != null && !row.getCell(15).toString().trim().equals("")){
+                    String afterDepartmentName = row.getCell(15).toString().trim();
 
                     try{
                         Integer afterDepartmentId = dictMapper.findDepartmentIdByName(afterDepartmentName);
@@ -297,14 +294,14 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 }
 
                 //拟返聘岗位
-                if(row.getCell(17)!=null&&!row.getCell(17).toString().trim().equals("")){
-                    String afterJobName=row.getCell(17).toString().trim();
+                if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
+                    String afterJobName=row.getCell(16).toString().trim();
                     p.setAfterJobName(afterJobName);
                 }
 
                 //拟返聘职级
-                if(row.getCell(18) != null && !row.getCell(18).toString().trim().equals("")){
-                    String afterJobLevelName = row.getCell(18).toString().trim();
+                if(row.getCell(17) != null && !row.getCell(17).toString().trim().equals("")){
+                    String afterJobLevelName = row.getCell(17).toString().trim();
 
                     try{
                         Integer afterJobLevelId = dictMapper.findJobIdByName(afterJobLevelName);
@@ -317,26 +314,26 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 }
 
                 //身份证号
-                if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")){
-                    String photoId=row.getCell(19).toString().trim();
+                if(row.getCell(18)!=null&&!row.getCell(18).toString().trim().equals("")){
+                    String photoId=row.getCell(18).toString().trim();
                     p.setPhotoId(photoId);
                 }
 
                 //家庭住址
-                if(row.getCell(20)!=null&&!row.getCell(20).toString().trim().equals("")){
-                    String address=row.getCell(20).toString().trim();
+                if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")){
+                    String address=row.getCell(19).toString().trim();
                     p.setAddress(address);
                 }
 
                 //户籍所在地
-                if(row.getCell(21)!=null&&!row.getCell(21).toString().trim().equals("")){
-                    String hukouAddress=row.getCell(21).toString().trim();
+                if(row.getCell(20)!=null&&!row.getCell(20).toString().trim().equals("")){
+                    String hukouAddress=row.getCell(20).toString().trim();
                     p.setHukouAddress(hukouAddress);
                 }
 
                 //返聘人员类型
-                if(row.getCell(22)!=null&&!row.getCell(22).toString().trim().equals("")){
-                    String category=row.getCell(22).toString().trim();
+                if(row.getCell(21)!=null&&!row.getCell(21).toString().trim().equals("")){
+                    String category=row.getCell(21).toString().trim();
                     p.setCategory(category);
                 }
 
@@ -363,55 +360,53 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 //创建表头
                 XSSFRow row=sheet.createRow(0);
                 row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
-                row.createCell(1).setCellValue("人员编码");row.getCell(1).setCellStyle(setBorder);
-                row.createCell(2).setCellValue("姓名");row.getCell(2).setCellStyle(setBorder);
-                row.createCell(3).setCellValue("性别");row.getCell(3).setCellStyle(setBorder);
-                row.createCell(4).setCellValue("民族");row.getCell(4).setCellStyle(setBorder);
-                row.createCell(5).setCellValue("籍贯");row.getCell(5).setCellStyle(setBorder);
-                row.createCell(6).setCellValue("出生地");row.getCell(6).setCellStyle(setBorder);
-                row.createCell(7).setCellValue("出生日期");row.getCell(7).setCellStyle(setBorder);
-                row.createCell(8).setCellValue("文化程度");row.getCell(8).setCellStyle(setBorder);
-                row.createCell(9).setCellValue("政治面貌");row.getCell(9).setCellStyle(setBorder);
-                row.createCell(10).setCellValue("健康状况");row.getCell(10).setCellStyle(setBorder);
-                row.createCell(11).setCellValue("退休日期");row.getCell(11).setCellStyle(setBorder);
-                row.createCell(12).setCellValue("专业技术及专长");row.getCell(12).setCellStyle(setBorder);
-                row.createCell(13).setCellValue("返聘前工作部门");row.getCell(13).setCellStyle(setBorder);
-                row.createCell(14).setCellValue("返聘前岗位");row.getCell(14).setCellStyle(setBorder);
-                row.createCell(15).setCellValue("返聘前职级");row.getCell(15).setCellStyle(setBorder);
-                row.createCell(16).setCellValue("拟返聘工作部门");row.getCell(16).setCellStyle(setBorder);
-                row.createCell(17).setCellValue("拟返聘岗位");row.getCell(17).setCellStyle(setBorder);
-                row.createCell(18).setCellValue("拟返聘职级");row.getCell(18).setCellStyle(setBorder);
-                row.createCell(19).setCellValue("身份证号");row.getCell(19).setCellStyle(setBorder);
-                row.createCell(20).setCellValue("家庭住址");row.getCell(20).setCellStyle(setBorder);
-                row.createCell(21).setCellValue("户籍所在地");row.getCell(21).setCellStyle(setBorder);
-                row.createCell(22).setCellValue("返聘人员类型");row.getCell(22).setCellStyle(setBorder);
+                row.createCell(1).setCellValue("姓名");row.getCell(1).setCellStyle(setBorder);
+                row.createCell(2).setCellValue("性别");row.getCell(2).setCellStyle(setBorder);
+                row.createCell(3).setCellValue("民族");row.getCell(3).setCellStyle(setBorder);
+                row.createCell(4).setCellValue("籍贯");row.getCell(4).setCellStyle(setBorder);
+                row.createCell(5).setCellValue("出生地");row.getCell(5).setCellStyle(setBorder);
+                row.createCell(6).setCellValue("出生日期");row.getCell(6).setCellStyle(setBorder);
+                row.createCell(7).setCellValue("文化程度");row.getCell(7).setCellStyle(setBorder);
+                row.createCell(8).setCellValue("政治面貌");row.getCell(8).setCellStyle(setBorder);
+                row.createCell(9).setCellValue("健康状况");row.getCell(9).setCellStyle(setBorder);
+                row.createCell(10).setCellValue("退休日期");row.getCell(10).setCellStyle(setBorder);
+                row.createCell(11).setCellValue("专业技术及专长");row.getCell(11).setCellStyle(setBorder);
+                row.createCell(12).setCellValue("返聘前工作部门");row.getCell(12).setCellStyle(setBorder);
+                row.createCell(13).setCellValue("返聘前岗位");row.getCell(13).setCellStyle(setBorder);
+                row.createCell(14).setCellValue("返聘前职级");row.getCell(14).setCellStyle(setBorder);
+                row.createCell(15).setCellValue("拟返聘工作部门");row.getCell(15).setCellStyle(setBorder);
+                row.createCell(16).setCellValue("拟返聘岗位");row.getCell(16).setCellStyle(setBorder);
+                row.createCell(17).setCellValue("拟返聘职级");row.getCell(17).setCellStyle(setBorder);
+                row.createCell(18).setCellValue("身份证号");row.getCell(18).setCellStyle(setBorder);
+                row.createCell(19).setCellValue("家庭住址");row.getCell(19).setCellStyle(setBorder);
+                row.createCell(20).setCellValue("户籍所在地");row.getCell(20).setCellStyle(setBorder);
+                row.createCell(21).setCellValue("返聘人员类型");row.getCell(21).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
                     PeopleRehireVo p=(PeopleRehireVo)list.get(i);
                     row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
-                    row.createCell(1).setCellValue(p.getCode());row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getName());row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getNationalName());row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getNativeName());row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getBirthPlace());row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getBirthday());row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getEducationName());row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getPoliticalName());row.getCell(9).setCellStyle(setBorder);
-                    row.createCell(10).setCellValue(p.getHealthStatus());row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getRetireDate());row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getSpeciality());row.getCell(12).setCellStyle(setBorder);
-                    row.createCell(13).setCellValue(p.getBeforeDepartment());row.getCell(13).setCellStyle(setBorder);
-                    row.createCell(14).setCellValue(p.getBeforeJobName());row.getCell(14).setCellStyle(setBorder);
-                    row.createCell(15).setCellValue(p.getBeforeJobLevelName());row.getCell(15).setCellStyle(setBorder);
-                    row.createCell(16).setCellValue(p.getAfterDepartmentName());row.getCell(16).setCellStyle(setBorder);
-                    row.createCell(17).setCellValue(p.getAfterJobName());row.getCell(17).setCellStyle(setBorder);
-                    row.createCell(18).setCellValue(p.getBeforeJobLevelName());row.getCell(18).setCellStyle(setBorder);
-                    row.createCell(19).setCellValue(p.getPhotoId());row.getCell(19).setCellStyle(setBorder);
-                    row.createCell(20).setCellValue(p.getAddress());row.getCell(20).setCellStyle(setBorder);
-                    row.createCell(21).setCellValue(p.getHukouAddress());row.getCell(21).setCellStyle(setBorder);
-                    row.createCell(22).setCellValue(p.getCategory());row.getCell(22).setCellStyle(setBorder);
+                    row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getNationalName());row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getNativeName());row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getBirthPlace());row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getBirthday());row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getEducationName());row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(p.getPoliticalName());row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getHealthStatus());row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getRetireDate());row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getSpeciality());row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getBeforeDepartment());row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(13).setCellValue(p.getBeforeJobName());row.getCell(13).setCellStyle(setBorder);
+                    row.createCell(14).setCellValue(p.getBeforeJobLevelName());row.getCell(14).setCellStyle(setBorder);
+                    row.createCell(15).setCellValue(p.getAfterDepartmentName());row.getCell(15).setCellStyle(setBorder);
+                    row.createCell(16).setCellValue(p.getAfterJobName());row.getCell(16).setCellStyle(setBorder);
+                    row.createCell(17).setCellValue(p.getBeforeJobLevelName());row.getCell(17).setCellStyle(setBorder);
+                    row.createCell(18).setCellValue(p.getPhotoId());row.getCell(18).setCellStyle(setBorder);
+                    row.createCell(19).setCellValue(p.getAddress());row.getCell(19).setCellStyle(setBorder);
+                    row.createCell(20).setCellValue(p.getHukouAddress());row.getCell(20).setCellStyle(setBorder);
+                    row.createCell(21).setCellValue(p.getCategory());row.getCell(21).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);

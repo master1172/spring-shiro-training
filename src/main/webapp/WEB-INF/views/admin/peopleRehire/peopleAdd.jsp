@@ -20,8 +20,6 @@
         <form id="peopleAddForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="code" type="text" placeholder="" class="easyui-validatebox" data-options="required:true" value=""></td>
                     <td>姓名</td>
                     <td><input type="text" name="name"></td>
                 </tr>
