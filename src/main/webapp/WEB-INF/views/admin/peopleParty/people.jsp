@@ -330,7 +330,6 @@
         <thead>
         <tr>
             <th field="ck"       data-options="checkbox:true"></th>
-            <th field="peopleCode"     data-options="sortable:true" width="80">人员编码</th>
             <th field="peopleType"     data-options="sortable:true" width="80">人员类别</th>
             <th field="peopleName"  data-options="sortable:true" width="80">人员姓名</th>
             <th field="branchName"     data-options="sortable:true" width="80">所在支部</th>

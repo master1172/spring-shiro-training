@@ -23,14 +23,6 @@
         <form id="peopleSearchForm" method="post">
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="peopleCode" type="text"></td>
-                    <td>人员类别</td>
-                    <td>
-                        <input type="text" name="peopleType">
-                    </td>
-                </tr>
-                <tr>
                     <td>人员姓名</td>
                     <td>
                         <input type="text" name="peopleName">

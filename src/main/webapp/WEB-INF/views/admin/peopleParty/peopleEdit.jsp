@@ -28,15 +28,10 @@
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${peopleParty.id}">
+            <input type="hidden" name="peopleCode" value="${peopleParty.peopleCode}">
+
             <table class="grid" border=1>
-                <tr>
-                    <td>人员编码</td>
-                    <td><input name="peopleCode" type="text" value="${peopleParty.peopleCode}"></td>
-                    <td>人员类别</td>
-                    <td>
-                        <input type="text" name="peopleType" value="${peopleParty.peopleType}">
-                    </td>
-                </tr>
+
                 <tr>
                     <td>人员姓名</td>
                     <td>
