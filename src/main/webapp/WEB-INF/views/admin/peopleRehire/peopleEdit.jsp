@@ -31,7 +31,7 @@
             <table class="grid" border=1>
                 <tr>
                     <td>姓名</td>
-                    <td><input type="text" name="name"></td>
+                    <td><input type="text" name="name" value="${peopleRehire.name}"></td>
                 </tr>
                 <tr>
                     <td>性别</td>

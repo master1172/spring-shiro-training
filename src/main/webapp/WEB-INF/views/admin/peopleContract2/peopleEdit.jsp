@@ -47,7 +47,7 @@
             <table class="grid" border=1>
                 <tr>
                     <td>姓名</td>
-                    <td><input type="text" name="name"></td>
+                    <td><input type="text" name="name" value="${peopleContract.name}"></td>
                     <td>性别</td>
                     <td>
                         <select name="sex" id="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
