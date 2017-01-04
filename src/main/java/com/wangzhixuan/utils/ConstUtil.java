@@ -24,6 +24,7 @@ public class ConstUtil {
     public static int PEOPLE_NORMAL = 0;
     public static int PEOPLE_RETIRE = 1;
     public static int PEOPLE_DEATH  = 2;
+    public static int PEOPLE_TRANSFER = 3;
 
     public static int PEOPLE_RETIRE_RETIRE = 0;
     public static int PEOPLE_RETIRE_REHIRE = 1;

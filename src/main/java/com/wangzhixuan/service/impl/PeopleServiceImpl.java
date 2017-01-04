@@ -141,6 +141,11 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
 	@Override
+	public void updatePeople(People people){
+		peopleMapper.updatePeople(people);
+	}
+
+	@Override
     public void deletePeopleById(Long id) {
         peopleMapper.deleteById(id);
     }

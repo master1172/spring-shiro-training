@@ -90,6 +90,40 @@
             });
         }
 
+        function goTransfer(){
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if(checkedItems.length==1){
+                var id=checkedItems[0]["id"];
+            }else{
+                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+            }
+
+            parent.$.modalDialog({
+                title: '调出本单位',
+                width: 800,
+                height: 400,
+                href: '${path}/people/transferPage?id='+checkedItems[0]["id"],
+                buttons:[{
+                    text: '调出',
+                    handler: function(){
+                        parent.$.modalDialog.openner_dataGrid = dataGrid; //因为调出成功后，需要刷新这个datagrid
+                        var f = parent.$.modalDialog.handler.find("#peopleTransferForm");
+                        if(parent.checkForm()){
+                            parent.SYS_SUBMIT_FORM(f,"/people/transfer",function(data){
+                                if(!data["success"]){
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                }else{
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
@@ -386,8 +420,8 @@
                 <th field="nationalName"  data-options="sortable:true" width="80">民族</th>
                 <th field="birthday"      data-options="sortable:true" width="130">生日</th>
                 <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
-                <th field="educationName" data-options="sortable:true" width="80">薪资</th>
-                <th field="degreeName"    data-options="sortable:true" width="80">学历</th>
+                <th field="educationName" data-options="sortable:true" width="80">学历</th>
+                <th field="degreeName"    data-options="sortable:true" width="80">学位</th>
                 <th field="jobName"       data-options="sortable:true" width="80">职务</th>
                 <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
                 <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
@@ -436,6 +470,8 @@
         <a onclick="goDeath();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">转入已故人员</a>
 
+        <a onclick="goTransfer();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">调出本单位</a>
         <!-- 附件下载使用 -->
     	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
     </div>

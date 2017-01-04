@@ -135,9 +135,10 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_transfer (people_code, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo)
+        insert into people_transfer (people_code, people_name, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo)
         values (
         #{peopleCode,jdbcType=VARCHAR},
+        #{peopleName,jdbcType=VARCHAR},
         #{peopleType,jdbcType=VARCHAR},
         #{fromSchool,jdbcType=VARCHAR},
         #{toSchool,jdbcType=VARCHAR},
@@ -202,6 +203,7 @@
         SELECT
         t.id,
         t.people_code,
+        t.people_name,
         t.people_type,
         t.from_school,
         t.to_school,
@@ -222,6 +224,7 @@
         SELECT
         t.id,
         t.people_code,
+        t.people_name,
         t.people_type,
         t.from_school,
         t.to_school,

@@ -56,6 +56,8 @@ public interface PeopleService {
      */
     void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
 
+    void updatePeople(People people);
+
     /**
      * 删除人员
      *

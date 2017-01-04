@@ -5,6 +5,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.model.PeopleTransfer;
+import com.wangzhixuan.service.PeopleTransferService;
+import com.wangzhixuan.utils.ConstUtil;
+import com.wangzhixuan.vo.PeopleTransferVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,6 +41,9 @@ public class PeopleController extends BaseController{
 
     @Autowired
     private PeopleService peopleService;
+
+    @Autowired
+    private PeopleTransferService peopleTransferService;
 
     /**
      * 人员管理页
@@ -161,6 +168,38 @@ public class PeopleController extends BaseController{
         }
     }
 
+    @RequestMapping("/transferPage")
+    public String transferPage(Long id, Model model){
+        PeopleVo peopleVo = peopleService.findPeopleVoById(id);
+        model.addAttribute("peopleVo", peopleVo);
+        return "/admin/people/peopleTransfer";
+    }
+
+    @RequestMapping("/transfer")
+    @ResponseBody
+    public Result transfer(PeopleTransfer peopleTransfer){
+        Result result = new Result();
+        try{
+            People people = peopleService.findPeopleById(peopleTransfer.getId());
+
+            //更新人员状态
+            if (people != null){
+                people.setStatus(ConstUtil.PEOPLE_TRANSFER);
+                peopleService.updatePeople(people);
+                //添加一条人员调动记录
+                peopleTransferService.addPeopleTransfer(peopleTransfer,null);
+            }
+
+            result.setSuccess(true);
+            result.setMsg("调动成功");
+            return result;
+        }catch(Exception e){
+            LOGGER.error("调动人员失败:{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
+    }
+
     @RequestMapping("/delete")
     @ResponseBody
     public Result delete(Long id){
@@ -248,6 +287,8 @@ public class PeopleController extends BaseController{
             return result;
         }
     }
+
+
     /**
      * 批量调入W
      */
