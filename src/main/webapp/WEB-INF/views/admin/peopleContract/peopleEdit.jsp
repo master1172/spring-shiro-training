@@ -43,14 +43,11 @@
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${peopleContract.id}">
+            <input type="hidden" name="code" value="${peopleContract.code}">
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="code" type="text" value="${peopleContract.code}" class="easyui-validatebox" data-options="required:true" value=""></td>
                     <td>姓名</td>
                     <td><input type="text" name="name"></td>
-                </tr>
-                <tr>
                     <td>性别</td>
                     <td>
                         <select name="sex" id="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -73,8 +70,6 @@
                     <td>
                         <select name="city" class="city" disabled="disabled"></select>
                     </td>
-                </tr>
-                <tr>
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
@@ -95,8 +90,6 @@
                     <td>
                         <input type="text" name="speciality" value="${peopleContract.speciality}"/>
                     </td>
-                </tr>
-                <tr>
                     <td>身高</td>
                     <td>
                         <input type="text" name="height" value="${peopleContract.height}"/>
@@ -115,14 +108,12 @@
                             <option value="1" >农业</option>
                         </select>
                     </td>
-                    <td>到院工作日期</td>
+                    <td>来院日期</td>
                     <td>
                         <input name="schoolDate" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly" value="${peopleContract.schoolDate}"/>
                     </td>
-                </tr>
-                <tr>
                     <td>联系电话</td>
                     <td>
                         <input type="text" name="mobile" value="${peopleContract.mobile}">
@@ -141,8 +132,6 @@
                     <td>
                         <input type="text" name="jobName" value="${peopleContract.jobName}"/>
                     </td>
-                </tr>
-                <tr>
                     <td>备注</td>
                     <td colspan="3">
                         <input type="text" name="comment" value="${peopleContract.comment}"/>
