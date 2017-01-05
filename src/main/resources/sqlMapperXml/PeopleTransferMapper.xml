@@ -129,6 +129,39 @@
         LIMIT #{from}, #{size}
     </select>
 
+    <select id="findPeopleTransferListPageCondition" resultMap="PeopleTransferVoResultMap" parameterType="PageInfo">
+        SELECT
+          t.id,
+          t.people_code,
+          t.people_name,
+          t.people_type,
+          t.from_school,
+          t.to_school,
+          t.transfer_date,
+          t.ref_letter_no,
+          t.salary_end_date,
+          t.party_transfer_date
+        FROM
+          people_transfer t
+        <where>
+            <if test=" condition.peopleCode != null and condition.peopleCode != ''">
+                and t.people_code LIKE concat('%', #{condition.peopleCode},'%')
+            </if>
+        </where>
+        LIMIT #{from},#{size}
+    </select>
+
+    <select id="findPeopleTransferListPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(t.id) count
+        FROM
+          people_transfer t
+        <where>
+            <if test=" condition.peopleCode != null and condition.peopleCode != ''">
+                and t.people_code LIKE concat('%', #{condition.peopleCode},'%')
+            </if>
+        </where>
+    </select>
+
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTransfer">

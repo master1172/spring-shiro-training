@@ -36,6 +36,8 @@ public interface PeopleTransferService {
      */
     void findDataGrid(PageInfo pageInfo);
 
+    void findTransferListDataGrid(PageInfo pageInfo);
+
     /**
      * 添加人员
      *
@@ -80,6 +82,8 @@ public interface PeopleTransferService {
      * @return
      */
     String findPeopleTransferIDsByCondition(PageInfo pageInfo);
+
+
 }
 
 

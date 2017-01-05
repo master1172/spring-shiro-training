@@ -18,7 +18,7 @@
                 rownumbers: true,
                 pagination: true,
                 singleSelect: true,
-                idField: 'id',
+                idField: 'people_code',
                 singleSelect: false,
                 selectOnCheck: false,
                 checkOnSelect: true,
@@ -28,8 +28,7 @@
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
 
                 onLoadSuccess: function (data) {
-                    $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
-                    $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
+                    $('.user-easyui-linkbutton-edit').linkbutton({text: '调动记录列表', plain: true, iconCls: 'icon-edit'});
                 },
                 toolbar: '#toolbar'
             });
@@ -123,6 +122,28 @@
             });
         }
 
+        function transferList(code) {
+            if (code == undefined){
+                var rows = dataGrid.datagrid('getSelections');
+                code = rows[0].id;
+            }else{
+                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            }
+
+            parent.$.modalDialog({
+                title:'调动列表',
+                width:1000,
+                height:600,
+                href:'${path}/peopleTransfer/transferListPage?code='+code,
+                buttons:[{
+                    text: '关闭',
+                    handler:function(){
+                        parent.$.modalDialog.handler.dialog("close");
+                    }
+                }]
+            });
+        }
+
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -152,9 +173,7 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-            <shiro:hasPermission name="/people/transferList">
                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="transferList(\'{0}\');" >调动记录列表</a>', row.id);
-            </shiro:hasPermission>
             return str;
         }
     </script>
@@ -168,10 +187,6 @@
                 <th>人员姓名:</th>
                 <td>
                     <input name="peopleName"/>
-                </td>
-                <th>人员类型:</th>
-                <td>
-                    <input name="peopleType"/>
                 </td>
                 <th>调入调出日期</th>
                 <td>
@@ -200,29 +215,21 @@
             <th field="fromSchool"    data-options="sortable:false" width="80">调出前单位</th>
             <th field="toSchool"      data-options="sortable:false" width="80">调往单位</th>
             <th field="transferDate"  data-options="sortable:false" width="80">调动日期</th>
-            <th field="id"    data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="peopleCode"    data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
 </div>
 
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/peopleTransfer/transfer">
         <a onclick="transferFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">人员调动</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleTransfer/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleTransfer/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleTransfer/exportSearch">
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
-    </shiro:hasPermission>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

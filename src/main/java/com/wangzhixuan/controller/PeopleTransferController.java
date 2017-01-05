@@ -1,5 +1,6 @@
 package com.wangzhixuan.controller;
 
+import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleTransferService;
@@ -63,6 +64,18 @@ public class PeopleTransferController extends BaseController{
         return pageInfo;
     }
 
+    @RequestMapping(value="/transferListGrid", method = RequestMethod.POST)
+    @ResponseBody
+    public PageInfo transferListGrid(HttpServletRequest request, Integer page, Integer rows, String sort, String order){
+        PageInfo pageInfo = new PageInfo(page, rows);
+        String peopleCode = "d667db621e4f453f90b24422ef40bad1";
+        Map<String,Object> condition = Maps.newHashMap();
+        condition.put("peopleCode", peopleCode);
+        pageInfo.setCondition(condition);
+        peopleTransferService.findTransferListDataGrid(pageInfo);
+        return pageInfo;
+    }
+
     @RequestMapping(value="/advSearchPage", method = RequestMethod.GET)
     public String advSearchPage(){
         return "admin/peopleTransfer/peopleSearch";
@@ -100,11 +113,16 @@ public class PeopleTransferController extends BaseController{
         return result;
     }
 
+    @RequestMapping(value="/transferListPage", method = RequestMethod.GET)
+    public String transferListPage(String code, Model model){
+        model.addAttribute("code","d667db621e4f453f90b24422ef40bad1");
+        return "/admin/peopleTransfer/peopleTransferList";
+    }
+
     @RequestMapping(value="/transferPage", method=RequestMethod.GET)
     public String addPage(){
         return "admin/peopleTransfer/peopleTransfer";
     }
-
 
     /**
      * 添加用户

@@ -70,6 +70,12 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     }
 
     @Override
+    public void findTransferListDataGrid(PageInfo pageInfo){
+        pageInfo.setRows(peopleTransferMapper.findPeopleTransferListPageCondition(pageInfo));
+        pageInfo.setTotal(peopleTransferMapper.findPeopleTransferListPageCount(pageInfo));
+    }
+
+    @Override
     public void addPeopleTransfer(PeopleTransfer peopleTransfer,CommonsMultipartFile file) {
 
         //当TransferDate不为空，而是""的时候，需要修改为null，否则插入会有错误

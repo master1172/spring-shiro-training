@@ -52,6 +52,10 @@ public interface PeopleTransferMapper {
      */
     List findPeopleTransferPageCondition(PageInfo pageInfo);
 
+    List findPeopleTransferListPageCondition(PageInfo pageInfo);
+
+    int findPeopleTransferListPageCount(PageInfo pageInfo);
+
     /**
      * 统计人员
      *
