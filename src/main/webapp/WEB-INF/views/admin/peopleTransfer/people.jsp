@@ -74,7 +74,6 @@
                                     parent.progressClose();
                                     parent.$.modalDialog.handler.dialog("close");
                                     var ids = data["obj"];
-                                    alert(ids);
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
                                     form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
@@ -123,24 +122,11 @@
         }
 
         function transferList(code) {
-            if (code == undefined){
-                var rows = dataGrid.datagrid('getSelections');
-                code = rows[0].id;
-            }else{
-                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-            }
-
             parent.$.modalDialog({
                 title:'调动列表',
                 width:1000,
                 height:600,
                 href:'${path}/peopleTransfer/transferListPage?code='+code,
-                buttons:[{
-                    text: '关闭',
-                    handler:function(){
-                        parent.$.modalDialog.handler.dialog("close");
-                    }
-                }]
             });
         }
 
