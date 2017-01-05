@@ -87,37 +87,38 @@
         }
 
         function transferFun(){
-            var checkedItems = $('#dataGrid').datagrid('getChecked');
-            var codes = [];
-            $.each(checkedItems, function(index,item){
-                codes.push(item.code);
-            });
-
-            parent.$.modalDialog({
-                title: '人员调动',
-                width: 500,
-                height: 300,
-                href: '${path}/peopleTransfer/editPage',
-                buttons: [{
-                    text: '修改',
-                    handler: function () {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#peopleTransferForm");
-                        //f.submit();
-                        if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/transfer",function(data){
-                                if(!data["success"]){
-                                    parent.$.messager.alert("提示", data["msg"], "warning");
-                                }else{
-                                    parent.progressClose();
-                                    dataGrid.datagrid("reload");
-                                    parent.$.modalDialog.handler.dialog("close");
-                                }
-                            });
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if(checkedItems.length==1){
+                var id = checkedItems[0]["id"];
+                parent.$.modalDialog({
+                    title: '人员调动',
+                    width: 500,
+                    height: 300,
+                    href: '${path}/peopleTransfer/transferPage?id='+id,
+                    buttons: [{
+                        text: '调动',
+                        handler: function () {
+                            parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                            var f = parent.$.modalDialog.handler.find("#peopleTransferForm");
+                            //f.submit();
+                            if(parent.checkForm()){
+                                parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/transfer",function(data){
+                                    if(!data["success"]){
+                                        parent.$.messager.alert("提示", data["msg"], "warning");
+                                    }else{
+                                        parent.progressClose();
+                                        dataGrid.datagrid("reload");
+                                        parent.$.modalDialog.handler.dialog("close");
+                                    }
+                                });
+                            }
                         }
-                    }
-                }]
-            });
+                    }]
+                });
+            }else{
+                parent.$.messager.alert("提示","请选择一条有效数据","warning");
+            }
+
         }
 
         function transferList(id) {

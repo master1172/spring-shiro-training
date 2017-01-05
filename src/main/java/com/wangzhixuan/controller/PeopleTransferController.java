@@ -46,7 +46,7 @@ public class PeopleTransferController extends BaseController{
     /**
      * 人员管理列表
      *
-     * @param peopleTransfer
+     * @param
      * @param page
      * @param rows
      * @param sort
@@ -126,7 +126,15 @@ public class PeopleTransferController extends BaseController{
     }
 
     @RequestMapping(value="/transferPage", method=RequestMethod.GET)
-    public String addPage(){
+    public String transferPage(Long id, Model model){
+        PeopleTransfer peopleTransfer = peopleTransferService.findPeopleTransferById(id);
+        if (peopleTransfer != null){
+            model.addAttribute("peopleTransfer",peopleTransfer);
+        }else{
+            peopleTransfer = new PeopleTransfer();
+            model.addAttribute("peopleTransfer",peopleTransfer);
+        }
+
         return "admin/peopleTransfer/peopleTransfer";
     }
 
@@ -143,10 +151,10 @@ public class PeopleTransferController extends BaseController{
         try {
             peopleTransferService.addPeopleTransfer(peopleTransfer,file);
             result.setSuccess(true);
-            result.setMsg("添加成功");
+            result.setMsg("人员调动成功");
             return result;
         } catch (RuntimeException e) {
-            LOGGER.error("添加用户失败：{}", e);
+            LOGGER.error("人员调动失败：{}", e);
             result.setMsg(e.getMessage());
             return result;
         }
