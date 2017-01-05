@@ -18,7 +18,7 @@
                 rownumbers: true,
                 pagination: true,
                 singleSelect: true,
-                idField: 'people_code',
+                idField: 'peopleCode',
                 singleSelect: false,
                 selectOnCheck: false,
                 checkOnSelect: true,
@@ -98,7 +98,6 @@
                 width: 500,
                 height: 300,
                 href: '${path}/peopleTransfer/editPage',
-
                 buttons: [{
                     text: '修改',
                     handler: function () {
@@ -121,12 +120,12 @@
             });
         }
 
-        function transferList(code) {
+        function transferList(id) {
             parent.$.modalDialog({
                 title:'调动列表',
                 width:1000,
                 height:600,
-                href:'${path}/peopleTransfer/transferListPage?code='+code,
+                href:'${path}/peopleTransfer/transferListPage?id='+id,
             });
         }
 

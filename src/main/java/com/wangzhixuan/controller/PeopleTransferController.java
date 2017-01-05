@@ -68,7 +68,7 @@ public class PeopleTransferController extends BaseController{
     @ResponseBody
     public PageInfo transferListGrid(HttpServletRequest request, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        String peopleCode = "d667db621e4f453f90b24422ef40bad1";
+        String peopleCode = request.getParameter("code");
         Map<String,Object> condition = Maps.newHashMap();
         condition.put("peopleCode", peopleCode);
         pageInfo.setCondition(condition);
@@ -114,8 +114,14 @@ public class PeopleTransferController extends BaseController{
     }
 
     @RequestMapping(value="/transferListPage", method = RequestMethod.GET)
-    public String transferListPage(String code, Model model){
-        model.addAttribute("code","d667db621e4f453f90b24422ef40bad1");
+    public String transferListPage(Long id, Model model){
+
+        PeopleTransfer peopleTransfer = peopleTransferService.findPeopleTransferById(id);
+        if (peopleTransfer != null){
+            model.addAttribute("code",peopleTransfer.getPeopleCode());
+        }else{
+            model.addAttribute("code","");
+        }
         return "/admin/peopleTransfer/peopleTransferList";
     }
 

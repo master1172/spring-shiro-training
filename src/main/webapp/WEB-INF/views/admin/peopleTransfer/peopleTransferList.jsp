@@ -9,6 +9,7 @@
             url: '${path}/peopleTransfer/transferListGrid',
             fit: true,
             striped: true,
+            queryParams: {code : '${code}'},
             rownumbers: true,
             pagination: true,
             singleSelect: true,
