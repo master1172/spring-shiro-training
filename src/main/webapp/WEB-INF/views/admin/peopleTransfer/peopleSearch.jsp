@@ -23,12 +23,8 @@
         <form id="peopleSearchForm" method="post">
             <table class="grid" border=1>
                 <tr>
-                    <td>人员编码</td>
-                    <td><input name="peopleCode" type="text"></td>
-                    <td>人员类型</td>
-                    <td>
-                        <input type="text" name="peopleType">
-                    </td>
+                    <td>人员姓名</td>
+                    <td><input name="peopleName" type="text"></td>
                 </tr>
                 <tr>
                     <td>调出前单位</td>
@@ -63,17 +59,6 @@
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
-                </tr>
-                <tr>
-                    <td>干部介绍信编号</td>
-                    <td>
-                        <input type="text" name="refLetterNo">
-                    </td>
-                    <td>工资止薪日期</td>
-                    <td>
-                        <input type="text" name="salaryEndDate" placeholder="XX年XX月">
-                    </td>
-                </tr>
                 </tr>
             </table>
         </form>

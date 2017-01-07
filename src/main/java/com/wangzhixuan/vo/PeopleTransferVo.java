@@ -164,12 +164,8 @@ public class PeopleTransferVo implements Serializable {
     public static Map<String,Object> CreateCondition(PeopleTransferVo peopleTransferVo){
         Map<String, Object> condition = Maps.newHashMap();
 
-        if(StringUtils.isNoneBlank(peopleTransferVo.getPeopleCode())){
-            condition.put("peopleCode",peopleTransferVo.getPeopleCode());
-        }
-
-        if(StringUtils.isNoneBlank(peopleTransferVo.getPeopleType())){
-            condition.put("peopleType",peopleTransferVo.getPeopleType());
+        if(StringUtils.isNoneBlank(peopleTransferVo.getPeopleName())){
+            condition.put("peopleName",peopleTransferVo.getPeopleName());
         }
 
         if(StringUtils.isNoneBlank(peopleTransferVo.getFromSchool())){

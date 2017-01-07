@@ -79,9 +79,7 @@
             <if test=" condition.peopleName != null and condition.peopleName != '' ">
                 and p.name LIKE concat('%', #{condition.peopleName},'%')
             </if>
-            <if test=" condition.peopleType != null and condition.peopleType != '' ">
-                and t.people_type LIKE concat('%',#{condition.peopleType},'%')
-            </if>
+
             <if test=" condition.fromSchool != null and condition.fromSchool != ''">
                 and t.from_school LIKE concat('%',#{condition.fromSchool},'%')
             </if>
@@ -93,12 +91,6 @@
             </if>
             <if test=" condition.transferDateMax != null and condition.transferDateMax != ''">
                 <![CDATA[ and t.transfer_date <= #{condition.transferDateMax} ]]>
-            </if>
-            <if test=" condition.refLetterNo != null and condition.refLetterNo != ''">
-                and t.ref_letter_no LIKE concat('%',#{condition.refLetterNo},'%')
-            </if>
-            <if test=" condition.salaryEndDate != null and condition.salaryEndDate != ''">
-                and t.salary_end_date LIKE concat('%',#{condition.salaryEndDate},'%')
             </if>
             <if test=" condition.partyTransferDateMin != null and condition.partyTransferDateMin != ''">
                 <![CDATA[ and t.party_transfer_date >= #{condition.party_transferDateMin} ]]>
