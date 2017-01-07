@@ -162,6 +162,13 @@
         </where>
     </select>
 
+    <select id="findPeopleTransferListByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from people_transfer
+        where people_code = #{peopleCode}
+    </select>
+
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTransfer">

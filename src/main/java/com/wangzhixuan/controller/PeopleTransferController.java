@@ -206,13 +206,12 @@ public class PeopleTransferController extends BaseController{
      * 导出Excel
      */
     @RequestMapping("/exportExcel")
-    public void exportExcel(HttpServletResponse response,String ids){
-
-        if (StringUtils.isBlank(ids)){
+    public void exportExcel(HttpServletResponse response,Long id){
+        if (id == null){
             LOGGER.error("Excel:{}","请选择有效数据!");
         }
         try{
-            peopleTransferService.exportExcel(response,ids.split(","));
+            peopleTransferService.exportExcel(response,id);
         }catch(Exception exp){
             LOGGER.error("导出Excel失败:{}",exp);
         }

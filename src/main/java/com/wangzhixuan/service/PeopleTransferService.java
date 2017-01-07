@@ -64,7 +64,7 @@ public interface PeopleTransferService {
      * @param id
      * @return
      */
-    void exportExcel(HttpServletResponse response,String[] idList);
+    void exportExcel(HttpServletResponse response,Long id);
     /**
      * 导出Word
      * @param request

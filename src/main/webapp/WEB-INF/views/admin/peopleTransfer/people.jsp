@@ -86,14 +86,27 @@
             });
         }
 
+        function exportExcel(){
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if(checkedItems.length == 1){
+                var id= checkedItems[0]["id"];
+                var form=$("#downLoadForm");
+                form.find("input[name='id']").val(id);
+                form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
+                $("#downLoadForm").submit();
+            }else{
+                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+            }
+        }
+
         function transferFun(){
             var checkedItems = $("#dataGrid").datagrid("getChecked");
             if(checkedItems.length==1){
                 var id = checkedItems[0]["id"];
                 parent.$.modalDialog({
                     title: '人员调动',
-                    width: 500,
-                    height: 300,
+                    width: 700,
+                    height: 250,
                     href: '${path}/peopleTransfer/transferPage?id='+id,
                     buttons: [{
                         text: '调动',
@@ -118,7 +131,6 @@
             }else{
                 parent.$.messager.alert("提示","请选择一条有效数据","warning");
             }
-
         }
 
         function transferList(id) {
@@ -142,14 +154,14 @@
         //导出Excel
         function exportExcel(){
             var checkedItems = $("#dataGrid").datagrid("getChecked");
-            if(checkedItems.length>0){
-                var ids="";
+            if(checkedItems.length == 1){
+                var id="";
                 $.each(checkedItems, function(index,item){
-                    if(ids.length>0)ids+=",";
-                    ids+=item["id"];
+                    if(id.length>0)id+=",";
+                    id+=item["id"];
                 });
                 var form=$("#downLoadForm");
-                form.find("input[name='ids']").val(ids);
+                form.find("input[name='id']").val(id);
                 form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
                 $("#downLoadForm").submit();
             }else{
@@ -217,7 +229,7 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     <!-- 附件下载使用 -->
-    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="id"/></form>
 </div>
 </body>
 </html>

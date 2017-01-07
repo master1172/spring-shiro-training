@@ -3,6 +3,7 @@ package com.wangzhixuan.service.impl;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleTransferMapper;
+import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.utils.PageInfo;
@@ -11,6 +12,7 @@ import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleTransferVo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,9 +247,18 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
     //导出excel
     @Override
-    public void exportExcel(HttpServletResponse response,String[] idList){
-        List list=peopleTransferMapper.selectPeopleTransferVoByIds(idList);
-        if(list!=null&&list.size()>0){
+    public void exportExcel(HttpServletResponse response,Long id){
+
+        List<PeopleTransfer> list = new ArrayList<>();
+        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(id);
+        if (peopleTransfer != null){
+            String peopleCode = peopleTransfer.getPeopleCode();
+            if (StringUtils.isNoneBlank(peopleCode)){
+                list = peopleTransferMapper.findPeopleTransferListByCode(peopleCode);
+            }
+        }
+
+        if(list!=null&&list.size()>=0){
             XSSFWorkbook workBook;
             OutputStream os;
             String newFileName="调动人员信息.xlsx";
@@ -257,28 +268,22 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
                 XSSFRow row=sheet.createRow(0);
-                row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
-                row.createCell(1).setCellValue("人员编码");row.getCell(1).setCellStyle(setBorder);
-                row.createCell(2).setCellValue("人员类型");row.getCell(2).setCellStyle(setBorder);
-                row.createCell(3).setCellValue("调出前单位");row.getCell(3).setCellStyle(setBorder);
-                row.createCell(4).setCellValue("调往单位");row.getCell(4).setCellStyle(setBorder);
-                row.createCell(5).setCellValue("调入调出日期");row.getCell(5).setCellStyle(setBorder);
-                row.createCell(6).setCellValue("干部介绍信编号");row.getCell(6).setCellStyle(setBorder);
-                row.createCell(7).setCellValue("工资止薪日期");row.getCell(7).setCellStyle(setBorder);
-                row.createCell(8).setCellValue("党组织转接日期");row.getCell(8).setCellStyle(setBorder);
+                row.createCell(0).setCellValue("序号");         row.getCell(0).setCellStyle(setBorder);
+                row.createCell(1).setCellValue("调出前单位");    row.getCell(1).setCellStyle(setBorder);
+                row.createCell(2).setCellValue("调往单位");      row.getCell(2).setCellStyle(setBorder);
+                row.createCell(3).setCellValue("调入调出日期");  row.getCell(3).setCellStyle(setBorder);
+                row.createCell(4).setCellValue("工资止薪日期");  row.getCell(4).setCellStyle(setBorder);
+                row.createCell(5).setCellValue("党组织转接日期");row.getCell(5).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
-                    PeopleTransferVo p=(PeopleTransferVo)list.get(i);
+                    PeopleTransfer p= list.get(i);
                     row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
-                    row.createCell(1).setCellValue(p.getPeopleCode());row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getPeopleType());row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getFromSchool());row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getToSchool());row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getTransferDate());row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getRefLetterNo());row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getSalaryEndDate());row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getPartyTransferDate());row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(1).setCellValue(p.getFromSchool());row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getToSchool());row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getTransferDate());row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getSalaryEndDate());row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getPartyTransferDate());row.getCell(5).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);

@@ -76,6 +76,9 @@ public interface PeopleTransferMapper {
      * @return
      */
     List selectPeopleTransferVoByIds(String[] ids);
+
+
+    List findPeopleTransferListByCode(String code);
     /**
      * 批量添加人员
      * @param list
