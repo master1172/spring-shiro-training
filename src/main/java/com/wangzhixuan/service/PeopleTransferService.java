@@ -55,19 +55,18 @@ public interface PeopleTransferService {
     void updatePeopleTransfer(PeopleTransfer peopleTransfer, CommonsMultipartFile file);
     /**
      * 数据导入
-     * @param list
+     * @param files
      */
     boolean insertByImport(CommonsMultipartFile[] files);
     /**
      * 导出Excel
      * @param response
-     * @param id
+     * @param ids
      * @return
      */
-    void exportExcel(HttpServletResponse response,Long id);
+    void exportExcel(HttpServletResponse response,String ids);
     /**
      * 导出Word
-     * @param request
      * @param response
      * @param id
      * @return
@@ -76,9 +75,6 @@ public interface PeopleTransferService {
 
     /**
      * 根据条件搜索ids
-     * @param request
-     * @param response
-     * @param id
      * @return
      */
     String findPeopleTransferIDsByCondition(PageInfo pageInfo);

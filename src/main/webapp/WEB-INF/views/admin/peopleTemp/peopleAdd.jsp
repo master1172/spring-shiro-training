@@ -100,7 +100,7 @@
                 </tr>
                 <tr>
                     <td>联系电话</td>
-                    <td><input type="text" name="mobile"></td>
+                    <td><input type="text" name="mobile" class="easyui-validatebox" data-options="validType:'length[1,11]'"></td>
                     <td>现住址</td>
                     <td>
                         <input type="text" name="address"/>

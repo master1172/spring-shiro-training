@@ -117,7 +117,7 @@
                 <tr>
                     <td>身份证号</td>
                     <td>
-                        <input type="text" name="photoId">
+                        <input type="text" name="photoId" class="easyui-validatebox" data-options="validType:'length[18,18]'">
                     </td>
                     <td>家庭住址</td>
                     <td>

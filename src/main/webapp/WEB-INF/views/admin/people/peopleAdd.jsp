@@ -131,7 +131,7 @@
                     </td>
                     <td>手机号</td>
                     <td>
-                        <input type="text" name="mobile">
+                        <input type="text" name="mobile" class="easyui-validatebox" data-options="validType:'length[1,11]'">
                     </td>
                     <td>婚姻状况</td>
                     <td>
@@ -140,7 +140,7 @@
                     </td>
                     <td>身份证号码</td>
                     <td>
-                        <input type="text" name="photoId">
+                        <input type="text" name="photoId" class="easyui-validatebox" data-options="validType:'length[18,18]'">
                     </td>
                     <td>现家庭住址</td>
                     <td>

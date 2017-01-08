@@ -247,15 +247,21 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
     //导出excel
     @Override
-    public void exportExcel(HttpServletResponse response,Long id){
+    public void exportExcel(HttpServletResponse response,String ids){
+
+        String[] idList = ids.split(",");
 
         List<PeopleTransfer> list = new ArrayList<>();
-        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(id);
-        if (peopleTransfer != null){
-            String peopleCode = peopleTransfer.getPeopleCode();
-            if (StringUtils.isNoneBlank(peopleCode)){
-                list = peopleTransferMapper.findPeopleTransferListByCode(peopleCode);
+        List<PeopleTransferVo> peopleTransferVoList = peopleTransferMapper.selectPeopleTransferVoByIds(idList);
+        if (peopleTransferVoList != null && peopleTransferVoList.size() > 0){
+            List<String> peopleCodeList = new ArrayList<>();
+            for(PeopleTransferVo peopleTransferVo: peopleTransferVoList){
+                if (peopleTransferVo != null && StringUtils.isNoneBlank(peopleTransferVo.getPeopleCode()))
+                    peopleCodeList.add(peopleTransferVo.getPeopleCode());
             }
+
+            list = peopleTransferMapper.selectPeopleTransferByCodeList(peopleCodeList);
+
         }
 
         if(list!=null&&list.size()>=0){

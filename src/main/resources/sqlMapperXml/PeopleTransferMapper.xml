@@ -252,6 +252,16 @@
         </foreach>
     </select>
 
+    <select id="selectPeopleTransferByCodeList" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        select
+          <include refid="Base_Column_List"/>
+        from people_transfer
+        where people_code in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <select id="selectPeopleTransferVoByIds" resultMap="PeopleTransferVoResultMap" parameterType="java.util.ArrayList">
         SELECT
         t.id,

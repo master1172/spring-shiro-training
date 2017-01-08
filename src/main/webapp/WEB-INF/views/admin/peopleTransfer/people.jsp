@@ -154,14 +154,14 @@
         //导出Excel
         function exportExcel(){
             var checkedItems = $("#dataGrid").datagrid("getChecked");
-            if(checkedItems.length == 1){
-                var id="";
+            if(checkedItems.length >0){
+                var ids="";
                 $.each(checkedItems, function(index,item){
-                    if(id.length>0)id+=",";
-                    id+=item["id"];
+                    if(ids.length>0)ids+=",";
+                    ids+=item["id"];
                 });
                 var form=$("#downLoadForm");
-                form.find("input[name='id']").val(id);
+                form.find("input[name='ids']").val(ids);
                 form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
                 $("#downLoadForm").submit();
             }else{
@@ -229,7 +229,7 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     <!-- 附件下载使用 -->
-    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="id"/></form>
+    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
 </body>
 </html>

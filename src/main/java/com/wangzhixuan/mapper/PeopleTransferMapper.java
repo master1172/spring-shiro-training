@@ -79,6 +79,9 @@ public interface PeopleTransferMapper {
 
 
     List findPeopleTransferListByCode(String code);
+
+    List selectPeopleTransferByCodeList(List<String> codeList);
+
     /**
      * 批量添加人员
      * @param list

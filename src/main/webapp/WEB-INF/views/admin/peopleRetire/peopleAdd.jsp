@@ -83,7 +83,7 @@
                     </td>
                     <td>联系电话</td>
                     <td>
-                        <input type="text" name="mobile"/>
+                        <input type="text" name="mobile" class="easyui-validatebox" data-options="validType:'length[1,11]'"/>
                     </td>
                 </tr>
 

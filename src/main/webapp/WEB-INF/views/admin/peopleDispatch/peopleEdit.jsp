@@ -124,7 +124,7 @@
                 <tr>
                     <td>联系电话</td>
                     <td>
-                        <input type="text" name="mobile" value="${peopleDispatch.mobile}">
+                        <input type="text" name="mobile" value="${peopleDispatch.mobile}" class="easyui-validatebox" data-options="validType:'length[1,11]'">
                     </td>
                     <td>现住址</td>
                     <td>

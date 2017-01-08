@@ -90,7 +90,7 @@
                     </td>
                     <td>联系电话</td>
                     <td>
-                        <input type="text" name="mobile" value="${peopleRetire.mobile}"/>
+                        <input type="text" name="mobile" value="${peopleRetire.mobile}" class="easyui-validatebox" data-options="validType:'length[1,11]'"/>
                     </td>
                 </tr>
 
