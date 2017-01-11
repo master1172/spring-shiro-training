@@ -24,6 +24,22 @@
         }
         return true;
     }
+
+    function birthdayChange(){
+        var birthday = $("#birthday").val();
+        var currnetYear = new Date().getFullYear();
+        var age =currnetYear - birthday.substr(0,4);
+        $("#age").val(age);
+        $("#virtualAge").val(age+1);
+    }
+
+    function workDateChange(){
+        var workDate = $("#workDate").val();
+        var currentYear = new Date().getFullYear();
+        var workAge = currentYear - workDate.substr(0,4);
+        $("#workAge").val(workAge);
+    }
+
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
@@ -55,8 +71,13 @@
                     </td>
                     <td>出生日期</td>
                     <td>
-                        <input name="birthday" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                        <input id="birthday" name="birthday" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d',
+                                onpicked:birthdayChange
+                                })"
                                readonly="readonly" value="${peopleVo.birthday}"/>
                     </td>
                 </tr>
@@ -77,21 +98,25 @@
                     <td>入党日期</td>
                     <td>
                         <input name="partyDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${peopleVo.partyDate}"/>
                     </td>
                 </tr>
                 <tr>
                     <td>参加工作日期</td>
                     <td>
-                        <input name="workDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                        <input id="workDate" name="workDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d',
+                                onpicked:workDateChange})"
                                readonly="readonly" value="${peopleVo.workDate}"/>
                     </td>
                     <td>来院日期</td>
                     <td>
                         <input name="schoolDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${peopleVo.schoolDate}"/>
                     </td>
                     <td>职务</td>
@@ -116,26 +141,26 @@
                     <td>任现职日期</td>
                     <td>
                         <input name="jobDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${peopleVo.jobDate}"/>
                     </td>
                     <td>任现职级日期</td>
                     <td>
                         <input name="jobLevelDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${peopleVo.jobLevelDate}"/>
                     </td>
                     <td>年龄</td>
                     <td>
-                        <input type="text" name="age" value="${peopleVo.age}">
+                        <input type="text" id="age" name="age" value="${peopleVo.age}">
                     </td>
                     <td>虚岁</td>
                     <td>
-                        <input type="text" name="virtualAge" value="${peopleVo.virtualAge}">
+                        <input type="text" id="virtualAge" name="virtualAge" value="${peopleVo.virtualAge}">
                     </td>
                     <td>工龄</td>
                     <td>
-                        <input type="text" name="workAge" value="${peopleVo.workAge}">
+                        <input type="text" id="workAge" name="workAge" value="${peopleVo.workAge}">
                     </td>
                 </tr>
                 <tr>

@@ -53,7 +53,7 @@
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                 </tr>
@@ -72,7 +72,7 @@
                     <td>入党日期</td>
                     <td>
                         <input name="partyDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                     <td>学历情况</td>
@@ -85,7 +85,7 @@
                     <td>参加工作日期</td>
                     <td>
                         <input name="workDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                     <td>职务岗位</td>
@@ -103,7 +103,7 @@
                     <td>现任职级日期</td>
                     <td>
                         <input name="jobDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                 </tr>
@@ -118,7 +118,7 @@
                     <td>党组织关系转入日期</td>
                     <td>
                         <input name="partyInDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                 </tr>
@@ -126,7 +126,7 @@
                     <td>党组织关系转出日期</td>
                     <td>
                         <input name="partyOutDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                     <td>备注</td>

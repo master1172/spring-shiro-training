@@ -51,7 +51,7 @@
                     <td>生日</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                     <td>文化程度</td>
@@ -71,7 +71,7 @@
                     <td>退休日期</td>
                     <td>
                         <input name="retireDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
                     <td>专业技术及专长</td>

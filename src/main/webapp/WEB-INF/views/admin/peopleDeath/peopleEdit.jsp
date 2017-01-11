@@ -46,7 +46,7 @@
                     <td>出生日期</td>
                     <td>
                         <input name="birthday" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${people.birthday}"/>
                     </td>
                 </tr>
@@ -54,7 +54,7 @@
                     <td>到院工作日期</td>
                     <td>
                         <input name="school_date" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${people.school_date}"/>
                     </td>
                     <td>职务</td>
@@ -75,7 +75,7 @@
                     <td>死亡日期</td>
                     <td>
                         <input name="death_date" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${people.death_date}"/>
                     </td>
                     <td>死亡原因</td>

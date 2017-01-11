@@ -56,7 +56,7 @@
                     <td>
                         <input id="birthday" name="birthday" placeholder="点击选择时间"
                                onclick="WdatePicker({
-                                    readOnly:false,
+                                    readOnly:true,
                                     dateFmt:'yyyy-MM-dd',
                                     maxDate:'%y-%M-%d',
                                     onpicked:birthdayChange
