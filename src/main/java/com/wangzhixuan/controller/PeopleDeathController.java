@@ -87,6 +87,7 @@ public class PeopleDeathController extends BaseController{
             result.setSuccess(false);
             result.setMsg("未找到有效数据");
             LOGGER.error("Excel:{}","无有效数据");
+            return result;
         }
         try{
             result.setSuccess(true);

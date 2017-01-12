@@ -77,7 +77,6 @@
                                     parent.progressClose();
                                     parent.$.modalDialog.handler.dialog("close");
                                     var ids = data["obj"];
-                                    alert(ids);
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
                                     form.attr("action",'${path}'+"/peopleRetire/exportExcel");

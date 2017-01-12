@@ -315,7 +315,7 @@ public class PeopleController extends BaseController{
     public void exportExcel(HttpServletResponse response,String ids){
 
         if (StringUtils.isBlank(ids)){
-        	 LOGGER.error("Excel:{}","请选择有效数据!");
+            LOGGER.error("Excel:{}","请选择有效数据!");
         }
         try{
             peopleService.exportExcel(response,ids.split(","));

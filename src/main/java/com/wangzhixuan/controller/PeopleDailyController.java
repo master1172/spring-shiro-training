@@ -76,6 +76,7 @@ public class PeopleDailyController extends BaseController{
             result.setSuccess(false);
             result.setMsg("没找到有效数据");
             LOGGER.error("Excel:{}","无有效数据");
+            return result;
         }
 
         try{
