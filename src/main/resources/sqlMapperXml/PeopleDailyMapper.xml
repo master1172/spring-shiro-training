@@ -290,21 +290,21 @@
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
-                #{code,     jdbcType=VARCHAR},
-                #{name,     jdbcType=VARCHAR},
-                #{sex,      jdbcType=TINYINT},
-                #{nationalId, jdbcType=INTEGER},
-                #{province, jdbcType=VARCHAR},
-                #{city,     jdbcType=VARCHAR},
-                #{birthday, jdbcType=DATE},
-                #{educationName, jdbcType=VARCHAR},
-                #{politicalName, jdbcType=VARCHAR},
-                #{schoolDate, jdbcType=DATE},
-                #{mobile,     jdbcType=VARCHAR},
-                #{departmentName, jdbcType=VARCHAR},
-                #{jobName,  jdbcType=VARCHAR},
-                #{comment,  jdbcType=VARCHAR},
-                #{photo,    jdbcType=VARCHAR}
+                #{item.code,     jdbcType=VARCHAR},
+                #{item.name,     jdbcType=VARCHAR},
+                #{item.sex,      jdbcType=TINYINT},
+                #{item.nationalId, jdbcType=INTEGER},
+                #{item.province, jdbcType=VARCHAR},
+                #{item.city,     jdbcType=VARCHAR},
+                #{item.birthday, jdbcType=DATE},
+                #{item.educationName, jdbcType=VARCHAR},
+                #{item.politicalName, jdbcType=VARCHAR},
+                #{item.schoolDate, jdbcType=DATE},
+                #{item.mobile,     jdbcType=VARCHAR},
+                #{item.departmentName, jdbcType=VARCHAR},
+                #{item.jobName,  jdbcType=VARCHAR},
+                #{item.comment,  jdbcType=VARCHAR},
+                #{item.photo,    jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
