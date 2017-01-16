@@ -1,6 +1,9 @@
 package com.wangzhixuan.controller;
 
 import com.google.common.collect.Maps;
+import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleSalary;
+import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.PageInfo;
@@ -10,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -58,5 +62,19 @@ public class PeopleSalaryController extends BaseController{
         peopleSalaryService.findDataGrid(pageInfo,request);
 
         return pageInfo;
+    }
+
+    @RequestMapping(value="/salaryListPage", method = RequestMethod.GET)
+    public String salaryListPage(Long id, Model model){
+
+        People people = peopleService.findPeopleById(id);
+        if (people != null){
+            model.addAttribute("code",people.getCode());
+            model.addAttribute("name",people.getName());
+        }else{
+            model.addAttribute("code","");
+            model.addAttribute("name","");
+        }
+        return "/admin/peopleSalary/peopleSalaryList";
     }
 }

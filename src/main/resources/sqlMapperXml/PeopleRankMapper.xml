@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeopleRankMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleRank">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="rank_level" property="rank_level" jdbcType="VARCHAR"/>
+        <result column="salary" property="salary" jdbcType="DECIMAL"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">,
+        id, rank_level, salary
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from rank
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeopleRankVoById" resultMap="peopleRankVoResultMap" parameterType="java.lang.Long">
+        SELECT
+        t.id,
+        t.rank_level,
+        t.salary
+        FROM
+        rank t
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findPeopleRankById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from rank
+        where id = #{id}
+    </select>
+
+    <select id="findPeopleRankbPageCondition" resultMap="peopleRankVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.rank_level,
+        t.salary
+        FROM
+        rank t
+        <where>
+            <if test=" condition.rank_level != null ">
+                and t.rank_level LIKE concat('%',#{condition.rank_level},'%')
+            </if>
+            <if test=" condition.salary != null and condition.salary != ''">
+                and t.salary LIKE concat('%',#{condition.salary},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeopleRankPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from rank t
+        <where>
+            <if test=" condition.rank_level != null ">
+                and t.rank_level LIKE concat('%',#{condition.rank_level},'%')
+            </if>
+            <if test=" condition.salary != null and condition.salary != ''">
+                and t.salary LIKE concat('%',#{condition.salary},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from rank
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete from rank
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleRank">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into rank (rank_level, salary)
+        values (
+        #{code,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{sex,jdbcType=TINYINT},
+        #{nationalId, jdbcType=INTEGER},
+        #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR},
+        #{birthday,jdbcType=DATE},
+        #{educationName,jdbcType=VARCHAR},
+        #{politicalName,jdbcType=VARCHAR},
+        #{speciality,jdbcType=VARCHAR},
+        #{height,jdbcType=VARCHAR},
+        #{marriageId, jdbcType=INTEGER},
+        #{hukou, jdbcType=TINYINT},
+        #{schoolDate,jdbcType=DATE},
+        #{mobile, jdbcType=VARCHAR},
+        #{address, jdbcType=VARCHAR},
+        #{departmentName, jdbcType=VARCHAR},
+        #{jobName, jdbcType=VARCHAR},
+        #{comment, jdbcType=VARCHAR},
+        #{photo, jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into rank (rank_level, salary)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{item.code,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.sex,jdbcType=TINYINT},
+            #{item.nationalId, jdbcType=INTEGER},
+            #{item.province,jdbcType=VARCHAR},
+            #{item.city,jdbcType=VARCHAR},
+            #{item.birthday,jdbcType=DATE},
+            #{item.educationName,jdbcType=VARCHAR},
+            #{item.politicalName,jdbcType=VARCHAR},
+            #{item.speciality,jdbcType=VARCHAR},
+            #{item.height,jdbcType=VARCHAR},
+            #{item.marriageId, jdbcType=INTEGER},
+            #{item.hukou, jdbcType=TINYINT},
+            #{item.schoolDate,jdbcType=DATE},
+            #{item.mobile, jdbcType=VARCHAR},
+            #{item.address, jdbcType=VARCHAR},
+            #{item.departmentName, jdbcType=VARCHAR},
+            #{item.jobName, jdbcType=VARCHAR},
+            #{item.comment, jdbcType=VARCHAR},
+            #{item.photo, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updatePeopleRank" parameterType="com.wangzhixuan.model.PeopleRank">
+        update rank
+        <set>
+            <if test="rank_level != null">
+                rank_level = #{rank_level,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                salary = #{salary,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectPeopleRankByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        select
+        t.id,
+        t.rank_level,
+        t.salary
+        from rank t
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectPeopleRankVoByIds" resultMap="peopleRankVoResultMap" parameterType="java.util.ArrayList">
+        SELECT
+        t.id,
+        t.rank_level,
+        t.salary
+        FROM
+        job t
+        where t.id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

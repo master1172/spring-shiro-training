@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeopleJobMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleJob">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="job_category" property="job_category" jdbcType="VARCHAR"/>
+        <result column="job_level" property="job_level" jdbcType="VARCHAR"/>
+        <result column="salary" property="salary" jdbcType="DECIMAL"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">,
+        id, job_category, job_level, salary
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from job
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPeopleJobVoById" resultMap="peopleJobVoResultMap" parameterType="java.lang.Long">
+        SELECT
+        t.id,
+        t.job_category,
+        t.job_level,
+        t.salary
+        FROM
+        job t
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findPeopleJobById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from job
+        where id = #{id}
+    </select>
+
+    <select id="findPeopleJobPageCondition" resultMap="peopleJobVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.job_category,
+        t.job_level,
+        t.salary
+        FROM
+        job t
+        <where>
+            <if test=" condition.job_category != null ">
+                and t.job_category LIKE concat('%',#{condition.job_category},'%')
+            </if>
+            <if test=" condition.job_level != null and condition.job_level != '' ">
+                and t.job_level LIKE concat('%',#{condition.job_level},'%')
+            </if>
+            <if test=" condition.salary != null and condition.salary != ''">
+                and t.salary LIKE concat('%',#{condition.salary},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeopleRankPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from rank t
+        <where>
+            <if test=" condition.job_category != null ">
+                and t.job_category LIKE concat('%',#{condition.job_category},'%')
+            </if>
+            <if test=" condition.job_level != null and condition.job_level != '' ">
+                and t.job_level LIKE concat('%',#{condition.job_level},'%')
+            </if>
+            <if test=" condition.salary != null and condition.salary != ''">
+                and t.salary LIKE concat('%',#{condition.salary},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from job
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete from job
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleJob">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into job (job_category, job_level, salary)
+        values (
+        #{code,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{sex,jdbcType=TINYINT},
+        #{nationalId, jdbcType=INTEGER},
+        #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR},
+        #{birthday,jdbcType=DATE},
+        #{educationName,jdbcType=VARCHAR},
+        #{politicalName,jdbcType=VARCHAR},
+        #{speciality,jdbcType=VARCHAR},
+        #{height,jdbcType=VARCHAR},
+        #{marriageId, jdbcType=INTEGER},
+        #{hukou, jdbcType=TINYINT},
+        #{schoolDate,jdbcType=DATE},
+        #{mobile, jdbcType=VARCHAR},
+        #{address, jdbcType=VARCHAR},
+        #{departmentName, jdbcType=VARCHAR},
+        #{jobName, jdbcType=VARCHAR},
+        #{comment, jdbcType=VARCHAR},
+        #{photo, jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into job (job_category, job_level, salary)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{item.code,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.sex,jdbcType=TINYINT},
+            #{item.nationalId, jdbcType=INTEGER},
+            #{item.province,jdbcType=VARCHAR},
+            #{item.city,jdbcType=VARCHAR},
+            #{item.birthday,jdbcType=DATE},
+            #{item.educationName,jdbcType=VARCHAR},
+            #{item.politicalName,jdbcType=VARCHAR},
+            #{item.speciality,jdbcType=VARCHAR},
+            #{item.height,jdbcType=VARCHAR},
+            #{item.marriageId, jdbcType=INTEGER},
+            #{item.hukou, jdbcType=TINYINT},
+            #{item.schoolDate,jdbcType=DATE},
+            #{item.mobile, jdbcType=VARCHAR},
+            #{item.address, jdbcType=VARCHAR},
+            #{item.departmentName, jdbcType=VARCHAR},
+            #{item.jobName, jdbcType=VARCHAR},
+            #{item.comment, jdbcType=VARCHAR},
+            #{item.photo, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updatePeopleJob" parameterType="com.wangzhixuan.model.PeopleJob">
+        update job
+        <set>
+            <if test="job_category != null">
+                job_category = #{job_category,jdbcType=VARCHAR},
+            </if>
+            <if test="job_level != null">
+                job_level = #{job_level,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                salary = #{salary,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectPeopleJobByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
+        select
+        t.id,
+        t.job_category,
+        t.job_level,
+        t.salary
+        from job t
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectPeopleJobVoByIds" resultMap="peopleJobVoResultMap" parameterType="java.util.ArrayList">
+        SELECT
+        t.id,
+        t.job_category,
+        t.job_level,
+        t.salary
+        FROM
+        job t
+        where t.id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
