@@ -95,4 +95,8 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
+    @RequestMapping("/editPage",method = RequestMethod.GET)
+    public String editPage(){
+        return "/admin/peopleSalary/peopleSalaryEdit";
+    }
 }
