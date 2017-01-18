@@ -2,11 +2,11 @@
 <%@ include file="/commons/global.jsp" %>
 
 <script type="text/javascript">
-    var transferListGrid;
+    var salaryGrid;
 
     $(function () {
-        transferListGrid = $('#transferListGrid').datagrid({
-            url: '${path}/peopleSalary/salaryListGrid',
+        salaryGrid = $('#salaryGrid').datagrid({
+            url: '${path}/peopleSalary/salaryGrid',
             fit: true,
             striped: true,
             queryParams: {code : '${code}'},
@@ -26,15 +26,11 @@
 </script>
 
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:true,title:'调动列表'">
-        <table id="transferListGrid" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:true,title:'工资发放列表'">
+        <table id="salaryGrid" data-options="fit:true,border:false">
             <thead>
             <tr>
-                <th field="jobCategory"     data-options="sortable:false" width="80">岗位分类</th>
-                <th field="jobLevel"        data-options="sortable:false" width="80">职级</th>
-                <th field="jobSalary"       data-options="sortable:false" width="80">岗位工资</th>
-                <th field="rank"            data-options="sortable:false" width="80">薪级</th>
-                <th field="rankSalary"      data-options="sortable:false" width="80">薪级工资</th>
+                <th field="ck" data-options="checkbox:true"></th>
             </tr>
             </thead>
         </table>

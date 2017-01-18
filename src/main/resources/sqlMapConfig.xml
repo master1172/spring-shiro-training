@@ -46,6 +46,9 @@
 
         <typeAlias type="com.wangzhixuan.model.PeopleTransfer" alias="PeopleTransfer"/>
         <typeAlias type="com.wangzhixuan.vo.PeopleTransferVo" alias="PeopleTransferVo"/>
+
+        <typeAlias type="com.wangzhixuan.model.PeopleSalary" alias="PeopleSalary"/>
+        <typeAlias type="com.wangzhixuan.vo.PeopleSalaryVo" alias="PeopleSalaryVo"/>
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
@@ -74,5 +77,6 @@
         <mapper resource="sqlMapperXml/PeoplePartyMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleDispatchMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleTransferMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleSalaryMapper.xml"/>
     </mappers>
 </configuration> 

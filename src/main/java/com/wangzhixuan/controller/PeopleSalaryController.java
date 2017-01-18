@@ -25,7 +25,7 @@ import java.util.Map;
  * Created by sterm on 2017/1/13.
  */
 @Controller
-@RequestMapping("/peoplesalary")
+@RequestMapping("/peopleSalary")
 public class PeopleSalaryController extends BaseController{
     private static Logger LOGGER = LoggerFactory.getLogger(PeopleSalaryController.class);
 
@@ -37,7 +37,7 @@ public class PeopleSalaryController extends BaseController{
 
     @RequestMapping(value="/manager", method = RequestMethod.GET)
     public String manager(){
-        return "/admin/peoplesalary/people";
+        return "/admin/peopleSalary/people";
     }
 
     @RequestMapping(value="/dataGrid", method = RequestMethod.POST)
@@ -77,8 +77,4 @@ public class PeopleSalaryController extends BaseController{
 
         return pageInfo;
     }
-
-
-
-
 }

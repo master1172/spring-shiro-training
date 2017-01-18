@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangzhixuan.mapper.PeopleSalaryMapper">
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleSalary">
-        <id     column="id"             jdbcType="INTEGER" property="id" />
+        <id     column="id"             jdbcType="BIGINT" property="id" />
         <result column="people_code"    jdbcType="VARCHAR" property="peopleCode" />
         <result column="job_id"         jdbcType="INTEGER" property="jobId" />
         <result column="job_salary"     jdbcType="DECIMAL" property="jobSalary" />
@@ -42,7 +42,7 @@
     </resultMap>
 
     <resultMap id="peopleSalaryVoResultMap" type="com.wangzhixuan.vo.PeopleSalaryVo">
-        <id     column="id"             jdbcType="INTEGER" property="id" />
+        <id     column="id"             jdbcType="BIGINT" property="id" />
         <result column="people_code"    jdbcType="VARCHAR" property="peopleCode" />
         <result column="people_name"    jdbcType="VARCHAR" property="peopleName" />
         <result column="age"            jdbcType="INTEGER" property="age" />
@@ -318,10 +318,10 @@
           p.age  as age,
           t.job_id,
           j.job_category as job_category,
-          t.job_level,
+          j.job_level as job_level,
           t.job_salary,
           t.rank_id,
-          r.level as rank_level,
+          r.rank_level as rank_level,
           t.rank_salary,
           t.reserve_salary,
           t.exam_result,
@@ -364,10 +364,10 @@
           rank r ON t.rank_id = r.id
         <where>
             <if test=" condition.peopleCode != null and condition.peopleCode != ''">
-                and t.peopleCode = #{condition.peopleCode}
+                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
             </if>
             <if test=" condition.peopleName != null and condition.peopleName != '' ">
-                and t.peopleName LIKE concat('%',#{condition.peopleName},'%')
+                and p.name LIKE concat('%',#{condition.peopleName},'%')
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -385,10 +385,10 @@
           rank r ON t.rank_id = r.id
         <where>
             <if test=" condition.peopleCode != null and condition.peopleCode != ''">
-                and t.peopleCode = #{condition.peopleCode}
+                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
             </if>
             <if test=" condition.peopleName != null and condition.peopleName != '' ">
-                and t.peopleName LIKE concat('%',#{condition.peopleName},'%')
+                and p.name LIKE concat('%',#{condition.peopleName},'%')
             </if>
         </where>
     </select>

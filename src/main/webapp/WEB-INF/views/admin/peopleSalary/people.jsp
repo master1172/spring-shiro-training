@@ -12,7 +12,7 @@
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/peoplesalary/dataGrid',
+                url: '${path}/peopleSalary/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -60,14 +60,14 @@
                 title: '导出',
                 width: 1000,
                 height: 600,
-                href: '${path}/peoplesalary/exportSearchPage',
+                href: '${path}/peopleSalary/exportSearchPage',
                 buttons:[{
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/peoplesalary/exportSearch",function(data){
+                            parent.SYS_SUBMIT_FORM(f, "/peopleSalary/exportSearch",function(data){
                                 if(!data["success"]){
                                     parent.progressClose();
                                     parent.$.modalDialog.handler.dialog("close");
@@ -78,7 +78,7 @@
                                     var ids = data["obj"];
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/peoplesalary/exportExcel");
+                                    form.attr("action",'${path}'+"/peopleSalary/exportExcel");
                                     $("#downLoadForm").submit();
                                 }
                             });
@@ -103,7 +103,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
-                href: '${path}/peoplesalary/importExcelPage',
+                href: '${path}/peopleSalary/importExcelPage',
                 buttons: [{
                     text: '导入',
                     handler: function () {
@@ -111,7 +111,7 @@
                         var f = parent.$.modalDialog.handler.find("#importExcelForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peoplesalary/importExcel",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleSalary/importExcel",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -137,7 +137,7 @@
                 });
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids);
-                form.attr("action",'${path}'+"/peoplesalary/exportExcel");
+                form.attr("action",'${path}'+"/peopleSalary/exportExcel");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择有效数据", "warning");
