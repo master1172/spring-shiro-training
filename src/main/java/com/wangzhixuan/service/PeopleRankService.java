@@ -32,7 +32,7 @@ public interface PeopleRankService {
      *
      * @param peoplerankvo
      */
-    void addPeopleRank(PeopleRankVo peoplerankvo, CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
+    void addPeopleRank(PeopleRankVo peoplerankvo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
     /**
      * 根据人员id查询人员
@@ -40,16 +40,16 @@ public interface PeopleRankService {
      * @param id
      * @return
      */
-    PeopleRank findPeopleRankById(Long id);
+//    PeopleRank findPeopleRankById(Long id);
 
-    PeopleRankVo findPeopleRankVoById(Long id);
+//    PeopleRankVo findPeopleRankVoById(Long id);
 
     /**
      * 修改人员薪级
      *
      * @param peoplerankvo
      */
-    void updatePeopleRank(PeopleRankVo peoplerankvo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
+    void updatePeopleRank(PeopleRankVo peoplerankvo) throws InvocationTargetException, IllegalAccessException;
 
     void updatePeopleRank(PeopleRank peoplerank);
 

@@ -169,7 +169,7 @@
         t.rank_level,
         t.salary
         FROM
-        job t
+        rank t
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}

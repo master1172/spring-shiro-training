@@ -1,14 +1,10 @@
 package com.wangzhixuan.service.impl;
 
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleJobMapper;
+
 import com.wangzhixuan.mapper.PeopleRankMapper;
-import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.model.PeopleRank;
-import com.wangzhixuan.service.PeopleJobService;
 import com.wangzhixuan.service.PeopleRankService;
 import com.wangzhixuan.utils.*;
-import com.wangzhixuan.vo.PeopleJobVo;
 import com.wangzhixuan.vo.PeopleRankVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,17 +29,9 @@ import java.util.Map;
 @Service
 public class PeopleRankServiceImpl implements PeopleRankService {
 
-	@Autowired
+	@Resource
     private PeopleRankMapper peopleRankMapper;
 
-	@Autowired
-	private DictMapper dictMapper;
-
-//	@Autowired
-//	private PeopleDeathMapper peopleDeathMapper;
-//
-//	@Autowired
-//	private PeopleRetireMapper peopleRetireMapper;
 
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -52,7 +41,7 @@ public class PeopleRankServiceImpl implements PeopleRankService {
     }
 
 	@Override
-    public void addPeopleRank(PeopleRankVo peoplerankvo, CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void addPeopleRank(PeopleRankVo peoplerankvo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		PeopleRank peoplerank = new PeopleRank();
 		BeanUtils.copyProperties(peoplerank,peoplerankvo);
         peopleRankMapper.insert(peoplerank);
@@ -60,7 +49,7 @@ public class PeopleRankServiceImpl implements PeopleRankService {
     }
 
 	@Override
-    public void updatePeopleRank(PeopleRankVo peoplerankvo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException {
+    public void updatePeopleRank(PeopleRankVo peoplerankvo) throws InvocationTargetException, IllegalAccessException {
 		PeopleRank peoplerank = new PeopleRank();
 		BeanUtils.copyProperties(peoplerank,peoplerankvo);
 		peopleRankMapper.updatePeopleRank(peoplerank);
@@ -162,12 +151,10 @@ public class PeopleRankServiceImpl implements PeopleRankService {
     			setBorder=WordUtil.setCellStyle(workBook,false);
         		for(int i=0;i<list.size();i++){
         			row=sheet.createRow(i+1);
-        			PeopleJobVo p=(PeopleJobVo)list.get(i);
+        			PeopleRankVo p=(PeopleRankVo)list.get(i);
         			row.createCell(0).setCellValue(i+1);
-        			row.createCell(1).setCellValue(p.getJob_category());
-        			row.createCell(2).setCellValue(p.getJob_level());
-        			row.createCell(3).setCellValue(p.getSalary().floatValue());
-
+        			row.createCell(1).setCellValue(p.getRank_level());
+        			row.createCell(2).setCellValue(p.getSalary().floatValue());
 					for(int j=0; j<38; j++){
 						row.getCell(j).setCellStyle(setBorder);
 					}

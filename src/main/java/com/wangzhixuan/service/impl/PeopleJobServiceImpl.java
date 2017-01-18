@@ -1,45 +1,35 @@
 package com.wangzhixuan.service.impl;
 
-import com.wangzhixuan.mapper.*;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleDeath;
+import com.wangzhixuan.mapper.DictMapper;
+import com.wangzhixuan.mapper.PeopleJobMapper;
 import com.wangzhixuan.model.PeopleJob;
-import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.service.PeopleJobService;
-import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleJobVo;
-import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
 public class PeopleJobServiceImpl implements PeopleJobService {
 
-	@Autowired
+	@Resource
     private PeopleJobMapper peopleJobMapper;
-
-	@Autowired
-	private DictMapper dictMapper;
-
-//	@Autowired
-//	private PeopleDeathMapper peopleDeathMapper;
-//
-//	@Autowired
-//	private PeopleRetireMapper peopleRetireMapper;
 
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -49,7 +39,7 @@ public class PeopleJobServiceImpl implements PeopleJobService {
     }
 
 	@Override
-    public void addPeopleJob(PeopleJobVo peoplejobvo, CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void addPeopleJob(PeopleJobVo peoplejobvo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		PeopleJob peoplejob = new PeopleJob();
 		BeanUtils.copyProperties(peoplejob,peoplejobvo);
         peopleJobMapper.insert(peoplejob);
@@ -57,7 +47,7 @@ public class PeopleJobServiceImpl implements PeopleJobService {
     }
 
 	@Override
-    public void updatePeopleJob(PeopleJobVo peoplejobvo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException {
+    public void updatePeopleJob(PeopleJobVo peoplejobvo) throws InvocationTargetException, IllegalAccessException {
 
 
 		PeopleJob peoplejob = new PeopleJob();

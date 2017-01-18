@@ -10,9 +10,9 @@ public class PeopleJob implements Serializable {
 
     private Long id;
 
-    private String Job_category;
+    private String job_category;
 
-    private String Job_level;
+    private String job_level;
 
     private String salary;
 
@@ -25,19 +25,19 @@ public class PeopleJob implements Serializable {
     }
 
     public String getJob_category() {
-        return Job_category;
+        return job_category;
     }
 
     public void setJob_category(String job_category) {
-        this.Job_category = job_category;
+        this.job_category = job_category;
     }
 
     public String getJob_level() {
-        return Job_level;
+        return job_level;
     }
 
     public void setJob_level(String job_level) {
-        this.Job_level = job_level;
+        this.job_level = job_level;
     }
 
     public String getSalary() {

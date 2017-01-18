@@ -17,12 +17,7 @@ import java.util.List;
  */
 public interface PeopleJobMapper {
 
-    /**
-     * 人员职级列表
-     *
-     * @param pageInfo
-     */
-    void findDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
     /**
      * 人员列表
      *
@@ -38,7 +33,7 @@ public interface PeopleJobMapper {
      * @param peoplejobvo
      *
      */
-    void addPeopleJob(PeopleJobVo peoplejobvo, CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
+    void addPeopleJob(PeopleJobVo peoplejobvo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
     /**
      * 添加人员
@@ -53,7 +48,7 @@ public interface PeopleJobMapper {
      * 修改人员职级
      * @param peoplejobvo
      */
-    void updatePeopleJob(PeopleJobVo peoplejobvo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
+    void updatePeopleJob(PeopleJobVo peoplejobvo) throws InvocationTargetException, IllegalAccessException;
 
     void updatePeopleJob(PeopleJob peoplejob);
 
@@ -97,4 +92,5 @@ public interface PeopleJobMapper {
      * @return
      */
     PeopleJobVo findPeopleJobVoById(Long id);
+
 }

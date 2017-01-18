@@ -14,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +29,6 @@ public class PeopleRankController extends BaseController{
     private static Logger LOGGER = LoggerFactory.getLogger(PeopleRankController.class);
     @Autowired
     private PeopleRankService peopleRankService;
-
-    @Autowired
-    private PeopleTransferService peopleTransferService;
 
     /**
      * 人员薪级页
@@ -56,7 +50,7 @@ public class PeopleRankController extends BaseController{
      * @param order
      * @return
      */
-    @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
+    @RequestMapping(value="/dataGrid", method=RequestMethod.GET)
     @ResponseBody
     public PageInfo dataGrid(HttpServletRequest request, PeopleRankVo peoplerankvo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
@@ -68,39 +62,33 @@ public class PeopleRankController extends BaseController{
     }
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public Result add(PeopleRankVo peopleRankVo, @RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
+    public Result add(PeopleRankVo peopleRankVo) {
         Result result = new Result();
         try {
 
-            peopleRankService.addPeopleRank(peopleRankVo,file);
+            peopleRankService.addPeopleRank(peopleRankVo);
             result.setSuccess(true);
-            result.setMsg("添加成功");
+            result.setMsg("添加薪级成功");
             return result;
         } catch (Exception e) {
-            LOGGER.error("添加用户失败：{}", e);
+            LOGGER.error("添加薪级失败：{}", e);
             result.setMsg(e.getMessage());
             return result;
         }
     }
 
-    @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
-        PeopleRankVo peopleRankVo = peopleRankService.findPeopleRankVoById(id);
-        model.addAttribute("peopleJobVo",peopleRankVo);
-        return "/admin/people/peopleEdit";
-    }
-
     @RequestMapping("/edit")
     @ResponseBody
-    public Result edit(PeopleRankVo peoplerankvo, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
+    //@RequestBody
+    public Result edit(PeopleRankVo peoplerankvo){
         Result result = new Result();
         try{
-            peopleRankService.updatePeopleRank(peoplerankvo,file);
+            peopleRankService.updatePeopleRank(peoplerankvo);
             result.setSuccess(true);
-            result.setMsg("修改成功!");
+            result.setMsg("修改薪级成功!");
             return result;
         }catch(Exception e){
-            LOGGER.error("修改人员失败：{}",e);
+            LOGGER.error("修改薪级失败：{}",e);
             result.setMsg(e.getMessage());
             return result;
         }
@@ -113,11 +101,11 @@ public class PeopleRankController extends BaseController{
         Result result = new Result();
         try{
             peopleRankService.deletePeopleRankById(id);
-            result.setMsg("删除成功！");
+            result.setMsg("删除薪级成功！");
             result.setSuccess(true);
             return result;
         }catch(RuntimeException e){
-            LOGGER.error("删除人员失败：{}",e);
+            LOGGER.error("删除薪级失败：{}",e);
             result.setMsg(e.getMessage());
             return result;
         }
