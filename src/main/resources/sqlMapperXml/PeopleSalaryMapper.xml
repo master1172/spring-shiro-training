@@ -370,6 +370,8 @@
                 and p.name LIKE concat('%',#{condition.peopleName},'%')
             </if>
         </where>
+        ORDER BY
+        t.pay_date desc
         LIMIT #{from}, #{size}
     </select>
 

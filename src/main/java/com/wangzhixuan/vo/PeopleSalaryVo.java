@@ -12,7 +12,7 @@ public class PeopleSalaryVo implements Serializable{
 
     private Long id;
 
-    private Long peopleCode;
+    private String peopleCode;
 
     private String peopleName;
 
@@ -104,11 +104,11 @@ public class PeopleSalaryVo implements Serializable{
         this.id = id;
     }
 
-    public Long getPeopleCode() {
+    public String getPeopleCode() {
         return peopleCode;
     }
 
-    public void setPeopleCode(Long peopleCode) {
+    public void setPeopleCode(String peopleCode) {
         this.peopleCode = peopleCode;
     }
 
