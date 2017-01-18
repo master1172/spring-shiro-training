@@ -1,6 +1,7 @@
 package com.wangzhixuan.controller;
 
 import com.google.common.collect.Maps;
+import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.model.PeopleTransfer;
@@ -77,4 +78,21 @@ public class PeopleSalaryController extends BaseController{
 
         return pageInfo;
     }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Result delete(Long id){
+        Result result = new Result();
+        try{
+            peopleSalaryService.deleteSalaryById(id);
+            result.setMsg("删除成功！");
+            result.setSuccess(true);
+            return result;
+        }catch(RuntimeException e){
+            LOGGER.error("删除工资记录失败：{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
+    }
+
 }

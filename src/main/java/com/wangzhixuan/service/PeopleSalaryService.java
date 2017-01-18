@@ -16,7 +16,7 @@ public interface PeopleSalaryService {
 
     void updateSalary(PeopleSalary peopleSalary);
 
-    void deleteSalarySalaryById(Long id);
+    void deleteSalaryById(Long id);
 
-    void batchDeletePeopleSalaryByIds(String[] ids);
+    void batchDeleteSalaryByIds(String[] ids);
 }

@@ -40,12 +40,12 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     }
 
     @Override
-    public void deleteSalarySalaryById(Long id) {
-        peopleSalaryMapper.deleteById(id);
+    public void deleteSalaryById(Long id) {
+        peopleSalaryMapper.deleteSalaryById(id);
     }
 
     @Override
-    public void batchDeletePeopleSalaryByIds(String[] ids) {
+    public void batchDeleteSalaryByIds(String[] ids) {
         peopleSalaryMapper.batchDeleteByIds(ids);
     }
 }
