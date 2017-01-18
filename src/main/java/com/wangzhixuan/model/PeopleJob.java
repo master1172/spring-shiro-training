@@ -1,9 +1,11 @@
 package com.wangzhixuan.model;
 
+import java.io.Serializable;
+
 /**
  * Created by wangwk on 2017/1/15.
  */
-public class PeopleJob extends PeopleBase {
+public class PeopleJob implements Serializable {
     private static final long serialVersionUID = -5321613594382537423L;
 
     private Long id;
@@ -45,7 +47,6 @@ public class PeopleJob extends PeopleBase {
     public void setSalary(String salary) {
         this.salary = salary;
     }
-
 
 
     @Override

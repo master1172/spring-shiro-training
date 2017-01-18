@@ -51,19 +51,6 @@ public class PeopleSalaryController extends BaseController{
         return pageInfo;
     }
 
-    @RequestMapping(value="/salaryGrid", method = RequestMethod.POST)
-    @ResponseBody
-    public PageInfo salaryGrid(HttpServletRequest request, Integer page, Integer rows, String sort, String order){
-        PageInfo pageInfo = new PageInfo(page,rows);
-        String peopleCode = request.getParameter("code");
-        Map<String,Object> condition = Maps.newHashMap();
-        condition.put("peopleCode",peopleCode);
-        pageInfo.setCondition(condition);
-        peopleSalaryService.findDataGrid(pageInfo,request);
-
-        return pageInfo;
-    }
-
     @RequestMapping(value="/salaryListPage", method = RequestMethod.GET)
     public String salaryListPage(Long id, Model model){
 
@@ -77,4 +64,21 @@ public class PeopleSalaryController extends BaseController{
         }
         return "/admin/peopleSalary/peopleSalaryList";
     }
+
+    @RequestMapping(value="/salaryGrid", method = RequestMethod.POST)
+    @ResponseBody
+    public PageInfo salaryGrid(HttpServletRequest request, Integer page, Integer rows, String sort, String order){
+        PageInfo pageInfo = new PageInfo(page,rows);
+        String peopleCode = request.getParameter("code");
+        Map<String,Object> condition = Maps.newHashMap();
+        condition.put("peopleCode",peopleCode);
+        pageInfo.setCondition(condition);
+        peopleSalaryService.findDataGrid(pageInfo,request);
+
+        return pageInfo;
+    }
+
+
+
+
 }
