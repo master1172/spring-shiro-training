@@ -30,7 +30,7 @@ public interface PeopleJobService {
      *
      * @param peoplejobvo
      */
-    void addPeopleJob(PeopleJobVo peoplejobvo, CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
+    void addPeopleJob(PeopleJobVo peoplejobvo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
 
 
@@ -38,7 +38,7 @@ public interface PeopleJobService {
      * 修改人员职级
      * @param peoplejobvo
      */
-    void updatePeopleJob(PeopleJobVo peoplejobvo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
+    void updatePeopleJob(PeopleJobVo peoplejobvo) throws InvocationTargetException, IllegalAccessException;
 
     void updatePeopleJob(PeopleJob peoplejob);
     /**
@@ -47,9 +47,9 @@ public interface PeopleJobService {
      * @param id
      * @return
      */
-    PeopleJob findPeopleJobById(Long id);
+//    PeopleJob findPeopleJobById(Long id);
 
-    PeopleJobVo findPeopleJobVoById(Long id);
+//    PeopleJobVo findPeopleJobVoById(Long id);
     /**
      * 删除人员
      *

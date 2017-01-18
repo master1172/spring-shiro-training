@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -13,31 +14,32 @@ public class PeopleRankVo implements Serializable {
     private Long id;
 
     public String getRank_level() {
-        return Rank_level;
+        return rank_level;
     }
 
     public void setRank_level(String rank_level) {
-        Rank_level = rank_level;
+        this.rank_level = rank_level;
     }
 
-    public String getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
-    private String Rank_level;
-    private String salary;
+    private String rank_level;
+    private BigDecimal salary;
     public static Map<String,Object> CreateCondition(PeopleRankVo peoplerankvo) {
         Map<String, Object> condition = Maps.newHashMap();
         if(peoplerankvo.getRank_level() != null){
-            condition.put("Job_category", peoplerankvo.getRank_level().split(","));
+            condition.put("rank_level", peoplerankvo.getRank_level().split(","));
         }
-        if(StringUtils.isNoneBlank(peoplerankvo.getSalary())){
-            condition.put("Job_level", peoplerankvo.getSalary());
+        if(StringUtils.isNoneBlank(peoplerankvo.getSalary().toString())){
+            condition.put("salary", peoplerankvo.getSalary());
         }
         return condition;
     }
 }
+

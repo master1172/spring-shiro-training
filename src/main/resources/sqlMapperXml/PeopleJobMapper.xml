@@ -62,9 +62,9 @@
         LIMIT #{from}, #{size}
     </select>
 
-    <select id="findPeopleRankPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+    <select id="findPeopleJobPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from rank t
+        from job t
         <where>
             <if test=" condition.job_category != null ">
                 and t.job_category LIKE concat('%',#{condition.job_category},'%')
@@ -176,17 +176,5 @@
         </foreach>
     </select>
 
-    <select id="selectPeopleJobVoByIds" resultMap="peopleJobVoResultMap" parameterType="java.util.ArrayList">
-        SELECT
-        t.id,
-        t.job_category,
-        t.job_level,
-        t.salary
-        FROM
-        job t
-        where t.id in
-        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </select>
+
 </mapper>
