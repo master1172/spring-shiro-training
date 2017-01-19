@@ -2,6 +2,7 @@ package com.wangzhixuan.service;
 
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleSalaryVo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,4 +20,6 @@ public interface PeopleSalaryService {
     void deleteSalaryById(Long id);
 
     void batchDeleteSalaryByIds(String[] ids);
+
+    PeopleSalaryVo findPeopleSalaryVoById(Long id);
 }

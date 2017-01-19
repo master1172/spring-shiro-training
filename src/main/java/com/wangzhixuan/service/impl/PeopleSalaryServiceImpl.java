@@ -5,6 +5,7 @@ import com.wangzhixuan.mapper.PeopleSalaryMapper;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleSalaryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +48,10 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     @Override
     public void batchDeleteSalaryByIds(String[] ids) {
         peopleSalaryMapper.batchDeleteByIds(ids);
+    }
+
+    @Override
+    public PeopleSalaryVo findPeopleSalaryVoById(Long id) {
+        return peopleSalaryMapper.findPeopleSalaryVoById(id);
     }
 }

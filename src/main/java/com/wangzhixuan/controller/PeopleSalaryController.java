@@ -8,6 +8,7 @@ import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.slf4j.Logger;
@@ -95,8 +96,47 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
-    @RequestMapping("/editPage",method = RequestMethod.GET)
-    public String editPage(){
+    @RequestMapping("/addPage")
+    public String addPage(){
+        return "/admin/peopleSalary/peopleSalaryAdd";
+    }
+
+    @RequestMapping("/add")
+    @ResponseBody
+    public Result add(PeopleSalary peopleSalary){
+        Result result = new Result();
+        try{
+            peopleSalaryService.addSalary(peopleSalary);
+            result.setSuccess(true);
+            result.setMsg("添加成功!");
+            return result;
+        }catch(Exception e){
+            LOGGER.error("添加工资失败：{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
+    }
+
+    @RequestMapping("/editPage")
+    public String editPage(Long id, Model model){
+        PeopleSalaryVo peopleSalaryVo = peopleSalaryService.findPeopleSalaryVoById(id);
+        model.addAttribute("peopleSalaryVo",peopleSalaryVo);
         return "/admin/peopleSalary/peopleSalaryEdit";
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public Result edit(PeopleSalary peopleSalary){
+        Result result = new Result();
+        try{
+            peopleSalaryService.updateSalary(peopleSalary);
+            result.setSuccess(true);
+            result.setMsg("修改成功!");
+            return result;
+        }catch(Exception e){
+            LOGGER.error("修改工资失败：{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
     }
 }
