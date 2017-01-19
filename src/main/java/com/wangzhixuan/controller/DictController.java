@@ -53,6 +53,13 @@ public class DictController {
         return identityList;
     }
 
+    @RequestMapping(value="/rank", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Dict> RankLevelDict(){
+        List<Dict> rankLevelList = dictMapper.findRankLevelDict();
+        return rankLevelList;
+    }
+
     @RequestMapping(value="/job", method = RequestMethod.POST)
     @ResponseBody
     public List<Dict> JobLevelDict(){

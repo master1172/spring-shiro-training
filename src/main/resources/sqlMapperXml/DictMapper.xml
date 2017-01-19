@@ -6,6 +6,11 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="RankResultMap" type="com.wangzhixuan.model.Dict">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="rank_level" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <resultMap id="JobResultMap" type="com.wangzhixuan.model.Dict">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="job_level" property="name" jdbcType="VARCHAR"/>
@@ -62,6 +67,12 @@
         where name = #{name}
     </select>
 
+    <select id="findRankLevelDict" resultMap="RankResultMap">
+        select
+        id, rank_level
+        from rank
+        order by id
+    </select>
 
     <select id="findJobLevelDict" resultMap="JobResultMap">
         select
