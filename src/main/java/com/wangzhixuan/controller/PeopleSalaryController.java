@@ -105,7 +105,7 @@ public class PeopleSalaryController extends BaseController{
         return "/admin/peopleSalary/peopleSalaryAdd";
     }
 
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add", headers = "Accept=application/json")
     @ResponseBody
     public Result add(PeopleSalary peopleSalary){
         Result result = new Result();

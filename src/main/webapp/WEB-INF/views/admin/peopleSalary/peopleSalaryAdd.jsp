@@ -1,17 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript">
-
-    function checkForm(){
-        progressLoad();
-        var isValid = $("#salaryAddForm").form("validate");
-        if (!isValid) {
-            progressClose();
-            return false;
-        }
-        return true;
-    }
-
 </script>
 
 
@@ -80,7 +69,7 @@
                                 readOnly:true,
                                 dateFmt:'yyyy-MM-dd',
                                 maxDate:'%y-%M-%d',
-                                onpicked:workDateChange})"
+                                })"
                                readonly="readonly"/>
                     </td>
                     <td>考勤情况</td>
@@ -121,11 +110,84 @@
                     </td>
                     <td>物业补贴</td>
                     <td>
-
+                        <input name="propertyAllowance" id="propertyAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
-                    
+                    <td>挂职补贴</td>
+                    <td>
+                        <input name="extraJobAllowance" id="extraJobAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>降温补贴</td>
+                    <td>
+                        <input name="temperatureAllowance" id="temperatureAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>补发</td>
+                    <td>
+                        <input name="reissueFee" id="reissueFee" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>药费报销</td>
+                    <td>
+                        <input name="medicare" id="medicare" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>一次性年终奖励</td>
+                    <td>
+                        <input name="yearlyBonus" id="yearlyBonus" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>应发合计</td>
+                    <td>
+                        <input name="grossSalary" id="grossSalary" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>养老保险</td>
+                    <td>
+                        <input name="lifeInsurance" id="lifeInsurance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>失业保险</td>
+                    <td>
+                        <input name="jobInsurance" id="jobInsurance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>医疗保险</td>
+                    <td>
+                        <input name="healthInsurance" id="healthInsurance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>职业年金</td>
+                    <td>
+                        <input name="annuity" id="annuity" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>住房公积金</td>
+                    <td>
+                        <input name="houseFund" id="houseFund" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>扣款</td>
+                    <td>
+                        <input name="expense" id="expense" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>代扣税</td>
+                    <td>
+                        <input name="tax" id="tax" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>实发合计</td>
+                    <td>
+                        <input name="netIncome" id="netIncome" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>发薪日</td>
+                    <td>
+                        <input id="payDate" name="payDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d',
+                                })"
+                               readonly="readonly"/>
+                    </td>
                 </tr>
             </table>
         </form>

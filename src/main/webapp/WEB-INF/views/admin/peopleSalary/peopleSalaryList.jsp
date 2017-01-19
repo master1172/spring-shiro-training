@@ -50,17 +50,17 @@
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为添加成功之后，需要刷新这个salaryGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find("#salaryAddForm");
-                    if(parent.checkForm()){
-                        parent.SYS_SUBMIT_FORM(f,"/peopleSalary/add",function(data){
-                            if(!data["success"]){
-                                parent.$.messager.alert("提示", data["msg"], "warning");
-                            }else{
-                                parent.progressClose();
-                                salaryGrid.datagrid("reload");
-                                parent.$.modalDialog.handler.dialog("close");
-                            }
-                        });
-                    }
+
+                    parent.SYS_SUBMIT_FORM(f,"/peopleSalary/add",function(data){
+                        if(!data["success"]){
+                            parent.$.messager.alert("提示", data["msg"], "warning");
+                        }else{
+                            parent.progressClose();
+                            salaryGrid.datagrid("reload");
+                            parent.$.modalDialog.handler.dialog("close");
+                        }
+                    });
+
                 }
             }]
         });
@@ -84,7 +84,7 @@
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find("#peopleSalaryEditForm");
-                    //f.submit();
+
                     if(parent.checkForm()){
                         parent.SYS_SUBMIT_FORM(f,"/peopleSalary/edit",function(data){
                             if(!data["success"]){
