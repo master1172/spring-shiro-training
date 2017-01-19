@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
-<script type="text/javascript" src="${staticPath}/static/easyui/plugins/uploadPreview.min.js" charset="utf-8"></script>
 <script type="text/javascript">
 
     function checkForm(){
@@ -74,6 +73,59 @@
                     <td>
                         <input name="houseAllowance" id="houseAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
+                    <td>参加工作日期</td>
+                    <td>
+                        <input id="workDate" name="workDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d',
+                                onpicked:workDateChange})"
+                               readonly="readonly"/>
+                    </td>
+                    <td>考勤情况</td>
+                    <td>
+                        <input name="timesheetStatus" id="timesheetStatus" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>职务补贴</td>
+                    <td>
+                        <input name="dutyAllowance" id="dutyAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>适当补贴</td>
+                    <td>
+                        <input name="extraAllowance" id="extraAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>通讯补贴</td>
+                    <td>
+                        <input name="telephoneAllowance" id="telephoneAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>交通补贴</td>
+                    <td>
+                        <input name="trafficAllowance" id="trafficAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>单日值班费</td>
+                    <td>
+                        <input name="onDutyFee" id="onDutyFee" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>值班天数</td>
+                    <td>
+                        <input name="onDutyDate" id="onDutyDate" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>值班费合计</td>
+                    <td>
+                        <input name="onDutyFeeTotal" id="onDutyFeeTotal" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>物业补贴</td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    
                 </tr>
             </table>
         </form>
