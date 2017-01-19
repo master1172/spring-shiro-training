@@ -27,6 +27,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.Range;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.util.StringUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -798,6 +799,13 @@ public class PeopleServiceImpl implements PeopleService{
 		ids = ids.substring(0, ids.lastIndexOf(','));
 
 		return ids;
+	}
+
+	@Override
+	public People findPeopleByCode(String code) {
+		if (StringUtils.isBlank(code))
+			return null;
+		return peopleMapper.findPeopleByCode(code);
 	}
 
 	private void UpdatePeopleDate(PeopleVo people) {

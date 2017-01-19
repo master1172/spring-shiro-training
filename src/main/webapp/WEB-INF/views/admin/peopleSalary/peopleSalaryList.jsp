@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
-
 <script type="text/javascript">
     var salaryGrid;
 
@@ -30,12 +29,39 @@
         });
     });
 
+    function addFun(){
+        parent.$.modalDialog({
+            title: '添加',
+            width: 1500,
+            height: 600,
+            href: '${path}/peopleSalary/addPage?peopleCode=${code}',
+            buttons: [{
+                text: '添加',
+                handler: function () {
+                    parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为添加成功之后，需要刷新这个salaryGrid，所以先预定义好
+                    var f = parent.$.modalDialog.handler.find("#salaryAddForm");
+                    if(parent.checkForm()){
+                        parent.SYS_SUBMIT_FORM(f,"/peopleSalary/add",function(data){
+                            if(!data["success"]){
+                                parent.$.messager.alert("提示", data["msg"], "warning");
+                            }else{
+                                parent.progressClose();
+                                salaryGrid.datagrid("reload");
+                                parent.$.modalDialog.handler.dialog("close");
+                            }
+                        });
+                    }
+                }
+            }]
+        });
+    }
+
     function editFun(id) {
         if (id == undefined) {
-            var rows = dataGrid.datagrid('getSelections');
+            var rows = salaryGrid.datagrid('getSelections');
             id = rows[0].id;
         } else {
-            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            salaryGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
 
         parent.$.modalDialog({
@@ -113,5 +139,9 @@
             </tr>
             </thead>
         </table>
+    </div>
+    <div id="salarytoolbar" style="display: none;">
+        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">添加</a>
     </div>
 </div>

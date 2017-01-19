@@ -101,4 +101,6 @@ public interface PeopleMapper {
      * @return
      */
     PeopleVo findPeopleVoById(Long id);
+
+    People findPeopleByCode(String code);
 }

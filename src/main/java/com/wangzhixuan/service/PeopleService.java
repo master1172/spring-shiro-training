@@ -99,4 +99,6 @@ public interface PeopleService {
      * @return
      */
     String findPeopleIDsByCondition(PageInfo pageInfo);
+
+    People findPeopleByCode(String code);
 }
