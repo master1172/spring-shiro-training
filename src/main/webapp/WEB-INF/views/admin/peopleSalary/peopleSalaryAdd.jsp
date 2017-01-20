@@ -6,7 +6,7 @@
 
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
-        <form id="salaryAddForm" method="post" enctype=”multipart/form-data”>
+        <form id="salaryAddForm" method="post">
             <table class="grid" border=1>
                 <input type="hidden" name="peopleCode" value="${people.code}">
                 <tr>
