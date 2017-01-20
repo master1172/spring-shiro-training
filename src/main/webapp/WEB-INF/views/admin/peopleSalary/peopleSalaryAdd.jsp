@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript">
+    function checkForm(){
+        progressLoad();
+        var isValid = $("#salaryAddForm").form("validate");
+        if (!isValid) {
+            progressClose();
+            return false;
+        }
+        return true;
+    }
 </script>
 
 
@@ -12,13 +21,13 @@
                 <tr>
                     <td>姓名</td>
                     <td>
-                        <input name="name" type="text" value="${people.name}" class="easyui-validatebox" data-options="required:true" value="">
+                        <input name="name" type="text" value="${people.name}" class="easyui-validatebox" data-options="required:true">
                     </td>
                 </tr>
                 <tr>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false" data-options="required:true">
                         </input>
                     </td>
                     <td>岗位工资</td>
@@ -27,7 +36,7 @@
                     </td>
                     <td>薪级</td>
                     <td>
-                        <input class="easyui-combobox" id="rankId" name="rankId" url="${path}/dict/rank" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="rankId" name="rankId" url="${path}/dict/rank" valueField="id" textField="name" editable="false" data-options="required:true">
                         </input>
                     </td>
                     <td>薪级工资</td>

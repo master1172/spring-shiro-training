@@ -50,16 +50,17 @@
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为添加成功之后，需要刷新这个salaryGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find("#salaryAddForm");
-
-                    parent.SYS_SUBMIT_FORM(f,"/peopleSalary/add",function(data){
-                        if(!data["success"]){
-                            parent.$.messager.alert("提示", data["msg"], "warning");
-                        }else{
-                            parent.progressClose();
-                            salaryGrid.datagrid("reload");
-                            parent.$.modalDialog.handler.dialog("close");
-                        }
-                    });
+                    if(parent.checkForm()) {
+                        parent.SYS_SUBMIT_FORM(f, "/peopleSalary/add", function (data) {
+                            if (!data["success"]) {
+                                parent.$.messager.alert("提示", data["msg"], "warning");
+                            } else {
+                                parent.progressClose();
+                                salaryGrid.datagrid("reload");
+                                parent.$.modalDialog.handler.dialog("close");
+                            }
+                        });
+                    }
 
                 }
             }]
@@ -143,7 +144,7 @@
                 <th field="jobCategory"     data-options="sortable:false" width="80">岗位分类</th>
                 <th field="jobLevel"        data-options="sortable:false" width="80">职级</th>
                 <th field="jobSalary"       data-options="sortable:false" width="80">岗位工资</th>
-                <th field="rank"            data-options="sortable:false" width="80">薪级</th>
+                <th field="rankLevel"       data-options="sortable:false" width="80">薪级</th>
                 <th field="rankSalary"      data-options="sortable:false" width="80">薪级工资</th>
                 <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
