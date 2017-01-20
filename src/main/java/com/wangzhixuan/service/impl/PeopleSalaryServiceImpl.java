@@ -61,7 +61,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){
         if (peopleSalary == null)
             return;
-        if (StringUtils.isBlank(peopleSalary.getWorkDate()){
+        if (StringUtils.isBlank(peopleSalary.getWorkDate())){
             peopleSalary.setWorkDate(null);
         }
     }
