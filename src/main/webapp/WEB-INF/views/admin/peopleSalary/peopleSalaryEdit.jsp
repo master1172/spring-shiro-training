@@ -62,7 +62,7 @@
                     </td>
                     <td>岗位考核结果</td>
                     <td>
-                        <input type="text" name="examResult">
+                        <input type="text" name="examResult" value="${peopleSalaryVo.examResult}">
                     </td>
                     <td>岗位津贴</td>
                     <td>
