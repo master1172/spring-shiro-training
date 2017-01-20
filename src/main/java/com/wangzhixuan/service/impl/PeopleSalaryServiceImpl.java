@@ -34,12 +34,12 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     @Override
     public void addSalary(PeopleSalary peopleSalary){
         UpdatePeopleSalaryDate(peopleSalary);
-
         peopleSalaryMapper.insert(peopleSalary);
     }
 
     @Override
     public void updateSalary(PeopleSalary peopleSalary) {
+        UpdatePeopleSalaryDate(peopleSalary);
         peopleSalaryMapper.update(peopleSalary);
     }
 
