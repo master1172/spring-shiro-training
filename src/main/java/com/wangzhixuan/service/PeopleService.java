@@ -8,6 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * Created by liushaoyang on 2016/9/8.
@@ -101,4 +102,6 @@ public interface PeopleService {
     String findPeopleIDsByCondition(PageInfo pageInfo);
 
     People findPeopleByCode(String code);
+
+    List findPeopleListByIds(String[] idList);
 }

@@ -4,14 +4,24 @@ import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.mapper.PeopleSalaryMapper;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.PeopleSalaryService;
+import com.wangzhixuan.utils.ConstUtil;
+import com.wangzhixuan.utils.ExcelUtil;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * Created by sterm on 2017/1/13.
@@ -62,6 +72,26 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     @Override
     public PeopleSalaryBaseVo findPeopleSalaryBaseByCode(String code) {
         return peopleSalaryMapper.findPeopleSalaryBaseVoByCode(code);
+    }
+
+    @Override
+    public void exportExcel(HttpServletResponse response, String[] idList) {
+        List list = peopleMapper.selectPeopleVoByIds(idList);
+
+        if (list != null && list.size() > 0){
+            XSSFWorkbook workBook;
+            OutputStream os;
+            String newFileName = "在编人员工资.xlsx";
+            try{
+                workBook = new XSSFWorkbook();
+                XSSFSheet sheet= workBook.createSheet("在编人员工资信息");
+                XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+                //创建表头
+                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleHeaders());
+            }catch (Exception exp){
+
+            }
+        }
     }
 
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){

@@ -808,6 +808,32 @@ public class PeopleServiceImpl implements PeopleService{
 		return peopleMapper.findPeopleByCode(code);
 	}
 
+	@Override
+	public List findPeopleListByIds(String[] idList) {
+		if (idList == null || idList.length < 1)
+			return null;
+
+		List<People> peopleList = new ArrayList<People>();
+
+		for(String idString: idList){
+			if (StringUtils.isBlank(idString))
+				continue;
+			Long id;
+			try{
+				id = Long.parseLong(idString);
+			}catch (Exception exp){
+				continue;
+			}
+			People people = peopleMapper.findPeopleById(id);
+
+			if (people != null){
+				peopleList.add(people);
+			}
+		}
+
+		return peopleList;
+	}
+
 	private void UpdatePeopleDate(PeopleVo people) {
 		if (people != null){
 			if (StringUtils.isBlank(people.getBirthday())){

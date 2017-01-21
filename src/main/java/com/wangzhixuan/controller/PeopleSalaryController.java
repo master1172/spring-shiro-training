@@ -11,6 +11,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
+import org.apache.commons.lang3.StringUtils;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -144,6 +147,20 @@ public class PeopleSalaryController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping("/exportExcel")
+    public void exportExcel(HttpServletResponse response, String ids){
+        if(StringUtils.isBlank(ids)){
+            LOGGER.error("Excel:{}","请选择有效数据");
+        }
+        
+        try{
+            peopleSalaryService.exportExcel(response, ids.split(","));
+        }catch(Exception exp){
+            LOGGER.error("导出Excel失败:{}",exp);
+        }
+    }
+
 
     @RequestMapping("/salaryBasePage")
     public String salaryBasePage(String code, Model model){
