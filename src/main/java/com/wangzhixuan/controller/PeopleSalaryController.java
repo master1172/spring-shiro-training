@@ -8,6 +8,7 @@ import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.omg.CORBA.PUBLIC_MEMBER;
@@ -142,5 +143,24 @@ public class PeopleSalaryController extends BaseController{
             result.setMsg(e.getMessage());
             return result;
         }
+    }
+
+    @RequestMapping("/salaryBasePage")
+    public String salaryBasePage(String code, Model model){
+        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryService.findPeopleSalaryBaseByCode(code);
+        People people = peopleService.findPeopleByCode(code);
+
+        if (peopleSalaryBaseVo == null){
+            peopleSalaryBaseVo = new PeopleSalaryBaseVo();
+        }
+
+        if (people == null){
+            people = new People();
+        }
+
+        model.addAttribute("peopleSalaryBaseVo",peopleSalaryBaseVo);
+        model.addAttribute("people",people);
+
+        return "/admin/peopleSalary/peopleSalaryBase";
     }
 }

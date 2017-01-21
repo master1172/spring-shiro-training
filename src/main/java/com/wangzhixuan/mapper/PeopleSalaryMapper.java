@@ -2,6 +2,7 @@ package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface PeopleSalaryMapper {
     List findPeopleSalaryPageCondition(PageInfo pageInfo);
 
     PeopleSalaryVo findPeopleSalaryVoById(Long id);
+
+    PeopleSalaryBaseVo findPeopleSalaryBaseVoByCode(String code);
 }

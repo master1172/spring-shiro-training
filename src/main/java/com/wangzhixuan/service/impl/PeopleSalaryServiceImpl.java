@@ -5,6 +5,7 @@ import com.wangzhixuan.mapper.PeopleSalaryMapper;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,11 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     @Override
     public PeopleSalaryVo findPeopleSalaryVoById(Long id) {
         return peopleSalaryMapper.findPeopleSalaryVoById(id);
+    }
+
+    @Override
+    public PeopleSalaryBaseVo findPeopleSalaryBaseByCode(String code) {
+        return peopleSalaryMapper.findPeopleSalaryBaseVoByCode(code);
     }
 
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){
