@@ -192,7 +192,7 @@
                         <input id="payDate" name="payDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
+                                dateFmt:'yyyy-MM',
                                 maxDate:'%y-%M-%d',
                                 })"
                                readonly="readonly"/>

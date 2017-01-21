@@ -21,6 +21,15 @@ public class ConstUtil {
         };
     }
 
+    public static String[] getPeopleSalaryHeaders(){
+        return new String[]{
+                "序号","姓名","岗位","岗位工资","薪级","薪级工资","工改保留工资","岗位考核结果","岗位津贴","绩效津贴","提租补贴",
+                "购房补贴","参加工作日期","考勤请假情况","职务补贴","适当补贴","通讯补贴","交通补贴","日值班费","值班天数","值班费合计",
+                "物业补贴","挂职补贴","降温补贴","补发","药费报销","一次性年终奖励","应发合计","养老保险","失业保险","医疗保险","职业年金",
+                "住房公积金","扣款","代扣税","实发合计","发工资日期"
+        };
+    }
+
     public static int PEOPLE_NORMAL = 0;
     public static int PEOPLE_RETIRE = 1;
     public static int PEOPLE_DEATH  = 2;

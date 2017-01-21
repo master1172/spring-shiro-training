@@ -86,6 +86,51 @@
         <result column="pay_date"               jdbcType="VARCHAR" property="payDate" />
     </resultMap>
 
+    <resultMap id="peopleSalaryBaseVoResultMap" type="com.wangzhixuan.vo.PeopleSalaryBaseVo">
+        <id     column="id"             jdbcType="BIGINT" property="id" />
+        <result column="people_code"    jdbcType="VARCHAR" property="peopleCode" />
+        <result column="people_name"    jdbcType="VARCHAR" property="peopleName" />
+        <result column="age"            jdbcType="INTEGER" property="age" />
+        <result column="job_id"         jdbcType="INTEGER" property="jobId" />
+        <result column="job_category"   jdbcType="VARCHAR" property="jobCategory"/>
+        <result column="job_level"      jdbcType="VARCHAR" property="jobLevel" />
+        <result column="job_salary"     jdbcType="DECIMAL" property="jobSalary" />
+        <result column="rank_id"        jdbcType="INTEGER" property="rankId" />
+        <result column="rank_level"     jdbcType="VARCHAR" property="rankLevel"/>
+        <result column="rank_salary"    jdbcType="DECIMAL" property="rankSalary" />
+        <result column="reserve_salary" jdbcType="DECIMAL" property="reserveSalary" />
+        <result column="exam_result"    jdbcType="VARCHAR" property="examResult" />
+        <result column="job_allowance"  jdbcType="DECIMAL" property="jobAllowance" />
+        <result column="performance_allowance"  jdbcType="DECIMAL" property="performanceAllowance" />
+        <result column="rent_allowance"         jdbcType="DECIMAL" property="rentAllowance" />
+        <result column="house_allowance"        jdbcType="DECIMAL" property="houseAllowance" />
+        <result column="work_date"              jdbcType="DATE"    property="workDate" />
+        <result column="timesheet_status"       jdbcType="DECIMAL" property="timesheetStatus" />
+        <result column="duty_allowance"         jdbcType="DECIMAL" property="dutyAllowance" />
+        <result column="extra_allowance"        jdbcType="DECIMAL" property="extraAllowance" />
+        <result column="telephone_allowance"    jdbcType="DECIMAL" property="telephoneAllowance" />
+        <result column="traffic_allowance"      jdbcType="DECIMAL" property="trafficAllowance" />
+        <result column="on_duty_fee"            jdbcType="DECIMAL" property="onDutyFee" />
+        <result column="on_duty_date"           jdbcType="DECIMAL" property="onDutyDate" />
+        <result column="on_duty_fee_total"      jdbcType="DECIMAL" property="onDutyFeeTotal" />
+        <result column="property_allowance"     jdbcType="DECIMAL" property="propertyAllowance" />
+        <result column="extra_job_allowance"    jdbcType="DECIMAL" property="extraJobAllowance" />
+        <result column="temperature_allowance"  jdbcType="DECIMAL" property="temperatureAllowance" />
+        <result column="reissue_fee"            jdbcType="DECIMAL" property="reissueFee" />
+        <result column="medicare"               jdbcType="DECIMAL" property="medicare" />
+        <result column="yearly_bonus"           jdbcType="DECIMAL" property="yearlyBonus" />
+        <result column="gross_salary"           jdbcType="DECIMAL" property="grossSalary" />
+        <result column="life_insurance"         jdbcType="DECIMAL" property="lifeInsurance" />
+        <result column="job_insurance"          jdbcType="DECIMAL" property="jobInsurance" />
+        <result column="health_insurance"       jdbcType="DECIMAL" property="healthInsurance" />
+        <result column="annuity"                jdbcType="DECIMAL" property="annuity" />
+        <result column="house_fund"             jdbcType="DECIMAL" property="houseFund" />
+        <result column="expense"                jdbcType="DECIMAL" property="expense" />
+        <result column="tax"                    jdbcType="DECIMAL" property="tax" />
+        <result column="net_income"             jdbcType="DECIMAL" property="netIncome" />
+        <result column="pay_date"               jdbcType="VARCHAR" property="payDate" />
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result,
         job_allowance, performance_allowance, rent_allowance, house_allowance, work_date,
@@ -449,6 +494,63 @@
         rank r ON t.rank_id = r.id
         <where>
             t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findPeopleSalaryBaseVoByCode" resultMap="peopleSalaryBaseVoResultMap" parameterType="java.lang.String">
+        SELECT
+        t.id,
+        t.people_code,
+        p.name as people_name,
+        p.age  as age,
+        t.job_id,
+        j.job_category as job_category,
+        j.job_level as job_level,
+        t.job_salary,
+        t.rank_id,
+        r.rank_level as rank_level,
+        t.rank_salary,
+        t.reserve_salary,
+        t.exam_result,
+        t.job_allowance,
+        t.performance_allowance,
+        t.rent_allowance,
+        t.house_allowance,
+        t.work_date,
+        t.timesheet_status,
+        t.duty_allowance,
+        t.extra_allowance,
+        t.telephone_allowance,
+        t.traffic_allowance,
+        t.on_duty_fee,
+        t.on_duty_date,
+        t.on_duty_fee_total,
+        t.property_allowance,
+        t.extra_job_allowance,
+        t.temperature_allowance,
+        t.reissue_fee,
+        t.medicare,
+        t.yearly_bonus,
+        t.gross_salary,
+        t.life_insurance,
+        t.job_insurance,
+        t.health_insurance,
+        t.annuity,
+        t.house_fund,
+        t.expense,
+        t.tax,
+        t.net_income,
+        t.pay_date
+        FROM
+        people_salary t
+        LEFT JOIN
+        people p ON t.people_code = p.code
+        LEFT JOIN
+        job j ON t.job_id = j.id
+        LEFT JOIN
+        rank r ON t.rank_id = r.id
+        <where>
+            t.people_code = #{code}
         </where>
     </select>
 
