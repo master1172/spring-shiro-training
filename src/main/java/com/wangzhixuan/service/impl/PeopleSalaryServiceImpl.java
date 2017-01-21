@@ -88,7 +88,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                 XSSFSheet sheet= workBook.createSheet("在编人员工资信息");
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
-                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleHeaders());
+                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleSalaryHeaders());
 
                 int count = 0;
 
