@@ -79,5 +79,6 @@
         <mapper resource="sqlMapperXml/PeopleTransferMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleSalaryMapper.xml"/>
         <mapper resource="sqlMapperXml/ExamYearlyMapper.xml"/>
+        <mapper resource="sqlMapperXml/ExamMonthlyMapper.xml"/>
     </mappers>
 </configuration> 

@@ -135,18 +135,7 @@ public class ExamYearlyController extends BaseController{
       LOGGER.error("导出Excel失败:{}",exp);
     }
   }
-  @RequestMapping("/exportWord")
-  public void exportWord(HttpServletResponse response,String ids){
 
-    if (StringUtils.isEmpty(ids)){
-      LOGGER.error("导出Word:{}","请选择一条有效数据!");
-    }
-    try{
-      examYearlyService.exportWord(response,ids);
-    }catch(Exception exp){
-      LOGGER.error("导出Word:{}",exp);
-    }
-  }
   @RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
   @ResponseBody
   public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files){
