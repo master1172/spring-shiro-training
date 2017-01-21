@@ -100,8 +100,6 @@ public class PeopleRetireSalary implements Serializable {
         this.retireAllowance = retireAllowance;
     }
 
-   
-
     public BigDecimal getFoodAllowance() {
         return foodAllowance;
     }

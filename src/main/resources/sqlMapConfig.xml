@@ -49,9 +49,19 @@
 
         <typeAlias type="com.wangzhixuan.model.PeopleSalary" alias="PeopleSalary"/>
         <typeAlias type="com.wangzhixuan.vo.PeopleSalaryVo" alias="PeopleSalaryVo"/>
+<<<<<<< HEAD
         
         <typeAlias type="com.wangzhixuan.model.PeopleContractSalary" alias="PeopleContractSalary"/>
         <typeAlias type="com.wangzhixuan.vo.PeopleContractSalaryVo" alias="PeopleContractSalaryVo"/>
+=======
+
+        <typeAlias type="com.wangzhixuan.model.PeopleJob" alias="PeopleJob"/>
+        <typeAlias type="com.wangzhixuan.vo.PeopleJobVo" alias="PeopleJobVo"/>
+
+        <typeAlias type="com.wangzhixuan.model.PeopleRank" alias="PeopleRank"/>
+        <typeAlias type="com.wangzhixuan.vo.PeopleRankVo" alias="PeopleRankVo"/>
+
+>>>>>>> cf86893c839aa89d18f71a929d42248c8674306e
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
@@ -81,7 +91,15 @@
         <mapper resource="sqlMapperXml/PeopleDispatchMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleTransferMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleSalaryMapper.xml"/>
+<<<<<<< HEAD
         <mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleRetireSalaryMapper.xml"/>
+=======
+        <mapper resource="sqlMapperXml/PeopleJobMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleRankMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml"/>
+        <mapper resource="sqlMapperXml/ExamYearlyMapper.xml"/>
+        <mapper resource="sqlMapperXml/ExamMonthlyMapper.xml"/>
+>>>>>>> cf86893c839aa89d18f71a929d42248c8674306e
     </mappers>
 </configuration> 

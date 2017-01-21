@@ -11,12 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wangzhixuan.mapper.PeopleContractSalaryMapper;
-import com.wangzhixuan.mapper.PeopleRetireMapper;
-import com.wangzhixuan.mapper.PeopleRetireSalaryMapper;
 import com.wangzhixuan.model.PeopleContractSalary;
-import com.wangzhixuan.model.PeopleRetireSalary;
 import com.wangzhixuan.service.PeopleContractSalaryService;
-import com.wangzhixuan.service.PeopleRetireSalaryService;
 import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
@@ -63,5 +59,4 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	public PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id) {
 		return peopleContractSalaryMapper.findPeopleContractSalaryVoById(id);
 	}
-
 }
