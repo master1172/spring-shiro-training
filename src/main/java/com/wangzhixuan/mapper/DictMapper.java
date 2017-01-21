@@ -22,6 +22,8 @@ public interface DictMapper {
 
     Integer findNativeIdByName(String nativeName);
 
+    List<Dict> findRankLevelDict();
+
     List<Dict> findJobLevelDict();
 
     Integer findMarriageIdByName(String marriageName);

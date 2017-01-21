@@ -1,12 +1,8 @@
 package com.wangzhixuan.service;
 
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.model.PeopleRank;
 import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleJobVo;
 import com.wangzhixuan.vo.PeopleRankVo;
-import com.wangzhixuan.vo.PeopleVo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -30,9 +26,9 @@ public interface PeopleRankService {
     /**
      * 添加人员薪级
      *
-     * @param peoplerankvo
+     * @param peopleRankVo
      */
-    void addPeopleRank(PeopleRankVo peoplerankvo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
+    void addPeopleRank(PeopleRankVo peopleRankVo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
     /**
      * 根据人员id查询人员
@@ -47,11 +43,11 @@ public interface PeopleRankService {
     /**
      * 修改人员薪级
      *
-     * @param peoplerankvo
+     * @param peopleRankVo
      */
-    void updatePeopleRank(PeopleRankVo peoplerankvo) throws InvocationTargetException, IllegalAccessException;
+    void updatePeopleRank(PeopleRankVo peopleRankVo) throws InvocationTargetException, IllegalAccessException;
 
-    void updatePeopleRank(PeopleRank peoplerank);
+    void updatePeopleRank(PeopleRank peopleRank);
 
     /**
      * 删除人员

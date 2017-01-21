@@ -49,7 +49,6 @@ public interface PeopleJobMapper {
      * @param peoplejobvo
      */
     void updatePeopleJob(PeopleJobVo peoplejobvo) throws InvocationTargetException, IllegalAccessException;
-
     void updatePeopleJob(PeopleJob peoplejob);
 
     /**
@@ -92,5 +91,5 @@ public interface PeopleJobMapper {
      * @return
      */
     PeopleJobVo findPeopleJobVoById(Long id);
-
+    
 }

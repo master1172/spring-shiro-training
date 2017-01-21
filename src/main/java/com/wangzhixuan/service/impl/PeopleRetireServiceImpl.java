@@ -1,26 +1,35 @@
 package com.wangzhixuan.service.impl;
 
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleRetireMapper;
-import com.wangzhixuan.model.PeopleRetire;
-import com.wangzhixuan.service.PeopleRetireService;
-import com.wangzhixuan.utils.*;
-import com.wangzhixuan.vo.PeopleRetireVo;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFPictureData;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.wangzhixuan.mapper.DictMapper;
+import com.wangzhixuan.mapper.PeopleRetireMapper;
+import com.wangzhixuan.model.PeopleRetire;
+import com.wangzhixuan.service.PeopleRetireService;
+import com.wangzhixuan.utils.ConstUtil;
+import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.utils.StringUtilExtra;
+import com.wangzhixuan.utils.UploadUtil;
+import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.vo.PeopleRetireVo;
 
 /**
  * Created by administrator_cernet on 2016/11/27.
@@ -435,6 +444,11 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
 
         return ids;
     }
+
+	@Override
+	public PeopleRetire findPeopleRetireByCode(String code) {
+		return peopleRetireMapper.findPeopleRetireByCode(code);
+	}
 }
 
 

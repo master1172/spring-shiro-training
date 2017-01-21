@@ -1,8 +1,5 @@
 package com.wangzhixuan.service;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -44,7 +41,7 @@ public interface PeopleContractService {
      *
      * @param peopleContract
      */
-    void addPeopleContract(PeopleContract peopleContract,CommonsMultipartFile file);
+    void addPeopleContract(PeopleContract peopleContract, CommonsMultipartFile file);
 
 
 
@@ -74,7 +71,7 @@ public interface PeopleContractService {
      * @param id
      * @return
      */
-    void exportExcel(HttpServletResponse response,String[] idList);
+    void exportExcel(HttpServletResponse response, String[] idList);
     /**
      * 导出Word
      * @param request
@@ -82,7 +79,7 @@ public interface PeopleContractService {
      * @param id
      * @return
      */
-    void exportWord(HttpServletResponse response,String id);
+    void exportWord(HttpServletResponse response, String id);
 
     /**
      * 根据条件搜索ids
@@ -92,5 +89,9 @@ public interface PeopleContractService {
      * @return
      */
     String findPeopleContractIDsByCondition(PageInfo pageInfo);
+
+	public PeopleContract findPeopleContractByCode(String code) ;
+
+	public int insert(PeopleContract peopleContract) ;
 }
 

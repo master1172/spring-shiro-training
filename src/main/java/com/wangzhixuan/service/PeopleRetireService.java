@@ -19,7 +19,9 @@ public interface PeopleRetireService {
      * @return
      */
     PeopleRetire findPeopleRetireById(Long id);
-
+    
+    PeopleRetire findPeopleRetireByCode(String code);
+    
     /**
      * 根据人员姓名查询人员
      *

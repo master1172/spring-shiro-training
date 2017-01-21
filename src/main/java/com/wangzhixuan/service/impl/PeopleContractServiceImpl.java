@@ -1,5 +1,27 @@
 package com.wangzhixuan.service.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFPictureData;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleContractMapper;
 import com.wangzhixuan.model.PeopleContract;
@@ -9,28 +31,13 @@ import com.wangzhixuan.utils.StringUtilExtra;
 import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleContractVo;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by administrator_cernet on 2016/11/27.
  */
 @Service
 public class PeopleContractServiceImpl implements PeopleContractService{
-
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private PeopleContractMapper peopleContractMapper;
@@ -117,6 +124,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
 
     @Override
     public void deletePeopleContractById(Long id) {
+    	logger.info(id+"");
         peopleContractMapper.deleteById(id);
     }
 
@@ -443,4 +451,15 @@ public class PeopleContractServiceImpl implements PeopleContractService{
 
         return ids;
     }
+    
+    @Override
+	public PeopleContract findPeopleContractByCode(String code) {
+		return peopleContractMapper.findContractPeopleByCode(code);
+	}
+
+
+	@Override
+	public int insert(PeopleContract peopleContract) {
+		return peopleContractMapper.insert(peopleContract);
+	}
 }

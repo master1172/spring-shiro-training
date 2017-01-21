@@ -7,7 +7,10 @@
         <result column="salary" property="salary" jdbcType="DECIMAL"/>
 
     </resultMap>
-
+    <resultMap id="peopleRankVoResultMap" type="com.wangzhixuan.vo.PeopleRankVo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="rank_level" property="rank_level" jdbcType="VARCHAR" />
+    </resultMap>
     <sql id="Base_Column_List">,
         id, rank_level, salary
     </sql>
@@ -69,6 +72,23 @@
         </where>
     </select>
 
+    <select id="findPeopleRankPageCondition" resultMap="peopleRankVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.rank_level,
+        t.salary
+        FROM
+        rank t
+        <where>
+            <if test=" condition.rank_level != null and condition.rank_level != '' ">
+                and t.rank_level LIKE concat('%',#{condition.rank_level},'%')
+            </if>
+            <if test=" condition.salary != null and condition.salary != ''">
+                and t.salary LIKE concat('%',#{condition.salary},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
     <delete id="deleteById" parameterType="java.lang.Long">
         delete from rank
         where id = #{id,jdbcType=BIGINT}
@@ -89,56 +109,11 @@
         </selectKey>
         insert into rank (rank_level, salary)
         values (
-        #{code,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT},
-        #{nationalId, jdbcType=INTEGER},
-        #{province,jdbcType=VARCHAR},
-        #{city,jdbcType=VARCHAR},
-        #{birthday,jdbcType=DATE},
-        #{educationName,jdbcType=VARCHAR},
-        #{politicalName,jdbcType=VARCHAR},
-        #{speciality,jdbcType=VARCHAR},
-        #{height,jdbcType=VARCHAR},
-        #{marriageId, jdbcType=INTEGER},
-        #{hukou, jdbcType=TINYINT},
-        #{schoolDate,jdbcType=DATE},
-        #{mobile, jdbcType=VARCHAR},
-        #{address, jdbcType=VARCHAR},
-        #{departmentName, jdbcType=VARCHAR},
-        #{jobName, jdbcType=VARCHAR},
-        #{comment, jdbcType=VARCHAR},
-        #{photo, jdbcType=VARCHAR}
+        #{rank_level,jdbcType=VARCHAR},
+        #{salary,jdbcType=DECIMAL}
         )
     </insert>
-    <insert id="insertByImport" parameterType="java.util.List">
-        insert into rank (rank_level, salary)
-        values
-        <foreach item="item" index="index" collection="list" separator=",">
-            (
-            #{item.code,jdbcType=VARCHAR},
-            #{item.name,jdbcType=VARCHAR},
-            #{item.sex,jdbcType=TINYINT},
-            #{item.nationalId, jdbcType=INTEGER},
-            #{item.province,jdbcType=VARCHAR},
-            #{item.city,jdbcType=VARCHAR},
-            #{item.birthday,jdbcType=DATE},
-            #{item.educationName,jdbcType=VARCHAR},
-            #{item.politicalName,jdbcType=VARCHAR},
-            #{item.speciality,jdbcType=VARCHAR},
-            #{item.height,jdbcType=VARCHAR},
-            #{item.marriageId, jdbcType=INTEGER},
-            #{item.hukou, jdbcType=TINYINT},
-            #{item.schoolDate,jdbcType=DATE},
-            #{item.mobile, jdbcType=VARCHAR},
-            #{item.address, jdbcType=VARCHAR},
-            #{item.departmentName, jdbcType=VARCHAR},
-            #{item.jobName, jdbcType=VARCHAR},
-            #{item.comment, jdbcType=VARCHAR},
-            #{item.photo, jdbcType=VARCHAR}
-            )
-        </foreach>
-    </insert>
+
     <update id="updatePeopleRank" parameterType="com.wangzhixuan.model.PeopleRank">
         update rank
         <set>
@@ -146,7 +121,7 @@
                 rank_level = #{rank_level,jdbcType=VARCHAR},
             </if>
             <if test="salary != null">
-                salary = #{salary,jdbcType=TINYINT},
+                salary = #{salary,jdbcType=DECIMAL},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}

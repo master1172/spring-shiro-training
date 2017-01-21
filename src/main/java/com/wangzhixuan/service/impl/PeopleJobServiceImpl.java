@@ -1,6 +1,5 @@
 package com.wangzhixuan.service.impl;
 
-import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleJobMapper;
 import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.service.PeopleJobService;
@@ -117,13 +116,13 @@ public class PeopleJobServiceImpl implements PeopleJobService {
 				if (row.getCell(1) == null || row.getCell(1).toString().trim().equals("")) {
 					continue;
 				}
-				String job_catagary = row.getCell(1).toString().trim();
-				p.setJob_category(job_catagary);
+				String jobCatagary = row.getCell(1).toString().trim();
+				p.setJobCategory(jobCatagary);
 
 				//职级
 				if (row.getCell(2) != null && !row.getCell(2).toString().trim().equals("")) {
-					String Job_level = row.getCell(2).toString().trim();
-					p.setJob_level(Job_level);
+					String jobLevel = row.getCell(2).toString().trim();
+					p.setJobLevel(jobLevel);
 				}
 
 				//岗位薪资
@@ -158,8 +157,8 @@ public class PeopleJobServiceImpl implements PeopleJobService {
         			row=sheet.createRow(i+1);
         			PeopleJobVo p=(PeopleJobVo)list.get(i);
         			row.createCell(0).setCellValue(i+1);
-        			row.createCell(1).setCellValue(p.getJob_category());
-        			row.createCell(2).setCellValue(p.getJob_level());
+        			row.createCell(1).setCellValue(p.getJobCategory());
+        			row.createCell(2).setCellValue(p.getJobLevel());
         			row.createCell(3).setCellValue(p.getSalary().floatValue());
 
 					for(int j=0; j<38; j++){
@@ -193,8 +192,8 @@ public class PeopleJobServiceImpl implements PeopleJobService {
         	String newFileName="在编人员职级信息.docx";
 
 			Map<String,Object> params = new HashMap<String,Object>();
-			params.put("${job_catagory}",p.getJob_category());
-			params.put("${job_level}",p.getJob_level());
+			params.put("${jobCatagory}",p.getJobCategory());
+			params.put("${jobLevel}",p.getJobLevel());
 			params.put("${salary}",p.getSalary());
 
 

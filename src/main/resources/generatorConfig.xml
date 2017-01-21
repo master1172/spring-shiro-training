@@ -48,7 +48,7 @@
         <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <table schema="shiro" tableName="SysLog" domainObjectName="SysLog"
+        <table schema="shiro" tableName="people_retire_salary" domainObjectName="PeopleRetireSalary"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false"

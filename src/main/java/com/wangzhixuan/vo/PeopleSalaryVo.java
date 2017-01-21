@@ -47,7 +47,7 @@ public class PeopleSalaryVo implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String workDate;
 
-    private BigDecimal timeSheetStatus;
+    private BigDecimal timesheetStatus;
 
     private BigDecimal dutyAllowance;
 
@@ -240,12 +240,12 @@ public class PeopleSalaryVo implements Serializable{
         this.workDate = workDate;
     }
 
-    public BigDecimal getTimeSheetStatus() {
-        return timeSheetStatus;
+    public BigDecimal getTimesheetStatus() {
+        return timesheetStatus;
     }
 
-    public void setTimeSheetStatus(BigDecimal timeSheetStatus) {
-        this.timeSheetStatus = timeSheetStatus;
+    public void setTimesheetStatus(BigDecimal timesheetStatus) {
+        this.timesheetStatus = timesheetStatus;
     }
 
     public BigDecimal getDutyAllowance() {

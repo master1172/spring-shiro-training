@@ -160,6 +160,7 @@ public class PeopleContractController extends BaseController{
         Result result = new Result();
         try{
             peopleContractService.deletePeopleContractById(id);
+            
             result.setMsg("删除成功！");
             result.setSuccess(true);
             return result;
@@ -184,6 +185,7 @@ public class PeopleContractController extends BaseController{
         try{
             String[] idList = ids.split(",");
             peopleContractService.batchDeletePeopleContractByIds(idList);
+            
             result.setSuccess(true);
             result.setMsg("批量删除人员成功");
             return result;

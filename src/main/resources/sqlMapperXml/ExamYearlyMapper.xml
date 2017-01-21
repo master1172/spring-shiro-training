@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.ExamYearlyMapper" >
+  <resultMap id="BaseResultMap" type="com.wangzhixuan.model.ExamYearly" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="people_code" property="peopleCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="people_type" property="peopleType" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="exam_result" property="examResult" jdbcType="VARCHAR" />
+    <result column="exam_operation" property="examOperation" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, people_code, name, people_type, year, exam_result, exam_operation
+  </sql>
+  <sql id="Base_Column_List_plus" >
+    t.id, t.people_code, p.name, t.people_type, t.year, t.exam_result, t.exam_operation
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam_yearly
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from exam_yearly
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wangzhixuan.model.ExamYearly" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into exam_yearly (people_code, name, people_type, 
+      year, exam_result, exam_operation
+      )
+    values (#{peopleCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{peopleType,jdbcType=VARCHAR}, 
+      #{year,jdbcType=INTEGER}, #{examResult,jdbcType=VARCHAR}, #{examOperation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangzhixuan.model.ExamYearly" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into exam_yearly
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="peopleCode != null" >
+        people_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="peopleType != null" >
+        people_type,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="examResult != null" >
+        exam_result,
+      </if>
+      <if test="examOperation != null" >
+        exam_operation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="peopleCode != null" >
+        #{peopleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleType != null" >
+        #{peopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="examResult != null" >
+        #{examResult,jdbcType=VARCHAR},
+      </if>
+      <if test="examOperation != null" >
+        #{examOperation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangzhixuan.model.ExamYearly" >
+    update exam_yearly
+    <set >
+      <if test="peopleCode != null" >
+        people_code = #{peopleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleType != null" >
+        people_type = #{peopleType,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="examResult != null" >
+        exam_result = #{examResult,jdbcType=VARCHAR},
+      </if>
+      <if test="examOperation != null" >
+        exam_operation = #{examOperation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.ExamYearly" >
+    update exam_yearly
+    set people_code = #{peopleCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      people_type = #{peopleType,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      exam_result = #{examResult,jdbcType=VARCHAR},
+      exam_operation = #{examOperation,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findPageCondition" parameterType="PageInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List_plus" />
+    from exam_yearly t  inner join people p on t.people_code = p.code
+    <where>
+      <if test=" condition.yearMax != null ">
+        and t.year &lt;= #{condition.yearMax}
+      </if>
+      <if test=" condition.yearMin != null ">
+        and t.year &gt;= #{condition.yearMin}
+      </if>
+      <if test=" condition.name != null and condition.name != '' ">
+        and p.name LIKE concat('%',#{condition.name},'%')
+      </if>
+      <if test=" condition.examResult != null and condition.examResult != '' ">
+        and t.exam_result LIKE concat('%',#{condition.examResult},'%')
+      </if>
+      <if test=" condition.examOperation != null and condition.examOperation != '' ">
+        and t.exam_operation LIKE concat('%',#{condition.examOperation},'%')
+      </if>
+    </where>
+    LIMIT #{from}, #{size}
+  </select>
+    <select id="selectByIds" parameterType="java.util.ArrayList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_plus" />
+        from exam_yearly t inner join people p on t.people_code = p.code
+        where t.id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into exam_yearly (people_code, name, people_type,
+        year, exam_result, exam_operation
+        )
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{item.peopleCode, jdbcType=VARCHAR},
+            #{item.name, jdbcType=VARCHAR},
+            #{item.peopleType,  jdbcType=VARCHAR},
+            #{item.year, jdbcType=INTEGER},
+            #{item.examResult,jdbcType=VARCHAR},
+            #{item.examOperation, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        delete from exam_yearly
+        where id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

@@ -11,27 +11,35 @@ import java.util.Map;
  * Created by wangwk on 2017/1/15.
  */
 public class PeopleJobVo implements Serializable {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private Long id;
 
-    public String getJob_category() {
-        return job_category;
+    public String getJobCategory() {
+        return jobCategory;
     }
 
-    public void setJob_category(String job_category) {
-        this.job_category = job_category;
+    public void setJobCategory(String jobCategory) {
+        this.jobCategory = jobCategory;
     }
 
-    private String job_category;
+    private String jobCategory;
 
-    public String getJob_level() {
-        return job_level;
+    public String getJobLevel() {
+        return jobLevel;
     }
 
-    public void setJob_level(String job_level) {
-        this.job_level = job_level;
+    public void setJobLevel(String jobLevel) {
+        this.jobLevel = jobLevel;
     }
 
-    private String job_level;
+    private String jobLevel;
 
     public BigDecimal getSalary() {
         return salary;
@@ -43,15 +51,15 @@ public class PeopleJobVo implements Serializable {
 
     private BigDecimal salary;
 
-    public static Map<String,Object> CreateCondition(PeopleJobVo peoplejobvo) {
+    public static Map<String,Object> createCondition(PeopleJobVo peoplejobvo) {
         Map<String, Object> condition = Maps.newHashMap();
-        if(peoplejobvo.getJob_category()!=null){
-            condition.put("job_category", peoplejobvo.getJob_category().split(","));
+        if(peoplejobvo.getJobCategory()!=null){
+            condition.put("jobCategory", peoplejobvo.getJobCategory().split(","));
         }
-        if(StringUtils.isNoneBlank(peoplejobvo.getJob_level())){
-            condition.put("job_level", peoplejobvo.getJob_level());
+        if(StringUtils.isNoneBlank(peoplejobvo.getJobLevel())){
+            condition.put("jobLevel", peoplejobvo.getJobLevel());
         }
-        if(StringUtils.isNoneBlank(peoplejobvo.getSalary().toString())){
+        if(peoplejobvo.getSalary() !=null){
             condition.put("salary", peoplejobvo.getSalary());
         }
         return condition;
