@@ -95,6 +95,6 @@
 		<!-- added by junfeng -->
 		<mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml" />
 		<mapper resource="sqlMapperXml/PeopleRetireSalaryMapper.xml" />
-		<!-- <mapper resource="sqlMapperXml/TimesheetMapper.xml" /> -->
+		<mapper resource="sqlMapperXml/TimesheetMapper.xml" />
 	</mappers>
 </configuration> 

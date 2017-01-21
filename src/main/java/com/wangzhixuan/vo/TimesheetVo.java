@@ -11,7 +11,7 @@ public class TimesheetVo implements Serializable {
 
     private String peopleType;
 
-    private Date checkDate;
+    private String checkDate;
 
     private String status;
 
@@ -43,11 +43,11 @@ public class TimesheetVo implements Serializable {
         this.peopleType = peopleType == null ? null : peopleType.trim();
     }
 
-    public Date getCheckDate() {
+    public String getCheckDate() {
         return checkDate;
     }
 
-    public void setCheckDate(Date checkDate) {
+    public void setCheckDate(String checkDate) {
         this.checkDate = checkDate;
     }
 

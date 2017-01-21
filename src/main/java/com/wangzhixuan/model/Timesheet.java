@@ -5,82 +5,82 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Timesheet implements Serializable {
-    private Integer id;
+	private static final long serialVersionUID = 199L;
 
-    private String peopleCode;
+	private Integer id;
 
-    private String peopleType;
+	private String peopleCode;
 
-    private Date checkDate;
+	private String peopleType;
 
-    private String status;
+	private String checkDate;
 
-    private BigDecimal vacationPeriod;
+	private String status;
 
-    private static final long serialVersionUID = 1L;
+	private BigDecimal vacationPeriod;
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getPeopleCode() {
-        return peopleCode;
-    }
+	public String getPeopleCode() {
+		return peopleCode;
+	}
 
-    public void setPeopleCode(String peopleCode) {
-        this.peopleCode = peopleCode == null ? null : peopleCode.trim();
-    }
+	public void setPeopleCode(String peopleCode) {
+		this.peopleCode = peopleCode == null ? null : peopleCode.trim();
+	}
 
-    public String getPeopleType() {
-        return peopleType;
-    }
+	public String getPeopleType() {
+		return peopleType;
+	}
 
-    public void setPeopleType(String peopleType) {
-        this.peopleType = peopleType == null ? null : peopleType.trim();
-    }
+	public void setPeopleType(String peopleType) {
+		this.peopleType = peopleType == null ? null : peopleType.trim();
+	}
 
-    public Date getCheckDate() {
-        return checkDate;
-    }
+	public String getCheckDate() {
+		return checkDate;
+	}
 
-    public void setCheckDate(Date checkDate) {
-        this.checkDate = checkDate;
-    }
+	public void setCheckDate(String checkDate) {
+		this.checkDate = checkDate;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
+	public void setStatus(String status) {
+		this.status = status == null ? null : status.trim();
+	}
 
-    public BigDecimal getVacationPeriod() {
-        return vacationPeriod;
-    }
+	public BigDecimal getVacationPeriod() {
+		return vacationPeriod;
+	}
 
-    public void setVacationPeriod(BigDecimal vacationPeriod) {
-        this.vacationPeriod = vacationPeriod;
-    }
+	public void setVacationPeriod(BigDecimal vacationPeriod) {
+		this.vacationPeriod = vacationPeriod;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", peopleCode=").append(peopleCode);
-        sb.append(", peopleType=").append(peopleType);
-        sb.append(", checkDate=").append(checkDate);
-        sb.append(", status=").append(status);
-        sb.append(", vacationPeriod=").append(vacationPeriod);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getClass().getSimpleName());
+		sb.append(" [");
+		sb.append("Hash = ").append(hashCode());
+		sb.append(", id=").append(id);
+		sb.append(", peopleCode=").append(peopleCode);
+		sb.append(", peopleType=").append(peopleType);
+		sb.append(", checkDate=").append(checkDate);
+		sb.append(", status=").append(status);
+		sb.append(", vacationPeriod=").append(vacationPeriod);
+		sb.append(", serialVersionUID=").append(serialVersionUID);
+		sb.append("]");
+		return sb.toString();
+	}
 }

@@ -5,15 +5,16 @@
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="people_code" jdbcType="VARCHAR" property="peopleCode" />
 		<result column="people_type" jdbcType="VARCHAR" property="peopleType" />
-		<result column="check_date" jdbcType="DATE" property="checkDate" />
+		<result column="check_date" jdbcType="VARCHAR" property="checkDate" />
 		<result column="status" jdbcType="VARCHAR" property="status" />
 		<result column="vacation_period" jdbcType="DECIMAL" property="vacationPeriod" />
 	</resultMap>
+
 	<resultMap id="TimesheetVoResultMap" type="com.wangzhixuan.vo.TimesheetVo">
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="people_code" jdbcType="VARCHAR" property="peopleCode" />
 		<result column="people_type" jdbcType="VARCHAR" property="peopleType" />
-		<result column="check_date" jdbcType="DATE" property="checkDate" />
+		<result column="check_date" jdbcType="VARCHAR" property="checkDate" />
 		<result column="status" jdbcType="VARCHAR" property="status" />
 		<result column="vacation_period" jdbcType="DECIMAL" property="vacationPeriod" />
 	</resultMap>
@@ -32,18 +33,13 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.wangzhixuan.model.Timesheet">
-		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
 		insert into timesheet (people_code, people_type, check_date,
 		status, vacation_period)
-		values (#{peopleCode,jdbcType=VARCHAR}, #{peopleType,jdbcType=VARCHAR}, #{checkDate,jdbcType=DATE},
+		values (#{peopleCode,jdbcType=VARCHAR}, #{peopleType,jdbcType=VARCHAR},
+		#{checkDate,jdbcType=DATE},
 		#{status,jdbcType=VARCHAR}, #{vacationPeriod,jdbcType=DECIMAL})
 	</insert>
 	<insert id="insertSelective" parameterType="com.wangzhixuan.model.Timesheet">
-		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
 		insert into timesheet
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="peopleCode != null">
@@ -101,113 +97,27 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+
 	<update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.Timesheet">
 		update timesheet
 		set people_code = #{peopleCode,jdbcType=VARCHAR},
 		people_type = #{peopleType,jdbcType=VARCHAR},
-		check_date = #{checkDate,jdbcType=DATE},
+		check_date =
+		#{checkDate,jdbcType=DATE},
 		status = #{status,jdbcType=VARCHAR},
 		vacation_period = #{vacationPeriod,jdbcType=DECIMAL}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<resultMap id="BaseResultMap" type="com.wangzhixuan.model.Timesheet">
-		<id column="id" jdbcType="INTEGER" property="id" />
-		<result column="people_code" jdbcType="VARCHAR" property="peopleCode" />
-		<result column="people_type" jdbcType="VARCHAR" property="peopleType" />
-		<result column="check_date" jdbcType="DATE" property="checkDate" />
-		<result column="status" jdbcType="VARCHAR" property="status" />
-		<result column="vacation_period" jdbcType="DECIMAL" property="vacationPeriod" />
-	</resultMap>
-	<sql id="Base_Column_List">
+
+	<select id="findDataGrid" resultMap="TimesheetVoResultMap" parameterType="PageInfo">
+		SELECT
 		id, people_code, people_type, check_date, status, vacation_period
-	</sql>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from timesheet
-		where id = #{id,jdbcType=INTEGER}
+		FROM timesheet
+		LIMIT #{from}, #{size}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from timesheet
-		where id = #{id,jdbcType=INTEGER}
-	</delete>
-	<insert id="insert" parameterType="com.wangzhixuan.model.Timesheet">
-		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-		insert into timesheet (people_code, people_type, check_date,
-		status, vacation_period)
-		values (#{peopleCode,jdbcType=VARCHAR}, #{peopleType,jdbcType=VARCHAR}, #{checkDate,jdbcType=DATE},
-		#{status,jdbcType=VARCHAR}, #{vacationPeriod,jdbcType=DECIMAL})
-	</insert>
-	<insert id="insertSelective" parameterType="com.wangzhixuan.model.Timesheet">
-		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-		insert into timesheet
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="peopleCode != null">
-				people_code,
-			</if>
-			<if test="peopleType != null">
-				people_type,
-			</if>
-			<if test="checkDate != null">
-				check_date,
-			</if>
-			<if test="status != null">
-				status,
-			</if>
-			<if test="vacationPeriod != null">
-				vacation_period,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="peopleCode != null">
-				#{peopleCode,jdbcType=VARCHAR},
-			</if>
-			<if test="peopleType != null">
-				#{peopleType,jdbcType=VARCHAR},
-			</if>
-			<if test="checkDate != null">
-				#{checkDate,jdbcType=DATE},
-			</if>
-			<if test="status != null">
-				#{status,jdbcType=VARCHAR},
-			</if>
-			<if test="vacationPeriod != null">
-				#{vacationPeriod,jdbcType=DECIMAL},
-			</if>
-		</trim>
-	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.wangzhixuan.model.Timesheet">
-		update timesheet
-		<set>
-			<if test="peopleCode != null">
-				people_code = #{peopleCode,jdbcType=VARCHAR},
-			</if>
-			<if test="peopleType != null">
-				people_type = #{peopleType,jdbcType=VARCHAR},
-			</if>
-			<if test="checkDate != null">
-				check_date = #{checkDate,jdbcType=DATE},
-			</if>
-			<if test="status != null">
-				status = #{status,jdbcType=VARCHAR},
-			</if>
-			<if test="vacationPeriod != null">
-				vacation_period = #{vacationPeriod,jdbcType=DECIMAL},
-			</if>
-		</set>
-		where id = #{id,jdbcType=INTEGER}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.Timesheet">
-		update timesheet
-		set people_code = #{peopleCode,jdbcType=VARCHAR},
-		people_type = #{peopleType,jdbcType=VARCHAR},
-		check_date = #{checkDate,jdbcType=DATE},
-		status = #{status,jdbcType=VARCHAR},
-		vacation_period = #{vacationPeriod,jdbcType=DECIMAL}
-		where id = #{id,jdbcType=INTEGER}
-	</update>
+
+	<select id="findDataGridCount" resultType="java.lang.Integer" parameterType="PageInfo">
+		select count(1) count
+		FROM timesheet
+	</select>
 </mapper>
