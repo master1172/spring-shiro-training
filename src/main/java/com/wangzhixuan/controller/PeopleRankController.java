@@ -1,21 +1,14 @@
 package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.PeopleJob;
-import com.wangzhixuan.model.PeopleRank;
-import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleRankService;
-import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleJobVo;
 import com.wangzhixuan.vo.PeopleRankVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -24,7 +17,7 @@ import java.util.Map;
  * Created by wangwk on 2017/1/15.
  */
 @Controller
-@RequestMapping("/people/rank")
+@RequestMapping("/peopleRank")
 public class PeopleRankController extends BaseController{
     private static Logger LOGGER = LoggerFactory.getLogger(PeopleRankController.class);
     @Autowired
@@ -37,24 +30,24 @@ public class PeopleRankController extends BaseController{
      */
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     public String manager() {
-        return "/admin/peopleRank/peopleRank";
+        return "/admin/peopleRank/people";
     }
 
     /**
      * 人员薪级列表
      * @param request
-     * @param peoplerankvo
+     * @param peopleRankvo
      * @param page
      * @param rows
      * @param sort
      * @param order
      * @return
      */
-    @RequestMapping(value="/dataGrid", method=RequestMethod.GET)
+    @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(HttpServletRequest request, PeopleRankVo peoplerankvo, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, PeopleRankVo peopleRankvo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String,Object> condition = PeopleRankVo.CreateCondition(peoplerankvo);
+        Map<String,Object> condition = PeopleRankVo.createCondition(peopleRankvo);
         pageInfo.setCondition(condition);
         peopleRankService.findDataGrid(pageInfo, request);
 

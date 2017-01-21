@@ -10,7 +10,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -41,24 +40,24 @@ public class PeopleRankServiceImpl implements PeopleRankService {
     }
 
 	@Override
-    public void addPeopleRank(PeopleRankVo peoplerankvo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void addPeopleRank(PeopleRankVo peopleRankVo) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		PeopleRank peoplerank = new PeopleRank();
-		BeanUtils.copyProperties(peoplerank,peoplerankvo);
+		BeanUtils.copyProperties(peoplerank, peopleRankVo);
         peopleRankMapper.insert(peoplerank);
 
     }
 
 	@Override
-    public void updatePeopleRank(PeopleRankVo peoplerankvo) throws InvocationTargetException, IllegalAccessException {
+    public void updatePeopleRank(PeopleRankVo peopleRankVo) throws InvocationTargetException, IllegalAccessException {
 		PeopleRank peoplerank = new PeopleRank();
-		BeanUtils.copyProperties(peoplerank,peoplerankvo);
+		BeanUtils.copyProperties(peoplerank, peopleRankVo);
 		peopleRankMapper.updatePeopleRank(peoplerank);
 
     }
 
 	@Override
-	public void updatePeopleRank(PeopleRank peoplerank){
-		peopleRankMapper.updatePeopleRank(peoplerank);
+	public void updatePeopleRank(PeopleRank peopleRank){
+		peopleRankMapper.updatePeopleRank(peopleRank);
 	}
 
 	@Override

@@ -483,4 +483,10 @@
             #{item}
         </foreach>
     </select>
+     <select id="findContractPeopleByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM people_contract
+        WHERE code = #{code, jdbcType=VARCHAR}
+    </select>
 </mapper>

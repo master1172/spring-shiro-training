@@ -1,7 +1,6 @@
 package com.wangzhixuan.vo;
 
 import com.google.common.collect.Maps;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,6 +10,14 @@ import java.util.Map;
  * Created by wangwk on 2017/1/15.
  */
 public class PeopleRankVo implements Serializable {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private Long id;
 
     public String getRank_level() {
@@ -31,12 +38,12 @@ public class PeopleRankVo implements Serializable {
 
     private String rank_level;
     private BigDecimal salary;
-    public static Map<String,Object> CreateCondition(PeopleRankVo peoplerankvo) {
+    public static Map<String,Object> createCondition(PeopleRankVo peoplerankvo) {
         Map<String, Object> condition = Maps.newHashMap();
         if(peoplerankvo.getRank_level() != null){
             condition.put("rank_level", peoplerankvo.getRank_level().split(","));
         }
-        if(StringUtils.isNoneBlank(peoplerankvo.getSalary().toString())){
+        if(peoplerankvo.getSalary() !=null){
             condition.put("salary", peoplerankvo.getSalary());
         }
         return condition;

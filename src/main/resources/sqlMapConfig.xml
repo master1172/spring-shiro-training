@@ -49,6 +49,13 @@
 
         <typeAlias type="com.wangzhixuan.model.PeopleSalary" alias="PeopleSalary"/>
         <typeAlias type="com.wangzhixuan.vo.PeopleSalaryVo" alias="PeopleSalaryVo"/>
+
+        <typeAlias type="com.wangzhixuan.model.PeopleJob" alias="PeopleJob"/>
+        <typeAlias type="com.wangzhixuan.vo.PeopleJobVo" alias="PeopleJobVo"/>
+
+        <typeAlias type="com.wangzhixuan.model.PeopleRank" alias="PeopleRank"/>
+        <typeAlias type="com.wangzhixuan.vo.PeopleRankVo" alias="PeopleRankVo"/>
+
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
@@ -78,6 +85,9 @@
         <mapper resource="sqlMapperXml/PeopleDispatchMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleTransferMapper.xml"/>
         <mapper resource="sqlMapperXml/PeopleSalaryMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleJobMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleRankMapper.xml"/>
+        <mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml"/>
         <mapper resource="sqlMapperXml/ExamYearlyMapper.xml"/>
         <mapper resource="sqlMapperXml/ExamMonthlyMapper.xml"/>
     </mappers>

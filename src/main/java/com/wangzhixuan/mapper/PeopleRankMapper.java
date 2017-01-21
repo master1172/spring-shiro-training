@@ -1,9 +1,7 @@
 package com.wangzhixuan.mapper;
 
-import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.model.PeopleRank;
 import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleJobVo;
 import com.wangzhixuan.vo.PeopleRankVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -27,25 +25,25 @@ public interface PeopleRankMapper {
     /**
      * 添加人员薪级
      *
-     * @param peoplerankvo
+     * @param peopleRankVo
      */
-    void addPeopleRank(PeopleRankVo peoplerankvo, CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
+    void addPeopleRank(PeopleRankVo peopleRankVo, CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
     /**
      * 添加人员
      *
-     * @param peoplerank
+     * @param peopleRank
      * @return
      */
-    int insert(PeopleRank peoplerank);
+    int insert(PeopleRank peopleRank);
 
     /**
      * 修改人员薪级
-     * @param peoplerankvo
+     * @param peopleRankVo
      */
-    void updatePeopleRank(PeopleRankVo peoplerankvo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
+    void updatePeopleRank(PeopleRankVo peopleRankVo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
 
-    void updatePeopleRank(PeopleRank peoplerank);
+    void updatePeopleRank(PeopleRank peopleRank);
 
     /**
      * 删除人员

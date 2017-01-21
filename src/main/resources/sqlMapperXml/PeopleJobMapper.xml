@@ -3,9 +3,14 @@
 <mapper namespace="com.wangzhixuan.mapper.PeopleJobMapper">
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleJob">
         <id     column="id"             property="id" jdbcType="BIGINT"/>
-        <result column="job_category"   property="job_category" jdbcType="VARCHAR"/>
-        <result column="job_level"      property="job_level" jdbcType="VARCHAR"/>
+        <result column="job_category"   property="jobCategory" jdbcType="VARCHAR"/>
+        <result column="job_level"      property="jobLevel" jdbcType="VARCHAR"/>
         <result column="salary"         property="salary" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap id="peopleJobVoResultMap" type="com.wangzhixuan.vo.PeopleJobVo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="job_category" property="jobCategory" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">,
@@ -48,10 +53,10 @@
         FROM
         job t
         <where>
-            <if test=" condition.job_category != null ">
+            <if test=" condition.jobCategory != null ">
                 and t.job_category LIKE concat('%',#{condition.job_category},'%')
             </if>
-            <if test=" condition.job_level != null and condition.job_level != '' ">
+            <if test=" condition.jobLevel != null and condition.jobLevel != '' ">
                 and t.job_level LIKE concat('%',#{condition.job_level},'%')
             </if>
             <if test=" condition.salary != null and condition.salary != ''">
@@ -97,67 +102,23 @@
         </selectKey>
         insert into job (job_category, job_level, salary)
         values (
-        #{code,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT},
-        #{nationalId, jdbcType=INTEGER},
-        #{province,jdbcType=VARCHAR},
-        #{city,jdbcType=VARCHAR},
-        #{birthday,jdbcType=DATE},
-        #{educationName,jdbcType=VARCHAR},
-        #{politicalName,jdbcType=VARCHAR},
-        #{speciality,jdbcType=VARCHAR},
-        #{height,jdbcType=VARCHAR},
-        #{marriageId, jdbcType=INTEGER},
-        #{hukou, jdbcType=TINYINT},
-        #{schoolDate,jdbcType=DATE},
-        #{mobile, jdbcType=VARCHAR},
-        #{address, jdbcType=VARCHAR},
-        #{departmentName, jdbcType=VARCHAR},
-        #{jobName, jdbcType=VARCHAR},
-        #{comment, jdbcType=VARCHAR},
-        #{photo, jdbcType=VARCHAR}
+        #{jobCategory,jdbcType=VARCHAR},
+        #{jobLevel,jdbcType=VARCHAR},
+        #{salary,jdbcType=DECIMAL}
         )
     </insert>
-    <insert id="insertByImport" parameterType="java.util.List">
-        insert into job (job_category, job_level, salary)
-        values
-        <foreach item="item" index="index" collection="list" separator=",">
-            (
-            #{item.code,jdbcType=VARCHAR},
-            #{item.name,jdbcType=VARCHAR},
-            #{item.sex,jdbcType=TINYINT},
-            #{item.nationalId, jdbcType=INTEGER},
-            #{item.province,jdbcType=VARCHAR},
-            #{item.city,jdbcType=VARCHAR},
-            #{item.birthday,jdbcType=DATE},
-            #{item.educationName,jdbcType=VARCHAR},
-            #{item.politicalName,jdbcType=VARCHAR},
-            #{item.speciality,jdbcType=VARCHAR},
-            #{item.height,jdbcType=VARCHAR},
-            #{item.marriageId, jdbcType=INTEGER},
-            #{item.hukou, jdbcType=TINYINT},
-            #{item.schoolDate,jdbcType=DATE},
-            #{item.mobile, jdbcType=VARCHAR},
-            #{item.address, jdbcType=VARCHAR},
-            #{item.departmentName, jdbcType=VARCHAR},
-            #{item.jobName, jdbcType=VARCHAR},
-            #{item.comment, jdbcType=VARCHAR},
-            #{item.photo, jdbcType=VARCHAR}
-            )
-        </foreach>
-    </insert>
+
     <update id="updatePeopleJob" parameterType="com.wangzhixuan.model.PeopleJob">
         update job
         <set>
-            <if test="job_category != null">
-                job_category = #{job_category,jdbcType=VARCHAR},
+            <if test="jobCategory != null">
+                job_category = #{jobCategory,jdbcType=VARCHAR},
             </if>
-            <if test="job_level != null">
-                job_level = #{job_level,jdbcType=VARCHAR},
+            <if test="jobLevel != null">
+                job_level = #{jobLevel,jdbcType=VARCHAR},
             </if>
             <if test="salary != null">
-                salary = #{salary,jdbcType=TINYINT},
+                salary = #{salary,jdbcType=DECIMAL},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}

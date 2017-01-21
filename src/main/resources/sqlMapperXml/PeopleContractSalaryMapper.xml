@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.PeopleContractSalaryMapper">
+	<resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleContractSalary">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="people_code" property="peopleCode" jdbcType="VARCHAR" />
+		<result column="job_id" property="jobId" jdbcType="INTEGER" />
+		<result column="job_salary" property="jobSalary" jdbcType="DECIMAL" />
+		<result column="school_salary" property="schoolSalary"
+			jdbcType="DECIMAL" />
+		<result column="exam_result" property="examResult" jdbcType="VARCHAR" />
+		<result column="job_exam_salary" property="jobExamSalary"
+			jdbcType="DECIMAL" />
+		<result column="telephone_allowance" property="telephoneAllowance"
+			jdbcType="DECIMAL" />
+		<result column="traffic_allowance" property="trafficAllowance"
+			jdbcType="DECIMAL" />
+		<result column="special_allowance" property="specialAllowance"
+			jdbcType="DECIMAL" />
+		<result column="head_allowance" property="headAllowance"
+			jdbcType="DECIMAL" />
+		<result column="extra_work_fee" property="extraWorkFee"
+			jdbcType="DECIMAL" />
+		<result column="extra_work_date" property="extraWorkDate"
+			jdbcType="DECIMAL" />
+		<result column="extra_work_allowance" property="extraWorkAllowance"
+			jdbcType="DECIMAL" />
+		<result column="bonus" property="bonus" jdbcType="DECIMAL" />
+		<result column="reissue_fee" property="reissueFee" jdbcType="DECIMAL" />
+		<result column="temperature_allowance" property="temperatureAllowance"
+			jdbcType="DECIMAL" />
+		<result column="gross_income" property="grossIncome" jdbcType="DECIMAL" />
+		<result column="life_insurance" property="lifeInsurance"
+			jdbcType="DECIMAL" />
+		<result column="job_insurance" property="jobInsurance"
+			jdbcType="DECIMAL" />
+		<result column="health_insurance" property="healthInsurance"
+			jdbcType="DECIMAL" />
+		<result column="house_fund" property="houseFund" jdbcType="DECIMAL" />
+		<result column="expense" property="expense" jdbcType="DECIMAL" />
+		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
+		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="peopleContractSalaryVoResultMap" type="com.wangzhixuan.vo.PeopleContractSalaryVo">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="people_code" jdbcType="VARCHAR" property="peopleCode" />
+		<result column="people_name" jdbcType="VARCHAR" property="peopleName" />
+		<result column="job_id" jdbcType="INTEGER" property="jobId" />
+		<result column="job_salary" jdbcType="DECIMAL" property="jobSalary" />
+		<result column="exam_result" jdbcType="VARCHAR" property="examResult" />
+		<result column="job_allowance" jdbcType="DECIMAL" property="jobAllowance" />
+		<result column="traffic_allowance" jdbcType="DECIMAL" property="trafficAllowance" />
+		<result column="temperature_allowance" jdbcType="DECIMAL"
+			property="temperatureAllowance" />
+		<result column="reissue_fee" jdbcType="DECIMAL" property="reissueFee" />
+		<result column="life_insurance" jdbcType="DECIMAL" property="lifeInsurance" />
+		<result column="job_insurance" jdbcType="DECIMAL" property="jobInsurance" />
+		<result column="health_insurance" jdbcType="DECIMAL" property="healthInsurance" />
+		<result column="house_fund" jdbcType="DECIMAL" property="houseFund" />
+		<result column="expense" jdbcType="DECIMAL" property="expense" />
+		<result column="net_income" jdbcType="DECIMAL" property="netIncome" />
+		<result column="pay_date" jdbcType="VARCHAR" property="payDate" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, people_code, job_id, job_salary, school_salary,
+		exam_result,
+		job_exam_salary,
+		telephone_allowance, traffic_allowance,
+		special_allowance, head_allowance, extra_work_fee,
+		extra_work_date,
+		extra_work_allowance, bonus, reissue_fee,
+		temperature_allowance,
+		gross_income, life_insurance, job_insurance, health_insurance,
+		house_fund, expense,
+		net_income, pay_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from people_contract_salary
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		people_contract_salary
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.wangzhixuan.model.PeopleContractSalary">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into people_contract_salary (people_code, job_id, job_salary,
+		school_salary, exam_result, job_exam_salary,
+		telephone_allowance,
+		traffic_allowance, special_allowance,
+		head_allowance, extra_work_fee,
+		extra_work_date,
+		extra_work_allowance, bonus, reissue_fee,
+		temperature_allowance, gross_income, life_insurance,
+		job_insurance,
+		health_insurance, house_fund,
+		expense, net_income, pay_date
+		)
+		values
+		(#{peopleCode,jdbcType=VARCHAR}, #{jobId,jdbcType=INTEGER},
+		#{jobSalary,jdbcType=DECIMAL},
+		#{schoolSalary,jdbcType=DECIMAL},
+		#{examResult,jdbcType=VARCHAR}, #{jobExamSalary,jdbcType=DECIMAL},
+		#{telephoneAllowance,jdbcType=DECIMAL},
+		#{trafficAllowance,jdbcType=DECIMAL},
+		#{specialAllowance,jdbcType=DECIMAL},
+		#{headAllowance,jdbcType=DECIMAL}, #{extraWorkFee,jdbcType=DECIMAL},
+		#{extraWorkDate,jdbcType=DECIMAL},
+		#{extraWorkAllowance,jdbcType=DECIMAL}, #{bonus,jdbcType=DECIMAL},
+		#{reissueFee,jdbcType=DECIMAL},
+		#{temperatureAllowance,jdbcType=DECIMAL},
+		#{grossIncome,jdbcType=DECIMAL}, #{lifeInsurance,jdbcType=DECIMAL},
+		#{jobInsurance,jdbcType=DECIMAL}, #{healthInsurance,jdbcType=DECIMAL},
+		#{houseFund,jdbcType=DECIMAL},
+		#{expense,jdbcType=DECIMAL},
+		#{netIncome,jdbcType=DECIMAL}, #{payDate,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.wangzhixuan.model.PeopleContractSalary">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into people_contract_salary
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="peopleCode != null">
+				people_code,
+			</if>
+			<if test="jobId != null">
+				job_id,
+			</if>
+			<if test="jobSalary != null">
+				job_salary,
+			</if>
+			<if test="schoolSalary != null">
+				school_salary,
+			</if>
+			<if test="examResult != null">
+				exam_result,
+			</if>
+			<if test="jobExamSalary != null">
+				job_exam_salary,
+			</if>
+			<if test="telephoneAllowance != null">
+				telephone_allowance,
+			</if>
+			<if test="trafficAllowance != null">
+				traffic_allowance,
+			</if>
+			<if test="specialAllowance != null">
+				special_allowance,
+			</if>
+			<if test="headAllowance != null">
+				head_allowance,
+			</if>
+			<if test="extraWorkFee != null">
+				extra_work_fee,
+			</if>
+			<if test="extraWorkDate != null">
+				extra_work_date,
+			</if>
+			<if test="extraWorkAllowance != null">
+				extra_work_allowance,
+			</if>
+			<if test="bonus != null">
+				bonus,
+			</if>
+			<if test="reissueFee != null">
+				reissue_fee,
+			</if>
+			<if test="temperatureAllowance != null">
+				temperature_allowance,
+			</if>
+			<if test="grossIncome != null">
+				gross_income,
+			</if>
+			<if test="lifeInsurance != null">
+				life_insurance,
+			</if>
+			<if test="jobInsurance != null">
+				job_insurance,
+			</if>
+			<if test="healthInsurance != null">
+				health_insurance,
+			</if>
+			<if test="houseFund != null">
+				house_fund,
+			</if>
+			<if test="expense != null">
+				expense,
+			</if>
+			<if test="netIncome != null">
+				net_income,
+			</if>
+			<if test="payDate != null">
+				pay_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="peopleCode != null">
+				#{peopleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="jobId != null">
+				#{jobId,jdbcType=INTEGER},
+			</if>
+			<if test="jobSalary != null">
+				#{jobSalary,jdbcType=DECIMAL},
+			</if>
+			<if test="schoolSalary != null">
+				#{schoolSalary,jdbcType=DECIMAL},
+			</if>
+			<if test="examResult != null">
+				#{examResult,jdbcType=VARCHAR},
+			</if>
+			<if test="jobExamSalary != null">
+				#{jobExamSalary,jdbcType=DECIMAL},
+			</if>
+			<if test="telephoneAllowance != null">
+				#{telephoneAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="trafficAllowance != null">
+				#{trafficAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="specialAllowance != null">
+				#{specialAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="headAllowance != null">
+				#{headAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="extraWorkFee != null">
+				#{extraWorkFee,jdbcType=DECIMAL},
+			</if>
+			<if test="extraWorkDate != null">
+				#{extraWorkDate,jdbcType=DECIMAL},
+			</if>
+			<if test="extraWorkAllowance != null">
+				#{extraWorkAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="bonus != null">
+				#{bonus,jdbcType=DECIMAL},
+			</if>
+			<if test="reissueFee != null">
+				#{reissueFee,jdbcType=DECIMAL},
+			</if>
+			<if test="temperatureAllowance != null">
+				#{temperatureAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="grossIncome != null">
+				#{grossIncome,jdbcType=DECIMAL},
+			</if>
+			<if test="lifeInsurance != null">
+				#{lifeInsurance,jdbcType=DECIMAL},
+			</if>
+			<if test="jobInsurance != null">
+				#{jobInsurance,jdbcType=DECIMAL},
+			</if>
+			<if test="healthInsurance != null">
+				#{healthInsurance,jdbcType=DECIMAL},
+			</if>
+			<if test="houseFund != null">
+				#{houseFund,jdbcType=DECIMAL},
+			</if>
+			<if test="expense != null">
+				#{expense,jdbcType=DECIMAL},
+			</if>
+			<if test="netIncome != null">
+				#{netIncome,jdbcType=DECIMAL},
+			</if>
+			<if test="payDate != null">
+				#{payDate,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.wangzhixuan.model.PeopleContractSalary">
+		update people_contract_salary
+		<set>
+			<if test="peopleCode != null">
+				people_code = #{peopleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="jobId != null">
+				job_id = #{jobId,jdbcType=INTEGER},
+			</if>
+			<if test="jobSalary != null">
+				job_salary = #{jobSalary,jdbcType=DECIMAL},
+			</if>
+			<if test="schoolSalary != null">
+				school_salary = #{schoolSalary,jdbcType=DECIMAL},
+			</if>
+			<if test="examResult != null">
+				exam_result = #{examResult,jdbcType=VARCHAR},
+			</if>
+			<if test="jobExamSalary != null">
+				job_exam_salary = #{jobExamSalary,jdbcType=DECIMAL},
+			</if>
+			<if test="telephoneAllowance != null">
+				telephone_allowance =
+				#{telephoneAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="trafficAllowance != null">
+				traffic_allowance = #{trafficAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="specialAllowance != null">
+				special_allowance = #{specialAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="headAllowance != null">
+				head_allowance = #{headAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="extraWorkFee != null">
+				extra_work_fee = #{extraWorkFee,jdbcType=DECIMAL},
+			</if>
+			<if test="extraWorkDate != null">
+				extra_work_date = #{extraWorkDate,jdbcType=DECIMAL},
+			</if>
+			<if test="extraWorkAllowance != null">
+				extra_work_allowance =
+				#{extraWorkAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="bonus != null">
+				bonus = #{bonus,jdbcType=DECIMAL},
+			</if>
+			<if test="reissueFee != null">
+				reissue_fee = #{reissueFee,jdbcType=DECIMAL},
+			</if>
+			<if test="temperatureAllowance != null">
+				temperature_allowance =
+				#{temperatureAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="grossIncome != null">
+				gross_income = #{grossIncome,jdbcType=DECIMAL},
+			</if>
+			<if test="lifeInsurance != null">
+				life_insurance = #{lifeInsurance,jdbcType=DECIMAL},
+			</if>
+			<if test="jobInsurance != null">
+				job_insurance = #{jobInsurance,jdbcType=DECIMAL},
+			</if>
+			<if test="healthInsurance != null">
+				health_insurance = #{healthInsurance,jdbcType=DECIMAL},
+			</if>
+			<if test="houseFund != null">
+				house_fund = #{houseFund,jdbcType=DECIMAL},
+			</if>
+			<if test="expense != null">
+				expense = #{expense,jdbcType=DECIMAL},
+			</if>
+			<if test="netIncome != null">
+				net_income = #{netIncome,jdbcType=DECIMAL},
+			</if>
+			<if test="payDate != null">
+				pay_date = #{payDate,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleContractSalary">
+		update
+		people_contract_salary
+		set people_code =
+		#{peopleCode,jdbcType=VARCHAR},
+		job_id = #{jobId,jdbcType=INTEGER},
+		job_salary = #{jobSalary,jdbcType=DECIMAL},
+		school_salary =
+		#{schoolSalary,jdbcType=DECIMAL},
+		exam_result =
+		#{examResult,jdbcType=VARCHAR},
+		job_exam_salary =
+		#{jobExamSalary,jdbcType=DECIMAL},
+		telephone_allowance =
+		#{telephoneAllowance,jdbcType=DECIMAL},
+		traffic_allowance =
+		#{trafficAllowance,jdbcType=DECIMAL},
+		special_allowance =
+		#{specialAllowance,jdbcType=DECIMAL},
+		head_allowance =
+		#{headAllowance,jdbcType=DECIMAL},
+		extra_work_fee =
+		#{extraWorkFee,jdbcType=DECIMAL},
+		extra_work_date =
+		#{extraWorkDate,jdbcType=DECIMAL},
+		extra_work_allowance =
+		#{extraWorkAllowance,jdbcType=DECIMAL},
+		bonus =
+		#{bonus,jdbcType=DECIMAL},
+		reissue_fee =
+		#{reissueFee,jdbcType=DECIMAL},
+		temperature_allowance =
+		#{temperatureAllowance,jdbcType=DECIMAL},
+		gross_income =
+		#{grossIncome,jdbcType=DECIMAL},
+		life_insurance =
+		#{lifeInsurance,jdbcType=DECIMAL},
+		job_insurance =
+		#{jobInsurance,jdbcType=DECIMAL},
+		health_insurance =
+		#{healthInsurance,jdbcType=DECIMAL},
+		house_fund =
+		#{houseFund,jdbcType=DECIMAL},
+		expense = #{expense,jdbcType=DECIMAL},
+		net_income = #{netIncome,jdbcType=DECIMAL},
+		pay_date =
+		#{payDate,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="findPeopleContractSalaryPageCount" resultType="java.lang.Integer"
+		parameterType="PageInfo">
+		select count(t.id) count
+		FROM
+		people_contract_salary t
+		LEFT JOIN
+		people_contract p ON t.people_code = p.code
+		LEFT JOIN
+		job j ON t.job_id
+		= j.id
+		<where>
+			<if test=" condition.peopleCode != null and condition.peopleCode != ''">
+				and t.people_code LIKE
+				concat('%',#{condition.peopleCode},'%')
+			</if>
+			<if test=" condition.peopleName != null and condition.peopleName != '' ">
+				and p.name LIKE concat('%',#{condition.peopleName},'%')
+			</if>
+		</where>
+	</select>
+	<select id="findPeopleContractSalaryPageCondition" resultMap="peopleContractSalaryVoResultMap"
+		parameterType="PageInfo">
+		SELECT
+		t.id,
+		t.people_code,
+		p.name as people_name,
+		t.job_id,
+		t.job_salary,
+		t.exam_result,
+		t.job_exam_salary,
+		t.exam_result,
+		t.telephone_allowance,
+		t.traffic_allowance,
+		t.temperature_allowance,
+		t.reissue_fee,
+		t.life_insurance,
+		t.job_insurance,
+		t.health_insurance,
+		t.house_fund,
+		t.expense,
+		t.net_income,
+		t.pay_date
+		FROM
+		people_contract_salary t
+		LEFT JOIN
+		people_contract p ON t.people_code = p.code
+		LEFT JOIN
+		job j ON t.job_id
+		= j.id
+		<where>
+			<if test=" condition.peopleCode != null and condition.peopleCode != ''">
+				and t.people_code LIKE
+				concat('%',#{condition.peopleCode},'%')
+			</if>
+			<if test=" condition.peopleName != null and condition.peopleName != '' ">
+				and p.name LIKE concat('%',#{condition.peopleName},'%')
+			</if>
+		</where>
+		ORDER BY
+		t.pay_date desc
+		LIMIT #{from}, #{size}
+	</select>
+</mapper>

@@ -2,7 +2,6 @@ package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.service.PeopleJobService;
-import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleJobVo;
 import org.slf4j.Logger;
@@ -11,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -22,7 +19,7 @@ import java.util.Map;
  * Created by wangwk on 2017/1/15.
  */
 @Controller
-@RequestMapping("/people/job")
+@RequestMapping("/peopleJob")
 public class PeopleJobController extends BaseController{
     private static Logger LOGGER = LoggerFactory.getLogger(PeopleJobController.class);
 
@@ -36,7 +33,7 @@ public class PeopleJobController extends BaseController{
      */
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     public String manager() {
-        return "/admin/peopleJob/peopleJob";
+        return "/admin/peopleJob/people";
     }
 
     /**
@@ -54,12 +51,13 @@ public class PeopleJobController extends BaseController{
     @ResponseBody
     public PageInfo dataGrid(HttpServletRequest request, PeopleJobVo peoplejobvo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String,Object> condition = PeopleJobVo.CreateCondition(peoplejobvo);
+        Map<String,Object> condition = PeopleJobVo.createCondition(peoplejobvo);
         pageInfo.setCondition(condition);
         peopleJobService.findDataGrid(pageInfo, request);
 
         return pageInfo;
     }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
