@@ -34,28 +34,33 @@
                 toolbar: '#toolbar'
             });
         });
-
-        function advSearch(){
+        function addFun() {
             parent.$.modalDialog({
-                title: '高级查询',
-                width: 1000,
-                height: 600,
-                href: '${path}/peopleJob/advSearchPage',
-                buttons:[{
-                    text: '提交',
-                    handler: function(){
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;
+                title: '添加',
+                width: 500,
+                height: 350,
+                href: '${path}/peopleJob/addPage',
+                buttons: [{
+                    text: '添加',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#peopleAddForm");
+                        //f.submit();
                         if(parent.checkForm()){
-                            parent.progressClose();
-                            var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
-                            dataGrid.datagrid("load",$.serializeObject(f));
-                            parent.$.modalDialog.handler.dialog("close");
+                            parent.SYS_SUBMIT_FORM(f,"/peopleJob/add",function(data){
+                                if(!data["success"]){
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                }else{
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
                         }
                     }
                 }]
             });
         }
-
         function exportSearch(){
             parent.$.modalDialog({
                 title: '导出',
@@ -170,7 +175,7 @@
         <form id="searchForm">
             <table>
                 <tr>
-                    <th>人员类别:</th>
+                    <th>人员职级:</th>
                     <td>
                         <input name="jobLevel" placeholder="请输入职级"/>
                     </td>

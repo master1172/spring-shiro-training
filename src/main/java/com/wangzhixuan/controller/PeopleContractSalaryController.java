@@ -88,7 +88,7 @@ public class PeopleContractSalaryController extends BaseController {
 
 		peopleContractSalaryService.findDataGrid(pageInfo, request);
 
-		logger.info(JSON.toJSONString(pageInfo));
+		logger.info("salaryGrid"+JSON.toJSONString(pageInfo));
 		return pageInfo;
 	}
 
@@ -97,7 +97,8 @@ public class PeopleContractSalaryController extends BaseController {
 	public Result delete(Long id) {
 		Result result = new Result();
 		try {
-			peopleContractService.deletePeopleContractById(id);
+			peopleContractSalaryService.deleteSalaryById(id);
+			
 			result.setMsg("删除成功！");
 			result.setSuccess(true);
 			return result;
@@ -137,7 +138,9 @@ public class PeopleContractSalaryController extends BaseController {
 	@RequestMapping("/editPage")
 	public String editPage(Long id, Model model) {
 		PeopleContractSalaryVo peopleContractVo = peopleContractSalaryService.findPeopleContractSalaryVoById(id);
-		model.addAttribute("peopleContractVo", peopleContractVo);
+		model.addAttribute("peopleContractSalary", peopleContractVo);
+		
+		logger.info("peopleContractSalary:"+JSON.toJSONString(peopleContractVo));
 		return "/admin/peopleContractSalary/peopleSalaryEdit";
 	}
 

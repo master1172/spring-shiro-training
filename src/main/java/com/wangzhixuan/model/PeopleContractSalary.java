@@ -1,6 +1,9 @@
 package com.wangzhixuan.model;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.io.Serializable;import java.math.BigDecimal;
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 /**
  * Created by sterm on 2017/1/12.
  */
@@ -12,7 +15,7 @@ public class PeopleContractSalary implements Serializable {
 	private int jobId;
 	private BigDecimal jobSalary;
 	private BigDecimal schoolSalary;
-	private String examResult;	
+	private String examResult;
 	private BigDecimal jobExamSalary;
 	private BigDecimal telephoneAllowance;
 	private BigDecimal trafficAllowance;
@@ -33,158 +36,210 @@ public class PeopleContractSalary implements Serializable {
 	private BigDecimal netIncome;
 	@JsonFormat(pattern = "yyyy-MM")
 	private String payDate;
+
 	public Long getId() {
-		return id;	}
+		return id;
+	}
 
 	public void setId(Long id) {
-		this.id = id;	}
+		this.id = id;
+	}
 
 	public String getPeopleCode() {
-		return peopleCode;	}
+		return peopleCode;
+	}
 
 	public void setPeopleCode(String peopleCode) {
-		this.peopleCode = peopleCode;	}
+		this.peopleCode = peopleCode;
+	}
 
 	public int getJobId() {
-		return jobId;	}
+		return jobId;
+	}
 
 	public void setJobId(int jobId) {
-		this.jobId = jobId;	}
+		this.jobId = jobId;
+	}
 
 	public BigDecimal getJobSalary() {
-		return jobSalary;	}
+		return jobSalary;
+	}
 
 	public void setJobSalary(BigDecimal jobSalary) {
-		this.jobSalary = jobSalary;	}
+		this.jobSalary = jobSalary;
+	}
 
 	public BigDecimal getSchoolSalary() {
-		return schoolSalary;	}
+		return schoolSalary;
+	}
 
 	public void setSchoolSalary(BigDecimal schoolSalary) {
-		this.schoolSalary = schoolSalary;	}
+		this.schoolSalary = schoolSalary;
+	}
 
 	public String getExamResult() {
-		return examResult;	}
+		return examResult;
+	}
 
 	public void setExamResult(String examResult) {
-		this.examResult = examResult;	}
+		this.examResult = examResult;
+	}
 
 	public BigDecimal getJobExamSalary() {
-		return jobExamSalary;	}
+		return jobExamSalary;
+	}
 
 	public void setJobExamSalary(BigDecimal jobExamSalary) {
-		this.jobExamSalary = jobExamSalary;	}
+		this.jobExamSalary = jobExamSalary;
+	}
 
 	public BigDecimal getTelephoneAllowance() {
-		return telephoneAllowance;	}
+		return telephoneAllowance;
+	}
 
 	public void setTelephoneAllowance(BigDecimal telephoneAllowance) {
-		this.telephoneAllowance = telephoneAllowance;	}
+		this.telephoneAllowance = telephoneAllowance;
+	}
 
 	public BigDecimal getTrafficAllowance() {
-		return trafficAllowance;	}
+		return trafficAllowance;
+	}
 
 	public void setTrafficAllowance(BigDecimal trafficAllowance) {
-		this.trafficAllowance = trafficAllowance;	}
+		this.trafficAllowance = trafficAllowance;
+	}
 
 	public BigDecimal getSpecialAllowance() {
-		return specialAllowance;	}
+		return specialAllowance;
+	}
 
 	public void setSpecialAllowance(BigDecimal specialAllowance) {
-		this.specialAllowance = specialAllowance;	}
+		this.specialAllowance = specialAllowance;
+	}
 
 	public BigDecimal getHeadAllowance() {
-		return headAllowance;	}
+		return headAllowance;
+	}
 
 	public void setHeadAllowance(BigDecimal headAllowance) {
-		this.headAllowance = headAllowance;	}
+		this.headAllowance = headAllowance;
+	}
 
 	public BigDecimal getExtraWorkFee() {
-		return extraWorkFee;	}
+		return extraWorkFee;
+	}
 
 	public void setExtraWorkFee(BigDecimal extraWorkFee) {
-		this.extraWorkFee = extraWorkFee;	}
+		this.extraWorkFee = extraWorkFee;
+	}
 
 	public BigDecimal getExtraWorkDate() {
-		return extraWorkDate;	}
+		return extraWorkDate;
+	}
 
 	public void setExtraWorkDate(BigDecimal extraWorkDate) {
-		this.extraWorkDate = extraWorkDate;	}
+		this.extraWorkDate = extraWorkDate;
+	}
 
 	public BigDecimal getExtraWorkAllowance() {
-		return extraWorkAllowance;	}
+		return extraWorkAllowance;
+	}
 
 	public void setExtraWorkAllowance(BigDecimal extraWorkAllowance) {
-		this.extraWorkAllowance = extraWorkAllowance;	}
+		this.extraWorkAllowance = extraWorkAllowance;
+	}
 
 	public BigDecimal getBonus() {
-		return bonus;	}
+		return bonus;
+	}
 
 	public void setBonus(BigDecimal bonus) {
-		this.bonus = bonus;	}
+		this.bonus = bonus;
+	}
 
 	public BigDecimal getReissueFee() {
-		return reissueFee;	}
+		return reissueFee;
+	}
 
 	public void setReissueFee(BigDecimal reissueFee) {
-		this.reissueFee = reissueFee;	}
+		this.reissueFee = reissueFee;
+	}
 
 	public BigDecimal getTemperatureAllowance() {
-		return temperatureAllowance;	}
+		return temperatureAllowance;
+	}
 
 	public void setTemperatureAllowance(BigDecimal temperatureAllowance) {
-		this.temperatureAllowance = temperatureAllowance;	}
+		this.temperatureAllowance = temperatureAllowance;
+	}
 
 	public BigDecimal getGrossIncome() {
-		return grossIncome;	}
+		return grossIncome;
+	}
 
 	public void setGrossIncome(BigDecimal grossIncome) {
-		this.grossIncome = grossIncome;	}
+		this.grossIncome = grossIncome;
+	}
 
 	public BigDecimal getLifeInsurance() {
-		return lifeInsurance;	}
+		return lifeInsurance;
+	}
 
 	public void setLifeInsurance(BigDecimal lifeInsurance) {
-		this.lifeInsurance = lifeInsurance;	}
+		this.lifeInsurance = lifeInsurance;
+	}
 
 	public BigDecimal getJobInsurance() {
-		return jobInsurance;	}
+		return jobInsurance;
+	}
 
 	public void setJobInsurance(BigDecimal jobInsurance) {
-		this.jobInsurance = jobInsurance;	}
+		this.jobInsurance = jobInsurance;
+	}
 
 	public BigDecimal getHealthInsurance() {
-		return healthInsurance;	}
+		return healthInsurance;
+	}
 
 	public void setHealthInsurance(BigDecimal healthInsurance) {
-		this.healthInsurance = healthInsurance;	}
+		this.healthInsurance = healthInsurance;
+	}
 
 	public BigDecimal getHouseFund() {
-		return houseFund;	}
+		return houseFund;
+	}
 
 	public void setHouseFund(BigDecimal houseFund) {
-		this.houseFund = houseFund;	}
+		this.houseFund = houseFund;
+	}
 
 	public BigDecimal getExpense() {
-		return Expense;	}
+		return Expense;
+	}
 
 	public void setExpense(BigDecimal expense) {
-		Expense = expense;	}
+		Expense = expense;
+	}
 
 	public BigDecimal getNetIncome() {
-		return netIncome;	}
+		return netIncome;
+	}
 
 	public void setNetIncome(BigDecimal netIncome) {
-		this.netIncome = netIncome;	}
+		this.netIncome = netIncome;
+	}
 
 	public String getPayDate() {
-		return payDate;	}
+		return payDate;
+	}
 
 	public void setPayDate(String payDate) {
-		this.payDate = payDate;	}
+		this.payDate = payDate;
+	}
 
 	@Override
 	public String toString() {
-		return "PeopleContractSalary{" + "id=" + id + "}";	}
+		return "PeopleContractSalary{" + "id=" + id + "}";
+	}
 
 }

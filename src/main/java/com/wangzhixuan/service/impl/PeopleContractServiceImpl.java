@@ -16,6 +16,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -35,7 +37,7 @@ import com.wangzhixuan.vo.PeopleContractVo;
  */
 @Service
 public class PeopleContractServiceImpl implements PeopleContractService{
-
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private PeopleContractMapper peopleContractMapper;
@@ -122,6 +124,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
 
     @Override
     public void deletePeopleContractById(Long id) {
+    	logger.info(id+"");
         peopleContractMapper.deleteById(id);
     }
 

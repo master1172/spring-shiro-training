@@ -4,54 +4,68 @@ import com.wangzhixuan.mapper.PeopleContractSalaryMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.service.PeopleContractSalaryService;
+import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
 
 /**
  * Created by sterm on 2017/1/13.
  */
 @Service
 public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryService {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	private PeopleMapper peopleMapper;
 
-    @Autowired
-    private PeopleMapper peopleMapper;
+	@Autowired
+	private PeopleContractSalaryMapper peopleContractSalaryMapper;
 
-    @Autowired
-    private PeopleContractSalaryMapper peopleContractSalaryMapper;
+	@Override
+	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
+		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
+	}
 
+	@Override
+	public void addSalary(PeopleContractSalary peopleSalary) {
 
-    @Override
-    public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
-        pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
-        pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
-    }
+		// 设置默认日期今天
+		if (peopleSalary != null && StringUtils.isBlank(peopleSalary.getPayDate())) {
+			peopleSalary.setPayDate(DateUtil.GetDate(new Date()));
+		}
 
-    @Override
-    public void addSalary(PeopleContractSalary peopleSalary){
-        peopleContractSalaryMapper.insert(peopleSalary);
-    }
+		peopleContractSalaryMapper.insert(peopleSalary);
+	}
 
-    @Override
-    public void updateSalary(PeopleContractSalary peopleSalary) {
-        peopleContractSalaryMapper.updateByPrimaryKeySelective(peopleSalary);
-    }
+	@Override
+	public void updateSalary(PeopleContractSalary peopleSalary) {
+		peopleContractSalaryMapper.updateByPrimaryKeySelective(peopleSalary);
+	}
 
-    @Override
-    public void deleteSalaryById(Long id) {
-        peopleContractSalaryMapper.deleteByPrimaryKey(id);
-    }
+	@Override
+	public void deleteSalaryById(Long id) {
+		int count = peopleContractSalaryMapper.deleteByPrimaryKey(id);
+		logger.info("delete:" +  count);
+	}
 
-    @Override
-    public void batchDeleteSalaryByIds(String[] ids) {
-        peopleContractSalaryMapper.batchDeleteByIds(ids);
-    }
+	@Override
+	public void batchDeleteSalaryByIds(String[] ids) {
+		peopleContractSalaryMapper.batchDeleteByIds(ids);
+	}
 
-    @Override
-    public PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id) {
-        return peopleContractSalaryMapper.findPeopleContractSalaryVoById(id);
-    }
+	@Override
+	public PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id) {
+		return peopleContractSalaryMapper.findPeopleContractSalaryVoById(id);
+	}
 }

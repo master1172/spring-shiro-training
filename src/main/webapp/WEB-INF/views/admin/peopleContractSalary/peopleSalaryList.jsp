@@ -42,7 +42,7 @@
     function addFun(){
         parent.$.modalDialog({
             title: '添加',
-            width: 1500,
+            width: 1200,
             height: 600,
             href: '${path}/peopleContractSalary/addPage?peopleCode=${code}',
             buttons: [{
@@ -50,7 +50,7 @@
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为添加成功之后，需要刷新这个salaryGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find("#salaryAddForm");
-
+					if(parent.checkForm()) {
                     parent.SYS_SUBMIT_FORM(f,"/peopleContractSalary/add",function(data){
                         if(!data["success"]){
                             parent.$.messager.alert("提示", data["msg"], "warning");
@@ -60,6 +60,7 @@
                             parent.$.modalDialog.handler.dialog("close");
                         }
                     });
+                    }
                 }
             }]
         });
@@ -75,14 +76,14 @@
 
         parent.$.modalDialog({
             title: '修改',
-            width: 1500,
+            width: 1200,
             height: 600,
             href: '${path}/peopleContractSalary/editPage?id='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find("#peopleSalaryEditForm");
+                    var f = parent.$.modalDialog.handler.find("#salaryEditForm");
 
                     if(parent.checkForm()){
                         parent.SYS_SUBMIT_FORM(f,"/peopleContractSalary/edit",function(data){
@@ -142,8 +143,8 @@
                 <th field="jobCategory"     data-options="sortable:false" width="80">岗位分类</th>
                 <th field="jobLevel"        data-options="sortable:false" width="80">职级</th>
                 <th field="jobSalary"       data-options="sortable:false" width="80">岗位工资</th>
-                <th field="rank"            data-options="sortable:false" width="80">薪级</th>
-                <th field="rankSalary"      data-options="sortable:false" width="80">薪级工资</th>
+                <th field="examResult"       data-options="sortable:false" width="80">岗位考核结果</th>
+                <th field="jobExamSalary"      data-options="sortable:false" width="80">岗位考核工资</th>
                 <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>

@@ -1,68 +1,101 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript">
+	function checkForm(){
+	    progressLoad();
+	    var isValid = $("#salaryAddForm").form("validate");
+	    if (!isValid) {
+	        progressClose();
+	        return false;
+	    }
+	    return true;
+	}
 </script>
 
 
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
-        <form id="salaryAddForm" method="post" enctype=”multipart/form-data”>
+        <form id="salaryAddForm" method="post">
             <table class="grid" border=1>
                 <input type="hidden" name="peopleCode" value="${people.code}">
                 <tr>
                     <td>姓名</td>
                     <td>
-                        <input name="name" type="text" value="${people.name}" class="easyui-validatebox" data-options="required:true" value="">
+                        <input name="name" type="text" value="${people.name}" class="easyui-validatebox" data-options="required:true">
                     </td>
-                </tr>
-                <tr>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false" data-options="required:true">
                         </input>
                     </td>
                     <td>岗位工资</td>
                     <td>
                         <input name="jobSalary" id="jobSalary" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                </tr>
-                <tr>
+                    <td>院龄工资</td>
+                 </tr>
+                 <tr>
+                    <td>
+                        <input name="jobSalary" id="schoolSalary" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
                     <td>岗位考核结果</td>
                     <td>
                         <input type="text" name="examResult">
                     </td>
-                </tr>
-                <tr>
+                    <td>岗位考核工资</td>
+                    <td>
+                        <input name="jobEaxmSalary" id="jobExamSalary" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
                     <td>通讯补贴</td>
                     <td>
                         <input name="telephoneAllowance" id="telephoneAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>交通补贴</td>
+                 </tr>
+                 <tr>                    
                     <td>
                         <input name="trafficAllowance" id="trafficAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                </tr>
-                <tr>
-                  
-                </tr>
-                <tr>
-                   
+                    <td>特殊补贴</td>
+                    <td>
+                        <input name="specialAllowance" id="specialAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>领班补贴</td>
+                    <td>
+                        <input name="headAllowance" id="headAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>每日加班费</td>
+                    <td>
+                        <input name="extraWorkFee" id="extraWorkFee" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>加班天数</td>
+                    <td>
+                        <input name="extraWorkDate" id="extraWorkDate" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+				</tr>
+                 <tr>
+                    <td>加班补贴</td>
+                    <td>
+                        <input name="extraWorkAllowance" id="extraWorkAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>奖金</td>
+                    <td>
+                        <input name="bonus" id="bonus" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                     <td>补发</td>
+                    <td>
+                        <input name="reissueFee" id="reissueFee" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
                     <td>降温补贴</td>
                     <td>
                         <input name="temperatureAllowance" id="temperatureAllowance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>补发</td>
-                    <td>
-                        <input name="reissueFee" id="reissueFee" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
-                    </td>
                 </tr>
                 <tr>
-                    <td>应发合计</td>
+                    <td>应发工资</td>
                     <td>
-                        <input name="grossSalary" id="grossSalary" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="grossIncome" id="grossIncome" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                </tr>
-                <tr>
                     <td>养老保险</td>
                     <td>
                         <input name="lifeInsurance" id="lifeInsurance" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
@@ -89,8 +122,6 @@
                     <td>
                         <input name="netIncome" id="netIncome" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                </tr>
-                <tr>
                     <td>发薪日</td>
                     <td>
                         <input id="payDate" name="payDate" placeholder="点击选择时间"

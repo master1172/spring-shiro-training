@@ -1,18 +1,9 @@
 package com.wangzhixuan.controller;
 
-import com.google.common.collect.Maps;
-import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleSalary;
-import com.wangzhixuan.model.PeopleTransfer;
-import com.wangzhixuan.service.PeopleSalaryService;
-import com.wangzhixuan.service.PeopleService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleSalaryBaseVo;
-import com.wangzhixuan.vo.PeopleSalaryVo;
-import com.wangzhixuan.vo.PeopleVo;
-import org.apache.commons.lang3.StringUtils;
-import org.omg.CORBA.PUBLIC_MEMBER;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +11,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+import com.google.common.collect.Maps;
+import com.wangzhixuan.code.Result;
+import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleSalary;
+import com.wangzhixuan.service.PeopleSalaryService;
+import com.wangzhixuan.service.PeopleService;
+import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleSalaryVo;
+import com.wangzhixuan.vo.PeopleVo;
 
 /**
  * Created by sterm on 2017/1/13.
@@ -109,9 +107,9 @@ public class PeopleSalaryController extends BaseController{
         return "/admin/peopleSalary/peopleSalaryAdd";
     }
 
-    @RequestMapping(value = "/add", headers = "Accept=application/json")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public Result add(PeopleSalary peopleSalary){
+    public Result add(PeopleSalary peopleSalary,@RequestParam(value="fileName",required=false)CommonsMultipartFile file){
         Result result = new Result();
         try{
             peopleSalaryService.addSalary(peopleSalary);
@@ -146,38 +144,5 @@ public class PeopleSalaryController extends BaseController{
             result.setMsg(e.getMessage());
             return result;
         }
-    }
-
-    @RequestMapping("/exportExcel")
-    public void exportExcel(HttpServletResponse response, String ids){
-        if(StringUtils.isBlank(ids)){
-            LOGGER.error("Excel:{}","请选择有效数据");
-        }
-        
-        try{
-            peopleSalaryService.exportExcel(response, ids.split(","));
-        }catch(Exception exp){
-            LOGGER.error("导出Excel失败:{}",exp);
-        }
-    }
-
-
-    @RequestMapping("/salaryBasePage")
-    public String salaryBasePage(String code, Model model){
-        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryService.findPeopleSalaryBaseByCode(code);
-        People people = peopleService.findPeopleByCode(code);
-
-        if (peopleSalaryBaseVo == null){
-            peopleSalaryBaseVo = new PeopleSalaryBaseVo();
-        }
-
-        if (people == null){
-            people = new People();
-        }
-
-        model.addAttribute("peopleSalaryBaseVo",peopleSalaryBaseVo);
-        model.addAttribute("people",people);
-
-        return "/admin/peopleSalary/peopleSalaryBase";
     }
 }
