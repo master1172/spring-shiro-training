@@ -48,7 +48,7 @@
         <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <table schema="shiro" tableName="exam_yearly" domainObjectName="ExamYearly"
+        <table schema="shiro" tableName="exam_monthly" domainObjectName="ExamMonthly"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false"

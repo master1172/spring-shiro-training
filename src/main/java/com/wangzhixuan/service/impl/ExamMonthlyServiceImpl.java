@@ -1,41 +1,56 @@
 package com.wangzhixuan.service.impl;
 
-import com.wangzhixuan.mapper.ExamYearlyMapper;
+import com.google.common.collect.Lists;
+import com.wangzhixuan.mapper.ExamMonthlyMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.model.ExamYearly;
 import com.wangzhixuan.model.People;
-import com.wangzhixuan.service.ExamYearlyService;
+import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.utils.*;
-import com.wangzhixuan.vo.ExamYearlyVo;
+import com.wangzhixuan.vo.ExamMonthlyVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by mengfw on 2017/1/20.
+ * Created by mengfw on 2017/1/21.
  */
 @Service
-public class ExamYearlyServiceImp implements ExamYearlyService {
+public class ExamMonthlyServiceImpl implements ExamMonthlyService {
   @Autowired
-  private ExamYearlyMapper mapper;
+  private ExamMonthlyMapper mapper;
   @Autowired
   private PeopleMapper peopleMapper;
   @Override
   public void findDataGrid(PageInfo pageInfo) {
-    pageInfo.setRows(mapper.findPageCondition(pageInfo));
+    List<ExamMonthly> list = mapper.findPageCondition(pageInfo);
+    List<ExamMonthlyVo> results = Lists.newArrayList();
+    for (ExamMonthly monthly:list){
+      ExamMonthlyVo vo = new ExamMonthlyVo();
+      vo.setId(monthly.getId());
+      vo.setExamResult(monthly.getExamResult());
+      vo.setExamOperation(monthly.getExamOperation());
+      vo.setPeopleCode(monthly.getPeopleCode());
+      vo.setPeopleType(monthly.getPeopleType());
+      vo.setName(monthly.getName());
+      vo.setYearMonth(monthly.getYear() + "-" + monthly.getMonth());
+      results.add(vo);
+    }
+    pageInfo.setRows(results);
 
   }
 
@@ -44,7 +59,7 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
     String ids = "";
     pageInfo.setFrom(0);
     pageInfo.setSize(100000);
-    List<ExamYearly> list = mapper.findPageCondition(pageInfo);
+    List<ExamMonthly> list = mapper.findPageCondition(pageInfo);
     if(CollectionUtils.isEmpty(list)){
       return ids;
     }
@@ -58,9 +73,19 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
   }
 
   @Override
-  public void add(ExamYearly examYearly) {
-    examYearly.setName(null);//不维护名称,联查
-    mapper.insert(examYearly);
+  public void add(ExamMonthlyVo vo) {
+    ExamMonthly examMonthly = new ExamMonthly();
+    String[]strArr = vo.getYearMonthMax().split("-");
+    if(strArr.length < 2){
+      throw new RuntimeException("时间格式不对");
+    }
+    examMonthly.setYear(Integer.parseInt(strArr[0]));
+    examMonthly.setMonth(Integer.parseInt(strArr[1]));
+    examMonthly.setId(vo.getId());
+    examMonthly.setPeopleCode(vo.getPeopleType());
+    examMonthly.setExamOperation(vo.getExamOperation());
+    examMonthly.setExamResult(vo.getExamResult());
+    mapper.insert(examMonthly);
   }
 
   @Override
@@ -69,32 +94,43 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
   }
 
   @Override
-  public void update(ExamYearly examYearly) {
-    mapper.updateByPrimaryKey(examYearly);
+  public void update(ExamMonthlyVo vo) {
+    ExamMonthly examMonthly = new ExamMonthly();
+    String[]strArr = vo.getYearMonthMax().split("-");
+    if(strArr.length < 2){
+      throw new RuntimeException("时间格式不对");
+    }
+    examMonthly.setYear(Integer.parseInt(strArr[0]));
+    examMonthly.setMonth(Integer.parseInt(strArr[1]));
+    examMonthly.setId(vo.getId());
+    examMonthly.setPeopleCode(vo.getPeopleType());
+    examMonthly.setExamOperation(vo.getExamOperation());
+    examMonthly.setExamResult(vo.getExamResult());
+    mapper.updateByPrimaryKey(examMonthly);
   }
 
   @Override
   public void exportExcel(HttpServletResponse response, String[] ids) {
-    List<ExamYearly> list=mapper.selectByIds(ids);
+    List<ExamMonthly> list=mapper.selectByIds(ids);
     if(CollectionUtils.isEmpty(list)){
       return;
     }
     XSSFWorkbook workBook;
     OutputStream os;
-    String newFileName="年度考核信息.xlsx";
+    String newFileName="月度考核信息.xlsx";
     try {
       workBook = new XSSFWorkbook();
-      XSSFSheet sheet = workBook.createSheet("年度考核信息");
-      XSSFCellStyle setBorder=WordUtil.setCellStyle(workBook,true);
+      XSSFSheet sheet = workBook.createSheet("月度考核信息");
+      XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
       //创建表头
       XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getEaxmYearlyHeaders());
       setBorder=WordUtil.setCellStyle(workBook,false);
       for(int i=0;i<list.size();i++) {
         row = sheet.createRow(i + 1);
-        ExamYearly e = list.get(i);
+        ExamMonthly e = list.get(i);
         row.createCell(0).setCellValue(i+1);
         row.createCell(1).setCellValue(e.getName());
-        row.createCell(2).setCellValue(e.getYear());
+        row.createCell(2).setCellValue(e.getYear() +"-" + e.getMonth());
         row.createCell(3).setCellValue(e.getExamResult());
         row.createCell(4).setCellValue(e.getExamOperation());
         for(int j=0; j<5; j++){
@@ -116,30 +152,12 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
   }
 
   @Override
-  public void exportWord(HttpServletResponse response, String id) {
-    ExamYearly examYearly = mapper.selectByPrimaryKey(Integer.parseInt(id));
-    if(examYearly == null){
-      return;
-    }
-    XWPFDocument doc;
-    OutputStream os;
-    String filePath=this.getClass().getResource("/template/examYearly.docx").getPath();
-    String newFileName="年度考核信息.docx";
-    Map<String,Object> params = new HashMap<String,Object>();
-    params.put("${name}",examYearly.getName());
-    params.put("${year}",examYearly.getYear());
-    params.put("${examResult}",examYearly.getExamResult());
-    params.put("${examOperation}",examYearly.getExamOperation());
-    WordUtil.OutputWord(response, filePath, newFileName, params);
-  }
-
-  @Override
   public boolean insertByImport(CommonsMultipartFile[] files) {
     boolean flag=false;
     if(files==null || files.length<=0){
       return flag;
     }
-    List<ExamYearly > list = new ArrayList<ExamYearly>();
+    List<ExamMonthly > list = new ArrayList<ExamMonthly>();
 
     String filePath = this.getClass().getResource("/").getPath();//文件临时路径
 
@@ -148,7 +166,7 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
       String path= UploadUtil.fileUpload(filePath, files[i]);
 
       if( StringUtils.isNotBlank(path)){
-        list=getExamYearlyByExcel(list,path);
+        list=getExamMonthlyByExcel(list,path);
       }
 
     }
@@ -163,7 +181,7 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
     mapper.batchDeleteByIds(idList);
   }
 
-  private List< ExamYearly > getExamYearlyByExcel(List< ExamYearly > list, String path) {
+  private List< ExamMonthly > getExamMonthlyByExcel(List< ExamMonthly > list, String path) {
     try
     {
       XSSFWorkbook xwb = new XSSFWorkbook(path);
@@ -172,29 +190,34 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
       XSSFRow row;
       for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
         row = sheet.getRow(i);
-        ExamYearly examYearly=new ExamYearly();
+        ExamMonthly examMonthly=new ExamMonthly();
         //姓名
         if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
           continue;
         }
         String name=row.getCell(1).toString().trim();
-        examYearly.setName(name);
-        People p = peopleMapper.findPeopleByName(examYearly.getName());
+        examMonthly.setName(name);
+        People p = peopleMapper.findPeopleByName(examMonthly.getName());
         if(p == null ){
           continue;
         }
-        examYearly.setPeopleCode(p.getCode());
+        examMonthly.setPeopleCode(p.getCode());
         if(row.getCell(2)!=null && !row.getCell(2).toString().trim().equals("")){
-          examYearly.setYear(Integer.parseInt(row.getCell(2).toString().trim()));
+          String[]strArr = row.getCell(2).toString().trim().split("-");
+          if(strArr.length < 2){
+            throw new RuntimeException("时间格式不对");
+          }
+          examMonthly.setYear(Integer.parseInt(strArr[0]));
+          examMonthly.setMonth(Integer.parseInt(strArr[1]));
         }
         if(row.getCell(3)!=null && !row.getCell(3).toString().trim().equals("")){
-          examYearly.setExamResult(row.getCell(3).toString().trim());
+          examMonthly.setExamResult(row.getCell(3).toString().trim());
         }
         if(row.getCell(4)!=null && !row.getCell(4).toString().trim().equals("")){
-          examYearly.setExamOperation(row.getCell(4).toString().trim());
+          examMonthly.setExamOperation(row.getCell(4).toString().trim());
         }
-        examYearly.setName(null);//不继续维护姓名，联查
-        list.add(examYearly);
+        examMonthly.setName(null);//不继续维护姓名，联查
+        list.add(examMonthly);
       }
     } catch (IOException e1) {
       e1.printStackTrace();

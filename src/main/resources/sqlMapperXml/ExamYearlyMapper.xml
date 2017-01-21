@@ -13,6 +13,9 @@
   <sql id="Base_Column_List" >
     id, people_code, name, people_type, year, exam_result, exam_operation
   </sql>
+  <sql id="Base_Column_List_plus" >
+    t.id, t.people_code, p.name, t.people_type, t.year, t.exam_result, t.exam_operation
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -116,8 +119,8 @@
   </update>
   <select id="findPageCondition" parameterType="PageInfo" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from exam_yearly t
+    <include refid="Base_Column_List_plus" />
+    from exam_yearly t  inner join people p on t.people_code = p.code
     <where>
       <if test=" condition.yearMax != null ">
         and t.year &lt;= #{condition.yearMax}
@@ -126,7 +129,7 @@
         and t.year &gt;= #{condition.yearMin}
       </if>
       <if test=" condition.name != null and condition.name != '' ">
-        and t.name LIKE concat('%',#{condition.name},'%')
+        and p.name LIKE concat('%',#{condition.name},'%')
       </if>
       <if test=" condition.examResult != null and condition.examResult != '' ">
         and t.exam_result LIKE concat('%',#{condition.examResult},'%')
@@ -139,8 +142,8 @@
   </select>
     <select id="selectByIds" parameterType="java.util.ArrayList" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
-        from exam_yearly t
+        <include refid="Base_Column_List_plus" />
+        from exam_yearly t inner join people p on t.people_code = p.code
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
