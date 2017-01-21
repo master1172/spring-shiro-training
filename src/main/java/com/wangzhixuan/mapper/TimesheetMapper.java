@@ -1,33 +1,28 @@
 package com.wangzhixuan.mapper;
 
-import com.wangzhixuan.model.PeopleContractSalary;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleContractSalaryVo;
-
 import java.util.List;
 
+import com.wangzhixuan.model.Timesheet;
+import com.wangzhixuan.utils.PageInfo;
+
+/**
+ * @author fengjunfeng
+ *
+ */
 public interface TimesheetMapper {
-    int deleteByPrimaryKey(Long id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(PeopleContractSalary record);
+	int insert(Timesheet record);
 
-    int insertSelective(PeopleContractSalary record);
+	int insertSelective(Timesheet record);
 
-    PeopleContractSalary selectByPrimaryKey(Long id);
+	Timesheet selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(PeopleContractSalary record);
+	int updateByPrimaryKeySelective(Timesheet record);
 
+	int updateByPrimaryKey(Timesheet record);
 
-    int updateByPrimaryKey(PeopleContractSalary record);
+	List findDataGrid(PageInfo pageInfo);
 
-    int findPeopleContractSalaryPageCount(PageInfo pageInfo);
-
-    List findPeopleContractSalaryPageCondition(PageInfo pageInfo);
-
-    // TODO
-    void batchDeleteByIds(String[] ids);
-
-    // TODO
-    PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
-    //add this part for timesheet
+	int findDataGridCount(PageInfo pageInfo);
 }

@@ -4,102 +4,97 @@
         "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
 
 <configuration>
-    <!-- 进行mybatis 配置 -->
-    <typeAliases>
-        <!-- 为类型 起了别名 -->
-        <typeAlias type="com.wangzhixuan.utils.PageInfo" alias="PageInfo"/>
+	<!-- 进行mybatis 配置 -->
+	<typeAliases>
+		<!-- 为类型 起了别名 -->
+		<typeAlias type="com.wangzhixuan.utils.PageInfo" alias="PageInfo" />
 
-        <typeAlias type="com.wangzhixuan.model.User" alias="User"/>
-        <typeAlias type="com.wangzhixuan.vo.UserVo" alias="UserVo"/>
+		<typeAlias type="com.wangzhixuan.model.User" alias="User" />
+		<typeAlias type="com.wangzhixuan.vo.UserVo" alias="UserVo" />
 
-        <typeAlias type="com.wangzhixuan.model.Resource" alias="Resource"/>
-        <typeAlias type="com.wangzhixuan.model.Role" alias="Role"/>
-        <typeAlias type="com.wangzhixuan.model.Organization" alias="Organization"/>
-        <typeAlias type="com.wangzhixuan.model.SysLog" alias="SysLog"/>
+		<typeAlias type="com.wangzhixuan.model.Resource" alias="Resource" />
+		<typeAlias type="com.wangzhixuan.model.Role" alias="Role" />
+		<typeAlias type="com.wangzhixuan.model.Organization" alias="Organization" />
+		<typeAlias type="com.wangzhixuan.model.SysLog" alias="SysLog" />
 
-        <typeAlias type="com.wangzhixuan.model.People" alias="People" />
-        <typeAlias type="com.wangzhixuan.vo.PeopleVo" alias="PeopleVo" />
+		<typeAlias type="com.wangzhixuan.model.People" alias="People" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleVo" alias="PeopleVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleDeath" alias="PeopleDeath" />
-        <typeAlias type="com.wangzhixuan.vo.PeopleDeathVo" alias="PeopleDeathVo" />
+		<typeAlias type="com.wangzhixuan.model.PeopleDeath" alias="PeopleDeath" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleDeathVo" alias="PeopleDeathVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleContract" alias="PeopleContract" />
-        <typeAlias type="com.wangzhixuan.vo.PeopleContractVo" alias="PeopleContractVo" />
+		<typeAlias type="com.wangzhixuan.model.PeopleContract" alias="PeopleContract" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleContractVo" alias="PeopleContractVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleTemp" alias="PeopleTemp" />
-        <typeAlias type="com.wangzhixuan.vo.PeopleTempVo" alias="PeopleTempVo" />
+		<typeAlias type="com.wangzhixuan.model.PeopleTemp" alias="PeopleTemp" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleTempVo" alias="PeopleTempVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleDaily" alias="PeopleDaily"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleDailyVo" alias="PeopleDailyVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleDaily" alias="PeopleDaily" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleDailyVo" alias="PeopleDailyVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleRehire" alias="PeopleRehire"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleRehireVo" alias="PeopleRehireVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleRehire" alias="PeopleRehire" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleRehireVo" alias="PeopleRehireVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleRetire" alias="PeopleRetire"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleRetireVo" alias="PeopleRetireVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleRetire" alias="PeopleRetire" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleRetireVo" alias="PeopleRetireVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleParty" alias="PeopleParty"/>
-        <typeAlias type="com.wangzhixuan.vo.PeoplePartyVo" alias="PeoplePartyVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleParty" alias="PeopleParty" />
+		<typeAlias type="com.wangzhixuan.vo.PeoplePartyVo" alias="PeoplePartyVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleDispatch" alias="PeopleDispatch"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleDispatchVo" alias="PeopleDispatchVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleDispatch" alias="PeopleDispatch" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleDispatchVo" alias="PeopleDispatchVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleTransfer" alias="PeopleTransfer"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleTransferVo" alias="PeopleTransferVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleTransfer" alias="PeopleTransfer" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleTransferVo" alias="PeopleTransferVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleSalary" alias="PeopleSalary"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleSalaryVo" alias="PeopleSalaryVo"/>
-<<<<<<< HEAD
-        
-        <typeAlias type="com.wangzhixuan.model.PeopleContractSalary" alias="PeopleContractSalary"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleContractSalaryVo" alias="PeopleContractSalaryVo"/>
-=======
+		<typeAlias type="com.wangzhixuan.model.PeopleSalary" alias="PeopleSalary" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleSalaryVo" alias="PeopleSalaryVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleJob" alias="PeopleJob"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleJobVo" alias="PeopleJobVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleContractSalary" alias="PeopleContractSalary" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleContractSalaryVo" alias="PeopleContractSalaryVo" />
 
-        <typeAlias type="com.wangzhixuan.model.PeopleRank" alias="PeopleRank"/>
-        <typeAlias type="com.wangzhixuan.vo.PeopleRankVo" alias="PeopleRankVo"/>
+		<typeAlias type="com.wangzhixuan.model.PeopleJob" alias="PeopleJob" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleJobVo" alias="PeopleJobVo" />
 
->>>>>>> cf86893c839aa89d18f71a929d42248c8674306e
-    </typeAliases>
+		<typeAlias type="com.wangzhixuan.model.PeopleRank" alias="PeopleRank" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleRankVo" alias="PeopleRankVo" />
+	</typeAliases>
 
-    <!-- 引入自定义 mapper 文件 -->
-    <mappers>
-        <!-- 从库测试 -->
-        <mapper resource="sqlMapperXml/SlaveMapper.xml"/>
+	<!-- 引入自定义 mapper 文件 -->
+	<mappers>
+		<!-- 从库测试 -->
+		<mapper resource="sqlMapperXml/SlaveMapper.xml" />
 
-        <mapper resource="sqlMapperXml/OrganizationMapper.xml"/>
-        <mapper resource="sqlMapperXml/UserMapper.xml"/>
-        <mapper resource="sqlMapperXml/ResourceMapper.xml"/>
-        <mapper resource="sqlMapperXml/RoleMapper.xml"/>
-        <mapper resource="sqlMapperXml/UserRoleMapper.xml"/>
-        <mapper resource="sqlMapperXml/RoleResourceMapper.xml"/>
-        <mapper resource="sqlMapperXml/SysLogMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleMapper.xml"/>
-        <mapper resource="sqlMapperXml/CategoryMapper.xml"/>
-        <mapper resource="sqlMapperXml/ArticleMapper.xml"/>
-        <mapper resource="sqlMapperXml/DictMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleDeathMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleContractMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleContract2Mapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleTempMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleDailyMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleRehireMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleRetireMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeoplePartyMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleDispatchMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleTransferMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleSalaryMapper.xml"/>
-<<<<<<< HEAD
-        <mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleRetireSalaryMapper.xml"/>
-=======
-        <mapper resource="sqlMapperXml/PeopleJobMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleRankMapper.xml"/>
-        <mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml"/>
-        <mapper resource="sqlMapperXml/ExamYearlyMapper.xml"/>
-        <mapper resource="sqlMapperXml/ExamMonthlyMapper.xml"/>
->>>>>>> cf86893c839aa89d18f71a929d42248c8674306e
-    </mappers>
+		<mapper resource="sqlMapperXml/OrganizationMapper.xml" />
+		<mapper resource="sqlMapperXml/UserMapper.xml" />
+		<mapper resource="sqlMapperXml/ResourceMapper.xml" />
+		<mapper resource="sqlMapperXml/RoleMapper.xml" />
+		<mapper resource="sqlMapperXml/UserRoleMapper.xml" />
+		<mapper resource="sqlMapperXml/RoleResourceMapper.xml" />
+		<mapper resource="sqlMapperXml/SysLogMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleMapper.xml" />
+		<mapper resource="sqlMapperXml/CategoryMapper.xml" />
+		<mapper resource="sqlMapperXml/ArticleMapper.xml" />
+		<mapper resource="sqlMapperXml/DictMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleDeathMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleContractMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleContract2Mapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleTempMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleDailyMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleRehireMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleRetireMapper.xml" />
+		<mapper resource="sqlMapperXml/PeoplePartyMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleDispatchMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleTransferMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleSalaryMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleJobMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleRankMapper.xml" />
+		<mapper resource="sqlMapperXml/ExamYearlyMapper.xml" />
+		<mapper resource="sqlMapperXml/ExamMonthlyMapper.xml" />
+
+		<!-- added by junfeng -->
+		<mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml" />
+		<mapper resource="sqlMapperXml/PeopleRetireSalaryMapper.xml" />
+		<!-- <mapper resource="sqlMapperXml/TimesheetMapper.xml" /> -->
+	</mappers>
 </configuration> 

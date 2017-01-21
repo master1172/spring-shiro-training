@@ -48,18 +48,14 @@
         <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-<<<<<<< HEAD
-        <table schema="shiro" tableName="people_retire_salary" domainObjectName="PeopleRetireSalary"
-=======
-        <table schema="shiro" tableName="exam_monthly" domainObjectName="ExamMonthly"
->>>>>>> cf86893c839aa89d18f71a929d42248c8674306e
+    <!--     <table schema="shiro" tableName="timesheet" domainObjectName="Timesheet"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false"
                selectByExampleQueryId="false"
                enableSelectByExample="false">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        </table> -->
     </context>
 </generatorConfiguration>
 

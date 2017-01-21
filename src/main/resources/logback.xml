@@ -30,5 +30,5 @@
     <!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
 
     <logger name="org.springframework" level="DEBUG"/>
-    <logger name="org.apache" level="INFO"/>
+    <logger name="org.apache" level="DEBUG"/>
 </configuration>
