@@ -10,6 +10,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -88,8 +89,40 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
                 XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleHeaders());
-            }catch (Exception exp){
 
+                setBorder = WordUtil.setCellStyle(workBook, false);
+                for(int i=0; i<list.size(); i++){
+                    PeopleVo peopleVo = (PeopleVo) list.get(i);
+                    if (peopleVo == null || StringUtils.isBlank(peopleVo.getCode()))
+                        continue;
+                    String peopleCode = peopleVo.getCode();
+                    List<PeopleSalaryVo> peopleSalaryVoList = peopleSalaryMapper.findPeopleSalaryVoListByCode(peopleCode);
+                    if (peopleSalaryVoList == null || peopleSalaryVoList.size() < 1)
+                        continue;
+                    for(int j=0; j<peopleSalaryVoList.size(); j++){
+                        row = sheet.createRow(j+1);
+                        PeopleSalaryVo peopleSalaryVo = peopleSalaryVoList.get(j);
+                        row.createCell(0).setCellValue(j+1);
+                        row.createCell(1).setCellValue(peopleSalaryVo.getPeopleName());
+                        row.createCell(2).setCellValue(peopleSalaryVo.getJobLevel());
+                        row.createCell(3).setCellValue(peopleSalaryVo.getJobSalary()==null?"":peopleSalaryVo.getJobSalary().toString());
+                        row.createCell(4).setCellValue(peopleSalaryVo.getRankLevel());
+                        row.createCell(5).setCellValue(peopleSalaryVo.getRankSalary()==null?"":peopleSalaryVo.getRankLevel().toString());
+
+                        for(int k=0; k<5; k++){
+                            row.getCell(k).setCellStyle(setBorder);
+                        }
+                        row.setHeight((short) 400);
+                    }
+                    sheet.setDefaultRowHeightInPoints(21);
+                    response.reset();
+                    os = response.getOutputStream();
+                    response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+                    workBook.write(os);
+                    os.close();
+                }
+            }catch (Exception exp){
+                exp.printStackTrace();
             }
         }
     }

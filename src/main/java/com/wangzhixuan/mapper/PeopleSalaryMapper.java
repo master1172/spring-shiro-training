@@ -27,4 +27,6 @@ public interface PeopleSalaryMapper {
     PeopleSalaryVo findPeopleSalaryVoById(Long id);
 
     PeopleSalaryBaseVo findPeopleSalaryBaseVoByCode(String code);
+
+    List findPeopleSalaryVoListByCode(String code);
 }
