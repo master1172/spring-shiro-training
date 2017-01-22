@@ -75,8 +75,8 @@
             parent.$.modalDialog({
                 title: '修改',
                 width: 800,
-                height: 600,
-                href: '${path}/people/editPage?id='+id,
+                height: 400,
+                href: '${path}/peopleJob/editPage?id='+id,
                 buttons: [{
                     text: '修改',
                     handler: function () {
@@ -198,8 +198,6 @@
                         <input name="job_level" placeholder="请输入人员职级"/>
                         <a href="javascript:void(0);" class="easyui-linkbutton"
                            data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
-                        <a href="javascript:void(0);" class="easyui-linkbutton"
-                           data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
                     </td>
 
                 </tr>

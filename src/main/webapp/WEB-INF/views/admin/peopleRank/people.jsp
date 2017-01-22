@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>在编人员职级</title>
+    <title>在编人员薪级</title>
     <script type="text/javascript">
         var dataGrid;
 
@@ -35,84 +35,21 @@
             });
         });
 
-        function advSearch(){
+        function addFun() {
+            debugger
             parent.$.modalDialog({
-                title: '高级查询',
-                width: 1000,
+                title: '添加',
+                width: 1500,
                 height: 600,
-                href: '${path}/peopleRank/advSearchPage',
-                buttons:[{
-                    text: '提交',
-                    handler: function(){
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;
-                        if(parent.checkForm()){
-                            parent.progressClose();
-                            var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
-                            dataGrid.datagrid("load",$.serializeObject(f));
-                            parent.$.modalDialog.handler.dialog("close");
-                        }
-                    }
-                }]
-            });
-        }
-
-        function exportSearch(){
-            parent.$.modalDialog({
-                title: '导出',
-                width: 1000,
-                height: 600,
-                href: '${path}/peopleRank/exportSearchPage',
-                buttons:[{
-                    text:'导出',
-                    handler: function(){
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;
-                        var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
-                        if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/peopleRank/exportSearch",function(data){
-                                if(!data["success"]){
-                                    parent.progressClose();
-                                    parent.$.modalDialog.handler.dialog("close");
-                                    parent.$.messager.alert("提示",data["msg"],"warning");
-                                }else{
-                                    parent.progressClose();
-                                    parent.$.modalDialog.handler.dialog("close");
-                                    var ids = data["obj"];
-                                    var form=$("#downLoadForm");
-                                    form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/peopleRank/exportExcel");
-                                    $("#downLoadForm").submit();
-                                }
-                            });
-                        }
-                    }
-                }]
-            });
-        }
-
-
-        function searchFun() {
-            dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
-        }
-
-        function cleanFun() {
-            $('#searchForm input').val('');
-            dataGrid.datagrid('load', {});
-        }
-        //导入Excel
-        function importExcel(){
-        	parent.$.modalDialog({
-                title: '数据导入',
-                width: 500,
-                height: 300,
-                href: '${path}/peopleRank/importExcelPage',
+                href: '${path}/peopleRank/addPage',
                 buttons: [{
-                    text: '导入',
+                    text: '添加',
                     handler: function () {
+                        debugger
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#importExcelForm");
-                        //f.submit();
-                        if(parent.checkForm()){
-                        	parent.SYS_SUBMIT_FORM(f,"/peopleRank/importExcel",function(data){
+                        var f = parent.$.modalDialog.handler.find("#peopleAddForm");
+                        if(true || parent.checkForm()){
+                        	parent.SYS_SUBMIT_FORM(f,"/peopleRank/add",function(data){
                     			if(!data["success"]){
                     				parent.$.messager.alert("提示", data["msg"], "warning");
                     			}else{
@@ -127,6 +64,67 @@
             });
         }
 
+        function editFun(id) {
+            if (id == undefined) {
+                var rows = dataGrid.datagrid('getSelections');
+                id = rows[0].id;
+            } else {
+                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            }
+
+            parent.$.modalDialog({
+                title: '修改',
+                width: 800,
+                height: 400,
+                href: '${path}/peopleRank/editPage?id='+id,
+                buttons: [{
+                    text: '修改',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#peopleEditForm");
+                        //f.submit();
+                        if(parent.checkForm()){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleRank/edit",function(data){
+                                if(!data["success"]){
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                }else{
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
+        function deleteFun(id) {
+            if (id == undefined) {//点击右键菜单才会触发这个
+                var rows = dataGrid.datagrid('getSelections');
+                id = rows[0].id;
+            } else {//点击操作里面的删除图标会触发这个
+                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            }
+            parent.$.messager.confirm('询问', '您是否要删除当前职级？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/peopleRank/delete',{
+                            id: id
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+        }
+
+
+
+
 	    //导出Excel
         function exportExcel(){
         	var checkedItems = $("#dataGrid").datagrid("getChecked");
@@ -138,29 +136,45 @@
                 });
 				var form=$("#downLoadForm");
 				form.find("input[name='ids']").val(ids);
-				form.attr("action",'${path}'+"/peopleRank/exportExcel");
+				form.attr("action",'${path}'+"/people/exportExcel");
 				$("#downLoadForm").submit();
 			}else{
 				parent.$.messager.alert("提示", "请选择有效数据", "warning");
 			}
         }
-		
-        function jobList(value,row,index){//薪级列表，please pay more attention about this funtion
-		parent.$.modalDialog({
-                title:'薪级列表',
-                width:1000,
-                height:600,
-                href:'${path}/peopleRank/jobListPage?id='+id,
-            });
-        	
+        //导出Word
+        function exportWord(){
+			var checkedItems = $("#dataGrid").datagrid("getChecked");
+			if(checkedItems.length==1){
+				var id=checkedItems[0]["id"];
+				var form=$("#downLoadForm");
+				form.find("input[name='ids']").val(id);
+				form.attr("action",'${path}'+"/people/exportWord");
+				$("#downLoadForm").submit();
+			}else{
+				parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+			}
+        }
+	
+        function sexFormatter(value,row,index){
+        	switch (value) {
+            case 0:
+                return '男';
+            case 1:
+                return '女';
+        	}
         }
         
         function operateFormatter(value,row,index){
         	 var str = '';
-
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="jobList(\'{0}\');" >职级明细</a>', row.id);
-
-            return str;
+             <shiro:hasPermission name="/people/edit">
+                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
+             </shiro:hasPermission>
+             <shiro:hasPermission name="/people/delete">
+                 str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
+             </shiro:hasPermission>
+             return str;
         }
     </script>
 </head>
@@ -170,14 +184,10 @@
         <form id="searchForm">
             <table>
                 <tr>
-                    <th>人员类别:</th>
+                    <th>薪级:</th>
                     <td>
-                        <input name="sarlay" placeholder="请输入工资"/>
-                    </td>
-                    <th>职级:</th>
-                    <td>
-                        <select name="">
-                            <option value="rank_level" selected>请选择</option>
+                        <select name="job_category">
+                            <option value="" selected>请选择</option>
                             <option value="1">1级</option>
                             <option value="2">2级</option>
                             <option value="3">3级</option>
@@ -238,9 +248,9 @@
                             <option value="57">58级</option>
                             <option value="59">59级</option>
                             <option value="60">60级</option>
-
                         </select>
                     </td>
+
                 </tr>
             </table>
         </form>
@@ -251,8 +261,9 @@
         	<thead>
             <tr>
                 <th field="ck"            data-options="checkbox:true"></th>
-                <th field="rank_level"          data-options="sortable:true,formatter:categoryFormatter" width="80">人员类别</th>
-                <th field="salary"  data-options="sortable:true" width="80">薪级工资</th>
+                <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
+                <th field="jobLevel"  data-options="sortable:true" width="80">职级</th>
+                <th field="salary"  data-options="sortable:true" width="80">岗位薪资</th>
                 <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
@@ -260,14 +271,30 @@
     </div>
 
     <div id="toolbar" style="display: none;">
-        <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导入</a>
-        <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-        <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">查询导出</a>
+        <shiro:hasPermission name="/people/add">
+            <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">添加</a>
+        </shiro:hasPermission>
+        <%--<shiro:hasPermission name="/people/importExcel">--%>
+            <%--<a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">导入</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <%--<shiro:hasPermission name="/people/exportExcel">--%>
+            <%--<a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">导出Excel</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <%--<shiro:hasPermission name="/people/exportWord">--%>
+            <%--<a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">导出Word</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <shiro:hasPermission name="/people/exportSearch">
+            <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-add'">查询导出</a>
+        </shiro:hasPermission>
+
+
         <!-- 附件下载使用 -->
-        <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
-</div>
+    	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+    </div>
 </body>
 </html>

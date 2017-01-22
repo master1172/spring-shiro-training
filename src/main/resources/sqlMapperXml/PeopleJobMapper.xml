@@ -78,10 +78,11 @@
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
+    <delete id="deletePeopleJobById" parameterType="java.lang.Long">
         delete from job
         where id = #{id,jdbcType=BIGINT}
     </delete>
+
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
         delete from job
