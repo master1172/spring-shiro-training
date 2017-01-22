@@ -306,7 +306,116 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                     p.setExtraAllowance(StringUtilExtra.StringToDecimal(extraAllowance));
                 }
 
-                
+                //
+                if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")) {
+                    String telephoneAllowance = row.getCell(16).toString().trim();
+                    p.setTelephoneAllowance(StringUtilExtra.StringToDecimal(telephoneAllowance));
+                }
+
+                //
+                if(row.getCell(17)!=null&&!row.getCell(17).toString().trim().equals("")) {
+                    String trafficAllowance = row.getCell(17).toString().trim();
+                    p.setTrafficAllowance(StringUtilExtra.StringToDecimal(trafficAllowance));
+                }
+
+                //
+                if(row.getCell(18)!=null&&!row.getCell(18).toString().trim().equals("")) {
+                    String onDutyFee = row.getCell(18).toString().trim();
+                    p.setOnDutyDate(StringUtilExtra.StringToDecimal(onDutyFee));
+                }
+
+                //
+                if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")) {
+                    String onDutyDate = row.getCell(19).toString().trim();
+                    p.setOnDutyDate(StringUtilExtra.StringToDecimal(onDutyDate));
+                }
+
+                if(row.getCell(20)!=null&&!row.getCell(20).toString().trim().equals("")) {
+                    String onDutyFeeTotal = row.getCell(20).toString().trim();
+                    p.setOnDutyFeeTotal(StringUtilExtra.StringToDecimal(onDutyFeeTotal));
+                }
+
+                //
+                if(row.getCell(21)!=null&&!row.getCell(21).toString().trim().equals("")) {
+                    String propertyAllowance = row.getCell(21).toString().trim();
+                    p.setPropertyAllowance(StringUtilExtra.StringToDecimal(propertyAllowance));
+                }
+
+                //
+                if(row.getCell(22)!=null&&!row.getCell(22).toString().trim().equals("")) {
+                    String extraJobAllowance = row.getCell(22).toString().trim();
+                    p.setExtraJobAllowance(StringUtilExtra.StringToDecimal(extraJobAllowance));
+                }
+
+                if(row.getCell(23)!=null&&!row.getCell(23).toString().trim().equals("")) {
+                    String temperatureAllowance = row.getCell(23).toString().trim();
+                    p.setTemperatureAllowance(StringUtilExtra.StringToDecimal(temperatureAllowance));
+                }
+
+                if(row.getCell(24)!=null&&!row.getCell(24).toString().trim().equals("")) {
+                    String reissueFee = row.getCell(24).toString().trim();
+                    p.setReissueFee(StringUtilExtra.StringToDecimal(reissueFee));
+                }
+
+                if(row.getCell(25)!=null&&!row.getCell(25).toString().trim().equals("")) {
+                    String medicare = row.getCell(25).toString().trim();
+                    p.setMedicare(StringUtilExtra.StringToDecimal(medicare));
+                }
+
+                if(row.getCell(26)!=null&&!row.getCell(26).toString().trim().equals("")) {
+                    String yearlyBonus = row.getCell(26).toString().trim();
+                    p.setYearlyBonus(StringUtilExtra.StringToDecimal(yearlyBonus));
+                }
+
+                if(row.getCell(27)!=null&&!row.getCell(27).toString().trim().equals("")) {
+                    String grossSalary = row.getCell(27).toString().trim();
+                    p.setGrossSalary(StringUtilExtra.StringToDecimal(grossSalary));
+                }
+
+                if(row.getCell(28)!=null&&!row.getCell(28).toString().trim().equals("")) {
+                    String lifeInsurance = row.getCell(28).toString().trim();
+                    p.setLifeInsurance(StringUtilExtra.StringToDecimal(lifeInsurance));
+                }
+
+                if(row.getCell(29)!=null&&!row.getCell(29).toString().trim().equals("")) {
+                    String jobInsurance = row.getCell(29).toString().trim();
+                    p.setJobInsurance(StringUtilExtra.StringToDecimal(jobInsurance));
+                }
+
+                if(row.getCell(30)!=null&&!row.getCell(30).toString().trim().equals("")) {
+                    String healthInsurance = row.getCell(30).toString().trim();
+                    p.setHealthInsurance(StringUtilExtra.StringToDecimal(healthInsurance));
+                }
+
+                if(row.getCell(31)!=null&&!row.getCell(31).toString().trim().equals("")) {
+                    String annuity = row.getCell(31).toString().trim();
+                    p.setAnnuity(StringUtilExtra.StringToDecimal(annuity));
+                }
+
+                if(row.getCell(32)!=null&&!row.getCell(32).toString().trim().equals("")) {
+                    String houseFund = row.getCell(32).toString().trim();
+                    p.setHouseFund(StringUtilExtra.StringToDecimal(houseFund));
+                }
+
+                if(row.getCell(33)!=null&&!row.getCell(33).toString().trim().equals("")) {
+                    String expense = row.getCell(33).toString().trim();
+                    p.setExpense(StringUtilExtra.StringToDecimal(expense));
+                }
+
+                if(row.getCell(34)!=null&&!row.getCell(34).toString().trim().equals("")) {
+                    String tax = row.getCell(34).toString().trim();
+                    p.setTax(StringUtilExtra.StringToDecimal(tax));
+                }
+
+                if(row.getCell(35)!=null&&!row.getCell(35).toString().trim().equals("")) {
+                    String netIncome = row.getCell(35).toString().trim();
+                    p.setNetIncome(StringUtilExtra.StringToDecimal(netIncome));
+                }
+
+                if(row.getCell(36)!=null&&!row.getCell(36).toString().trim().equals("")) {
+                    String payDate = row.getCell(36).toString().trim();
+                    p.setPayDate(payDate);
+                }
 
                 list.add(p);
             }
