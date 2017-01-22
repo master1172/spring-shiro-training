@@ -15,11 +15,11 @@ public class PeopleSalary implements Serializable {
 
     private String peopleCode;
 
-    private int jobId;
+    private Integer jobId;
 
     private BigDecimal jobSalary;
 
-    private int rankId;
+    private Integer rankId;
 
     private BigDecimal rankSalary;
 
@@ -103,11 +103,11 @@ public class PeopleSalary implements Serializable {
         this.peopleCode = peopleCode;
     }
 
-    public int getJobId() {
+    public Integer getJobId() {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(Integer jobId) {
         this.jobId = jobId;
     }
 
@@ -119,11 +119,11 @@ public class PeopleSalary implements Serializable {
         this.jobSalary = jobSalary;
     }
 
-    public int getRankId() {
+    public Integer getRankId() {
         return rankId;
     }
 
-    public void setRankId(int rankId) {
+    public void setRankId(Integer rankId) {
         this.rankId = rankId;
     }
 

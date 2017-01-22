@@ -24,8 +24,6 @@
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="jobEditForm" method="post" >
             <input type="hidden" name="id" value="${peopleJobVo.id}">
-            <input type="hidden" name="jobCategory" value="${peopleJobVo.jobCategory}">
-			<input type="hidden" name="jobLevel" value="${peopleJobVo.jobLevel}">
             <table class="grid" border="1">
                 <tr>
   				    <td>人员类别</td>

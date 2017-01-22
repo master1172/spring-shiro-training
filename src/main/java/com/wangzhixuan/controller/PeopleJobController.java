@@ -87,7 +87,7 @@ public class PeopleJobController extends BaseController{
     public String editPage(Long id, Model model){
         PeopleJobVo peopleJobVo = peopleJobService.findPeopleJobVoById(id);
         model.addAttribute("peopleJobVo",peopleJobVo);
-        return "/admin/peopleJob/peopleJobEdit";
+        return "admin/peopleJob/peopleEdit";
     }
     @RequestMapping("/edit")
     @ResponseBody
@@ -114,7 +114,7 @@ public class PeopleJobController extends BaseController{
             result.setMsg("删除职级成功！");
             result.setSuccess(true);
             return result;
-        }catch(RuntimeException e){
+        }catch(Throwable e){
             LOGGER.error("删除职级失败：{}",e);
             result.setMsg(e.getMessage());
             return result;

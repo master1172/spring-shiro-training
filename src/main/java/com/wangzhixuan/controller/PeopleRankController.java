@@ -81,9 +81,9 @@ public class PeopleRankController extends BaseController{
         model.addAttribute("peopleRankVo",peopleRankVo);
         return "/admin/peopleRank/peopleRankEdit";
     }
+
     @RequestMapping("/edit")
     @ResponseBody
-    //@RequestBody
     public Result edit(PeopleRankVo peoplerankvo){
         Result result = new Result();
         try{
@@ -97,7 +97,6 @@ public class PeopleRankController extends BaseController{
             return result;
         }
     }
-
 
     @RequestMapping("/delete")
     @ResponseBody
