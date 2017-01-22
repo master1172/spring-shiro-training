@@ -219,6 +219,14 @@
         where name LIKE concat('%',#{name},'%')
     </select>
 
+    <select id="findFirstPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        from people
+        where name = #{name, jdbcType=VARCHAR}
+        LIMIT 0,1
+    </select>
+
     <select id="findPeoplePageCondition" resultMap="peopleVoResultMap" parameterType="PageInfo">
         SELECT
             t.id,

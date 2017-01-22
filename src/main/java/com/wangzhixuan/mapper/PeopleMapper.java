@@ -103,4 +103,6 @@ public interface PeopleMapper {
     PeopleVo findPeopleVoById(Long id);
 
     People findPeopleByCode(String code);
+
+    People findFirstPeopleByName(String name);
 }
