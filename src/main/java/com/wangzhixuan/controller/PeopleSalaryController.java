@@ -3,7 +3,9 @@ package com.wangzhixuan.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +145,19 @@ public class PeopleSalaryController extends BaseController{
             LOGGER.error("修改工资失败：{}",e);
             result.setMsg(e.getMessage());
             return result;
+        }
+    }
+
+    @RequestMapping("/exportExcel")
+    public void exportExcel(HttpServletResponse response, String ids){
+
+        if (StringUtils.isBlank(ids)){
+            LOGGER.error("Excel:{}","请选择有效数据!");
+        }
+        try{
+            peopleSalaryService.exportExcel(response,ids.split(","));
+        }catch(Exception exp){
+            LOGGER.error("导出Excel失败:{}",exp);
         }
     }
 
