@@ -36,8 +36,7 @@
                                onclick="WdatePicker({
                                 readOnly:true,
                                 dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d',
-                                onpicked:birthdayChange
+                                maxDate:'%y-%M-%d'
                                 })"
                                readonly="readonly" value="${timesheet.checkDate}"/>
                     </td>

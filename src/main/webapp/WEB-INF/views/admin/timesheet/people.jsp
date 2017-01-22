@@ -413,7 +413,7 @@
         	<thead>
             <tr>
                 <th field="ck"             data-options="checkbox:true"></th>
-                <th field="peopleCode"     data-options="sortable:true" width="40">人员编号</th>
+                <th field="peopleCode"     data-options="sortable:true" width="80">人员编号</th>
                 <th field="peopleType"     data-options="sortable:true" width="80">人员类型</th>
                 <th field="checkDate"     placeholder="点击选择时间"
                                onclick="WdatePicker({

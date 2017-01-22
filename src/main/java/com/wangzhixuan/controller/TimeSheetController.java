@@ -19,12 +19,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.model.Timesheet;
 import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.service.TimesheetService;
-import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
 
@@ -306,11 +304,12 @@ public class TimeSheetController extends BaseController {
 	public Result importExcel(@RequestParam(value = "fileName", required = false) CommonsMultipartFile[] files) {
 		Result result = new Result();
 		if (files != null && files.length > 0) {
-//			boolean flag = peopleService.insertByImport(files);
-//			result.setSuccess(flag);
-//			if (!flag) {
-//				result.setMsg("系统繁忙，请稍后再试！");
-//			}
+			LOGGER.info(JSON.toJSONString(files));
+			boolean flag = timesheetService.insertByImport(files);
+			result.setSuccess(flag);
+			if (!flag) {
+				result.setMsg("系统繁忙，请稍后再试！");
+			}
 		} else {
 			result.setSuccess(false);
 			result.setMsg("请选择附件！");

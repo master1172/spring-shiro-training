@@ -11,13 +11,7 @@
         }
 		return true;
     }
-    function birthdayChange(){
-        var birthday = $("#birthday").val();
-        var currnetYear = new Date().getFullYear();
-        var age =currnetYear - birthday.substr(0,4);
-        $("#age").val(age);
-        $("#virtualAge").val(age+1);
-    }
+    
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
@@ -41,8 +35,7 @@
                                onclick="WdatePicker({
                                 readOnly:true,
                                 dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d',
-                                onpicked:birthdayChange
+                                maxDate:'%y-%M-%d'
                                 })"
                                readonly="readonly" />
                     </td>

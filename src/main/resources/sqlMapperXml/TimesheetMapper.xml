@@ -120,4 +120,18 @@
 		select count(1) count
 		FROM timesheet
 	</select>
+	
+  <insert id="insertByImport" parameterType="java.util.List">
+        insert into people (people_code, people_type, check_date, status, vacation_period)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+          (
+            #{item.people_code, jdbcType=VARCHAR},
+            #{item.people_type, jdbcType=VARCHAR},
+            #{item.check_date, jdbcType=VARCHAR},
+            #{item.status, jdbcType=VARCHAR},
+            #{item.vacation_period,jdbcType=VARCHAR},
+	      )  
+        </foreach>
+    </insert>	
 </mapper>
