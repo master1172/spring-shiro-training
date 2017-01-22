@@ -72,7 +72,6 @@ public class PeopleJobController extends BaseController{
     public Result add(PeopleJobVo peopleJobVo) {
         Result result = new Result();
         try {
-
             peopleJobService.addPeopleJob(peopleJobVo);
             result.setSuccess(true);
             result.setMsg("添加职级成功");

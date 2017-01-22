@@ -47,7 +47,7 @@
                     handler: function () {
                         debugger
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#peopleAddForm");
+                        var f = parent.$.modalDialog.handler.find("#peopleJobAddForm");
                         if(true || parent.checkForm()){
                         	parent.SYS_SUBMIT_FORM(f,"/peopleJob/add",function(data){
                     			if(!data["success"]){
@@ -81,10 +81,10 @@
                     text: '修改',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#peopleEditForm");
+                        var f = parent.$.modalDialog.handler.find("#peopleJobEditForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/people/edit",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleJob/edit",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -121,59 +121,15 @@
                 }
             });
         }
-
-
-
-
-	    //导出Excel
-        function exportExcel(){
-        	var checkedItems = $("#dataGrid").datagrid("getChecked");
-        	if(checkedItems.length>0){
-        		var ids="";
-        		$.each(checkedItems, function(index,item){
-                    if(ids.length>0)ids+=",";
-                    ids+=item["id"];
-                });
-				var form=$("#downLoadForm");
-				form.find("input[name='ids']").val(ids);
-				form.attr("action",'${path}'+"/people/exportExcel");
-				$("#downLoadForm").submit();
-			}else{
-				parent.$.messager.alert("提示", "请选择有效数据", "warning");
-			}
-        }
-        //导出Word
-        function exportWord(){
-			var checkedItems = $("#dataGrid").datagrid("getChecked");
-			if(checkedItems.length==1){
-				var id=checkedItems[0]["id"];
-				var form=$("#downLoadForm");
-				form.find("input[name='ids']").val(id);
-				form.attr("action",'${path}'+"/people/exportWord");
-				$("#downLoadForm").submit();
-			}else{
-				parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
-			}
-        }
-	
-        function sexFormatter(value,row,index){
-        	switch (value) {
-            case 0:
-                return '男';
-            case 1:
-                return '女';
-        	}
-        }
         
         function operateFormatter(value,row,index){
         	 var str = '';
-             <shiro:hasPermission name="/people/edit">
+
                  str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
-             </shiro:hasPermission>
-             <shiro:hasPermission name="/people/delete">
+
                  str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
                  str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
-             </shiro:hasPermission>
+
              return str;
         }
     </script>
@@ -181,28 +137,6 @@
 
 <body class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">
-        <form id="searchForm">
-            <table>
-                <tr>
-                    <th>人员类别:</th>
-                    <td>
-                        <select name="job_category">
-                            <option value="" selected>请选择</option>
-                            <option value="0">管理类</option>
-                            <option value="1">专业类</option>
-                            <option value="1">工勤类</option>
-                        </select>
-                    </td>
-                    <th>职级:</th>
-                    <td>
-                        <input name="job_level" placeholder="请输入人员职级"/>
-                        <a href="javascript:void(0);" class="easyui-linkbutton"
-                           data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
-                    </td>
-
-                </tr>
-            </table>
-        </form>
     </div>
 
     <div data-options="region:'center',border:true,title:'职级列表'">
@@ -211,8 +145,8 @@
             <tr>
                 <th field="ck"            data-options="checkbox:true"></th>
                 <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
-                <th field="jobLevel"  data-options="sortable:true" width="80">职级</th>
-                <th field="salary"  data-options="sortable:true" width="80">岗位薪资</th>
+                <th field="jobLevel"      data-options="sortable:true" width="80">职级</th>
+                <th field="salary"        data-options="sortable:true" width="80">岗位薪资</th>
                 <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
@@ -220,28 +154,8 @@
     </div>
 
     <div id="toolbar" style="display: none;">
-        <shiro:hasPermission name="/people/add">
-            <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">添加</a>
-        </shiro:hasPermission>
-        <%--<shiro:hasPermission name="/people/importExcel">--%>
-            <%--<a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">导入</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <%--<shiro:hasPermission name="/people/exportExcel">--%>
-            <%--<a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">导出Excel</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <%--<shiro:hasPermission name="/people/exportWord">--%>
-            <%--<a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">导出Word</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <shiro:hasPermission name="/people/exportSearch">
-            <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">查询导出</a>
-        </shiro:hasPermission>
-
-
+        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">添加</a>
         <!-- 附件下载使用 -->
     	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
     </div>

@@ -4,8 +4,6 @@
 <script type="text/javascript">
     $(function() {        
         $("#jobCategory").val('${peopleJobVo.jobCategory}');
-        $('#jobLevel').val('${peopleJobVo.jobLevel}');
-        $('#salary').val('${peopleJobVo.salary}');
     });
 
     function checkForm(){
@@ -17,12 +15,11 @@
         }
         return true;
     }
-
-
 </script>
+
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
-        <form id="jobEditForm" method="post" >
+        <form id="peopleJobEditForm" method="post" >
             <input type="hidden" name="id" value="${peopleJobVo.id}">
             <table class="grid" border="1">
                 <tr>
@@ -36,15 +33,13 @@
                     </td>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false" data-options="required:true">
-                        </input>
+                        <input type="text" name="jobLevel" id="jobLevel" value="${peopleJobVo.jobLevel}" data-options="required:true">
                     </td>
                     <td>岗位工资</td>
                     <td>
-                        <input name="salary" id="salary" type="text" value="${peopleJobVo.salary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input type="text" name="salary" id="salary" value="${peopleJobVo.salary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
-                
             </table>
         </form>
     </div>

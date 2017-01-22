@@ -50,7 +50,6 @@ public class PeopleJobServiceImpl implements PeopleJobService {
 	@Override
     public void updatePeopleJob(PeopleJobVo peoplejobvo) throws InvocationTargetException, IllegalAccessException {
 
-
 		PeopleJob peoplejob = new PeopleJob();
 		BeanUtils.copyProperties(peoplejob,peoplejobvo);
 		peopleJobMapper.updatePeopleJob(peoplejob);
@@ -137,7 +136,7 @@ public class PeopleJobServiceImpl implements PeopleJobService {
 				//岗位薪资
 				if (row.getCell(3) != null && !row.getCell(3).toString().trim().equals("")) {
 					String salary = row.getCell(3).toString().trim();
-					p.setSalary(salary);
+					p.setSalary(StringUtilExtra.StringToDecimal(salary));
 				}
 			}
 		} catch (IOException e1) {
