@@ -39,8 +39,8 @@
             debugger
             parent.$.modalDialog({
                 title: '添加',
-                width: 1500,
-                height: 600,
+                width: 800,
+                height: 400,
                 href: '${path}/peopleRank/addPage',
                 buttons: [{
                     text: '添加',
@@ -81,7 +81,7 @@
                     text: '修改',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find("#peopleEditForm");
+                        var f = parent.$.modalDialog.handler.find("#peopleRankForm");
                         //f.submit();
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f,"/peopleRank/edit",function(data){
