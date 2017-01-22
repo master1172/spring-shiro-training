@@ -5,9 +5,12 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
- * Created by sterm on 2017/1/13.
+ * Created by fengjunfeng on 2017/1/22.
  */
 public interface PeopleContractSalaryService {
 
@@ -20,4 +23,9 @@ public interface PeopleContractSalaryService {
     void deleteSalaryById(Long id);
 
     PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
+    
+    
+    public boolean insertByImport(CommonsMultipartFile[] files);
+    
+    void exportExcel(HttpServletResponse response, String[] idList);
 }

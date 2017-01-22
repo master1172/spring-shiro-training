@@ -27,7 +27,6 @@ import com.wangzhixuan.vo.PeopleContractSalaryVo;
 import com.wangzhixuan.vo.PeopleContractVo;
 
 /**
- * Created by sterm on 2017/1/13.
  */
 @Controller
 @RequestMapping("/peopleContractSalary")
