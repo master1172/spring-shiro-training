@@ -216,7 +216,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
                 String name=row.getCell(1).toString().trim();
 
-                People people = peopleMapper.findPeopleByName(name);
+                People people = peopleMapper.findFirstPeopleByName(name);
 
                 if (people == null || StringUtils.isBlank(people.getCode()))
                     continue;
@@ -237,7 +237,8 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                 //薪级
                 if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
                     String rankLevel = row.getCell(4).toString().trim();
-                    p.setRankId(dictMapper.findRankLevelIdByName(rankLevel));
+                    int rankId = dictMapper.findRankLevelIdByName(rankLevel);
+                    p.setRankId(rankId);
                 }
 
                 //薪级工资
