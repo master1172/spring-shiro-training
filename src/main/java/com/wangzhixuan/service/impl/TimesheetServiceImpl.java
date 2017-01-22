@@ -2,12 +2,14 @@ package com.wangzhixuan.service.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -31,6 +33,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleVo;
+import com.wangzhixuan.vo.TimesheetVo;
 
 /**
  * Created by administrator_cernet on 2016/11/27.
@@ -116,6 +119,16 @@ public class TimesheetServiceImpl implements TimesheetService {
 		return flag;
 	}
 
+	private String getCellString(XSSFCell xs) {
+		String cell = "";
+		if (xs == null) {
+			cell = "";
+		} else {
+			cell = xs.toString();
+		}
+		return cell;
+	}
+
 	/**
 	 * 文件读取
 	 * 
@@ -123,22 +136,28 @@ public class TimesheetServiceImpl implements TimesheetService {
 	 * @param path
 	 * @return
 	 */
-	private List<Timesheet> getPeopleInfoByExcel(List<Timesheet> list,
-			String path) {
+	public List<Timesheet> getPeopleInfoByExcel(List<Timesheet> list, String path) {
 		try {
 			XSSFWorkbook xwb = new XSSFWorkbook(path);
 			XSSFSheet sheet = xwb.getSheetAt(0);
 			XSSFRow row;
-			for (int i = sheet.getFirstRowNum() + 1; i < sheet
-					.getPhysicalNumberOfRows(); i++) {
+			for (int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 				row = sheet.getRow(i);
-				Timesheet p = new Timesheet();
-
-				for (int j = 0; j < 6; j++) {
-					logger.info(i+","+j+":"+row.getCell(j).toString().trim());
+				Timesheet timesheet = new Timesheet();
+				timesheet.setPeopleCode(getCellString(row.getCell(1)));
+				timesheet.setPeopleType(getCellString(row.getCell(2)));
+				timesheet.setCheckDate(getCellString(row.getCell(3)));
+				timesheet.setStatus(getCellString(row.getCell(4)));
+				String vacationPeriod = getCellString(row.getCell(5));
+				if (StringUtils.isNotBlank(vacationPeriod)) {
+					try {
+						timesheet.setVacationPeriod(new BigDecimal(vacationPeriod));
+					} catch (Exception e) {
+						logger.error("", e);
+					}
 				}
 
-				list.add(p);
+				list.add(timesheet);
 			}
 		} catch (IOException e1) {
 			logger.info("", e1);
@@ -150,70 +169,36 @@ public class TimesheetServiceImpl implements TimesheetService {
 	// 导出excel
 	@Override
 	public void exportExcel(HttpServletResponse response, String[] idList) {
-		List list = timesheetMapper.selectPeopleVoByIds(idList);
+		List list = timesheetMapper.selectTimesheetVoByIds(idList);
 		if (list != null && list.size() > 0) {
 			XSSFWorkbook workBook;
 			OutputStream os;
-			String newFileName = "在编人员信息.xlsx";
+			String newFileName = "考勤信息.xlsx";
 			try {
 				workBook = new XSSFWorkbook();
-				XSSFSheet sheet = workBook.createSheet("在编人员信息");
+				XSSFSheet sheet = workBook.createSheet("考勤信息");
 				XSSFCellStyle setBorder = WordUtil.setCellStyle(workBook, true);
 				// 创建表头
-				XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder,
-						ConstUtil.getPeopleHeaders());
+				XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getTimesheetHeader());
 
 				setBorder = WordUtil.setCellStyle(workBook, false);
 				for (int i = 0; i < list.size(); i++) {
 					row = sheet.createRow(i + 1);
-					PeopleVo p = (PeopleVo) list.get(i);
-					row.createCell(0).setCellValue(i + 1);
-					row.createCell(1).setCellValue(p.getName());
-					row.createCell(2).setCellValue(
-							p.getSex() == null ? "" : (p.getSex() == 0 ? "男"
-									: "女"));
-					row.createCell(3).setCellValue(p.getNationalName());
-					row.createCell(4).setCellValue(p.getBirthday().toString());
-					row.createCell(5).setCellValue(p.getNativeName());
-					row.createCell(6).setCellValue(p.getEducationName());
-					row.createCell(7).setCellValue(p.getDegreeName());
-					row.createCell(8).setCellValue(p.getPoliticalName());
-					row.createCell(9).setCellValue(p.getPartyDate());
-					row.createCell(10).setCellValue(p.getWorkDate());
-					row.createCell(11).setCellValue(p.getSchoolDate());
-					row.createCell(12).setCellValue(p.getJobName());
-					row.createCell(13).setCellValue(p.getJobCategory());
-					row.createCell(14).setCellValue(p.getJobLevelName());
-					row.createCell(15).setCellValue(p.getJobDate());
-					row.createCell(16).setCellValue(p.getJobLevelDate());
-					row.createCell(17).setCellValue(
-							p.getAge() == null ? "" : p.getAge().toString());
-					row.createCell(18).setCellValue(
-							p.getVirtualAge() == null ? "" : p.getVirtualAge()
-									.toString());
-					row.createCell(19).setCellValue(
-							p.getWorkAge() == null ? "" : p.getWorkAge()
-									.toString());
-					row.createCell(20).setCellValue(p.getFormation());
-					row.createCell(21).setCellValue(p.getMobile());
-					row.createCell(22).setCellValue(p.getMarriageName());
-					row.createCell(23).setCellValue(p.getPhotoId());
-					row.createCell(24).setCellValue(p.getAddress());
-					row.createCell(25).setCellValue(p.getHukou());
-					row.createCell(26).setCellValue(p.getHukouAddress());
-					row.createCell(27).setCellValue(p.getFinalEducationName());
-					row.createCell(28).setCellValue(p.getMajor());
-					row.createCell(29).setCellValue(p.getGraduateSchool());
-					row.createCell(30).setCellValue(p.getContact());
-					row.createCell(31).setCellValue(p.getRelationship());
-					row.createCell(32).setCellValue(p.getContactNumber());
-					row.createCell(33).setCellValue(p.getFamilyInfo1());
-					row.createCell(34).setCellValue(p.getFamilyInfo2());
-					row.createCell(35).setCellValue(p.getFamilyInfo3());
-					row.createCell(36).setCellValue(p.getFamilyInfo4());
-					row.createCell(37).setCellValue(p.getIdentityName());
+					TimesheetVo timesheetVo = (TimesheetVo) list.get(i);
+					row.createCell(0).setCellValue(i+1);
+					row.createCell(1).setCellValue(timesheetVo.getPeopleCode());
+					row.createCell(2).setCellValue(timesheetVo.getPeopleType());
+					row.createCell(3).setCellValue(timesheetVo.getCheckDate());
+					row.createCell(4).setCellValue(timesheetVo.getStatus());
+					BigDecimal va = timesheetVo.getVacationPeriod();
+					if (va == null) {
+						row.createCell(5).setCellValue("");
+					} else{
+						row.createCell(5).setCellValue(va.toString());
+					}
+					
 
-					for (int j = 0; j < 38; j++) {
+					for (int j = 0; j < 6; j++) {
 						row.getCell(j).setCellStyle(setBorder);
 					}
 					row.setHeight((short) 400);
@@ -221,15 +206,13 @@ public class TimesheetServiceImpl implements TimesheetService {
 				sheet.setDefaultRowHeightInPoints(21);
 				response.reset();
 				os = response.getOutputStream();
-				response.setHeader(
-						"Content-disposition",
-						"attachment; filename="
-								+ new String(newFileName.getBytes("GBK"),
-										"ISO-8859-1"));
+				response.setHeader("Content-disposition",
+						"attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
 				workBook.write(os);
 				os.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+				logger.error("", e);
 			} finally {
 
 			}
