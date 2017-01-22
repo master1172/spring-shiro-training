@@ -237,7 +237,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                 //薪级
                 if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
                     String rankLevel = row.getCell(4).toString().trim();
-                    int rankId = dictMapper.findRankLevelIdByName(rankLevel);
+                    Integer rankId = dictMapper.findRankLevelIdByName(rankLevel);
                     p.setRankId(rankId);
                 }
 
