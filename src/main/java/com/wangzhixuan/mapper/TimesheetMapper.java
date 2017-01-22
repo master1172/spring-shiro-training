@@ -27,7 +27,7 @@ public interface TimesheetMapper {
 	int findDataGridCount(PageInfo pageInfo);
 
 	// TODO
-	List selectPeopleVoByIds(String[] idList);
+	List selectTimesheetVoByIds(String[] idList);
 
 	int insertByImport(List<Timesheet> list);
 }

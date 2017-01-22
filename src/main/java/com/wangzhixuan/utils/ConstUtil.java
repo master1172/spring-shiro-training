@@ -4,6 +4,14 @@ package com.wangzhixuan.utils;
  * Created by sterm on 2016/12/5.
  */
 public class ConstUtil {
+	
+	
+	public static String[] getTimesheetHeader(){
+        return new  String[]{
+                "序号","人员编号","人员类型","考勤日期","考勤结果","假期单位"
+        };
+    }
+	
     public static String[] getPeopleHeaders(){
         return new  String[]{
                 "序号","姓名","性别","民族","出生日期","籍贯","学历","学位","政治面貌","入党日期","参加工作日期",

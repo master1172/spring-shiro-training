@@ -83,6 +83,7 @@ public interface PeopleService {
      * @return
      */
     void exportExcel(HttpServletResponse response,String[] idList);
+    
     /**
      * 导出Word
      * @param request

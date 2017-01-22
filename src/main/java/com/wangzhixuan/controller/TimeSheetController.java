@@ -21,7 +21,6 @@ import com.alibaba.fastjson.JSON;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.model.Timesheet;
-import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.service.TimesheetService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
@@ -38,9 +37,6 @@ public class TimeSheetController extends BaseController {
 
 	@Autowired
 	private TimesheetService timesheetService;
-
-	@Autowired
-	private PeopleTransferService peopleTransferService;
 
 	/**
 	 * 人员管理页
@@ -327,7 +323,7 @@ public class TimeSheetController extends BaseController {
 			LOGGER.error("Excel:{}", "请选择有效数据!");
 		}
 		try {
-//			peopleService.exportExcel(response, ids.split(","));
+			timesheetService.exportExcel(response, ids.split(","));
 		} catch (Exception exp) {
 			LOGGER.error("导出Excel失败:{}", exp);
 		}
