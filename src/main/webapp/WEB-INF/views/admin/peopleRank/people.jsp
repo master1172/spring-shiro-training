@@ -261,9 +261,8 @@
         	<thead>
             <tr>
                 <th field="ck"            data-options="checkbox:true"></th>
-                <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
-                <th field="jobLevel"  data-options="sortable:true" width="80">职级</th>
-                <th field="salary"  data-options="sortable:true" width="80">岗位薪资</th>
+                <th field="rank_level"   data-options="sortable:true" width="80">薪级</th>
+                <th field="salary"  data-options="sortable:true" width="80">薪级薪资</th>
                 <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
