@@ -33,12 +33,12 @@
                         <input name="jobSalary" id="jobSalary" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>院龄工资</td>
-                 </tr>
-                 <tr>
-                    <td>
+                   <td>
                         <input name="jobSalary" id="schoolSalary" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>岗位考核结果</td>
+                 </tr>
+                 <tr>
+                     <td>岗位考核结果</td>
                     <td>
                         <input type="text" name="examResult">
                     </td>

@@ -1,49 +1,45 @@
 package com.wangzhixuan.service.impl;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.tools.internal.jxc.ap.Const;
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleDeathMapper;
-import com.wangzhixuan.mapper.PeopleRetireMapper;
-import com.wangzhixuan.model.PeopleDeath;
-import com.wangzhixuan.model.PeopleRetire;
-import com.wangzhixuan.utils.*;
-import com.wangzhixuan.vo.PeopleDeathVo;
-import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.POIXMLDocument;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.usermodel.Range;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.util.StringUtil;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFPictureData;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.wangzhixuan.mapper.DictMapper;
+import com.wangzhixuan.mapper.PeopleDeathMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.mapper.PeopleRetireMapper;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleDeath;
+import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.service.PeopleService;
-
-import static com.wangzhixuan.utils.WordUtil.generateWord;
+import com.wangzhixuan.utils.ConstUtil;
+import com.wangzhixuan.utils.DateUtil;
+import com.wangzhixuan.utils.ExcelUtil;
+import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.utils.StringUtilExtra;
+import com.wangzhixuan.utils.UploadUtil;
+import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.vo.PeopleVo;
 
 
 @Service

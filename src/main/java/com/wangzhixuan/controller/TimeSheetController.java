@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleTransfer;
@@ -77,12 +78,12 @@ public class TimeSheetController extends BaseController {
 
 	@RequestMapping(value = "/advSearchPage", method = RequestMethod.GET)
 	public String advSearchPage() {
-		return "admin/people/peopleSearch";
+		return "admin/timesheet/peopleSearch";
 	}
 
 	@RequestMapping(value = "/exportSearchPage", method = RequestMethod.GET)
 	public String exportSearchPage() {
-		return "admin/people/peopleSearch";
+		return "admin/timesheet/peopleSearch";
 	}
 
 	@RequestMapping(value = "/exportSearch", method = RequestMethod.POST)
@@ -118,12 +119,12 @@ public class TimeSheetController extends BaseController {
 
 	@RequestMapping(value = "/addPage", method = RequestMethod.GET)
 	public String addPage() {
-		return "admin/people/peopleAdd";
+		return "admin/timesheet/peopleAdd";
 	}
 
 	@RequestMapping(value = "/importExcelPage", method = RequestMethod.GET)
 	public String importExcelPage() {
-		return "admin/people/importExcelPage";
+		return "admin/timesheet/importExcelPage";
 	}
 
 	/**
@@ -134,8 +135,7 @@ public class TimeSheetController extends BaseController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
-	public Result add(Timesheet timesheet,
-			@RequestParam(value = "fileName", required = false) CommonsMultipartFile file) {
+	public Result add(Timesheet timesheet) {
 		Result result = new Result();
 		try {
 
@@ -154,8 +154,8 @@ public class TimeSheetController extends BaseController {
 	@RequestMapping("/editPage")
 	public String editPage(Integer id, Model model) {
 		Timesheet timesheet = timesheetService.selectByPrimaryKey(id);
-		model.addAttribute("peopleVo", timesheet);
-		return "/admin/people/peopleEdit";
+		model.addAttribute("timesheet", timesheet);
+		return "/admin/timesheet/peopleEdit";
 	}
 
 	@RequestMapping("/edit")
@@ -165,6 +165,8 @@ public class TimeSheetController extends BaseController {
 		Result result = new Result();
 		try {
 			timesheetService.updateByPrimaryKey(timesheet);
+			LOGGER.info(JSON.toJSONString(timesheet));
+			
 			result.setSuccess(true);
 			result.setMsg("修改成功!");
 			return result;
@@ -179,7 +181,7 @@ public class TimeSheetController extends BaseController {
 	public String transferPage(Long id, Model model) {
 //		PeopleVo peopleVo = peopleService.findPeopleVoById(id);
 //		model.addAttribute("peopleVo", peopleVo);
-		return "/admin/people/peopleTransfer";
+		return "/admin/timesheet/peopleTransfer";
 	}
 
 	@RequestMapping("/transfer")
@@ -213,6 +215,7 @@ public class TimeSheetController extends BaseController {
 		Result result = new Result();
 		try {
 			timesheetService.deleteByPrimaryKey(id);
+			
 			result.setMsg("删除成功！");
 			result.setSuccess(true);
 			return result;
