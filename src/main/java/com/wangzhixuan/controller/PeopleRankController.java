@@ -57,14 +57,15 @@ public class PeopleRankController extends BaseController{
     }
     @RequestMapping(value="/addPage", method=RequestMethod.GET)
     public String addPage(){
-        return "admin/peopleRank/peopleAdd";
+        return "admin/peopleRank/peopleRankAdd";
     }
+
+
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public Result add(PeopleRankVo peopleRankVo) {
         Result result = new Result();
         try {
-
             peopleRankService.addPeopleRank(peopleRankVo);
             result.setSuccess(true);
             result.setMsg("添加薪级成功");
@@ -75,6 +76,7 @@ public class PeopleRankController extends BaseController{
             return result;
         }
     }
+
     @RequestMapping("/editPage")
     public String editPage(Long id, Model model){
         PeopleRankVo peopleRankVo = peopleRankService.findPeopleRankVoById(id);
