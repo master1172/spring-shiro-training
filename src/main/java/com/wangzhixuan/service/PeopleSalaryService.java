@@ -5,6 +5,7 @@ import com.wangzhixuan.model.PeopleSalaryBase;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,4 +31,6 @@ public interface PeopleSalaryService {
     PeopleSalaryBaseVo findPeopleSalaryBaseByCode(String code);
 
     void exportExcel(HttpServletResponse response, String[] idList);
+
+    boolean insertByImport(CommonsMultipartFile[] files);
 }
