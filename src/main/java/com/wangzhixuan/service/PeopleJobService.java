@@ -47,9 +47,10 @@ public interface PeopleJobService {
      * @param id
      * @return
      */
-//    PeopleJob findPeopleJobById(Long id);
+    PeopleJob findPeopleJobById(Long id);
 
-//    PeopleJobVo findPeopleJobVoById(Long id);
+    PeopleJobVo findPeopleJobVoById(Long id);
+
     /**
      * 删除人员
      *

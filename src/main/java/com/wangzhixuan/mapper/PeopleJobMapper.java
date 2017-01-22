@@ -91,5 +91,5 @@ public interface PeopleJobMapper {
      * @return
      */
     PeopleJobVo findPeopleJobVoById(Long id);
-    
+    PeopleJob findPeopleJobById(Long id);
 }

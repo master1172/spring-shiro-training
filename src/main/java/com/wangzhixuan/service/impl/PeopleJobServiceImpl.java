@@ -1,10 +1,12 @@
 package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.PeopleJobMapper;
+import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.service.PeopleJobService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleJobVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
@@ -54,7 +56,14 @@ public class PeopleJobServiceImpl implements PeopleJobService {
 		peopleJobMapper.updatePeopleJob(peoplejob);
 
     }
-
+	@Override
+	public PeopleJobVo findPeopleJobVoById(Long id){
+		return peopleJobMapper.findPeopleJobVoById(id);
+	}
+	@Override
+	public PeopleJob findPeopleJobById(Long id) {
+		return peopleJobMapper.findPeopleJobById(id);
+	}
 	@Override
 	public void updatePeopleJob(PeopleJob peopleJob){
 		peopleJobMapper.updatePeopleJob(peopleJob);

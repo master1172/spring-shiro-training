@@ -2,9 +2,11 @@ package com.wangzhixuan.service.impl;
 
 
 import com.wangzhixuan.mapper.PeopleRankMapper;
+import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.model.PeopleRank;
 import com.wangzhixuan.service.PeopleRankService;
 import com.wangzhixuan.utils.*;
+import com.wangzhixuan.vo.PeopleJobVo;
 import com.wangzhixuan.vo.PeopleRankVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -69,7 +71,14 @@ public class PeopleRankServiceImpl implements PeopleRankService {
     public void batchDeletePeopleRankByIds(String[] ids){
         peopleRankMapper.batchDeletePeopleRankByIds(ids);
     }
-
+	@Override
+	public PeopleRankVo findPeopleRankVoById(Long id){
+		return peopleRankMapper.findPeopleRankVoById(id);
+	}
+	@Override
+	public PeopleRank findPeopleRankById(Long id) {
+		return peopleRankMapper.findPeopleRankById(id);
+	}
 
     @Override
     public boolean insertByImport(CommonsMultipartFile[] files){

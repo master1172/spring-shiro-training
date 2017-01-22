@@ -3,11 +3,13 @@ package com.wangzhixuan.controller;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.service.PeopleRankService;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleJobVo;
 import com.wangzhixuan.vo.PeopleRankVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +55,10 @@ public class PeopleRankController extends BaseController{
 
         return pageInfo;
     }
+    @RequestMapping(value="/addPage", method=RequestMethod.GET)
+    public String addPage(){
+        return "admin/peopleRank/peopleAdd";
+    }
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
     public Result add(PeopleRankVo peopleRankVo) {
@@ -69,7 +75,12 @@ public class PeopleRankController extends BaseController{
             return result;
         }
     }
-
+    @RequestMapping("/editPage")
+    public String editPage(Long id, Model model){
+        PeopleRankVo peopleRankVo = peopleRankService.findPeopleRankVoById(id);
+        model.addAttribute("peopleRankVo",peopleRankVo);
+        return "/admin/peopleRank/peopleRankEdit";
+    }
     @RequestMapping("/edit")
     @ResponseBody
     //@RequestBody

@@ -36,9 +36,9 @@ public interface PeopleRankService {
      * @param id
      * @return
      */
-//    PeopleRank findPeopleRankById(Long id);
+    PeopleRank findPeopleRankById(Long id);
 
-//    PeopleRankVo findPeopleRankVoById(Long id);
+    PeopleRankVo findPeopleRankVoById(Long id);
 
     /**
      * 修改人员薪级

@@ -1,5 +1,6 @@
 package com.wangzhixuan.mapper;
 
+import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.model.PeopleRank;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleRankVo;
@@ -92,5 +93,5 @@ public interface PeopleRankMapper {
      * @return
      */
     PeopleRankVo findPeopleRankVoById(Long id);
-
+    PeopleRank findPeopleRankById(Long id);
 }

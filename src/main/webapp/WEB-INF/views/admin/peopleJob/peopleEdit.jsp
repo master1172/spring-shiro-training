@@ -43,7 +43,7 @@
                     </td>
                     <td>岗位工资</td>
                     <td>
-                        <input name="jobSalary" id="jobSalary" type="text" value="${peopleJobVo.salary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="salary" id="salary" type="text" value="${peopleJobVo.salary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 

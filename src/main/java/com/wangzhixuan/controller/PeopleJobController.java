@@ -1,13 +1,18 @@
 package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
+import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleJobService;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleJobVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +38,7 @@ public class PeopleJobController extends BaseController{
      */
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     public String manager() {
-        return "/admin/peopleJob/people";
+        return "admin/peopleJob/people";
     }
 
     /**
@@ -57,7 +62,10 @@ public class PeopleJobController extends BaseController{
 
         return pageInfo;
     }
-
+    @RequestMapping(value="/addPage", method=RequestMethod.GET)
+    public String addPage(){
+        return "admin/peopleJob/peopleAdd";
+    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
@@ -75,7 +83,12 @@ public class PeopleJobController extends BaseController{
             return result;
         }
     }
-
+    @RequestMapping("/editPage")
+    public String editPage(Long id, Model model){
+        PeopleJobVo peopleJobVo = peopleJobService.findPeopleJobVoById(id);
+        model.addAttribute("peopleJobVo",peopleJobVo);
+        return "/admin/peopleJob/peopleJobEdit";
+    }
     @RequestMapping("/edit")
     @ResponseBody
     public Result edit(PeopleJobVo peoplejobvo){

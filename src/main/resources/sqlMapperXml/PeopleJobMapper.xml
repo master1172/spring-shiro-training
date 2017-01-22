@@ -11,6 +11,8 @@
     <resultMap id="peopleJobVoResultMap" type="com.wangzhixuan.vo.PeopleJobVo">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="job_category" property="jobCategory" jdbcType="VARCHAR" />
+        <result column="job_level" property="jobLevel" jdbcType="VARCHAR" />
+        <result column="salary" property="salary" jdbcType="DECIMAL" />
     </resultMap>
 
     <sql id="Base_Column_List">,
@@ -54,13 +56,10 @@
         job t
         <where>
             <if test=" condition.jobCategory != null ">
-                and t.job_category LIKE concat('%',#{condition.job_category},'%')
+                and t.job_category LIKE concat('%',#{condition.jobCategory},'%')
             </if>
             <if test=" condition.jobLevel != null and condition.jobLevel != '' ">
-                and t.job_level LIKE concat('%',#{condition.job_level},'%')
-            </if>
-            <if test=" condition.salary != null and condition.salary != ''">
-                and t.salary LIKE concat('%',#{condition.salary},'%')
+                and t.job_level LIKE concat('%',#{condition.jobLevel},'%')
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -70,14 +69,11 @@
         select count(*) count
         from job t
         <where>
-            <if test=" condition.job_category != null ">
-                and t.job_category LIKE concat('%',#{condition.job_category},'%')
+            <if test=" condition.jobCategory != null ">
+                and t.job_category LIKE concat('%',#{condition.jobCategory},'%')
             </if>
-            <if test=" condition.job_level != null and condition.job_level != '' ">
-                and t.job_level LIKE concat('%',#{condition.job_level},'%')
-            </if>
-            <if test=" condition.salary != null and condition.salary != ''">
-                and t.salary LIKE concat('%',#{condition.salary},'%')
+            <if test=" condition.jobLevel != null and condition.jobLevel != '' ">
+                and t.job_level LIKE concat('%',#{condition.jobLevel},'%')
             </if>
         </where>
     </select>
