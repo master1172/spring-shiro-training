@@ -126,8 +126,8 @@
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
-                width: 1500,
-                height: 600,
+                width: 1200,
+                height: 500,
                 href: '${path}/timesheet/addPage',
                 buttons: [{
                     text: '添加',
@@ -160,8 +160,8 @@
 
             parent.$.modalDialog({
                 title: '修改',
-                width: 1500,
-                height: 600,
+                width: 1200,
+                height: 500,
                 href: '${path}/timesheet/editPage?id='+id,
                 buttons: [{
                     text: '修改',
