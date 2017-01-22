@@ -3,6 +3,7 @@ package com.wangzhixuan.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -40,5 +41,13 @@ public class StringUtilExtra {
 
     public static String generateUUID(){
         return UUID.randomUUID().toString().replace("-","");
+    }
+
+    public static BigDecimal StringToDecimal(String str){
+        if (StringUtils.isBlank(str))
+                return null;
+        BigDecimal output = new BigDecimal(str);
+        return output;
+
     }
 }

@@ -1,27 +1,26 @@
 package com.wangzhixuan.service.impl;
 
+import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.mapper.PeopleSalaryMapper;
+import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.PeopleSalaryService;
-import com.wangzhixuan.utils.ConstUtil;
-import com.wangzhixuan.utils.ExcelUtil;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +34,9 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Autowired
     private PeopleSalaryMapper peopleSalaryMapper;
+
+    @Autowired
+    private DictMapper dictMapper;
 
 
     @Override
@@ -110,7 +112,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                         row.createCell(2).setCellValue(peopleSalaryVo.getJobLevel());
                         row.createCell(3).setCellValue(peopleSalaryVo.getJobSalary()==null?"":peopleSalaryVo.getJobSalary().toString());
                         row.createCell(4).setCellValue(peopleSalaryVo.getRankLevel());
-                        row.createCell(5).setCellValue(peopleSalaryVo.getRankSalary()==null?"":peopleSalaryVo.getRankLevel().toString());
+                        row.createCell(5).setCellValue(peopleSalaryVo.getRankSalary()==null?"":peopleSalaryVo.getRankSalary().toString());
                         row.createCell(6).setCellValue(peopleSalaryVo.getReserveSalary()==null?"":peopleSalaryVo.getReserveSalary().toString());
                         row.createCell(7).setCellValue(peopleSalaryVo.getExamResult());
                         row.createCell(8).setCellValue(peopleSalaryVo.getJobAllowance()==null?"":peopleSalaryVo.getJobAllowance().toString());
@@ -163,11 +165,263 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         }
     }
 
+    @Override
+    public boolean insertByImport(CommonsMultipartFile[] files) {
+        boolean flag=false;
+        if(files!=null && files.length>0){
+
+            List<PeopleSalary> list = new ArrayList<PeopleSalary>();
+
+            String filePath = this.getClass().getResource("/").getPath();//文件临时路径
+
+            for(int i=0; i<files.length; i++){
+
+                String path= UploadUtil.fileUpload(filePath, files[i]);
+
+                if( StringUtils.isNotBlank(path)){
+                    list=getPeopleSalaryInfoByExcel(list,path);
+                }
+            }
+            if(list.size()>0){
+                flag=peopleSalaryMapper.insertByImport(list)>0;
+            }
+        }
+        return flag;
+    }
+
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){
         if (peopleSalary == null)
             return;
         if (StringUtils.isBlank(peopleSalary.getWorkDate())){
             peopleSalary.setWorkDate(null);
         }
+    }
+
+    private List<PeopleSalary> getPeopleSalaryInfoByExcel(List<PeopleSalary> list,String path){
+        try
+        {
+            XSSFWorkbook xwb = new XSSFWorkbook(path);
+            XSSFSheet sheet = xwb.getSheetAt(0);
+
+            XSSFRow row;
+            for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
+                row = sheet.getRow(i);
+                PeopleSalary p = new PeopleSalary();
+
+
+                //姓名
+                if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
+                    continue;
+                }
+
+                String name=row.getCell(1).toString().trim();
+
+                People people = peopleMapper.findPeopleByName(name);
+
+                if (people == null || StringUtils.isBlank(people.getCode()))
+                    continue;
+                p.setPeopleCode(people.getCode());
+
+                //岗位名称
+                if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
+                    String jobLevel = row.getCell(2).toString().trim();
+                    p.setJobId(dictMapper.findJobLevelIdByName(jobLevel));
+                }
+
+                //岗位工资
+                if (row.getCell(3)!=null && !row.getCell(3).toString().trim().equals("")){
+                    String jobSalary = row.getCell(3).toString().trim();
+                    p.setJobSalary(StringUtilExtra.StringToDecimal(jobSalary));
+                }
+
+                //薪级
+                if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
+                    String rankLevel = row.getCell(4).toString().trim();
+                    p.setRankId(dictMapper.findRankLevelIdByName(rankLevel));
+                }
+
+                //薪级工资
+                if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
+                    String rankSalary = row.getCell(5).toString().trim();
+                    p.setRankSalary(StringUtilExtra.StringToDecimal(rankSalary));
+                }
+
+                //工改保留工资
+                if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
+                    String reserverSalary = row.getCell(6).toString().trim();
+                    p.setReserveSalary(StringUtilExtra.StringToDecimal(reserverSalary));
+                }
+
+                //考核结果
+                if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
+                    String examResult = row.getCell(7).toString().trim();
+                    p.setExamResult(examResult);
+                }
+
+                //
+                if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
+                    String jobAllowance = row.getCell(8).toString().trim();
+                    p.setJobAllowance(StringUtilExtra.StringToDecimal(jobAllowance));
+                }
+
+                //
+                if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
+                    String perfrmanceAllowance = row.getCell(9).toString().trim();
+                    p.setPerformanceAllowance(StringUtilExtra.StringToDecimal(perfrmanceAllowance));
+                }
+
+                //
+                if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
+                    String rentAllowance = row.getCell(10).toString().trim();
+                    p.setRentAllowance(StringUtilExtra.StringToDecimal(rentAllowance));
+                }
+
+                //
+                if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
+                    String houseAllowance = row.getCell(11).toString().trim();
+                    p.setHouseAllowance(StringUtilExtra.StringToDecimal(houseAllowance));
+                }
+
+                //
+                if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")) {
+                    String workDate = row.getCell(12).toString().trim();
+                    p.setWorkDate(workDate);
+                }
+
+                //
+                if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")) {
+                    String timeSheeStatus = row.getCell(13).toString().trim();
+                    p.setTimesheetStatus(StringUtilExtra.StringToDecimal(timeSheeStatus));
+                }
+
+                //
+                if(row.getCell(14)!=null&&!row.getCell(14).toString().trim().equals("")) {
+                    String dutyAllowance = row.getCell(14).toString().trim();
+                    p.setDutyAllowance(StringUtilExtra.StringToDecimal(dutyAllowance));
+                }
+
+                //
+                if(row.getCell(15)!=null&&!row.getCell(15).toString().trim().equals("")) {
+                    String extraAllowance = row.getCell(15).toString().trim();
+                    p.setExtraAllowance(StringUtilExtra.StringToDecimal(extraAllowance));
+                }
+
+                //
+                if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")) {
+                    String telephoneAllowance = row.getCell(16).toString().trim();
+                    p.setTelephoneAllowance(StringUtilExtra.StringToDecimal(telephoneAllowance));
+                }
+
+                //
+                if(row.getCell(17)!=null&&!row.getCell(17).toString().trim().equals("")) {
+                    String trafficAllowance = row.getCell(17).toString().trim();
+                    p.setTrafficAllowance(StringUtilExtra.StringToDecimal(trafficAllowance));
+                }
+
+                //
+                if(row.getCell(18)!=null&&!row.getCell(18).toString().trim().equals("")) {
+                    String onDutyFee = row.getCell(18).toString().trim();
+                    p.setOnDutyDate(StringUtilExtra.StringToDecimal(onDutyFee));
+                }
+
+                //
+                if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")) {
+                    String onDutyDate = row.getCell(19).toString().trim();
+                    p.setOnDutyDate(StringUtilExtra.StringToDecimal(onDutyDate));
+                }
+
+                if(row.getCell(20)!=null&&!row.getCell(20).toString().trim().equals("")) {
+                    String onDutyFeeTotal = row.getCell(20).toString().trim();
+                    p.setOnDutyFeeTotal(StringUtilExtra.StringToDecimal(onDutyFeeTotal));
+                }
+
+                //
+                if(row.getCell(21)!=null&&!row.getCell(21).toString().trim().equals("")) {
+                    String propertyAllowance = row.getCell(21).toString().trim();
+                    p.setPropertyAllowance(StringUtilExtra.StringToDecimal(propertyAllowance));
+                }
+
+                //
+                if(row.getCell(22)!=null&&!row.getCell(22).toString().trim().equals("")) {
+                    String extraJobAllowance = row.getCell(22).toString().trim();
+                    p.setExtraJobAllowance(StringUtilExtra.StringToDecimal(extraJobAllowance));
+                }
+
+                if(row.getCell(23)!=null&&!row.getCell(23).toString().trim().equals("")) {
+                    String temperatureAllowance = row.getCell(23).toString().trim();
+                    p.setTemperatureAllowance(StringUtilExtra.StringToDecimal(temperatureAllowance));
+                }
+
+                if(row.getCell(24)!=null&&!row.getCell(24).toString().trim().equals("")) {
+                    String reissueFee = row.getCell(24).toString().trim();
+                    p.setReissueFee(StringUtilExtra.StringToDecimal(reissueFee));
+                }
+
+                if(row.getCell(25)!=null&&!row.getCell(25).toString().trim().equals("")) {
+                    String medicare = row.getCell(25).toString().trim();
+                    p.setMedicare(StringUtilExtra.StringToDecimal(medicare));
+                }
+
+                if(row.getCell(26)!=null&&!row.getCell(26).toString().trim().equals("")) {
+                    String yearlyBonus = row.getCell(26).toString().trim();
+                    p.setYearlyBonus(StringUtilExtra.StringToDecimal(yearlyBonus));
+                }
+
+                if(row.getCell(27)!=null&&!row.getCell(27).toString().trim().equals("")) {
+                    String grossSalary = row.getCell(27).toString().trim();
+                    p.setGrossSalary(StringUtilExtra.StringToDecimal(grossSalary));
+                }
+
+                if(row.getCell(28)!=null&&!row.getCell(28).toString().trim().equals("")) {
+                    String lifeInsurance = row.getCell(28).toString().trim();
+                    p.setLifeInsurance(StringUtilExtra.StringToDecimal(lifeInsurance));
+                }
+
+                if(row.getCell(29)!=null&&!row.getCell(29).toString().trim().equals("")) {
+                    String jobInsurance = row.getCell(29).toString().trim();
+                    p.setJobInsurance(StringUtilExtra.StringToDecimal(jobInsurance));
+                }
+
+                if(row.getCell(30)!=null&&!row.getCell(30).toString().trim().equals("")) {
+                    String healthInsurance = row.getCell(30).toString().trim();
+                    p.setHealthInsurance(StringUtilExtra.StringToDecimal(healthInsurance));
+                }
+
+                if(row.getCell(31)!=null&&!row.getCell(31).toString().trim().equals("")) {
+                    String annuity = row.getCell(31).toString().trim();
+                    p.setAnnuity(StringUtilExtra.StringToDecimal(annuity));
+                }
+
+                if(row.getCell(32)!=null&&!row.getCell(32).toString().trim().equals("")) {
+                    String houseFund = row.getCell(32).toString().trim();
+                    p.setHouseFund(StringUtilExtra.StringToDecimal(houseFund));
+                }
+
+                if(row.getCell(33)!=null&&!row.getCell(33).toString().trim().equals("")) {
+                    String expense = row.getCell(33).toString().trim();
+                    p.setExpense(StringUtilExtra.StringToDecimal(expense));
+                }
+
+                if(row.getCell(34)!=null&&!row.getCell(34).toString().trim().equals("")) {
+                    String tax = row.getCell(34).toString().trim();
+                    p.setTax(StringUtilExtra.StringToDecimal(tax));
+                }
+
+                if(row.getCell(35)!=null&&!row.getCell(35).toString().trim().equals("")) {
+                    String netIncome = row.getCell(35).toString().trim();
+                    p.setNetIncome(StringUtilExtra.StringToDecimal(netIncome));
+                }
+
+                if(row.getCell(36)!=null&&!row.getCell(36).toString().trim().equals("")) {
+                    String payDate = row.getCell(36).toString().trim();
+                    p.setPayDate(payDate);
+                }
+
+                list.add(p);
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return list;
     }
 }

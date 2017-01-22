@@ -16,6 +16,8 @@ public interface DictMapper {
 
     Integer findJobLevelIdByName(String job_level_name);
 
+    Integer findRankLevelIdByName(String rank_level_name);
+
     List<Dict> findNationalDict();
 
     List<Dict> findNativeDict();

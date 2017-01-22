@@ -1,5 +1,9 @@
 package com.wangzhixuan.service;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.wangzhixuan.model.Timesheet;
 import com.wangzhixuan.utils.PageInfo;
 
@@ -24,5 +28,8 @@ public interface TimesheetService {
 
 	public Timesheet findTimeSheetByCode(String code) ;
 
+	public boolean insertByImport(CommonsMultipartFile[] files);
+
+	void exportExcel(HttpServletResponse response, String[] idList);
 }
 

@@ -5,12 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wangzhixuan.model.PeopleTransfer;
-import com.wangzhixuan.service.PeopleTransferService;
-import com.wangzhixuan.utils.ConstUtil;
-import com.wangzhixuan.vo.PeopleTransferVo;
-import com.wangzhixuan.vo.PeopleVo;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleService;
+import com.wangzhixuan.service.PeopleTransferService;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleVo;
 
 /**
  * Created by liushaoyang on 2016/9/8.
