@@ -145,4 +145,29 @@ public class PeopleSalaryController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
+    public String importExcelPage(){
+        return "admin/peopleSalary/importExcelPage";
+    }
+
+    /**
+     * 批量调入W
+     */
+    @RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files){
+        Result result = new Result();
+        if(files!=null&&files.length>0){
+            boolean flag=peopleSalaryService.insertByImport(files);
+            result.setSuccess(flag);
+            if(!flag){
+                result.setMsg("系统繁忙，请稍后再试！");
+            }
+        }else{
+            result.setSuccess(false);
+            result.setMsg("请选择附件！");
+        }
+        return result;
+    }
 }

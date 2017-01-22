@@ -1,27 +1,26 @@
 package com.wangzhixuan.service.impl;
 
+import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.mapper.PeopleSalaryMapper;
+import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.PeopleSalaryService;
-import com.wangzhixuan.utils.ConstUtil;
-import com.wangzhixuan.utils.ExcelUtil;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +34,9 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Autowired
     private PeopleSalaryMapper peopleSalaryMapper;
+
+    @Autowired
+    private DictMapper dictMapper;
 
 
     @Override
@@ -163,11 +165,88 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         }
     }
 
+    @Override
+    public boolean insertByImport(CommonsMultipartFile[] files) {
+        boolean flag=false;
+        if(files!=null && files.length>0){
+
+            List<PeopleSalary> list = new ArrayList<PeopleSalary>();
+
+            String filePath = this.getClass().getResource("/").getPath();//文件临时路径
+
+            for(int i=0; i<files.length; i++){
+
+                String path= UploadUtil.fileUpload(filePath, files[i]);
+
+                if( StringUtils.isNotBlank(path)){
+                    list=getPeopleSalaryInfoByExcel(list,path);
+                }
+            }
+            if(list.size()>0){
+                flag=peopleSalaryMapper.insertByImport(list)>0;
+            }
+        }
+        return flag;
+    }
+
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){
         if (peopleSalary == null)
             return;
         if (StringUtils.isBlank(peopleSalary.getWorkDate())){
             peopleSalary.setWorkDate(null);
         }
+    }
+
+    private List<PeopleSalary> getPeopleSalaryInfoByExcel(List<PeopleSalary> list,String path){
+        try
+        {
+            XSSFWorkbook xwb = new XSSFWorkbook(path);
+            XSSFSheet sheet = xwb.getSheetAt(0);
+
+            XSSFRow row;
+            for (int i = sheet.getFirstRowNum()+1; i < sheet.getPhysicalNumberOfRows(); i++) {
+                row = sheet.getRow(i);
+                PeopleSalary p = new PeopleSalary();
+
+
+                //姓名
+                if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
+                    continue;
+                }
+
+                String name=row.getCell(1).toString().trim();
+
+                People people = peopleMapper.findPeopleByName(name);
+
+                if (people == null || StringUtils.isBlank(people.getCode()))
+                    continue;
+                p.setPeopleCode(people.getCode());
+
+                //岗位名称
+                if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
+                    String jobLevel = row.getCell(2).toString().trim();
+                    p.setJobId(dictMapper.findJobLevelIdByName(jobLevel));
+                }
+
+                //岗位工资
+                if (row.getCell(3)!=null && !row.getCell(3).toString().trim().equals("")){
+                    String jobSalary = row.getCell(3).toString().trim();
+                    p.setJobSalary(StringUtilExtra.StringToDecimal(jobSalary));
+                }
+
+                //薪级
+                if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
+                    String rankLevel = row.getCell(4).toString().trim();
+                    p.setRankId(dictMapper.findRankLevelIdByName(rankLevel));
+                }
+
+
+
+                list.add(p);
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return list;
     }
 }
