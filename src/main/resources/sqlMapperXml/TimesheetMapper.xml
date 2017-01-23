@@ -112,7 +112,19 @@
 	<select id="findDataGrid" resultMap="TimesheetVoResultMap" parameterType="PageInfo">
 		SELECT
 		id, people_code, people_type, check_date, status, vacation_period
-		FROM timesheet
+		FROM timesheet t
+		 <where>
+		 1 = 1
+            <if test=" condition.people_code != null and condition.peopleCode != '' ">
+                and t.people_code LIKE concat('%',#{condition.people_code},'%')
+            </if>
+             <if test=" condition.people_type != null and condition.people_code != '' ">
+                and t.people_type LIKE concat('%',#{condition.people_type},'%')
+            </if>
+             <if test=" condition.status != null and condition.status != '' ">
+                and t.status LIKE concat('%',#{condition.status},'%')
+            </if>
+         </where>
 		LIMIT #{from}, #{size}
 	</select>
 

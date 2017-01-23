@@ -61,10 +61,11 @@ public class TimeSheetController extends BaseController {
 	 */
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo dataGrid(HttpServletRequest request, PeopleVo peoplevo, Integer page, Integer rows, String sort,
+	public PageInfo dataGrid(HttpServletRequest request, TimesheetVo timesheetVo, Integer page, Integer rows, String sort,
 			String order) {
 		PageInfo pageInfo = new PageInfo(page, rows);
-		Map<String, Object> condition = PeopleVo.CreateCondition(peoplevo);
+		Map<String, Object> condition = TimesheetVo.CreateCondition(timesheetVo);
+		
 		pageInfo.setCondition(condition);
 		timesheetService.findDataGrid(pageInfo);
 
