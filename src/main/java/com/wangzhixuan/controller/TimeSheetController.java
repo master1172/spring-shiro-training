@@ -46,7 +46,7 @@ public class TimeSheetController extends BaseController {
 	 */
 	@RequestMapping(value = "/manager", method = RequestMethod.GET)
 	public String manager() {
-		return "/admin/timeSheet/people";
+		return "admin/timesheet/people";
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class TimeSheetController extends BaseController {
 	public String editPage(Integer id, Model model) {
 		Timesheet timesheet = timesheetService.selectByPrimaryKey(id);
 		model.addAttribute("timesheet", timesheet);
-		return "/admin/timesheet/peopleEdit";
+		return "admin/timesheet/peopleEdit";
 	}
 
 	@RequestMapping("/edit")

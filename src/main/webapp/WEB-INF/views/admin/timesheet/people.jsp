@@ -390,7 +390,7 @@
                             <option value="1">女</option>
                         </select>
                     </td>
-                    <th>出生日期</th>
+                    <th>起止日期</th>
                     <td>
                         <input name="birthdayMin" placeholder="点击选择起始时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
