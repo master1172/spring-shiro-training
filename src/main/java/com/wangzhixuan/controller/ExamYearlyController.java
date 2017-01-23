@@ -37,10 +37,9 @@ public class ExamYearlyController extends BaseController {
 	@Autowired
 	private PeopleService peopleService;
 
-	
 	/**
 	 * 人员管理页
-	 *
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/manager", method = RequestMethod.GET)
@@ -48,7 +47,6 @@ public class ExamYearlyController extends BaseController {
 		return "admin/examYearly/people";
 	}
 
-	
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
 	public PageInfo dataGrid(ExamYearlyVo examYearlyVo, Integer page,
@@ -105,7 +103,7 @@ public class ExamYearlyController extends BaseController {
 	public String addPage() {
 		return "admin/examYearly/peopleAdd";
 	}
-	
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
 	public Result add(ExamYearly examYearly) {
@@ -173,6 +171,11 @@ public class ExamYearlyController extends BaseController {
 		}
 	}
 
+	@RequestMapping(value = "/importExcelPage", method = RequestMethod.GET)
+	public String importExcelPage() {
+		return "admin/examYearly/importExcelPage";
+	}
+	
 	@RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
 	public Result importExcel(
