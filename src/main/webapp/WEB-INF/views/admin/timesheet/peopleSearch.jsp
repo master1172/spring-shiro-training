@@ -16,128 +16,31 @@
         <form id="peopleSearchForm" method="post">
             <table class="grid" border=1>
                 <tr>
-                    <td>姓名</td>
-                    <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" value=""></td>
-                    <td>性别</td>
+                    <td>人员编号</td>
+                    	<td><input name="peopleCode" type="text" placeholder="请输入人员编号" class="easyui-validatebox" value=""></td>
+                    <td>人员类型</td>
                     <td>
-                        <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="">请选择</option>
-                            <option value="0" >男</option>
-                            <option value="1" >女</option>
-                        </select>
+                       <td><input name="peopleType" type="text" placeholder="请输入人员类型" class="easyui-validatebox" value=""></td>
                     </td>
-                    <td>民族</td>
-                    <td>
-                        <input class="easyui-combobox" id="nationalIdList" name="nationalIdList" url="${path}/dict/national" valueField="id" textField="name" editable="false" multiple="true">
-                        </input>
-                    </td>
-                    <td>籍贯</td>
-                    <td>
-                        <input class="easyui-combobox" id="nativeIdList" name="nativeIdList" url="${path}/dict/native" valueField="id" textField="name" editable="false" multiple="true">
-                        </input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>出生日期范围</td>
+                    <td>考勤日期范围</td>
                     <td colspan="3">
-                        <input name="birthdayMin" placeholder="点击选择起始时间"
+                        <input name="checkDateMin" placeholder="点击选择起始时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                         ~
-                        <input name="birthdayMax" placeholder="点击选择结束时间"
+                        <input name="checkDateMax" placeholder="点击选择结束时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
                     </td>
-                    <td>政治面貌</td>
+                    <td>考勤结果</td>
                     <td>
-                        <input type="text" name="politicalName">
+                        <input type="text" name="status" id="status">
                     </td>
-                    <td>学历</td>
+                    <td>假期单位</td>
                     <td>
-                        <input type="text" name="educationName">
+                        <input type="text" name="vacationPeriod">
                     </td>
                  </tr>
-                <tr>
-                    <td>学位</td>
-                    <td>
-                        <input class="easyui-combobox" id="degreeIdList" name="degreeIdList" url="${path}/dict/degree" valueField="id" textField="name" editable="false" multiple="true">
-                        </input>
-                    </td>
-                    <td>入党日期范围</td>
-                    <td colspan="3">
-                        <input name="partyDateMin" placeholder="点击选择起始时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                        ~
-                        <input name="partyDateyMax" placeholder="点击选择结束时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>参加工作日期范围</td>
-                    <td colspan="3">
-                        <input name="workDateMin" placeholder="点击选择起始时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                        ~
-                        <input name="workDateyMax" placeholder="点击选择结束时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                    <td>来院日期范围</td>
-                    <td colspan="3">
-                        <input name="schoolDateMin" placeholder="点击选择起始时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                        ~
-                        <input name="schoolDateMax" placeholder="点击选择结束时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>职务</td>
-                    <td>
-                        <input type="text" name="jobName">
-                    </td>
-                    <td>人员类别</td>
-                    <td>
-                        <select name="jobCategoryList" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'" multiple="true">
-                            <option value="" selected="selected"></option>
-                            <option value="管理类">管理类</option>
-                            <option value="专业类">专业类</option>
-                            <option value="工勤类">工勤类</option>
-                        </select>
-                    </td>
-                    <td>职级</td>
-                    <td>
-                        <input class="easyui-combobox" id="jobLevelIdList" name="jobLevelIdList" url="${path}/dict/job" valueField="id" textField="name" editable="false" multiple="true">
-                        </input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>任现职日期范围</td>
-                    <td colspan="3">
-                        <input name="jobDateMin" placeholder="点击选择起始时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                        ~
-                        <input name="jobDateyMax" placeholder="点击选择结束时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                    <td>任现职级日期范围</td>
-                    <td colspan="3">
-                        <input name="jobLevelDateMin" placeholder="点击选择起始时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                        ~
-                        <input name="jobLevelDateyMax" placeholder="点击选择结束时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                </tr>
             </table>
         </form>
     </div>

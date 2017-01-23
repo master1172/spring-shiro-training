@@ -24,6 +24,7 @@ import com.wangzhixuan.model.Timesheet;
 import com.wangzhixuan.service.TimesheetService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
+import com.wangzhixuan.vo.TimesheetVo;
 
 /**
  * fengjunfeng <br>
@@ -82,31 +83,31 @@ public class TimeSheetController extends BaseController {
 
 	@RequestMapping(value = "/exportSearch", method = RequestMethod.POST)
 	@ResponseBody
-	public Result exportSearch(HttpServletResponse response, PeopleVo peoplevo) {
+	public Result exportSearch(HttpServletResponse response, TimesheetVo peoplevo) {
 
 		Result result = new Result();
 
 		// TODO
-		Map<String, Object> condition = PeopleVo.CreateCondition(peoplevo);
+		Map<String, Object> condition = TimesheetVo.CreateCondition(peoplevo);
 
-		// PageInfo pageInfo = new PageInfo();
-		// pageInfo.setCondition(condition);
-		// String ids = peopleService.findPeopleIDsByCondition(pageInfo);
-		//
-		// if (StringUtils.isBlank(ids)) {
-		// result.setSuccess(false);
-		// result.setMsg("未找到有效数据");
-		// LOGGER.error("Excel:{}", "无有效数据");
-		// return result;
-		// }
-		// try {
-		// result.setSuccess(true);
-		// result.setObj(ids);
-		// } catch (Exception exp) {
-		// result.setSuccess(false);
-		// result.setMsg("导出Excel失败");
-		// LOGGER.error("导出Excel失败:{}", exp);
-		// }
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setCondition(condition);
+//		String ids = timesheetService.findPeopleIDsByCondition(pageInfo);
+//
+//		if (StringUtils.isBlank(ids)) {
+//			result.setSuccess(false);
+//			result.setMsg("未找到有效数据");
+//			LOGGER.error("Excel:{}", "无有效数据");
+//			return result;
+//		}
+//		try {
+//			result.setSuccess(true);
+//			result.setObj(ids);
+//		} catch (Exception exp) {
+//			result.setSuccess(false);
+//			result.setMsg("导出Excel失败");
+//			LOGGER.error("导出Excel失败:{}", exp);
+//		}
 
 		return result;
 	}
