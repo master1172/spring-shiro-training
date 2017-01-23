@@ -1,14 +1,9 @@
 package com.wangzhixuan.controller;
 
-import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.ExamMonthly;
-import com.wangzhixuan.model.ExamYearly;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.service.ExamMonthlyService;
-import com.wangzhixuan.service.PeopleService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.ExamMonthlyVo;
-import com.wangzhixuan.vo.ExamYearlyVo;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
+import com.wangzhixuan.code.Result;
+import com.wangzhixuan.model.People;
+import com.wangzhixuan.service.ExamMonthlyService;
+import com.wangzhixuan.service.PeopleService;
+import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.ExamMonthlyVo;
 
 /**
  * Created by mengfw on 2017/1/21.
@@ -35,7 +34,16 @@ public class ExamMonthlyController extends BaseController {
   @Autowired
   private PeopleService peopleService;
 
-
+  
+  /**
+	 * 月度考核
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/manager", method = RequestMethod.GET)
+	public String manager() {
+		return "/admin/exammonthly/people";
+	}
 
   @RequestMapping(value="/dataGrid", method= RequestMethod.POST)
   @ResponseBody

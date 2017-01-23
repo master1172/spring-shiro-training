@@ -3,6 +3,7 @@ package com.wangzhixuan.service;
 import com.wangzhixuan.model.ExamYearly;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.ExamYearlyVo;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
  * Created by mengfw on 2017/1/20.
  */
 public interface ExamYearlyService {
+	
+	 ExamYearly selectByPrimaryKey(Integer id);
   void findDataGrid(PageInfo pageInfo);
 
   String findIDsByCondition(PageInfo pageInfo);

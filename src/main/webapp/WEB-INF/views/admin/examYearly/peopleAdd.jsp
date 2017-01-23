@@ -17,36 +17,30 @@
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="peopleAddForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
-              <tr>
+             <tr>
                     <td>人员编号 </td>
                     <td>
-                        <input name="peopleCode" id="peopleCode" type="text"  class="easyui-validatebox" data-options="required:true" >
+                        <input name="peopleCode" id="peopleCode" type="text"  >
                     </td>
                     <td>人员类型 </td>
                     <td>
-                        <input name="peopleType" id="peopleType" type="text"  class="easyui-validatebox" data-options="required:true" >
+                        <input name="peopleType" id="peopleType" type="text"  >
                         </input>
                     </td>
                 </tr>
                 <tr>
-                    <td>考勤日期 </td>
+                    <td>年份信息 </td>
                     <td>
-                        <input id="checkDate" name="checkDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({
-                                readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d'
-                                })"
-                               readonly="readonly" />
+		              <input type="text" name="year"  id="year" >
                     </td>
           
                     <td>考勤结果 </td>
                     <td>
-                        <input type="text" name="status"  id="status" >
+                        <input type="text" name="examResult"  id="status" >
                     </td>
-                    <td>假期单位 </td>
+                    <td>考核运用 </td>
                     <td>
-                        <input type="text" name="vacationPeriod" id="vacationPeriod" >
+                        <input type="text" name="examOperation" id="vacationPeriod" >
                     </td>
                 </tr>
             </table>

@@ -16,38 +16,32 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
-            <input type="hidden" name="id" value="${timesheet.id}">
+            <input type="hidden" name="id" value="${examYearly.id}">
             <table class="grid" border="1">
                 <tr>
                     <td>人员编号 </td>
                     <td>
-                        <input name="peopleCode" id="peopleCode" type="text" value="${timesheet.peopleCode}" class="easyui-validatebox" data-options="required:true" >
+                        <input name="peopleCode" id="peopleCode" type="text" value="${examYearly.peopleCode}" class="easyui-validatebox" data-options="required:true" >
                     </td>
                     <td>人员类型 </td>
                     <td>
-                        <input name="peopleType" id="peopleType" type="text" value="${timesheet.peopleType}" class="easyui-validatebox" data-options="required:true" >
+                        <input name="peopleType" id="peopleType" type="text" value="${examYearly.peopleType}" class="easyui-validatebox" data-options="required:true" >
                         </input>
                     </td>
                 </tr>
                 <tr>
-                    <td>考勤日期 </td>
+                    <td>年份信息 </td>
                     <td>
-                        <input id="checkDate" name="checkDate" placeholder="点击选择时间"
-                               onclick="WdatePicker({
-                                readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d'
-                                })"
-                               readonly="readonly" value="${timesheet.checkDate}"/>
+		              <input type="text" name="year"  id="year" value="${examYearly.year}">
                     </td>
           
                     <td>考勤结果 </td>
                     <td>
-                        <input type="text" name="status"  id="status" value="${timesheet.status}">
+                        <input type="text" name="examResult"  id="status" value="${examYearly.examResult}">
                     </td>
-                    <td>假期单位 </td>
+                    <td>考核运用 </td>
                     <td>
-                        <input type="text" name="vacationPeriod" id="vacationPeriod" value="${timesheet.vacationPeriod}">
+                        <input type="text" name="examOperation" id="vacationPeriod" value="${examYearly.examOperation}">
                     </td>
                 </tr>
               

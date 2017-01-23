@@ -6,13 +6,13 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>考勤管理</title>
+    <title>月度考核</title>
     <script type="text/javascript">
         var dataGrid;
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/examYearly/dataGrid',
+                url: '${path}/examMonthly/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -40,7 +40,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
-                href: '${path}/examYearly/advSearchPage',
+                href: '${path}/timesheet/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
@@ -61,14 +61,14 @@
                 title: '导出',
                 width: 1000,
                 height: 600,
-                href: '${path}/examYearly/exportSearchPage',
+                href: '${path}/timesheet/exportSearchPage',
                 buttons:[{
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/examYearly/exportSearch",function(data){
+                            parent.SYS_SUBMIT_FORM(f, "/timesheet/exportSearch",function(data){
                                 if(!data["success"]){
                                     parent.progressClose();
                                     parent.$.modalDialog.handler.dialog("close");
@@ -79,7 +79,7 @@
                                     var ids = data["obj"];
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/examYearly/exportExcel");
+                                    form.attr("action",'${path}'+"/timesheet/exportExcel");
                                     $("#downLoadForm").submit();
                                 }
                             });
@@ -101,14 +101,14 @@
                 title: '调出本单位',
                 width: 800,
                 height: 400,
-                href: '${path}/examYearly/transferPage?id='+checkedItems[0]["id"],
+                href: '${path}/timesheet/transferPage?id='+checkedItems[0]["id"],
                 buttons:[{
                     text: '调出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid; //因为调出成功后，需要刷新这个datagrid
                         var f = parent.$.modalDialog.handler.find("#peopleTransferForm");
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/examYearly/transfer",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/timesheet/transfer",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -126,16 +126,16 @@
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
-                width: 1200,
-                height: 500,
-                href: '${path}/examYearly/addPage',
+                width: 1500,
+                height: 600,
+                href: '${path}/examMonthly/add',
                 buttons: [{
                     text: '添加',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                         var f = parent.$.modalDialog.handler.find("#peopleAddForm");
                         if(parent.checkForm()){
-                        	parent.SYS_SUBMIT_FORM(f,"/examYearly/add",function(data){
+                        	parent.SYS_SUBMIT_FORM(f,"/timesheet/add",function(data){
                     			if(!data["success"]){
                     				parent.$.messager.alert("提示", data["msg"], "warning");
                     			}else{
@@ -160,9 +160,9 @@
 
             parent.$.modalDialog({
                 title: '修改',
-                width: 1200,
-                height: 500,
-                href: '${path}/examYearly/editPage?id='+id,
+                width: 1500,
+                height: 600,
+                href: '${path}/timesheet/editPage?id='+id,
                 buttons: [{
                     text: '修改',
                     handler: function () {
@@ -170,7 +170,7 @@
                         var f = parent.$.modalDialog.handler.find("#peopleEditForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/examYearly/edit",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/timesheet/edit",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -195,7 +195,7 @@
             parent.$.messager.confirm('询问', '您是否要删除当前人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/examYearly/delete',{
+                    $.post('${path}/timesheet/delete',{
                             id: id
                     }, function (result) {
                         if (result.success) {
@@ -218,7 +218,7 @@
             parent.$.messager.confirm('询问', '您是否要删除所选人员？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/examYearly/batchDel', {
+                    $.post('${path}/timesheet/batchDel', {
                         ids: ids.join(",")
                     }, function (result) {
                         if (result.success) {
@@ -241,7 +241,7 @@
             parent.$.messager.confirm('询问', '您是否要将所选人员转入退休库？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/examYearly/batchRetire', {
+                    $.post('${path}/timesheet/batchRetire', {
                         ids: ids.join(",")
                     }, function (result) {
                         if (result.success) {
@@ -264,7 +264,7 @@
             parent.$.messager.confirm('询问', '您是否要将所选人员转入逝世库？', function (b) {
                 if (b) {
                     progressLoad();
-                    $.post('${path}/examYearly/batchDeath', {
+                    $.post('${path}/timesheet/batchDeath', {
                         ids: ids.join(",")
                     }, function (result) {
                         if (result.success) {
@@ -296,7 +296,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
-                href: '${path}/examYearly/importExcelPage',
+                href: '${path}/timesheet/importExcelPage',
                 buttons: [{
                     text: '导入',
                     handler: function () {
@@ -304,7 +304,7 @@
                         var f = parent.$.modalDialog.handler.find("#importExcelForm");
                         //f.submit();
                         if(parent.checkForm()){
-                        	parent.SYS_SUBMIT_FORM(f,"/examYearly/importExcel",function(data){
+                        	parent.SYS_SUBMIT_FORM(f,"/timesheet/importExcel",function(data){
                     			if(!data["success"]){
                     				parent.$.messager.alert("提示", data["msg"], "warning");
                     			}else{
@@ -330,7 +330,7 @@
                 });
 				var form=$("#downLoadForm");
 				form.find("input[name='ids']").val(ids);
-				form.attr("action",'${path}'+"/examYearly/exportExcel");
+				form.attr("action",'${path}'+"/timesheet/exportExcel");
 				$("#downLoadForm").submit();
 			}else{
 				parent.$.messager.alert("提示", "请选择有效数据", "warning");
@@ -343,7 +343,7 @@
 				var id=checkedItems[0]["id"];
 				var form=$("#downLoadForm");
 				form.find("input[name='ids']").val(id);
-				form.attr("action",'${path}'+"/examYearly/exportWord");
+				form.attr("action",'${path}'+"/timesheet/exportWord");
 				$("#downLoadForm").submit();
 			}else{
 				parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
@@ -361,10 +361,10 @@
         
         function operateFormatter(value,row,index){
         	 var str = '';
-             <shiro:hasPermission name="/examYearly/edit">
+             <shiro:hasPermission name="/timesheet/edit">
                  str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
              </shiro:hasPermission>
-             <shiro:hasPermission name="/examYearly/delete">
+             <shiro:hasPermission name="/timesheet/delete">
                  str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
                  str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
              </shiro:hasPermission>
@@ -377,24 +377,27 @@
     <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">
         <form id="searchForm">
             <table>
- 				<tr>
-                    <td>人员编号</td>
-                    	<td><input name="peopleCode" type="text" placeholder="请输入人员编号" class="easyui-validatebox" value=""></td>
-                    <td>人员类型</td>
+                <tr>
+                    <th>姓名:</th>
                     <td>
-                       <td><input name="peopleType" type="text" placeholder="请输入人员类型" class="easyui-validatebox" value=""></td>
+                        <input name="name" placeholder="请输入人员姓名"/>
                     </td>
-                    <td>考勤日期范围</td>
-                    <td colspan="3">
-                        <input name="checkDateMin" placeholder="点击选择起始时间"
+                    <th>性别:</th>
+                    <td>
+                        <select name="sex">
+                            <option value="" selected>请选择</option>
+                            <option value="0">男</option>
+                            <option value="1">女</option>
+                        </select>
+                    </td>
+                    <th>出生日期</th>
+                    <td>
+                        <input name="birthdayMin" placeholder="点击选择起始时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>至
+                        <input name="birthdayMax" placeholder="点击选择结束时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
                                readonly="readonly"/>
-                        ~
-                        <input name="checkDateMax" placeholder="点击选择结束时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                    <td>
                         <a href="javascript:void(0);" class="easyui-linkbutton"
                            data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
                         <a href="javascript:void(0);" class="easyui-linkbutton"
@@ -405,23 +408,18 @@
         </form>
     </div>
 
-    <div data-options="region:'center',border:true,title:'考勤列表'">
+    <div data-options="region:'center',border:true,title:'月度考核列表'">
         <table id="dataGrid" data-options="fit:true,border:false">
         	<thead>
             <tr>
                 <th field="ck"             data-options="checkbox:true"></th>
                 <th field="peopleCode"     data-options="sortable:true" width="80">人员编号</th>
+                <th field="name"     data-options="sortable:true" width="80">人员姓名</th>
                 <th field="peopleType"     data-options="sortable:true" width="80">人员类型</th>
-                <th field="checkDate"     placeholder="点击选择时间"
-                               onclick="WdatePicker({
-                                readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d',
-                                })"
-                               readonly="readonly"
-                                 data-options="sortable:true" width="130">考勤日期</th>
-                <th field="status"         data-options="sortable:true" width="80">考勤结果</th>
-                <th field="vacationPeriod" data-options="sortable:true" width="80">假期单位</th>
+                <th field="yearMonth"     data-options="sortable:true" width="80">年份信息</th>
+                <th field="month"     data-options="sortable:true" width="80">月份信息</th>
+                <th field="examResult"     data-options="sortable:true" width="80">考核结果</th>
+                <th field="examOperation"     data-options="sortable:true" width="80">考核运用</th>
                 <th field="id"      data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
@@ -429,27 +427,27 @@
     </div>
 
     <div id="toolbar" style="display: none;">
-        <shiro:hasPermission name="/examYearly/add">
+        <shiro:hasPermission name="/timesheet/add">
             <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">添加</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/importExcel">
+        <shiro:hasPermission name="/timesheet/importExcel">
             <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">导入</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/exportExcel">
+        <shiro:hasPermission name="/timesheet/exportExcel">
             <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/exportWord">
+        <shiro:hasPermission name="/timesheet/exportWord">
             <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">导出Word</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/advSearch">
+        <shiro:hasPermission name="/timesheet/advSearch">
             <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">高级查询</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/exportSearch">
+        <shiro:hasPermission name="/timesheet/exportSearch">
             <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         </shiro:hasPermission>
