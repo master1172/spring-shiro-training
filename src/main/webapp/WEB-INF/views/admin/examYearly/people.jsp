@@ -412,16 +412,9 @@
                 <th field="ck"             data-options="checkbox:true"></th>
                 <th field="peopleCode"     data-options="sortable:true" width="80">人员编号</th>
                 <th field="peopleType"     data-options="sortable:true" width="80">人员类型</th>
-                <th field="checkDate"     placeholder="点击选择时间"
-                               onclick="WdatePicker({
-                                readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d',
-                                })"
-                               readonly="readonly"
-                                 data-options="sortable:true" width="130">考勤日期</th>
-                <th field="status"         data-options="sortable:true" width="80">考勤结果</th>
-                <th field="vacationPeriod" data-options="sortable:true" width="80">假期单位</th>
+         		<th field="year"         data-options="sortable:true" width="80">年份信息</th>
+                <th field="examResult"         data-options="sortable:true" width="80">考勤结果</th>
+                <th field="examOperation" data-options="sortable:true" width="80">考核运用</th>
                 <th field="id"      data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
