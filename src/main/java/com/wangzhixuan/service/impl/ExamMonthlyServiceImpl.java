@@ -12,6 +12,7 @@ import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.ExamMonthlyVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -72,7 +73,7 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
 
   @Override
   public void exportExcel(HttpServletResponse response, String[] ids) {
-    List<ExamMonthly> list = null;
+    List<PeopleVo> list = peopleMapper.selectPeopleVoByIds(ids);
 
     if(CollectionUtils.isEmpty(list)){
       return;
@@ -87,19 +88,39 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
       XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
       //创建表头
       XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getExamMonthlyHeaders());
+
+      int count = 0;
+
       setBorder=WordUtil.setCellStyle(workBook,false);
       for(int i=0;i<list.size();i++) {
-        row = sheet.createRow(i + 1);
-        ExamMonthly e = list.get(i);
-        row.createCell(0).setCellValue(i+1);
-        row.createCell(1).setCellValue(e.getName());
-        row.createCell(2).setCellValue(e.getYear() +"-" + e.getMonth());
-        row.createCell(3).setCellValue(e.getExamResult());
-        row.createCell(4).setCellValue(e.getExamOperation());
-        for(int j=0; j<5; j++){
-          row.getCell(j).setCellStyle(setBorder);
+        PeopleVo peopleVo = list.get(i);
+        if (peopleVo == null || StringUtils.isBlank(peopleVo.getCode()))
+          continue;
+        String peopleCode = peopleVo.getCode();
+
+        List<ExamMonthlyVo> examMonthlyVoList = examMonthlyMapper.findExamMonthlyVoListByCode(peopleCode);
+
+        if (examMonthlyVoList == null || examMonthlyVoList.size() < 1)
+            continue;
+
+        for(int j=0; j<examMonthlyVoList.size(); j++){
+          row = sheet.createRow(count+1);
+          ExamMonthlyVo examMonthlyVo = examMonthlyVoList.get(j);
+          row.createCell(0).setCellValue(count+1);
+          row.createCell(1).setCellValue(examMonthlyVo.getName());
+          row.createCell(2).setCellValue(examMonthlyVo.getYear());
+          row.createCell(3).setCellValue(examMonthlyVo.getMonth());
+          row.createCell(4).setCellValue(examMonthlyVo.getExamResult());
+          row.createCell(5).setCellValue(examMonthlyVo.getExamOperation());
+
+          count++;
+
+          for(int k=0; k<6; k++){
+            row.getCell(k).setCellStyle(setBorder);
+          }
+          row.setHeight((short) 400);
         }
-        row.setHeight((short) 400);
+
         sheet.setDefaultRowHeightInPoints(21);
         response.reset();
         os = response.getOutputStream();
@@ -107,10 +128,8 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
         workBook.write(os);
         os.close();
       }
-    }catch (IOException e){
+    }catch (IOException e) {
       e.printStackTrace();
-    }finally {
-
     }
   }
 
@@ -120,7 +139,7 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
     if(files==null || files.length<=0){
       return flag;
     }
-    List<ExamMonthly > list = new ArrayList<ExamMonthly>();
+    List<ExamMonthly> list = new ArrayList<ExamMonthly>();
 
     String filePath = this.getClass().getResource("/").getPath();//文件临时路径
 
@@ -131,7 +150,6 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
       if( StringUtils.isNotBlank(path)){
         list=getExamMonthlyByExcel(list,path);
       }
-
     }
     if(list.size()>0){
       flag=examMonthlyMapper.insertByImport(list)>0;
@@ -145,7 +163,7 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
   }
 
 
-  private List< ExamMonthly > getExamMonthlyByExcel(List< ExamMonthly > list, String path) {
+  private List<ExamMonthly> getExamMonthlyByExcel(List<ExamMonthly> list, String path) {
     try
     {
       XSSFWorkbook xwb = new XSSFWorkbook(path);
@@ -160,27 +178,33 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
           continue;
         }
         String name=row.getCell(1).toString().trim();
-        examMonthly.setName(name);
-        People p = peopleMapper.findPeopleByName(examMonthly.getName());
-        if(p == null ){
+
+        People people = peopleMapper.findFirstPeopleByName(name);
+
+        if (people == null || StringUtils.isBlank(people.getCode()))
           continue;
-        }
-        examMonthly.setPeopleCode(p.getCode());
+        examMonthly.setPeopleCode(people.getCode());
+
         if(row.getCell(2)!=null && !row.getCell(2).toString().trim().equals("")){
-          String[]strArr = row.getCell(2).toString().trim().split("-");
-          if(strArr.length < 2){
-            throw new RuntimeException("时间格式不对");
-          }
-          examMonthly.setYear(Integer.parseInt(strArr[0]));
-          examMonthly.setMonth(Integer.parseInt(strArr[1]));
+          Double yearValue = Double.parseDouble(row.getCell(2).toString().trim());
+          if (yearValue != null)
+            examMonthly.setYear(yearValue.intValue());
         }
+
         if(row.getCell(3)!=null && !row.getCell(3).toString().trim().equals("")){
-          examMonthly.setExamResult(row.getCell(3).toString().trim());
+          Double monthValue = Double.parseDouble(row.getCell(3).toString().trim());
+          if (monthValue != null)
+            examMonthly.setMonth(monthValue.intValue());
         }
+
         if(row.getCell(4)!=null && !row.getCell(4).toString().trim().equals("")){
-          examMonthly.setExamOperation(row.getCell(4).toString().trim());
+          examMonthly.setExamResult(row.getCell(4).toString().trim());
         }
-        examMonthly.setName(null);//不继续维护姓名，联查
+
+        if(row.getCell(5)!=null && !row.getCell(5).toString().trim().equals("")){
+          examMonthly.setExamOperation(row.getCell(5).toString().trim());
+        }
+
         list.add(examMonthly);
       }
     } catch (IOException e1) {

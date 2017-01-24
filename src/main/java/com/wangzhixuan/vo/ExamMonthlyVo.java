@@ -21,6 +21,10 @@ public class ExamMonthlyVo implements Serializable{
 
   private String peopleType;
 
+  private Integer year;
+
+  private Integer month;
+
   private String yearMonth;
 
   private String yearMonthMax;
@@ -85,6 +89,22 @@ public class ExamMonthlyVo implements Serializable{
 
   public void setYearMonthMin(String yearMonthMin) {
     this.yearMonthMin = yearMonthMin;
+  }
+
+  public Integer getMonth() {
+    return month;
+  }
+
+  public void setMonth(Integer month) {
+    this.month = month;
+  }
+
+  public Integer getYear() {
+    return year;
+  }
+
+  public void setYear(Integer year) {
+    this.year = year;
   }
 
   public String getExamResult() {

@@ -22,4 +22,6 @@ public interface ExamMonthlyMapper {
     int insertByImport(List<ExamMonthly > list);
 
     int batchDeleteByIds(String[] ids);
+
+    List findExamMonthlyVoListByCode(String code);
 }
