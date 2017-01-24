@@ -46,6 +46,12 @@ public class ConstUtil {
     public static int PEOPLE_RETIRE_RETIRE = 0;
     public static int PEOPLE_RETIRE_REHIRE = 1;
 
+    public static String[] getExamMonthlyHeaders(){
+        return new String[]{
+                "序号","姓名","年份","月份","考核结果","考核运用"
+        };
+    }
+
     public static String[] getEaxmYearlyHeaders() {
         return new  String[]{
             "序号","姓名","年份","考核结果","考核运用"

@@ -4,13 +4,13 @@
     $(function() {
     });
     function checkForm(){
-    	progressLoad();
-    	var isValid = $("#importExcelForm").form("validate");
+        progressLoad();
+        var isValid = $("#importExcelForm").form("validate");
         if (!isValid) {
             progressClose();
             return false;
         }
-		return true;
+        return true;
     }
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -19,7 +19,7 @@
             <table class="grid" border=1>
                 <tr>
                     <td>
-                    	<input type="file" name="fileName" multiple="multiple" placeholder="请选择文件" class="easyui-validatebox" data-options="required:true">
+                        <input type="file" name="fileName" multiple="multiple" placeholder="请选择文件" class="easyui-validatebox" data-options="required:true">
                     </td>
                 </tr>
             </table>

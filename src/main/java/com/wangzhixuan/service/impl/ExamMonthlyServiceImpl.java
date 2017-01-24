@@ -1,11 +1,14 @@
 package com.wangzhixuan.service.impl;
 
 import com.google.common.collect.Lists;
+import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.ExamMonthlyMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.mapper.PeopleSalaryMapper;
 import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.model.ExamYearly;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.ExamMonthlyVo;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -32,89 +36,48 @@ import java.util.List;
 @Service
 public class ExamMonthlyServiceImpl implements ExamMonthlyService {
   @Autowired
-  private ExamMonthlyMapper mapper;
-  @Autowired
   private PeopleMapper peopleMapper;
+
+  @Autowired
+  private ExamMonthlyMapper examMonthlyMapper;
+
+  @Autowired
+  private DictMapper dictMapper;
+
+  @Override
+  public ExamMonthly findExamMonthlyById(Long id) {
+    return examMonthlyMapper.selectByPrimaryKey(id.intValue());
+  }
+
   @Override
   public void findDataGrid(PageInfo pageInfo) {
-    List<ExamMonthly> list = mapper.findPageCondition(pageInfo);
-    List<ExamMonthlyVo> results = Lists.newArrayList();
-    for (ExamMonthly monthly:list){
-      ExamMonthlyVo vo = new ExamMonthlyVo();
-      vo.setId(monthly.getId());
-      vo.setExamResult(monthly.getExamResult());
-      vo.setExamOperation(monthly.getExamOperation());
-      vo.setPeopleCode(monthly.getPeopleCode());
-      vo.setPeopleType(monthly.getPeopleType());
-      vo.setName(monthly.getName());
-      vo.setYearMonth(monthly.getYear() + "-" + monthly.getMonth());
-      results.add(vo);
-    }
-    pageInfo.setRows(results);
-
+    pageInfo.setRows(examMonthlyMapper.findPageCondition(pageInfo));
+    pageInfo.setTotal(examMonthlyMapper.findPageCount(pageInfo));
   }
 
   @Override
-  public String findIDsByCondition(PageInfo pageInfo) {
-    String ids = "";
-    pageInfo.setFrom(0);
-    pageInfo.setSize(100000);
-    List<ExamMonthly> list = mapper.findPageCondition(pageInfo);
-    if(CollectionUtils.isEmpty(list)){
-      return ids;
-    }
-    for(int i=0; i<list.size(); i++){
-      ids = ids + list.get(i).getId().toString() + ",";
-    }
-
-    //刪除最後一個逗号
-    ids = ids.substring(0, ids.lastIndexOf(','));
-    return ids;
+  public void add(ExamMonthly examMonthly){
+    examMonthlyMapper.insert(examMonthly);
   }
 
   @Override
-  public void add(ExamMonthlyVo vo) {
-    ExamMonthly examMonthly = new ExamMonthly();
-    String[]strArr = vo.getYearMonthMax().split("-");
-    if(strArr.length < 2){
-      throw new RuntimeException("时间格式不对");
-    }
-    examMonthly.setYear(Integer.parseInt(strArr[0]));
-    examMonthly.setMonth(Integer.parseInt(strArr[1]));
-    examMonthly.setId(vo.getId());
-    examMonthly.setPeopleCode(vo.getPeopleType());
-    examMonthly.setExamOperation(vo.getExamOperation());
-    examMonthly.setExamResult(vo.getExamResult());
-    mapper.insert(examMonthly);
+  public void update(ExamMonthly examMonthly) {
+    examMonthlyMapper.updateByPrimaryKey(examMonthly);
   }
 
   @Override
   public void deleteById(Long id) {
-    mapper.deleteByPrimaryKey(id.intValue());
-  }
-
-  @Override
-  public void update(ExamMonthlyVo vo) {
-    ExamMonthly examMonthly = new ExamMonthly();
-    String[]strArr = vo.getYearMonthMax().split("-");
-    if(strArr.length < 2){
-      throw new RuntimeException("时间格式不对");
-    }
-    examMonthly.setYear(Integer.parseInt(strArr[0]));
-    examMonthly.setMonth(Integer.parseInt(strArr[1]));
-    examMonthly.setId(vo.getId());
-    examMonthly.setPeopleCode(vo.getPeopleType());
-    examMonthly.setExamOperation(vo.getExamOperation());
-    examMonthly.setExamResult(vo.getExamResult());
-    mapper.updateByPrimaryKey(examMonthly);
+    examMonthlyMapper.deleteByPrimaryKey(id.intValue());
   }
 
   @Override
   public void exportExcel(HttpServletResponse response, String[] ids) {
-    List<ExamMonthly> list=mapper.selectByIds(ids);
+    List<ExamMonthly> list = null;
+
     if(CollectionUtils.isEmpty(list)){
       return;
     }
+
     XSSFWorkbook workBook;
     OutputStream os;
     String newFileName="月度考核信息.xlsx";
@@ -123,7 +86,7 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
       XSSFSheet sheet = workBook.createSheet("月度考核信息");
       XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
       //创建表头
-      XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getEaxmYearlyHeaders());
+      XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getExamMonthlyHeaders());
       setBorder=WordUtil.setCellStyle(workBook,false);
       for(int i=0;i<list.size();i++) {
         row = sheet.createRow(i + 1);
@@ -171,15 +134,16 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
 
     }
     if(list.size()>0){
-      flag=mapper.insertByImport(list)>0;
+      flag=examMonthlyMapper.insertByImport(list)>0;
     }
     return flag;
   }
 
   @Override
   public void batchDeletePeopleByIds(String[] idList) {
-    mapper.batchDeleteByIds(idList);
+    examMonthlyMapper.batchDeleteByIds(idList);
   }
+
 
   private List< ExamMonthly > getExamMonthlyByExcel(List< ExamMonthly > list, String path) {
     try
