@@ -3,7 +3,9 @@ package com.wangzhixuan.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +163,48 @@ public class PeopleRetireSalaryController extends BaseController {
 			logger.error("修改工资失败：{}", e);
 			result.setMsg(e.getMessage());
 			return result;
+		}
+	}
+	
+	@RequestMapping(value = "/importExcelPage", method = RequestMethod.GET)
+	public String importExcelPage() {
+		return "admin/peopleRetireSalary/importExcelPage";
+	}
+	
+	/**
+	 * 批量调入W
+	 */
+	@RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
+	@ResponseBody
+	public Result importExcel(@RequestParam(value = "fileName", required = false) CommonsMultipartFile[] files) {
+		Result result = new Result();
+		if (files != null && files.length > 0) {
+			logger.info(JSON.toJSONString(files));
+			boolean flag = peopleRetireSalaryService.insertByImport(files);
+			result.setSuccess(flag);
+			if (!flag) {
+				result.setMsg("系统繁忙，请稍后再试！");
+			}
+		} else {
+			result.setSuccess(false);
+			result.setMsg("请选择附件！");
+		}
+		return result;
+	}
+
+	/**
+	 * 导出Excel
+	 */
+	@RequestMapping("/exportExcel")
+	public void exportExcel(HttpServletResponse response, String ids) {
+
+		if (StringUtils.isBlank(ids)) {
+			logger.error("Excel:{}", "请选择有效数据!");
+		}
+		try {
+			peopleRetireSalaryService.exportExcel(response, ids.split(","));
+		} catch (Exception exp) {
+			logger.error("导出Excel失败:{}", exp);
 		}
 	}
 }

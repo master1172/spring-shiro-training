@@ -1,6 +1,9 @@
 package com.wangzhixuan.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.wangzhixuan.model.PeopleRetireSalary;
 import com.wangzhixuan.utils.PageInfo;
@@ -17,5 +20,9 @@ public interface PeopleRetireSalaryService {
     void deleteSalaryById(Long id);
 
     PeopleRetireSalaryVo findPeopleRetireSalaryVoById(Long id);
+    
+    public boolean insertByImport(CommonsMultipartFile[] files);
+    
+    void exportExcel(HttpServletResponse response, String[] idList);
 }
 

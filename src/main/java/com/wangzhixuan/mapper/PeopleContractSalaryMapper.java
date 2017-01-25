@@ -1,6 +1,7 @@
 package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.PeopleContractSalary;
+import com.wangzhixuan.model.Timesheet;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
@@ -26,5 +27,9 @@ public interface PeopleContractSalaryMapper {
     void batchDeleteByIds(String[] ids);
 
     PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
+    
+    List selectPeopleContractSalaryVoByIds(String[] idList);
+
+	int insertByImport(List<PeopleContractSalary> list);
 
 }

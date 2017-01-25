@@ -2,6 +2,7 @@ package com.wangzhixuan.mapper;
 
 import java.util.List;
 
+import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.model.PeopleRetireSalary;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleRetireSalaryVo;
@@ -24,5 +25,9 @@ public interface PeopleRetireSalaryMapper {
     List findPeopleRetireSalaryPageCondition(PageInfo pageInfo);
 
     PeopleRetireSalaryVo findPeopleRetireSalaryVoById(Long id);
+    
+    List selectPeopleRetireSalaryVoByIds(String[] idList);
+
+   	int insertByImport(List<PeopleRetireSalary> list);
     
 }

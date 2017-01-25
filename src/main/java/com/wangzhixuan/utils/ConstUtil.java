@@ -37,7 +37,20 @@ public class ConstUtil {
                 "住房公积金","扣款","代扣税","实发合计","发工资日期"
         };
     }
+    public static String[] getPeopleContractSalaryHeaders(){
+        return new String[]{
+                "序号","人员编码","姓名","岗位","岗位工资","院龄工资","考核结果","岗位考核工资","通信补贴","交通补贴","特殊补贴",
+                "领班补贴","降温补贴","加班天数","加班补贴","奖金","补发","应发工资","养老保险","失业保险","医疗保险","住房公积金",
+                "其他扣款","实发工资","月份"
+        };
+    }
 
+    public static String[] getPeopleRetireSalaryHeaders(){
+        return new String[]{
+                "序号","人员编码","基本工资","适当补贴","提租补贴","退休补贴","退休费调增","肉食补助","卫生补贴","医药费报销",
+                "物业补贴","供暖费","残疾补助","应发合计","扣款","代扣房租","实发合计","月份"
+        };
+    }
     public static int PEOPLE_NORMAL = 0;
     public static int PEOPLE_RETIRE = 1;
     public static int PEOPLE_DEATH  = 2;

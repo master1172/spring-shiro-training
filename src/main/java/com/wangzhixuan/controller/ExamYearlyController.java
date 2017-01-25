@@ -44,7 +44,7 @@ public class ExamYearlyController extends BaseController {
 	 */
 	@RequestMapping(value = "/manager", method = RequestMethod.GET)
 	public String manager() {
-		return "admin/examYearly/people";
+		return "/admin/examYearly/people";
 	}
 
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
