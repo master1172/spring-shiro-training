@@ -53,10 +53,11 @@
                     if(parent.checkForm()) {
                         parent.SYS_SUBMIT_FORM(f, "/peopleTimesheet/add", function (data) {
                             if (!data["success"]) {
+                                parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
                             } else {
                                 parent.progressClose();
-                                timehsheetGrid.datagrid("reload");
+                                timesheetGrid.datagrid("reload");
                                 parent.$.modalDialog.handler.dialog("close");
                             }
                         });
@@ -89,6 +90,7 @@
                     if(parent.checkForm()){
                         parent.SYS_SUBMIT_FORM(f,"/peopleTimesheet/edit",function(data){
                             if(!data["success"]){
+                                parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
                             }else{
                                 parent.progressClose();

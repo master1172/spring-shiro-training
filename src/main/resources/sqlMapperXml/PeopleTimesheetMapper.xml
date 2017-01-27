@@ -53,11 +53,10 @@
 	</delete>
 
 	<insert id="insert" parameterType="com.wangzhixuan.model.PeopleTimesheet">
-		insert into timesheet (
+		insert into people_timesheet (
 			people_code, check_date, status, vacation_period)
 		values (
 			#{peopleCode,jdbcType=VARCHAR},
-			#{peopleType,jdbcType=VARCHAR},
 			#{checkDate,jdbcType=DATE},
 			#{status,jdbcType=VARCHAR},
 			#{vacationPeriod,jdbcType=DECIMAL}
@@ -65,7 +64,7 @@
 	</insert>
 
 	<update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleTimesheet">
-		update timesheet
+		update people_timesheet
 		set
 			people_code 	= #{peopleCode,jdbcType=VARCHAR},
 			check_date 		= #{checkDate,jdbcType=DATE},
@@ -106,12 +105,7 @@
 	</select>
 
 	<select id="findPeopleTimesheetPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
-		SELECT
-		t.id,
-		t.people_code,
-		t.check_date,
-		t.status,
-		t.vacation_period
+		SELECT count(t.id) count
 		FROM people_timesheet t
 		<where>
 			<if test=" condition.peopleCode != null and condition.peopleCode != '' ">
@@ -135,7 +129,7 @@
 		</where>
 	</select>
 	
-  <insert id="insertByImport" parameterType="java.util.List">
+    <insert id="insertByImport" parameterType="java.util.List">
         insert into people_timesheet
 	  		(people_code, check_date, status, vacation_period)
         values

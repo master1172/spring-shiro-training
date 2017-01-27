@@ -8,7 +8,7 @@ public class ConstUtil {
 	
 	public static String[] getTimesheetHeader(){
         return new  String[]{
-                "序号","人员姓名","考勤日期","考勤结果","请假时间"
+                "序号","人员姓名","请假日期","请假原因","假期长度"
         };
     }
 	

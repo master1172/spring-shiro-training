@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleVo;
@@ -43,7 +44,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	private PeopleTimesheetMapper peopleTimesheetMapper;
 
 	@Autowired
-	private PeopleService peopleService;
+	private PeopleMapper peopleMapper;
 
 	@Override
 	public PeopleTimesheet selectByPrimaryKey(Integer id) {
@@ -134,7 +135,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 						continue;
 					String peopleName = row.getCell(1).toString().trim();
 
-					People people = peopleService.findPeopleByName(peopleName);
+					People people = peopleMapper.findFirstPeopleByName(peopleName);
 
 					if (people == null || StringUtils.isBlank(people.getCode()))
 						continue;
@@ -167,7 +168,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	@Override
 	public void exportExcel(HttpServletResponse response, String[] idList) {
 
-		List list = peopleService.findPeopleListByIds(idList);
+		List list = peopleMapper.selectPeopleVoByIds(idList);
 
 		if (list != null && list.size() > 0) {
 			XSSFWorkbook workBook;
