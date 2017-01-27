@@ -24,7 +24,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.wangzhixuan.mapper.PeopleContractSalaryMapper;
 import com.wangzhixuan.model.PeopleContractSalary;
-import com.wangzhixuan.model.Timesheet;
 import com.wangzhixuan.service.PeopleContractSalaryService;
 import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.DateUtil;
@@ -33,7 +32,6 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
-import com.wangzhixuan.vo.TimesheetVo;
 
 /**
  * Created by fengjunfeng on 2017/1/22.

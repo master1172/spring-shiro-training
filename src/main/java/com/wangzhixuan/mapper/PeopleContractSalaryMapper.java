@@ -1,7 +1,6 @@
 package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.PeopleContractSalary;
-import com.wangzhixuan.model.Timesheet;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.wangzhixuan.service.PeopleTimesheetService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,9 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
-import com.wangzhixuan.model.Timesheet;
-import com.wangzhixuan.service.impl.TimesheetServiceImpl;
-import com.wangzhixuan.utils.DateUtil;
+import com.wangzhixuan.model.PeopleTimesheet;
+import com.wangzhixuan.service.impl.PeopleTimesheetServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -24,12 +24,12 @@ public class TimesheetMapperTest {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private TimesheetMapper timesheetMapper;
+	private PeopleTimesheetMapper timesheetMapper;
 	
 	@Test
 	public void insertByImport() {
-		List<Timesheet> list = new ArrayList<Timesheet>();
-		Timesheet timesheet = new Timesheet();
+		List<PeopleTimesheet> list = new ArrayList<PeopleTimesheet>();
+		PeopleTimesheet timesheet = new PeopleTimesheet();
 		timesheet.setCheckDate(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 		list.add(timesheet);
 		timesheetMapper.insertByImport(list);
@@ -38,9 +38,9 @@ public class TimesheetMapperTest {
 	@Test
 	public void getPeopleInfoByExcel() {
 		String path = "/Users/social-test/Downloads/timesheet.xlsx";
-		List<Timesheet> list = new ArrayList<Timesheet>();
-		TimesheetServiceImpl timesheetServiceImpl = new TimesheetServiceImpl();
-		timesheetServiceImpl.getPeopleInfoByExcel(list, path);
+		List<PeopleTimesheet> list = new ArrayList<PeopleTimesheet>();
+		PeopleTimesheetService timesheetServiceImpl = new PeopleTimesheetServiceImpl();
+		//timesheetServiceImpl.getPeopleInfoByExcel(list, path);
 		
 		logger.info(JSON.toJSONString(list));
 		

@@ -2,28 +2,36 @@ package com.wangzhixuan.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Maps;
 
-public class TimesheetVo implements Serializable {
+public class PeopleTimesheetVo implements Serializable {
 	private Integer id;
 
 	private String peopleCode;
 
-	private String peopleType;
+	private String peopleName;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String checkDate;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String checkDateMin;
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String checkDateMax;
 
 	private String status;
 
 	private BigDecimal vacationPeriod;
+
+	private BigDecimal vacationPeriodMin;
+
+	private BigDecimal vacationPeriodMax;
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,12 +51,12 @@ public class TimesheetVo implements Serializable {
 		this.peopleCode = peopleCode == null ? null : peopleCode.trim();
 	}
 
-	public String getPeopleType() {
-		return peopleType;
+	public String getPeopleName() {
+		return peopleName;
 	}
 
-	public void setPeopleType(String peopleType) {
-		this.peopleType = peopleType == null ? null : peopleType.trim();
+	public void setPeopleName(String peopleName) {
+		this.peopleName = peopleName;
 	}
 
 	public String getCheckDate() {
@@ -75,28 +83,20 @@ public class TimesheetVo implements Serializable {
 		this.vacationPeriod = vacationPeriod;
 	}
 
-	public static Map<String, Object> CreateCondition(TimesheetVo timesheetVo) {
-		Map<String, Object> condition = Maps.newHashMap();
+	public BigDecimal getVacationPeriodMin() {
+		return vacationPeriodMin;
+	}
 
-		if (StringUtils.isNoneBlank(timesheetVo.getPeopleCode())) {
-			condition.put("peopleCode", timesheetVo.getPeopleCode());
-		}
-		if (StringUtils.isNoneBlank(timesheetVo.getPeopleType())) {
-			condition.put("peopleType", timesheetVo.getPeopleType());
-		}
-		if (StringUtils.isNoneBlank(timesheetVo.getCheckDateMin())) {
-			condition.put("checkDateMin", timesheetVo.getCheckDateMin());
-		}
-		if (StringUtils.isNoneBlank(timesheetVo.getCheckDateMax())) {
-			condition.put("checkDateMax", timesheetVo.getCheckDateMax());
-		}
-		if (StringUtils.isNoneBlank(timesheetVo.getStatus())) {
-			condition.put("status", timesheetVo.getStatus());
-		}
-		if (timesheetVo.getVacationPeriod() != null) {
-			condition.put("vacationPeriod", timesheetVo.getVacationPeriod());
-		}
-		return condition;
+	public void setVacationPeriodMin(BigDecimal vacationPeriodMin) {
+		this.vacationPeriodMin = vacationPeriodMin;
+	}
+
+	public BigDecimal getVacationPeriodMax() {
+		return vacationPeriodMax;
+	}
+
+	public void setVacationPeriodMax(BigDecimal vacationPeriodMax) {
+		this.vacationPeriodMax = vacationPeriodMax;
 	}
 
 	public String getCheckDateMin() {
@@ -115,6 +115,48 @@ public class TimesheetVo implements Serializable {
 		this.checkDateMax = checkDateMax;
 	}
 
+	public static Map<String, Object> CreateCondition(PeopleTimesheetVo timesheetVo) {
+
+		Map<String, Object> condition = Maps.newHashMap();
+
+		if (StringUtils.isNoneBlank(timesheetVo.getPeopleCode())) {
+			condition.put("peopleCode", timesheetVo.getPeopleCode());
+		}
+
+		if (StringUtils.isNoneBlank(timesheetVo.getPeopleName())){
+			condition.put("peopleName", timesheetVo.getPeopleName());
+		}
+
+		if (StringUtils.isNoneBlank(timesheetVo.getCheckDateMin())) {
+			condition.put("checkDateMin", timesheetVo.getCheckDateMin());
+		}
+		if (StringUtils.isNoneBlank(timesheetVo.getCheckDateMax())) {
+			condition.put("checkDateMax", timesheetVo.getCheckDateMax());
+		}
+
+		if (StringUtils.isNoneBlank(timesheetVo.getCheckDate())){
+			condition.put("checkDate",timesheetVo.getCheckDate());
+		}
+
+		if (StringUtils.isNoneBlank(timesheetVo.getStatus())) {
+			condition.put("status", timesheetVo.getStatus());
+		}
+
+		if (timesheetVo.getVacationPeriod() != null) {
+			condition.put("vacationPeriod", timesheetVo.getVacationPeriod());
+		}
+
+		if (timesheetVo.getVacationPeriodMin() != null){
+			condition.put("vacationPeriodMin",timesheetVo.getVacationPeriodMin());
+		}
+
+		if(timesheetVo.getVacationPeriodMax()!=null){
+			condition.put("vacationPeriodMax",timesheetVo.getVacationPeriodMax());
+		}
+
+		return condition;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -123,7 +165,6 @@ public class TimesheetVo implements Serializable {
 		sb.append("Hash = ").append(hashCode());
 		sb.append(", id=").append(id);
 		sb.append(", peopleCode=").append(peopleCode);
-		sb.append(", peopleType=").append(peopleType);
 		sb.append(", checkDate=").append(checkDate);
 		sb.append(", status=").append(status);
 		sb.append(", vacationPeriod=").append(vacationPeriod);
