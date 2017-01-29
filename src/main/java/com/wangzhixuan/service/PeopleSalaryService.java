@@ -30,6 +30,8 @@ public interface PeopleSalaryService {
 
     PeopleSalaryBaseVo findPeopleSalaryBaseByCode(String code);
 
+    void updateSalaryBase(PeopleSalaryBase peopleSalaryBase);
+
     void exportExcel(HttpServletResponse response, String[] idList);
 
     boolean insertByImport(CommonsMultipartFile[] files);
