@@ -386,7 +386,7 @@ public class PeopleSalaryBase implements Serializable {
 
     @Override
     public String toString(){
-        return "PeopleSalary{" +
+        return "PeopleSalaryBase{" +
                 "id=" + id +
                 "}";
     }

@@ -93,8 +93,8 @@ public class PeopleSalaryBaseVo implements Serializable{
 
     private BigDecimal netIncome;
 
-    @JsonFormat(pattern = "yyyy-MM")
-    private String payDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String lastChangeDate;
 
     public Long getId() {
         return id;
@@ -424,12 +424,12 @@ public class PeopleSalaryBaseVo implements Serializable{
         this.netIncome = netIncome;
     }
 
-    public String getPayDate() {
-        return payDate;
+    public String getLastChangeDate() {
+        return lastChangeDate;
     }
 
-    public void setPayDate(String payDate) {
-        this.payDate = payDate;
+    public void setLastChangeDate(String lastChangeDate) {
+        this.lastChangeDate = lastChangeDate;
     }
 
     public String toString(){
