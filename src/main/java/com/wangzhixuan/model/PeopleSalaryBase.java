@@ -9,17 +9,18 @@ import java.math.BigDecimal;
  * Created by sterm on 2017/1/12.
  */
 public class PeopleSalaryBase implements Serializable {
+
     private static final long serialVersionUID = -5321613594382537452L;
 
     private Long id;
 
     private String peopleCode;
 
-    private int jobId;
+    private Integer jobId;
 
     private BigDecimal jobSalary;
 
-    private int rankId;
+    private Integer rankId;
 
     private BigDecimal rankSalary;
 
@@ -84,8 +85,8 @@ public class PeopleSalaryBase implements Serializable {
 
     private BigDecimal netIncome;
 
-    @JsonFormat(pattern = "yyyy-MM")
-    private String payDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String lastChangeDate;
 
     public Long getId() {
         return id;
@@ -103,11 +104,11 @@ public class PeopleSalaryBase implements Serializable {
         this.peopleCode = peopleCode;
     }
 
-    public int getJobId() {
+    public Integer getJobId() {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(Integer jobId) {
         this.jobId = jobId;
     }
 
@@ -119,11 +120,11 @@ public class PeopleSalaryBase implements Serializable {
         this.jobSalary = jobSalary;
     }
 
-    public int getRankId() {
+    public Integer getRankId() {
         return rankId;
     }
 
-    public void setRankId(int rankId) {
+    public void setRankId(Integer rankId) {
         this.rankId = rankId;
     }
 
@@ -375,12 +376,12 @@ public class PeopleSalaryBase implements Serializable {
         this.netIncome = netIncome;
     }
 
-    public String getPayDate() {
-        return payDate;
+    public String getLastChangeDate() {
+        return lastChangeDate;
     }
 
-    public void setPayDate(String payDate) {
-        this.payDate = payDate;
+    public void setLastChangeDate(String lastChangeDate) {
+        this.lastChangeDate = lastChangeDate;
     }
 
     @Override
