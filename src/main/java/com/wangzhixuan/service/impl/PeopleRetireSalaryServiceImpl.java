@@ -10,6 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.mapper.PeopleRetireMapper;
+import com.wangzhixuan.model.PeopleRetire;
+import com.wangzhixuan.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -27,13 +30,9 @@ import com.wangzhixuan.mapper.PeopleRetireSalaryMapper;
 import com.wangzhixuan.model.PeopleRetireSalary;
 import com.wangzhixuan.model.PeopleRetireSalary;
 import com.wangzhixuan.service.PeopleRetireSalaryService;
-import com.wangzhixuan.utils.ConstUtil;
-import com.wangzhixuan.utils.DateUtil;
-import com.wangzhixuan.utils.ExcelUtil;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleRetireSalaryVo;
+
+import static com.wangzhixuan.utils.WordUtil.getCellString;
 //import com.wangzhixuan.vo.PeopleRetireSalaryVo;
 
 /**
@@ -45,6 +44,9 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 
 	@Autowired
 	private PeopleRetireSalaryMapper peopleRetireSalaryMapper;
+
+	@Autowired
+	private PeopleRetireMapper peopleRetireMapper;
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -82,8 +84,9 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 
 	@Override
 	public void exportExcel(HttpServletResponse response, String[] idList) {
-		// TODO Auto-generated method stub
-		List list = peopleRetireSalaryMapper.selectPeopleRetireSalaryVoByIds(idList);
+
+		List list = peopleRetireMapper.selectPeopleRetireVoByIds(idList);
+
 		if (list != null && list.size() > 0) {
 			XSSFWorkbook workBook;
 			OutputStream os;
@@ -95,39 +98,53 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 				// 创建表头
 				XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleRetireSalaryHeaders());
 
+				int count = 0;
+
 				setBorder = WordUtil.setCellStyle(workBook, false);
 				for (int i = 0; i < list.size(); i++) {
-					row = sheet.createRow(i + 1);
-					PeopleRetireSalaryVo peopleRetireSalaryVo = (PeopleRetireSalaryVo) list.get(i);
-					row.createCell(0).setCellValue(i+1);
-					row.createCell(1).setCellValue(peopleRetireSalaryVo.getPeopleCode());
-					row.createCell(2).setCellValue(peopleRetireSalaryVo.getBaseSalary()==null?"":peopleRetireSalaryVo.getBaseSalary().toString());
-					row.createCell(3).setCellValue(peopleRetireSalaryVo.getExtraAllowance()==null?"":peopleRetireSalaryVo.getExtraAllowance().toString());
-					row.createCell(4).setCellValue(peopleRetireSalaryVo.getRentAllowance()==null?"":peopleRetireSalaryVo.getRentAllowance().toString());
-					row.createCell(5).setCellValue(peopleRetireSalaryVo.getRetireAllowance()==null?"":peopleRetireSalaryVo.getRetireAllowance().toString());
-					row.createCell(6).setCellValue(peopleRetireSalaryVo.getRetireFeeIncrease()==null?"":peopleRetireSalaryVo.getRetireFeeIncrease().toString());
-					row.createCell(7).setCellValue(peopleRetireSalaryVo.getFoodAllowance()==null?"":peopleRetireSalaryVo.getFoodAllowance().toString());
-					row.createCell(8).setCellValue(peopleRetireSalaryVo.getHeathAllowance()==null?"":peopleRetireSalaryVo.getHeathAllowance().toString());
-					row.createCell(9).setCellValue(peopleRetireSalaryVo.getMedicareFee()==null?"":peopleRetireSalaryVo.getMedicareFee().toString());
-					row.createCell(10).setCellValue(peopleRetireSalaryVo.getPropertyAllowance()==null?"":peopleRetireSalaryVo.getPropertyAllowance().toString());
-					row.createCell(11).setCellValue(peopleRetireSalaryVo.getHeatingFee()==null?"":peopleRetireSalaryVo.getHeatingFee().toString());
-					row.createCell(12).setCellValue(peopleRetireSalaryVo.getHandicapAllowance()==null?"":peopleRetireSalaryVo.getHandicapAllowance().toString());
-					row.createCell(13).setCellValue(peopleRetireSalaryVo.getGrossIncome()==null?"":peopleRetireSalaryVo.getGrossIncome().toString());
-					row.createCell(14).setCellValue(peopleRetireSalaryVo.getExpense()==null?"":peopleRetireSalaryVo.getExpense().toString());
-					row.createCell(15).setCellValue(peopleRetireSalaryVo.getRentFee()==null?"":peopleRetireSalaryVo.getRentFee().toString());
-					row.createCell(16).setCellValue(peopleRetireSalaryVo.getNetIncome()==null?"":peopleRetireSalaryVo.getNetIncome().toString());
-					row.createCell(17).setCellValue(peopleRetireSalaryVo.getPayDate()==null?"":peopleRetireSalaryVo.getPayDate().toString());
-					
-					for (int j = 0; j < 18; j++) {
-						row.getCell(j).setCellStyle(setBorder);
+					PeopleRetire peopleRetire = (PeopleRetire) list.get(i);
+					if (peopleRetire == null || StringUtils.isBlank(peopleRetire.getCode()))
+						continue;
+
+					String peopleCode = peopleRetire.getCode();
+					List<PeopleRetireSalaryVo> peopleRetireSalaryVoList = peopleRetireSalaryMapper.findPeopleRetireSalaryVoListByCode(peopleCode);
+					if (peopleRetireSalaryVoList == null || peopleRetireSalaryVoList.size() < 1)
+						continue;
+
+					for(int j=0; j<peopleRetireSalaryVoList.size(); j++){
+						row = sheet.createRow(count+1);
+						PeopleRetireSalaryVo peopleRetireSalaryVo = peopleRetireSalaryVoList.get(j);
+						row.createCell(0).setCellValue(count+1);
+						row.createCell(1).setCellValue(peopleRetireSalaryVo.getPeopleName());
+						row.createCell(2).setCellValue(peopleRetireSalaryVo.getBaseSalary()==null?		"":peopleRetireSalaryVo.getBaseSalary().toString());
+						row.createCell(3).setCellValue(peopleRetireSalaryVo.getExtraAllowance()==null?	"":peopleRetireSalaryVo.getExtraAllowance().toString());
+						row.createCell(4).setCellValue(peopleRetireSalaryVo.getRentAllowance()==null?	"":peopleRetireSalaryVo.getRentAllowance().toString());
+						row.createCell(5).setCellValue(peopleRetireSalaryVo.getRetireAllowance()==null?	"":peopleRetireSalaryVo.getRetireAllowance().toString());
+						row.createCell(6).setCellValue(peopleRetireSalaryVo.getRetireFeeIncrease()==null?"":peopleRetireSalaryVo.getRetireFeeIncrease().toString());
+						row.createCell(7).setCellValue(peopleRetireSalaryVo.getFoodAllowance()==null?	"":peopleRetireSalaryVo.getFoodAllowance().toString());
+						row.createCell(8).setCellValue(peopleRetireSalaryVo.getHealthAllowance()==null?	"":peopleRetireSalaryVo.getHealthAllowance().toString());
+						row.createCell(9).setCellValue(peopleRetireSalaryVo.getMedicareFee()==null?		"":peopleRetireSalaryVo.getMedicareFee().toString());
+						row.createCell(10).setCellValue(peopleRetireSalaryVo.getPropertyAllowance()==null?"":peopleRetireSalaryVo.getPropertyAllowance().toString());
+						row.createCell(11).setCellValue(peopleRetireSalaryVo.getHeatingFee()==null?		"":peopleRetireSalaryVo.getHeatingFee().toString());
+						row.createCell(12).setCellValue(peopleRetireSalaryVo.getHandicapAllowance()==null?"":peopleRetireSalaryVo.getHandicapAllowance().toString());
+						row.createCell(13).setCellValue(peopleRetireSalaryVo.getGrossIncome()==null?	"":peopleRetireSalaryVo.getGrossIncome().toString());
+						row.createCell(14).setCellValue(peopleRetireSalaryVo.getExpense()==null?		"":peopleRetireSalaryVo.getExpense().toString());
+						row.createCell(15).setCellValue(peopleRetireSalaryVo.getRentFee()==null?		"":peopleRetireSalaryVo.getRentFee().toString());
+						row.createCell(16).setCellValue(peopleRetireSalaryVo.getNetIncome()==null?		"":peopleRetireSalaryVo.getNetIncome().toString());
+						row.createCell(17).setCellValue(peopleRetireSalaryVo.getPayDate()==null?		"":peopleRetireSalaryVo.getPayDate().toString());
+
+						count ++;
+
+						for (int k = 0; k < 18; k++) {
+							row.getCell(k).setCellStyle(setBorder);
+						}
+						row.setHeight((short) 400);
 					}
-					row.setHeight((short) 400);
 				}
 				sheet.setDefaultRowHeightInPoints(21);
 				response.reset();
 				os = response.getOutputStream();
-				response.setHeader("Content-disposition",
-						"attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+				response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
 				workBook.write(os);
 				os.close();
 			} catch (IOException e) {
@@ -141,7 +158,7 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 
 	@Override
 	public boolean insertByImport(CommonsMultipartFile[] files) {
-		// TODO Auto-generated method stub
+
 		boolean flag = false;
 		if (files != null && files.length > 0) {
 
@@ -177,58 +194,45 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 			XSSFSheet sheet = xwb.getSheetAt(0);
 			XSSFRow row;
 			for (int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+
 				row = sheet.getRow(i);
+
 				PeopleRetireSalary peopleRetireSalary = new PeopleRetireSalary();
-				peopleRetireSalary.setPeopleCode(getCellString(row.getCell(1)));
-				peopleRetireSalary.setBaseSalary(toDecimal(getCellString(row.getCell(2))));
-				peopleRetireSalary.setExtraAllowance(toDecimal(getCellString(row.getCell(3))));
-				peopleRetireSalary.setRentAllowance(toDecimal(getCellString(row.getCell(4))));
-				peopleRetireSalary.setRetireAllowance(toDecimal(getCellString(row.getCell(5))));
-				peopleRetireSalary.setRetireFeeIncrease(toDecimal(getCellString(row.getCell(6))));
-				peopleRetireSalary.setFoodAllowance(toDecimal(getCellString(row.getCell(7))));
-				peopleRetireSalary.setHeathAllowance(toDecimal(getCellString(row.getCell(8))));
-				peopleRetireSalary.setMedicareFee(toDecimal(getCellString(row.getCell(9))));
-				peopleRetireSalary.setPropertyAllowance(toDecimal(getCellString(row.getCell(10))));
-				peopleRetireSalary.setHeatingFee(toDecimal(getCellString(row.getCell(11))));
-				peopleRetireSalary.setHandicapAllowance(toDecimal(getCellString(row.getCell(12))));
-				peopleRetireSalary.setGrossIncome(toDecimal(getCellString(row.getCell(13))));
-				peopleRetireSalary.setExpense(toDecimal(getCellString(row.getCell(14))));
-				peopleRetireSalary.setRentFee(toDecimal(getCellString(row.getCell(15))));
-				peopleRetireSalary.setNetIncome(toDecimal(getCellString(row.getCell(16))));
+
+				if (row.getCell(1) == null || StringUtils.isBlank(row.getCell(1).toString()))
+					continue;
+
+				String peopleName = row.getCell(1).toString().trim();
+
+				PeopleRetire peopleRetire = peopleRetireMapper.findFirstPeopleByName(peopleName);
+
+				if (peopleRetire == null || StringUtils.isBlank(peopleRetire.getCode()))
+					continue;
+
+				peopleRetireSalary.setPeopleCode(peopleRetire.getCode());
+				peopleRetireSalary.setBaseSalary(StringUtilExtra.StringToDecimal(getCellString(row.getCell(2))));
+				peopleRetireSalary.setExtraAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(3))));
+				peopleRetireSalary.setRentAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(4))));
+				peopleRetireSalary.setRetireAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(5))));
+				peopleRetireSalary.setRetireFeeIncrease(StringUtilExtra.StringToDecimal(getCellString(row.getCell(6))));
+				peopleRetireSalary.setFoodAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(7))));
+				peopleRetireSalary.setHealthAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(8))));
+				peopleRetireSalary.setMedicareFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(9))));
+				peopleRetireSalary.setPropertyAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(10))));
+				peopleRetireSalary.setHeatingFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
+				peopleRetireSalary.setHandicapAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
+				peopleRetireSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(13))));
+				peopleRetireSalary.setExpense(StringUtilExtra.StringToDecimal(getCellString(row.getCell(14))));
+				peopleRetireSalary.setRentFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
+				peopleRetireSalary.setNetIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
 				peopleRetireSalary.setPayDate(getCellString(row.getCell(17)));
 
 				list.add(peopleRetireSalary);
 			}
 		} catch (IOException e1) {
-			logger.info("", e1);
+
 			e1.printStackTrace();
 		}
 		return list;
-	}
-	
-	private BigDecimal toDecimal(String str){
-		if(StringUtils.isNotBlank(str)){
-			return new BigDecimal(str);
-		}else{
-			return new BigDecimal("0.00");
-		}
-	}
-	
-	private int toint(String str){
-		try{
-			return Integer.valueOf(str);
-		}catch(Exception ex){
-			return 0;
-		}
-	}
-	
-	private String getCellString(XSSFCell xs) {
-		String cell = "";
-		if (xs == null) {
-			cell = "";
-		} else {
-			cell = xs.toString();
-		}
-		return cell;
 	}
 }

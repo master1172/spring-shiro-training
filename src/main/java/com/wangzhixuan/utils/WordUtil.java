@@ -5,6 +5,7 @@ import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -209,6 +210,15 @@ public class WordUtil {
             e.printStackTrace();
         }finally{
 
+        }
+    }
+
+
+    public static String getCellString(XSSFCell xs) {
+        if (xs == null) {
+            return "";
+        } else {
+            return xs.toString();
         }
     }
 }

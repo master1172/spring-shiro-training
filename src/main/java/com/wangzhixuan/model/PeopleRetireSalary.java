@@ -22,7 +22,7 @@ public class PeopleRetireSalary implements Serializable {
 
     private BigDecimal foodAllowance;
 
-    private BigDecimal heathAllowance;
+    private BigDecimal healthAllowance;
 
     private BigDecimal medicareFee;
 
@@ -108,12 +108,12 @@ public class PeopleRetireSalary implements Serializable {
         this.foodAllowance = foodAllowance;
     }
 
-    public BigDecimal getHeathAllowance() {
-        return heathAllowance;
+    public BigDecimal getHealthAllowance() {
+        return healthAllowance;
     }
 
-    public void setHeathAllowance(BigDecimal heathAllowance) {
-        this.heathAllowance = heathAllowance;
+    public void setHealthAllowance(BigDecimal heathAllowance) {
+        this.healthAllowance = heathAllowance;
     }
 
     public BigDecimal getMedicareFee() {
@@ -211,7 +211,7 @@ public class PeopleRetireSalary implements Serializable {
         sb.append(", retireAllowance=").append(retireAllowance);
         sb.append(", retireFeeAllowance=").append(retireFeeIncrease);
         sb.append(", foodAllowance=").append(foodAllowance);
-        sb.append(", heathAllowance=").append(heathAllowance);
+        sb.append(", healthAllowance=").append(healthAllowance);
         sb.append(", medicareFee=").append(medicareFee);
         sb.append(", propertyAllowance=").append(propertyAllowance);
         sb.append(", heatingFee=").append(heatingFee);

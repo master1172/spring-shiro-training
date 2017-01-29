@@ -35,6 +35,7 @@ import com.wangzhixuan.vo.PeopleRetireSalaryVo;
 @Controller
 @RequestMapping("/peopleRetireSalary")
 public class PeopleRetireSalaryController extends BaseController {
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
@@ -50,16 +51,12 @@ public class PeopleRetireSalaryController extends BaseController {
 
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows,
-			String sort, String order) {
+	public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows, String sort, String order) {
 		PageInfo pageInfo = new PageInfo(page, rows);
 		Map<String, Object> condition = PeopleContractVo.CreateCondition(peopleVo);
 		pageInfo.setCondition(condition);
 
-		// LOGGER.info(JSON.toJSONString(pageInfo));
 		peopleRetireService.findDataGrid(pageInfo);
-
-		// LOGGER.info(JSON.toJSONString(pageInfo));
 
 		return pageInfo;
 	}
@@ -68,7 +65,6 @@ public class PeopleRetireSalaryController extends BaseController {
 	public String salaryListPage(Long id, Model model) {
 
 		PeopleRetire people = peopleRetireService.findPeopleRetireById(id);
-		logger.info(JSON.toJSONString(people));
 
 		if (people != null) {
 			model.addAttribute("code", people.getCode());
@@ -91,7 +87,6 @@ public class PeopleRetireSalaryController extends BaseController {
 
 		peopleRetireSalaryService.findDataGrid(pageInfo, request);
 
-		logger.info("salaryGrid123:" + JSON.toJSONString(pageInfo));
 		return pageInfo;
 	}
 

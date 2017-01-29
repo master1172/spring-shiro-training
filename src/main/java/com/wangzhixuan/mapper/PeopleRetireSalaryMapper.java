@@ -29,5 +29,7 @@ public interface PeopleRetireSalaryMapper {
     List selectPeopleRetireSalaryVoByIds(String[] idList);
 
    	int insertByImport(List<PeopleRetireSalary> list);
+
+    List findPeopleRetireSalaryVoListByCode(String peopleCode);
     
 }

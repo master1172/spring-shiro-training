@@ -11,13 +11,7 @@ public class PeopleRetireSalaryVo implements Serializable {
 	private String peopleCode;
 
 	private String peopleName;
-	private int jobId;
-	private String jobCategory;
-	private String jobLevel;
-	private BigDecimal jobSalary;
-	private String retireJobName;
-	private String retireJobLevelId;
-	
+
 	private BigDecimal baseSalary;
 
 	private Integer rankId;
@@ -32,7 +26,7 @@ public class PeopleRetireSalaryVo implements Serializable {
 
 	private BigDecimal foodAllowance;
 
-	private BigDecimal heathAllowance;
+	private BigDecimal healthAllowance;
 
 	private BigDecimal medicareFee;
 
@@ -119,12 +113,12 @@ public class PeopleRetireSalaryVo implements Serializable {
 		this.foodAllowance = foodAllowance;
 	}
 
-	public BigDecimal getHeathAllowance() {
-		return heathAllowance;
+	public BigDecimal getHealthAllowance() {
+		return healthAllowance;
 	}
 
-	public void setHeathAllowance(BigDecimal heathAllowance) {
-		this.heathAllowance = heathAllowance;
+	public void setHealthAllowance(BigDecimal healthAllowance) {
+		this.healthAllowance = healthAllowance;
 	}
 
 	public BigDecimal getMedicareFee() {
@@ -205,54 +199,6 @@ public class PeopleRetireSalaryVo implements Serializable {
 
 	public void setPeopleName(String peopleName) {
 		this.peopleName = peopleName;
-	}
-
-	public int getJobId() {
-		return jobId;
-	}
-
-	public void setJobId(int jobId) {
-		this.jobId = jobId;
-	}
-
-	public String getJobCategory() {
-		return jobCategory;
-	}
-
-	public void setJobCategory(String jobCategory) {
-		this.jobCategory = jobCategory;
-	}
-
-	public String getJobLevel() {
-		return jobLevel;
-	}
-
-	public void setJobLevel(String jobLevel) {
-		this.jobLevel = jobLevel;
-	}
-
-	public BigDecimal getJobSalary() {
-		return jobSalary;
-	}
-
-	public void setJobSalary(BigDecimal jobSalary) {
-		this.jobSalary = jobSalary;
-	}
-
-	public String getRetireJobName() {
-		return retireJobName;
-	}
-
-	public void setRetireJobName(String retireJobName) {
-		this.retireJobName = retireJobName;
-	}
-
-	public String getRetireJobLevelId() {
-		return retireJobLevelId;
-	}
-
-	public void setRetireJobLevelId(String retireJobLevelId) {
-		this.retireJobLevelId = retireJobLevelId;
 	}
 
 	public BigDecimal getRetireFeeIncrease() {
