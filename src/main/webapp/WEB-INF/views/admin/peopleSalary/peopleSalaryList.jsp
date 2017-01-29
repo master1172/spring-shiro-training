@@ -42,8 +42,8 @@
     function addSalaryBaseFun() {
         parent.$.modalDialog({
             title: '修改工资基数',
-            width: 1500,
-            height: 1000,
+            width: 1000,
+            height: 600,
             href: '${path}/peopleSalary/salaryBasePage?peopleCode=${code}',
             buttons:[{
                 text: '修改',

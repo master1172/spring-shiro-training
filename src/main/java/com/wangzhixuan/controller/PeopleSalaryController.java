@@ -195,6 +195,12 @@ public class PeopleSalaryController extends BaseController{
         if (peopleSalaryBaseVo == null){
             peopleSalaryBaseVo = new PeopleSalaryBaseVo();
             peopleSalaryBaseVo.setPeopleCode(peopleCode);
+
+            People people = peopleService.findPeopleByCode(peopleCode);
+            if (people != null){
+                peopleSalaryBaseVo.setPeopleName(people.getName());
+                peopleSalaryBaseVo.setJobId(people.getJobLevelId());
+            }
         }
 
         model.addAttribute("peopleSalaryBaseVo",peopleSalaryBaseVo);

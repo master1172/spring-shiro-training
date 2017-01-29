@@ -4,8 +4,15 @@
 
     $(function(){
         $("#workDate").val('${peopleSalaryBaseVo.workDate}');
-        $("#jobId").val('${peopleSalaryBaseVo.jobId}');
-        $("#rankId").val('${peopleSalaryBaseVo.rankId}');
+
+        if (${peopleSalaryBaseVo.jobId}) {
+            $("#jobId").val('${peopleSalaryBaseVo.jobId}');
+        }
+
+        if (${peopleSalaryBaseVo.rankId}) {
+            $("#rankId").val('${peopleSalaryBaseVo.rankId}');
+        }
+
         $("#lastChangeDate").val('${peopleSalaryBaseVo.lastChangeDate}');
     });
 
