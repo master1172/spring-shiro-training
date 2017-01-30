@@ -235,6 +235,7 @@
 		)
 		VALUES
 		<foreach item="item" index="index" collection="list" separator=",">
+		(
 			#{item.peopleCode,jdbcType=VARCHAR},
 			#{item.baseSalary,jdbcType=DECIMAL},
 			#{item.rankId,jdbcType=INTEGER},
@@ -253,6 +254,7 @@
 			#{item.rentFee,jdbcType=DECIMAL},
 			#{item.netIncome,jdbcType=DECIMAL},
 			#{item.payDate,jdbcType=VARCHAR}
+		)
 		</foreach>
 	</insert>
 </mapper>
