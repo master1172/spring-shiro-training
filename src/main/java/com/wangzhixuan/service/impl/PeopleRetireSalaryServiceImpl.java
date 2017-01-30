@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.wangzhixuan.mapper.PeopleRetireMapper;
 import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.utils.*;
+import com.wangzhixuan.vo.PeopleRetireVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -102,11 +103,11 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 
 				setBorder = WordUtil.setCellStyle(workBook, false);
 				for (int i = 0; i < list.size(); i++) {
-					PeopleRetire peopleRetire = (PeopleRetire) list.get(i);
-					if (peopleRetire == null || StringUtils.isBlank(peopleRetire.getCode()))
+					PeopleRetireVo peopleRetireVo = (PeopleRetireVo) list.get(i);
+					if (peopleRetireVo == null || StringUtils.isBlank(peopleRetireVo.getCode()))
 						continue;
 
-					String peopleCode = peopleRetire.getCode();
+					String peopleCode = peopleRetireVo.getCode();
 					List<PeopleRetireSalaryVo> peopleRetireSalaryVoList = peopleRetireSalaryMapper.findPeopleRetireSalaryVoListByCode(peopleCode);
 					if (peopleRetireSalaryVoList == null || peopleRetireSalaryVoList.size() < 1)
 						continue;
