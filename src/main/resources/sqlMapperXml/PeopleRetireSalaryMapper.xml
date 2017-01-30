@@ -226,4 +226,33 @@
 		ON t.people_code = p.code
 		where t.people_code = #{peopleCode}
 	</select>
+
+	<insert id="insertByImport" parameterType="java.util.List">
+		insert into people_retire_salary(
+	  		people_code, base_salary, rank_id, extra_allowance, rent_allowance, retire_allowance,
+			retire_fee_increase, food_allowance, health_allowance, medicare_fee, property_allowance,
+			heating_fee, handicap_allowance, gross_income, expense, rent_fee, net_income, pay_date
+		)
+		VALUES
+		<foreach item="item" index="index" collection="list" separator=",">
+			#{item.peopleCode,jdbcType=VARCHAR},
+			#{item.baseSalary,jdbcType=DECIMAL},
+			#{item.rankId,jdbcType=INTEGER},
+			#{item.extraAllowance,jdbcType=DECIMAL},
+			#{item.rentAllowance,jdbcType=DECIMAL},
+			#{item.retireAllowance,jdbcType=DECIMAL},
+			#{item.retireFeeIncrease,jdbcType=DECIMAL},
+			#{item.foodAllowance,jdbcType=DECIMAL},
+			#{item.healthAllowance,jdbcType=DECIMAL},
+			#{item.medicareFee,jdbcType=DECIMAL},
+			#{item.propertyAllowance,jdbcType=DECIMAL},
+			#{item.heatingFee,jdbcType=DECIMAL},
+			#{item.handicapAllowance,jdbcType=DECIMAL},
+			#{item.grossIncome,jdbcType=DECIMAL},
+			#{item.expense,jdbcType=DECIMAL},
+			#{item.rentFee,jdbcType=DECIMAL},
+			#{item.netIncome,jdbcType=DECIMAL},
+			#{item.payDate,jdbcType=VARCHAR}
+		</foreach>
+	</insert>
 </mapper>
