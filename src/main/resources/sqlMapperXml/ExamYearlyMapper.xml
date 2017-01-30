@@ -9,7 +9,7 @@
     <result column="exam_operation" property="examOperation" jdbcType="VARCHAR" />
   </resultMap>
 
-  <resultMap id="ExamYearlyVoMap" type="com.wangzhixuan.vo.ExamMonthlyVo">
+  <resultMap id="ExamYearlyVoMap" type="com.wangzhixuan.vo.ExamYearlyVo">
     <id column="id" property="id" jdbcType="INTEGER"/>
     <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
     <result column="name" property="name" jdbcType="VARCHAR"/>
@@ -72,7 +72,22 @@
       </if>
     </where>
   </select>
-
+  <select id="findExamYearlyVoListByCode" resultMap="ExamYearlyVoMap" parameterType="java.lang.String">
+    SELECT
+    t.id,
+    t.people_code,
+    p.name as name,
+    t.year,
+    t.exam_result,
+    t.exam_operation
+    FROM
+    exam_yearly t
+    LEFT JOIN
+    people p ON t.people_code = p.code
+    <where>
+      t.people_code = #{code,jdbcType=VARCHAR}
+    </where>
+  </select>
   <insert id="insertByImport" parameterType="java.util.List">
         insert into exam_yearly (people_code, year, exam_result, exam_operation
         )

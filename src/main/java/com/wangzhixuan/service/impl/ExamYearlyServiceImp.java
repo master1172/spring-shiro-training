@@ -102,12 +102,12 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 				row.createCell(0).setCellValue(count+1);
 				row.createCell(1).setCellValue(examYearlyVo.getName());
 				row.createCell(2).setCellValue(examYearlyVo.getYear());//please pay more attention about this row
-				row.createCell(4).setCellValue(examYearlyVo.getExamResult());
-				row.createCell(5).setCellValue(examYearlyVo.getExamOperation());
+				row.createCell(3).setCellValue(examYearlyVo.getExamResult());
+				row.createCell(4).setCellValue(examYearlyVo.getExamOperation());
 
 				count++;
 
-				for(int k=0; k<6; k++){
+				for(int k=0; k<5; k++){
 					row.getCell(k).setCellStyle(setBorder);
 				}
 				row.setHeight((short) 400);
