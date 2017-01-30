@@ -6,23 +6,21 @@ import com.wangzhixuan.utils.PageInfo;
 import java.util.List;
 
 public interface ExamYearlyMapper {
-    int deleteByPrimaryKey(Integer id);
+    void deleteByPrimaryKey(Integer id);
 
     int insert(ExamYearly record);
 
-    int insertSelective(ExamYearly record);
-
     ExamYearly selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(ExamYearly record);
 
     int updateByPrimaryKey(ExamYearly record);
 
     List findPageCondition(PageInfo pageInfo);
 
-    List selectByIds(String[] ids);
+    int findPageCount(PageInfo pageInfo);
 
     int insertByImport(List<ExamYearly> list);
 
     int batchDeleteByIds(String[] ids);
+
+    List findExamYearlyVoListByCode(String code);
 }

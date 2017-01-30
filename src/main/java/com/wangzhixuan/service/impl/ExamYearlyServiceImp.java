@@ -1,13 +1,15 @@
 package com.wangzhixuan.service.impl;
 
+import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.ExamYearlyMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.ExamYearly;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.service.ExamYearlyService;
 import com.wangzhixuan.utils.*;
-import com.wangzhixuan.vo.ExamYearlyVo;
 
+import com.wangzhixuan.vo.ExamYearlyVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
@@ -16,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
@@ -32,57 +33,43 @@ import java.util.Map;
 @Service
 public class ExamYearlyServiceImp implements ExamYearlyService {
 	@Autowired
-	private ExamYearlyMapper mapper;
+	private ExamYearlyMapper examYearlyMapper;
 	@Autowired
 	private PeopleMapper peopleMapper;
 
-	public ExamYearly selectByPrimaryKey(Integer id) {
-		return mapper.selectByPrimaryKey(id);
+	@Autowired
+	private DictMapper dictMapper;
+
+	@Override
+	public ExamYearly findExamYearlyById(Long id) {
+		return examYearlyMapper.selectByPrimaryKey(id.intValue());
 	}
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo) {
-		pageInfo.setRows(mapper.findPageCondition(pageInfo));
-
-	}
-
-	@Override
-	public String findIDsByCondition(PageInfo pageInfo) {
-		String ids = "";
-		pageInfo.setFrom(0);
-		pageInfo.setSize(100000);
-		List<ExamYearly> list = mapper.findPageCondition(pageInfo);
-		if (CollectionUtils.isEmpty(list)) {
-			return ids;
-		}
-		for (int i = 0; i < list.size(); i++) {
-			ids = ids + list.get(i).getId().toString() + ",";
-		}
-
-		// 刪除最後一個逗号
-		ids = ids.substring(0, ids.lastIndexOf(','));
-		return ids;
+		pageInfo.setRows(examYearlyMapper.findPageCondition(pageInfo));
+		pageInfo.setTotal(examYearlyMapper.findPageCount(pageInfo));
 	}
 
 	@Override
 	public void add(ExamYearly examYearly) {
-		examYearly.setName(null);// 不维护名称,联查
-		mapper.insert(examYearly);
+		examYearlyMapper.insert(examYearly);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		mapper.deleteByPrimaryKey(id.intValue());
+		examYearlyMapper.deleteByPrimaryKey(id.intValue());
 	}
 
 	@Override
 	public void update(ExamYearly examYearly) {
-		mapper.updateByPrimaryKey(examYearly);
+		examYearlyMapper.updateByPrimaryKey(examYearly);
 	}
 
 	@Override
 	public void exportExcel(HttpServletResponse response, String[] ids) {
-		List<ExamYearly> list = mapper.selectByIds(ids);
+		List<PeopleVo> list = peopleMapper.selectPeopleVoByIds(ids);
+
 		if (CollectionUtils.isEmpty(list)) {
 			return;
 		}
@@ -96,54 +83,46 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 			// 创建表头
 			XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder,
 					ConstUtil.getEaxmYearlyHeaders());
+			int count = 0;
 			setBorder = WordUtil.setCellStyle(workBook, false);
-			for (int i = 0; i < list.size(); i++) {
-				row = sheet.createRow(i + 1);
-				ExamYearly e = list.get(i);
-				row.createCell(0).setCellValue(i + 1);
-				row.createCell(1).setCellValue(e.getName());
-				row.createCell(2).setCellValue(e.getYear());
-				row.createCell(3).setCellValue(e.getExamResult());
-				row.createCell(4).setCellValue(e.getExamOperation());
-				for (int j = 0; j < 5; j++) {
-					row.getCell(j).setCellStyle(setBorder);
+			for(int i=0;i<list.size();i++) {
+			PeopleVo peopleVo = list.get(i);
+			if (peopleVo == null || StringUtils.isBlank(peopleVo.getCode()))
+				continue;
+			String peopleCode = peopleVo.getCode();
+
+			List<ExamYearlyVo> examYearlyVoList = examYearlyMapper.findExamYearlyVoListByCode(peopleCode);
+
+			if (examYearlyVoList == null || examYearlyVoList.size() < 1)
+				continue;
+
+			for(int j=0; j<examYearlyVoList.size(); j++){
+				row = sheet.createRow(count+1);
+				ExamYearlyVo examYearlyVo = examYearlyVoList.get(j);
+				row.createCell(0).setCellValue(count+1);
+				row.createCell(1).setCellValue(examYearlyVo.getName());
+				row.createCell(2).setCellValue(examYearlyVo.getYear());//please pay more attention about this row
+				row.createCell(4).setCellValue(examYearlyVo.getExamResult());
+				row.createCell(5).setCellValue(examYearlyVo.getExamOperation());
+
+				count++;
+
+				for(int k=0; k<6; k++){
+					row.getCell(k).setCellStyle(setBorder);
 				}
 				row.setHeight((short) 400);
-				sheet.setDefaultRowHeightInPoints(21);
-				response.reset();
-				os = response.getOutputStream();
-				response.setHeader(
-						"Content-disposition",
-						"attachment; filename="
-								+ new String(newFileName.getBytes("GBK"),
-										"ISO-8859-1"));
-				workBook.write(os);
-				os.close();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
 
+			sheet.setDefaultRowHeightInPoints(21);
+			response.reset();
+			os = response.getOutputStream();
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+			workBook.write(os);
+			os.close();
 		}
+	}catch (IOException e) {
+		e.printStackTrace();
 	}
-
-	@Override
-	public void exportWord(HttpServletResponse response, String id) {
-		ExamYearly examYearly = mapper.selectByPrimaryKey(Integer.parseInt(id));
-		if (examYearly == null) {
-			return;
-		}
-		XWPFDocument doc;
-		OutputStream os;
-		String filePath = this.getClass()
-				.getResource("/template/examYearly.docx").getPath();
-		String newFileName = "年度考核信息.docx";
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("${name}", examYearly.getName());
-		params.put("${year}", examYearly.getYear());
-		params.put("${examResult}", examYearly.getExamResult());
-		params.put("${examOperation}", examYearly.getExamOperation());
-		WordUtil.OutputWord(response, filePath, newFileName, params);
 	}
 
 	@Override
@@ -166,14 +145,14 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 
 		}
 		if (list.size() > 0) {
-			flag = mapper.insertByImport(list) > 0;
+			flag = examYearlyMapper.insertByImport(list) > 0;
 		}
 		return flag;
 	}
 
 	@Override
 	public void batchDeletePeopleByIds(String[] idList) {
-		mapper.batchDeleteByIds(idList);
+		examYearlyMapper.batchDeleteByIds(idList);
 	}
 
 	private List<ExamYearly> getExamYearlyByExcel(List<ExamYearly> list,
@@ -193,19 +172,19 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 					continue;
 				}
 				String name = row.getCell(1).toString().trim();
-				examYearly.setName(name);
-				People p = peopleMapper.findPeopleByName(examYearly.getName());
-				if (p == null) {
+//				examYearly.setName(name);
+				People people = peopleMapper.findPeopleByName(examYearly.getName());
+				if (people == null || StringUtils.isBlank(people.getCode())) {
 					continue;
 				}
-				examYearly.setPeopleCode(p.getCode());
+				examYearly.setPeopleCode(people.getCode());
 				if (row.getCell(2) != null
 						&& !row.getCell(2).toString().trim().equals("")) {
-					examYearly.setYear(Integer.parseInt(row.getCell(2)
-							.toString().trim()));
+					Double yearValue = Double.parseDouble(row.getCell(2).toString().trim());
+					if (yearValue != null)
+						examYearly.setYear(yearValue.intValue());
 				}
-				if (row.getCell(3) != null
-						&& !row.getCell(3).toString().trim().equals("")) {
+				if(row.getCell(3)!=null && !row.getCell(3).toString().trim().equals("")){
 					examYearly.setExamResult(row.getCell(3).toString().trim());
 				}
 				if (row.getCell(4) != null

@@ -28,8 +28,7 @@
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
 
                 onLoadSuccess: function (data) {
-                        $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
-                        $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
+                        $('.user-easyui-linkbutton-edit').linkbutton({text: '年度考评明细', plain: true, iconCls: 'icon-edit'});
                 },
                 toolbar: '#toolbar'
             });
@@ -38,9 +37,9 @@
         function advSearch(){
             parent.$.modalDialog({
                 title: '高级查询',
-                width: 1000,
+                width: 800,
                 height: 600,
-                href: '${path}/examYearly/advSearchPage',
+                href: '${path}/people/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
@@ -59,7 +58,7 @@
         function exportSearch(){
             parent.$.modalDialog({
                 title: '导出',
-                width: 1000,
+                width: 800,
                 height: 600,
                 href: '${path}/examYearly/exportSearchPage',
                 buttons:[{
@@ -81,40 +80,6 @@
                                     form.find("input[name='ids']").val(ids);
                                     form.attr("action",'${path}'+"/examYearly/exportExcel");
                                     $("#downLoadForm").submit();
-                                }
-                            });
-                        }
-                    }
-                }]
-            });
-        }
-
-        function goTransfer(){
-            var checkedItems = $("#dataGrid").datagrid("getChecked");
-            if(checkedItems.length==1){
-                var id=checkedItems[0]["id"];
-            }else{
-                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
-            }
-
-            parent.$.modalDialog({
-                title: '调出本单位',
-                width: 800,
-                height: 400,
-                href: '${path}/examYearly/transferPage?id='+checkedItems[0]["id"],
-                buttons:[{
-                    text: '调出',
-                    handler: function(){
-                        parent.$.modalDialog.openner_dataGrid = dataGrid; //因为调出成功后，需要刷新这个datagrid
-                        var f = parent.$.modalDialog.handler.find("#peopleTransferForm");
-                        if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/examYearly/transfer",function(data){
-                                if(!data["success"]){
-                                    parent.$.messager.alert("提示", data["msg"], "warning");
-                                }else{
-                                    parent.progressClose();
-                                    dataGrid.datagrid("reload");
-                                    parent.$.modalDialog.handler.dialog("close");
                                 }
                             });
                         }
@@ -185,103 +150,6 @@
             });
         }
 
-        function deleteFun(id) {
-            if (id == undefined) {//点击右键菜单才会触发这个
-                var rows = dataGrid.datagrid('getSelections');
-                id = rows[0].id;
-            } else {//点击操作里面的删除图标会触发这个
-                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-            }
-            parent.$.messager.confirm('询问', '您是否要删除当前人员？', function (b) {
-                if (b) {
-                    progressLoad();
-                    $.post('${path}/examYearly/delete',{
-                            id: id
-                    }, function (result) {
-                        if (result.success) {
-                            parent.$.messager.alert('提示', result.msg, 'info');
-                            dataGrid.datagrid('reload');
-                        }
-                        progressClose();
-                    }, 'JSON');
-                }
-            });
-        }
-
-        function batchDel(){
-            var checkedItems = $('#dataGrid').datagrid('getChecked');
-            var ids = [];
-            $.each(checkedItems, function(index,item){
-                ids.push(item.id);
-            });
-
-            parent.$.messager.confirm('询问', '您是否要删除所选人员？', function (b) {
-                if (b) {
-                    progressLoad();
-                    $.post('${path}/examYearly/batchDel', {
-                        ids: ids.join(",")
-                    }, function (result) {
-                        if (result.success) {
-                            parent.$.messager.alert('提示', result.msg, 'info');
-                            dataGrid.datagrid('reload');
-                        }
-                        progressClose();
-                    }, 'JSON');
-                }
-            });
-        }
-
-        function goRetire(){
-            var checkedItems = $('#dataGrid').datagrid('getChecked');
-            var ids = [];
-            $.each(checkedItems, function(index,item){
-                ids.push(item.id);
-            });
-
-            parent.$.messager.confirm('询问', '您是否要将所选人员转入退休库？', function (b) {
-                if (b) {
-                    progressLoad();
-                    $.post('${path}/examYearly/batchRetire', {
-                        ids: ids.join(",")
-                    }, function (result) {
-                        if (result.success) {
-                            parent.$.messager.alert('提示', result.msg, 'info');
-                            dataGrid.datagrid('reload');
-                        }
-                        progressClose();
-                    }, 'JSON');
-                }
-            });
-        }
-
-        function goDeath(){
-            var checkedItems = $('#dataGrid').datagrid('getChecked');
-            var ids = [];
-            $.each(checkedItems, function(index,item){
-                ids.push(item.id);
-            });
-
-            parent.$.messager.confirm('询问', '您是否要将所选人员转入逝世库？', function (b) {
-                if (b) {
-                    progressLoad();
-                    $.post('${path}/examYearly/batchDeath', {
-                        ids: ids.join(",")
-                    }, function (result) {
-                        if (result.success) {
-                            parent.$.messager.alert('提示', result.msg, 'info');
-                            dataGrid.datagrid('reload');
-                        }
-                        progressClose();
-                    }, 'JSON');
-                }
-            });
-        }
-
-        function nearRetire(){
-            $('#searchForm input').val('');
-            dataGrid.datagrid('load', {"nearRetire":"1"});
-        }
-
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -336,119 +204,189 @@
 				parent.$.messager.alert("提示", "请选择有效数据", "warning");
 			}
         }
-        //导出Word
-        function exportWord(){
-			var checkedItems = $("#dataGrid").datagrid("getChecked");
-			if(checkedItems.length==1){
-				var id=checkedItems[0]["id"];
-				var form=$("#downLoadForm");
-				form.find("input[name='ids']").val(id);
-				form.attr("action",'${path}'+"/examYearly/exportWord");
-				$("#downLoadForm").submit();
-			}else{
-				parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
-			}
+
+        function examYearlyList(id) {
+            parent.$.modalDialog({
+                title:'年考核列表',
+                width:800,
+                height:600,
+                href:'${path}/examYearly/examYearlyListPage?id='+id,
+            });
         }
-	
+
         function sexFormatter(value,row,index){
-        	switch (value) {
-            case 0:
-                return '男';
-            case 1:
-                return '女';
-        	}
+            switch (value) {
+                case 0:
+                    return '男';
+                case 1:
+                    return '女';
+            }
         }
         
+        <%--function operateFormatter(value,row,index){--%>
+        	 <%--var str = '';--%>
+             <%--<shiro:hasPermission name="/examYearly/edit">--%>
+                 <%--str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);--%>
+             <%--</shiro:hasPermission>--%>
+             <%--<shiro:hasPermission name="/examYearly/delete">--%>
+                 <%--str += '&nbsp;&nbsp;|&nbsp;&nbsp;';--%>
+                 <%--str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);--%>
+             <%--</shiro:hasPermission>--%>
+             <%--return str;--%>
+        <%--}--%>
         function operateFormatter(value,row,index){
-        	 var str = '';
-             <shiro:hasPermission name="/examYearly/edit">
-                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
-             </shiro:hasPermission>
-             <shiro:hasPermission name="/examYearly/delete">
-                 str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
-             </shiro:hasPermission>
-             return str;
+            var str = '';
+
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="examYearlyList(\'{0}\');" >年度考核明细</a>', row.id);
+
+            return str;
         }
     </script>
 </head>
 
+<%--<body class="easyui-layout" data-options="fit:true,border:false">--%>
+    <%--<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">--%>
+        <%--<form id="searchForm">--%>
+            <%--<table>--%>
+ 				<%--<tr>--%>
+                    <%--<td>人员编号</td>--%>
+                    	<%--<td><input name="peopleCode" type="text" placeholder="请输入人员编号" class="easyui-validatebox" value=""></td>--%>
+                    <%--<td>人员类型</td>--%>
+                    <%--<td>--%>
+                       <%--<td><input name="peopleType" type="text" placeholder="请输入人员类型" class="easyui-validatebox" value=""></td>--%>
+                    <%--</td>--%>
+                    <%--<td>考勤日期范围</td>--%>
+                    <%--<td colspan="3">--%>
+                        <%--<input name="checkDateMin" placeholder="点击选择起始时间"--%>
+                               <%--onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"--%>
+                               <%--readonly="readonly"/>--%>
+                        <%--~--%>
+                        <%--<input name="checkDateMax" placeholder="点击选择结束时间"--%>
+                               <%--onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"--%>
+                               <%--readonly="readonly"/>--%>
+                    <%--</td>--%>
+                    <%--<td>--%>
+                        <%--<a href="javascript:void(0);" class="easyui-linkbutton"--%>
+                           <%--data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>--%>
+                        <%--<a href="javascript:void(0);" class="easyui-linkbutton"--%>
+                            <%--data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
+            <%--</table>--%>
+        <%--</form>--%>
+    <%--</div>--%>
+
+    <%--<div data-options="region:'center',border:true,title:'考勤列表'">--%>
+        <%--<table id="dataGrid" data-options="fit:true,border:false">--%>
+        	<%--<thead>--%>
+            <%--<tr>--%>
+                <%--<th field="ck"             data-options="checkbox:true"></th>--%>
+                <%--<th field="peopleCode"     data-options="sortable:true" width="80">人员编号</th>--%>
+                <%--<th field="peopleType"     data-options="sortable:true" width="80">人员类型</th>--%>
+         		<%--<th field="year"         data-options="sortable:true" width="80">年份信息</th>--%>
+                <%--<th field="examResult"         data-options="sortable:true" width="80">考勤结果</th>--%>
+                <%--<th field="examOperation" data-options="sortable:true" width="80">考核运用</th>--%>
+                <%--<th field="id"      data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>--%>
+            <%--</tr>--%>
+            <%--</thead>--%>
+        <%--</table>--%>
+    <%--</div>--%>
+
+    <%--<div id="toolbar" style="display: none;">--%>
+        <%--<shiro:hasPermission name="/examYearly/add">--%>
+            <%--<a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">添加</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <%--<shiro:hasPermission name="/examYearly/importExcel">--%>
+            <%--<a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">导入</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <%--<shiro:hasPermission name="/examYearly/exportExcel">--%>
+            <%--<a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">导出Excel</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <%--<shiro:hasPermission name="/examYearly/exportWord">--%>
+            <%--<a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">导出Word</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <%--<shiro:hasPermission name="/examYearly/advSearch">--%>
+            <%--<a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">高级查询</a>--%>
+        <%--</shiro:hasPermission>--%>
+        <%--<shiro:hasPermission name="/examYearly/exportSearch">--%>
+            <%--<a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"--%>
+               <%--data-options="plain:true,iconCls:'icon-add'">查询导出</a>--%>
+        <%--</shiro:hasPermission>--%>
+
+        <%--<!-- 附件下载使用 -->--%>
+    	<%--<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>--%>
+    <%--</div>--%>
+<%--</body>--%>
 <body class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">
-        <form id="searchForm">
-            <table>
- 				<tr>
-                    <td>人员编号</td>
-                    	<td><input name="peopleCode" type="text" placeholder="请输入人员编号" class="easyui-validatebox" value=""></td>
-                    <td>人员类型</td>
-                    <td>
-                       <td><input name="peopleType" type="text" placeholder="请输入人员类型" class="easyui-validatebox" value=""></td>
-                    </td>
-                    <td>考勤日期范围</td>
-                    <td colspan="3">
-                        <input name="checkDateMin" placeholder="点击选择起始时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                        ~
-                        <input name="checkDateMax" placeholder="点击选择结束时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-                               readonly="readonly"/>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0);" class="easyui-linkbutton"
-                           data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
-                        <a href="javascript:void(0);" class="easyui-linkbutton"
-                            data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-
-    <div data-options="region:'center',border:true,title:'考勤列表'">
-        <table id="dataGrid" data-options="fit:true,border:false">
-        	<thead>
+<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">
+    <form id="searchForm">
+        <table>
             <tr>
-                <th field="ck"             data-options="checkbox:true"></th>
-                <th field="peopleCode"     data-options="sortable:true" width="80">人员编号</th>
-                <th field="peopleType"     data-options="sortable:true" width="80">人员类型</th>
-         		<th field="year"         data-options="sortable:true" width="80">年份信息</th>
-                <th field="examResult"         data-options="sortable:true" width="80">考勤结果</th>
-                <th field="examOperation" data-options="sortable:true" width="80">考核运用</th>
-                <th field="id"      data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+                <th>姓名:</th>
+                <td>
+                    <input name="name" placeholder="请输入人员姓名"/>
+                </td>
+                <th>性别:</th>
+                <td>
+                    <select name="sex">
+                        <option value="" selected>请选择</option>
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                </td>
+                <th>出生日期</th>
+                <td>
+                    <input name="birthdayMin" placeholder="点击选择起始时间"
+                           onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                           readonly="readonly"/>至
+                    <input name="birthdayMax" placeholder="点击选择结束时间"
+                           onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                           readonly="readonly"/>
+                    <a href="javascript:void(0);" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
+                    <a href="javascript:void(0);" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                </td>
             </tr>
-            </thead>
         </table>
-    </div>
+    </form>
+</div>
 
-    <div id="toolbar" style="display: none;">
-        <shiro:hasPermission name="/examYearly/add">
-            <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">添加</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/importExcel">
-            <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">导入</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/exportExcel">
-            <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/exportWord">
-            <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">导出Word</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/advSearch">
-            <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="/examYearly/exportSearch">
-            <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-add'">查询导出</a>
-        </shiro:hasPermission>
+<div data-options="region:'center',border:true,title:'人员列表'">
+    <table id="dataGrid" data-options="fit:true,border:false">
+        <thead>
+        <tr>
+            <th field="ck"            data-options="checkbox:true"></th>
+            <th field="name"          data-options="sortable:true" width="80">姓名</th>
+            <th field="sex"           data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
+            <th field="nationalName"  data-options="sortable:true" width="80">民族</th>
+            <th field="birthday"      data-options="sortable:true" width="130">生日</th>
+            <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
+            <th field="educationName" data-options="sortable:true" width="80">学历</th>
+            <th field="degreeName"    data-options="sortable:true" width="80">学位</th>
+            <th field="jobName"       data-options="sortable:true" width="80">职务</th>
+            <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
+            <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
+            <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
 
-        <!-- 附件下载使用 -->
-    	<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
-    </div>
+<div id="toolbar" style="display: none;">
+    <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
+    <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
+    <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+    <!-- 附件下载使用 -->
+    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+</div>
 </body>
 </html>
