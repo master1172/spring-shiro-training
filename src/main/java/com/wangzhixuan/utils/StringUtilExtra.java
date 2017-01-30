@@ -50,4 +50,15 @@ public class StringUtilExtra {
         return output;
 
     }
+
+    public static String DecimalToString(BigDecimal decimal){
+        if (decimal == null)
+            return null;
+
+        try{
+            return decimal.toString();
+        }catch (Exception exp){
+            return null;
+        }
+    }
 }

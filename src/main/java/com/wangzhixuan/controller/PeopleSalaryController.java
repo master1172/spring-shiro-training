@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.model.PeopleSalaryBase;
+import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,5 +186,40 @@ public class PeopleSalaryController extends BaseController{
             result.setMsg("请选择附件！");
         }
         return result;
+    }
+
+    @RequestMapping("/salaryBasePage")
+    public String salaryBasePage(String peopleCode, Model model){
+        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);
+
+        if (peopleSalaryBaseVo == null){
+            peopleSalaryBaseVo = new PeopleSalaryBaseVo();
+            peopleSalaryBaseVo.setPeopleCode(peopleCode);
+
+            People people = peopleService.findPeopleByCode(peopleCode);
+            if (people != null){
+                peopleSalaryBaseVo.setPeopleName(people.getName());
+                peopleSalaryBaseVo.setJobId(people.getJobLevelId());
+            }
+        }
+
+        model.addAttribute("peopleSalaryBaseVo",peopleSalaryBaseVo);
+        return "/admin/peopleSalary/peopleSalaryBase";
+    }
+
+    @RequestMapping("/salaryBaseEdit")
+    @ResponseBody
+    public Result salaryBaseEdit(PeopleSalaryBase peopleSalaryBase){
+        Result result = new Result();
+        try{
+            peopleSalaryService.updateSalaryBase(peopleSalaryBase);
+            result.setSuccess(true);
+            result.setMsg("修改成功!");
+            return result;
+        }catch(Exception e){
+            LOGGER.error("修改工资基数失败：{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
     }
 }

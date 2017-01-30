@@ -1,18 +1,19 @@
 package com.wangzhixuan.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Timesheet implements Serializable {
+public class PeopleTimesheet implements Serializable {
 	private static final long serialVersionUID = 199L;
 
 	private Integer id;
 
 	private String peopleCode;
 
-	private String peopleType;
-
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String checkDate;
 
 	private String status;
@@ -33,14 +34,6 @@ public class Timesheet implements Serializable {
 
 	public void setPeopleCode(String peopleCode) {
 		this.peopleCode = peopleCode == null ? null : peopleCode.trim();
-	}
-
-	public String getPeopleType() {
-		return peopleType;
-	}
-
-	public void setPeopleType(String peopleType) {
-		this.peopleType = peopleType == null ? null : peopleType.trim();
 	}
 
 	public String getCheckDate() {
@@ -75,7 +68,6 @@ public class Timesheet implements Serializable {
 		sb.append("Hash = ").append(hashCode());
 		sb.append(", id=").append(id);
 		sb.append(", peopleCode=").append(peopleCode);
-		sb.append(", peopleType=").append(peopleType);
 		sb.append(", checkDate=").append(checkDate);
 		sb.append(", status=").append(status);
 		sb.append(", vacationPeriod=").append(vacationPeriod);

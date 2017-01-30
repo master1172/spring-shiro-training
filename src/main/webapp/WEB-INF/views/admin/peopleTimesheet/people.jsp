@@ -6,13 +6,13 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>合同人员薪资</title>
+    <title>在编人员考勤</title>
     <script type="text/javascript">
         var dataGrid;
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/peopleRetire/dataGrid',
+                url: '${path}/peopleTimesheet/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -28,7 +28,7 @@
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
 
                 onLoadSuccess: function (data) {
-                    $('.user-easyui-linkbutton-edit').linkbutton({text: '工资明细', plain: true, iconCls: 'icon-edit'});
+                    $('.user-easyui-linkbutton-edit').linkbutton({text: '考勤明细', plain: true, iconCls: 'icon-edit'});
                 },
                 toolbar: '#toolbar'
             });
@@ -70,7 +70,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
-                href: '${path}/peopleRetireSalary/importExcelPage',
+                href: '${path}/peopleTimesheet/importExcelPage',
                 buttons: [{
                     text: '导入',
                     handler: function () {
@@ -78,7 +78,7 @@
                         var f = parent.$.modalDialog.handler.find("#importExcelForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/peopleRetireSalary/importExcel",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleTimesheet/importExcel",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -104,19 +104,19 @@
                 });
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids);
-                form.attr("action",'${path}'+"/peopleRetireSalary/exportExcel");
+                form.attr("action",'${path}'+"/peopleTimesheet/exportExcel");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择有效数据", "warning");
             }
         }
 
-        function salaryList(id) {
+        function timesheetList(id) {
             parent.$.modalDialog({
-                title:'工资列表',
-                width:1200,
+                title:'考勤列表',
+                width:1000,
                 height:600,
-                href:'${path}/peopleRetireSalary/salaryListPage?id='+id,
+                href:'${path}/peopleTimesheet/timesheetListPage?id='+id,
             });
         }
 
@@ -132,7 +132,7 @@
         function operateFormatter(value,row,index){
             var str = '';
 
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="salaryList(\'{0}\');" >工资明细</a>', row.id);
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="timesheetList(\'{0}\');" >考勤明细</a>', row.id);
 
             return str;
         }
@@ -185,9 +185,10 @@
             <th field="birthday"      data-options="sortable:true" width="130">生日</th>
             <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
             <th field="educationName" data-options="sortable:true" width="80">学历</th>
-            <th field="politicalName" data-options="sortable:true" width="80">学位</th>
-            <th field="retireJobName" data-options="sortable:true" width="80">退休时职务</th>
-            <th field="retireJobLevelName"  data-options="sortable:true" width="80">退休时职级</th>
+            <th field="degreeName"    data-options="sortable:true" width="80">学位</th>
+            <th field="jobName"       data-options="sortable:true" width="80">职务</th>
+            <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
+            <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
             <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
@@ -195,14 +196,14 @@
 </div>
 
 <div id="toolbar" style="display: none;">
-        <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导入</a>
-        <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-        <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-        <!-- 附件下载使用 -->
-        <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+    <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
+    <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
+    <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+    <!-- 附件下载使用 -->
+    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
 </body>
 </html>

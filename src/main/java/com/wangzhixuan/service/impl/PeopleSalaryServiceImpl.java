@@ -5,6 +5,7 @@ import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.mapper.PeopleSalaryMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleSalary;
+import com.wangzhixuan.model.PeopleSalaryBase;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
@@ -74,7 +75,21 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Override
     public PeopleSalaryBaseVo findPeopleSalaryBaseByCode(String code) {
+
+        if (StringUtils.isBlank(code))
+            return null;
+
         return peopleSalaryMapper.findPeopleSalaryBaseVoByCode(code);
+    }
+
+    @Override
+    public void updateSalaryBase(PeopleSalaryBase peopleSalaryBase){
+        if(peopleSalaryBase == null)
+            return;
+
+        if (peopleSalaryBase.getId() == null)
+            peopleSalaryMapper.addSalaryBase(peopleSalaryBase);
+        peopleSalaryMapper.updateSalaryBase(peopleSalaryBase);
     }
 
     @Override
@@ -152,13 +167,15 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                         }
                         row.setHeight((short) 400);
                     }
-                    sheet.setDefaultRowHeightInPoints(21);
-                    response.reset();
-                    os = response.getOutputStream();
-                    response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
-                    workBook.write(os);
-                    os.close();
                 }
+
+                sheet.setDefaultRowHeightInPoints(21);
+                response.reset();
+                os = response.getOutputStream();
+                response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+                workBook.write(os);
+                os.close();
+
             }catch (Exception exp){
                 exp.printStackTrace();
             }

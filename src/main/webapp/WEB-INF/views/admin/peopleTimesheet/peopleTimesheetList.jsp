@@ -11,11 +11,11 @@
 <link rel="stylesheet" type="text/css" href="${staticPath }/static/style/css/dreamlu.css" />
 
 <script type="text/javascript">
-    var salaryGrid;
+    var timesheetGrid;
 
     $(function () {
-        salaryGrid = $('#salaryGrid').datagrid({
-            url: '${path}/peopleSalary/salaryGrid',
+        timesheetGrid = $('#timesheetGrid').datagrid({
+            url: '${path}/peopleTimesheet/timesheetGrid',
             fit: true,
             striped: true,
             queryParams: {code : '${code}'},
@@ -35,58 +35,29 @@
                 $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
                 $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
             },
-            toolbar: '#salarytoolbar'
+            toolbar: '#timesheettoolbar'
         });
     });
-
-    function addSalaryBaseFun() {
-        parent.$.modalDialog({
-            title: '修改工资基数',
-            width: 1000,
-            height: 600,
-            href: '${path}/peopleSalary/salaryBasePage?peopleCode=${code}',
-            buttons:[{
-                text: '修改',
-                handler: function(){
-                    parent.$.modalDialog.openner_dataGrid = salaryGrid;
-                    var f = parent.$.modalDialog.handler.find('#salaryBaseForm');
-                    if(parent.checkForm()) {
-                        parent.SYS_SUBMIT_FORM(f, "/peopleSalary/salaryBaseEdit", function (data) {
-                            if (!data["success"]) {
-                                parent.progressClose();
-                                parent.$.messager.alert("提示", data["msg"], "warning");
-                            } else {
-                                parent.progressClose();
-                                salaryGrid.datagrid("reload");
-                                parent.$.modalDialog.handler.dialog("close");
-                            }
-                        });
-                    }
-
-                }
-            }]
-        });
-    }
 
     function addFun(){
         parent.$.modalDialog({
             title: '添加',
             width: 1000,
             height: 600,
-            href: '${path}/peopleSalary/addPage?peopleCode=${code}',
+            href: '${path}/peopleTimesheet/addPage?peopleCode=${code}',
             buttons: [{
                 text: '添加',
                 handler: function () {
-                    parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为添加成功之后，需要刷新这个salaryGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find("#salaryAddForm");
+                    parent.$.modalDialog.openner_dataGrid = timesheetGrid;//因为添加成功之后，需要刷新这个timesheetGrid，所以先预定义好
+                    var f = parent.$.modalDialog.handler.find("#timesheetAddForm");
                     if(parent.checkForm()) {
-                        parent.SYS_SUBMIT_FORM(f, "/peopleSalary/add", function (data) {
+                        parent.SYS_SUBMIT_FORM(f, "/peopleTimesheet/add", function (data) {
                             if (!data["success"]) {
                                 parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
                             } else {
                                 parent.progressClose();
-                                salaryGrid.datagrid("reload");
+                                timesheetGrid.datagrid("reload");
                                 parent.$.modalDialog.handler.dialog("close");
                             }
                         });
@@ -99,30 +70,31 @@
 
     function editFun(id) {
         if (id == undefined) {
-            var rows = salaryGrid.datagrid('getSelections');
+            var rows = timesheetGrid.datagrid('getSelections');
             id = rows[0].id;
         } else {
-            salaryGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            timesheetGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
 
         parent.$.modalDialog({
             title: '修改',
             width: 1000,
             height: 600,
-            href: '${path}/peopleSalary/editPage?id='+id,
+            href: '${path}/peopleTimesheet/editPage?id='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
-                    parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find("#salaryEditForm");
+                    parent.$.modalDialog.openner_dataGrid = timesheetGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                    var f = parent.$.modalDialog.handler.find("#timesheetEditForm");
 
                     if(parent.checkForm()){
-                        parent.SYS_SUBMIT_FORM(f,"/peopleSalary/edit",function(data){
+                        parent.SYS_SUBMIT_FORM(f,"/peopleTimesheet/edit",function(data){
                             if(!data["success"]){
+                                parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
                             }else{
                                 parent.progressClose();
-                                salaryGrid.datagrid("reload");
+                                timesheetGrid.datagrid("reload");
                                 parent.$.modalDialog.handler.dialog("close");
                             }
                         });
@@ -134,20 +106,20 @@
 
     function deleteFun(id) {
         if (id == undefined) {//点击右键菜单才会触发这个
-            var rows = salaryGrid.datagrid('getSelections');
+            var rows = timesheetGrid.datagrid('getSelections');
             id = rows[0].id;
         } else {//点击操作里面的删除图标会触发这个
-            salaryGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            timesheetGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
         parent.$.messager.confirm('询问', '您是否要删除当前工资记录？', function (b) {
             if (b) {
                 progressLoad();
-                $.post('${path}/peopleSalary/delete',{
+                $.post('${path}/peopleTimesheet/delete',{
                     id: id
                 }, function (result) {
                     if (result.success) {
                         parent.$.messager.alert('提示', result.msg, 'info');
-                        salaryGrid.datagrid('reload');
+                        timesheetGrid.datagrid('reload');
                     }
                     progressClose();
                 }, 'JSON');
@@ -165,26 +137,21 @@
 </script>
 
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:true,title:'工资发放列表'">
-        <table id="salaryGrid" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:true,title:'考勤列表'">
+        <table id="timesheetGrid" data-options="fit:true,border:false">
             <thead>
             <tr>
                 <th field="ck"              data-options="checkbox:true"></th>
-                <th field="payDate"         data-options="sortable:false" width="80">发放日期</th>
-                <th field="jobCategory"     data-options="sortable:false" width="80">岗位分类</th>
-                <th field="jobLevel"        data-options="sortable:false" width="80">职级</th>
-                <th field="jobSalary"       data-options="sortable:false" width="80">岗位工资</th>
-                <th field="rankLevel"       data-options="sortable:false" width="80">薪级</th>
-                <th field="rankSalary"      data-options="sortable:false" width="80">薪级工资</th>
+                <th field="checkDate"       data-options="sortable:false" width="80">请假日期</th>
+                <th field="status"          data-options="sortable:false" width="80">请假原因</th>
+                <th field="vacationPeriod"  data-options="sortable:false" width="80">假期长度</th>
                 <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
         </table>
     </div>
-    <div id="salarytoolbar" style="display: none;">
+    <div id="timesheettoolbar" style="display: none;">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
-        <a onclick="addSalaryBaseFun()" href="javascript:void(0)" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">修改工资基数</a>
     </div>
 </div>

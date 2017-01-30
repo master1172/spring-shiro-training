@@ -2,6 +2,7 @@ package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleSalary;
+import com.wangzhixuan.model.PeopleSalaryBase;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
@@ -32,4 +33,8 @@ public interface PeopleSalaryMapper {
     List findPeopleSalaryVoListByCode(String code);
 
     int insertByImport(List<PeopleSalary> list);
+
+    int addSalaryBase(PeopleSalaryBase peopleSalaryBase);
+
+    int updateSalaryBase(PeopleSalaryBase peopleSalaryBase);
 }

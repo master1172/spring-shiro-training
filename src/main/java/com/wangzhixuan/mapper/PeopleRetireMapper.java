@@ -96,5 +96,7 @@ public interface PeopleRetireMapper {
      * @return
      */
     PeopleRetireVo findPeopleRetireVoById(Long id);
+
+    PeopleRetire findFirstPeopleByName(String code);
 }
 
