@@ -12,7 +12,7 @@
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/peopleRetireSalary/dataGrid',
+                url: '${path}/peopleRetire/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -49,39 +49,6 @@
                             var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
                             dataGrid.datagrid("load",$.serializeObject(f));
                             parent.$.modalDialog.handler.dialog("close");
-                        }
-                    }
-                }]
-            });
-        }
-
-        function exportSearch(){
-            parent.$.modalDialog({
-                title: '导出',
-                width: 1000,
-                height: 600,
-                href: '${path}/peopleRetireSalary/exportSearchPage',
-                buttons:[{
-                    text:'导出',
-                    handler: function(){
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;
-                        var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
-                        if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/peopleRetireSalary/exportSearch",function(data){
-                                if(!data["success"]){
-                                    parent.progressClose();
-                                    parent.$.modalDialog.handler.dialog("close");
-                                    parent.$.messager.alert("提示",data["msg"],"warning");
-                                }else{
-                                    parent.progressClose();
-                                    parent.$.modalDialog.handler.dialog("close");
-                                    var ids = data["obj"];
-                                    var form=$("#downLoadForm");
-                                    form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/peopleRetireSalary/exportExcel");
-                                    $("#downLoadForm").submit();
-                                }
-                            });
                         }
                     }
                 }]
@@ -218,10 +185,9 @@
             <th field="birthday"      data-options="sortable:true" width="130">生日</th>
             <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
             <th field="educationName" data-options="sortable:true" width="80">学历</th>
-            <th field="degreeName"    data-options="sortable:true" width="80">学位</th>
-            <th field="jobName"       data-options="sortable:true" width="80">职务</th>
-            <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
-            <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
+            <th field="politicalName" data-options="sortable:true" width="80">学位</th>
+            <th field="retireJobName" data-options="sortable:true" width="80">退休时职务</th>
+            <th field="retireJobLevelName"  data-options="sortable:true" width="80">退休时职级</th>
             <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
@@ -235,8 +201,6 @@
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-        <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         <!-- 附件下载使用 -->
         <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

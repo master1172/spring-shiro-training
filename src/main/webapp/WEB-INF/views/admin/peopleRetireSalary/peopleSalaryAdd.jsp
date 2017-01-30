@@ -53,7 +53,7 @@
                     </td>
                     <td>卫生补贴</td>
                     <td>
-                        <input name="heathAllowance" id="heathAllowance" type="text"   class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="healthAllowance" id="healthAllowance" type="text"   class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                  </tr>
                  <tr>
@@ -85,7 +85,7 @@
                     </td>
                     <td>代扣房租</td>
                     <td>
-                        <input name="rentFee" id="netIncome" type="text"   class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="rentFee" id="rentFee" type="text"   class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>实发合计</td>
                     <td>
@@ -98,7 +98,7 @@
                         <input id="payDate" name="payDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
+                                dateFmt:'yyyy-MM',
                                 maxDate:'%y-%M-%d',
                                 })"
                                readonly="readonly"/>

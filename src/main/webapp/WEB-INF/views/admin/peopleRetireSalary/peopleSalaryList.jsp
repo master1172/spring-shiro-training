@@ -138,14 +138,14 @@
         <table id="salaryGrid" data-options="fit:true,border:false">
             <thead>
             <tr>
-                <th field="ck"              data-options="checkbox:true"></th>
-                <th field="payDate"         data-options="sortable:false" width="80">发放日期</th>
-                <th field="baseSalary"     data-options="sortable:false" width="80">基本工资</th>
-                <th field="extraAllowance"        data-options="sortable:false" width="80">适当补贴</th>
-                <th field="rentAllowance"       data-options="sortable:false" width="80">提租补贴</th>
-                <th field="retireAllowance"       data-options="sortable:false" width="80">退休补贴</th>
+                <th field="ck"                     data-options="checkbox:true"></th>
+                <th field="payDate"                data-options="sortable:false" width="80">发放日期</th>
+                <th field="baseSalary"             data-options="sortable:false" width="80">基本工资</th>
+                <th field="extraAllowance"         data-options="sortable:false" width="80">适当补贴</th>
+                <th field="rentAllowance"          data-options="sortable:false" width="80">提租补贴</th>
+                <th field="retireAllowance"        data-options="sortable:false" width="80">退休补贴</th>
                 <th field="retireFeeIncrease"      data-options="sortable:false" width="80">退休费调增</th>
-                <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+                <th field="id"                     data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
         </table>
