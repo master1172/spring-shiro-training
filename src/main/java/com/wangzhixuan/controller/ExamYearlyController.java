@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
+import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -163,21 +164,15 @@ public class ExamYearlyController extends BaseController {
 	}
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
-	public Result add(ExamYearly examYearly) {
+	public Result add(ExamYearly examYearly, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
 		Result result = new Result();
-		try {
-			People people = peopleService
-					.findPeopleByName(examYearly.getName());
-			if (people == null || StringUtils.isBlank(people.getCode())) {
-				throw new RuntimeException("用户不存在");
-			}
-			examYearly.setPeopleCode(people.getCode());
+		try{
 			examYearlyService.add(examYearly);
 			result.setSuccess(true);
-			result.setMsg("添加成功");
+			result.setMsg("添加成功!");
 			return result;
-		} catch (Exception e) {
-			LOGGER.error("添加失败：{}", e);
+		}catch(Exception e){
+			LOGGER.error("添加失败：{}",e);
 			result.setMsg(e.getMessage());
 			return result;
 		}
