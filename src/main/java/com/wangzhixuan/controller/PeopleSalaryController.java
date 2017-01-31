@@ -105,9 +105,13 @@ public class PeopleSalaryController extends BaseController{
     @RequestMapping("/addPage")
     public String addPage(String peopleCode, Model model){
         People people = peopleService.findPeopleByCode(peopleCode);
+        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);
         if (people == null)
             people = new People();
+        if (peopleSalaryBaseVo == null)
+            peopleSalaryBaseVo = new PeopleSalaryBaseVo();
         model.addAttribute("people",people);
+        model.addAttribute("peopleSalaryBaseVo", peopleSalaryBaseVo);
         return "/admin/peopleSalary/peopleSalaryAdd";
     }
 
