@@ -10,11 +10,10 @@ import java.math.BigDecimal;
  */
 public class PeopleContractSalaryVo implements Serializable{
 
-
-	private static final long serialVersionUID = -5321233594382537L;
-	private Long id;
+	private Integer id;
 	private String peopleCode;
 	private String peopleName;
+	private BigDecimal baseSalary;
 	private int jobId;
     private String jobCategory;
     private String jobLevel;
@@ -42,11 +41,11 @@ public class PeopleContractSalaryVo implements Serializable{
 	@JsonFormat(pattern = "yyyy-MM")
 	private String payDate;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -57,6 +56,10 @@ public class PeopleContractSalaryVo implements Serializable{
 	public void setPeopleCode(String peopleCode) {
 		this.peopleCode = peopleCode;
 	}
+
+	public BigDecimal getBaseSalary() {return baseSalary;}
+
+	public void setBaseSalary(BigDecimal baseSalary) {this.baseSalary = baseSalary;}
 
 	public int getJobId() {
 		return jobId;

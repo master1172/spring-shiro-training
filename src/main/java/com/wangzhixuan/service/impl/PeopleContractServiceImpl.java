@@ -454,7 +454,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
     
     @Override
 	public PeopleContract findPeopleContractByCode(String code) {
-		return peopleContractMapper.findContractPeopleByCode(code);
+		return peopleContractMapper.findPeopleContractByCode(code);
 	}
 
 

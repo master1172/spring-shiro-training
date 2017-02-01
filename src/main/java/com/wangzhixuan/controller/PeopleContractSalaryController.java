@@ -48,17 +48,11 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows,
-			String sort, String order) {
+	public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows, String sort, String order) {
 		PageInfo pageInfo = new PageInfo(page, rows);
 		Map<String, Object> condition = PeopleContractVo.CreateCondition(peopleVo);
 		pageInfo.setCondition(condition);
-
-		// LOGGER.info(JSON.toJSONString(pageInfo));
 		peopleContractService.findDataGrid(pageInfo);
-
-		// LOGGER.info(JSON.toJSONString(pageInfo));
-
 		return pageInfo;
 	}
 
@@ -77,11 +71,7 @@ public class PeopleContractSalaryController extends BaseController {
 		}
 		return "/admin/peopleContractSalary/peopleSalaryList";
 	}
-	
-	@RequestMapping(value = "/importExcelPage", method = RequestMethod.GET)
-	public String importExcelPage() {
-		return "admin/peopleContractSalary/importExcelPage";
-	}
+
 
 	@RequestMapping(value = "/salaryGrid", method = RequestMethod.POST)
 	@ResponseBody
@@ -152,10 +142,10 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Result edit(PeopleContractSalary peopleContract) {
+	public Result edit(PeopleContractSalary peopleContractSalary) {
 		Result result = new Result();
 		try {
-			peopleContractSalaryService.updateSalary(peopleContract);
+			peopleContractSalaryService.updateSalary(peopleContractSalary);
 			result.setSuccess(true);
 			result.setMsg("修改成功!");
 			return result;
@@ -169,6 +159,10 @@ public class PeopleContractSalaryController extends BaseController {
 	/**
 	 * 批量调入W
 	 */
+	@RequestMapping(value = "/importExcelPage", method = RequestMethod.GET)
+	public String importExcelPage() {
+		return "admin/peopleContractSalary/importExcelPage";
+	}
 	@RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
 	public Result importExcel(@RequestParam(value = "fileName", required = false) CommonsMultipartFile[] files) {

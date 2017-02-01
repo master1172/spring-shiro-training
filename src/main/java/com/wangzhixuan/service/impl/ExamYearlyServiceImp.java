@@ -85,32 +85,35 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 					ConstUtil.getEaxmYearlyHeaders());
 			int count = 0;
 			setBorder = WordUtil.setCellStyle(workBook, false);
+
 			for(int i=0;i<list.size();i++) {
-			PeopleVo peopleVo = list.get(i);
-			if (peopleVo == null || StringUtils.isBlank(peopleVo.getCode()))
-				continue;
-			String peopleCode = peopleVo.getCode();
+				PeopleVo peopleVo = list.get(i);
+				if (peopleVo == null || StringUtils.isBlank(peopleVo.getCode()))
+					continue;
 
-			List<ExamYearlyVo> examYearlyVoList = examYearlyMapper.findExamYearlyVoListByCode(peopleCode);
+				String peopleCode = peopleVo.getCode();
 
-			if (examYearlyVoList == null || examYearlyVoList.size() < 1)
-				continue;
+				List<ExamYearlyVo> examYearlyVoList = examYearlyMapper.findExamYearlyVoListByCode(peopleCode);
 
-			for(int j=0; j<examYearlyVoList.size(); j++){
-				row = sheet.createRow(count+1);
-				ExamYearlyVo examYearlyVo = examYearlyVoList.get(j);
-				row.createCell(0).setCellValue(count+1);
-				row.createCell(1).setCellValue(examYearlyVo.getName());
-				row.createCell(2).setCellValue(examYearlyVo.getYear());//please pay more attention about this row
-				row.createCell(3).setCellValue(examYearlyVo.getExamResult());
-				row.createCell(4).setCellValue(examYearlyVo.getExamOperation());
+				if (examYearlyVoList == null || examYearlyVoList.size() < 1)
+					continue;
 
-				count++;
+				for(int j=0; j<examYearlyVoList.size(); j++){
+					row = sheet.createRow(count+1);
+					ExamYearlyVo examYearlyVo = examYearlyVoList.get(j);
+					row.createCell(0).setCellValue(count+1);
+					row.createCell(1).setCellValue(examYearlyVo.getName());
+					row.createCell(2).setCellValue(examYearlyVo.getYear());//please pay more attention about this row
+					row.createCell(3).setCellValue(examYearlyVo.getExamResult());
+					row.createCell(4).setCellValue(examYearlyVo.getExamOperation());
 
-				for(int k=0; k<5; k++){
-					row.getCell(k).setCellStyle(setBorder);
+					count++;
+
+					for(int k=0; k<5; k++){
+						row.getCell(k).setCellStyle(setBorder);
+					}
+					row.setHeight((short) 400);
 				}
-				row.setHeight((short) 400);
 			}
 
 			sheet.setDefaultRowHeightInPoints(21);
@@ -119,7 +122,7 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 			response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
 			workBook.write(os);
 			os.close();
-		}
+
 	}catch (IOException e) {
 		e.printStackTrace();
 	}
@@ -173,7 +176,7 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 				}
 				String name = row.getCell(1).toString().trim();
 //				examYearly.setName(name);
-				People people = peopleMapper.findPeopleByName(examYearly.getName());
+				People people = peopleMapper.findPeopleByName(name);
 				if (people == null || StringUtils.isBlank(people.getCode())) {
 					continue;
 				}

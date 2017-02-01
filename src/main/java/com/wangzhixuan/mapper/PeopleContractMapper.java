@@ -59,7 +59,7 @@ public interface PeopleContractMapper {
      * @return
      */
     List findPeopleContractPageCondition(PageInfo pageInfo);
-
+    PeopleContract findPeopleRetireByCode(String code);
     /**
      * 统计人员
      *
@@ -94,6 +94,7 @@ public interface PeopleContractMapper {
      * @return
      */
     PeopleContractVo findPeopleContractVoById(Long id);
-    
-    PeopleContract findContractPeopleByCode(String code);
+
+    PeopleContract findFirstPeopleByName(String name);
+    PeopleContract findPeopleContractByCode(String code);
 }
