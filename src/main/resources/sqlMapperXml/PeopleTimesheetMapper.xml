@@ -19,7 +19,7 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, people_code, heck_date, status, vacation_period
+		id, people_code, check_date, status, vacation_period
 	</sql>
 
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
