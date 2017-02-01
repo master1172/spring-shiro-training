@@ -137,15 +137,14 @@ public class PeopleSalaryController extends BaseController{
             }
         }
 
-        model.addAttribute("timesheetStatus", sumVacationPeriod);
-
         String examResult = "";
 
         if (peopleExamMonthlyResult != null){
             examResult = peopleExamMonthlyResult.getExamResult();
         }
-        model.addAttribute("examResult",examResult);
 
+        model.addAttribute("timesheetStatus", sumVacationPeriod);
+        model.addAttribute("examResult",examResult);
         model.addAttribute("people",people);
         model.addAttribute("peopleSalaryBaseVo", peopleSalaryBaseVo);
         return "/admin/peopleSalary/peopleSalaryAdd";

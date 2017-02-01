@@ -37,7 +37,13 @@
                 <tr>
                     <td>考核结果</td>
                     <td>
-                        <input type="text" name="examResult">
+                        <select name="examResult" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="A" selected="selected">A</option>
+                            <option value="B" >B</option>
+                            <option value="C" >C</option>
+                            <option value="D" >D</option>
+                            <option value="E" >E</option>
+                        </select>
                     </td>
                     <td>考核运用</td>
                     <td>
