@@ -102,6 +102,7 @@
                         if(parent.checkForm()){
                         	parent.SYS_SUBMIT_FORM(f,"/examYearly/add",function(data){
                     			if(!data["success"]){
+                                    parent.progressClose();
                     				parent.$.messager.alert("提示", data["msg"], "warning");
                     			}else{
                     				parent.progressClose();
@@ -137,6 +138,7 @@
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f,"/examYearly/edit",function(data){
                                 if(!data["success"]){
+                                    parent.progressClose();
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
                                     parent.progressClose();
@@ -223,18 +225,7 @@
                     return '女';
             }
         }
-        
-        <%--function operateFormatter(value,row,index){--%>
-        	 <%--var str = '';--%>
-             <%--<shiro:hasPermission name="/examYearly/edit">--%>
-                 <%--str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);--%>
-             <%--</shiro:hasPermission>--%>
-             <%--<shiro:hasPermission name="/examYearly/delete">--%>
-                 <%--str += '&nbsp;&nbsp;|&nbsp;&nbsp;';--%>
-                 <%--str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);--%>
-             <%--</shiro:hasPermission>--%>
-             <%--return str;--%>
-        <%--}--%>
+
         function operateFormatter(value,row,index){
             var str = '';
 
@@ -245,84 +236,6 @@
     </script>
 </head>
 
-<%--<body class="easyui-layout" data-options="fit:true,border:false">--%>
-    <%--<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">--%>
-        <%--<form id="searchForm">--%>
-            <%--<table>--%>
- 				<%--<tr>--%>
-                    <%--<td>人员编号</td>--%>
-                    	<%--<td><input name="peopleCode" type="text" placeholder="请输入人员编号" class="easyui-validatebox" value=""></td>--%>
-                    <%--<td>人员类型</td>--%>
-                    <%--<td>--%>
-                       <%--<td><input name="peopleType" type="text" placeholder="请输入人员类型" class="easyui-validatebox" value=""></td>--%>
-                    <%--</td>--%>
-                    <%--<td>考勤日期范围</td>--%>
-                    <%--<td colspan="3">--%>
-                        <%--<input name="checkDateMin" placeholder="点击选择起始时间"--%>
-                               <%--onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"--%>
-                               <%--readonly="readonly"/>--%>
-                        <%--~--%>
-                        <%--<input name="checkDateMax" placeholder="点击选择结束时间"--%>
-                               <%--onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"--%>
-                               <%--readonly="readonly"/>--%>
-                    <%--</td>--%>
-                    <%--<td>--%>
-                        <%--<a href="javascript:void(0);" class="easyui-linkbutton"--%>
-                           <%--data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>--%>
-                        <%--<a href="javascript:void(0);" class="easyui-linkbutton"--%>
-                            <%--data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-            <%--</table>--%>
-        <%--</form>--%>
-    <%--</div>--%>
-
-    <%--<div data-options="region:'center',border:true,title:'考勤列表'">--%>
-        <%--<table id="dataGrid" data-options="fit:true,border:false">--%>
-        	<%--<thead>--%>
-            <%--<tr>--%>
-                <%--<th field="ck"             data-options="checkbox:true"></th>--%>
-                <%--<th field="peopleCode"     data-options="sortable:true" width="80">人员编号</th>--%>
-                <%--<th field="peopleType"     data-options="sortable:true" width="80">人员类型</th>--%>
-         		<%--<th field="year"         data-options="sortable:true" width="80">年份信息</th>--%>
-                <%--<th field="examResult"         data-options="sortable:true" width="80">考勤结果</th>--%>
-                <%--<th field="examOperation" data-options="sortable:true" width="80">考核运用</th>--%>
-                <%--<th field="id"      data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>--%>
-            <%--</tr>--%>
-            <%--</thead>--%>
-        <%--</table>--%>
-    <%--</div>--%>
-
-    <%--<div id="toolbar" style="display: none;">--%>
-        <%--<shiro:hasPermission name="/examYearly/add">--%>
-            <%--<a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">添加</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <%--<shiro:hasPermission name="/examYearly/importExcel">--%>
-            <%--<a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">导入</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <%--<shiro:hasPermission name="/examYearly/exportExcel">--%>
-            <%--<a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">导出Excel</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <%--<shiro:hasPermission name="/examYearly/exportWord">--%>
-            <%--<a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">导出Word</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <%--<shiro:hasPermission name="/examYearly/advSearch">--%>
-            <%--<a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">高级查询</a>--%>
-        <%--</shiro:hasPermission>--%>
-        <%--<shiro:hasPermission name="/examYearly/exportSearch">--%>
-            <%--<a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"--%>
-               <%--data-options="plain:true,iconCls:'icon-add'">查询导出</a>--%>
-        <%--</shiro:hasPermission>--%>
-
-        <%--<!-- 附件下载使用 -->--%>
-    	<%--<form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>--%>
-    <%--</div>--%>
-<%--</body>--%>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">
     <form id="searchForm">
