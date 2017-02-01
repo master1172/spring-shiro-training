@@ -114,4 +114,17 @@
       )
     </foreach>
   </insert>
+
+  <select id="findPeopleExamMonthlyResultByCodeAndDate" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM exam_monthly t
+    WHERE
+      t.people_code = #{peopleCode}
+      AND
+      t.year = #{year}
+      AND
+      t.month = #{month}
+      LIMIT 0,1
+  </select>
 </mapper>

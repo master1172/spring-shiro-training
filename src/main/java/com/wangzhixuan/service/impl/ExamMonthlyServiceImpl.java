@@ -1,6 +1,7 @@
 package com.wangzhixuan.service.impl;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.ExamMonthlyMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
@@ -30,6 +31,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mengfw on 2017/1/21.
@@ -48,6 +50,20 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
   @Override
   public ExamMonthly findExamMonthlyById(Long id) {
     return examMonthlyMapper.selectByPrimaryKey(id.intValue());
+  }
+
+  @Override
+  public ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(String code, Integer year, Integer month) {
+    Map<String, Object> condition = Maps.newHashMap();
+    condition.put("peopleCode",code);
+    String checkDateMin = year.toString() + "-" + month.toString() + "-" + "1";
+    String checkDateMax = year.toString() + "-" + month.toString() + "-" + "31";
+    condition.put("checkDateMin",checkDateMin);
+    condition.put("checkDateMax",checkDateMax);
+    condition.put("year",year);
+    condition.put("month",month);
+
+    return examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(condition);
   }
 
   @Override

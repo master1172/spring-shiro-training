@@ -4,6 +4,7 @@ import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.utils.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ExamMonthlyMapper {
 
@@ -24,4 +25,6 @@ public interface ExamMonthlyMapper {
     int batchDeleteByIds(String[] ids);
 
     List findExamMonthlyVoListByCode(String code);
+
+    ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(Map<String, Object> condition);
 }

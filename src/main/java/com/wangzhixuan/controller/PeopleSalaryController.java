@@ -1,11 +1,16 @@
 package com.wangzhixuan.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wangzhixuan.model.PeopleSalaryBase;
+import com.wangzhixuan.model.*;
+import com.wangzhixuan.service.ExamMonthlyService;
+import com.wangzhixuan.service.PeopleTimesheetService;
+import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -21,8 +26,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.PageInfo;
@@ -42,6 +45,12 @@ public class PeopleSalaryController extends BaseController{
 
     @Autowired
     private PeopleService peopleService;
+
+    @Autowired
+    private PeopleTimesheetService peopleTimesheetService;
+
+    @Autowired
+    private ExamMonthlyService examMonthlyService;
 
     @RequestMapping(value="/manager", method = RequestMethod.GET)
     public String manager(){
@@ -105,9 +114,39 @@ public class PeopleSalaryController extends BaseController{
     @RequestMapping("/addPage")
     public String addPage(String peopleCode, Model model){
         People people = peopleService.findPeopleByCode(peopleCode);
+        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);
         if (people == null)
             people = new People();
+        if (peopleSalaryBaseVo == null)
+            peopleSalaryBaseVo = new PeopleSalaryBaseVo();
+
+        Integer currentMonth = DateUtil.GetCurrentMonth();
+        Integer currentYear  = DateUtil.GetCurrentYear();
+
+        List<PeopleTimesheet> peopleTimeSheetList = peopleTimesheetService.findPeopleTimesheetListByCodeAndDate(people.getCode(), currentYear, currentMonth);
+        ExamMonthly peopleExamMonthlyResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(people.getCode(), currentYear, currentMonth);
+
+        BigDecimal sumVacationPeriod = BigDecimal.valueOf(0.0);
+
+        if (peopleTimeSheetList != null && peopleTimeSheetList.size() > 0){
+            for (int i=0; i<peopleTimeSheetList.size(); i++){
+                PeopleTimesheet peopleTimesheet = peopleTimeSheetList.get(i);
+                if (peopleTimesheet == null || StringUtils.isBlank(peopleTimesheet.getPeopleCode()))
+                    continue;
+                sumVacationPeriod = sumVacationPeriod.add(peopleTimesheet.getVacationPeriod());
+            }
+        }
+
+        String examResult = "";
+
+        if (peopleExamMonthlyResult != null){
+            examResult = peopleExamMonthlyResult.getExamResult();
+        }
+
+        model.addAttribute("timesheetStatus", sumVacationPeriod);
+        model.addAttribute("examResult",examResult);
         model.addAttribute("people",people);
+        model.addAttribute("peopleSalaryBaseVo", peopleSalaryBaseVo);
         return "/admin/peopleSalary/peopleSalaryAdd";
     }
 

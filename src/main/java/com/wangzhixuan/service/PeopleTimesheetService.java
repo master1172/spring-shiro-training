@@ -32,5 +32,7 @@ public interface PeopleTimesheetService {
 	void exportExcel(HttpServletResponse response, String[] idList);
 
     PeopleTimesheetVo findPeopleTimesheetVoById(Integer id);
+
+    List<PeopleTimesheet> findPeopleTimesheetListByCodeAndDate(String code, Integer year, Integer month);
 }
 

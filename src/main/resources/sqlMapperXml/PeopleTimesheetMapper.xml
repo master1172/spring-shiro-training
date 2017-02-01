@@ -19,7 +19,7 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, people_code, heck_date, status, vacation_period
+		id, people_code, check_date, status, vacation_period
 	</sql>
 
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -172,5 +172,15 @@
 		left join people p
 			on t.people_code = p.code
 		where t.people_code = #{peopleCode}
+	</select>
+
+	<select id="findTimesheetListByCodeAndDate" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from people_timesheet t
+		WHERE
+			t.people_code = #{peopleCode}
+			<![CDATA[ and t.check_date >= #{checkDateMin} ]]>
+			<![CDATA[ and t.check_date <= #{checkDateMax} ]]>
 	</select>
 </mapper>
