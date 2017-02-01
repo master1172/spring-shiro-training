@@ -1,6 +1,7 @@
 package com.wangzhixuan.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.wangzhixuan.model.PeopleTimesheet;
 import com.wangzhixuan.utils.PageInfo;
@@ -31,5 +32,7 @@ public interface PeopleTimesheetMapper {
 	List findTimesheetVoByPeopleCode(String peopleCode);
 
 	PeopleTimesheetVo findTimesheetVoById(Integer id);
+
+	List findTimesheetListByCodeAndDate(Map<String, Object> condition);
 
 }

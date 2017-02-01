@@ -63,7 +63,7 @@
                     </td>
                     <td>岗位考核结果</td>
                     <td>
-                        <input type="text" name="examResult">
+                        <input type="text" name="examResult" value="${examResult}">
                     </td>
                     <td>岗位津贴</td>
                     <td>
@@ -95,7 +95,7 @@
                     </td>
                     <td>考勤情况</td>
                     <td>
-                        <input name="timesheetStatus" id="timesheetStatus" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="timesheetStatus" id="timesheetStatus" type="text" value="${timesheetStatus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
@@ -208,7 +208,7 @@
                                 maxDate:'%y-%M-%d',
                                 })"
                                readonly="readonly"/>
-                    </td>   
+                    </td>
                 </tr>
             </table>
         </form>

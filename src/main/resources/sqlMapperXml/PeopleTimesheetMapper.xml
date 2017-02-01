@@ -173,4 +173,14 @@
 			on t.people_code = p.code
 		where t.people_code = #{peopleCode}
 	</select>
+
+	<select id="findTimesheetListByCodeAndDate" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from people_timesheet t
+		WHERE
+			t.people_code = #{peopleCode}
+			<![CDATA[ and t.check_date >= #{checkDateMin} ]]>
+			<![CDATA[ and t.check_date <= #{checkDateMax} ]]>
+	</select>
 </mapper>

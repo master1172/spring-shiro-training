@@ -5,9 +5,11 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.*;
@@ -236,5 +238,17 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 			return new PeopleTimesheetVo();
 
 		return peopleTimesheetMapper.findTimesheetVoById(id);
+	}
+
+	@Override
+	public List<PeopleTimesheet> findPeopleTimesheetListByCodeAndDate(String code, Integer year, Integer month) {
+		Map<String, Object> condition = Maps.newHashMap();
+		condition.put("peopleCode",code);
+		String checkDateMin = year.toString() + "-" + month.toString() + "-" + "1";
+		String checkDateMax = year.toString() + "-" + month.toString() + "-" + "31";
+		condition.put("checkDateMin",checkDateMin);
+		condition.put("checkDateMax",checkDateMax);
+
+		return peopleTimesheetMapper.findTimesheetListByCodeAndDate(condition);
 	}
 }

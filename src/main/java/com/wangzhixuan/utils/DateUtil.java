@@ -73,4 +73,12 @@ public class DateUtil {
             return null;
         }
     }
+
+    public static Integer GetCurrentMonth(){
+        return Calendar.getInstance().get(Calendar.MONTH) + 1;
+    }
+
+    public static Integer GetCurrentYear(){
+        return Calendar.getInstance().get(Calendar.YEAR);
+    }
 }

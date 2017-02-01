@@ -28,4 +28,6 @@ public interface ExamMonthlyService {
   void batchDeletePeopleByIds(String[] idList);
 
   ExamMonthly findExamMonthlyById(Long id);
+
+  ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(String code, Integer year, Integer month);
 }
