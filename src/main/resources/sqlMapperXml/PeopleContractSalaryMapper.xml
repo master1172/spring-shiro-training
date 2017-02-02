@@ -117,7 +117,40 @@
 		t.job_id = j.id
 		where t.id = #{id,jdbcType=INTEGER}
 	</select>
-
+	<select id="findPeopleContractSalaryVoListByCode" resultMap="peopleContractSalaryVoResultMap" parameterType="java.lang.String">
+		SELECT
+		t.id,
+		t.people_code,
+		p.name as people_name,
+		t.job_id,
+		t.job_salary,
+		t.school_salary,
+		t.exam_result,
+		t.job_exam_salary,
+		t.telephone_allowance,
+		t.traffic_allowance,
+		t.special_allowance,
+		t.head_allowance,
+		t.extra_work_fee,
+		t.extra_work_date,
+		t.extra_work_allowance,
+		t.bonus,
+		t.reissue_fee,
+		t.temperature_allowance,
+		t.gross_income,
+		t.reissue_fee,
+		t.life_insurance,
+		t.job_insurance,
+		t.health_insurance,
+		t.house_fund,
+		t.expense,
+		t.net_income,
+		t.pay_date
+		FROM people_contract_salary t
+		LEFT JOIN people_contract p
+		ON t.people_code = p.code
+		where t.people_code = #{peopleCode}
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from
 		people_contract_salary
