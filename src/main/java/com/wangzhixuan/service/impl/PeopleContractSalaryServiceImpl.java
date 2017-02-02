@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.mapper.PeopleContractMapper;
+import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleContractVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -39,7 +42,8 @@ import static com.wangzhixuan.utils.WordUtil.getCellString;
 @Service
 public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	@Autowired
+	private PeopleMapper peopleMapper;
 	@Autowired
 	private PeopleContractSalaryMapper peopleContractSalaryMapper;
 	@Autowired
@@ -194,15 +198,20 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 			for (int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 				row = sheet.getRow(i);
 				PeopleContractSalary peopleContractSalary = new PeopleContractSalary();
+
 				if (row.getCell(1) == null || StringUtils.isBlank(row.getCell(1).toString()))
 					continue;
 
 				String peopleName = row.getCell(1).toString().trim();
 				PeopleContract peopleContract = peopleContractMapper.findFirstPeopleByName(peopleName);
-				if (peopleContract == null || StringUtils.isBlank(peopleContract.getCode()))
+				String peopleCode = peopleContract.getCode();
+				if (peopleContract == null || StringUtils.isBlank(peopleCode))
 					continue;
-				peopleContractSalary.setPeopleCode(peopleContract.getCode());
-				peopleContractSalary.setJobId(Integer.parseInt(getCellString(row.getCell(2))));
+				peopleContractSalary.setPeopleCode(peopleCode);
+
+				Double d = Double.parseDouble(getCellString(row.getCell(2)));
+
+				peopleContractSalary.setJobId(d.intValue());
 				peopleContractSalary.setJobSalary(StringUtilExtra.StringToDecimal(getCellString(row.getCell(3))));
 				peopleContractSalary.setSchoolSalary(StringUtilExtra.StringToDecimal(getCellString(row.getCell(4))));
 				peopleContractSalary.setExamResult(getCellString(row.getCell(5)));

@@ -11,7 +11,7 @@ public class PeopleContractSalary implements Serializable {
 
 	private Long id;
 	private String peopleCode;
-	private int jobId;
+	private Integer jobId;
 	private BigDecimal jobSalary;
 	private BigDecimal schoolSalary;
 	private String examResult;

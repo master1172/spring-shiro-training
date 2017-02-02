@@ -155,42 +155,75 @@
 		people_contract_salary
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.wangzhixuan.model.PeopleContractSalary">
-		insert into
-		people_contract_salary (people_code, job_id, job_salary,
-		school_salary, exam_result, job_exam_salary,
-		telephone_allowance,
-		traffic_allowance,
-		special_allowance,
-		head_allowance, extra_work_fee,
-		extra_work_date,
-		extra_work_allowance, bonus, reissue_fee,
-		temperature_allowance, gross_income, life_insurance,
-		job_insurance,
-		health_insurance,
-		house_fund,
-		expense, net_income, pay_date
+	<insert id="insert" parameterType="java.util.List">
+		insert into people_contract_salary (
+		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
+		special_allowance, head_allowance, extra_work_fee, extra_work_date, extra_work_allowance, bonus, reissue_fee,
+		temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
 		)
-		values
-		(#{peopleCode,jdbcType=VARCHAR}, #{jobId,jdbcType=INTEGER},
-		#{jobSalary,jdbcType=DECIMAL},
-		#{schoolSalary,jdbcType=DECIMAL},
-		#{examResult,jdbcType=VARCHAR}, #{jobExamSalary,jdbcType=DECIMAL},
-		#{telephoneAllowance,jdbcType=DECIMAL},
-		#{trafficAllowance,jdbcType=DECIMAL},
-		#{specialAllowance,jdbcType=DECIMAL},
-		#{headAllowance,jdbcType=DECIMAL}, #{extraWorkFee,jdbcType=DECIMAL},
-		#{extraWorkDate,jdbcType=DECIMAL},
-		#{extraWorkAllowance,jdbcType=DECIMAL}, #{bonus,jdbcType=DECIMAL},
-		#{reissueFee,jdbcType=DECIMAL},
-		#{temperatureAllowance,jdbcType=DECIMAL},
-		#{grossIncome,jdbcType=DECIMAL}, #{lifeInsurance,jdbcType=DECIMAL},
-		#{jobInsurance,jdbcType=DECIMAL},
-		#{healthInsurance,jdbcType=DECIMAL},
-		#{houseFund,jdbcType=DECIMAL},
-		#{expense,jdbcType=DECIMAL},
-		#{netIncome,jdbcType=DECIMAL}, #{payDate,jdbcType=VARCHAR}
+		VALUES
+			(
+			#{peopleCode,jdbcType=VARCHAR},
+			#{jobId,jdbcType=INTEGER},
+			#{jobSalary,jdbcType=DECIMAL},
+			#{schoolSalary,jdbcType=DECIMAL},
+			#{examResult,jdbcType=VARCHAR},
+			#{jobExamSalary,jdbcType=DECIMAL},
+			#{telephoneAllowance,jdbcType=DECIMAL},
+			#{trafficAllowance,jdbcType=DECIMAL},
+			#{specialAllowance,jdbcType=DECIMAL},
+			#{headAllowance,jdbcType=DECIMAL},
+			#{extraWorkFee,jdbcType=DECIMAL},
+			#{extraWorkDate,jdbcType=DECIMAL},
+			#{extraWorkAllowance,jdbcType=DECIMAL},
+			#{bonus,jdbcType=DECIMAL},
+			#{reissueFee,jdbcType=DECIMAL},
+			#{temperatureAllowance,jdbcType=DECIMAL},
+			#{grossIncome,jdbcType=DECIMAL},
+			#{lifeInsurance,jdbcType=DECIMAL},
+			#{jobInsurance,jdbcType=DECIMAL},
+			#{healthInsurance,jdbcType=DECIMAL},
+			#{houseFund,jdbcType=DECIMAL},
+			#{expense,jdbcType=DECIMAL},
+			#{netIncome,jdbcType=DECIMAL},
+			#{payDate,jdbcType=VARCHAR}
+			)
+	</insert>
+	<insert id="insertByImport" parameterType="java.util.List">
+		insert into people_contract_salary (
+		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
+		special_allowance, head_allowance, extra_work_fee, extra_work_date, extra_work_allowance, bonus, reissue_fee,
+		temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
 		)
+		VALUES
+		<foreach item="item" index="index" collection="list" separator=",">
+			(
+		      #{peopleCode,jdbcType=VARCHAR},
+			  #{jobId,jdbcType=INTEGER},
+		      #{jobSalary,jdbcType=DECIMAL},
+		      #{schoolSalary,jdbcType=DECIMAL},
+		      #{examResult,jdbcType=VARCHAR},
+			  #{jobExamSalary,jdbcType=DECIMAL},
+		      #{telephoneAllowance,jdbcType=DECIMAL},
+		      #{trafficAllowance,jdbcType=DECIMAL},
+		      #{specialAllowance,jdbcType=DECIMAL},
+		      #{headAllowance,jdbcType=DECIMAL},
+			  #{extraWorkFee,jdbcType=DECIMAL},
+		      #{extraWorkDate,jdbcType=DECIMAL},
+		      #{extraWorkAllowance,jdbcType=DECIMAL},
+			  #{bonus,jdbcType=DECIMAL},
+		      #{reissueFee,jdbcType=DECIMAL},
+		      #{temperatureAllowance,jdbcType=DECIMAL},
+		      #{grossIncome,jdbcType=DECIMAL},
+			  #{lifeInsurance,jdbcType=DECIMAL},
+		      #{jobInsurance,jdbcType=DECIMAL},
+		      #{healthInsurance,jdbcType=DECIMAL},
+		      #{houseFund,jdbcType=DECIMAL},
+		      #{expense,jdbcType=DECIMAL},
+		      #{netIncome,jdbcType=DECIMAL},
+			  #{payDate,jdbcType=VARCHAR}
+		)
+		</foreach>
 	</insert>
 	<insert id="insertSelective" parameterType="com.wangzhixuan.model.PeopleContractSalary">
 		insert into people_contract_salary
