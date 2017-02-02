@@ -636,4 +636,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <update id="updateSalaryBaseJobLevel" parameterType=""
+
 </mapper>

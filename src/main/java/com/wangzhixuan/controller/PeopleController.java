@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.service.PeopleSalaryService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,9 @@ public class PeopleController extends BaseController{
 
     @Autowired
     private PeopleTransferService peopleTransferService;
+
+    @Autowired
+    private PeopleSalaryService peopleSalaryService;
 
     /**
      * 人员管理页
@@ -155,6 +159,8 @@ public class PeopleController extends BaseController{
         Result result = new Result();
         try{
             peopleService.updatePeople(peoplevo,file);
+            //如果修改人员信息的时候，同时也修改了人员的职级，那么同时也需要修改此人base salary里面的岗位和岗位工资
+            peopleSalaryService.updateSalaryJobLevel(peoplevo);
             result.setSuccess(true);
             result.setMsg("修改成功!");
             return result;

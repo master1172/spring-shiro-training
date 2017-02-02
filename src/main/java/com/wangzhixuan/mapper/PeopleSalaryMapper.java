@@ -7,6 +7,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -37,4 +38,8 @@ public interface PeopleSalaryMapper {
     int addSalaryBase(PeopleSalaryBase peopleSalaryBase);
 
     int updateSalaryBase(PeopleSalaryBase peopleSalaryBase);
+
+    void updateSalaryBaseJobLevel(String peopleCode, Long jobId, BigDecimal jobSalary);
+
+    void updateSalaryBaseRankLevel(String peopleCode, Long rankId, BigDecimal rankSalary);
 }
