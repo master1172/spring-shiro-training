@@ -636,6 +636,12 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <update id="updateSalaryBaseJobLevel" parameterType=""
-
+    <update id="updateSalaryBaseJobLevel" parameterType="java.util.Map">
+        update people_salary_base
+        set
+          job_id      = #{jobId, jdbcType=INTEGER},
+          job_salary  = #{jobSalary, jdbcType=DECIMAL}
+        WHERE
+          people_code = #{peopleCode, jdbcType=VARCHAR}
+    </update>
 </mapper>

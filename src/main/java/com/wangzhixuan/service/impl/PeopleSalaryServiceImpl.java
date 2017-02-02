@@ -1,5 +1,6 @@
 package com.wangzhixuan.service.impl;
 
+import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleJob;
@@ -23,6 +24,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sterm on 2017/1/13.
@@ -218,7 +220,12 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         if (peopleJob != null){
             Long jobId = peopleJob.getId();
             BigDecimal jobSalary = peopleJob.getSalary();
-            peopleSalaryMapper.updateSalaryBaseJobLevel(peopleVo.getCode(), jobId, jobSalary);
+
+            Map<String,Object> condition = Maps.newHashMap();
+            condition.put("peopleCode", peopleVo.getCode());
+            condition.put("jobId", jobId);
+            condition.put("jobSalary", jobSalary);
+            peopleSalaryMapper.updateSalaryBaseJobLevel(condition);
         }
     }
 

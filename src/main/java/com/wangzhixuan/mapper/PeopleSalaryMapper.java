@@ -9,6 +9,7 @@ import com.wangzhixuan.vo.PeopleSalaryVo;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sterm on 2017/1/13.
@@ -39,7 +40,7 @@ public interface PeopleSalaryMapper {
 
     int updateSalaryBase(PeopleSalaryBase peopleSalaryBase);
 
-    void updateSalaryBaseJobLevel(String peopleCode, Long jobId, BigDecimal jobSalary);
+    void updateSalaryBaseJobLevel(Map<String,Object> condition);
 
-    void updateSalaryBaseRankLevel(String peopleCode, Long rankId, BigDecimal rankSalary);
+    void updateSalaryBaseRankLevel(Map<String,Object> condition);
 }
