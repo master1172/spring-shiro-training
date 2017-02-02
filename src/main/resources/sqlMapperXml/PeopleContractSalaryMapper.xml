@@ -138,7 +138,6 @@
 		t.reissue_fee,
 		t.temperature_allowance,
 		t.gross_income,
-		t.reissue_fee,
 		t.life_insurance,
 		t.job_insurance,
 		t.health_insurance,

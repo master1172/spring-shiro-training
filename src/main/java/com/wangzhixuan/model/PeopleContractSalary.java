@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  */
 public class PeopleContractSalary implements Serializable {
 
-	private Integer id;
+	private Long id;
 	private String peopleCode;
 	private int jobId;
 	private BigDecimal jobSalary;
@@ -37,11 +37,11 @@ public class PeopleContractSalary implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM")
 	private String payDate;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -61,7 +61,7 @@ public class PeopleContractSalary implements Serializable {
 		return jobId;
 	}
 
-	public void setJobId(int jobId) {
+	public void setJobId(Integer jobId) {
 		this.jobId = jobId;
 	}
 

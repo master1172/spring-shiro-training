@@ -61,7 +61,25 @@
         from people_contract
         where id = #{id,jdbcType=BIGINT}
     </select>
-
+    <select id="findPeopleRetireByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from people_contract
+        where name LIKE concat('%',#{name},'%')
+    </select>
+    <select id="findFirstPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        from people_contract
+        where name = #{name, jdbcType=VARCHAR}
+        LIMIT 0,1
+    </select>
+    <select id="findPeopleContractByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from people_contract
+        where code = #{code, jdbcType=BIGINT}
+    </select>
     <select id="findPeopleContractVoById" resultMap="peopleContractVoResultMap" parameterType="java.lang.Long">
         SELECT
         t.id,
