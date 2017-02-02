@@ -1,9 +1,9 @@
 package com.wangzhixuan.service.impl;
 
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
-import com.wangzhixuan.mapper.PeopleSalaryMapper;
+import com.google.common.collect.Maps;
+import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.model.PeopleSalaryBase;
 import com.wangzhixuan.service.PeopleSalaryService;
@@ -21,8 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sterm on 2017/1/13.
@@ -39,6 +41,8 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     @Autowired
     private DictMapper dictMapper;
 
+    @Autowired
+    private PeopleJobMapper peopleJobMapper;
 
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -86,6 +90,10 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     public void updateSalaryBase(PeopleSalaryBase peopleSalaryBase){
         if(peopleSalaryBase == null)
             return;
+
+        if (StringUtils.isBlank(peopleSalaryBase.getLastChangeDate())){
+            peopleSalaryBase.setLastChangeDate(DateUtil.GetToday());
+        }
 
         if (peopleSalaryBase.getId() == null)
             peopleSalaryMapper.addSalaryBase(peopleSalaryBase);
@@ -204,6 +212,25 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
             }
         }
         return flag;
+    }
+
+    @Override
+    public void updateSalaryJobLevel(PeopleVo peopleVo) {
+        if (peopleVo == null || peopleVo.getJobLevelId() == null)
+            return;
+
+        PeopleJob peopleJob = peopleJobMapper.findPeopleJobById((long) peopleVo.getJobLevelId());
+
+        if (peopleJob != null){
+            Long jobId = peopleJob.getId();
+            BigDecimal jobSalary = peopleJob.getSalary();
+
+            Map<String,Object> condition = Maps.newHashMap();
+            condition.put("peopleCode", peopleVo.getCode());
+            condition.put("jobId", jobId);
+            condition.put("jobSalary", jobSalary);
+            peopleSalaryMapper.updateSalaryBaseJobLevel(condition);
+        }
     }
 
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){

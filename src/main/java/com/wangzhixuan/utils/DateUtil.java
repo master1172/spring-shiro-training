@@ -13,6 +13,11 @@ import java.util.Date;
  */
 public class DateUtil {
 
+
+    public static String GetToday(){
+        return GetDate(new Date());
+    }
+
     public static String GetDate(Date date){
 
         if (date == null)

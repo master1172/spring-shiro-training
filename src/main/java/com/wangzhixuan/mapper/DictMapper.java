@@ -1,7 +1,6 @@
 package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.Dict;
-
 import java.util.List;
 
 /**
