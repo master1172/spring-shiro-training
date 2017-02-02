@@ -137,6 +137,7 @@
                         if(parent.checkForm()){
                         	parent.SYS_SUBMIT_FORM(f,"/people/add",function(data){
                     			if(!data["success"]){
+                                    parent.progressClose();
                     				parent.$.messager.alert("提示", data["msg"], "warning");
                     			}else{
                     				parent.progressClose();
@@ -172,6 +173,7 @@
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f,"/people/edit",function(data){
                                 if(!data["success"]){
+                                    parent.progressClose();
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
                                     parent.progressClose();
@@ -306,6 +308,7 @@
                         if(parent.checkForm()){
                         	parent.SYS_SUBMIT_FORM(f,"/people/importExcel",function(data){
                     			if(!data["success"]){
+                                    parent.progressClose();
                     				parent.$.messager.alert("提示", data["msg"], "warning");
                     			}else{
                     				parent.progressClose();

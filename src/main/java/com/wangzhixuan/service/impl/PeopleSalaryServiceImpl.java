@@ -91,6 +91,10 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         if(peopleSalaryBase == null)
             return;
 
+        if (StringUtils.isBlank(peopleSalaryBase.getLastChangeDate())){
+            peopleSalaryBase.setLastChangeDate(DateUtil.GetToday());
+        }
+
         if (peopleSalaryBase.getId() == null)
             peopleSalaryMapper.addSalaryBase(peopleSalaryBase);
         peopleSalaryMapper.updateSalaryBase(peopleSalaryBase);

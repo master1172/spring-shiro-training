@@ -41,9 +41,9 @@
 
     <select id="findPeopleJobById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
-        <include refid="Base_Column_List"/>
+        id, job_category, job_level, salary
         from job
-        where id = #{id}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="findPeopleJobPageCondition" resultMap="peopleJobVoResultMap" parameterType="PageInfo">
