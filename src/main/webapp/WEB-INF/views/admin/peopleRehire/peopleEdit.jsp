@@ -6,10 +6,9 @@
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
         $("#sex").val('${peopleRehire.sex}');
         $('#nationalId').val('${peopleRehire.nationalId}');
-        $('#beforeJobName').val('${peopleRehire.beforeJobName}');
+        $('#beforeDepartmentId').val('${peopleRehire.beforeDepartmentId}');
         $('#beforeJobLevelId').val('${peopleRehire.beforeJobLevelId}');
         $('#afterDepartmentId').val('${peopleRehire.afterDepartmentId}');
-        $('#afterJobName').val('${peopleRehire.afterJobName}');
         $('#afterJobLevelId').val('${peopleRehire.afterJobLevelId}');
         $('#imgShow').attr('src','${staticPath}/${peopleRehire.photo}');
     });
@@ -92,12 +91,12 @@
                 <tr>
                     <td>返聘前工作部门</td>
                     <td>
-                        <input type="text" name="beforeDepartment" value="${peopleRehire.beforeDepartment}"/>
+                        <input class="easyui-combobox" id="beforeDepartmentId" name="beforeDepartmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>返聘前岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="beforeJobName" name="beforeJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
-                        </input>
+                        <input type="text" name="beforeJobName" value="${peopleRehire.beforeJobName}">
                     </td>
                 </tr>
                 <tr>
@@ -108,15 +107,14 @@
                     </td>
                     <td>拟返聘工作部门</td>
                     <td>
-                        <input class="easyui-combobox" id="AfterDepartmentId" name="AfterDepartmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="afterDepartmentId" name="afterDepartmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>
                 <tr>
                     <td>拟返聘岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="afterJobName" name="afterJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
-                        </input>
+                        <input type="text" name="afterJobName" value="${peopleRehire.afterJobName}">
                     </td>
                     <td>拟返聘职级</td>
                     <td>

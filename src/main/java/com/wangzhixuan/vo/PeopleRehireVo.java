@@ -55,7 +55,9 @@ public class PeopleRehireVo implements Serializable {
 
     private String speciality;
 
-    private String beforeDepartment;
+    private Integer beforeDepartmentId;
+
+    private String beforeDepartmentName;
 
     private String beforeJobName;
 
@@ -187,12 +189,18 @@ public class PeopleRehireVo implements Serializable {
         this.speciality = speciality;
     }
 
-    public String getBeforeDepartment() {
-        return beforeDepartment;
+    public Integer getBeforeDepartmentId() { return beforeDepartmentId; }
+
+    public void setBeforeDepartmentId(Integer beforeDepartmentId){
+        this.beforeDepartmentId = beforeDepartmentId;
     }
 
-    public void setBeforeDepartment(String beforeDepartment) {
-        this.beforeDepartment = beforeDepartment;
+    public String getBeforeDepartmentName() {
+        return beforeDepartmentName;
+    }
+
+    public void setBeforeDepartmentName(String beforeDepartmentName) {
+        this.beforeDepartmentName = beforeDepartmentName;
     }
 
     public String getBeforeJobName() {
@@ -398,8 +406,8 @@ public class PeopleRehireVo implements Serializable {
             condition.put("speciality", peopleRehirevo.getSpeciality());
         }
 
-        if(StringUtils.isNoneBlank(peopleRehirevo.getBeforeDepartment())){
-            condition.put("beforeDepartment", peopleRehirevo.getBeforeDepartment());
+        if(peopleRehirevo.getBeforeDepartmentId() != null){
+            condition.put("beforeDepartmentId", peopleRehirevo.getBeforeDepartmentId());
         }
 
         if(StringUtils.isNoneBlank(peopleRehirevo.getBeforeJobName())){

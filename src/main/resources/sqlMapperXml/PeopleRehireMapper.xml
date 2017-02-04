@@ -15,7 +15,7 @@
         <result column="health_status" property="healthStatus" jdbcType="VARCHAR"/>
         <result column="retire_date" property="retireDate" jdbcType="DATE"/>
         <result column="speciality" property="speciality" jdbcType="VARCHAR"/>
-        <result column="before_department" property="beforeDepartment" jdbcType="VARCHAR"/>
+        <result column="before_department_id" property="beforeDepartmentId" jdbcType="INTEGER"/>
         <result column="before_job_name" property="beforeJobName" jdbcType="VARCHAR"/>
         <result column="before_job_level_id" property="beforeJobLevelId" jdbcType="INTEGER"/>
         <result column="after_department_id" property="afterDepartmentId" jdbcType="INTEGER"/>
@@ -43,7 +43,7 @@
         <result column="health_status" property="healthStatus" jdbcType="VARCHAR"/>
         <result column="retire_date" property="retireDate" jdbcType="DATE"/>
         <result column="speciality" property="speciality" jdbcType="VARCHAR"/>
-        <result column="before_department" property="beforeDepartment" jdbcType="VARCHAR"/>
+        <result column="before_department_id" property="beforeDepartmentId" jdbcType="INTEGER"/>
         <result column="before_job_name" property="beforeJobName" jdbcType="VARCHAR"/>
         <result column="before_job_level_id" property="beforeJobLevelId" jdbcType="INTEGER"/>
         <result column="before_job_level_name" property="beforeJobLevelName" jdbcType="VARCHAR"/>
@@ -60,7 +60,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category
+        id, code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -86,7 +86,8 @@
         t.health_status,
         t.retire_date,
         t.speciality,
-        t.before_department,
+        t.before_department_id,
+        n.name as before_department_name,
         t.before_job_name,
         t.before_job_level_id,
         m.job_level as before_job_level_name,
@@ -112,6 +113,8 @@
         ON p.id = t.after_job_level_id
         LEFT JOIN
         dict_department o ON o.id = t.after_department_id
+        LEFT JOIN
+        dict_department n ON n.id = t.before_department_id
         <where>
             t.id = #{id}
         </where>
@@ -147,7 +150,8 @@
         t.health_status,
         t.retire_date,
         t.speciality,
-        t.before_department,
+        t.before_department_id,
+        n.name as after_department_name,
         t.before_job_name,
         t.before_job_level_id,
         m.job_level as before_job_level_name,
@@ -173,6 +177,8 @@
         ON p.id = t.after_job_level_id
         LEFT JOIN
         dict_department o ON o.id = t.after_department_id
+        LEFT JOIN
+        dict_department n ON n.id = t.before_department_id
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -216,8 +222,8 @@
             <if test=" condition.speciality != null and condition.speciality != ''">
                 and t.speciality LIKE concat('%',#{condition.speciality},'%')
             </if>
-            <if test=" condition.beforeDepartment != null and condition.beforeDepartment != ''">
-                and t.before_department LIKE concat('%',#{condition.beforeDepartment},'%')
+            <if test=" condition.beforeDepartmentId != null">
+                and t.before_department_id = #{condition.beforeDepartmentId}
             </if>
             <if test=" condition.beforeJobName != null and condition.beforeJobName != ''">
                 and t.before_job_name LIKE concat('%',#{condition.beforeJobName},'%')
@@ -296,8 +302,8 @@
             <if test=" condition.speciality != null and condition.speciality != ''">
                 and t.speciality LIKE concat('%',#{condition.speciality},'%')
             </if>
-            <if test=" condition.beforeDepartment != null and condition.beforeDepartment != ''">
-                and t.before_department LIKE concat('%',#{condition.beforeDepartment},'%')
+            <if test=" condition.beforeDepartmentId != null ">
+                and t.before_department_id = #{condition.beforeDepartmentId}
             </if>
             <if test=" condition.beforeJobName != null and condition.beforeJobName != ''">
                 and t.before_job_name LIKE concat('%',#{condition.beforeJobName},'%')
@@ -347,7 +353,7 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
+        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
         values (
         #{code,jdbcType=VARCHAR},
         #{name,jdbcType=VARCHAR},
@@ -361,7 +367,7 @@
         #{healthStatus,jdbcType=VARCHAR},
         #{retireDate,jdbcType=DATE},
         #{speciality,jdbcType=VARCHAR},
-        #{beforeDepartment, jdbcType=VARCHAR},
+        #{beforeDepartmentId, jdbcType=INTEGER},
         #{beforeJobName, jdbcType=VARCHAR},
         #{beforeJobLevelId, jdbcType=INTEGER},
         #{afterDepartmentId, jdbcType=INTEGER},
@@ -375,7 +381,7 @@
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
+        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
@@ -391,7 +397,7 @@
             #{item.healthStatus,jdbcType=VARCHAR},
             #{item.retireDate,jdbcType=DATE},
             #{item.speciality,jdbcType=VARCHAR},
-            #{item.beforeDepartment, jdbcType=VARCHAR},
+            #{item.beforeDepartmentId, jdbcType=INTEGER},
             #{item.beforeJobName, jdbcType=VARCHAR},
             #{item.beforeJobLevelId, jdbcType=INTEGER},
             #{item.afterDepartmentId, jdbcType=INTEGER},
@@ -444,8 +450,8 @@
             <if test="speciality != null">
                 speciality = #{speciality,jdbcType=VARCHAR},
             </if>
-            <if test="beforeDepartment != null">
-                before_department = #{beforeDepartment, jdbcType=VARCHAR},
+            <if test="beforeDepartmentId != null">
+                before_department_id = #{beforeDepartmentId, jdbcType=VARCHAR},
             </if>
             <if test="beforeJobName != null">
                 before_job_name = #{beforeJobName, jdbcType=VARCHAR},
@@ -495,7 +501,7 @@
         t.health_status,
         t.retire_date,
         t.speciality,
-        t.before_department,
+        t.before_department_id,
         t.before_job_name,
         t.before_job_level_id,
         t.after_department_id,
@@ -529,7 +535,8 @@
         t.health_status,
         t.retire_date,
         t.speciality,
-        t.before_department,
+        t.before_department_id,
+        n.name as before_department_name,
         t.before_job_name,
         t.before_job_level_id,
         m.job_level as before_job_level_name,
@@ -555,6 +562,8 @@
         ON p.id = t.after_job_level_id
         LEFT JOIN
         dict_department o ON o.id = t.after_department_id
+        LEFT JOIN
+        dict_department n ON n.id = t.before_department_id
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}

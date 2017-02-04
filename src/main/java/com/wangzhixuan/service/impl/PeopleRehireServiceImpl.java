@@ -256,7 +256,15 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 //返聘前工作部门
                 if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
                     String beforeDepartment=row.getCell(12).toString().trim();
-                    p.setBeforeDepartment(beforeDepartment);
+
+                    try{
+                        Integer beforeDepartmentId = dictMapper.findDepartmentIdByName(beforeDepartment);
+                        if (beforeDepartmentId != null){
+                            p.setBeforeDepartmentId(beforeDepartmentId);
+                        }
+                    }catch(Exception exp){
+
+                    }
                 }
 
                 //返聘前岗位
@@ -397,7 +405,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                     row.createCell(9).setCellValue(p.getHealthStatus());row.getCell(9).setCellStyle(setBorder);
                     row.createCell(10).setCellValue(p.getRetireDate());row.getCell(10).setCellStyle(setBorder);
                     row.createCell(11).setCellValue(p.getSpeciality());row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getBeforeDepartment());row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getBeforeDepartmentName());row.getCell(12).setCellStyle(setBorder);
                     row.createCell(13).setCellValue(p.getBeforeJobName());row.getCell(13).setCellStyle(setBorder);
                     row.createCell(14).setCellValue(p.getBeforeJobLevelName());row.getCell(14).setCellStyle(setBorder);
                     row.createCell(15).setCellValue(p.getAfterDepartmentName());row.getCell(15).setCellStyle(setBorder);
@@ -446,7 +454,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             params.put("${healthStatus}",p.getHealthStatus());
             params.put("${retireDate}",p.getRetireDate());
             params.put("${speciality}",p.getSpeciality());
-            params.put("${beforeDepartment}",p.getBeforeDepartment());
+            params.put("${beforeDepartment}",p.getBeforeDepartmentName());
             params.put("${beforeJobName}",p.getBeforeJobName());
             params.put("${beforeJobLevelName}",p.getBeforeJobLevelName());
             params.put("${afterDepartmentName}",p.getAfterDepartmentName());
