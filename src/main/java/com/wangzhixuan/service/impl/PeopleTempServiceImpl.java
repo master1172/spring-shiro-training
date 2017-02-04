@@ -394,7 +394,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
             String newFileName="临时聘用人员信息.docx";
 
             Map<String,Object> params = new HashMap<String,Object>();
-            params.put("${code}",p.getCode());
+            params.put("${code}","");
             params.put("${name}",p.getName());
             params.put("${sex}",p.getSex()==0?"男":"女");
             params.put("${nationalName}",p.getNationalName());
@@ -406,7 +406,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
             params.put("${speciality}",p.getSpeciality());
             params.put("${height}",p.getHeight());
             params.put("${marriageName}",p.getMarriageName());
-            params.put("${hukou}",p.getSex()==0?"非农业":"农业");
+            params.put("${hukou}",p.getHukou()==0?"非农业":"农业");
             params.put("${schoolDate}",p.getSchoolDate());
             params.put("${mobile}",p.getMobile());
             params.put("${address}",p.getAddress());
@@ -418,6 +418,8 @@ public class PeopleTempServiceImpl implements PeopleTempService{
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
