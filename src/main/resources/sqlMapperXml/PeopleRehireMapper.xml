@@ -44,6 +44,7 @@
         <result column="retire_date" property="retireDate" jdbcType="DATE"/>
         <result column="speciality" property="speciality" jdbcType="VARCHAR"/>
         <result column="before_department_id" property="beforeDepartmentId" jdbcType="INTEGER"/>
+        <result column="before_department_name" property="beforeDepartmentName" jdbcType="VARCHAR"/>
         <result column="before_job_name" property="beforeJobName" jdbcType="VARCHAR"/>
         <result column="before_job_level_id" property="beforeJobLevelId" jdbcType="INTEGER"/>
         <result column="before_job_level_name" property="beforeJobLevelName" jdbcType="VARCHAR"/>
@@ -151,7 +152,7 @@
         t.retire_date,
         t.speciality,
         t.before_department_id,
-        n.name as after_department_name,
+        n.name as before_department_name,
         t.before_job_name,
         t.before_job_level_id,
         m.job_level as before_job_level_name,
