@@ -190,7 +190,7 @@
         LEFT JOIN
           job j ON j.id = t.job_level_id
         LEFT JOIN
-          dict_marriage m ON m.id = t.degree_id
+          dict_marriage m ON m.id = t.marriage_id
         LEFT JOIN
           dict_identity i ON i.id = t.identity_id
         <where>
