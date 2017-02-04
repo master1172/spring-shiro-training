@@ -199,6 +199,11 @@ public class WordUtil {
         XWPFDocument doc;
         OutputStream os;
         try {
+            for(Map.Entry entry:params.entrySet()){
+                if(entry.getValue() == null){
+                    entry.setValue("");
+                }
+            }
             doc = WordUtil.generateWord(params, filePath);
             response.reset();
             os = response.getOutputStream();
