@@ -1,24 +1,14 @@
 package com.wangzhixuan.service.impl;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.wangzhixuan.mapper.PeopleContractMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
-import com.wangzhixuan.model.People;
+import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.model.PeopleContractSalary;
+import com.wangzhixuan.service.PeopleContract2SalaryService;
+import com.wangzhixuan.service.PeopleContractSalaryService;
 import com.wangzhixuan.utils.*;
+import com.wangzhixuan.vo.PeopleContractSalaryVo;
 import com.wangzhixuan.vo.PeopleContractVo;
-import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -29,10 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.mapper.PeopleContractSalaryMapper;
-import com.wangzhixuan.model.PeopleContractSalary;
-import com.wangzhixuan.service.PeopleContractSalaryService;
-import com.wangzhixuan.vo.PeopleContractSalaryVo;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static com.wangzhixuan.utils.WordUtil.getCellString;
 
@@ -40,19 +33,19 @@ import static com.wangzhixuan.utils.WordUtil.getCellString;
  * Created by fengjunfeng on 2017/1/22.
  */
 @Service
-public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryService {
+public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalaryService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private PeopleMapper peopleMapper;
 	@Autowired
-	private PeopleContractSalaryMapper peopleContractSalaryMapper;
+	private PeopleContract2SalaryMapper peopleContract2SalaryMapper;
 	@Autowired
-	private PeopleContractMapper peopleContractMapper;
+	private PeopleContract2Mapper peopleContract2Mapper;
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
-		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
-		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
+		pageInfo.setRows(peopleContract2SalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
+		pageInfo.setTotal(peopleContract2SalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
 	}
 
 	@Override
@@ -63,29 +56,29 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 			peopleSalary.setPayDate(DateUtil.GetDate(new Date()));
 		}
 
-		peopleContractSalaryMapper.insert(peopleSalary);
+		peopleContract2SalaryMapper.insert(peopleSalary);
 	}
 
 	@Override
 	public void updateSalary(PeopleContractSalary peopleSalary) {
-		peopleContractSalaryMapper.updateByPrimaryKeySelective(peopleSalary);
+		peopleContract2SalaryMapper.updateByPrimaryKeySelective(peopleSalary);
 	}
 
 	@Override
 	public void deleteSalaryById(Long id) {
-		int count = peopleContractSalaryMapper.deleteByPrimaryKey(id);
+		int count = peopleContract2SalaryMapper.deleteByPrimaryKey(id);
 		logger.info("delete:" + count);
 	}
 
 	@Override
 	public PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id) {
-		return peopleContractSalaryMapper.findPeopleContractSalaryVoById(id);
+		return peopleContract2SalaryMapper.findPeopleContractSalaryVoById(id);
 	}
 
 	@Override
 	public void exportExcel(HttpServletResponse response, String[] idList) {
 		// TODO Auto-generated method stub
-		List list = peopleContractMapper.selectPeopleContractVoByIds(idList);
+		List list = peopleContract2Mapper.selectPeopleContractVoByIds(idList);
 		if (list != null && list.size() > 0) {
 			XSSFWorkbook workBook;
 			OutputStream os;
@@ -104,7 +97,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 					if(peopleContractVo ==null || StringUtils.isBlank(peopleContractVo.getCode()))
 						continue;
 					String peopleCode = peopleContractVo.getCode();
-					List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContractSalaryMapper.findPeopleContractSalaryVoListByCode(peopleCode);
+					List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContract2SalaryMapper.findPeopleContractSalaryVoListByCode(peopleCode);
 					if(peopleContractSalaryVoList == null || peopleContractSalaryVoList.size()<1)
 						continue;
 					for(int j=0; j<peopleContractSalaryVoList.size();j++) {
@@ -177,7 +170,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 				}
 			}
 			if (list.size() > 0) {
-				flag = peopleContractSalaryMapper.insertByImport(list) > 0;
+				flag = peopleContract2SalaryMapper.insertByImport(list) > 0;
 			}
 		}
 		return flag;
@@ -203,7 +196,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 					continue;
 
 				String peopleName = row.getCell(1).toString().trim();
-				PeopleContract peopleContract = peopleContractMapper.findFirstPeopleByName(peopleName);
+				PeopleContract peopleContract = peopleContract2Mapper.findFirstPeopleByName(peopleName);
 				String peopleCode = peopleContract.getCode();
 				if (peopleContract == null || StringUtils.isBlank(peopleCode))
 					continue;

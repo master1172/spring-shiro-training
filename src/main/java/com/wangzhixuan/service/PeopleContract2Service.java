@@ -92,5 +92,6 @@ public interface PeopleContract2Service {
      * @return
      */
     String findPeopleContractIDsByCondition(PageInfo pageInfo);
+    public PeopleContract findPeopleContractByCode(String code) ;
 }
 

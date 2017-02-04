@@ -6,13 +6,13 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>在编人员薪资</title>
+    <title>无固定期合同人员薪资</title>
     <script type="text/javascript">
         var dataGrid;
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/examMonthly/dataGrid',
+                url: '${path}/peopleContract2Salary/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -28,7 +28,7 @@
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
 
                 onLoadSuccess: function (data) {
-                    $('.user-easyui-linkbutton-edit').linkbutton({text: '月度考评明细', plain: true, iconCls: 'icon-edit'});
+                    $('.user-easyui-linkbutton-edit').linkbutton({text: '工资明细', plain: true, iconCls: 'icon-edit'});
                 },
                 toolbar: '#toolbar'
             });
@@ -39,7 +39,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
-                href: '${path}/people/advSearchPage',
+                href: '${path}/peopleContract2Salary/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
@@ -60,14 +60,14 @@
                 title: '导出',
                 width: 1000,
                 height: 600,
-                href: '${path}/examMonthly/exportSearchPage',
+                href: '${path}/peopleContract2Salary/exportSearchPage',
                 buttons:[{
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f, "/examMonthly/exportSearch",function(data){
+                            parent.SYS_SUBMIT_FORM(f, "/peopleContract2Salary/exportSearch",function(data){
                                 if(!data["success"]){
                                     parent.progressClose();
                                     parent.$.modalDialog.handler.dialog("close");
@@ -78,7 +78,7 @@
                                     var ids = data["obj"];
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/examMonthly/exportExcel");
+                                    form.attr("action",'${path}'+"/peopleContract2Salary/exportExcel");
                                     $("#downLoadForm").submit();
                                 }
                             });
@@ -103,7 +103,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
-                href: '${path}/examMonthly/importExcelPage',
+                href: '${path}/peopleContract2Salary/importExcelPage',
                 buttons: [{
                     text: '导入',
                     handler: function () {
@@ -111,7 +111,7 @@
                         var f = parent.$.modalDialog.handler.find("#importExcelForm");
                         //f.submit();
                         if(parent.checkForm()){
-                            parent.SYS_SUBMIT_FORM(f,"/examMonthly/importExcel",function(data){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleContract2Salary/importExcel",function(data){
                                 if(!data["success"]){
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
@@ -137,19 +137,19 @@
                 });
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids);
-                form.attr("action",'${path}'+"/examMonthly/exportExcel");
+                form.attr("action",'${path}'+"/peopleContract2Salary/exportExcel");
                 $("#downLoadForm").submit();
             }else{
                 parent.$.messager.alert("提示", "请选择有效数据", "warning");
             }
         }
 
-        function examMonthlyList(id) {
+        function salaryList(id) {
             parent.$.modalDialog({
                 title:'工资列表',
-                width:1000,
+                width:1200,
                 height:600,
-                href:'${path}/examMonthly/examMonthlyListPage?id='+id,
+                href:'${path}/peopleContract2Salary/salaryListPage?id='+id,
             });
         }
 
@@ -165,7 +165,7 @@
         function operateFormatter(value,row,index){
             var str = '';
 
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="examMonthlyList(\'{0}\');" >月度考核明细</a>', row.id);
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="salaryList(\'{0}\');" >工资明细</a>', row.id);
 
             return str;
         }
@@ -222,21 +222,23 @@
             <th field="jobName"       data-options="sortable:true" width="80">职务</th>
             <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
             <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
-            <th field="peopleCode"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
 </div>
 
 <div id="toolbar" style="display: none;">
-    <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-       data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-    <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-       data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
-    <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-       data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-    <!-- 附件下载使用 -->
-    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+        <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">导入</a>
+        <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
+        <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+        <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">查询导出</a>
+        <!-- 附件下载使用 -->
+        <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
 </body>
 </html>

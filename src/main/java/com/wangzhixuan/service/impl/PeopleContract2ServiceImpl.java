@@ -444,4 +444,9 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
 
         return ids;
     }
+    @Override
+    public PeopleContract findPeopleContractByCode(String code) {
+        return peopleContractMapper.findPeopleContractByCode(code);
+    }
+
 }

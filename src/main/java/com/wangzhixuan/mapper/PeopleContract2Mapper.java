@@ -94,4 +94,6 @@ public interface PeopleContract2Mapper {
      * @return
      */
     PeopleContractVo findPeopleContractVoById(Long id);
+    PeopleContract findFirstPeopleByName(String name);
+    PeopleContract findPeopleContractByCode(String code);
 }
