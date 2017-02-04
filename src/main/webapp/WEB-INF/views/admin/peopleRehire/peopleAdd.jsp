@@ -82,12 +82,12 @@
                 <tr>
                     <td>返聘前工作部门</td>
                     <td>
-                        <input type="text" name="beforeDepartment"/>
+                        <input class="easyui-combobox" id="beforeDepartmentId" name="beforeDepartmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>返聘前岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="beforeJobName" name="beforeJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
-                        </input>
+                        <input type="text" name="beforeJobName">
                     </td>
                 </tr>
                 <tr>
@@ -98,15 +98,14 @@
                     </td>
                     <td>拟返聘工作部门</td>
                     <td>
-                        <input class="easyui-combobox" id="AfterDepartmentId" name="AfterDepartmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="afterDepartmentId" name="afterDepartmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>
                 <tr>
                     <td>拟返聘岗位</td>
                     <td>
-                        <input class="easyui-combobox" id="afterJobName" name="afterJobName" url="${path}/dict/jobName" valueField="name" textField="name" editable="false">
-                        </input>
+                        <input type="text" name="afterJobName">
                     </td>
                     <td>拟返聘职级</td>
                     <td>

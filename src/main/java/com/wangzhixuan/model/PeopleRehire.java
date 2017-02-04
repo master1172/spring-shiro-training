@@ -39,7 +39,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
 
     private String speciality;
 
-    private String beforeDepartment;
+    private Integer beforeDepartmentId;
 
     private String beforeJobName;
 
@@ -165,12 +165,12 @@ public class PeopleRehire extends PeopleBase implements Serializable {
         this.speciality = speciality;
     }
 
-    public String getBeforeDepartment() {
-        return beforeDepartment;
+    public Integer getBeforeDepartmentId() {
+        return beforeDepartmentId;
     }
 
-    public void setBeforeDepartment(String beforeDepartment) {
-        this.beforeDepartment = beforeDepartment;
+    public void setBeforeDepartmentId(Integer beforeDepartmentId) {
+        this.beforeDepartmentId = beforeDepartmentId;
     }
 
     public String getBeforeJobName() {

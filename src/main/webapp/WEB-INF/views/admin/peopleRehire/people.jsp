@@ -328,29 +328,29 @@
     <table id="dataGrid" data-options="fit:true,border:false">
         <thead>
         <tr>
-            <th field="ck"       data-options="checkbox:true"></th>
-            <th field="name"     data-options="sortable:true" width="80">姓名</th>
-            <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
-            <th field="nationalName"     data-options="sortable:true" width="80">民族</th>
-            <th field="nativeName"     data-options="sortable:true" width="80">籍贯</th>
-            <th field="birthPlace"     data-options="sortable:true" width="80">出生地</th>
-            <th field="birthday" data-options="sortable:true" width="80">生日</th>
-            <th field="educationName"     data-options="sortable:true" width="80">文化程度</th>
-            <th field="politicalName"     data-options="sortable:true" width="80">政治面貌</th>
-            <th field="healthStatus"     data-options="sortable:true" width="80">健康状况</th>
-            <th field="retireDate"     data-options="sortable:true" width="80">退休日期</th>
-            <th field="speciality"     data-options="sortable:true" width="130">专业技术及专长</th>
-            <th field="beforeDepartment"     data-options="sortable:true" width="80">返聘前工作部门</th>
-            <th field="beforeJobName"     data-options="sortable:true" width="80">返聘前岗位</th>
-            <th field="beforeJobLevelName"      data-options="sortable:true" width="40">返聘前职级</th>
-            <th field="afterDepartmentName"     data-options="sortable:true" width="80">拟返聘工作部门</th>
-            <th field="afterJobName"     data-options="sortable:true" width="80">拟反聘岗位</th>
-            <th field="afterJobLevelName"  data-options="sortable:true" width="130">拟返聘职级</th>
-            <th field="photoId"     data-options="sortable:true" width="80">身份证号</th>
-            <th field="address"     data-options="sortable:true" width="80">家庭住址</th>
-            <th field="hukouAddress"     data-options="sortable:true" width="80">户籍所在地</th>
-            <th field="category"       data-options="sortable:true" width="130">返聘人员类型</th>
-            <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="ck"                  data-options="checkbox:true"></th>
+            <th field="name"                data-options="sortable:true" width="80">姓名</th>
+            <th field="sex"                 data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
+            <th field="nationalName"        data-options="sortable:true" width="80">民族</th>
+            <th field="nativeName"          data-options="sortable:true" width="80">籍贯</th>
+            <th field="birthPlace"          data-options="sortable:true" width="80">出生地</th>
+            <th field="birthday"            data-options="sortable:true" width="80">生日</th>
+            <th field="educationName"       data-options="sortable:true" width="80">文化程度</th>
+            <th field="politicalName"       data-options="sortable:true" width="80">政治面貌</th>
+            <th field="healthStatus"        data-options="sortable:true" width="80">健康状况</th>
+            <th field="retireDate"          data-options="sortable:true" width="80">退休日期</th>
+            <th field="speciality"          data-options="sortable:true" width="130">专业技术及专长</th>
+            <th field="beforeDepartmentName"     data-options="sortable:true" width="80">返聘前工作部门</th>
+            <th field="beforeJobName"       data-options="sortable:true" width="80">返聘前岗位</th>
+            <th field="beforeJobLevelName"  data-options="sortable:true" width="40">返聘前职级</th>
+            <th field="afterDepartmentName" data-options="sortable:true" width="80">拟返聘工作部门</th>
+            <th field="afterJobName"        data-options="sortable:true" width="80">拟反聘岗位</th>
+            <th field="afterJobLevelName"   data-options="sortable:true" width="130">拟返聘职级</th>
+            <th field="photoId"             data-options="sortable:true" width="80">身份证号</th>
+            <th field="address"             data-options="sortable:true" width="80">家庭住址</th>
+            <th field="hukouAddress"        data-options="sortable:true" width="80">户籍所在地</th>
+            <th field="category"            data-options="sortable:true" width="130">返聘人员类型</th>
+            <th field="id"                  data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>

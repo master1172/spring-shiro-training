@@ -256,7 +256,15 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 //返聘前工作部门
                 if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
                     String beforeDepartment=row.getCell(12).toString().trim();
-                    p.setBeforeDepartment(beforeDepartment);
+
+                    try{
+                        Integer beforeDepartmentId = dictMapper.findDepartmentIdByName(beforeDepartment);
+                        if (beforeDepartmentId != null){
+                            p.setBeforeDepartmentId(beforeDepartmentId);
+                        }
+                    }catch(Exception exp){
+
+                    }
                 }
 
                 //返聘前岗位
@@ -397,7 +405,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                     row.createCell(9).setCellValue(p.getHealthStatus());row.getCell(9).setCellStyle(setBorder);
                     row.createCell(10).setCellValue(p.getRetireDate());row.getCell(10).setCellStyle(setBorder);
                     row.createCell(11).setCellValue(p.getSpeciality());row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getBeforeDepartment());row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getBeforeDepartmentName());row.getCell(12).setCellStyle(setBorder);
                     row.createCell(13).setCellValue(p.getBeforeJobName());row.getCell(13).setCellStyle(setBorder);
                     row.createCell(14).setCellValue(p.getBeforeJobLevelName());row.getCell(14).setCellStyle(setBorder);
                     row.createCell(15).setCellValue(p.getAfterDepartmentName());row.getCell(15).setCellStyle(setBorder);
@@ -435,32 +443,34 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
-            params.put("${name}",p.getName());
+            params.put("${name}",p.getName()==null?"":p.getName());
             params.put("${sex}",p.getSex()==0?"男":"女");
-            params.put("${nationalName}",p.getNationalName());
-            params.put("${nativeName}",p.getNativeName());
-            params.put("${birthPlace}",p.getBirthPlace());
-            params.put("${birthday}",p.getBirthday());
-            params.put("${educationName}",p.getEducationName());
-            params.put("${politicalName}",p.getPoliticalName());
-            params.put("${healthStatus}",p.getHealthStatus());
-            params.put("${retireDate}",p.getRetireDate());
-            params.put("${speciality}",p.getSpeciality());
-            params.put("${beforeDepartment}",p.getBeforeDepartment());
-            params.put("${beforeJobName}",p.getBeforeJobName());
-            params.put("${beforeJobLevelName}",p.getBeforeJobLevelName());
-            params.put("${afterDepartmentName}",p.getAfterDepartmentName());
-            params.put("${afterJobName}",p.getAfterJobName());
-            params.put("${afterJobLevelName}",p.getAfterJobLevelName());
-            params.put("${photoId}",p.getPhotoId());
-            params.put("${address}",p.getAddress());
-            params.put("${hukouAddress}",p.getHukouAddress());
-            params.put("${category}",p.getCategory());
+            params.put("${nationalName}",p.getNationalName()==null?"":p.getNationalName());
+            params.put("${nativeName}",p.getNativeName()==null?"":p.getNativeName());
+            params.put("${birthPlace}",p.getBirthPlace()==null?"":p.getBirthPlace());
+            params.put("${birthday}",p.getBirthday()==null?"":p.getBirthday());
+            params.put("${educationName}",p.getEducationName()==null?"":p.getEducationName());
+            params.put("${politicalName}",p.getPoliticalName()==null?"":p.getPoliticalName());
+            params.put("${healthStatus}",p.getHealthStatus()==null?"":p.getHealthStatus());
+            params.put("${retireDate}",p.getRetireDate()==null?"":p.getRetireDate());
+            params.put("${speciality}",p.getSpeciality()==null?"":p.getSpeciality());
+            params.put("${beforeDepartment}",p.getBeforeDepartmentName()==null?"":p.getBeforeDepartmentName());
+            params.put("${beforeJobName}",p.getBeforeJobName()==null?"":p.getBeforeJobName());
+            params.put("${beforeJobLevelName}",p.getBeforeJobLevelName()==null?"":p.getBeforeJobLevelName());
+            params.put("${afterDepartmentName}",p.getAfterDepartmentName()==null?"":p.getAfterDepartmentName());
+            params.put("${afterJobName}",p.getAfterJobName()==null?"":p.getAfterJobName());
+            params.put("${afterJobLevelName}",p.getAfterJobLevelName()==null?"":p.getAfterJobLevelName());
+            params.put("${photoId}",p.getPhotoId()==null?"":p.getPhotoId());
+            params.put("${address}",p.getAddress()==null?"":p.getAddress());
+            params.put("${hukouAddress}",p.getHukouAddress()==null?"":p.getHukouAddress());
+            params.put("${category}",p.getCategory()==null?"":p.getCategory());
 
             //判断是否有头像
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
