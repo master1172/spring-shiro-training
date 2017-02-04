@@ -443,32 +443,34 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
-            params.put("${name}",p.getName());
+            params.put("${name}",p.getName()==null?"":p.getName());
             params.put("${sex}",p.getSex()==0?"男":"女");
-            params.put("${nationalName}",p.getNationalName());
-            params.put("${nativeName}",p.getNativeName());
-            params.put("${birthPlace}",p.getBirthPlace());
-            params.put("${birthday}",p.getBirthday());
-            params.put("${educationName}",p.getEducationName());
-            params.put("${politicalName}",p.getPoliticalName());
-            params.put("${healthStatus}",p.getHealthStatus());
-            params.put("${retireDate}",p.getRetireDate());
-            params.put("${speciality}",p.getSpeciality());
-            params.put("${beforeDepartment}",p.getBeforeDepartmentName());
-            params.put("${beforeJobName}",p.getBeforeJobName());
-            params.put("${beforeJobLevelName}",p.getBeforeJobLevelName());
-            params.put("${afterDepartmentName}",p.getAfterDepartmentName());
-            params.put("${afterJobName}",p.getAfterJobName());
-            params.put("${afterJobLevelName}",p.getAfterJobLevelName());
-            params.put("${photoId}",p.getPhotoId());
-            params.put("${address}",p.getAddress());
-            params.put("${hukouAddress}",p.getHukouAddress());
-            params.put("${category}",p.getCategory());
+            params.put("${nationalName}",p.getNationalName()==null?"":p.getNationalName());
+            params.put("${nativeName}",p.getNativeName()==null?"":p.getNativeName());
+            params.put("${birthPlace}",p.getBirthPlace()==null?"":p.getBirthPlace());
+            params.put("${birthday}",p.getBirthday()==null?"":p.getBirthday());
+            params.put("${educationName}",p.getEducationName()==null?"":p.getEducationName());
+            params.put("${politicalName}",p.getPoliticalName()==null?"":p.getPoliticalName());
+            params.put("${healthStatus}",p.getHealthStatus()==null?"":p.getHealthStatus());
+            params.put("${retireDate}",p.getRetireDate()==null?"":p.getRetireDate());
+            params.put("${speciality}",p.getSpeciality()==null?"":p.getSpeciality());
+            params.put("${beforeDepartment}",p.getBeforeDepartmentName()==null?"":p.getBeforeDepartmentName());
+            params.put("${beforeJobName}",p.getBeforeJobName()==null?"":p.getBeforeJobName());
+            params.put("${beforeJobLevelName}",p.getBeforeJobLevelName()==null?"":p.getBeforeJobLevelName());
+            params.put("${afterDepartmentName}",p.getAfterDepartmentName()==null?"":p.getAfterDepartmentName());
+            params.put("${afterJobName}",p.getAfterJobName()==null?"":p.getAfterJobName());
+            params.put("${afterJobLevelName}",p.getAfterJobLevelName()==null?"":p.getAfterJobLevelName());
+            params.put("${photoId}",p.getPhotoId()==null?"":p.getPhotoId());
+            params.put("${address}",p.getAddress()==null?"":p.getAddress());
+            params.put("${hukouAddress}",p.getHukouAddress()==null?"":p.getHukouAddress());
+            params.put("${category}",p.getCategory()==null?"":p.getCategory());
 
             //判断是否有头像
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
