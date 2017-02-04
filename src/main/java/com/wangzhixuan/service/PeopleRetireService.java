@@ -62,6 +62,8 @@ public interface PeopleRetireService {
     void deletePeopleRetireById(Long id);
 
     void batchDeletePeopleRetireByIds(String[] ids);
+
+    void batchConvertFromRetireToRehireByIds(String[] ids);
     /**
      * 数据导入
      * @param list

@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.mapper.PeopleRehireMapper;
+import com.wangzhixuan.model.PeopleRehire;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFPictureData;
@@ -37,6 +39,8 @@ import com.wangzhixuan.vo.PeopleRetireVo;
 @Service
 public class PeopleRetireServiceImpl implements PeopleRetireService{
 
+    @Autowired
+    private PeopleRehireMapper peopleRehireMapper;
 
     @Autowired
     private PeopleRetireMapper peopleRetireMapper;
@@ -144,6 +148,42 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
     @Override
     public void batchDeletePeopleRetireByIds(String[] ids){
         peopleRetireMapper.batchDeleteByIds(ids);
+    }
+
+    @Override
+    public void batchConvertFromRetireToRehireByIds(String[] ids) {
+        if (ids == null || ids.length < 1)
+            return;
+
+        for(int i=0; i<ids.length; i++){
+            String id = ids[i];
+            PeopleRetire peopleRetire = peopleRetireMapper.findPeopleRetireById(StringUtilExtra.StringToLong(id));
+
+            if (peopleRetire == null || StringUtils.isBlank(peopleRetire.getCode()) || StringUtils.isBlank(peopleRetire.getName()))
+                continue;
+
+            //首先删除原有people rehire表里对应的人员信息
+            peopleRehireMapper.deleteByCode(peopleRetire.getCode());
+
+            PeopleRehire peopleRehire = new PeopleRehire();
+            peopleRehire.setCode(peopleRetire.getCode());
+            peopleRehire.setName(peopleRetire.getName());
+            peopleRehire.setSex(peopleRetire.getSex());
+            peopleRehire.setNationalId(peopleRetire.getNationalId());
+            peopleRehire.setBirthday(peopleRetire.getBirthday());
+            peopleRehire.setEducationName(peopleRetire.getEducationName());
+            peopleRehire.setPoliticalName(peopleRetire.getPoliticalName());
+            peopleRehire.setRetireDate(peopleRetire.getRetireDate());
+            peopleRehire.setBeforeJobName(peopleRetire.getRetireJobName());
+            peopleRehire.setBeforeJobLevelId(peopleRetire.getRetireJobLevelId());
+            peopleRehire.setAddress(peopleRetire.getAddress());
+            peopleRehire.setPhoto(peopleRetire.getPhoto());
+
+            peopleRehireMapper.insert(peopleRehire);
+
+            peopleRetire.setStatus(1);
+            peopleRetireMapper.updatePeopleRetire(peopleRetire);
+        }
     }
 
     @Override

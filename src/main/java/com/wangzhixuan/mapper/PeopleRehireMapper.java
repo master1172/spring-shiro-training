@@ -94,4 +94,6 @@ public interface PeopleRehireMapper {
      * @return
      */
     PeopleRehireVo findPeopleRehireVoById(Long id);
+
+    void deleteByCode(String code);
 }

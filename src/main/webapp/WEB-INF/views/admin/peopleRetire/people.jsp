@@ -198,6 +198,29 @@
             });
         }
 
+        function batchRehire(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要返聘所选人员？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/peopleRetire/batchRehire', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+        }
+
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -389,6 +412,11 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>
+    <shiro:hasPermission name="/peopleRetire/exportSearch">
+        <a onclick="batchRehire();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">批量返聘</a>
+    </shiro:hasPermission>
+
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

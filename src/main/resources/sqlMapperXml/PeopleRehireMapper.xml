@@ -349,6 +349,11 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByCode" parameterType="java.lang.String">
+        delete from people_rehire
+        where code = #{code, jdbcType=VARCHAR}
+    </delete>
+
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleRehire">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">

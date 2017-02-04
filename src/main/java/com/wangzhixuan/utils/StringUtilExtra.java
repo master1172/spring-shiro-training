@@ -12,6 +12,19 @@ import java.util.UUID;
  * Created by liushaoyang on 2016/9/18.
  */
 public class StringUtilExtra {
+
+
+    public static Long StringToLong(String value){
+        if (StringUtils.isBlank(value))
+            return Long.valueOf(-1);
+
+        try{
+            return Long.valueOf(value);
+        }catch (Exception exp){
+            return Long.valueOf(-1);
+        }
+    }
+
     public static String Date2String(Date date){
         if (date == null)
             return "";

@@ -243,6 +243,30 @@ public class PeopleRetireController extends BaseController{
         }
     }
 
+    @RequestMapping("/batchRehire")
+    @ResponseBody
+    public Result batchRehire(String ids){
+        Result result = new Result();
+
+        if (StringUtils.isEmpty(ids)){
+            result.setSuccess(true);
+            result.setMsg("请选择至少一个人");
+            return result;
+        }
+
+        try{
+            String[] idList = ids.split(",");
+            peopleRetireService.batchConvertFromRetireToRehireByIds(idList);
+            result.setSuccess(true);
+            result.setMsg("批量返聘人员成功");
+            return result;
+        }catch(Exception exp){
+            LOGGER.error("批量返聘人员失败:{}",exp);
+            result.setMsg(exp.getMessage());
+            return result;
+        }
+    }
+
 }
 
 
