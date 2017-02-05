@@ -169,6 +169,20 @@
             }
         }
 
+        function transferedPeople(){
+            $('#searchForm input').val('');
+            dataGrid.datagrid('load', {"transfer":"1"});
+        }
+
+        function sexFormatter(value,row,index){
+            switch (value) {
+                case 0:
+                    return '男';
+                case 1:
+                    return '女';
+            }
+        }
+
         function operateFormatter(value,row,index){
             var str = '';
                 str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="transferList(\'{0}\');" >调动记录列表</a>', row.id);
@@ -209,10 +223,16 @@
         <thead>
         <tr>
             <th field="ck"            data-options="checkbox:true"></th>
-            <th field="peopleName"    data-options="sortable:true"  width="80">姓名</th>
-            <th field="fromSchool"    data-options="sortable:false" width="80">调出前单位</th>
-            <th field="toSchool"      data-options="sortable:false" width="80">调往单位</th>
-            <th field="transferDate"  data-options="sortable:false" width="80">调动日期</th>
+            <th field="name"          data-options="sortable:true" width="80">姓名</th>
+            <th field="sex"           data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
+            <th field="nationalName"  data-options="sortable:true" width="80">民族</th>
+            <th field="birthday"      data-options="sortable:true" width="130">生日</th>
+            <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
+            <th field="educationName" data-options="sortable:true" width="80">学历</th>
+            <th field="degreeName"    data-options="sortable:true" width="80">学位</th>
+            <th field="jobName"       data-options="sortable:true" width="80">职务</th>
+            <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
+            <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
             <th field="peopleCode"    data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
@@ -228,6 +248,8 @@
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
+        <a onclick="transferedPeople();" href="javascript:void(0)" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">目前调出人员</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

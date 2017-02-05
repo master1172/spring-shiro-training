@@ -291,7 +291,6 @@
         LEFT JOIN
           dict_identity i ON i.id = t.identity_id
         <where>
-            t.status = 0
             <if test=" condition.name != null and condition.name != '' ">
                 and t.name LIKE concat('%',#{condition.name},'%')
             </if>
@@ -372,6 +371,12 @@
             </if>
             <if test=" condition.jobLevelDateMax != null and condition.jobLevelDateMax != ''">
                 <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
+            </if>
+            <if test=" condition.status != null and condition.status != ''">
+                t.status = #{condition.status}
+            </if>
+            <if test=" condition.status == null or condition.status == ''">
+                t.status = 0
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -394,7 +399,6 @@
         LEFT JOIN
         dict_identity i ON i.id = t.identity_id
         <where>
-            t.status = 0
             <if test=" condition.name != null and condition.name != '' ">
                 and t.name LIKE concat('%',#{condition.name},'%')
             </if>
@@ -475,6 +479,12 @@
             </if>
             <if test=" condition.jobLevelDateMax != null and condition.jobLevelDateMax != ''">
                 <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
+            </if>
+            <if test=" condition.status != null and condition.status != ''">
+                t.status = #{condition.status}
+            </if>
+            <if test=" condition.status == null or condition.status == ''">
+                t.status = 0
             </if>
         </where>
     </select>

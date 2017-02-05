@@ -2,10 +2,14 @@ package com.wangzhixuan.controller;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
+import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleTransfer;
+import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.service.PeopleTransferService;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleTransferVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +37,9 @@ public class PeopleTransferController extends BaseController{
     @Autowired
     private PeopleTransferService peopleTransferService;
 
+    @Autowired
+    private PeopleService peopleService;
+
     /**
      * 人员管理页
      *
@@ -55,12 +62,17 @@ public class PeopleTransferController extends BaseController{
      */
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(HttpServletRequest request, PeopleTransferVo peopleTransfervo, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, PeopleVo peopleVo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String,Object> condition = PeopleTransferVo.CreateCondition(peopleTransfervo);
-        pageInfo.setCondition(condition);
-        peopleTransferService.findDataGrid(pageInfo);
+        Map<String,Object> condition = PeopleVo.CreateCondition(peopleVo);
+        String transfer = request.getParameter("transfer");
 
+        if (StringUtils.isNoneBlank(transfer)){
+            condition.put("status", ConstUtil.PEOPLE_TRANSFER);
+        }
+
+        pageInfo.setCondition(condition);
+        peopleService.findDataGrid(pageInfo,request);
         return pageInfo;
     }
 
@@ -117,9 +129,10 @@ public class PeopleTransferController extends BaseController{
     @RequestMapping(value="/transferListPage", method = RequestMethod.GET)
     public String transferListPage(Long id, Model model){
 
-        PeopleTransfer peopleTransfer = peopleTransferService.findPeopleTransferById(id);
-        if (peopleTransfer != null){
-            model.addAttribute("code",peopleTransfer.getPeopleCode());
+        People people = peopleService.findPeopleById(id);
+
+        if (people != null){
+            model.addAttribute("code",people.getCode());
         }else{
             model.addAttribute("code","");
         }
@@ -128,12 +141,12 @@ public class PeopleTransferController extends BaseController{
 
     @RequestMapping(value="/transferPage", method=RequestMethod.GET)
     public String transferPage(Long id, Model model){
-        PeopleTransfer peopleTransfer = peopleTransferService.findPeopleTransferById(id);
-        if (peopleTransfer != null){
-            model.addAttribute("peopleTransfer",peopleTransfer);
+        People people = peopleService.findPeopleById(id);
+        if (people != null){
+            model.addAttribute("people",people);
         }else{
-            peopleTransfer = new PeopleTransfer();
-            model.addAttribute("peopleTransfer",peopleTransfer);
+            people = new People();
+            model.addAttribute("people",people);
         }
 
         return "admin/peopleTransfer/peopleTransfer";

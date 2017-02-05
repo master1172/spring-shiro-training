@@ -16,11 +16,11 @@
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleTransferForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
-                <input type="hidden" name="peopleCode" value="${peopleTransfer.peopleCode}">
+                <input type="hidden" name="peopleCode" value="${people.code}">
                 <tr>
                     <td>姓名</td>
                     <td>
-                        <input type="text" name="peopleName" value="${peopleTransfer.peopleName}">
+                        <input type="text" name="peopleName" value="${people.name}">
                     </td>
                 </tr>
                 <tr>
