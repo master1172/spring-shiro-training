@@ -426,6 +426,8 @@ public class PeopleContractServiceImpl implements PeopleContractService{
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
