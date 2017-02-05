@@ -74,7 +74,7 @@
             title: '修改',
             width: 800,
             height: 600,
-            href: '${path}/peopleTransfer/editPage?id='+id,
+            href: '${path}/peopleTransfer/editPage?code='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
@@ -97,6 +97,36 @@
             }]
         });
     }
+
+    function addTransferFun(){
+            parent.$.modalDialog({
+                title: '人员调动',
+                width: 700,
+                height: 250,
+                href: '${path}/peopleTransfer/transferPage?code=${code}',
+                buttons: [{
+                    text: '调动',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = transferListGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#peopleTransferForm");
+                        //f.submit();
+                        if(parent.checkForm()){
+                            parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/transfer",function(data){
+                                if(!data["success"]){
+                                    parent.progressClose();
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                }else{
+                                    parent.progressClose();
+                                    transferListGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+    }
+
 
     function operateFormatter(value,row,index){
         var str = '';
@@ -125,7 +155,7 @@
     </div>
 
     <div id="transferListToolbar" style="display: none;">
-        <a onclick="" href="javascript:void(0);" class="easyui-linkbutton"
+        <a onclick="addTransferFun()" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加调动记录</a>
         <a onclick="" href="javascript:void(0)" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">生成通知书</a>

@@ -140,8 +140,15 @@ public class PeopleTransferController extends BaseController{
     }
 
     @RequestMapping(value="/transferPage", method=RequestMethod.GET)
-    public String transferPage(Long id, Model model){
-        People people = peopleService.findPeopleById(id);
+    public String transferPage(Long id, String code, Model model){
+
+        People people = null;
+
+        if (id != null)
+            people = peopleService.findPeopleById(id);
+        if (StringUtils.isNoneBlank(code))
+            people = peopleService.findPeopleByCode(code);
+
         if (people != null){
             model.addAttribute("people",people);
         }else{
