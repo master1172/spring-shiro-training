@@ -21,7 +21,7 @@
                 idField: 'peopleCode',
                 singleSelect: false,
                 selectOnCheck: false,
-                checkOnSelect: true,
+                checkOnSelect: false,
                 sortName: 'id',
                 sortOrder: 'asc',
                 pageSize: 20,
@@ -88,14 +88,17 @@
 
         function exportExcel(){
             var checkedItems = $("#dataGrid").datagrid("getChecked");
-            if(checkedItems.length == 1){
-                var id= checkedItems[0]["id"];
+            if(checkedItems.length > 0){
+                var ids=[];
+                $.each(checkedItems,function(index,item){
+                    ids.push(item.id);
+                });
                 var form=$("#downLoadForm");
-                form.find("input[name='id']").val(id);
+                form.find("input[name='ids']").val(ids.join(","));
                 form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
                 $("#downLoadForm").submit();
-            }else{
-                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+            }else{11111
+                parent.$.messager.alert("提示", "请选择至少一条记录", "warning");
             }
         }
 
@@ -117,6 +120,7 @@
                             if(parent.checkForm()){
                                 parent.SYS_SUBMIT_FORM(f,"/peopleTransfer/transfer",function(data){
                                     if(!data["success"]){
+                                        parent.progressClose();
                                         parent.$.messager.alert("提示", data["msg"], "warning");
                                     }else{
                                         parent.progressClose();

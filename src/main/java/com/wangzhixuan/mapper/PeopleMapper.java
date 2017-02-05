@@ -105,4 +105,6 @@ public interface PeopleMapper {
     People findPeopleByCode(String code);
 
     People findFirstPeopleByName(String name);
+
+    List selectPeopleByCodes(List code);
 }

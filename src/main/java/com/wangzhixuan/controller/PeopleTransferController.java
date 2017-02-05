@@ -164,6 +164,11 @@ public class PeopleTransferController extends BaseController{
         Result result = new Result();
         try {
             peopleTransferService.addPeopleTransfer(peopleTransfer,file);
+            People people = peopleService.findPeopleByCode(peopleTransfer.getPeopleCode());
+            if (people != null){
+                people.setStatus(ConstUtil.PEOPLE_TRANSFER);
+                peopleService.updatePeople(people);
+            }
             result.setSuccess(true);
             result.setMsg("人员调动成功");
             return result;

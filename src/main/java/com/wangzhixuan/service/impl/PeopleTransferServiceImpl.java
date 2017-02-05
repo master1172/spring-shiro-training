@@ -2,6 +2,7 @@ package com.wangzhixuan.service.impl;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.DictMapper;
+import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.mapper.PeopleTransferMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleTransfer;
@@ -38,6 +39,9 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
     @Autowired
     private PeopleTransferMapper peopleTransferMapper;
+
+    @Autowired
+    private PeopleMapper peopleMapper;
 
     @Autowired
     private DictMapper dictMapper;
@@ -252,16 +256,22 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
         String[] idList = ids.split(",");
 
         List<PeopleTransfer> list = new ArrayList<>();
-        List<PeopleTransferVo> peopleTransferVoList = peopleTransferMapper.selectPeopleTransferVoByIds(idList);
-        if (peopleTransferVoList != null && peopleTransferVoList.size() > 0){
-            List<String> peopleCodeList = new ArrayList<>();
-            for(PeopleTransferVo peopleTransferVo: peopleTransferVoList){
-                if (peopleTransferVo != null && StringUtils.isNoneBlank(peopleTransferVo.getPeopleCode()))
-                    peopleCodeList.add(peopleTransferVo.getPeopleCode());
+
+        List<People> peopleList = peopleMapper.selectPeopleByIds(idList);
+
+        List<String> peopleCodeList = new ArrayList<>();
+
+        if (peopleList != null && peopleList.size() > 0){
+            for(People people: peopleList){
+                if (people == null || StringUtils.isBlank(people.getCode()))
+                    continue;
+                String peopleCode = people.getCode();
+                peopleCodeList.add(peopleCode);
             }
+        }
 
+        if (peopleCodeList!=null && peopleCodeList.size() > 0){
             list = peopleTransferMapper.selectPeopleTransferByCodeList(peopleCodeList);
-
         }
 
         if(list!=null&&list.size()>=0){
@@ -274,22 +284,24 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
                 XSSFRow row=sheet.createRow(0);
-                row.createCell(0).setCellValue("序号");         row.getCell(0).setCellStyle(setBorder);
-                row.createCell(1).setCellValue("调出前单位");    row.getCell(1).setCellStyle(setBorder);
-                row.createCell(2).setCellValue("调往单位");      row.getCell(2).setCellStyle(setBorder);
-                row.createCell(3).setCellValue("调入调出日期");  row.getCell(3).setCellStyle(setBorder);
-                row.createCell(4).setCellValue("工资止薪日期");  row.getCell(4).setCellStyle(setBorder);
-                row.createCell(5).setCellValue("党组织转接日期");row.getCell(5).setCellStyle(setBorder);
+                row.createCell(0).setCellValue("序号");          row.getCell(0).setCellStyle(setBorder);
+                row.createCell(1).setCellValue("姓名");          row.getCell(1).setCellStyle(setBorder);
+                row.createCell(2).setCellValue("调出前单位");     row.getCell(2).setCellStyle(setBorder);
+                row.createCell(3).setCellValue("调往单位");       row.getCell(3).setCellStyle(setBorder);
+                row.createCell(4).setCellValue("调入调出日期");   row.getCell(4).setCellStyle(setBorder);
+                row.createCell(5).setCellValue("工资止薪日期");   row.getCell(5).setCellStyle(setBorder);
+                row.createCell(6).setCellValue("党组织转接日期"); row.getCell(6).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
                     PeopleTransfer p= list.get(i);
-                    row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
-                    row.createCell(1).setCellValue(p.getFromSchool());row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getToSchool());row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getTransferDate());row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getSalaryEndDate());row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getPartyTransferDate());row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(0).setCellValue(i+1);                     row.getCell(0).setCellStyle(setBorder);
+                    row.createCell(1).setCellValue(p.getPeopleName());       row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getFromSchool());       row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getToSchool());         row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getTransferDate());     row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getSalaryEndDate());    row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getPartyTransferDate());row.getCell(6).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
@@ -318,6 +330,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${peopleCode}",p.getPeopleCode());
+            params.put("${peopleName}",p.getPeopleName());
             params.put("${peopleType}",p.getPeopleType());
             params.put("${fromSchool}",p.getFromSchool());
             params.put("${toSchool}",p.getToSchool());
@@ -330,6 +343,8 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
