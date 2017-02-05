@@ -161,7 +161,10 @@
         where people_code = #{peopleCode}
     </select>
 
-
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from people_transfer
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTransfer">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">

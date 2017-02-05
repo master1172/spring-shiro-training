@@ -202,6 +202,22 @@ public class PeopleTransferController extends BaseController{
         }
     }
 
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Result delete(Long id){
+        Result result = new Result();
+        try{
+            peopleTransferService.delete(id);
+            result.setMsg("删除成功！");
+            result.setSuccess(true);
+            return result;
+        }catch(RuntimeException e){
+            LOGGER.error("删除记录失败：{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
+    }
+
     /**
      * 批量调入W
      */

@@ -80,6 +80,7 @@ public interface PeopleTransferService {
     String findPeopleTransferIDsByCondition(PageInfo pageInfo);
 
 
+    void delete(Long id);
 }
 
 

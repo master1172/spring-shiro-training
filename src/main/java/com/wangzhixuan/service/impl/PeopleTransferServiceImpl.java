@@ -370,6 +370,11 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
         return ids;
     }
+
+    @Override
+    public void delete(Long id) {
+        peopleTransferMapper.deleteById(id);
+    }
 }
 
 

@@ -96,6 +96,8 @@ public interface PeopleTransferMapper {
      * @return
      */
     PeopleTransferVo findPeopleTransferVoById(Long id);
+
+    void deleteById(Long id);
 }
 
 
