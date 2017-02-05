@@ -196,7 +196,7 @@ public class PeopleTransferController extends BaseController{
             result.setMsg("修改成功!");
             return result;
         }catch(RuntimeException e){
-            LOGGER.error("修改人员失败：{}",e);
+            LOGGER.error("修改失败：{}",e);
             result.setMsg(e.getMessage());
             return result;
         }

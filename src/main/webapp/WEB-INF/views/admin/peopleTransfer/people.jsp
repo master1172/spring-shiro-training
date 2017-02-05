@@ -21,7 +21,7 @@
                 idField: 'peopleCode',
                 singleSelect: false,
                 selectOnCheck: false,
-                checkOnSelect: false,
+                checkOnSelect: true,
                 sortName: 'id',
                 sortOrder: 'asc',
                 pageSize: 20,
@@ -157,15 +157,21 @@
 
         //导出Excel
         function exportExcel(){
-            var checkedItems = $("#dataGrid").datagrid("getChecked");
-            if(checkedItems.length >0){
-                var ids="";
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+
+            alert(checkedItems.length);
+
+            if(checkedItems.length > 0){
+
+                var ids=[];
                 $.each(checkedItems, function(index,item){
-                    if(ids.length>0)ids+=",";
-                    ids+=item["id"];
+                    ids.push(item.id);
                 });
+
+                alert(ids.join(","));
+
                 var form=$("#downLoadForm");
-                form.find("input[name='ids']").val(ids);
+                form.find("input[name='ids']").val(ids.join(","));
                 form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
                 $("#downLoadForm").submit();
             }else{
