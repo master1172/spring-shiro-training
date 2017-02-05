@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
-<script type="text/javascript" src="${staticPath}/static/easyui/plugins/uploadPreview.min.js" charset="utf-8"></script>
 <script type="text/javascript">
 
     $(function(){
-        $('#transferDate').val('${peopleTransfer.transferDate}');
-        $('#partyTransferDate').val('${peopleTransfer.partyTransferDate}');
+        $("#transferDate").val("${peopleTransfer.transferDate}");
+        $("#partyTransferDate").val("${peopleTransfer.partyTransferDate}");
     });
 
     function checkForm(){
@@ -22,7 +21,8 @@
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleTransferEditForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
-                <input type="hidden" name="peopleCode" value="${peopleTransfer.code}">
+                <input type="hidden" name="id" value="${peopleTransfer.id}">
+                <input type="hidden" name="peopleCode" value="${peopleTransfer.peopleCode}">
                 <tr>
                     <td>姓名</td>
                     <td>
