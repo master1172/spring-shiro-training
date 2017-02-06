@@ -401,7 +401,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
             params.put("${code}",p.getCode());
             params.put("${name}",p.getName());
             params.put("${sex}",p.getSex()==0?"男":"女");
-            params.put("${nationalName}",p.getNationalName());
+            params.put("￥",p.getNationalName());
             params.put("${province}",p.getProvince());
             params.put("${city}",p.getCity());
             params.put("${birthday}",p.getBirthday());
