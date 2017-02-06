@@ -74,7 +74,7 @@
             title: '修改',
             width: 800,
             height: 600,
-            href: '${path}/peopleTransfer/editPage?code='+id,
+            href: '${path}/peopleTransfer/editPage?id='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
@@ -148,7 +148,7 @@
                     <th field="fromSchool"    data-options="sortable:false" width="80">调出前单位</th>
                     <th field="toSchool"      data-options="sortable:false" width="80">调往单位</th>
                     <th field="transferDate"  data-options="sortable:false" width="80">调动日期</th>
-                    <th field="id"            data-options="sortable:false,formatter:operateFormatter" width="200">操作</th>
+                    <th field="id"            data-options="sortable:false, formatter:operateFormatter" width="200">操作</th>
                 </tr>
             </thead>
         </table>
