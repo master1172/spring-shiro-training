@@ -438,13 +438,13 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
-            params.put("${name}",p.getName());
+            params.put("￥",p.getName());
             params.put("${retireJobName}",p.getRetireJobName());
-            params.put("${afterJobLevelName}",p.getRetireJobLevelName());
+            params.put("${retire}",p.getRetireJobLevelName());
             params.put("${sex}",p.getSex()==0?"男":"女");
             params.put("${nationalName}",p.getNationalName());
             params.put("${educationName}",p.getEducationName());
-            params.put("${birthday}",p.getBirthday());
+            params.put("${birth}",p.getBirthday());
             params.put("${politicalName}",p.getPoliticalName());
             params.put("${workDate}",p.getWorkDate());
             params.put("${retireDate}",p.getRetireDate());
@@ -459,6 +459,8 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
                 Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
                 params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
             }
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
