@@ -387,10 +387,10 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
             params.put("${name}",peopleTransfer.getPeopleName()==null?"":peopleTransfer.getPeopleName());
             params.put("${from}",peopleTransfer.getFromSchool()==null?"":peopleTransfer.getFromSchool());
             params.put("${to}",  peopleTransfer.getToSchool()==null?"":peopleTransfer.getToSchool());
-            params.put("${year}",  DateUtil.GetYear(peopleTransfer.getTransferDate()));
-            params.put("${month}", DateUtil.GetMonth(peopleTransfer.getTransferDate()));
-            params.put("${day}",   DateUtil.GetDay(peopleTransfer.getTransferDate()));
-            
+            params.put("$y",  DateUtil.GetYear(peopleTransfer.getTransferDate()));
+            params.put("$m", DateUtil.GetMonth(peopleTransfer.getTransferDate()));
+            params.put("$d",   DateUtil.GetDay(peopleTransfer.getTransferDate()));
+
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
         }
