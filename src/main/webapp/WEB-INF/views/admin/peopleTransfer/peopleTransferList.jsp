@@ -128,6 +128,19 @@
     }
 
 
+    function businessLetter(){
+        var checkedItems = $("#transferListGrid").datagrid("getChecked");
+        if(checkedItems.length==1){
+            var id=checkedItems[0]["id"];
+            var form=$("#downLoadForm");
+            form.find("input[name='ids']").val(id);
+            form.attr("action",'${path}'+"/peopleTransfer/exportBusinessLetter");
+            $("#downLoadForm").submit();
+        }else{
+            parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+        }
+    }
+
     function operateFormatter(value,row,index){
         var str = '';
         str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
@@ -157,7 +170,13 @@
     <div id="transferListToolbar" style="display: none;">
         <a onclick="addTransferFun()" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加调动记录</a>
+        <a onclick="businessLetter()" href="javascript:void(0)" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">生成商调函</a>
         <a onclick="" href="javascript:void(0)" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">生成通知书</a>
+           data-options="plain:true,iconCls:'icon-add'">生成行政介绍信</a>
+        <a onclick="" href="javascript:void(0)" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">生成工资介绍信</a>
+
+        <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
     </div>
 </div>

@@ -81,6 +81,8 @@ public interface PeopleTransferService {
 
 
     void delete(Long id);
+
+    void exportBusinessLetter(HttpServletResponse response, String ids);
 }
 
 

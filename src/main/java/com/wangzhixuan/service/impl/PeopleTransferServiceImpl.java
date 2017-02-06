@@ -7,10 +7,7 @@ import com.wangzhixuan.mapper.PeopleTransferMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleTransferService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleTransferVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.util.StringUtil;
@@ -374,6 +371,29 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     @Override
     public void delete(Long id) {
         peopleTransferMapper.deleteById(id);
+    }
+
+    @Override
+    public void exportBusinessLetter(HttpServletResponse response, String ids) {
+        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Long.valueOf(ids));
+        if (peopleTransfer!=null){
+            XWPFDocument doc;
+            OutputStream os;
+
+            String filePath = this.getClass().getResource("/template/transferBusiness.docx").getPath();
+            String newFileName = "中央民族干部学院商调函.docx";
+            Map<String,Object> params = new HashMap<>();
+
+            params.put("${name}",peopleTransfer.getPeopleName()==null?"":peopleTransfer.getPeopleName());
+            params.put("${from}",peopleTransfer.getFromSchool()==null?"":peopleTransfer.getFromSchool());
+            params.put("${to}",  peopleTransfer.getToSchool()==null?"":peopleTransfer.getToSchool());
+            params.put("${year}",  DateUtil.GetYear(peopleTransfer.getTransferDate()));
+            params.put("${month}", DateUtil.GetMonth(peopleTransfer.getTransferDate()));
+            params.put("${day}",   DateUtil.GetDay(peopleTransfer.getTransferDate()));
+            
+
+            WordUtil.OutputWord(response, filePath, newFileName, params);
+        }
     }
 }
 

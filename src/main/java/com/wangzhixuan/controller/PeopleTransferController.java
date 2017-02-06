@@ -300,6 +300,16 @@ public class PeopleTransferController extends BaseController{
         }
     }
 
+    @RequestMapping("/exportBusinessLetter")
+    public void exportBusinessLetter(HttpServletResponse response, String ids){
+        if(StringUtils.isEmpty(ids))
+            return;
+
+        try{
+            peopleTransferService.exportBusinessLetter(response,ids);
+        }catch (Exception exp){
+        }
+    }
 }
 
 
