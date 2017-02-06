@@ -97,9 +97,32 @@
                 form.find("input[name='ids']").val(ids.join(","));
                 form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
                 $("#downLoadForm").submit();
-            }else{11111
+            }else{
                 parent.$.messager.alert("提示", "请选择至少一条记录", "warning");
             }
+        }
+
+        function transferBack(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要调回所选人员？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/peopleTransfer/transferBack', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
         }
 
         function transferFun(){
@@ -260,6 +283,8 @@
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         <a onclick="transferedPeople();" href="javascript:void(0)" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">目前调出人员</a>
+        <a onclick="transferBack();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">调回</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

@@ -68,6 +68,8 @@ public interface PeopleService {
 
     void batchDeletePeopleByIds(String[] ids);
 
+    void batchTransferBackPeopleByIds(String[] idList);
+
     void batchRetirePeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException;
 
     void batchDeathPeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException;
@@ -105,4 +107,6 @@ public interface PeopleService {
     People findPeopleByCode(String code);
 
     List findPeopleListByIds(String[] idList);
+
+
 }

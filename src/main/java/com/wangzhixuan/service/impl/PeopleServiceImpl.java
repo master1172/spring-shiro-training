@@ -153,6 +153,25 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
 	@Override
+	public void batchTransferBackPeopleByIds(String[] idList) {
+		List<People> peopleList = peopleMapper.selectPeopleByIds(idList);
+
+		if (peopleList == null || peopleList.size() < 1)
+			return;
+
+		for(People people: peopleList){
+			if (people == null)
+				continue;
+			int status = people.getStatus();
+
+			if (status == ConstUtil.PEOPLE_TRANSFER){
+				people.setStatus(ConstUtil.PEOPLE_NORMAL);
+				peopleMapper.updatePeople(people);
+			}
+		}
+	}
+
+	@Override
 	public void batchRetirePeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException {
 		List<PeopleVo> peopleVoList = peopleMapper.selectPeopleVoByIds(ids);
 
