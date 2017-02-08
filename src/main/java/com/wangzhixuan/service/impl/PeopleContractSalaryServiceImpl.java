@@ -204,10 +204,10 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 				String peopleName = row.getCell(1).toString().trim();
 				PeopleContract peopleContract = peopleContractMapper.findFirstPeopleByName(peopleName);
-				String peopleCode = peopleContract.getCode();
-				if (peopleContract == null || StringUtils.isBlank(peopleCode))
+				String peopleCodeString = peopleContract.getCode();
+				if (peopleContract == null || StringUtils.isBlank(peopleCodeString))
 					continue;
-				peopleContractSalary.setPeopleCode(peopleCode);
+				peopleContractSalary.setPeopleCode(peopleCodeString);
 
 				Double peopleCodeDoubleType = Double.parseDouble(getCellString(row.getCell(2)));
 

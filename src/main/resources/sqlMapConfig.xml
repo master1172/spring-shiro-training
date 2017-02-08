@@ -92,7 +92,7 @@
 		<mapper resource="sqlMapperXml/ExamYearlyMapper.xml" />
 		<mapper resource="sqlMapperXml/ExamMonthlyMapper.xml" />
 
-		<!-- added by junfeng -->
+		<mapper resource="sqlMapperXml/PeopleContract2SalaryMapper.xml" />
 		<mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml" />
 		<mapper resource="sqlMapperXml/PeopleRetireSalaryMapper.xml" />
 		<mapper resource="sqlMapperXml/PeopleTimesheetMapper.xml" />

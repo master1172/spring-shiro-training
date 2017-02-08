@@ -82,10 +82,10 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 		if (list != null && list.size() > 0) {
 			XSSFWorkbook workBook;
 			OutputStream os;
-			String newFileName = "合同制人员工资.xlsx";
+			String newFileName = "无固定期合同制人员工资.xlsx";
 			try {
 				workBook = new XSSFWorkbook();
-				XSSFSheet sheet = workBook.createSheet("合同制人员工资");
+				XSSFSheet sheet = workBook.createSheet("无固定期合同制人员工资");
 				XSSFCellStyle setBorder = WordUtil.setCellStyle(workBook, true);
 				// 创建表头
 				XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleContractSalaryHeaders());
