@@ -30,6 +30,30 @@ public class DateUtil {
         }
     }
 
+    public static String GetYear(String date){
+        try{
+            return date.substring(0,4);
+        }catch (Exception exp){
+            return "";
+        }
+    }
+
+    public static String GetMonth(String date){
+        try{
+           return date.substring(5,7);
+        }catch (Exception exp){
+            return "";
+        }
+    }
+
+    public static String GetDay(String date){
+        try{
+            return date.substring(8);
+        }catch (Exception exp){
+            return "";
+        }
+    }
+
     public static Integer GetAgeByBirthday(String birthday){
         if (StringUtils.isBlank(birthday))
             return null;

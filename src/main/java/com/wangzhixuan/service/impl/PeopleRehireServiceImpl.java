@@ -445,7 +445,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             params.put("${code}",p.getCode());
             params.put("${name}",p.getName()==null?"":p.getName());
             params.put("${sex}",p.getSex()==0?"男":"女");
-            params.put("${nationalName}",p.getNationalName()==null?"":p.getNationalName());
+            params.put("￥",p.getNationalName()==null?"":p.getNationalName());
             params.put("${nativeName}",p.getNativeName()==null?"":p.getNativeName());
             params.put("${birthPlace}",p.getBirthPlace()==null?"":p.getBirthPlace());
             params.put("${birthday}",p.getBirthday()==null?"":p.getBirthday());
@@ -464,6 +464,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             params.put("${address}",p.getAddress()==null?"":p.getAddress());
             params.put("${hukouAddress}",p.getHukouAddress()==null?"":p.getHukouAddress());
             params.put("${category}",p.getCategory()==null?"":p.getCategory());
+
 
             //判断是否有头像
             if(p.getPhoto()!=null&&p.getPhoto().length()>0){
