@@ -147,6 +147,15 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="findLatestPeopleSalaryByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from people_salary
+        where people_code = #{code, jdbcType=VARCHAR}
+        order BY pay_date
+        limit 0,1
+    </select>
+
     <delete id="deleteSalaryById" parameterType="java.lang.Long">
         delete from people_salary
         where id = #{id,jdbcType=INTEGER}

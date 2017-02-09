@@ -310,6 +310,28 @@ public class PeopleTransferController extends BaseController{
         }catch (Exception exp){
         }
     }
+
+    @RequestMapping("/exportExecutionLetter")
+    public void exportExecutionLetter(HttpServletResponse response, String ids){
+        if(StringUtils.isEmpty(ids))
+            return;
+
+        try{
+            peopleTransferService.exportExecutionLetter(response,ids);
+        }catch (Exception exp){
+        }
+    }
+
+    @RequestMapping("/exportSalaryLetter")
+    public void exportSalaryLetter(HttpServletResponse response, String ids){
+        if(StringUtils.isEmpty(ids))
+            return;
+
+        try{
+            peopleTransferService.exportSalaryLetter(response,ids);
+        }catch (Exception exp){
+        }
+    }
 }
 
 

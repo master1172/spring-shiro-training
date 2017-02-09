@@ -1,10 +1,10 @@
 package com.wangzhixuan.service.impl;
 
 import com.google.common.collect.Maps;
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
-import com.wangzhixuan.mapper.PeopleTransferMapper;
+import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleJob;
+import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.utils.*;
@@ -41,7 +41,13 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     private PeopleMapper peopleMapper;
 
     @Autowired
+    private PeopleJobMapper peopleJobMapper;
+
+    @Autowired
     private DictMapper dictMapper;
+
+    @Autowired
+    private PeopleSalaryMapper peopleSalaryMapper;
 
     @Override
     public PeopleTransfer findPeopleTransferById(Long id) {
@@ -387,13 +393,132 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
             params.put("${name}",peopleTransfer.getPeopleName()==null?"":peopleTransfer.getPeopleName());
             params.put("${from}",peopleTransfer.getFromSchool()==null?"":peopleTransfer.getFromSchool());
             params.put("${to}",  peopleTransfer.getToSchool()==null?"":peopleTransfer.getToSchool());
-            params.put("$y",  DateUtil.GetYear(peopleTransfer.getTransferDate()));
-            params.put("$m", DateUtil.GetMonth(peopleTransfer.getTransferDate()));
-            params.put("$d",   DateUtil.GetDay(peopleTransfer.getTransferDate()));
-
+            params.put("$y",     DateUtil.GetYear(peopleTransfer.getTransferDate()));
+            params.put("$m",     DateUtil.GetMonth(peopleTransfer.getTransferDate()));
+            params.put("$d",     DateUtil.GetDay(peopleTransfer.getTransferDate()));
+            params.put("$a",     DateUtil.GetYear(DateUtil.GetToday()));
+            params.put("$b",     DateUtil.GetMonth(DateUtil.GetToday()));
+            params.put("$c",     DateUtil.GetDay(DateUtil.GetToday()));
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
         }
+    }
+
+    @Override
+    public void exportExecutionLetter(HttpServletResponse response, String ids) {
+        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Long.valueOf(ids));
+
+        if (peopleTransfer==null)
+            return;
+        String peopleCode = peopleTransfer.getPeopleCode();
+        if (StringUtils.isBlank(peopleCode))
+            return;
+
+        People people = peopleMapper.findPeopleByCode(peopleCode);
+
+
+
+        if (people == null)
+            return;
+
+        Integer jobLevelId = people.getJobLevelId();
+        PeopleJob peopleJob = null;
+        if (jobLevelId != null)
+            peopleJob = peopleJobMapper.findPeopleJobById(jobLevelId.longValue());
+
+        String jobLevel = "";
+        if (peopleJob != null)
+            jobLevel = peopleJob.getJobLevel();
+
+        XWPFDocument doc;
+        OutputStream os;
+
+        String filePath = this.getClass().getResource("/template/transferExecution.docx").getPath();
+        String newFileName = "中央民族干部学院行政介绍信.docx";
+        Map<String,Object> params = new HashMap<>();
+
+        params.put("${name}",peopleTransfer.getPeopleName()==null?"":peopleTransfer.getPeopleName());
+        params.put("${sex}", people.getSex()==0?"男":"女");
+        params.put("${from}",peopleTransfer.getFromSchool()==null?"":peopleTransfer.getFromSchool());
+        params.put("${to}",  peopleTransfer.getToSchool()==null?"":peopleTransfer.getToSchool());
+        params.put("$y",     DateUtil.GetYear(peopleTransfer.getTransferDate()));
+        params.put("$m",     DateUtil.GetMonth(peopleTransfer.getTransferDate()));
+        params.put("$d",     DateUtil.GetDay(peopleTransfer.getTransferDate()));
+        params.put("$a",     DateUtil.GetYear(DateUtil.GetToday()));
+        params.put("$b",     DateUtil.GetMonth(DateUtil.GetToday()));
+        params.put("$c",     DateUtil.GetDay(DateUtil.GetToday()));
+        params.put("${job}", jobLevel);
+
+        WordUtil.OutputWord(response, filePath, newFileName, params);
+
+    }
+
+    @Override
+    public void exportSalaryLetter(HttpServletResponse response, String ids) {
+        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Long.valueOf(ids));
+
+        if (peopleTransfer==null)
+            return;
+        String peopleCode = peopleTransfer.getPeopleCode();
+        if (StringUtils.isBlank(peopleCode))
+            return;
+
+        People people = peopleMapper.findPeopleByCode(peopleCode);
+
+        if (people == null)
+            return;
+
+        PeopleSalary peopleSalary = peopleSalaryMapper.findLatestPeopleSalaryByCode(peopleCode);
+
+        BigDecimal jobSalary      = BigDecimal.valueOf(0.0);
+        BigDecimal rankSalary     = BigDecimal.valueOf(0.0);
+        BigDecimal reserverSalary = BigDecimal.valueOf(0.0);
+        BigDecimal sum            = BigDecimal.valueOf(0.0);
+
+        if(peopleSalary != null){
+            if (peopleSalary.getJobSalary()!=null)
+                jobSalary = peopleSalary.getJobSalary();
+            if (peopleSalary.getRankSalary() != null)
+                rankSalary = peopleSalary.getRankSalary();
+            if (peopleSalary.getReserveSalary() != null)
+                reserverSalary = peopleSalary.getReserveSalary();
+        }
+
+        sum = jobSalary.add(rankSalary).add(reserverSalary);
+
+        Integer jobLevelId = people.getJobLevelId();
+        PeopleJob peopleJob = null;
+        if (jobLevelId != null)
+            peopleJob = peopleJobMapper.findPeopleJobById(jobLevelId.longValue());
+
+        String jobLevel = "";
+        if (peopleJob != null)
+            jobLevel = peopleJob.getJobLevel();
+
+        XWPFDocument doc;
+        OutputStream os;
+
+        String filePath = this.getClass().getResource("/template/transferSalary.docx").getPath();
+        String newFileName = "中央民族干部学院工资转移单.docx";
+        Map<String,Object> params = new HashMap<>();
+
+        params.put("${name}",peopleTransfer.getPeopleName()==null?"":peopleTransfer.getPeopleName());
+        params.put("${sex}", people.getSex()==0?"男":"女");
+        params.put("${from}",peopleTransfer.getFromSchool()==null?"":peopleTransfer.getFromSchool());
+        params.put("${to}",  peopleTransfer.getToSchool()==null?"":peopleTransfer.getToSchool());
+        params.put("${salaryEnd}", peopleTransfer.getSalaryEndDate() == null? "":peopleTransfer.getSalaryEndDate());
+        params.put("${salaryBegin}", peopleTransfer.getTransferDate() == null? "" : peopleTransfer.getTransferDate());
+
+        params.put("$a",     DateUtil.GetYear(DateUtil.GetToday()));
+        params.put("$b",     DateUtil.GetMonth(DateUtil.GetToday()));
+        params.put("$c",     DateUtil.GetDay(DateUtil.GetToday()));
+        params.put("${job}", jobLevel);
+        params.put("${jobSalary}",   jobSalary.toString());
+        params.put("${rankSalary}", rankSalary.toString());
+        params.put("${reserve}",    reserverSalary.toString());
+        params.put("${sum}",        sum.toString());
+
+        WordUtil.OutputWord(response, filePath, newFileName, params);
     }
 }
 

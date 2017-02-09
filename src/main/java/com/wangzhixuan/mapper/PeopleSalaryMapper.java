@@ -34,6 +34,8 @@ public interface PeopleSalaryMapper {
 
     List findPeopleSalaryVoListByCode(String code);
 
+    PeopleSalary findLatestPeopleSalaryByCode(String code);
+
     int insertByImport(List<PeopleSalary> list);
 
     int addSalaryBase(PeopleSalaryBase peopleSalaryBase);
