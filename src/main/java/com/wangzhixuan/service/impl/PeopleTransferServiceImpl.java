@@ -506,15 +506,15 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
         params.put("${sex}", people.getSex()==0?"男":"女");
         params.put("${from}",peopleTransfer.getFromSchool()==null?"":peopleTransfer.getFromSchool());
         params.put("${to}",  peopleTransfer.getToSchool()==null?"":peopleTransfer.getToSchool());
-        params.put("${salaryEnd}", peopleTransfer.getSalaryEndDate() == null? "":peopleTransfer.getSalaryEndDate());
-        params.put("${salaryBegin}", peopleTransfer.getTransferDate() == null? "" : peopleTransfer.getTransferDate());
+        params.put("${sEnd}", peopleTransfer.getSalaryEndDate() == null? "":peopleTransfer.getSalaryEndDate());
+        params.put("${sBegin}", peopleTransfer.getTransferDate() == null? "" : peopleTransfer.getTransferDate());
 
         params.put("$a",     DateUtil.GetYear(DateUtil.GetToday()));
         params.put("$b",     DateUtil.GetMonth(DateUtil.GetToday()));
         params.put("$c",     DateUtil.GetDay(DateUtil.GetToday()));
         params.put("${job}", jobLevel);
-        params.put("${jobSalary}",   jobSalary.toString());
-        params.put("${rankSalary}", rankSalary.toString());
+        params.put("${j}",   jobSalary.toString());
+        params.put("${r}", rankSalary.toString());
         params.put("${reserve}",    reserverSalary.toString());
         params.put("${sum}",        sum.toString());
 
