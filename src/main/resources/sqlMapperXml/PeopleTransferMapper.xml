@@ -66,7 +66,7 @@
         where name LIKE concat('%',#{name},'%')
     </select>
 
-    <select id="findPeopleTransferCodeListByConditions" resultMap="PeopleTransferVoResultMap" parameterType="PageInfo">
+    <select id="findPeopleTransferCodeListByConditions" resultType="java.lang.String" parameterType="PageInfo">
         SELECT
           distinct people_code
         FROM

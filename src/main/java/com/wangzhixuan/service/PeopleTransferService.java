@@ -7,6 +7,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.utils.PageInfo;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by liushaoyang on 2016/9/8.
  */
@@ -87,6 +90,8 @@ public interface PeopleTransferService {
     void exportExecutionLetter(HttpServletResponse response, String ids);
 
     void exportSalaryLetter(HttpServletResponse response, String ids);
+
+    List<String> findPeopleTransferCodeListByCondition(Map<String, Object> condition);
 }
 
 

@@ -520,6 +520,16 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
         WordUtil.OutputWord(response, filePath, newFileName, params);
     }
+
+    @Override
+    public List<String> findPeopleTransferCodeListByCondition(Map<String, Object> condition) {
+        if (condition == null)
+            return null;
+
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setCondition(condition);
+        return peopleTransferMapper.findPeopleTransferCodeListByConditions(pageInfo);
+    }
 }
 
 

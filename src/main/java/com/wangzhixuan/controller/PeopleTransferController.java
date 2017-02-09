@@ -24,6 +24,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,13 +63,20 @@ public class PeopleTransferController extends BaseController{
      */
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(HttpServletRequest request, PeopleVo peopleVo, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, PeopleTransferVo peopleTransferVo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String,Object> condition = PeopleVo.CreateCondition(peopleVo);
+        Map<String,Object> condition = PeopleTransferVo.CreateCondition(peopleTransferVo);
+
+        List<String> peopleCodeList = peopleTransferService.findPeopleTransferCodeListByCondition(condition);
+
         String transfer = request.getParameter("transfer");
 
         if (StringUtils.isNoneBlank(transfer)){
             condition.put("status", ConstUtil.PEOPLE_TRANSFER);
+        }
+
+        if (peopleCodeList != null && peopleCodeList.size() > 1){
+            condition.put("codeList", peopleCodeList.toArray());
         }
 
         pageInfo.setCondition(condition);

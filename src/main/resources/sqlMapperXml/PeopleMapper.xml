@@ -297,6 +297,12 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
+            <if test=" condition.codeList != null">
+                and t.code in
+                <foreach item="item" index="index" collection="condition.codeList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
             <if test=" condition.nationalIdList != null">
                 and t.national_id in
                 <foreach item="item" index="index" collection="condition.nationalIdList" open="(" separator="," close=")">
@@ -373,10 +379,10 @@
                 <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
             </if>
             <if test=" condition.status != null and condition.status != ''">
-                t.status = #{condition.status}
+                and t.status = #{condition.status}
             </if>
             <if test=" condition.status == null or condition.status == ''">
-                t.status = 0
+                and t.status = 0
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -405,6 +411,12 @@
             <if test=" condition.sex != null">
                 and t.sex = #{condition.sex}
             </if>
+            <if test=" condition.codeList != null">
+                and t.code in
+                <foreach item="item" index="index" collection="condition.codeList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
             <if test=" condition.nationalIdList != null">
                 and t.national_id in
                 <foreach item="item" index="index" collection="condition.nationalIdList" open="(" separator="," close=")">
@@ -481,10 +493,10 @@
                 <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
             </if>
             <if test=" condition.status != null and condition.status != ''">
-                t.status = #{condition.status}
+                and t.status = #{condition.status}
             </if>
             <if test=" condition.status == null or condition.status == ''">
-                t.status = 0
+                and t.status = 0
             </if>
         </where>
     </select>
