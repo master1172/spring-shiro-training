@@ -21,6 +21,7 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
         <form id="peopleSearchForm" method="post">
+            <input type="hidden" name="inQuery" value="1">
             <table class="grid" border=1>
                 <tr>
                     <td>人员姓名</td>

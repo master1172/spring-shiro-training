@@ -69,6 +69,7 @@
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f, "/peopleTransfer/exportSearch",function(data){
                                 if(!data["success"]){
+                                    parent.progressClose();
                                     parent.$.messager.alert("提示",data["msg"],"warning");
                                 }else{
                                     parent.progressClose();
@@ -191,8 +192,6 @@
                     ids.push(item.id);
                 });
 
-                alert(ids.join(","));
-
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids.join(","));
                 form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
@@ -227,6 +226,7 @@
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden; background-color: #fff">
     <form id="searchForm">
+        <input type="hidden" name="inQuery" value="1">
         <table>
             <tr>
                 <th>人员姓名:</th>
@@ -281,8 +281,10 @@
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
+        <a onclick="cleanFun();" href="javascript:void(0)" class="easyui-linkbutton"
+            data-options="plain:true,iconCls:'icon-add'">当前未调出人员</a>
         <a onclick="transferedPeople();" href="javascript:void(0)" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">目前调出人员</a>
+           data-options="plain:true,iconCls:'icon-add'">当前已调出人员</a>
         <a onclick="transferBack();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">调回</a>
     <!-- 附件下载使用 -->

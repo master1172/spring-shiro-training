@@ -71,11 +71,13 @@ public class PeopleTransferController extends BaseController{
 
         String transfer = request.getParameter("transfer");
 
+        String inQuery  = request.getParameter("inQuery");
+
         if (StringUtils.isNoneBlank(transfer)){
             condition.put("status", ConstUtil.PEOPLE_TRANSFER);
         }
 
-        if (peopleCodeList != null && peopleCodeList.size() > 1){
+        if (peopleCodeList != null && peopleCodeList.size() > 1 && StringUtils.isNoneBlank(inQuery)){
             condition.put("codeList", peopleCodeList.toArray());
         }
 
