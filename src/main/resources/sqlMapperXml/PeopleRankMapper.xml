@@ -5,11 +5,11 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="rank_level" property="rank_level" jdbcType="VARCHAR"/>
         <result column="salary" property="salary" jdbcType="DECIMAL"/>
-
     </resultMap>
     <resultMap id="peopleRankVoResultMap" type="com.wangzhixuan.vo.PeopleRankVo">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="rank_level" property="rank_level" jdbcType="VARCHAR" />
+        <result column="salary"     property="salary"     jdbcType="DECIMAL" />
     </resultMap>
     <sql id="Base_Column_List">,
         id, rank_level, salary
@@ -36,7 +36,7 @@
 
     <select id="findPeopleRankById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
-        <include refid="Base_Column_List"/>
+        id, rank_level, salary
         from rank
         where id = #{id}
     </select>

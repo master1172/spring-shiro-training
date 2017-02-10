@@ -22,6 +22,17 @@
                 });
             }
         });
+
+        $("#rankId").combobox({
+           onChange:function (newValue,oldValue) {
+               if (newValue == oldValue)
+                   return;
+               $.post('${path}/peopleRank/getValue',{id:newValue},
+                       function(data){
+                           $("#rankSalary").numberbox('setValue',data);
+               });
+           }
+        });
     });
 
     function checkForm(){

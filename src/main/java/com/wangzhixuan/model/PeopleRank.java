@@ -1,6 +1,7 @@
 package com.wangzhixuan.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by wangwk on 2017/1/15.
@@ -12,7 +13,7 @@ public class PeopleRank implements Serializable {
 
     private String rank_level;
 
-    private String salary;
+    private BigDecimal salary;
 
     public Long getId() {
         return id;
@@ -30,11 +31,11 @@ public class PeopleRank implements Serializable {
         this.rank_level = rank_level;
     }
 
-    public String getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 

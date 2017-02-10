@@ -131,7 +131,7 @@ public class PeopleRankServiceImpl implements PeopleRankService {
 				//薪级工资
 				if (row.getCell(2) != null && !row.getCell(2).toString().trim().equals("")) {
 					String salary = row.getCell(2).toString().trim();
-					p.setSalary(salary);
+					p.setSalary(StringUtilExtra.StringToDecimal(salary));
 				}
 
 			}

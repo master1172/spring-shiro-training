@@ -1,6 +1,7 @@
 package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
+import com.wangzhixuan.model.PeopleRank;
 import com.wangzhixuan.service.PeopleRankService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleJobVo;
@@ -116,5 +117,14 @@ public class PeopleRankController extends BaseController{
         }
     }
 
-
+    @RequestMapping("/getValue")
+    @ResponseBody
+    public String getValueById(Long id){
+        if (id == null)
+            return "";
+        PeopleRank peopleRank = peopleRankService.findPeopleRankById(id);
+        if (peopleRank == null || peopleRank.getSalary() == null)
+            return "";
+        return peopleRank.getSalary().toString();
+    }
 }
