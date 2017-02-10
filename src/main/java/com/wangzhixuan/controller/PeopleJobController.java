@@ -2,6 +2,7 @@ package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleJob;
 import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleJobService;
 import com.wangzhixuan.utils.ConstUtil;
@@ -120,4 +121,14 @@ public class PeopleJobController extends BaseController{
         }
     }
 
+    @RequestMapping("/getValue")
+    @ResponseBody
+    public String getValueById(Long id){
+        if (id == null)
+            return "";
+        PeopleJob peopleJob = peopleJobService.findPeopleJobById(id);
+        if (peopleJob == null || peopleJob.getSalary() == null)
+            return "";
+        return peopleJob.getSalary().toString();
+    }
 }

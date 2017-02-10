@@ -11,6 +11,17 @@
             $("#rankId").val('${peopleSalaryBaseVo.rankId}');
         }
 
+        $("#jobId").combobox({
+            onChange:function(newValue,oldValue){
+                if (newValue == oldValue)
+                    return;
+
+                $.post('${path}/peopleJob/getValue', {id:newValue},
+                  function(data){
+                    $("#jobSalary").numberbox('setValue',data);
+                });
+            }
+        });
     });
 
     function checkForm(){
@@ -22,6 +33,8 @@
         }
         return true;
     }
+
+
 </script>
 
 
