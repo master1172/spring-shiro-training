@@ -156,7 +156,7 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="java.util.List">
-		insert into people_contract_salary (
+		insert into people_contract_2_salary (
 		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
 		special_allowance, head_allowance, extra_work_fee, extra_work_date, extra_work_allowance, bonus, reissue_fee,
 		temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
@@ -190,7 +190,7 @@
 			)
 	</insert>
 	<insert id="insertByImport" parameterType="java.util.List">
-		insert into people_contract_salary (
+		insert into people_contract_2_salary (
 		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
 		special_allowance, head_allowance, extra_work_fee, extra_work_date, extra_work_allowance, bonus, reissue_fee,
 		temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
@@ -459,7 +459,7 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleContractSalary">
 		update
-		people_contract_salary
+		people_contract_2_salary
 		set people_code =
 		#{peopleCode,jdbcType=VARCHAR},
 		job_id = #{jobId,jdbcType=INTEGER},
