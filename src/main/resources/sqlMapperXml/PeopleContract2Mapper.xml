@@ -105,6 +105,13 @@
         where id = #{id}
     </select>
 
+    <select id="findPeopleContractByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from people_contract_2
+        WHERE code = #{code}
+    </select>
+
     <select id="findPeopleContractByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
@@ -323,6 +330,7 @@
         #{photo, jdbcType=VARCHAR}
         )
     </insert>
+
     <insert id="insertByImport" parameterType="java.util.List">
         insert into people_contract_2 (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
         values
@@ -351,6 +359,7 @@
             )
         </foreach>
     </insert>
+
     <update id="updatePeopleContract" parameterType="com.wangzhixuan.model.PeopleContract">
         update people_contract_2
         <set>

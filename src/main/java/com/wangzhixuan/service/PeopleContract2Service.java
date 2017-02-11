@@ -39,6 +39,7 @@ public interface PeopleContract2Service {
 
 
     String findPeopleContractIDsByCondition(PageInfo pageInfo);
-    public PeopleContract findPeopleContractByCode(String code) ;
+
+    PeopleContract findPeopleContractByCode(String code);
 }
 
