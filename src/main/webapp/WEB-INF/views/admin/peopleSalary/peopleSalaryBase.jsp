@@ -14,6 +14,30 @@
         }
 
         $("#lastChangeDate").val('${peopleSalaryBaseVo.lastChangeDate}');
+
+        $("#jobId").combobox({
+            onChange:function(newValue,oldValue){
+                if (newValue == oldValue)
+                    return;
+
+                $.post('${path}/peopleJob/getValue', {id:newValue},
+                        function(data){
+                            $("#jobSalary").numberbox('setValue',data);
+                        });
+            }
+        });
+
+        $("#rankId").combobox({
+            onChange:function (newValue,oldValue) {
+                if (newValue == oldValue)
+                    return;
+                $.post('${path}/peopleRank/getValue',{id:newValue},
+                        function(data){
+                            $("#rankSalary").numberbox('setValue',data);
+                        });
+            }
+        });
+
     });
 
     function checkForm(){
