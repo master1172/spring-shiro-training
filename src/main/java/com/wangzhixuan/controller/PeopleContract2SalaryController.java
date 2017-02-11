@@ -134,7 +134,7 @@ public class PeopleContract2SalaryController extends BaseController {
 	@RequestMapping("/editPage")
 	public String editPage(Long id, Model model) {
 		PeopleContractSalaryVo peopleContractVo = peopleContract2SalaryService.findPeopleContractSalaryVoById(id);
-		model.addAttribute("peopleContract2Salary", peopleContractVo);
+		model.addAttribute("peopleContractSalary", peopleContractVo);
 		
 		logger.info("peopleContractSalary:"+JSON.toJSONString(peopleContractVo));
 		return "/admin/peopleContract2Salary/peopleSalaryEdit";
