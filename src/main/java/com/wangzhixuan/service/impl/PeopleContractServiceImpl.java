@@ -352,7 +352,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
                 row.createCell(14).setCellValue("联系电话");row.getCell(14).setCellStyle(setBorder);
                 row.createCell(15).setCellValue("现住址");row.getCell(15).setCellStyle(setBorder);
                 row.createCell(16).setCellValue("部门");row.getCell(16).setCellStyle(setBorder);
-                row.createCell(17).setCellValue("工种");row.getCell(17).setCellStyle(setBorder);
+                row.createCell(17).setCellValue("职级");row.getCell(17).setCellStyle(setBorder);
                 row.createCell(18).setCellValue("备注");row.getCell(18).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){

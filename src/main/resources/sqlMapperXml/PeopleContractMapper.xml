@@ -20,7 +20,7 @@
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
-        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="job_id" property="jobId" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
@@ -152,7 +152,7 @@
         t.address,
         t.department_name,
         t.job_id,
-        j.job_leve as job_name
+        j.job_level as job_name,
         t.comment,
         t.photo
         FROM
