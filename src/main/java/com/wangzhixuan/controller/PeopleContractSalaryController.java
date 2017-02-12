@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.PeopleContract;
-import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.service.PeopleContractSalaryService;
 import com.wangzhixuan.service.PeopleContractService;
 import com.wangzhixuan.utils.PageInfo;
@@ -163,6 +162,7 @@ public class PeopleContractSalaryController extends BaseController {
 	public String importExcelPage() {
 		return "admin/peopleContractSalary/importExcelPage";
 	}
+
 	@RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
 	public Result importExcel(@RequestParam(value = "fileName", required = false) CommonsMultipartFile[] files) {
@@ -196,4 +196,16 @@ public class PeopleContractSalaryController extends BaseController {
 			logger.error("导出Excel失败:{}", exp);
 		}
 	}
+
+    @RequestMapping("/salaryBasePage")
+    public String salaryBasePage(String peopleCode, Model model){
+        PeopleContractSalaryBase peopleContractSalaryBase = null;
+        //peopleContractSalaryService.findPeopleContractSalaryBaseByCode(peopleCode);
+        if(peopleContractSalaryBase == null){
+            peopleContractSalaryBase = new PeopleContractSalaryBase();
+            peopleContractSalaryBase.setPeopleCode(peopleCode);
+        }
+
+        return "";
+    }
 }

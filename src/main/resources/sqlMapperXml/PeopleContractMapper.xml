@@ -46,13 +46,14 @@
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="job_id"   property="jobId"   jdbcType="INTEGER" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo
+        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_id, comment, photo
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -97,7 +98,8 @@
         t.mobile,
         t.address,
         t.department_name,
-        t.job_name,
+        t.job_id,
+        j.job_level as job_name,
         t.comment,
         t.photo
         FROM
@@ -106,6 +108,8 @@
         dict_national s ON s.id = t.national_id
         LEFT JOIN
         dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+        job j ON j.id = t.job_id
         <where>
             t.id = #{id}
         </where>
@@ -147,7 +151,8 @@
         t.mobile,
         t.address,
         t.department_name,
-        t.job_name,
+        t.job_id,
+        j.job_leve as job_name
         t.comment,
         t.photo
         FROM
@@ -156,6 +161,8 @@
         dict_national s ON s.id = t.national_id
         LEFT JOIN
         dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+        job j ON j.id = t.job_id
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -214,8 +221,8 @@
             <if test=" condition.departmentName != null and condition.departmentName != ''">
                 and t.department_name LIKE concat('%',#{condition.departmentName},'%')
             </if>
-            <if test=" condition.jobName != null and condition.jobName != ''">
-                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            <if test=" condition.jobId != null">
+                and t.job_id = #{condition.jobId}
             </if>
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
@@ -285,8 +292,8 @@
             <if test=" condition.departmentName != null and condition.departmentName != ''">
                 and t.department_name LIKE concat('%',#{condition.departmentName},'%')
             </if>
-            <if test=" condition.jobName != null and condition.jobName != ''">
-                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            <if test=" condition.jobId != null">
+                and t.job_id = #{condition.jobId}
             </if>
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
@@ -312,56 +319,63 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_contract (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_contract (
+          code, name, sex, national_id, province, city, birthday, education_name, political_name,
+          speciality, height, marriage_id, hukou, school_date, mobile, address, department_name,
+          job_id, comment, photo)
         values (
-        #{code,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT},
-        #{nationalId, jdbcType=INTEGER},
-        #{province,jdbcType=VARCHAR},
-        #{city,jdbcType=VARCHAR},
-        #{birthday,jdbcType=DATE},
-        #{educationName,jdbcType=VARCHAR},
-        #{politicalName,jdbcType=VARCHAR},
-        #{speciality,jdbcType=VARCHAR},
-        #{height,jdbcType=VARCHAR},
-        #{marriageId, jdbcType=INTEGER},
-        #{hukou, jdbcType=TINYINT},
-        #{schoolDate,jdbcType=DATE},
-        #{mobile, jdbcType=VARCHAR},
-        #{address, jdbcType=VARCHAR},
-        #{departmentName, jdbcType=VARCHAR},
-        #{jobName, jdbcType=VARCHAR},
-        #{comment, jdbcType=VARCHAR},
-        #{photo, jdbcType=VARCHAR}
+            #{code,       jdbcType=VARCHAR},
+            #{name,       jdbcType=VARCHAR},
+            #{sex,        jdbcType=TINYINT},
+            #{nationalId, jdbcType=INTEGER},
+            #{province,   jdbcType=VARCHAR},
+            #{city,       jdbcType=VARCHAR},
+            #{birthday,   jdbcType=DATE},
+            #{educationName,jdbcType=VARCHAR},
+            #{politicalName,jdbcType=VARCHAR},
+            #{speciality, jdbcType=VARCHAR},
+            #{height,     jdbcType=VARCHAR},
+            #{marriageId, jdbcType=INTEGER},
+            #{hukou,      jdbcType=TINYINT},
+            #{schoolDate, jdbcType=DATE},
+            #{mobile,     jdbcType=VARCHAR},
+            #{address,    jdbcType=VARCHAR},
+            #{departmentName, jdbcType=VARCHAR},
+            #{jobId,      jdbcType=INTEGER},
+            #{comment,    jdbcType=VARCHAR},
+            #{photo,      jdbcType=VARCHAR}
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_contract (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_contract (
+          code, name, sex, national_id, province, city, birthday, education_name, political_name,
+          speciality, height, marriage_id, hukou, school_date, mobile, address, department_name,
+          job_id, comment, photo
+        )
         values
         <foreach item="item" index="index" collection="list" separator=",">
-            (
-            #{item.code,jdbcType=VARCHAR},
-            #{item.name,jdbcType=VARCHAR},
-            #{item.sex,jdbcType=TINYINT},
-            #{item.nationalId, jdbcType=INTEGER},
-            #{item.province,jdbcType=VARCHAR},
-            #{item.city,jdbcType=VARCHAR},
-            #{item.birthday,jdbcType=DATE},
-            #{item.educationName,jdbcType=VARCHAR},
-            #{item.politicalName,jdbcType=VARCHAR},
-            #{item.speciality,jdbcType=VARCHAR},
-            #{item.height,jdbcType=VARCHAR},
-            #{item.marriageId, jdbcType=INTEGER},
-            #{item.hukou, jdbcType=TINYINT},
-            #{item.schoolDate,jdbcType=DATE},
-            #{item.mobile, jdbcType=VARCHAR},
-            #{item.address, jdbcType=VARCHAR},
-            #{item.departmentName, jdbcType=VARCHAR},
-            #{item.jobName, jdbcType=VARCHAR},
-            #{item.comment, jdbcType=VARCHAR},
-            #{item.photo, jdbcType=VARCHAR}
-            )
+        (
+            #{item.code,          jdbcType=VARCHAR},
+            #{item.name,          jdbcType=VARCHAR},
+            #{item.sex,           jdbcType=TINYINT},
+            #{item.nationalId,    jdbcType=INTEGER},
+            #{item.province,      jdbcType=VARCHAR},
+            #{item.city,          jdbcType=VARCHAR},
+            #{item.birthday,      jdbcType=DATE},
+            #{item.educationName, jdbcType=VARCHAR},
+            #{item.politicalName, jdbcType=VARCHAR},
+            #{item.speciality,    jdbcType=VARCHAR},
+            #{item.height,        jdbcType=VARCHAR},
+            #{item.marriageId,    jdbcType=INTEGER},
+            #{item.hukou,         jdbcType=TINYINT},
+            #{item.schoolDate,    jdbcType=DATE},
+            #{item.mobile,        jdbcType=VARCHAR},
+            #{item.address,       jdbcType=VARCHAR},
+            #{item.departmentName,jdbcType=VARCHAR},
+            #{item.jobId,         jdbcType=INTEGER},
+            #{item.comment,       jdbcType=VARCHAR},
+            #{item.photo,         jdbcType=VARCHAR}
+        )
         </foreach>
     </insert>
     <update id="updatePeopleContract" parameterType="com.wangzhixuan.model.PeopleContract">
@@ -418,8 +432,8 @@
             <if test="departmentName != null">
                 department_name = #{departmentName, jdbcType=VARCHAR},
             </if>
-            <if test="jobName != null">
-                job_name = #{jobName, jdbcType=VARCHAR},
+            <if test="jobId != null">
+                job_id = #{jobId, jdbcType=INTEGER},
             </if>
             <if test="comment != null">
                 comment = #{comment, jdbcType=VARCHAR},
@@ -432,27 +446,27 @@
     </update>
     <select id="selectPeopleContractByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-        t.id,
-        t.code,
-        t.name,
-        t.sex,
-        t.national_id,
-        t.province,
-        t.city,
-        t.birthday,
-        t.education_name,
-        t.political_name,
-        t.speciality,
-        t.height,
-        t.marriage_id,
-        t.hukou,
-        t.school_date,
-        t.mobile,
-        t.address,
-        t.department_name,
-        t.job_name,
-        t.comment,
-        t.photo
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            t.province,
+            t.city,
+            t.birthday,
+            t.education_name,
+            t.political_name,
+            t.speciality,
+            t.height,
+            t.marriage_id,
+            t.hukou,
+            t.school_date,
+            t.mobile,
+            t.address,
+            t.department_name,
+            t.job_id,
+            t.comment,
+            t.photo
         from people_contract t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -462,35 +476,38 @@
 
     <select id="selectPeopleContractVoByIds" resultMap="peopleContractVoResultMap" parameterType="java.util.ArrayList">
         SELECT
-        t.id,
-        t.code,
-        t.name,
-        t.sex,
-        t.national_id,
-        s.name as national_name,
-        t.province,
-        t.city,
-        t.birthday,
-        t.education_name,
-        t.political_name,
-        t.speciality,
-        t.height,
-        t.marriage_id,
-        m.name as marriage_name,
-        t.hukou,
-        t.school_date,
-        t.mobile,
-        t.address,
-        t.department_name,
-        t.job_name,
-        t.comment,
-        t.photo
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            s.name as national_name,
+            t.province,
+            t.city,
+            t.birthday,
+            t.education_name,
+            t.political_name,
+            t.speciality,
+            t.height,
+            t.marriage_id,
+            m.name as marriage_name,
+            t.hukou,
+            t.school_date,
+            t.mobile,
+            t.address,
+            t.department_name,
+            t.job_id,
+            j.job_level as job_name,
+            t.comment,
+            t.photo
         FROM
-        people_contract t
+          people_contract t
         LEFT JOIN
-        dict_national s ON s.id = t.national_id
+          dict_national s ON s.id = t.national_id
         LEFT JOIN
-        dict_marriage m ON m.id = t.marriage_id
+          dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+          job j ON j.id = t.job_id
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}

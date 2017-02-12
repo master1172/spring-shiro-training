@@ -67,6 +67,8 @@ public class PeopleContractVo implements Serializable {
 
     private String departmentName;
 
+    private Integer jobId;
+
     private String jobName;
 
     private String comment;
@@ -233,13 +235,17 @@ public class PeopleContractVo implements Serializable {
         this.departmentName = departmentName;
     }
 
-    public String getJobName() {
-        return jobName;
+    public Integer getJobId() {
+        return jobId;
     }
 
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
+
+    public String getJobName() {return jobName;}
+
+    public void setJobName(String jobName) {this.jobName = jobName;}
 
     public String getComment() {
         return comment;
@@ -344,8 +350,8 @@ public class PeopleContractVo implements Serializable {
             condition.put("departmentName", peopleContractvo.getDepartmentName());
         }
 
-        if(StringUtils.isNoneBlank(peopleContractvo.getJobName())){
-            condition.put("jobName", peopleContractvo.getJobName());
+        if (peopleContractvo.getJobId() != null){
+            condition.put("jobId", peopleContractvo.getJobId());
         }
 
         if(StringUtils.isNoneBlank(peopleContractvo.getComment())){

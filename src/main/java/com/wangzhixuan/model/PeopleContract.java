@@ -49,7 +49,7 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     private String departmentName;
 
-    private String jobName;
+    private Integer jobId;
 
     private String comment;
 
@@ -191,12 +191,12 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.departmentName = departmentName;
     }
 
-    public String getJobName() {
-        return jobName;
+    public Integer getJobId() {
+        return jobId;
     }
 
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public String getComment() {

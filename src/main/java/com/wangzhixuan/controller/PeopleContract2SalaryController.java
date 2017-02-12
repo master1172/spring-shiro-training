@@ -163,6 +163,7 @@ public class PeopleContract2SalaryController extends BaseController {
 	public String importExcelPage() {
 		return "admin/peopleContract2Salary/importExcelPage";
 	}
+
 	@RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
 	public Result importExcel(@RequestParam(value = "fileName", required = false) CommonsMultipartFile[] files) {
