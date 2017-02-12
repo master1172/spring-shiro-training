@@ -10,6 +10,7 @@
         $('#marriageId').val('${peopleContract.marriageId}');
         $('#nationalId').val('${peopleContract.nationalId}');
         $('#imgShow').attr('src','${staticPath}/${peopleContract.photo}');
+        $('#jobId').val('${peopleContract.jobId}');
     });
     $(function(){
         if("${peopleContract.province}" == ""){
@@ -128,9 +129,10 @@
                     <td>
                         <input type="text" name="departmentName" value="${peopleContract.departmentName}">
                     </td>
-                    <td>工种</td>
+                    <td>职级</td>
                     <td>
-                        <input type="text" name="jobName" value="${peopleContract.jobName}"/>
+                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>备注</td>
                     <td colspan="3">

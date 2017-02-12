@@ -110,9 +110,10 @@
                     </td>
                     <td>部门</td>
                     <td><input type="text" name="departmentName"></td>
-                    <td>工种</td>
+                    <td>职级</td>
                     <td>
-                        <input type="text" name="jobName"/>
+                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                 </tr>
                 <tr>
