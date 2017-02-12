@@ -293,7 +293,7 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
                 //工种
                 if(row.getCell(17)!=null&&!row.getCell(17).toString().trim().equals("")){
                     String jobName=row.getCell(17).toString().trim();
-                    Integer jobId = dictMapper.findJobIdByName(jobName);
+                    Integer jobId = dictMapper.findJobLevelIdByName(jobName);
                     p.setJobId(jobId);
                 }
 

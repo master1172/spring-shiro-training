@@ -87,7 +87,7 @@
         from job
         where job_level = #{job_level}
     </select>
-    
+
     <select id="findJobNameById" resultType="java.lang.String" parameterType="java.lang.Integer">
         SELECT
         job_level
