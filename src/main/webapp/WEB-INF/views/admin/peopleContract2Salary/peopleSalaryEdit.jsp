@@ -41,7 +41,7 @@
                     </td>
                     <td>院龄工资</td>
                     <td>
-                        <input name="jobSalary" id="schoolSalary" type="text" value="${peopleContractSalary.schoolSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="schoolSalary" id="schoolSalary" type="text" value="${peopleContractSalary.schoolSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                  </tr>
                  <tr>
