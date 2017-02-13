@@ -10,8 +10,6 @@ public class PeopleRetireSalary implements Serializable {
 
     private BigDecimal baseSalary;
 
-    private Integer rankId;
-
     private BigDecimal extraAllowance;
 
     private BigDecimal rentAllowance;
@@ -66,14 +64,6 @@ public class PeopleRetireSalary implements Serializable {
 
     public void setBaseSalary(BigDecimal baseSalary) {
         this.baseSalary = baseSalary;
-    }
-
-    public Integer getRankId() {
-        return rankId;
-    }
-
-    public void setRankId(Integer rankId) {
-        this.rankId = rankId;
     }
 
     public BigDecimal getExtraAllowance() {
@@ -205,7 +195,6 @@ public class PeopleRetireSalary implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", peopleCode=").append(peopleCode);
         sb.append(", baseSalary=").append(baseSalary);
-        sb.append(", rankId=").append(rankId);
         sb.append(", extraAllowance=").append(extraAllowance);
         sb.append(", rentAllowance=").append(rentAllowance);
         sb.append(", retireAllowance=").append(retireAllowance);

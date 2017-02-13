@@ -5,7 +5,6 @@
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="people_code" property="peopleCode" jdbcType="VARCHAR" />
 		<result column="base_salary" property="baseSalary" jdbcType="DECIMAL" />
-		<result column="rank_id" property="rankId" jdbcType="INTEGER" />
 		<result column="extra_allowance" property="extraAllowance" jdbcType="DECIMAL" />
 		<result column="rent_allowance" property="rentAllowance" jdbcType="DECIMAL" />
 		<result column="retire_allowance" property="retireAllowance" jdbcType="DECIMAL" />
@@ -27,7 +26,6 @@
 		<result column="people_code" property="peopleCode" jdbcType="VARCHAR" />
 		<result column="people_name" property="peopleName" jdbcType="VARCHAR" />
 		<result column="base_salary" property="baseSalary" jdbcType="DECIMAL" />
-		<result column="rank_id" property="rankId" jdbcType="INTEGER" />
 		<result column="extra_allowance" property="extraAllowance" jdbcType="DECIMAL" />
 		<result column="rent_allowance" property="rentAllowance" jdbcType="DECIMAL" />
 		<result column="retire_allowance" property="retireAllowance" jdbcType="DECIMAL" />
@@ -46,7 +44,7 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, people_code, base_salary, rank_id, extra_allowance, rent_allowance, retire_allowance,
+		id, people_code, base_salary, extra_allowance, rent_allowance, retire_allowance,
 		retire_fee_increase, food_allowance, health_allowance, medicare_fee, property_allowance,
 		heating_fee, handicap_allowance, gross_income, expense, rent_fee, net_income, pay_date
 	</sql>
@@ -62,7 +60,6 @@
 		t.people_code,
 		p.name as people_name,
 		t.base_salary,
-		t.rank_id,
 		t.extra_allowance,
 		t.rent_allowance,
 		t.retire_allowance,
@@ -91,14 +88,13 @@
 
 	<insert id="insert" parameterType="com.wangzhixuan.model.PeopleRetireSalary">
 		insert into people_retire_salary (
-			people_code, base_salary, rank_id, extra_allowance, rent_allowance, retire_allowance,
+			people_code, base_salary, extra_allowance, rent_allowance, retire_allowance,
 			retire_fee_increase, food_allowance, health_allowance, medicare_fee, property_allowance,
 			heating_fee, handicap_allowance, gross_income, expense, rent_fee, net_income, pay_date
 		)
 		values (
 			#{peopleCode,jdbcType=VARCHAR},
 			#{baseSalary,jdbcType=DECIMAL},
-			#{rankId,jdbcType=INTEGER},
 			#{extraAllowance,jdbcType=DECIMAL},
 			#{rentAllowance,jdbcType=DECIMAL},
 			#{retireAllowance,jdbcType=DECIMAL},
@@ -122,7 +118,6 @@
 		set
 			people_code = #{peopleCode,jdbcType=VARCHAR},
 			base_salary = #{baseSalary,jdbcType=DECIMAL},
-			rank_id 	= #{rankId,jdbcType=INTEGER},
 			extra_allowance = #{extraAllowance,jdbcType=DECIMAL},
 			rent_allowance = #{rentAllowance,jdbcType=DECIMAL},
 			retire_allowance = #{retireAllowance,jdbcType=DECIMAL},
@@ -205,7 +200,6 @@
 			t.people_code,
 			p.name as people_name,
 			t.base_salary,
-			t.rank_id,
 			t.extra_allowance,
 			t.rent_allowance,
 			t.retire_allowance,
@@ -229,7 +223,7 @@
 
 	<insert id="insertByImport" parameterType="java.util.List">
 		insert into people_retire_salary(
-	  		people_code, base_salary, rank_id, extra_allowance, rent_allowance, retire_allowance,
+	  		people_code, base_salary, extra_allowance, rent_allowance, retire_allowance,
 			retire_fee_increase, food_allowance, health_allowance, medicare_fee, property_allowance,
 			heating_fee, handicap_allowance, gross_income, expense, rent_fee, net_income, pay_date
 		)
@@ -238,7 +232,6 @@
 		(
 			#{item.peopleCode,jdbcType=VARCHAR},
 			#{item.baseSalary,jdbcType=DECIMAL},
-			#{item.rankId,jdbcType=INTEGER},
 			#{item.extraAllowance,jdbcType=DECIMAL},
 			#{item.rentAllowance,jdbcType=DECIMAL},
 			#{item.retireAllowance,jdbcType=DECIMAL},

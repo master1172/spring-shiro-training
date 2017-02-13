@@ -14,8 +14,6 @@ public class PeopleRetireSalaryVo implements Serializable {
 
 	private BigDecimal baseSalary;
 
-	private Integer rankId;
-
 	private BigDecimal extraAllowance;
 
 	private BigDecimal rentAllowance;
@@ -72,13 +70,6 @@ public class PeopleRetireSalaryVo implements Serializable {
 		this.baseSalary = baseSalary;
 	}
 
-	public Integer getRankId() {
-		return rankId;
-	}
-
-	public void setRankId(Integer rankId) {
-		this.rankId = rankId;
-	}
 
 	public BigDecimal getExtraAllowance() {
 		return extraAllowance;
