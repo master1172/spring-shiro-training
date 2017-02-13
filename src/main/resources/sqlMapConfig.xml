@@ -53,6 +53,9 @@
 		<typeAlias type="com.wangzhixuan.model.PeopleContractSalary" alias="PeopleContractSalary" />
 		<typeAlias type="com.wangzhixuan.vo.PeopleContractSalaryVo" alias="PeopleContractSalaryVo" />
 
+		<typeAlias type="com.wangzhixuan.model.PeopleContract2SalaryBase" alias="PeopleContract2SalaryBase" />
+		<typeAlias type="com.wangzhixuan.vo.PeopleContractSalaryVo" alias="PeopleContractSalaryVo" />
+
 		<typeAlias type="com.wangzhixuan.model.PeopleJob" alias="PeopleJob" />
 		<typeAlias type="com.wangzhixuan.vo.PeopleJobVo" alias="PeopleJobVo" />
 

@@ -1,5 +1,6 @@
 package com.wangzhixuan.mapper;
 
+import com.wangzhixuan.model.PeopleContract2SalaryBase;
 import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
@@ -32,5 +33,10 @@ public interface PeopleContract2SalaryMapper {
 	int insertByImport(List<PeopleContractSalary> list);
 
     List findPeopleContractSalaryVoListByCode(String peopleCode);
+    PeopleContract2SalaryBase findPeopleContract2SalaryBaseByCode(String peopleCode);
+
+    void addSalaryBase(PeopleContract2SalaryBase peopleContract2SalaryBase);
+
+    void updateSalaryBase(PeopleContract2SalaryBase peopleContract2SalaryBase);
 
 }

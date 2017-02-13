@@ -1,6 +1,8 @@
 package com.wangzhixuan.service;
 
+import com.wangzhixuan.model.PeopleContract2SalaryBase;
 import com.wangzhixuan.model.PeopleContractSalary;
+import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -26,4 +28,7 @@ public interface PeopleContract2SalaryService {
     public boolean insertByImport(CommonsMultipartFile[] files);
     
     void exportExcel(HttpServletResponse response, String[] idList);
+    PeopleContract2SalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
+
+    void updateSalaryBase(PeopleContract2SalaryBase peopleContractSalaryBase);
 }

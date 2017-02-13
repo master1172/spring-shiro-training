@@ -2,6 +2,7 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.model.PeopleContract2SalaryBase;
 import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.service.PeopleContract2SalaryService;
 import com.wangzhixuan.service.PeopleContractSalaryService;
@@ -236,6 +237,27 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 		}
 		return list;
 	}
-	
+	@Override
+	public PeopleContract2SalaryBase findPeopleContractSalaryBaseByCode(String peopleCode) {
+		if(StringUtils.isBlank(peopleCode))
+			return null;
+
+		return peopleContract2SalaryMapper.findPeopleContract2SalaryBaseByCode(peopleCode);
+	}
+
+	@Override
+	public void updateSalaryBase(PeopleContract2SalaryBase peopleContract2SalaryBase) {
+		if(peopleContract2SalaryBase == null)
+			return;
+
+		if(StringUtils.isBlank(peopleContract2SalaryBase.getLastChangeDate())){
+			peopleContract2SalaryBase.setLastChangeDate(DateUtil.GetToday());
+		}
+
+		if (peopleContract2SalaryBase.getId() == null)
+			peopleContract2SalaryMapper.addSalaryBase(peopleContract2SalaryBase);
+		else
+			peopleContract2SalaryMapper.updateSalaryBase(peopleContract2SalaryBase);
+	}
 
 }

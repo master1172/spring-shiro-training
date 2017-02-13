@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.model.PeopleContract2SalaryBase;
 import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.service.PeopleContract2SalaryService;
 import com.wangzhixuan.service.PeopleContract2Service;
@@ -195,6 +196,37 @@ public class PeopleContract2SalaryController extends BaseController {
 			peopleContract2SalaryService.exportExcel(response, ids.split(","));
 		} catch (Exception exp) {
 			logger.error("导出Excel失败:{}", exp);
+		}
+	}
+	@RequestMapping("/salaryBasePage")
+	public String salaryBasePage(String peopleCode, Model model){
+		PeopleContract2SalaryBase peopleContract2SalaryBase = peopleContract2SalaryService.findPeopleContractSalaryBaseByCode(peopleCode);
+		if(peopleContract2SalaryBase == null){
+			peopleContract2SalaryBase = new PeopleContract2SalaryBase();
+			peopleContract2SalaryBase.setPeopleCode(peopleCode);
+
+			PeopleContract peopleContract = peopleContract2Service.findPeopleContractByCode(peopleCode);
+			if (peopleContract != null){
+				peopleContract2SalaryBase.setJobId(peopleContract.getJobId());
+			}
+		}
+
+		model.addAttribute("peopleContractSalaryBase", peopleContract2SalaryBase);
+		return "/admin/peopleContractSalary/peopleSalaryBase";
+	}
+
+	@RequestMapping("/salaryBaseEdit")
+	@ResponseBody
+	public Result salaryBaseEdit(PeopleContract2SalaryBase peopleContractSalaryBase){
+		Result result = new Result();
+		try{
+			peopleContract2SalaryService.updateSalaryBase(peopleContractSalaryBase);
+			result.setSuccess(true);
+			result.setMsg("修改成功！");
+			return result;
+		}catch (Exception exp){
+			result.setMsg(exp.getMessage());
+			return result;
 		}
 	}
 }
