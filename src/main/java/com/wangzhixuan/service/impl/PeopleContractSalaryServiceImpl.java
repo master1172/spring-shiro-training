@@ -14,6 +14,7 @@ import com.wangzhixuan.mapper.PeopleContractMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleContractVo;
 import com.wangzhixuan.vo.PeopleVo;
@@ -243,6 +244,29 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 		}
 		return list;
 	}
-	
+
+	@Override
+	public PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode) {
+		if(StringUtils.isBlank(peopleCode))
+            return null;
+
+        return peopleContractSalaryMapper.findPeopleContractSalaryBaseByCode(peopleCode);
+	}
+
+	@Override
+	public void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase) {
+        if(peopleContractSalaryBase == null)
+            return;
+
+        if(StringUtils.isBlank(peopleContractSalaryBase.getLastChangeDate())){
+            peopleContractSalaryBase.setLastChangeDate(DateUtil.GetToday());
+        }
+
+        if (peopleContractSalaryBase.getId() == null)
+            peopleContractSalaryMapper.addSalaryBase(peopleContractSalaryBase);
+        else
+            peopleContractSalaryMapper.updateSalaryBase(peopleContractSalaryBase);
+	}
+
 
 }

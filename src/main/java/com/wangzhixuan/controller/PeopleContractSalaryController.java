@@ -199,13 +199,34 @@ public class PeopleContractSalaryController extends BaseController {
 
     @RequestMapping("/salaryBasePage")
     public String salaryBasePage(String peopleCode, Model model){
-        PeopleContractSalaryBase peopleContractSalaryBase = null;
-        //peopleContractSalaryService.findPeopleContractSalaryBaseByCode(peopleCode);
+        PeopleContractSalaryBase peopleContractSalaryBase = peopleContractSalaryService.findPeopleContractSalaryBaseByCode(peopleCode);
         if(peopleContractSalaryBase == null){
             peopleContractSalaryBase = new PeopleContractSalaryBase();
             peopleContractSalaryBase.setPeopleCode(peopleCode);
+
+            PeopleContract peopleContract = peopleContractService.findPeopleContractByCode(peopleCode);
+            if (peopleContract != null){
+                peopleContractSalaryBase.setJobId(peopleContract.getJobId());
+            }
         }
 
-        return "";
+        model.addAttribute("peopleContractSalaryBase", peopleContractSalaryBase);
+        return "/admin/peopleContractSalary/peopleContractSalaryBase";
     }
+
+    @RequestMapping("/salaryBaseEdit")
+    @ResponseBody
+	public Result salaryBaseEdit(PeopleContractSalaryBase peopleContractSalaryBase){
+		Result result = new Result();
+		try{
+			peopleContractSalaryService.updateSalaryBase(peopleContractSalaryBase);
+			result.setSuccess(true);
+			result.setMsg("修改成功！");
+			return result;
+		}catch (Exception exp){
+			result.setMsg(exp.getMessage());
+			return result;
+		}
+	}
+
 }

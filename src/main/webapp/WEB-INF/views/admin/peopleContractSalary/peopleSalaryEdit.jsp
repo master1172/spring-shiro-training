@@ -9,7 +9,7 @@
 
     function checkForm(){
         progressLoad();
-        var isValid = $("#salaryAddForm").form("validate");
+        var isValid = $("#salaryEditForm").form("validate");
         if (!isValid) {
             progressClose();
             return false;
