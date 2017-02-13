@@ -4,7 +4,7 @@
 
     $(function(){
         $("#jobId").val('${peopleContractSalaryBase.jobId}');
-        $("#lastUpdateDate").val('${peopleContractSalaryBase.lastUpdateDate}');
+        $("#lastChangeDate").val('${peopleContractSalaryBase.lastChangeDate}');
     });
 
     function checkForm(){
@@ -111,7 +111,7 @@
                     </td>
                     <td>最后更新日期</td>
                     <td>
-                        <input id="lastUpdateDate" name="lastUpdateDate" placeholder="点击选择时间"
+                        <input id="lastChangeDate" name="lastChangeDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
                                 dateFmt:'yyyy-MM-dd',

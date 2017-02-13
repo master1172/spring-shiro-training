@@ -211,7 +211,7 @@ public class PeopleContractSalaryController extends BaseController {
         }
 
         model.addAttribute("peopleContractSalaryBase", peopleContractSalaryBase);
-        return "/admin/peopleContractSalary/peopleContractSalaryBase";
+        return "/admin/peopleContractSalary/peopleSalaryBase";
     }
 
     @RequestMapping("/salaryBaseEdit")

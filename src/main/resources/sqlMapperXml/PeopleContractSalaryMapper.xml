@@ -85,7 +85,7 @@
 		<result column="house_fund" property="houseFund" jdbcType="DECIMAL" />
 		<result column="expense" property="expense" jdbcType="DECIMAL" />
 		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
-		<result column="last_update_date" property="lastUpdateDate" jdbcType="DATE" />
+		<result column="last_change_date" property="lastChangeDate" jdbcType="DATE" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -377,7 +377,7 @@
 		SELECT
 			id,people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
 			special_allowance, head_allowance, extra_work_fee, extra_work_date, extra_work_allowance, bonus, reissue_fee,
-			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, last_update_date
+			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, last_change_date
 		FROM
 			people_contract_salary_base
 		WHERE
@@ -388,7 +388,7 @@
 		INSERT INTO people_contract_salary_base(
 			people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
 			special_allowance, head_allowance, extra_work_fee, extra_work_date, extra_work_allowance, bonus, reissue_fee,
-			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, last_update_date
+			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, last_change_date
 		)
 		VALUES (
 			#{peopleCode,jdbcType=VARCHAR},
@@ -414,7 +414,7 @@
 			#{houseFund,jdbcType=DECIMAL},
 			#{expense,jdbcType=DECIMAL},
 			#{netIncome,jdbcType=DECIMAL},
-			#{lastUpdateDate,jdbcType=DATE}
+			#{lastChangeDate,jdbcType=DATE}
 		)
 	</insert>
 
@@ -444,7 +444,7 @@
 			house_fund 			= #{houseFund,jdbcType=DECIMAL},
 			expense 			= #{expense,jdbcType=DECIMAL},
 			net_income 			= #{netIncome,jdbcType=DECIMAL},
-			last_update_date 	= #{lastUpdateDate,jdbcType=VARCHAR}
+			last_change_date 	= #{lastChangeDate,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>
