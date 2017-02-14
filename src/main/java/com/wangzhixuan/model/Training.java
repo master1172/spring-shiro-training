@@ -31,6 +31,16 @@ public class Training implements Serializable{
 
     private String description;
 
+    private String trainingCategory;
+
+    public String getTrainingCategory() {
+        return trainingCategory;
+    }
+
+    public void setTrainingCategory(String trainingCategory) {
+        this.trainingCategory = trainingCategory;
+    }
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String startDate;
 
