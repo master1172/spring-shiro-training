@@ -128,9 +128,9 @@
                     <td>
                         <input name="netIncome" id="netIncome" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>发薪日</td>
+                    <td>最后更新日期</td>
                     <td>
-                        <input id="payDate" name="payDate" placeholder="点击选择时间"
+                        <input id="lastChangeDate" name="lastChangeDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
                                 dateFmt:'yyyy-MM-dd',

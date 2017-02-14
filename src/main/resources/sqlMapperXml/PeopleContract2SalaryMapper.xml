@@ -59,7 +59,7 @@
 		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
 		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
 	</resultMap>
-	<resultMap id="peopleContract2SalaryBaseMap" type="com.wangzhixuan.model.PeopleContractSalaryBase">
+	<resultMap id="peopleContract2SalaryBaseMap" type="com.wangzhixuan.model.PeopleContract2SalaryBase">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="people_code" property="peopleCode" jdbcType="VARCHAR" />
 		<result column="job_id" property="jobId" jdbcType="INTEGER" />

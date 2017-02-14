@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.model.PeopleRetireSalary;
+import com.wangzhixuan.model.PeopleRetireSalaryBase;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleRetireSalaryVo;
 
@@ -31,5 +32,11 @@ public interface PeopleRetireSalaryMapper {
    	int insertByImport(List<PeopleRetireSalary> list);
 
     List findPeopleRetireSalaryVoListByCode(String peopleCode);
+
+    PeopleRetireSalaryBase findPeopleRetireSalaryBaseByCode(String peopleCode);
+
+    void addSalaryBase(PeopleRetireSalaryBase peopleRetireSalaryBase);
+
+    void updateSalaryBase(PeopleRetireSalaryBase peopleRetireSalaryBase);
     
 }

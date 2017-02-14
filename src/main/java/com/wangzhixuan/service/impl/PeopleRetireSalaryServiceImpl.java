@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.mapper.PeopleRetireMapper;
 import com.wangzhixuan.model.PeopleRetire;
+import com.wangzhixuan.model.PeopleRetireSalaryBase;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleRetireVo;
 import org.apache.commons.lang3.StringUtils;
@@ -236,4 +237,27 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 		}
 		return list;
 	}
+	@Override
+	public PeopleRetireSalaryBase findPeopleRetireSalaryBaseByCode(String peopleCode) {
+		if(StringUtils.isBlank(peopleCode))
+			return null;
+
+		return peopleRetireSalaryMapper.findPeopleRetireSalaryBaseByCode(peopleCode);
+	}
+
+	@Override
+	public void updateSalaryBase(PeopleRetireSalaryBase peopleRetireSalaryBase) {
+		if(peopleRetireSalaryBase == null)
+			return;
+
+		if(StringUtils.isBlank(peopleRetireSalaryBase.getLastChangeDate())){
+			peopleRetireSalaryBase.setLastChangeDate(DateUtil.GetToday());
+		}
+
+		if (peopleRetireSalaryBase.getId() == null)
+			peopleRetireSalaryMapper.addSalaryBase(peopleRetireSalaryBase);
+		else
+			peopleRetireSalaryMapper.updateSalaryBase(peopleRetireSalaryBase);
+	}
+
 }

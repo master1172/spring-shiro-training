@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.model.PeopleRetireSalaryBase;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -200,6 +201,37 @@ public class PeopleRetireSalaryController extends BaseController {
 			peopleRetireSalaryService.exportExcel(response, ids.split(","));
 		} catch (Exception exp) {
 			logger.error("导出Excel失败:{}", exp);
+		}
+	}
+	@RequestMapping("/salaryBasePage")
+	public String salaryBasePage(String peopleCode, Model model){
+		PeopleRetireSalaryBase peopleRetireSalaryBase = peopleRetireSalaryService.findPeopleRetireSalaryBaseByCode(peopleCode);
+		if(peopleRetireSalaryBase == null){
+			peopleRetireSalaryBase = new PeopleRetireSalaryBase();
+			peopleRetireSalaryBase.setPeopleCode(peopleCode);
+
+			PeopleRetire peopleRetire = peopleRetireService.findPeopleRetireByCode(peopleCode);
+//			if (peopleRetire != null){
+//				peopleRetireSalaryBase.setRetireJobLevelId(peopleRetire.RetireJobLevelId());
+//			}
+		}
+
+		model.addAttribute("peopleRetireSalaryBase", peopleRetireSalaryBase);
+		return "/admin/peopleRetireSalary/peopleSalaryBase";
+	}
+
+	@RequestMapping("/salaryBaseEdit")
+	@ResponseBody
+	public Result salaryBaseEdit(PeopleRetireSalaryBase peopleRetireSalaryBase){
+		Result result = new Result();
+		try{
+			peopleRetireSalaryService.updateSalaryBase(peopleRetireSalaryBase);
+			result.setSuccess(true);
+			result.setMsg("修改成功！");
+			return result;
+		}catch (Exception exp){
+			result.setMsg(exp.getMessage());
+			return result;
 		}
 	}
 }
