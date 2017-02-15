@@ -149,4 +149,122 @@
           #{comment,        jdbcType=VARCHAR}
         )
     </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM training
+        WHERE id = ${id, jdbcType=INTEGER}
+    </delete>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+        DELETE FROM training
+        WHERE id IN
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="com.wangzhixuan.model.Training">
+        UPDATE training
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name, jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex, jdbcType=INTEGER},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId, jdbcType=INTEGER},
+            </if>
+            <if test="nationalId != null">
+                national_id = #{nationalId, jdbcType=INTEGER},
+            </if>
+
+            political_name = #{politicalName, jdbcType=VARCHAR},
+
+            <if test="jobId != null">
+                job_id = #{jobId, jdbcType=INTEGER},
+            </if>
+
+            training_class = #{trainingClass, jdbcType=VARCHAR},
+            start_date     = #{startDate,     jdbcType=VARCHAR},
+            end_date       = #{endDate,       jdbcType=VARCHAR},
+            sum_time       = #{sumTime,       jdbcType=VARCHAR},
+            off_work       = #{offWork,       jdbcType=VARCHAR},
+            class_hour     = #{classHour,     jdbcType=VARCHAR},
+            training_place = #{trainingPlace, jdbcType=VARCHAR},
+            training_school = #{trainingSchool, jdbcType=VARCHAR},
+            comment        = #{comment,       jdbcType=VARCHAR}
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertByImport" parameterType="java.util.List">
+        INSERT INTO training(
+          code, name, sex, department_id, national_id, political_name, job_id, training_class,
+          description, training_category, start_date, end_date, sum_time, off_work, class_hour,
+          training_place, training_school, comment
+        )
+        VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+                #{item.code,         jdbcType=VARCHAR},
+                #{item.name,         jdbcType=VARCHAR},
+                #{item.sex,          jdbcType=INTEGER},
+                #{item.departmentId, jdbcType=INTEGER},
+                #{item.nationalId,   jdbcType=INTEGER},
+                #{item.politicalName, jdbcType=VARCHAR},
+                #{item.jobId,        jdbcType=INTEGER},
+                #{item.trainingClass, jdbcType=VARCHAR},
+                #{item.description,  jdbcType=VARCHAR},
+                #{item.trainingCategory, jdbcType=VARCHAR},
+                #{item.startDate,    jdbcType=DATE},
+                #{item.endDate,      jdbcType=DATE},
+                #{item.sumTime,      jdbcType=VARCHAR},
+                #{item.offWork,      jdbcType=VARCHAR},
+                #{item.classHour,    jdbcType=VARCHAR},
+                #{item.trainingPlace,  jdbcType=VARCHAR},
+                #{item.trainingSchool, jdbcType=VARCHAR},
+                #{item.comment,        jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectTrainingVoByIds" resultMap="trainingVoResultMap" parameterType="java.util.ArrayList">
+        SELECT
+        t.id,
+        t.code,
+        t.name,
+        t.sex,
+        t.department_id,
+        d.name as department_name,
+        t.national_id,
+        n.name as national_name,
+        t.political_name,
+        t.job_id,
+        j.job_level as job_name,
+        t.training_class,
+        t.description,
+        t.training_category,
+        t.start_date,
+        t.end_date,
+        t.sum_time,
+        t.off_work,
+        t.class_hour,
+        t.training_place,
+        t.training_school,
+        t.comment
+        FROM
+          training t
+        LEFT JOIN
+          dict_department d ON d.id = t.department_id
+        LEFT JOIN
+          dict_national n ON n.id = t.national_id
+        LEFT JOIN
+          job j ON j.id = t.job_id
+        WHERE
+          t.id IN
+          <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+    </select>
 </mapper>
