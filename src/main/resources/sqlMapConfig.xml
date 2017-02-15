@@ -101,5 +101,6 @@
 		<mapper resource="sqlMapperXml/PeopleContractSalaryMapper.xml" />
 		<mapper resource="sqlMapperXml/PeopleRetireSalaryMapper.xml" />
 		<mapper resource="sqlMapperXml/PeopleTimesheetMapper.xml" />
+		<mapper resource="sqlMapperXml/TrainingMapper.xml"/>
 	</mappers>
 </configuration> 

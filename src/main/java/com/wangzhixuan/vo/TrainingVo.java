@@ -38,6 +38,16 @@ public class TrainingVo implements Serializable {
 
     private String description;
 
+    public String getTrainingCategory() {
+        return trainingCategory;
+    }
+
+    public void setTrainingCategory(String trainingCategory) {
+        this.trainingCategory = trainingCategory;
+    }
+
+    private String trainingCategory;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String startDate;
 
@@ -235,6 +245,29 @@ public class TrainingVo implements Serializable {
             condition.put("sex", trainingVo.getSex());
         }
 
+        if(trainingVo.getDepartmentId() != null){
+            condition.put("departmentId", trainingVo.getDepartmentId());
+        }
+
+        if(trainingVo.getNationalId() != null){
+            condition.put("nationalId", trainingVo.getNationalId());
+        }
+
+        if(StringUtils.isNoneBlank(trainingVo.getPoliticalName())){
+            condition.put("politicalName",trainingVo.getPoliticalName());
+        }
+
+        if(trainingVo.getJobId() != null){
+            condition.put("jobId", trainingVo.getJobId());
+        }
+
+        if(StringUtils.isNoneBlank(trainingVo.getOffWork())){
+            condition.put("offWork", trainingVo.getOffWork());
+        }
+
+        if(StringUtils.isNoneBlank(trainingVo.getTrainingCategory())){
+            condition.put("trainingCategory", trainingVo.getTrainingCategory());
+        }
 
         return condition;
     }

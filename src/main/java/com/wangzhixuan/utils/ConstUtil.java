@@ -51,6 +51,14 @@ public class ConstUtil {
                 "物业补贴","供暖费","残疾补助","应发合计","扣款","代扣房租","实发合计","月份"
         };
     }
+
+    public static String[] getTrainingPeopleHeaders(){
+        return new String[]{
+                "序号","人员姓名","人员性别","所在部门","民族","政治面貌","职级","培训班名称","学习内容","培训类型",
+                "起始时间","结束时间","累计时间","是否脱产","培训学时","培训地点","培训机构","备注"
+        };
+    }
+
     public static int PEOPLE_NORMAL = 0;
     public static int PEOPLE_RETIRE = 1;
     public static int PEOPLE_DEATH  = 2;
