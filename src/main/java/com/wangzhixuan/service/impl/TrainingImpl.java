@@ -80,6 +80,7 @@ public class TrainingImpl implements TrainingService {
 
     @Override
     public void delete(Integer id) {
+
         trainingMapper.delete(id);
     }
 
@@ -316,7 +317,7 @@ public class TrainingImpl implements TrainingService {
                 }
 
                 //备注
-                if(row.getCell(17) != null && !row.getCell(178).toString().trim().equals("")){
+                if(row.getCell(17) != null && !row.getCell(17).toString().trim().equals("")){
                     String comment = row.getCell(17).toString().trim();
                     p.setComment(comment);
                 }

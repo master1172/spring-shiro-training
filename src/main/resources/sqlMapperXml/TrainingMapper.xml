@@ -152,7 +152,7 @@
 
     <delete id="delete" parameterType="java.lang.Integer">
         DELETE FROM training
-        WHERE id = ${id, jdbcType=INTEGER}
+        WHERE id = #{id, jdbcType=INTEGER}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
@@ -186,6 +186,7 @@
             </if>
 
             training_class = #{trainingClass, jdbcType=VARCHAR},
+            description    = #{description,   jdbcType=VARCHAR},
             start_date     = #{startDate,     jdbcType=VARCHAR},
             end_date       = #{endDate,       jdbcType=VARCHAR},
             sum_time       = #{sumTime,       jdbcType=VARCHAR},

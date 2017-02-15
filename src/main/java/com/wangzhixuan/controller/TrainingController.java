@@ -171,6 +171,11 @@ public class TrainingController {
         return result;
     }
 
+    @RequestMapping(value = "importExcelPage")
+    public String importExcelPage(){
+        return "/admin/training/importExcelPage";
+    }
+
     /**
      * 批量调入W
      */
