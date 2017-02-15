@@ -1,9 +1,13 @@
 package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by sterm on 2017/1/15.
@@ -434,5 +438,22 @@ public class PeopleSalaryBaseVo implements Serializable{
 
     public String toString(){
         return "";
+    }
+
+    public static Map<String,Object> createCondition(PeopleSalaryBaseVo peopleSalaryBaseVo) {
+        Map<String,Object> condition = Maps.newHashMap();
+
+
+        if(StringUtils.isNoneBlank(peopleSalaryBaseVo.getPeopleName())){
+            condition.put("name", peopleSalaryBaseVo.getPeopleName());
+        }
+
+
+
+        condition.put("jobId", peopleSalaryBaseVo.getJobId());
+        condition.put("rankId", peopleSalaryBaseVo.getRankId());
+
+
+        return condition;
     }
 }
