@@ -291,6 +291,10 @@
                         <option value="0">男</option>
                         <option value="1">女</option>
                     </select>
+                    <a href="javascript:void(0);" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
+                    <a href="javascript:void(0);" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
                 </td>
             </tr>
         </table>

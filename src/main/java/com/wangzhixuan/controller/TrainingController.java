@@ -44,6 +44,7 @@ public class TrainingController {
     public PageInfo dataGrid(HttpServletRequest request, TrainingVo trainingVo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = trainingVo.CreateCondition(trainingVo);
+        pageInfo.setCondition(condition);
         trainingService.findDataGrid(pageInfo, request);
 
         return pageInfo;

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.TrainingMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.Training">
+        <id     column="id"   property="id"   jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sex"  property="sex"  jdbcType="INTEGER"/>
+        <result column="department_id"  property="departmentId"  jdbcType="INTEGER"/>
+        <result column="national_id"    property="nationalId"    jdbcType="INTEGER"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
+        <result column="job_id"         property="jobId"         jdbcType="INTEGER"/>
+        <result column="training_class" property="trainingClass" jdbcType="VARCHAR"/>
+        <result column="description"    property="description"   jdbcType="VARCHAR"/>
+        <result column="training_category" property="trainingCategory" jdbcType="VARCHAR"/>
+        <result column="start_date"     property="startDate"     jdbcType="DATE"/>
+        <result column="end_date"       property="endDate"       jdbcType="DATE"/>
+        <result column="sum_time"       property="sumTime"       jdbcType="VARCHAR"/>
+        <result column="off_work"       property="offWork"       jdbcType="VARCHAR"/>
+        <result column="class_hour"     property="classHour"     jdbcType="VARCHAR"/>
+        <result column="training_place" property="trainingPlace" jdbcType="VARCHAR"/>
+        <result column="training_school" property="trainingSchool" jdbcType="VARCHAR"/>
+        <result column="comment"        property="comment"       jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="trainingVoResultMap" type="com.wangzhixuan.vo.TrainingVo">
+        <id     column="id"   property="id"   jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sex"  property="sex"  jdbcType="INTEGER"/>
+        <result column="department_id"  property="departmentId"  jdbcType="INTEGER"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="national_id"    property="nationalId"    jdbcType="INTEGER"/>
+        <result column="national_name"  property="national_name" jdbcType="VARCHAR"/>
+        <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
+        <result column="job_id"         property="jobId"         jdbcType="INTEGER"/>
+        <result column="job_name"       property="jobName"       jdbcType="VARCHAR"/>
+        <result column="training_class" property="trainingClass" jdbcType="VARCHAR"/>
+        <result column="description"    property="description"   jdbcType="VARCHAR"/>
+        <result column="training_category" property="trainingCategory" jdbcType="VARCHAR"/>
+        <result column="start_date"     property="startDate"     jdbcType="DATE"/>
+        <result column="end_date"       property="endDate"       jdbcType="DATE"/>
+        <result column="sum_time"       property="sumTime"       jdbcType="VARCHAR"/>
+        <result column="off_work"       property="offWork"       jdbcType="VARCHAR"/>
+        <result column="class_hour"     property="classHour"     jdbcType="VARCHAR"/>
+        <result column="training_place" property="trainingPlace" jdbcType="VARCHAR"/>
+        <result column="training_school" property="trainingSchool" jdbcType="VARCHAR"/>
+        <result column="comment"        property="comment"       jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, name, sex, department_id, national_id, political_name, job_id, training_class,
+        description, training_category, start_date, end_date, sum_time, off_work, class_hour,
+        traiing_place, training_school, comment
+    </sql>
+
+    <select id="findPeoplePageCondition" resultMap="trainingVoResultMap" parameterType="PageInfo">
+        SELECT
+          t.id,
+          t.code,
+          t.name,
+          t.sex,
+          t.department_id,
+          d.name as department_name,
+          t.national_id,
+          n.name as national_name,
+          t.political_name,
+          t.job_id,
+          j.job_level as job_name,
+          t.training_class,
+          t.description,
+          t.training_category,
+          t.start_date,
+          t.end_date,
+          t.sum_time,
+          t.off_work,
+          t.class_hour,
+          t.training_place,
+          t.training_school,
+          t.comment
+        FROM
+          training t
+        LEFT JOIN
+          dict_department d ON d.id = t.department_id
+        LEFT JOIN
+          dict_national n ON n.id = t.national_id
+        LEFT JOIN
+          job j ON j.id = t.job_id
+        <where>
+            <if test=" condition.name != null and condition.name != '' ">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        SELECT count(t.id) count
+        FROM
+          training t
+        LEFT JOIN
+          dict_department d ON d.id = t.department_id
+        LEFT JOIN
+          dict_national n ON n.id = t.national_id
+        LEFT JOIN
+          job j ON j.id = t.job_id
+        <where>
+            <if test="condition.name != null and condition.name != ''">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
