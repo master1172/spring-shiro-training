@@ -313,8 +313,8 @@
             <th field="politicalName"   data-options="sortable:true" width="80">政治面貌</th>
             <th field="jobName"         data-options="sortable:true" width="80">职级</th>
             <th field="trainingClass"   data-options="sortable:true" width="80">培训班名称</th>
-            <th field="startTime"       data-options="sortable:true" width="80">起始时间</th>
-            <th field="endTime"         data-options="sortable:true" width="80">结束时间</th>
+            <th field="startDate"       data-options="sortable:true" width="80">起始时间</th>
+            <th field="endDate"         data-options="sortable:true" width="80">结束时间</th>
             <th field="offWork"         data-options="sortable:true" width="80">是否脱产</th>
             <th field="classHour"       data-options="sortable:true" width="80">培训学时</th>
             <th field="trainingPlace"   data-options="sortable:true" width="80">培训地点</th>

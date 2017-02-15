@@ -60,7 +60,7 @@ public class TrainingImpl implements TrainingService {
 
     @Override
     public Training findTrainingById(Integer id) {
-        return trainingMapper.findTraningById(id);
+        return trainingMapper.findTrainingById(id);
     }
 
     @Override

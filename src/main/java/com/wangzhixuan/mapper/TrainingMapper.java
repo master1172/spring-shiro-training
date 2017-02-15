@@ -14,7 +14,7 @@ public interface TrainingMapper {
 
     int findPeoplePageCount(PageInfo pageInfo);
 
-    Training findTraningById(Integer id);
+    Training findTrainingById(Integer id);
 
     void insert(Training training);
 

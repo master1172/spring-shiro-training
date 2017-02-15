@@ -31,7 +31,7 @@
         <result column="department_id"  property="departmentId"  jdbcType="INTEGER"/>
         <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
         <result column="national_id"    property="nationalId"    jdbcType="INTEGER"/>
-        <result column="national_name"  property="national_name" jdbcType="VARCHAR"/>
+        <result column="national_name"  property="nationalName" jdbcType="VARCHAR"/>
         <result column="political_name" property="politicalName" jdbcType="VARCHAR"/>
         <result column="job_id"         property="jobId"         jdbcType="INTEGER"/>
         <result column="job_name"       property="jobName"       jdbcType="VARCHAR"/>
@@ -51,7 +51,7 @@
     <sql id="Base_Column_List">
         id, code, name, sex, department_id, national_id, political_name, job_id, training_class,
         description, training_category, start_date, end_date, sum_time, off_work, class_hour,
-        traiing_place, training_school, comment
+        training_place, training_school, comment
     </sql>
 
     <select id="findPeoplePageCondition" resultMap="trainingVoResultMap" parameterType="PageInfo">
@@ -109,4 +109,44 @@
             </if>
         </where>
     </select>
+
+    <select id="findTrainingById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+          <include refid="Base_Column_List" />
+        FROM
+          training
+        WHERE
+          id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.Training">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO training(
+          code, name, sex, department_id, national_id, political_name, job_id, training_class,
+          description, training_category, start_date, end_date, sum_time, off_work, class_hour,
+          training_place, training_school, comment
+        )
+        VALUES(
+          #{code,         jdbcType=VARCHAR},
+          #{name,         jdbcType=VARCHAR},
+          #{sex,          jdbcType=INTEGER},
+          #{departmentId, jdbcType=INTEGER},
+          #{nationalId,   jdbcType=INTEGER},
+          #{politicalName, jdbcType=VARCHAR},
+          #{jobId,        jdbcType=INTEGER},
+          #{trainingClass, jdbcType=VARCHAR},
+          #{description,  jdbcType=VARCHAR},
+          #{trainingCategory, jdbcType=VARCHAR},
+          #{startDate,    jdbcType=DATE},
+          #{endDate,      jdbcType=DATE},
+          #{sumTime,      jdbcType=VARCHAR},
+          #{offWork,      jdbcType=VARCHAR},
+          #{classHour,    jdbcType=VARCHAR},
+          #{trainingPlace,  jdbcType=VARCHAR},
+          #{trainingSchool, jdbcType=VARCHAR},
+          #{comment,        jdbcType=VARCHAR}
+        )
+    </insert>
 </mapper>
