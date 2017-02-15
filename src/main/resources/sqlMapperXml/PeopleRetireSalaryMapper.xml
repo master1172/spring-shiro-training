@@ -43,7 +43,7 @@
 		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<resultMap id="peopleRetireSalaryBaseMap" type="com.wangzhixuan.model.PeopleContractSalaryBase">
+	<resultMap id="peopleRetireSalaryBaseMap" type="com.wangzhixuan.vo.PeopleRetireSalaryBaseVo">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="people_code" property="peopleCode" jdbcType="VARCHAR" />
 		<result column="people_name" property="peopleName" jdbcType="VARCHAR" />
@@ -273,13 +273,31 @@
 	</insert>
 	<select id="findPeopleRetireSalaryBaseByCode" resultMap="peopleRetireSalaryBaseMap" parameterType="java.lang.String">
 		SELECT
-		id,people_code,base_salary,extra_allowance,rent_allowance,retire_allowance,retire_fee_increase,food_allowance,
-		health_allowance,medicare_fee,property_allowance,heating_fee,handicap_allowance,gross_income,expense,rent_fee,net_income,
-		last_change_date
-		FROM
-		people_retire_salary_base
-		WHERE
-		people_code = #{peopleCode}
+		t.id,
+			t.people_code,
+			p.name as people_name,
+			t.base_salary,
+			t.extra_allowance,
+			t.rent_allowance,
+			t.retire_allowance,
+			t.retire_fee_increase,
+			t.food_allowance,
+			t.health_allowance,
+			t.medicare_fee,
+			t.property_allowance,
+			t.heating_fee,
+			t.handicap_allowance,
+			t.gross_income,
+			t.expense,
+			t.rent_fee,
+			t.net_income,
+			t.last_change_date
+		FROM people_retire_salary_base t
+		LEFT JOIN people_retire p
+		ON t.people_code = p.code
+		<where>
+		t.people_code = #{peopleCode}
+		</where>
 	</select>
 
 	<insert id="addSalaryBase" parameterType="com.wangzhixuan.model.PeopleRetireSalaryBase">
