@@ -1,0 +1,1273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzhixuan.mapper.PeopleTotalMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.PeopleTotal">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="national_id" jdbcType="INTEGER" property="nationalId"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="native_id" jdbcType="INTEGER" property="nativeId"/>
+        <result column="education_name" jdbcType="VARCHAR" property="educationName"/>
+        <result column="degree_id" jdbcType="INTEGER" property="degreeId"/>
+        <result column="political_name" jdbcType="VARCHAR" property="politicalName"/>
+        <result column="party_date" jdbcType="DATE" property="partyDate"/>
+        <result column="work_date" jdbcType="DATE" property="workDate"/>
+        <result column="school_date" jdbcType="DATE" property="schoolDate"/>
+        <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
+        <result column="job_category" jdbcType="VARCHAR" property="jobCategory"/>
+        <result column="job_id" jdbcType="INTEGER" property="jobId"/>
+        <result column="job_date" jdbcType="DATE" property="jobDate"/>
+        <result column="job_level_date" jdbcType="DATE" property="jobLevelDate"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="virtual_age" jdbcType="INTEGER" property="virtualAge"/>
+        <result column="work_age" jdbcType="INTEGER" property="workAge"/>
+        <result column="formation" jdbcType="VARCHAR" property="formation"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="marriage_id" jdbcType="INTEGER" property="marriageId"/>
+        <result column="photo_id" jdbcType="VARCHAR" property="photoId"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="hukou" jdbcType="VARCHAR" property="hukou"/>
+        <result column="hukou_address" jdbcType="VARCHAR" property="hukouAddress"/>
+        <result column="final_education_name" jdbcType="VARCHAR" property="finalEducationName"/>
+        <result column="major" jdbcType="VARCHAR" property="major"/>
+        <result column="graduate_school" jdbcType="VARCHAR" property="graduateSchool"/>
+        <result column="contact" jdbcType="VARCHAR" property="contact"/>
+        <result column="relationship" jdbcType="VARCHAR" property="relationship"/>
+        <result column="contact_number" jdbcType="VARCHAR" property="contactNumber"/>
+        <result column="family_info_1" jdbcType="VARCHAR" property="familyInfo1"/>
+        <result column="family_info_2" jdbcType="VARCHAR" property="familyInfo2"/>
+        <result column="family_info_3" jdbcType="VARCHAR" property="familyInfo3"/>
+        <result column="family_info_4" jdbcType="VARCHAR" property="familyInfo4"/>
+        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="identity_id" jdbcType="INTEGER" property="identityId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="speciality" jdbcType="VARCHAR" property="speciality"/>
+        <result column="height" jdbcType="VARCHAR" property="height"/>
+        <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+        <result column="extra_department_name" jdbcType="VARCHAR" property="extraDepartmentName"/>
+        <result column="extra_job_name" jdbcType="VARCHAR" property="extraJobName"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment"/>
+        <result column="birth_place" jdbcType="VARCHAR" property="birthPlace"/>
+        <result column="health_status" jdbcType="VARCHAR" property="healthStatus"/>
+        <result column="retire_date" jdbcType="VARCHAR" property="retireDate"/>
+        <result column="before_department_id" jdbcType="INTEGER" property="beforeDepartmentId"/>
+        <result column="before_job_name" jdbcType="VARCHAR" property="beforeJobName"/>
+        <result column="before_job_id" jdbcType="INTEGER" property="beforeJobId"/>
+        <result column="after_department_id" jdbcType="INTEGER" property="afterDepartmentId"/>
+        <result column="rehire_category" jdbcType="VARCHAR" property="rehireCategory"/>
+        <result column="retire_job_name" jdbcType="VARCHAR" property="retireJobName"/>
+        <result column="retire_job_id" jdbcType="INTEGER" property="retireJobId"/>
+        <result column="retire_status" jdbcType="INTEGER" property="retireStatus"/>
+        <result column="death_date" jdbcType="DATE" property="deathDate"/>
+        <result column="death_reason" jdbcType="VARCHAR" property="deathReason"/>
+        <result column="branch_id" jdbcType="INTEGER" property="branchId"/>
+        <result column="party_status_id" jdbcType="INTEGER" property="partyStatusId"/>
+        <result column="party_in_date" jdbcType="DATE" property="partyInDate"/>
+        <result column="party_out_date" jdbcType="DATE" property="partyOutDate"/>
+        <result column="job_salary" jdbcType="DECIMAL" property="jobSalary"/>
+        <result column="rank_id" jdbcType="INTEGER" property="rankId"/>
+        <result column="rank_salary" jdbcType="DECIMAL" property="rankSalary"/>
+        <result column="reserve_salary" jdbcType="DECIMAL" property="reserveSalary"/>
+        <result column="performance_allowance" jdbcType="DECIMAL" property="performanceAllowance"/>
+        <result column="rent_allowance" jdbcType="DECIMAL" property="rentAllowance"/>
+        <result column="house_allowance" jdbcType="DECIMAL" property="houseAllowance"/>
+        <result column="timesheet_result" jdbcType="DECIMAL" property="timesheetResult"/>
+        <result column="duty_allowance" jdbcType="DECIMAL" property="dutyAllowance"/>
+        <result column="extra_allowance" jdbcType="DECIMAL" property="extraAllowance"/>
+        <result column="telephone_allowance" jdbcType="DECIMAL" property="telephoneAllowance"/>
+        <result column="traffic_allowance" jdbcType="DECIMAL" property="trafficAllowance"/>
+        <result column="on_duty_fee" jdbcType="DECIMAL" property="onDutyFee"/>
+        <result column="property_allowance" jdbcType="DECIMAL" property="propertyAllowance"/>
+        <result column="extrajob_allowance" jdbcType="DECIMAL" property="extrajobAllowance"/>
+        <result column="temperature_allowance" jdbcType="DECIMAL" property="temperatureAllowance"/>
+        <result column="reissue_fee" jdbcType="DECIMAL" property="reissueFee"/>
+        <result column="medicare" jdbcType="DECIMAL" property="medicare"/>
+        <result column="yearly_bonus" jdbcType="DECIMAL" property="yearlyBonus"/>
+        <result column="life_insurance" jdbcType="DECIMAL" property="lifeInsurance"/>
+        <result column="job_insurance" jdbcType="DECIMAL" property="jobInsurance"/>
+        <result column="health_insurance" jdbcType="DECIMAL" property="healthInsurance"/>
+        <result column="annuity" jdbcType="DECIMAL" property="annuity"/>
+        <result column="house_fund" jdbcType="DECIMAL" property="houseFund"/>
+        <result column="school_salary" jdbcType="DECIMAL" property="schoolSalary"/>
+        <result column="exam_result" jdbcType="VARCHAR" property="examResult"/>
+        <result column="job_exam_salary" jdbcType="DECIMAL" property="jobExamSalary"/>
+        <result column="special_allowance" jdbcType="DECIMAL" property="specialAllowance"/>
+        <result column="head_allowance" jdbcType="DECIMAL" property="headAllowance"/>
+        <result column="bonus" jdbcType="DECIMAL" property="bonus"/>
+        <result column="base_salary" jdbcType="DECIMAL" property="baseSalary"/>
+        <result column="retire_allowance" jdbcType="DECIMAL" property="retireAllowance"/>
+        <result column="retire_fee_increase" jdbcType="DECIMAL" property="retireFeeIncrease"/>
+        <result column="health_allowance" jdbcType="DECIMAL" property="healthAllowance"/>
+        <result column="heating_fee" jdbcType="DECIMAL" property="heatingFee"/>
+        <result column="handicap_allowance" jdbcType="DECIMAL" property="handicapAllowance"/>
+        <result column="rent_fee" jdbcType="DECIMAL" property="rentFee"/>
+        <result column="last_update_date" jdbcType="VARCHAR" property="lastUpdateDate"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, name, sex, national_id, birthday, native_id, education_name, degree_id,
+        political_name, party_date, work_date, school_date, job_name, job_category, job_id,
+        job_date, job_level_date, age, virtual_age, work_age, formation, mobile, marriage_id,
+        photo_id, address, hukou, hukou_address, final_education_name, major, graduate_school,
+        contact, relationship, contact_number, family_info_1, family_info_2, family_info_3,
+        family_info_4, photo, identity_id, status, province, city, speciality, height, department_id,
+        extra_department_name, extra_job_name, comment, birth_place, health_status, retire_date,
+        before_department_id, before_job_name, before_job_id, after_department_id, rehire_category,
+        retire_job_name, retire_job_id, retire_status, death_date, death_reason, branch_id,
+        party_status_id, party_in_date, party_out_date, job_salary, rank_id, rank_salary,
+        reserve_salary, performance_allowance, rent_allowance, house_allowance, timesheet_result,
+        duty_allowance, extra_allowance, telephone_allowance, traffic_allowance, on_duty_fee,
+        property_allowance, extrajob_allowance, temperature_allowance, reissue_fee, medicare,
+        yearly_bonus, life_insurance, job_insurance, health_insurance, annuity, house_fund,
+        school_salary, exam_result, job_exam_salary, special_allowance, head_allowance, bonus,
+        base_salary, retire_allowance, retire_fee_increase, health_allowance, heating_fee,
+        handicap_allowance, rent_fee, last_update_date
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleTotalKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from people_total
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleTotalKey">
+        delete from people_total
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTotal">
+        insert into people_total (
+        code, name, sex, national_id, birthday,
+        native_id, education_name, degree_id,
+        political_name, party_date, work_date,
+        school_date, job_name, job_category,
+        job_id, job_date, job_level_date,
+        age, virtual_age, work_age,
+        formation, mobile, marriage_id,
+        photo_id, address, hukou,
+        hukou_address, final_education_name, major,
+        graduate_school, contact, relationship,
+        contact_number, family_info_1, family_info_2,
+        family_info_3, family_info_4, photo,
+        identity_id, status, province,
+        city, speciality, height,
+        department_id, extra_department_name, extra_job_name,
+        comment, birth_place, health_status,
+        retire_date, before_department_id, before_job_name,
+        before_job_id, after_department_id, rehire_category,
+        retire_job_name, retire_job_id, retire_status,
+        death_date, death_reason, branch_id,
+        party_status_id, party_in_date, party_out_date,
+        job_salary, rank_id, rank_salary,
+        reserve_salary, performance_allowance, rent_allowance,
+        house_allowance, timesheet_result, duty_allowance,
+        extra_allowance, telephone_allowance, traffic_allowance,
+        on_duty_fee, property_allowance, extrajob_allowance,
+        temperature_allowance, reissue_fee, medicare,
+        yearly_bonus, life_insurance, job_insurance,
+        health_insurance, annuity, house_fund,
+        school_salary, exam_result, job_exam_salary,
+        special_allowance, head_allowance, bonus,
+        base_salary, retire_allowance, retire_fee_increase,
+        health_allowance, heating_fee, handicap_allowance,
+        rent_fee, last_update_date
+        )
+        values
+        (
+        #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{sex,jdbcType=INTEGER}, #{nationalId,jdbcType=INTEGER}, #{birthday,jdbcType=DATE},
+        #{nativeId,jdbcType=INTEGER}, #{educationName,jdbcType=VARCHAR}, #{degreeId,jdbcType=INTEGER},
+        #{politicalName,jdbcType=VARCHAR}, #{partyDate,jdbcType=DATE}, #{workDate,jdbcType=DATE},
+        #{schoolDate,jdbcType=DATE}, #{jobName,jdbcType=VARCHAR}, #{jobCategory,jdbcType=VARCHAR},
+        #{jobId,jdbcType=INTEGER}, #{jobDate,jdbcType=DATE}, #{jobLevelDate,jdbcType=DATE},
+        #{age,jdbcType=INTEGER}, #{virtualAge,jdbcType=INTEGER}, #{workAge,jdbcType=INTEGER},
+        #{formation,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{marriageId,jdbcType=INTEGER},
+        #{photoId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{hukou,jdbcType=VARCHAR},
+        #{hukouAddress,jdbcType=VARCHAR}, #{finalEducationName,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR},
+        #{graduateSchool,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{relationship,jdbcType=VARCHAR},
+        #{contactNumber,jdbcType=VARCHAR}, #{familyInfo1,jdbcType=VARCHAR}, #{familyInfo2,jdbcType=VARCHAR},
+        #{familyInfo3,jdbcType=VARCHAR}, #{familyInfo4,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR},
+        #{identityId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR}, #{speciality,jdbcType=VARCHAR}, #{height,jdbcType=VARCHAR},
+        #{departmentId,jdbcType=INTEGER}, #{extraDepartmentName,jdbcType=VARCHAR}, #{extraJobName,jdbcType=VARCHAR},
+        #{comment,jdbcType=VARCHAR}, #{birthPlace,jdbcType=VARCHAR}, #{healthStatus,jdbcType=VARCHAR},
+        #{retireDate,jdbcType=VARCHAR}, #{beforeDepartmentId,jdbcType=INTEGER}, #{beforeJobName,jdbcType=VARCHAR},
+        #{beforeJobId,jdbcType=INTEGER}, #{afterDepartmentId,jdbcType=INTEGER}, #{rehireCategory,jdbcType=VARCHAR},
+        #{retireJobName,jdbcType=VARCHAR}, #{retireJobId,jdbcType=INTEGER}, #{retireStatus,jdbcType=INTEGER},
+        #{deathDate,jdbcType=DATE}, #{deathReason,jdbcType=VARCHAR}, #{branchId,jdbcType=INTEGER},
+        #{partyStatusId,jdbcType=INTEGER}, #{partyInDate,jdbcType=DATE}, #{partyOutDate,jdbcType=DATE},
+        #{jobSalary,jdbcType=DECIMAL}, #{rankId,jdbcType=INTEGER}, #{rankSalary,jdbcType=DECIMAL},
+        #{reserveSalary,jdbcType=DECIMAL}, #{performanceAllowance,jdbcType=DECIMAL}, #{rentAllowance,jdbcType=DECIMAL},
+        #{houseAllowance,jdbcType=DECIMAL}, #{timesheetResult,jdbcType=DECIMAL}, #{dutyAllowance,jdbcType=DECIMAL},
+        #{extraAllowance,jdbcType=DECIMAL}, #{telephoneAllowance,jdbcType=DECIMAL}, #{trafficAllowance,jdbcType=DECIMAL},
+        #{onDutyFee,jdbcType=DECIMAL}, #{propertyAllowance,jdbcType=DECIMAL}, #{extrajobAllowance,jdbcType=DECIMAL},
+        #{temperatureAllowance,jdbcType=DECIMAL}, #{reissueFee,jdbcType=DECIMAL}, #{medicare,jdbcType=DECIMAL},
+        #{yearlyBonus,jdbcType=DECIMAL}, #{lifeInsurance,jdbcType=DECIMAL}, #{jobInsurance,jdbcType=DECIMAL},
+        #{healthInsurance,jdbcType=DECIMAL}, #{annuity,jdbcType=DECIMAL}, #{houseFund,jdbcType=DECIMAL},
+        #{schoolSalary,jdbcType=DECIMAL}, #{examResult,jdbcType=VARCHAR}, #{jobExamSalary,jdbcType=DECIMAL},
+        #{specialAllowance,jdbcType=DECIMAL}, #{headAllowance,jdbcType=DECIMAL}, #{bonus,jdbcType=DECIMAL},
+        #{baseSalary,jdbcType=DECIMAL}, #{retireAllowance,jdbcType=DECIMAL}, #{retireFeeIncrease,jdbcType=DECIMAL},
+        #{healthAllowance,jdbcType=DECIMAL}, #{heatingFee,jdbcType=DECIMAL}, #{handicapAllowance,jdbcType=DECIMAL},
+        #{rentFee,jdbcType=DECIMAL}, #{lastUpdateDate,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.wangzhixuan.model.PeopleTotal">
+        insert into people_total
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="nationalId != null">
+                national_id,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="nativeId != null">
+                native_id,
+            </if>
+            <if test="educationName != null">
+                education_name,
+            </if>
+            <if test="degreeId != null">
+                degree_id,
+            </if>
+            <if test="politicalName != null">
+                political_name,
+            </if>
+            <if test="partyDate != null">
+                party_date,
+            </if>
+            <if test="workDate != null">
+                work_date,
+            </if>
+            <if test="schoolDate != null">
+                school_date,
+            </if>
+            <if test="jobName != null">
+                job_name,
+            </if>
+            <if test="jobCategory != null">
+                job_category,
+            </if>
+            <if test="jobId != null">
+                job_id,
+            </if>
+            <if test="jobDate != null">
+                job_date,
+            </if>
+            <if test="jobLevelDate != null">
+                job_level_date,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="virtualAge != null">
+                virtual_age,
+            </if>
+            <if test="workAge != null">
+                work_age,
+            </if>
+            <if test="formation != null">
+                formation,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="marriageId != null">
+                marriage_id,
+            </if>
+            <if test="photoId != null">
+                photo_id,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="hukou != null">
+                hukou,
+            </if>
+            <if test="hukouAddress != null">
+                hukou_address,
+            </if>
+            <if test="finalEducationName != null">
+                final_education_name,
+            </if>
+            <if test="major != null">
+                major,
+            </if>
+            <if test="graduateSchool != null">
+                graduate_school,
+            </if>
+            <if test="contact != null">
+                contact,
+            </if>
+            <if test="relationship != null">
+                relationship,
+            </if>
+            <if test="contactNumber != null">
+                contact_number,
+            </if>
+            <if test="familyInfo1 != null">
+                family_info_1,
+            </if>
+            <if test="familyInfo2 != null">
+                family_info_2,
+            </if>
+            <if test="familyInfo3 != null">
+                family_info_3,
+            </if>
+            <if test="familyInfo4 != null">
+                family_info_4,
+            </if>
+            <if test="photo != null">
+                photo,
+            </if>
+            <if test="identityId != null">
+                identity_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="speciality != null">
+                speciality,
+            </if>
+            <if test="height != null">
+                height,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="extraDepartmentName != null">
+                extra_department_name,
+            </if>
+            <if test="extraJobName != null">
+                extra_job_name,
+            </if>
+            <if test="comment != null">
+                comment,
+            </if>
+            <if test="birthPlace != null">
+                birth_place,
+            </if>
+            <if test="healthStatus != null">
+                health_status,
+            </if>
+            <if test="retireDate != null">
+                retire_date,
+            </if>
+            <if test="beforeDepartmentId != null">
+                before_department_id,
+            </if>
+            <if test="beforeJobName != null">
+                before_job_name,
+            </if>
+            <if test="beforeJobId != null">
+                before_job_id,
+            </if>
+            <if test="afterDepartmentId != null">
+                after_department_id,
+            </if>
+            <if test="rehireCategory != null">
+                rehire_category,
+            </if>
+            <if test="retireJobName != null">
+                retire_job_name,
+            </if>
+            <if test="retireJobId != null">
+                retire_job_id,
+            </if>
+            <if test="retireStatus != null">
+                retire_status,
+            </if>
+            <if test="deathDate != null">
+                death_date,
+            </if>
+            <if test="deathReason != null">
+                death_reason,
+            </if>
+            <if test="branchId != null">
+                branch_id,
+            </if>
+            <if test="partyStatusId != null">
+                party_status_id,
+            </if>
+            <if test="partyInDate != null">
+                party_in_date,
+            </if>
+            <if test="partyOutDate != null">
+                party_out_date,
+            </if>
+            <if test="jobSalary != null">
+                job_salary,
+            </if>
+            <if test="rankId != null">
+                rank_id,
+            </if>
+            <if test="rankSalary != null">
+                rank_salary,
+            </if>
+            <if test="reserveSalary != null">
+                reserve_salary,
+            </if>
+            <if test="performanceAllowance != null">
+                performance_allowance,
+            </if>
+            <if test="rentAllowance != null">
+                rent_allowance,
+            </if>
+            <if test="houseAllowance != null">
+                house_allowance,
+            </if>
+            <if test="timesheetResult != null">
+                timesheet_result,
+            </if>
+            <if test="dutyAllowance != null">
+                duty_allowance,
+            </if>
+            <if test="extraAllowance != null">
+                extra_allowance,
+            </if>
+            <if test="telephoneAllowance != null">
+                telephone_allowance,
+            </if>
+            <if test="trafficAllowance != null">
+                traffic_allowance,
+            </if>
+            <if test="onDutyFee != null">
+                on_duty_fee,
+            </if>
+            <if test="propertyAllowance != null">
+                property_allowance,
+            </if>
+            <if test="extrajobAllowance != null">
+                extrajob_allowance,
+            </if>
+            <if test="temperatureAllowance != null">
+                temperature_allowance,
+            </if>
+            <if test="reissueFee != null">
+                reissue_fee,
+            </if>
+            <if test="medicare != null">
+                medicare,
+            </if>
+            <if test="yearlyBonus != null">
+                yearly_bonus,
+            </if>
+            <if test="lifeInsurance != null">
+                life_insurance,
+            </if>
+            <if test="jobInsurance != null">
+                job_insurance,
+            </if>
+            <if test="healthInsurance != null">
+                health_insurance,
+            </if>
+            <if test="annuity != null">
+                annuity,
+            </if>
+            <if test="houseFund != null">
+                house_fund,
+            </if>
+            <if test="schoolSalary != null">
+                school_salary,
+            </if>
+            <if test="examResult != null">
+                exam_result,
+            </if>
+            <if test="jobExamSalary != null">
+                job_exam_salary,
+            </if>
+            <if test="specialAllowance != null">
+                special_allowance,
+            </if>
+            <if test="headAllowance != null">
+                head_allowance,
+            </if>
+            <if test="bonus != null">
+                bonus,
+            </if>
+            <if test="baseSalary != null">
+                base_salary,
+            </if>
+            <if test="retireAllowance != null">
+                retire_allowance,
+            </if>
+            <if test="retireFeeIncrease != null">
+                retire_fee_increase,
+            </if>
+            <if test="healthAllowance != null">
+                health_allowance,
+            </if>
+            <if test="heatingFee != null">
+                heating_fee,
+            </if>
+            <if test="handicapAllowance != null">
+                handicap_allowance,
+            </if>
+            <if test="rentFee != null">
+                rent_fee,
+            </if>
+            <if test="lastUpdateDate != null">
+                last_update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="nationalId != null">
+                #{nationalId,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="nativeId != null">
+                #{nativeId,jdbcType=INTEGER},
+            </if>
+            <if test="educationName != null">
+                #{educationName,jdbcType=VARCHAR},
+            </if>
+            <if test="degreeId != null">
+                #{degreeId,jdbcType=INTEGER},
+            </if>
+            <if test="politicalName != null">
+                #{politicalName,jdbcType=VARCHAR},
+            </if>
+            <if test="partyDate != null">
+                #{partyDate,jdbcType=DATE},
+            </if>
+            <if test="workDate != null">
+                #{workDate,jdbcType=DATE},
+            </if>
+            <if test="schoolDate != null">
+                #{schoolDate,jdbcType=DATE},
+            </if>
+            <if test="jobName != null">
+                #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobCategory != null">
+                #{jobCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="jobId != null">
+                #{jobId,jdbcType=INTEGER},
+            </if>
+            <if test="jobDate != null">
+                #{jobDate,jdbcType=DATE},
+            </if>
+            <if test="jobLevelDate != null">
+                #{jobLevelDate,jdbcType=DATE},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="virtualAge != null">
+                #{virtualAge,jdbcType=INTEGER},
+            </if>
+            <if test="workAge != null">
+                #{workAge,jdbcType=INTEGER},
+            </if>
+            <if test="formation != null">
+                #{formation,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="marriageId != null">
+                #{marriageId,jdbcType=INTEGER},
+            </if>
+            <if test="photoId != null">
+                #{photoId,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="hukou != null">
+                #{hukou,jdbcType=VARCHAR},
+            </if>
+            <if test="hukouAddress != null">
+                #{hukouAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="finalEducationName != null">
+                #{finalEducationName,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="graduateSchool != null">
+                #{graduateSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="contact != null">
+                #{contact,jdbcType=VARCHAR},
+            </if>
+            <if test="relationship != null">
+                #{relationship,jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber != null">
+                #{contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo1 != null">
+                #{familyInfo1,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo2 != null">
+                #{familyInfo2,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo3 != null">
+                #{familyInfo3,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo4 != null">
+                #{familyInfo4,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="identityId != null">
+                #{identityId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="speciality != null">
+                #{speciality,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null">
+                #{height,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="extraDepartmentName != null">
+                #{extraDepartmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="extraJobName != null">
+                #{extraJobName,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="birthPlace != null">
+                #{birthPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="healthStatus != null">
+                #{healthStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="retireDate != null">
+                #{retireDate,jdbcType=VARCHAR},
+            </if>
+            <if test="beforeDepartmentId != null">
+                #{beforeDepartmentId,jdbcType=INTEGER},
+            </if>
+            <if test="beforeJobName != null">
+                #{beforeJobName,jdbcType=VARCHAR},
+            </if>
+            <if test="beforeJobId != null">
+                #{beforeJobId,jdbcType=INTEGER},
+            </if>
+            <if test="afterDepartmentId != null">
+                #{afterDepartmentId,jdbcType=INTEGER},
+            </if>
+            <if test="rehireCategory != null">
+                #{rehireCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="retireJobName != null">
+                #{retireJobName,jdbcType=VARCHAR},
+            </if>
+            <if test="retireJobId != null">
+                #{retireJobId,jdbcType=INTEGER},
+            </if>
+            <if test="retireStatus != null">
+                #{retireStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deathDate != null">
+                #{deathDate,jdbcType=DATE},
+            </if>
+            <if test="deathReason != null">
+                #{deathReason,jdbcType=VARCHAR},
+            </if>
+            <if test="branchId != null">
+                #{branchId,jdbcType=INTEGER},
+            </if>
+            <if test="partyStatusId != null">
+                #{partyStatusId,jdbcType=INTEGER},
+            </if>
+            <if test="partyInDate != null">
+                #{partyInDate,jdbcType=DATE},
+            </if>
+            <if test="partyOutDate != null">
+                #{partyOutDate,jdbcType=DATE},
+            </if>
+            <if test="jobSalary != null">
+                #{jobSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="rankId != null">
+                #{rankId,jdbcType=INTEGER},
+            </if>
+            <if test="rankSalary != null">
+                #{rankSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="reserveSalary != null">
+                #{reserveSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="performanceAllowance != null">
+                #{performanceAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="rentAllowance != null">
+                #{rentAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="houseAllowance != null">
+                #{houseAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="timesheetResult != null">
+                #{timesheetResult,jdbcType=DECIMAL},
+            </if>
+            <if test="dutyAllowance != null">
+                #{dutyAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="extraAllowance != null">
+                #{extraAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="telephoneAllowance != null">
+                #{telephoneAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="trafficAllowance != null">
+                #{trafficAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="onDutyFee != null">
+                #{onDutyFee,jdbcType=DECIMAL},
+            </if>
+            <if test="propertyAllowance != null">
+                #{propertyAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="extrajobAllowance != null">
+                #{extrajobAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="temperatureAllowance != null">
+                #{temperatureAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="reissueFee != null">
+                #{reissueFee,jdbcType=DECIMAL},
+            </if>
+            <if test="medicare != null">
+                #{medicare,jdbcType=DECIMAL},
+            </if>
+            <if test="yearlyBonus != null">
+                #{yearlyBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="lifeInsurance != null">
+                #{lifeInsurance,jdbcType=DECIMAL},
+            </if>
+            <if test="jobInsurance != null">
+                #{jobInsurance,jdbcType=DECIMAL},
+            </if>
+            <if test="healthInsurance != null">
+                #{healthInsurance,jdbcType=DECIMAL},
+            </if>
+            <if test="annuity != null">
+                #{annuity,jdbcType=DECIMAL},
+            </if>
+            <if test="houseFund != null">
+                #{houseFund,jdbcType=DECIMAL},
+            </if>
+            <if test="schoolSalary != null">
+                #{schoolSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="examResult != null">
+                #{examResult,jdbcType=VARCHAR},
+            </if>
+            <if test="jobExamSalary != null">
+                #{jobExamSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="specialAllowance != null">
+                #{specialAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="headAllowance != null">
+                #{headAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="bonus != null">
+                #{bonus,jdbcType=DECIMAL},
+            </if>
+            <if test="baseSalary != null">
+                #{baseSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="retireAllowance != null">
+                #{retireAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="retireFeeIncrease != null">
+                #{retireFeeIncrease,jdbcType=DECIMAL},
+            </if>
+            <if test="healthAllowance != null">
+                #{healthAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="heatingFee != null">
+                #{heatingFee,jdbcType=DECIMAL},
+            </if>
+            <if test="handicapAllowance != null">
+                #{handicapAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="rentFee != null">
+                #{rentFee,jdbcType=DECIMAL},
+            </if>
+            <if test="lastUpdateDate != null">
+                #{lastUpdateDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.wangzhixuan.model.PeopleTotal">
+        update people_total
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="nationalId != null">
+                national_id = #{nationalId,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="nativeId != null">
+                native_id = #{nativeId,jdbcType=INTEGER},
+            </if>
+            <if test="educationName != null">
+                education_name = #{educationName,jdbcType=VARCHAR},
+            </if>
+            <if test="degreeId != null">
+                degree_id = #{degreeId,jdbcType=INTEGER},
+            </if>
+            <if test="politicalName != null">
+                political_name = #{politicalName,jdbcType=VARCHAR},
+            </if>
+            <if test="partyDate != null">
+                party_date = #{partyDate,jdbcType=DATE},
+            </if>
+            <if test="workDate != null">
+                work_date = #{workDate,jdbcType=DATE},
+            </if>
+            <if test="schoolDate != null">
+                school_date = #{schoolDate,jdbcType=DATE},
+            </if>
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobCategory != null">
+                job_category = #{jobCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="jobId != null">
+                job_id = #{jobId,jdbcType=INTEGER},
+            </if>
+            <if test="jobDate != null">
+                job_date = #{jobDate,jdbcType=DATE},
+            </if>
+            <if test="jobLevelDate != null">
+                job_level_date = #{jobLevelDate,jdbcType=DATE},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="virtualAge != null">
+                virtual_age = #{virtualAge,jdbcType=INTEGER},
+            </if>
+            <if test="workAge != null">
+                work_age = #{workAge,jdbcType=INTEGER},
+            </if>
+            <if test="formation != null">
+                formation = #{formation,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="marriageId != null">
+                marriage_id = #{marriageId,jdbcType=INTEGER},
+            </if>
+            <if test="photoId != null">
+                photo_id = #{photoId,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="hukou != null">
+                hukou = #{hukou,jdbcType=VARCHAR},
+            </if>
+            <if test="hukouAddress != null">
+                hukou_address = #{hukouAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="finalEducationName != null">
+                final_education_name = #{finalEducationName,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                major = #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="graduateSchool != null">
+                graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+            </if>
+            <if test="contact != null">
+                contact = #{contact,jdbcType=VARCHAR},
+            </if>
+            <if test="relationship != null">
+                relationship = #{relationship,jdbcType=VARCHAR},
+            </if>
+            <if test="contactNumber != null">
+                contact_number = #{contactNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo1 != null">
+                family_info_1 = #{familyInfo1,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo2 != null">
+                family_info_2 = #{familyInfo2,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo3 != null">
+                family_info_3 = #{familyInfo3,jdbcType=VARCHAR},
+            </if>
+            <if test="familyInfo4 != null">
+                family_info_4 = #{familyInfo4,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="identityId != null">
+                identity_id = #{identityId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="speciality != null">
+                speciality = #{speciality,jdbcType=VARCHAR},
+            </if>
+            <if test="height != null">
+                height = #{height,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="extraDepartmentName != null">
+                extra_department_name = #{extraDepartmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="extraJobName != null">
+                extra_job_name = #{extraJobName,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                comment = #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="birthPlace != null">
+                birth_place = #{birthPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="healthStatus != null">
+                health_status = #{healthStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="retireDate != null">
+                retire_date = #{retireDate,jdbcType=VARCHAR},
+            </if>
+            <if test="beforeDepartmentId != null">
+                before_department_id = #{beforeDepartmentId,jdbcType=INTEGER},
+            </if>
+            <if test="beforeJobName != null">
+                before_job_name = #{beforeJobName,jdbcType=VARCHAR},
+            </if>
+            <if test="beforeJobId != null">
+                before_job_id = #{beforeJobId,jdbcType=INTEGER},
+            </if>
+            <if test="afterDepartmentId != null">
+                after_department_id = #{afterDepartmentId,jdbcType=INTEGER},
+            </if>
+            <if test="rehireCategory != null">
+                rehire_category = #{rehireCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="retireJobName != null">
+                retire_job_name = #{retireJobName,jdbcType=VARCHAR},
+            </if>
+            <if test="retireJobId != null">
+                retire_job_id = #{retireJobId,jdbcType=INTEGER},
+            </if>
+            <if test="retireStatus != null">
+                retire_status = #{retireStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deathDate != null">
+                death_date = #{deathDate,jdbcType=DATE},
+            </if>
+            <if test="deathReason != null">
+                death_reason = #{deathReason,jdbcType=VARCHAR},
+            </if>
+            <if test="branchId != null">
+                branch_id = #{branchId,jdbcType=INTEGER},
+            </if>
+            <if test="partyStatusId != null">
+                party_status_id = #{partyStatusId,jdbcType=INTEGER},
+            </if>
+            <if test="partyInDate != null">
+                party_in_date = #{partyInDate,jdbcType=DATE},
+            </if>
+            <if test="partyOutDate != null">
+                party_out_date = #{partyOutDate,jdbcType=DATE},
+            </if>
+            <if test="jobSalary != null">
+                job_salary = #{jobSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="rankId != null">
+                rank_id = #{rankId,jdbcType=INTEGER},
+            </if>
+            <if test="rankSalary != null">
+                rank_salary = #{rankSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="reserveSalary != null">
+                reserve_salary = #{reserveSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="performanceAllowance != null">
+                performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="rentAllowance != null">
+                rent_allowance = #{rentAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="houseAllowance != null">
+                house_allowance = #{houseAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="timesheetResult != null">
+                timesheet_result = #{timesheetResult,jdbcType=DECIMAL},
+            </if>
+            <if test="dutyAllowance != null">
+                duty_allowance = #{dutyAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="extraAllowance != null">
+                extra_allowance = #{extraAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="telephoneAllowance != null">
+                telephone_allowance = #{telephoneAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="trafficAllowance != null">
+                traffic_allowance = #{trafficAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="onDutyFee != null">
+                on_duty_fee = #{onDutyFee,jdbcType=DECIMAL},
+            </if>
+            <if test="propertyAllowance != null">
+                property_allowance = #{propertyAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="extrajobAllowance != null">
+                extrajob_allowance = #{extrajobAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="temperatureAllowance != null">
+                temperature_allowance = #{temperatureAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="reissueFee != null">
+                reissue_fee = #{reissueFee,jdbcType=DECIMAL},
+            </if>
+            <if test="medicare != null">
+                medicare = #{medicare,jdbcType=DECIMAL},
+            </if>
+            <if test="yearlyBonus != null">
+                yearly_bonus = #{yearlyBonus,jdbcType=DECIMAL},
+            </if>
+            <if test="lifeInsurance != null">
+                life_insurance = #{lifeInsurance,jdbcType=DECIMAL},
+            </if>
+            <if test="jobInsurance != null">
+                job_insurance = #{jobInsurance,jdbcType=DECIMAL},
+            </if>
+            <if test="healthInsurance != null">
+                health_insurance = #{healthInsurance,jdbcType=DECIMAL},
+            </if>
+            <if test="annuity != null">
+                annuity = #{annuity,jdbcType=DECIMAL},
+            </if>
+            <if test="houseFund != null">
+                house_fund = #{houseFund,jdbcType=DECIMAL},
+            </if>
+            <if test="schoolSalary != null">
+                school_salary = #{schoolSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="examResult != null">
+                exam_result = #{examResult,jdbcType=VARCHAR},
+            </if>
+            <if test="jobExamSalary != null">
+                job_exam_salary = #{jobExamSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="specialAllowance != null">
+                special_allowance = #{specialAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="headAllowance != null">
+                head_allowance = #{headAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="bonus != null">
+                bonus = #{bonus,jdbcType=DECIMAL},
+            </if>
+            <if test="baseSalary != null">
+                base_salary = #{baseSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="retireAllowance != null">
+                retire_allowance = #{retireAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="retireFeeIncrease != null">
+                retire_fee_increase = #{retireFeeIncrease,jdbcType=DECIMAL},
+            </if>
+            <if test="healthAllowance != null">
+                health_allowance = #{healthAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="heatingFee != null">
+                heating_fee = #{heatingFee,jdbcType=DECIMAL},
+            </if>
+            <if test="handicapAllowance != null">
+                handicap_allowance = #{handicapAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="rentFee != null">
+                rent_fee = #{rentFee,jdbcType=DECIMAL},
+            </if>
+            <if test="lastUpdateDate != null">
+                last_update_date = #{lastUpdateDate,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleTotal">
+        update people_total
+        set code = #{code,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=INTEGER},
+        national_id = #{nationalId,jdbcType=INTEGER},
+        birthday = #{birthday,jdbcType=DATE},
+        native_id = #{nativeId,jdbcType=INTEGER},
+        education_name = #{educationName,jdbcType=VARCHAR},
+        degree_id = #{degreeId,jdbcType=INTEGER},
+        political_name = #{politicalName,jdbcType=VARCHAR},
+        party_date = #{partyDate,jdbcType=DATE},
+        work_date = #{workDate,jdbcType=DATE},
+        school_date = #{schoolDate,jdbcType=DATE},
+        job_name = #{jobName,jdbcType=VARCHAR},
+        job_category = #{jobCategory,jdbcType=VARCHAR},
+        job_id = #{jobId,jdbcType=INTEGER},
+        job_date = #{jobDate,jdbcType=DATE},
+        job_level_date = #{jobLevelDate,jdbcType=DATE},
+        age = #{age,jdbcType=INTEGER},
+        virtual_age = #{virtualAge,jdbcType=INTEGER},
+        work_age = #{workAge,jdbcType=INTEGER},
+        formation = #{formation,jdbcType=VARCHAR},
+        mobile = #{mobile,jdbcType=VARCHAR},
+        marriage_id = #{marriageId,jdbcType=INTEGER},
+        photo_id = #{photoId,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        hukou = #{hukou,jdbcType=VARCHAR},
+        hukou_address = #{hukouAddress,jdbcType=VARCHAR},
+        final_education_name = #{finalEducationName,jdbcType=VARCHAR},
+        major = #{major,jdbcType=VARCHAR},
+        graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+        contact = #{contact,jdbcType=VARCHAR},
+        relationship = #{relationship,jdbcType=VARCHAR},
+        contact_number = #{contactNumber,jdbcType=VARCHAR},
+        family_info_1 = #{familyInfo1,jdbcType=VARCHAR},
+        family_info_2 = #{familyInfo2,jdbcType=VARCHAR},
+        family_info_3 = #{familyInfo3,jdbcType=VARCHAR},
+        family_info_4 = #{familyInfo4,jdbcType=VARCHAR},
+        photo = #{photo,jdbcType=VARCHAR},
+        identity_id = #{identityId,jdbcType=INTEGER},
+        status = #{status,jdbcType=INTEGER},
+        province = #{province,jdbcType=VARCHAR},
+        city = #{city,jdbcType=VARCHAR},
+        speciality = #{speciality,jdbcType=VARCHAR},
+        height = #{height,jdbcType=VARCHAR},
+        department_id = #{departmentId,jdbcType=INTEGER},
+        extra_department_name = #{extraDepartmentName,jdbcType=VARCHAR},
+        extra_job_name = #{extraJobName,jdbcType=VARCHAR},
+        comment = #{comment,jdbcType=VARCHAR},
+        birth_place = #{birthPlace,jdbcType=VARCHAR},
+        health_status = #{healthStatus,jdbcType=VARCHAR},
+        retire_date = #{retireDate,jdbcType=VARCHAR},
+        before_department_id = #{beforeDepartmentId,jdbcType=INTEGER},
+        before_job_name = #{beforeJobName,jdbcType=VARCHAR},
+        before_job_id = #{beforeJobId,jdbcType=INTEGER},
+        after_department_id = #{afterDepartmentId,jdbcType=INTEGER},
+        rehire_category = #{rehireCategory,jdbcType=VARCHAR},
+        retire_job_name = #{retireJobName,jdbcType=VARCHAR},
+        retire_job_id = #{retireJobId,jdbcType=INTEGER},
+        retire_status = #{retireStatus,jdbcType=INTEGER},
+        death_date = #{deathDate,jdbcType=DATE},
+        death_reason = #{deathReason,jdbcType=VARCHAR},
+        branch_id = #{branchId,jdbcType=INTEGER},
+        party_status_id = #{partyStatusId,jdbcType=INTEGER},
+        party_in_date = #{partyInDate,jdbcType=DATE},
+        party_out_date = #{partyOutDate,jdbcType=DATE},
+        job_salary = #{jobSalary,jdbcType=DECIMAL},
+        rank_id = #{rankId,jdbcType=INTEGER},
+        rank_salary = #{rankSalary,jdbcType=DECIMAL},
+        reserve_salary = #{reserveSalary,jdbcType=DECIMAL},
+        performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
+        rent_allowance = #{rentAllowance,jdbcType=DECIMAL},
+        house_allowance = #{houseAllowance,jdbcType=DECIMAL},
+        timesheet_result = #{timesheetResult,jdbcType=DECIMAL},
+        duty_allowance = #{dutyAllowance,jdbcType=DECIMAL},
+        extra_allowance = #{extraAllowance,jdbcType=DECIMAL},
+        telephone_allowance = #{telephoneAllowance,jdbcType=DECIMAL},
+        traffic_allowance = #{trafficAllowance,jdbcType=DECIMAL},
+        on_duty_fee = #{onDutyFee,jdbcType=DECIMAL},
+        property_allowance = #{propertyAllowance,jdbcType=DECIMAL},
+        extrajob_allowance = #{extrajobAllowance,jdbcType=DECIMAL},
+        temperature_allowance = #{temperatureAllowance,jdbcType=DECIMAL},
+        reissue_fee = #{reissueFee,jdbcType=DECIMAL},
+        medicare = #{medicare,jdbcType=DECIMAL},
+        yearly_bonus = #{yearlyBonus,jdbcType=DECIMAL},
+        life_insurance = #{lifeInsurance,jdbcType=DECIMAL},
+        job_insurance = #{jobInsurance,jdbcType=DECIMAL},
+        health_insurance = #{healthInsurance,jdbcType=DECIMAL},
+        annuity = #{annuity,jdbcType=DECIMAL},
+        house_fund = #{houseFund,jdbcType=DECIMAL},
+        school_salary = #{schoolSalary,jdbcType=DECIMAL},
+        exam_result = #{examResult,jdbcType=VARCHAR},
+        job_exam_salary = #{jobExamSalary,jdbcType=DECIMAL},
+        special_allowance = #{specialAllowance,jdbcType=DECIMAL},
+        head_allowance = #{headAllowance,jdbcType=DECIMAL},
+        bonus = #{bonus,jdbcType=DECIMAL},
+        base_salary = #{baseSalary,jdbcType=DECIMAL},
+        retire_allowance = #{retireAllowance,jdbcType=DECIMAL},
+        retire_fee_increase = #{retireFeeIncrease,jdbcType=DECIMAL},
+        health_allowance = #{healthAllowance,jdbcType=DECIMAL},
+        heating_fee = #{heatingFee,jdbcType=DECIMAL},
+        handicap_allowance = #{handicapAllowance,jdbcType=DECIMAL},
+        rent_fee = #{rentFee,jdbcType=DECIMAL},
+        last_update_date = #{lastUpdateDate,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
