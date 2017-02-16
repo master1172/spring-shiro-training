@@ -291,7 +291,7 @@
           political_name,
           school_date,
           mobile,
-          department_name,
+          extra_department_name,
           job_name,
           comment,
           photo,
