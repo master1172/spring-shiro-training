@@ -72,7 +72,7 @@
         FROM
           people_transfer t
         LEFT JOIN
-          people p
+          people_total p
         ON
           t.people_code = p.code
         <where>
@@ -97,6 +97,9 @@
             </if>
             <if test=" condition.partyTransferDateMax != null and condition.partyTransferDateMax != ''">
                 <![CDATA[ and t.party_transfer_date <= #{condition.partyTransferDateMax} ]]>
+            </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and p.status = #{condition.status}
             </if>
         </where>
     </select>

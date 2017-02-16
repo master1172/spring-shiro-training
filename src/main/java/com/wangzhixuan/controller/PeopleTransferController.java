@@ -67,18 +67,15 @@ public class PeopleTransferController extends BaseController{
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String,Object> condition = PeopleTransferVo.CreateCondition(peopleTransferVo);
 
+        String includeHistory = request.getParameter("includeHistory");
+        if (StringUtils.isBlank(includeHistory))
+            condition.put("status",ConstUtil.PEOPLE_TRANSFER);
+
         List<String> peopleCodeList = peopleTransferService.findPeopleTransferCodeListByCondition(condition);
-
-        String transfer = request.getParameter("transfer");
-
-        String inQuery  = request.getParameter("inQuery");
-
-        if (StringUtils.isNoneBlank(transfer)){
-            condition.put("status", ConstUtil.PEOPLE_TRANSFER);
-        }
-
-        if (peopleCodeList != null && peopleCodeList.size() > 1 && StringUtils.isNoneBlank(inQuery)){
+        if (peopleCodeList != null && peopleCodeList.size() > 0){
             condition.put("codeList", peopleCodeList.toArray());
+        }else{
+            condition.put("sex", -1);
         }
 
         pageInfo.setCondition(condition);
