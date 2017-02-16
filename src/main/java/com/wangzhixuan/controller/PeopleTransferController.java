@@ -178,11 +178,6 @@ public class PeopleTransferController extends BaseController{
         Result result = new Result();
         try {
             peopleTransferService.addPeopleTransfer(peopleTransferVo,file);
-            People people = peopleService.findPeopleByCode(peopleTransferVo.getPeopleCode());
-            if (people != null){
-                people.setStatus(ConstUtil.PEOPLE_TRANSFER);
-                //peopleService.updatePeople(people);
-            }
             result.setSuccess(true);
             result.setMsg("人员调动成功");
             return result;
@@ -194,7 +189,7 @@ public class PeopleTransferController extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleTransfer peopleTransfer = peopleTransferService.findPeopleTransferById(id);
         model.addAttribute("peopleTransfer",peopleTransfer);
         return "/admin/peopleTransfer/peopleEdit";
@@ -218,7 +213,7 @@ public class PeopleTransferController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleTransferService.delete(id);
