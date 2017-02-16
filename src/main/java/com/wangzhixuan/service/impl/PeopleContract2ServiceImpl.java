@@ -3,6 +3,7 @@ package com.wangzhixuan.service.impl;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleContract2Mapper;
 import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.service.PeopleContract2Service;
 import com.wangzhixuan.service.PeopleContractService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.utils.StringUtilExtra;
@@ -30,7 +31,7 @@ import java.util.Map;
  * Created by administrator_cernet on 2016/11/27.
  */
 @Service
-public class PeopleContract2ServiceImpl implements PeopleContractService{
+public class PeopleContract2ServiceImpl implements PeopleContract2Service {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
