@@ -18,7 +18,7 @@
                 rownumbers: true,
                 pagination: true,
                 singleSelect: true,
-                idField: 'peopleCode',
+                idField: 'id',
                 singleSelect: false,
                 selectOnCheck: false,
                 checkOnSelect: true,
@@ -203,7 +203,7 @@
 
         function transferedPeople(){
             $('#searchForm input').val('');
-            dataGrid.datagrid('load', {"transfer":"1"});
+            dataGrid.datagrid('load', {"includeHistory":"1"});
         }
 
         function sexFormatter(value,row,index){
@@ -266,7 +266,7 @@
             <th field="jobName"       data-options="sortable:true" width="80">职务</th>
             <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
             <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
-            <th field="peopleCode"    data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
@@ -282,9 +282,9 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         <a onclick="cleanFun();" href="javascript:void(0)" class="easyui-linkbutton"
-            data-options="plain:true,iconCls:'icon-add'">当前未调出人员</a>
+            data-options="plain:true,iconCls:'icon-add'">清除</a>
         <a onclick="transferedPeople();" href="javascript:void(0)" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">当前已调出人员</a>
+           data-options="plain:true,iconCls:'icon-add'">历史全部调动人员</a>
         <a onclick="transferBack();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">调回</a>
     <!-- 附件下载使用 -->

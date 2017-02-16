@@ -3,6 +3,7 @@ package com.wangzhixuan.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.model.PeopleTransfer;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;

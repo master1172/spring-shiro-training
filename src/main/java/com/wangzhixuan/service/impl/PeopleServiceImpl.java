@@ -159,20 +159,18 @@ public class PeopleServiceImpl implements PeopleService{
 
 	@Override
 	public void batchTransferBackPeopleByIds(String[] idList) {
-		List<People> peopleList = peopleMapper.selectPeopleByIds(idList);
-
-		if (peopleList == null || peopleList.size() < 1)
+		if (idList == null)
 			return;
 
-		for(People people: peopleList){
-			if (people == null)
+		for(String id: idList){
+			if (StringUtils.isBlank(id))
 				continue;
-			int status = people.getStatus();
-
-			if (status == ConstUtil.PEOPLE_TRANSFER){
-				people.setStatus(ConstUtil.PEOPLE_NORMAL);
-				peopleMapper.updatePeople(people);
-			}
+			Integer peopleId = Integer.valueOf(id);
+			PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(peopleId);
+			if (peopleTotal == null)
+				continue;
+			peopleTotal.setStatus(ConstUtil.PEOPLE_NORMAL);
+			peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
 		}
 	}
 
