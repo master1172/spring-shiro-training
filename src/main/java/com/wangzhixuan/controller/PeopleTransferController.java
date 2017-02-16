@@ -68,7 +68,9 @@ public class PeopleTransferController extends BaseController{
         Map<String,Object> condition = PeopleTransferVo.CreateCondition(peopleTransferVo);
 
         String includeHistory = request.getParameter("includeHistory");
-        if (StringUtils.isBlank(includeHistory))
+        String inQuery        = request.getParameter("inQuery");
+
+        if (StringUtils.isBlank(includeHistory) && StringUtils.isBlank(inQuery))
             condition.put("status",ConstUtil.PEOPLE_TRANSFER);
 
         List<String> peopleCodeList = peopleTransferService.findPeopleTransferCodeListByCondition(condition);
@@ -293,10 +295,10 @@ public class PeopleTransferController extends BaseController{
             String[] idList = ids.split(",");
             peopleService.batchTransferBackPeopleByIds(idList);
             result.setSuccess(true);
-            result.setMsg("批量删除人员成功");
+            result.setMsg("批量调回人员成功");
             return result;
         }catch(Exception exp){
-            LOGGER.error("批量删除人员失败:{}",exp);
+            LOGGER.error("批量调回人员失败:{}",exp);
             result.setMsg(exp.getMessage());
             return result;
         }
