@@ -12,7 +12,7 @@ public class People extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -5321613594382537423L;
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -100,11 +100,11 @@ public class People extends PeopleBase implements Serializable {
 
     private Integer status;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

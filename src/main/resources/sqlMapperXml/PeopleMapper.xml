@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangzhixuan.mapper.PeopleMapper">
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.People">
-        <id     column="id"             property="id" jdbcType="BIGINT"/>
+        <id     column="id"             property="id" jdbcType="INTEGER"/>
         <result column="code"           property="code" jdbcType="VARCHAR" />
         <result column="name"           property="name" jdbcType="VARCHAR"/>
         <result column="sex"            property="sex" jdbcType="TINYINT"/>
@@ -46,7 +46,7 @@
     </resultMap>
 
     <resultMap id="peopleVoResultMap" type="com.wangzhixuan.vo.PeopleVo">
-        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id     column="id"             property="id"           jdbcType="INTEGER"/>
         <result column="code"           property="code"         jdbcType="VARCHAR"/>
         <result column="name"           property="name"         jdbcType="VARCHAR"/>
         <result column="sex"            property="sex"          jdbcType="TINYINT" />
