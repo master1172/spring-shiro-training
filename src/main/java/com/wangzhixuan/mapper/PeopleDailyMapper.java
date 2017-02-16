@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface PeopleDailyMapper {
 
-    PeopleDaily findPeopleDailyById(Long id);
+    PeopleDaily findPeopleDailyById(Integer id);
 
     List<PeopleDailyVo> findPeopleDailyPageCondition(PageInfo pageInfo);
 
@@ -21,7 +21,7 @@ public interface PeopleDailyMapper {
 
     void updatePeopleDaily(PeopleDaily peopleDaily);
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 
     void batchDeleteByIds(String[] ids);
 

@@ -14,7 +14,7 @@
         <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="extra_department_name" property="extraDepartmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
@@ -34,24 +34,25 @@
         <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="extra_department_name" property="extraDepartmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, school_date, mobile, department_name, job_name, comment, photo
+        id, code, name, sex, national_id, province, city, birthday, education_name,
+        political_name, school_date, mobile, extra_department_name, job_name, comment, photo
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_daily
+        from people_total
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleDailyVoById" resultMap="peopleDailyVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleDailyVoById" resultMap="peopleDailyVoResultMap" parameterType="java.lang.Integer">
         SELECT
         t.id,
         t.code,
@@ -66,12 +67,12 @@
         t.political_name,
         t.school_date,
         t.mobile,
-        t.department_name,
+        t.extra_department_name,
         t.job_name,
         t.comment,
         t.photo
         FROM
-        people_daily t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         <where>
@@ -79,11 +80,11 @@
         </where>
     </select>
 
-    <select id="findPeopleDailyById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleDailyById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
           <include refid="Base_Column_List"/>
         FROM
-          people_daily
+          people_total
         WHERE
           id = #{id}
     </select>
@@ -103,12 +104,12 @@
             t.political_name,
             t.school_date,
             t.mobile,
-            t.department_name,
+            t.extra_department_name,
             t.job_name,
             t.comment,
             t.photo
         FROM
-          people_daily t
+          people_total t
         LEFT JOIN
           dict_national s ON s.id = t.national_id
         <where>
@@ -151,11 +152,14 @@
             <if test=" condition.mobile != null and condition.mobile != ''">
                 and t.mobile LIKE concat('%',#{condition.mobile},'%')
             </if>
-            <if test=" condition.departmentName != null and condition.departmentName != ''">
-                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            <if test=" condition.extraDepartmentName != null and condition.extraDepartmentName != ''">
+                and t.extra_department_name LIKE concat('%',#{condition.extraDepartmentName},'%')
             </if>
             <if test=" condition.jobName != null and condition.jobName != ''">
                 and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
+            <if test=" condition.status != null and condition.status !=''">
+                and t.status = #{condition.status}
             </if>
         </where>
           LIMIT #{from}, #{size}
@@ -163,7 +167,7 @@
 
     <select id="findPeopleDailyPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_daily t
+        from people_total t
         <where>
             <if test=" condition.code != null">
                 and t.code = #{condition.code}
@@ -189,8 +193,8 @@
             <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
                 <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
             </if>
-            <if test=" condition.educationName != null and condition.educationName != ''">
-                and t.education_name LIKE concat('%', #{condition.educationName}, '%')
+            <if test=" condition.extraDepartmentName != null and condition.extraDepartmentName != ''">
+                and t.extra_education_name LIKE concat('%', #{condition.extraDepartmentName}, '%')
             </if>
             <if test=" condition.politicalName != null and condition.politicalName != ''">
                 and t.political_name LIKE concat('%', #{condition.politicalName}, '%')
@@ -210,20 +214,23 @@
             <if test=" condition.jobName != null and condition.jobName != ''">
                 and t.job_name LIKE concat('%',#{condition.jobName},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
+    <delete id="deleteById" parameterType="java.lang.Integer">
         delete
         from
-          people_daily
+          people_total
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
         delete
         from
-          people_daily
+          people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -231,10 +238,10 @@
     </delete>
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleDaily">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_daily (
+        insert into people_total (
           code,
           name,
           sex,
@@ -246,10 +253,11 @@
           political_name,
           school_date,
           mobile,
-          department_name,
+          extra_department_name,
           job_name,
           comment,
-          photo
+          photo,
+          status
         )
         values (
             #{code,     jdbcType=VARCHAR},
@@ -263,14 +271,15 @@
             #{politicalName, jdbcType=VARCHAR},
             #{schoolDate, jdbcType=DATE},
             #{mobile,     jdbcType=VARCHAR},
-            #{departmentName, jdbcType=VARCHAR},
+            #{extraDepartmentName, jdbcType=VARCHAR},
             #{jobName,  jdbcType=VARCHAR},
             #{comment,  jdbcType=VARCHAR},
-            #{photo,  jdbcType=VARCHAR}
+            #{photo,  jdbcType=VARCHAR},
+            9
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_daily (
+        insert into people_total (
           code,
           name,
           sex,
@@ -285,7 +294,8 @@
           department_name,
           job_name,
           comment,
-          photo
+          photo,
+          status
         )
         values
         <foreach item="item" index="index" collection="list" separator=",">
@@ -301,16 +311,17 @@
                 #{item.politicalName, jdbcType=VARCHAR},
                 #{item.schoolDate, jdbcType=DATE},
                 #{item.mobile,     jdbcType=VARCHAR},
-                #{item.departmentName, jdbcType=VARCHAR},
+                #{item.extraDepartmentName, jdbcType=VARCHAR},
                 #{item.jobName,  jdbcType=VARCHAR},
                 #{item.comment,  jdbcType=VARCHAR},
-                #{item.photo,    jdbcType=VARCHAR}
+                #{item.photo,    jdbcType=VARCHAR},
+                9
             )
         </foreach>
     </insert>
 
     <update id="updatePeopleDaily" parameterType="com.wangzhixuan.model.PeopleDaily">
-        update people_daily
+        update people_total
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -345,8 +356,8 @@
             <if test="mobile != null">
                 mobile = #{mobile,jdbcType=VARCHAR},
             </if>
-            <if test="departmentName != null">
-                department_name = #{departmentName, jdbcType=VARCHAR},
+            <if test="extraDepartmentName != null">
+                extra_department_name = #{extraDepartmentName, jdbcType=VARCHAR},
             </if>
             <if test="jobName != null">
                 job_name = #{jobName,jdbcType=VARCHAR},
@@ -364,7 +375,7 @@
         select
           <include refid="Base_Column_List"/>
         FROM
-          people_daily
+          people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -386,11 +397,11 @@
         t.political_name,
         t.school_date,
         t.mobile,
-        t.department_name,
+        t.extra_department_name,
         t.job_name,
         t.comment,
         t.photo
-        from people_daily t
+        from people_total t
         left join
           dict_national s ON s.id = t.national_id
         where t.id in

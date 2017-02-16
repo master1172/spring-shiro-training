@@ -35,7 +35,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 
 
     @Override
-    public PeopleDaily findPeopleDailyById(Long id) {
+    public PeopleDaily findPeopleDailyById(Integer id) {
         return peopleDailyMapper.findPeopleDailyById(id);
     }
 
@@ -96,7 +96,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
     }
 
     @Override
-    public void deletePeopleDailyById(Long id) {
+    public void deletePeopleDailyById(Integer id) {
         peopleDailyMapper.deleteById(id);
     }
 
@@ -164,7 +164,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                 //部门
                 if(!StringUtilExtra.isBlank(row.getCell(2))) {
                     String departmentName = row.getCell(2).toString().trim();
-                    p.setDepartmentName(departmentName);
+                    p.setExtraDepartmentName(departmentName);
                 }
 
                 //工种
@@ -270,7 +270,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                     PeopleDailyVo p=(PeopleDailyVo)list.get(i);
                     row.createCell(0).setCellValue(i+1);                    row.getCell(0).setCellStyle(setBorder);
                     row.createCell(1).setCellValue(p.getName());            row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getDepartmentName());  row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getExtraDepartmentName());  row.getCell(2).setCellStyle(setBorder);
                     row.createCell(3).setCellValue(p.getJobName());         row.getCell(3).setCellStyle(setBorder);
                     row.createCell(4).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女")); row.getCell(4).setCellStyle(setBorder);
                     row.createCell(5).setCellValue(p.getNationalName());    row.getCell(5).setCellStyle(setBorder);
@@ -311,7 +311,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${name}",           p.getName());
-            params.put("${departmentName}", p.getDepartmentName());
+            params.put("${departmentName}", p.getExtraDepartmentName());
             params.put("${jobName}",        p.getJobName());
             params.put("${sex}",            p.getSex()==0?"男":"女");
             params.put("￥",                p.getNationalName());

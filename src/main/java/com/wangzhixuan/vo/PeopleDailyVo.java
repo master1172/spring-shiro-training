@@ -2,6 +2,7 @@ package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Map;
  */
 public class PeopleDailyVo implements Serializable{
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -48,7 +49,7 @@ public class PeopleDailyVo implements Serializable{
 
     private String mobile;
 
-    private String departmentName;
+    private String extraDepartmentName;
 
     private String jobName;
 
@@ -56,11 +57,11 @@ public class PeopleDailyVo implements Serializable{
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -160,12 +161,12 @@ public class PeopleDailyVo implements Serializable{
         this.mobile = mobile;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getExtraDepartmentName() {
+        return extraDepartmentName;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setExtraDepartmentName(String departmentName) {
+        this.extraDepartmentName = departmentName;
     }
 
     public String getJobName() {
@@ -269,13 +270,15 @@ public class PeopleDailyVo implements Serializable{
             condition.put("schoolDateMax", peopleDailyVo.getSchoolDateMax());
         }
 
-        if(StringUtils.isNoneBlank(peopleDailyVo.getDepartmentName())){
-            condition.put("departmentName", peopleDailyVo.getDepartmentName());
+        if(StringUtils.isNoneBlank(peopleDailyVo.getExtraDepartmentName())){
+            condition.put("extraDepartmentName", peopleDailyVo.getExtraDepartmentName());
         }
 
         if(StringUtils.isNoneBlank(peopleDailyVo.getJobName())){
             condition.put("jobName", peopleDailyVo.getJobName());
         }
+
+        condition.put("status", ConstUtil.PEOPLE_DAILY);
 
         return condition;
     }

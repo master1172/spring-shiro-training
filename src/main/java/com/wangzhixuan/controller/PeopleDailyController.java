@@ -116,7 +116,7 @@ public class PeopleDailyController extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleDaily peopleDaily = peopleDailyService.findPeopleDailyById(id);
         model.addAttribute("people",peopleDaily);
         return "/admin/peopleDaily/peopleEdit";
@@ -140,7 +140,7 @@ public class PeopleDailyController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleDailyService.deletePeopleDailyById(id);

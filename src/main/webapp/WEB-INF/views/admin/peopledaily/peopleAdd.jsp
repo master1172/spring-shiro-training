@@ -75,7 +75,7 @@
                 <tr>
                     <td>部门</td>
                     <td>
-                        <input type="text" name="departmentName">
+                        <input type="text" name="extraDepartmentName">
                     </td>
                     <td>工种</td>
                     <td>

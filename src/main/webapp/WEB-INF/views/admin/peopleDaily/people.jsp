@@ -333,7 +333,7 @@
             <th field="nationalName"        data-options="sortable:true" width="80">民族</th>
             <th field="birthday"            data-options="sortable:true" width="130">生日</th>
             <th field="jobName"             data-options="sortable:true" width="80">工种</th>
-            <th field="departmentName"      data-options="sortable:true" width="80">部门</th>
+            <th field="extraDepartmentName"      data-options="sortable:true" width="80">部门</th>
             <th field="id"                  data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>

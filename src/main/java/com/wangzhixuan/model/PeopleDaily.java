@@ -11,7 +11,7 @@ public class PeopleDaily extends PeopleBase implements Serializable{
     private static final long serialVersionUID = -5321613594382537343L;
 
     //id key
-    private Long id;
+    private Integer id;
 
     //编码
     private String code;
@@ -49,7 +49,7 @@ public class PeopleDaily extends PeopleBase implements Serializable{
     private String mobile;
 
     //部门
-    private String departmentName;
+    private String extraDepartmentName;
 
     //工种
     private String jobName;
@@ -60,11 +60,11 @@ public class PeopleDaily extends PeopleBase implements Serializable{
     //照片
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -156,12 +156,12 @@ public class PeopleDaily extends PeopleBase implements Serializable{
         this.mobile = mobile;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getExtraDepartmentName() {
+        return extraDepartmentName;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setExtraDepartmentName(String departmentName) {
+        this.extraDepartmentName = departmentName;
     }
 
     public String getJobName() {

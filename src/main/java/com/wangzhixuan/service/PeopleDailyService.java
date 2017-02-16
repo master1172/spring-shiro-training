@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PeopleDailyService {
 
-    PeopleDaily findPeopleDailyById(Long id);
+    PeopleDaily findPeopleDailyById(Integer id);
 
     void findDataGrid(PageInfo pageInfo);
 
@@ -19,7 +19,7 @@ public interface PeopleDailyService {
 
     void updatePeopleDaily(PeopleDaily peopleDaily, CommonsMultipartFile file);
 
-    void deletePeopleDailyById(Long id);
+    void deletePeopleDailyById(Integer id);
 
     void batchDeletePeopleDailyByIds(String[] ids);
 
