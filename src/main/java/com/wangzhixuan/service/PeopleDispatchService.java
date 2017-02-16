@@ -17,7 +17,7 @@ public interface PeopleDispatchService {
      * @param id
      * @return
      */
-    PeopleDispatch findPeopleDispatchById(Long id);
+    PeopleDispatch findPeopleDispatchById(Integer id);
 
     /**
      * 根据人员姓名查询人员
@@ -56,7 +56,7 @@ public interface PeopleDispatchService {
      *
      * @param id
      */
-    void deletePeopleDispatchById(Long id);
+    void deletePeopleDispatchById(Integer id);
 
     void batchDeletePeopleDispatchByIds(String[] ids);
     /**

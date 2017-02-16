@@ -18,7 +18,7 @@ public interface PeopleDispatchMapper {
      * @param id
      * @return
      */
-    int deleteById(Long id);
+    int deleteById(Integer id);
 
     /**
      * 添加人员
@@ -50,7 +50,7 @@ public interface PeopleDispatchMapper {
      * @param id
      * @return
      */
-    PeopleDispatch findPeopleDispatchById(Long id);
+    PeopleDispatch findPeopleDispatchById(Integer id);
 
     /**
      * 人员列表
@@ -93,6 +93,6 @@ public interface PeopleDispatchMapper {
      * @param id
      * @return
      */
-    PeopleDispatchVo findPeopleDispatchVoById(Long id);
+    PeopleDispatchVo findPeopleDispatchVoById(Integer id);
 }
 

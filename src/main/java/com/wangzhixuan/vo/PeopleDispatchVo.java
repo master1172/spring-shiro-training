@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.model.PeopleDispatch;
 import com.wangzhixuan.model.PeopleTemp;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public class PeopleDispatchVo implements Serializable {
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -66,7 +67,7 @@ public class PeopleDispatchVo implements Serializable {
 
     private String address;
 
-    private String departmentName;
+    private String extraDepartmentName;
 
     private String jobName;
 
@@ -74,11 +75,11 @@ public class PeopleDispatchVo implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -226,12 +227,12 @@ public class PeopleDispatchVo implements Serializable {
         this.mobile = mobile;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getExtraDepartmentName() {
+        return extraDepartmentName;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setExtraDepartmentName(String departmentName) {
+        this.extraDepartmentName = departmentName;
     }
 
     public String getJobName() {
@@ -333,8 +334,8 @@ public class PeopleDispatchVo implements Serializable {
             condition.put("address", peopleDispatchvo.getAddress());
         }
 
-        if(StringUtils.isNoneBlank(peopleDispatchvo.getDepartmentName())){
-            condition.put("departmentName", peopleDispatchvo.getDepartmentName());
+        if(StringUtils.isNoneBlank(peopleDispatchvo.getExtraDepartmentName())){
+            condition.put("extraDepartmentName", peopleDispatchvo.getExtraDepartmentName());
         }
 
         if(StringUtils.isNoneBlank(peopleDispatchvo.getJobName())){
@@ -344,6 +345,8 @@ public class PeopleDispatchVo implements Serializable {
         if(StringUtils.isNoneBlank(peopleDispatchvo.getComment())){
             condition.put("comment", peopleDispatchvo.getComment());
         }
+
+        condition.put("status", ConstUtil.PEOPLE_DISPATCH);
 
         return condition;
     }

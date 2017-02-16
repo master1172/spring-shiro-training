@@ -353,7 +353,7 @@
             <th field="schoolDate"     data-options="sortable:true" width="80">来院日期</th>
             <th field="mobile"     data-options="sortable:true" width="80">联系电话</th>
             <th field="address"  data-options="sortable:true" width="130">现住址</th>
-            <th field="departmentName"     data-options="sortable:true" width="80">部门</th>
+            <th field="extraDepartmentName"     data-options="sortable:true" width="80">部门</th>
             <th field="jobName"     data-options="sortable:true" width="80">工种</th>
             <th field="comment"     data-options="sortable:true" width="130">备注</th>
             <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>

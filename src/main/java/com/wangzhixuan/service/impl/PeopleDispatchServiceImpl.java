@@ -43,7 +43,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
     private DictMapper dictMapper;
 
     @Override
-    public PeopleDispatch findPeopleDispatchById(Long id) {
+    public PeopleDispatch findPeopleDispatchById(Integer id) {
         return peopleDispatchMapper.findPeopleDispatchById(id);
     }
 
@@ -120,7 +120,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
     }
 
     @Override
-    public void deletePeopleDispatchById(Long id) {
+    public void deletePeopleDispatchById(Integer id) {
         peopleDispatchMapper.deleteById(id);
     }
 
@@ -292,7 +292,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
                 //部门
                 if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
                     String departmentName=row.getCell(16).toString().trim();
-                    p.setDepartmentName(departmentName);
+                    p.setExtraDepartmentName(departmentName);
                 }
 
                 //工种
@@ -368,7 +368,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
                     row.createCell(13).setCellValue(p.getSchoolDate()==null?"":(p.getBirthday().toString()));row.getCell(13).setCellStyle(setBorder);
                     row.createCell(14).setCellValue(p.getMobile());row.getCell(14).setCellStyle(setBorder);
                     row.createCell(15).setCellValue(p.getAddress());row.getCell(15).setCellStyle(setBorder);
-                    row.createCell(16).setCellValue(p.getDepartmentName());row.getCell(16).setCellStyle(setBorder);
+                    row.createCell(16).setCellValue(p.getExtraDepartmentName());row.getCell(16).setCellStyle(setBorder);
                     row.createCell(17).setCellValue(p.getJobName());row.getCell(17).setCellStyle(setBorder);
                     row.createCell(18).setCellValue(p.getComment());row.getCell(18).setCellStyle(setBorder);
                     row.setHeight((short) 400);
@@ -390,7 +390,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleDispatchVo p= peopleDispatchMapper.findPeopleDispatchVoById(Long.valueOf(id));
+        PeopleDispatchVo p= peopleDispatchMapper.findPeopleDispatchVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;
@@ -414,7 +414,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
             params.put("${schoolDate}",p.getSchoolDate());
             params.put("${mobile}",p.getMobile());
             params.put("${address}",p.getAddress());
-            params.put("${departmentName}",p.getDepartmentName());
+            params.put("${departmentName}",p.getExtraDepartmentName());
             params.put("${jobName}",p.getJobName());
             params.put("${comment}",p.getComment());
 

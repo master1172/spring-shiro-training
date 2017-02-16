@@ -131,7 +131,7 @@ public class PeopleDispatchController extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleDispatch peopleDispatch = peopleDispatchService.findPeopleDispatchById(id);
         model.addAttribute("peopleDispatch",peopleDispatch);
         return "/admin/peopleDispatch/peopleEdit";
@@ -155,7 +155,7 @@ public class PeopleDispatchController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleDispatchService.deletePeopleDispatchById(id);

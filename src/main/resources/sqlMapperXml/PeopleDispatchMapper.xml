@@ -15,11 +15,11 @@
         <result column="speciality" property="speciality" jdbcType="VARCHAR"/>
         <result column="height" property="height" jdbcType="VARCHAR"/>
         <result column="marriage_id" property="marriageId" jdbcType="INTEGER" />
-        <result column="hukou" property="hukou" jdbcType="TINYINT"/>
+        <result column="hukou" property="hukou" jdbcType="VARCHAR"/>
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="extra_department_name" property="extraDepartmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
@@ -41,28 +41,28 @@
         <result column="height" property="height" jdbcType="VARCHAR"/>
         <result column="marriage_id" property="marriageId" jdbcType="INTEGER" />
         <result column="marriage_name" property="marriageName" jdbcType="VARCHAR"/>
-        <result column="hukou" property="hukou" jdbcType="TINYINT"/>
+        <result column="hukou" property="hukou" jdbcType="VARCHAR"/>
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="extra_department_name" property="extraDepartmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo
+        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, extra_department_name, job_name, comment, photo
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_dispatch
+        from people_total
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleDispatchVoById" resultMap="peopleDispatchVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleDispatchVoById" resultMap="peopleDispatchVoResultMap" parameterType="java.lang.Integer">
         SELECT
         t.id,
         t.code,
@@ -83,12 +83,12 @@
         t.school_date,
         t.mobile,
         t.address,
-        t.department_name,
+        t.extra_department_name,
         t.job_name,
         t.comment,
         t.photo
         FROM
-        people_dispatch t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -98,47 +98,48 @@
         </where>
     </select>
 
-    <select id="findPeopleDispatchById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleDispatchById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_dispatch
+        from people_total
         where id = #{id}
     </select>
 
     <select id="findPeopleDispatchByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from people_dispatch
+        from people_total
         where name LIKE concat('%',#{name},'%')
+        and status = 8
     </select>
 
     <select id="findPeopleDispatchPageCondition" resultMap="peopleDispatchVoResultMap" parameterType="PageInfo">
         SELECT
-        t.id,
-        t.code,
-        t.name,
-        t.sex,
-        t.national_id,
-        s.name as national_name,
-        t.province,
-        t.city,
-        t.birthday,
-        t.education_name,
-        t.political_name,
-        t.speciality,
-        t.height,
-        t.marriage_id,
-        m.name as marriage_name,
-        t.hukou,
-        t.school_date,
-        t.mobile,
-        t.address,
-        t.department_name,
-        t.job_name,
-        t.comment,
-        t.photo
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            s.name as national_name,
+            t.province,
+            t.city,
+            t.birthday,
+            t.education_name,
+            t.political_name,
+            t.speciality,
+            t.height,
+            t.marriage_id,
+            m.name as marriage_name,
+            t.hukou,
+            t.school_date,
+            t.mobile,
+            t.address,
+            t.extra_department_name,
+            t.job_name,
+            t.comment,
+            t.photo
         FROM
-        people_dispatch t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -198,8 +199,8 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.departmentName != null and condition.departmentName != ''">
-                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            <if test=" condition.extraDepartmentName != null and condition.extraDepartmentName != ''">
+                and t.extra_department_name LIKE concat('%',#{condition.extraDepartmentName},'%')
             </if>
             <if test=" condition.jobName != null and condition.jobName != ''">
                 and t.job_name LIKE concat('%',#{condition.jobName},'%')
@@ -207,13 +208,16 @@
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
         LIMIT #{from}, #{size}
     </select>
 
     <select id="findPeopleDispatchPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_dispatch t
+        from people_total t
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -269,8 +273,8 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.departmentName != null and condition.departmentName != ''">
-                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            <if test=" condition.extraDepartmentName != null and condition.extraDepartmentName != ''">
+                and t.extra_department_name LIKE concat('%',#{condition.extraDepartmentName},'%')
             </if>
             <if test=" condition.jobName != null and condition.jobName != ''">
                 and t.job_name LIKE concat('%',#{condition.jobName},'%')
@@ -278,16 +282,19 @@
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_dispatch
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from people_total
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_dispatch
+        delete from people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -296,63 +303,71 @@
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleDispatch">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_dispatch (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_total (
+          code, name, sex, national_id, province, city, birthday, education_name,
+          political_name, speciality, height, marriage_id, hukou, school_date, mobile,
+          address, extra_department_name, job_name, comment, photo, status)
         values (
-        #{code,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT},
-        #{nationalId, jdbcType=INTEGER},
-        #{province,jdbcType=VARCHAR},
-        #{city,jdbcType=VARCHAR},
-        #{birthday,jdbcType=DATE},
-        #{educationName,jdbcType=VARCHAR},
-        #{politicalName,jdbcType=VARCHAR},
-        #{speciality,jdbcType=VARCHAR},
-        #{height,jdbcType=VARCHAR},
-        #{marriageId, jdbcType=INTEGER},
-        #{hukou, jdbcType=TINYINT},
-        #{schoolDate,jdbcType=DATE},
-        #{mobile, jdbcType=VARCHAR},
-        #{address, jdbcType=VARCHAR},
-        #{departmentName, jdbcType=VARCHAR},
-        #{jobName, jdbcType=VARCHAR},
-        #{comment, jdbcType=VARCHAR},
-        #{photo, jdbcType=VARCHAR}
+            #{code,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{sex,jdbcType=TINYINT},
+            #{nationalId, jdbcType=INTEGER},
+            #{province,jdbcType=VARCHAR},
+            #{city,jdbcType=VARCHAR},
+            #{birthday,jdbcType=DATE},
+            #{educationName,jdbcType=VARCHAR},
+            #{politicalName,jdbcType=VARCHAR},
+            #{speciality,jdbcType=VARCHAR},
+            #{height,jdbcType=VARCHAR},
+            #{marriageId, jdbcType=INTEGER},
+            #{hukou, jdbcType=TINYINT},
+            #{schoolDate,jdbcType=DATE},
+            #{mobile, jdbcType=VARCHAR},
+            #{address, jdbcType=VARCHAR},
+            #{extraDepartmentName, jdbcType=VARCHAR},
+            #{jobName, jdbcType=VARCHAR},
+            #{comment, jdbcType=VARCHAR},
+            #{photo, jdbcType=VARCHAR},
+            8
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_dispatch (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_total (
+          code, name, sex, national_id, province, city, birthday, education_name,
+          political_name, speciality, height, marriage_id, hukou, school_date, mobile,
+          address, extra_department_name, job_name, comment, photo, status)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
-            #{item.code,jdbcType=VARCHAR},
-            #{item.name,jdbcType=VARCHAR},
-            #{item.sex,jdbcType=TINYINT},
-            #{item.nationalId, jdbcType=INTEGER},
-            #{item.province,jdbcType=VARCHAR},
-            #{item.city,jdbcType=VARCHAR},
-            #{item.birthday,jdbcType=DATE},
-            #{item.educationName,jdbcType=VARCHAR},
-            #{item.politicalName,jdbcType=VARCHAR},
-            #{item.speciality,jdbcType=VARCHAR},
-            #{item.height,jdbcType=VARCHAR},
-            #{item.marriageId, jdbcType=INTEGER},
-            #{item.hukou, jdbcType=TINYINT},
-            #{item.schoolDate,jdbcType=DATE},
-            #{item.mobile, jdbcType=VARCHAR},
-            #{item.address, jdbcType=VARCHAR},
-            #{item.departmentName, jdbcType=VARCHAR},
-            #{item.jobName, jdbcType=VARCHAR},
-            #{item.comment, jdbcType=VARCHAR},
-            #{item.photo, jdbcType=VARCHAR}
+                #{item.code,jdbcType=VARCHAR},
+                #{item.name,jdbcType=VARCHAR},
+                #{item.sex,jdbcType=TINYINT},
+                #{item.nationalId, jdbcType=INTEGER},
+                #{item.province,jdbcType=VARCHAR},
+                #{item.city,jdbcType=VARCHAR},
+                #{item.birthday,jdbcType=DATE},
+                #{item.educationName,jdbcType=VARCHAR},
+                #{item.politicalName,jdbcType=VARCHAR},
+                #{item.speciality,jdbcType=VARCHAR},
+                #{item.height,jdbcType=VARCHAR},
+                #{item.marriageId, jdbcType=INTEGER},
+                #{item.hukou, jdbcType=TINYINT},
+                #{item.schoolDate,jdbcType=DATE},
+                #{item.mobile, jdbcType=VARCHAR},
+                #{item.address, jdbcType=VARCHAR},
+                #{item.extraDepartmentName, jdbcType=VARCHAR},
+                #{item.jobName, jdbcType=VARCHAR},
+                #{item.comment, jdbcType=VARCHAR},
+                #{item.photo, jdbcType=VARCHAR},
+                8
             )
         </foreach>
     </insert>
     <update id="updatePeopleDispatch" parameterType="com.wangzhixuan.model.PeopleDispatch">
-        update people_dispatch
+        update people_total
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -402,8 +417,8 @@
             <if test="address!= null">
                 address = #{address, jdbcType=VARCHAR},
             </if>
-            <if test="departmentName != null">
-                department_name = #{departmentName, jdbcType=VARCHAR},
+            <if test="extraDepartmentName != null">
+                extra_department_name = #{extraDepartmentName, jdbcType=VARCHAR},
             </if>
             <if test="jobName != null">
                 job_name = #{jobName, jdbcType=VARCHAR},
@@ -419,28 +434,28 @@
     </update>
     <select id="selectPeopleDispatchByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-        t.id,
-        t.code,
-        t.name,
-        t.sex,
-        t.national_id,
-        t.province,
-        t.city,
-        t.birthday,
-        t.education_name,
-        t.political_name,
-        t.speciality,
-        t.height,
-        t.marriage_id,
-        t.hukou,
-        t.school_date,
-        t.mobile,
-        t.address,
-        t.department_name,
-        t.job_name,
-        t.comment,
-        t.photo
-        from people_dispatch t
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            t.province,
+            t.city,
+            t.birthday,
+            t.education_name,
+            t.political_name,
+            t.speciality,
+            t.height,
+            t.marriage_id,
+            t.hukou,
+            t.school_date,
+            t.mobile,
+            t.address,
+            t.extra_department_name,
+            t.job_name,
+            t.comment,
+            t.photo
+        from people_total t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -449,31 +464,31 @@
 
     <select id="selectPeopleDispatchVoByIds" resultMap="peopleDispatchVoResultMap" parameterType="java.util.ArrayList">
         SELECT
-        t.id,
-        t.code,
-        t.name,
-        t.sex,
-        t.national_id,
-        s.name as national_name,
-        t.province,
-        t.city,
-        t.birthday,
-        t.education_name,
-        t.political_name,
-        t.speciality,
-        t.height,
-        t.marriage_id,
-        m.name as marriage_name,
-        t.hukou,
-        t.school_date,
-        t.mobile,
-        t.address,
-        t.department_name,
-        t.job_name,
-        t.comment,
-        t.photo
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            s.name as national_name,
+            t.province,
+            t.city,
+            t.birthday,
+            t.education_name,
+            t.political_name,
+            t.speciality,
+            t.height,
+            t.marriage_id,
+            m.name as marriage_name,
+            t.hukou,
+            t.school_date,
+            t.mobile,
+            t.address,
+            t.extra_department_name,
+            t.job_name,
+            t.comment,
+            t.photo
         FROM
-        people_dispatch t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
