@@ -2,10 +2,7 @@ package com.wangzhixuan.service.impl;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.*;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleJob;
-import com.wangzhixuan.model.PeopleSalary;
-import com.wangzhixuan.model.PeopleTransfer;
+import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleTransferVo;
@@ -52,7 +49,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     private PeopleSalaryMapper peopleSalaryMapper;
 
     @Override
-    public PeopleTransfer findPeopleTransferById(Long id) {
+    public PeopleTransfer findPeopleTransferById(Integer id) {
         return peopleTransferMapper.findPeopleTransferById(id);
     }
 
@@ -324,7 +321,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleTransferVo p= peopleTransferMapper.findPeopleTransferVoById(Long.valueOf(id));
+        PeopleTransferVo p= peopleTransferMapper.findPeopleTransferVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;
@@ -375,13 +372,13 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         peopleTransferMapper.deleteById(id);
     }
 
     @Override
-    public void exportBusinessLetter(HttpServletResponse response, String ids) {
-        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Long.valueOf(ids));
+    public void exportBusinessLetter(HttpServletResponse response, String id) {
+        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Integer.valueOf(id));
         if (peopleTransfer!=null){
             XWPFDocument doc;
             OutputStream os;
@@ -405,8 +402,8 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     }
 
     @Override
-    public void exportExecutionLetter(HttpServletResponse response, String ids) {
-        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Long.valueOf(ids));
+    public void exportExecutionLetter(HttpServletResponse response, String id) {
+        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Integer.valueOf(id));
 
         if (peopleTransfer==null)
             return;
@@ -454,8 +451,8 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     }
 
     @Override
-    public void exportSalaryLetter(HttpServletResponse response, String ids) {
-        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Long.valueOf(ids));
+    public void exportSalaryLetter(HttpServletResponse response, String id) {
+        PeopleTransfer peopleTransfer = peopleTransferMapper.findPeopleTransferById(Integer.valueOf(id));
 
         if (peopleTransfer==null)
             return;

@@ -22,7 +22,7 @@ public interface PeopleTransferService {
      * @param id
      * @return
      */
-    PeopleTransfer findPeopleTransferById(Long id);
+    PeopleTransfer findPeopleTransferById(Integer id);
 
     /**
      * 根据人员姓名查询人员
@@ -45,7 +45,7 @@ public interface PeopleTransferService {
     /**
      * 添加人员
      *
-     * @param peopleTransfer
+     * @param
      */
     void addPeopleTransfer(PeopleTransferVo peopleTransferVo, CommonsMultipartFile file);
 
@@ -84,13 +84,13 @@ public interface PeopleTransferService {
     String findPeopleTransferIDsByCondition(PageInfo pageInfo);
 
 
-    void delete(Long id);
+    void delete(Integer id);
 
-    void exportBusinessLetter(HttpServletResponse response, String ids);
+    void exportBusinessLetter(HttpServletResponse response, String id);
 
-    void exportExecutionLetter(HttpServletResponse response, String ids);
+    void exportExecutionLetter(HttpServletResponse response, String id);
 
-    void exportSalaryLetter(HttpServletResponse response, String ids);
+    void exportSalaryLetter(HttpServletResponse response, String id);
 
     List<String> findPeopleTransferCodeListByCondition(Map<String, Object> condition);
 }

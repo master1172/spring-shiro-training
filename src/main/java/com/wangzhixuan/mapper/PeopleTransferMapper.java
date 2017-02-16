@@ -41,7 +41,7 @@ public interface PeopleTransferMapper {
      * @param id
      * @return
      */
-    PeopleTransfer findPeopleTransferById(Long id);
+    PeopleTransfer findPeopleTransferById(Integer id);
 
     List findPeopleTransferCodeListByConditions(PageInfo pageInfo);
     /**
@@ -95,9 +95,9 @@ public interface PeopleTransferMapper {
      * @param id
      * @return
      */
-    PeopleTransferVo findPeopleTransferVoById(Long id);
+    PeopleTransferVo findPeopleTransferVoById(Integer id);
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 }
 
 
