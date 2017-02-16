@@ -3,6 +3,7 @@ package com.wangzhixuan.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Map;
  */
 public class PeopleContractVo implements Serializable {
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -65,6 +66,8 @@ public class PeopleContractVo implements Serializable {
 
     private String address;
 
+    private Integer departmentId;
+
     private String departmentName;
 
     private Integer jobId;
@@ -75,11 +78,11 @@ public class PeopleContractVo implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -227,6 +230,14 @@ public class PeopleContractVo implements Serializable {
         this.mobile = mobile;
     }
 
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public String getDepartmentName() {
         return departmentName;
     }
@@ -346,6 +357,10 @@ public class PeopleContractVo implements Serializable {
             condition.put("address", peopleContractvo.getAddress());
         }
 
+        if(peopleContractvo.getDepartmentId() != null){
+            condition.put("departmentId", peopleContractvo.getDepartmentId());
+        }
+
         if(StringUtils.isNoneBlank(peopleContractvo.getDepartmentName())){
             condition.put("departmentName", peopleContractvo.getDepartmentName());
         }
@@ -361,6 +376,8 @@ public class PeopleContractVo implements Serializable {
         if(StringUtils.isNoneBlank(peopleContractvo.getPhoto())){
             condition.put("photo", peopleContractvo.getPhoto());
         }
+
+        condition.put("status", ConstUtil.PEOPLE_CONTRACT);
 
         return condition;
     }

@@ -45,7 +45,7 @@ public class PeopleContractController extends BaseController{
     /**
      * 人员管理列表
      *
-     * @param peopleContract
+     * @param request
      * @param page
      * @param rows
      * @param sort
@@ -132,7 +132,7 @@ public class PeopleContractController extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleContract peopleContract = peopleContractService.findPeopleContractById(id);
         model.addAttribute("peopleContract",peopleContract);
         return "/admin/peopleContract/peopleEdit";
@@ -156,7 +156,7 @@ public class PeopleContractController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleContractService.deletePeopleContractById(id);

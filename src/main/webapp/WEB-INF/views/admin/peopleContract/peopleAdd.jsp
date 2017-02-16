@@ -106,7 +106,10 @@
                 </tr>
                 <tr>
                     <td>部门</td>
-                    <td><input type="text" name="departmentName"></td>
+                    <td>
+                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
+                    </td>
                     <td>职级</td>
                     <td>
                         <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">

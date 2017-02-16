@@ -46,7 +46,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
     private DictMapper dictMapper;
 
     @Override
-    public PeopleContract findPeopleContractById(Long id) {
+    public PeopleContract findPeopleContractById(Integer id) {
         return peopleContractMapper.findPeopleContractById(id);
     }
 
@@ -85,6 +85,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                peopleContract.setPhoto(uploadPath);
                 peopleContractMapper.insert(peopleContract);
             }
         }else{
@@ -115,6 +116,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleContract.setPhoto(uploadPath);
                 peopleContractMapper.updatePeopleContract(peopleContract);
             }
         }else{
@@ -123,8 +125,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
     }
 
     @Override
-    public void deletePeopleContractById(Long id) {
-    	logger.info(id+"");
+    public void deletePeopleContractById(Integer id) {
         peopleContractMapper.deleteById(id);
     }
 
@@ -296,7 +297,8 @@ public class PeopleContractServiceImpl implements PeopleContractService{
                 //部门
                 if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
                     String departmentName=row.getCell(16).toString().trim();
-                    p.setDepartmentName(departmentName);
+                    Integer departmentId = dictMapper.findDepartmentIdByName(departmentName);
+                    p.setDepartmentId(departmentId);
                 }
 
                 //工种
@@ -396,7 +398,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleContractVo p= peopleContractMapper.findPeopleContractVoById(Long.valueOf(id));
+        PeopleContractVo p= peopleContractMapper.findPeopleContractVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;

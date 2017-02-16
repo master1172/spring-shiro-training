@@ -11,7 +11,7 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -6771435680301413458L;
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -47,7 +47,7 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     private String address;
 
-    private String departmentName;
+    private Integer departmentId;
 
     private Integer jobId;
 
@@ -55,11 +55,11 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -183,12 +183,12 @@ public class PeopleContract extends PeopleBase implements Serializable {
         this.address = address;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
     public Integer getJobId() {

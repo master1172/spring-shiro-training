@@ -10,6 +10,7 @@
         $('#marriageId').val('${peopleContract.marriageId}');
         $('#nationalId').val('${peopleContract.nationalId}');
         $('#jobId').val('${peopleContract.jobId}');
+        $('#departmentId').val('${peopleContract.departmentId}');
         $('#imgShow').attr('src','${staticPath}/${peopleContract.photo}');
     });
     $(function(){
@@ -127,7 +128,8 @@
                 <tr>
                     <td>部门</td>
                     <td>
-                        <input type="text" name="departmentName" value="${peopleContract.departmentName}">
+                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>职级</td>
                     <td>

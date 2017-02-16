@@ -18,12 +18,12 @@ public interface PeopleContractMapper {
      * @param id
      * @return
      */
-    int deleteById(Long id);
+    int deleteById(Integer id);
 
     /**
      * 添加人员
      *
-     * @param people
+     * @param
      * @return
      */
     int insert(PeopleContract peopleContract);
@@ -31,7 +31,7 @@ public interface PeopleContractMapper {
     /**
      * 修改人员
      *
-     * @param people
+     * @param
      * @return
      */
     int updatePeopleContract(PeopleContract peopleContract);
@@ -50,7 +50,7 @@ public interface PeopleContractMapper {
      * @param id
      * @return
      */
-    PeopleContract findPeopleContractById(Long id);
+    PeopleContract findPeopleContractById(Integer id);
 
     /**
      * 人员列表
@@ -93,7 +93,7 @@ public interface PeopleContractMapper {
      * @param id
      * @return
      */
-    PeopleContractVo findPeopleContractVoById(Long id);
+    PeopleContractVo findPeopleContractVoById(Integer id);
 
     PeopleContract findFirstPeopleByName(String name);
     PeopleContract findPeopleContractByCode(String code);

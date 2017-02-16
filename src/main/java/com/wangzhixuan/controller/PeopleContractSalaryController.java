@@ -56,7 +56,7 @@ public class PeopleContractSalaryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/salaryListPage", method = RequestMethod.GET)
-	public String salaryListPage(Long id, Model model) {
+	public String salaryListPage(Integer id, Model model) {
 
 		PeopleContract people = peopleContractService.findPeopleContractById(id);
 		logger.info(JSON.toJSONString(people));

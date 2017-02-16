@@ -18,7 +18,7 @@ public interface PeopleContractService {
      * @param id
      * @return
      */
-    PeopleContract findPeopleContractById(Long id);
+    PeopleContract findPeopleContractById(Integer id);
 
     /**
      * 根据人员姓名查询人员
@@ -57,7 +57,7 @@ public interface PeopleContractService {
      *
      * @param id
      */
-    void deletePeopleContractById(Long id);
+    void deletePeopleContractById(Integer id);
 
     void batchDeletePeopleContractByIds(String[] ids);
     /**

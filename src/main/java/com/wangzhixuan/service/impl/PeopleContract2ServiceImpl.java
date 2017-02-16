@@ -287,7 +287,8 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
                 //部门
                 if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
                     String departmentName=row.getCell(16).toString().trim();
-                    p.setDepartmentName(departmentName);
+                    Integer departmentId = dictMapper.findDepartmentIdByName(departmentName);
+                    p.setDepartmentId(departmentId);
                 }
 
                 //工种

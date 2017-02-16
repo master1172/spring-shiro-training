@@ -19,7 +19,7 @@
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="department_id" property="departmentId" jdbcType="INTEGER" />
         <result column="job_id" property="jobId" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
@@ -45,6 +45,7 @@
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="department_id"   property="departmentId"   jdbcType="INTEGER" />
         <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
         <result column="job_id"   property="jobId"   jdbcType="INTEGER" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
@@ -53,30 +54,30 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_id, comment, photo
+        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_id, job_id, comment, photo
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_contract
+        from people_total
         where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="findFirstPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List" />
-        from people_contract
-        where name = #{name, jdbcType=VARCHAR}
+        from people_total
+        where name = #{name, jdbcType=VARCHAR} and status = 4
         LIMIT 0,1
     </select>
     <select id="findPeopleContractByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
-        from people_contract
+        from people_total
         where code = #{code, jdbcType=BIGINT}
     </select>
-    <select id="findPeopleContractVoById" resultMap="peopleContractVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleContractVoById" resultMap="peopleContractVoResultMap" parameterType="java.lang.Integer">
         SELECT
         t.id,
         t.code,
@@ -97,17 +98,20 @@
         t.school_date,
         t.mobile,
         t.address,
-        t.department_name,
+        t.department_id,
+        d.name as department_name,
         t.job_id,
         j.job_level as job_name,
         t.comment,
         t.photo
         FROM
-        people_contract t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
         dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+        dict_department d ON d.id = t.department_id
         LEFT JOIN
         job j ON j.id = t.job_id
         <where>
@@ -115,18 +119,18 @@
         </where>
     </select>
 
-    <select id="findPeopleContractById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleContractById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_contract
+        from people_total
         where id = #{id}
     </select>
 
     <select id="findPeopleContractByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from people_contract
-        where name LIKE concat('%',#{name},'%')
+        from people_total
+        where name LIKE concat('%',#{name},'%') and status = 4
     </select>
 
     <select id="findPeopleContractPageCondition" resultMap="peopleContractVoResultMap" parameterType="PageInfo">
@@ -150,17 +154,20 @@
         t.school_date,
         t.mobile,
         t.address,
-        t.department_name,
+        t.department_id,
+        d.name as department_name,
         t.job_id,
         j.job_level as job_name,
         t.comment,
         t.photo
         FROM
-        people_contract t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
         dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+        dict_department d ON d.id = t.department_id
         LEFT JOIN
         job j ON j.id = t.job_id
         <where>
@@ -218,8 +225,8 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.departmentName != null and condition.departmentName != ''">
-                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            <if test=" condition.departmentId != null and condition.departmentId != ''">
+                and t.department_id = #{condition.departmentId}
             </if>
             <if test=" condition.jobId != null">
                 and t.job_id = #{condition.jobId}
@@ -227,13 +234,16 @@
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
         LIMIT #{from}, #{size}
     </select>
 
     <select id="findPeopleContractPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_contract t
+        from people_total t
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -289,8 +299,8 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.departmentName != null and condition.departmentName != ''">
-                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            <if test=" condition.departmentId != null and condition.departmentId != ''">
+                and t.department_id = #{condition.departmentName}
             </if>
             <if test=" condition.jobId != null">
                 and t.job_id = #{condition.jobId}
@@ -298,16 +308,19 @@
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_contract
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from people_total
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_contract
+        delete from people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -316,13 +329,13 @@
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleContract">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_contract (
+        insert into people_total (
           code, name, sex, national_id, province, city, birthday, education_name, political_name,
-          speciality, height, marriage_id, hukou, school_date, mobile, address, department_name,
-          job_id, comment, photo)
+          speciality, height, marriage_id, hukou, school_date, mobile, address, department_id,
+          job_id, comment, photo, status)
         values (
             #{code,       jdbcType=VARCHAR},
             #{name,       jdbcType=VARCHAR},
@@ -340,17 +353,18 @@
             #{schoolDate, jdbcType=DATE},
             #{mobile,     jdbcType=VARCHAR},
             #{address,    jdbcType=VARCHAR},
-            #{departmentName, jdbcType=VARCHAR},
+            #{departmentId, jdbcType=INTEGER},
             #{jobId,      jdbcType=INTEGER},
             #{comment,    jdbcType=VARCHAR},
-            #{photo,      jdbcType=VARCHAR}
+            #{photo,      jdbcType=VARCHAR},
+            4
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_contract (
+        insert into people_total (
           code, name, sex, national_id, province, city, birthday, education_name, political_name,
-          speciality, height, marriage_id, hukou, school_date, mobile, address, department_name,
-          job_id, comment, photo
+          speciality, height, marriage_id, hukou, school_date, mobile, address, department_id,
+          job_id, comment, photo, status
         )
         values
         <foreach item="item" index="index" collection="list" separator=",">
@@ -371,15 +385,16 @@
             #{item.schoolDate,    jdbcType=DATE},
             #{item.mobile,        jdbcType=VARCHAR},
             #{item.address,       jdbcType=VARCHAR},
-            #{item.departmentName,jdbcType=VARCHAR},
+            #{item.departmentId,  jdbcType=INTEGER},
             #{item.jobId,         jdbcType=INTEGER},
             #{item.comment,       jdbcType=VARCHAR},
-            #{item.photo,         jdbcType=VARCHAR}
+            #{item.photo,         jdbcType=VARCHAR},
+            4
         )
         </foreach>
     </insert>
     <update id="updatePeopleContract" parameterType="com.wangzhixuan.model.PeopleContract">
-        update people_Contract
+        update people_total
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -429,8 +444,8 @@
             <if test="address!= null">
                 address = #{address, jdbcType=VARCHAR},
             </if>
-            <if test="departmentName != null">
-                department_name = #{departmentName, jdbcType=VARCHAR},
+            <if test="departmentId != null">
+                department_id = #{departmentId, jdbcType=VARCHAR},
             </if>
             <if test="jobId != null">
                 job_id = #{jobId, jdbcType=INTEGER},
@@ -463,11 +478,11 @@
             t.school_date,
             t.mobile,
             t.address,
-            t.department_name,
+            t.department_id,
             t.job_id,
             t.comment,
             t.photo
-        from people_contract t
+        from people_total t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -495,17 +510,20 @@
             t.school_date,
             t.mobile,
             t.address,
-            t.department_name,
+            t.department_id,
+            d.name as department_name,
             t.job_id,
             j.job_level as job_name,
             t.comment,
             t.photo
         FROM
-          people_contract t
+          people_total t
         LEFT JOIN
           dict_national s ON s.id = t.national_id
         LEFT JOIN
           dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+          dict_department d ON d.id = t.department_id
         LEFT JOIN
           job j ON j.id = t.job_id
         where t.id in
@@ -513,10 +531,11 @@
             #{item}
         </foreach>
     </select>
+
      <select id="findContractPeopleByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM people_contract
+        FROM people_total
         WHERE code = #{code, jdbcType=VARCHAR}
     </select>
 </mapper>
