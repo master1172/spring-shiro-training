@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.AbroadMapper" >
+  <resultMap id="BaseResultMap" type="com.wangzhixuan.model.Abroad" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="job_id" property="jobId" jdbcType="INTEGER" />
+    <result column="abroad_date" property="abroadDate" jdbcType="DATE" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="passport_status" property="passportStatus" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="funding" property="funding" jdbcType="VARCHAR" />
+    <result column="issue_date" property="issueDate" jdbcType="DATE" />
+    <result column="pick_passport_date" property="pickPassportDate" jdbcType="DATE" />
+    <result column="return_passport_date" property="returnPassportDate" jdbcType="DATE" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="abroadVoResultMap" type="com.wangzhixuan.vo.AbroadVo">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="job_id" property="jobId" jdbcType="INTEGER" />
+    <result column="abroad_date" property="abroadDate" jdbcType="DATE" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="passport_status" property="passportStatus" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="funding" property="funding" jdbcType="VARCHAR" />
+    <result column="issue_date" property="issueDate" jdbcType="DATE" />
+    <result column="pick_passport_date" property="pickPassportDate" jdbcType="DATE" />
+    <result column="return_passport_date" property="returnPassportDate" jdbcType="DATE" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, code, name, department_id, job_id,abroad_date, country, passport_status, reason, funding,
+    issue_date, pick_passport_date, return_passport_date, comment
+  </sql>
+
+  <select id="findPeoplePageCondition" resultMap="abroadVoResultMap" parameterType="PageInfo">
+    SELECT
+       t.id,
+       t.code,
+       t.name,
+       t.department_id,
+       t.job_id,
+       j.job_level as job_name,
+       t.abroad_date,
+       t.country,
+       t.passport_status,
+       t.reason,
+       t.funding,
+       t.issue_date,
+       t.pick_passport_date,
+       t.return_passport_date,
+       t.comment
+    FROM
+       abroad t
+    LEFT JOIN
+       dict_department d ON d.id = t.department_id
+    LEFT JOIN
+       job j ON j.id = t.job_id
+    <where>
+      <if test=" condition.name != null and condition.name != '' ">
+        and t.name LIKE concat('%',#{condition.name},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+    SELECT count(t.id) count
+    FROM
+    abroad t
+    LEFT JOIN
+    dict_department d ON d.id = t.department_id
+    LEFT JOIN
+    job j ON j.id = t.job_id
+    <where>
+      <if test="condition.name != null and condition.name != ''">
+        and t.name LIKE concat('%',#{condition.name},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="findAbroadById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    abroad
+    WHERE
+    id = #{id, jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from abroad
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from abroad
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+    DELETE FROM abroad
+    WHERE id IN
+    <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.wangzhixuan.model.Abroad" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into abroad (code, name, department_id, job_id
+      abroad_date, country, passport_status, 
+      reason, funding, issue_date, 
+      pick_passport_date, return_passport_date, comment
+      )
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER},
+      #{abroadDate,jdbcType=DATE}, #{country,jdbcType=VARCHAR}, #{passportStatus,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR}, #{funding,jdbcType=VARCHAR}, #{issueDate,jdbcType=DATE}, 
+      #{pickPassportDate,jdbcType=DATE}, #{returnPassportDate,jdbcType=DATE}, #{comment,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertByImport" parameterType="java.util.List">
+    INSERT INTO abroad(code, name, department_id, job_id
+      abroad_date, country, passport_status,
+      reason, funding, issue_date,
+      pick_passport_date, return_passport_date, comment
+    )
+    values
+    <foreach item="item" index="index" collection="list" separator=",">
+    (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER},
+    #{abroadDate,jdbcType=DATE}, #{country,jdbcType=VARCHAR}, #{passportStatus,jdbcType=VARCHAR},
+    #{reason,jdbcType=VARCHAR}, #{funding,jdbcType=VARCHAR}, #{issueDate,jdbcType=DATE},
+    #{pickPassportDate,jdbcType=DATE}, #{returnPassportDate,jdbcType=DATE}, #{comment,jdbcType=VARCHAR}
+    )
+    </foreach>
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.wangzhixuan.model.Abroad" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into abroad
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        code,
+        name,
+        department_id,
+        job_id,
+        abroad_date,
+        country,
+        passport_status,
+        reason,
+        funding,
+        issue_date,
+        pick_passport_date,
+        return_passport_date,
+        comment
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{code,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{departmentId,jdbcType=INTEGER},
+        #{jobId,jdbcType=INTEGER},
+        #{abroadDate,jdbcType=DATE},
+        #{country,jdbcType=VARCHAR},
+        #{passportStatus,jdbcType=VARCHAR},
+        #{reason,jdbcType=VARCHAR},
+        #{funding,jdbcType=VARCHAR},
+        #{issueDate,jdbcType=DATE},
+        #{pickPassportDate,jdbcType=DATE},
+        #{returnPassportDate,jdbcType=DATE},
+        #{comment,jdbcType=VARCHAR}
+    </trim>
+  </insert>
+
+    <update id="update" parameterType="com.wangzhixuan.model.Abroad" >
+    update abroad
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      job_id = #{jobId,jdbcType=INTEGER},
+      abroad_date = #{abroadDate,jdbcType=DATE},
+      country = #{country,jdbcType=VARCHAR},
+      passport_status = #{passportStatus,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      funding = #{funding,jdbcType=VARCHAR},
+      issue_date = #{issueDate,jdbcType=DATE},
+      pick_passport_date = #{pickPassportDate,jdbcType=DATE},
+      return_passport_date = #{returnPassportDate,jdbcType=DATE},
+      comment = #{comment,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+   </update>
+
+   <select id="selectAbroadVoByIds" resultMap="abroadVoResultMap" parameterType="java.util.ArrayList">
+      SELECT
+        t.id
+        t.code,
+        t.name,
+        t.department_id,
+        d.name as department_name,
+        t.job_id,
+        j.job_level as job_name,
+        t.abroad_date,
+        t.country,
+        t.passport_status,
+        t.reason,
+        t.funding,
+        t.issue_date,
+        t.pick_passport_date,
+        t.return_passport_date,
+        t.comment
+        FROM
+          abroad t
+        LEFT JOIN
+          dict_department d ON d.id = t.department_id
+        LEFT JOIN
+          job j ON j.id = t.job_id
+        WHERE
+          t.id IN
+          <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+             #{item}
+          </foreach>
+   </select>
+
+</mapper>
