@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.RecruitMapper" >
+  <resultMap id="BaseResultMap" type="com.wangzhixuan.model.Recruit" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="apply_job" property="applyJob" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
+    <result column="health" property="health" jdbcType="VARCHAR" />
+    <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
+    <result column="degree" property="degree" jdbcType="VARCHAR" />
+    <result column="degree_ontime" property="degreeOntime" jdbcType="VARCHAR" />
+    <result column="school_address" property="schoolAddress" jdbcType="VARCHAR" />
+    <result column="graduate_status" property="graduateStatus" jdbcType="VARCHAR" />
+    <result column="foreign_language_level" property="foreignLanguageLevel" jdbcType="VARCHAR" />
+    <result column="marriage_id" property="marriageId" jdbcType="INTEGER" />
+    <result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
+    <result column="photo_id" property="photoId" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="zipcode" property="zipcode" jdbcType="VARCHAR" />
+    <result column="study_experience" property="studyExperience" jdbcType="VARCHAR" />
+    <result column="speciality_and_ability" property="specialityAndAbility" jdbcType="VARCHAR" />
+    <result column="social_experience" property="socialExperience" jdbcType="VARCHAR" />
+    <result column="award" property="award" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="recruitVoResultMap" type="com.wangzhixuan.vo.RecruitVo">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="apply_job" property="applyJob" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
+    <result column="health" property="health" jdbcType="VARCHAR" />
+    <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
+    <result column="degree" property="degree" jdbcType="VARCHAR" />
+    <result column="degree_ontime" property="degreeOntime" jdbcType="VARCHAR" />
+    <result column="school_address" property="schoolAddress" jdbcType="VARCHAR" />
+    <result column="graduate_status" property="graduateStatus" jdbcType="VARCHAR" />
+    <result column="foreign_language_level" property="foreignLanguageLevel" jdbcType="VARCHAR" />
+    <result column="marriage_id" property="marriageId" jdbcType="INTEGER" />
+    <result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
+    <result column="photo_id" property="photoId" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="zipcode" property="zipcode" jdbcType="VARCHAR" />
+    <result column="study_experience" property="studyExperience" jdbcType="VARCHAR" />
+    <result column="speciality_and_ability" property="specialityAndAbility" jdbcType="VARCHAR" />
+    <result column="social_experience" property="socialExperience" jdbcType="VARCHAR" />
+    <result column="award" property="award" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, sex, age, major, apply_job, origin, national_id, birthday, political_name, 
+    health, graduate_school, degree, degree_ontime, school_address, graduate_status, 
+    foreign_language_level, marriage_id, cellphone, photo_id, email, address, zipcode, 
+    study_experience, speciality_and_ability, social_experience, award, photo
+  </sql>
+
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from recruit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
+    DELETE FROM recruit
+    WHERE id IN
+    <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.wangzhixuan.model.Recruit" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into recruit (
+      name, sex, age,
+      major, apply_job, origin, 
+      national_id, birthday, political_name, 
+      health, graduate_school, degree, 
+      degree_ontime, school_address, graduate_status, 
+      foreign_language_level, marriage_id, cellphone, 
+      photo_id, email, address, 
+      zipcode, study_experience, speciality_and_ability, 
+      social_experience, award, photo
+      )
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, 
+      #{major,jdbcType=VARCHAR}, #{applyJob,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
+      #{nationalId,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{politicalName,jdbcType=VARCHAR}, 
+      #{health,jdbcType=VARCHAR}, #{graduateSchool,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, 
+      #{degreeOntime,jdbcType=VARCHAR}, #{schoolAddress,jdbcType=VARCHAR}, #{graduateStatus,jdbcType=VARCHAR}, 
+      #{foreignLanguageLevel,jdbcType=VARCHAR}, #{marriageId,jdbcType=INTEGER}, #{cellphone,jdbcType=VARCHAR}, 
+      #{photoId,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{zipcode,jdbcType=VARCHAR}, #{studyExperience,jdbcType=VARCHAR}, #{specialityAndAbility,jdbcType=VARCHAR}, 
+      #{socialExperience,jdbcType=VARCHAR}, #{award,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <select id="findPeoplePageCondition" resultMap="recruitVoResultMap" parameterType="PageInfo">
+    SELECT
+      t.name, t.sex, t.age,
+      t.major, t.apply_job, t.origin,
+      t.national_id, n.name as national_name,t.birthday, t.political_name,
+      t.health, t.graduate_school, t.degree,
+      t.degree_ontime, t.school_address, t.graduate_status,
+      t.foreign_language_level,t.marriage_id, t.cellphone,
+      t.photo_id, t.email, t.address,
+      t.zipcode, t.study_experience, t.speciality_and_ability,
+      t.social_experience, t.award, t.photo
+    FROM
+      recruit t
+    LEFT JOIN
+          dict_national n ON n.id = t.national_id
+    <where>
+      <if test=" condition.name != null and condition.name != '' ">
+        and t.name LIKE concat('%',#{condition.name},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+    SELECT count(t.id) count
+    FROM
+    recruit t
+    LEFT JOIN
+    dict_national n ON n.id = t.national_id
+    <where>
+      <if test="condition.name != null and condition.name != ''">
+        and t.name LIKE concat('%',#{condition.name},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="findRecruitById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    recruit
+    WHERE
+    id = #{id, jdbcType=INTEGER}
+  </select>
+
+
+  <update id="update" parameterType="com.wangzhixuan.model.Recruit" >
+    update recruit
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+
+        age = #{age,jdbcType=INTEGER},
+
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="applyJob != null" >
+        apply_job = #{applyJob,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalId != null" >
+        national_id = #{nationalId,jdbcType=INTEGER},
+      </if>
+        birthday = #{birthday,jdbcType=DATE},
+        political_name = #{politicalName,jdbcType=VARCHAR},
+        health = #{health,jdbcType=VARCHAR},
+        graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+        degree = #{degree,jdbcType=VARCHAR},
+        degree_ontime = #{degreeOntime,jdbcType=VARCHAR},
+        school_address = #{schoolAddress,jdbcType=VARCHAR},
+      <if test="graduateStatus != null" >
+        graduate_status = #{graduateStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignLanguageLevel != null" >
+        foreign_language_level = #{foreignLanguageLevel,jdbcType=VARCHAR},
+      </if>
+        marriage_id = #{marriageId,jdbcType=INTEGER},
+        cellphone = #{cellphone,jdbcType=VARCHAR},
+        photo_id = #{photoId,jdbcType=VARCHAR},
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+        address = #{address,jdbcType=VARCHAR},
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+        study_experience = #{studyExperience,jdbcType=VARCHAR},
+        speciality_and_ability = #{specialityAndAbility,jdbcType=VARCHAR},
+        social_experience = #{socialExperience,jdbcType=VARCHAR},
+        award = #{award,jdbcType=VARCHAR},
+        photo = #{photo,jdbcType=VARCHAR},
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertByImport" parameterType="java.util.List">
+    INSERT INTO recruit(name, sex, age,
+      major, apply_job, origin,
+      national_id, birthday, political_name,
+      health, graduate_school, degree,
+      degree_ontime, school_address, graduate_status,
+      foreign_language_level, marriage_id, cellphone,
+      photo_id, email, address,
+      zipcode, study_experience, speciality_and_ability,
+      social_experience, award, photo
+        )
+    VALUES
+    <foreach item="item" index="index" collection="list" separator=",">
+    (
+    name = #{name,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=INTEGER},
+    age = #{age,jdbcType=INTEGER},
+    major = #{major,jdbcType=VARCHAR},
+    apply_job = #{applyJob,jdbcType=VARCHAR},
+    origin = #{origin,jdbcType=VARCHAR},
+    national_id = #{nationalId,jdbcType=INTEGER},
+    birthday = #{birthday,jdbcType=DATE},
+    political_name = #{politicalName,jdbcType=VARCHAR},
+    health = #{health,jdbcType=VARCHAR},
+    graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+    degree = #{degree,jdbcType=VARCHAR},
+    degree_ontime = #{degreeOntime,jdbcType=VARCHAR},
+    school_address = #{schoolAddress,jdbcType=VARCHAR},
+    graduate_status = #{graduateStatus,jdbcType=VARCHAR},
+    foreign_language_level = #{foreignLanguageLevel,jdbcType=VARCHAR},
+    marriage_id = #{marriageId,jdbcType=INTEGER},
+    cellphone = #{cellphone,jdbcType=VARCHAR},
+    photo_id = #{photoId,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR},
+    address = #{address,jdbcType=VARCHAR},
+    zipcode = #{zipcode,jdbcType=VARCHAR},
+    study_experience = #{studyExperience,jdbcType=VARCHAR},
+    speciality_and_ability = #{specialityAndAbility,jdbcType=VARCHAR},
+    social_experience = #{socialExperience,jdbcType=VARCHAR},
+    award = #{award,jdbcType=VARCHAR},
+    photo = #{photo,jdbcType=VARCHAR}
+    )
+    </foreach>
+  </insert>
+
+  <select id="selectRecruitVoByIds" resultMap="recruitVoResultMap" parameterType="java.util.ArrayList">
+    SELECT
+    t.name, t.sex, t.age,
+      t.major, t.apply_job, t.origin,
+      t.national_id, n.name as national_name,t.birthday, t.political_name,
+      t.health, t.graduate_school, t.degree,
+      t.degree_ontime, t.school_address, t.graduate_status,
+      t.foreign_language_level,t.marriage_id, t.cellphone,
+      t.photo_id, t.email, t.address,
+      t.zipcode, t.study_experience, t.speciality_and_ability,
+      t.social_experience, t.award, t.photo
+    FROM
+      recruit t
+    LEFT JOIN
+          dict_national n ON n.id = t.national_id
+    WHERE
+    t.id IN
+    <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+</mapper>

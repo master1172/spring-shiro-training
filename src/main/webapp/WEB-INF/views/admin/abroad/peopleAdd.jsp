@@ -35,7 +35,12 @@
                     </td>
                     <td>出国境日期</td>
                     <td>
-                        <input type="text" name="abroadDate">
+                        <input id="abroadDate" name="abroadDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d'})"
+                               readonly="readonly"/>
                     </td>
                     <td>所赴国家</td>
                     <td>

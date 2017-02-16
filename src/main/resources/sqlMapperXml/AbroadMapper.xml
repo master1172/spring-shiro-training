@@ -118,15 +118,25 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into abroad (code, name, department_id, job_id
+    insert into abroad (code, name, department_id, job_id,
       abroad_date, country, passport_status, 
       reason, funding, issue_date, 
       pick_passport_date, return_passport_date, comment
       )
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER},
-      #{abroadDate,jdbcType=DATE}, #{country,jdbcType=VARCHAR}, #{passportStatus,jdbcType=VARCHAR}, 
-      #{reason,jdbcType=VARCHAR}, #{funding,jdbcType=VARCHAR}, #{issueDate,jdbcType=DATE}, 
-      #{pickPassportDate,jdbcType=DATE}, #{returnPassportDate,jdbcType=DATE}, #{comment,jdbcType=VARCHAR}
+    values (
+      #{code,           jdbcType=VARCHAR},
+      #{name,           jdbcType=VARCHAR},
+      #{departmentId,   jdbcType=INTEGER},
+      #{jobId,          jdbcType=INTEGER},
+      #{abroadDate,     jdbcType=DATE},
+      #{country,        jdbcType=VARCHAR},
+      #{passportStatus, jdbcType=VARCHAR},
+      #{reason,         jdbcType=VARCHAR},
+      #{funding,        jdbcType=VARCHAR},
+      #{issueDate,       jdbcType=DATE},
+      #{pickPassportDate,jdbcType=DATE},
+      #{returnPassportDate,jdbcType=DATE},
+      #{comment,         jdbcType=VARCHAR}
       )
   </insert>
 

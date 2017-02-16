@@ -134,7 +134,7 @@ public class AbroadImpl implements AbroadService {
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
 
                 //创建表头
-                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getTrainingPeopleHeaders());
+                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getAbroadPeopleHeaders());
                 setBorder=WordUtil.setCellStyle(workBook,false);
 
                 for(int i=0; i<list.size(); i++){
@@ -178,7 +178,12 @@ public class AbroadImpl implements AbroadService {
     private void UpdateDate(Abroad abroad) {
         if (StringUtils.isBlank(abroad.getAbroadDate()))
             abroad.setAbroadDate(null);
-
+        if (StringUtils.isBlank(abroad.getPickPassportDate()))
+            abroad.setPickPassportDate(null);
+        if (StringUtils.isBlank(abroad.getReturnPassportDate()))
+            abroad.setReturnPassportDate(null);
+        if (StringUtils.isBlank(abroad.getIssueDate()))
+            abroad.setIssueDate(null);
     }
 
     private List<Abroad> getPeopleInfoByExcel(List<Abroad> list, String path) {

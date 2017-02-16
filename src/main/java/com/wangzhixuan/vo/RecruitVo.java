@@ -1,15 +1,17 @@
-package com.wangzhixuan.model;
+package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by sterm on 2017/2/15.
  */
-public class Recruit implements Serializable{
+public class RecruitVo implements Serializable{
 
-    private static final long serialVersionUID = 1;
     private Integer id;
 
     private String name;
@@ -25,6 +27,8 @@ public class Recruit implements Serializable{
     private String origin;
 
     private Integer nationalId;
+
+    private String nationalName;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String birthday;
@@ -132,6 +136,10 @@ public class Recruit implements Serializable{
         this.nationalId = nationalId;
     }
 
+    public String getNationalName() {return nationalName;}
+
+    public void setNationalName(String nationalName) {this.nationalName = nationalName;}
+
     public String getBirthday() {
         return birthday;
     }
@@ -172,9 +180,7 @@ public class Recruit implements Serializable{
         this.degree = degree;
     }
 
-    public Integer getDegreeOnTime() {
-        return degreeOnTime;
-    }
+    public Integer getDegreeOnTime() {return degreeOnTime;}
 
     public void setDegreeOnTime(Integer degreeOnTime) {
         this.degreeOnTime = degreeOnTime;
@@ -291,4 +297,45 @@ public class Recruit implements Serializable{
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    public static Map<String,Object> CreateCondition(RecruitVo recruitVo){
+        Map<String,Object> condition = Maps.newHashMap();
+
+        if(StringUtils.isNoneBlank(recruitVo.getName())){
+            condition.put("name",recruitVo.getName());
+        }
+
+        if(recruitVo.getSex() != null){
+            condition.put("sex", recruitVo.getSex());
+        }
+
+        if(recruitVo.getAge() != null){
+            condition.put("age", recruitVo.getAge());
+        }
+
+        if(recruitVo.getNationalId() != null){
+            condition.put("nationalId", recruitVo.getNationalId());
+        }
+
+        if(StringUtils.isNoneBlank(recruitVo.getPoliticalName())){
+            condition.put("politicalName",recruitVo.getPoliticalName());
+        }
+
+        if(recruitVo.getGraduateSchool() != null){
+            condition.put("graduateSchool", recruitVo.getGraduateSchool());
+        }
+
+        if(StringUtils.isNoneBlank(recruitVo.getGraduateStatus())){
+            condition.put("graduateStatus", recruitVo.getGraduateStatus());
+        }
+
+        if(StringUtils.isNoneBlank(recruitVo.getDegree())){
+            condition.put("degree", recruitVo.getDegree());
+        }
+        if(StringUtils.isNoneBlank(recruitVo.getForeignLanguageLevel())){
+            condition.put("foreignLanguageLevel", recruitVo.getForeignLanguageLevel());
+        }
+        return condition;
+    }
 }
+

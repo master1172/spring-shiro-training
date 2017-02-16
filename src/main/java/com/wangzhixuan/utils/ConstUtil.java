@@ -59,7 +59,7 @@ public class ConstUtil {
         };
     }
 
-    public static String[] getAbroadPeopleHeader(){
+    public static String[] getAbroadPeopleHeaders(){
         return new String[]{
                 "序号","人员姓名","人员所在部门","职级","出国境日期","所赴国家","申请因私证件情况","是由","经费形式","办理日期","取证日期","还证日期","备注"
         };
@@ -98,6 +98,14 @@ public class ConstUtil {
     public static String[] getEaxmYearlyHeaders() {
         return new  String[]{
             "序号","姓名","年份","考核结果","考核运用"
+        };
+    }
+
+    public static String[] getRecruitHeaders(){
+        return new String[]{
+                "序号","姓名","性别","年龄","专业","应聘岗位","生源地","民族","出生日期","政治面貌","身体状况","毕业院校","学历",
+                "是否能按期获得学位","院校所在地","毕业生性质","外语水平","婚姻状况","联系电话","身份证号码","邮箱","联系地址",
+                "邮政编码","主要学习工作经历","特长及能力","主要社会实践","获奖情况","照片"
         };
     }
 

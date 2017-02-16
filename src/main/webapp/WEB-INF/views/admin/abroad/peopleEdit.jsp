@@ -4,12 +4,11 @@
 <script type="text/javascript">
 
     $(function(){
-        $("#sex").val('${training.sex}');
-        $("#nationalId").val('${training.nationalId}');
-        $("#departmentId").val('${training.departmentId}');
-        $("#jobId").val('${training.jobId}');
-        $("#trainingCategory").val('${training.trainingCategory}');
-        $("#offWork").val('${training.offWork}');
+        $("#departmentId").val('${abroad.departmentId}');
+        $("#jobId").val('${abroad.jobId}');
+        $("#passportStatus").val('${abroad.passportStatus}');
+        $("#reason").val('${abroad.reason}');
+        $("#funding").val('${abroad.funding}');
 
     });
 
@@ -26,12 +25,12 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
-            <input type="hidden" name="id" value="${training.id}"/>
-            <input type="hidden" name="code" value="${training.code}"/>
+            <input type="hidden" name="id" value="${abroad.id}"/>
+            <input type="hidden" name="code" value="${abroad.code}"/>
             <table class="grid" border=1>
                 <tr>
                     <td>姓名</td>
-                    <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true" value="${training.name}"></td>
+                    <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true" value="${abroad.name}"></td>
                     <td>部门</td>
                     <td>
                         <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
