@@ -10,6 +10,7 @@ import java.math.BigDecimal;
  */
 public class PeopleTotal implements Serializable {
 
+    private static final long serialVersionUID = -5321613594382537423L;
     //id
     private Integer id;
 
@@ -1159,5 +1160,9 @@ public class PeopleTotal implements Serializable {
 
     public void setLastUpdateDate(String lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public String toString(){
+        return "";
     }
 }

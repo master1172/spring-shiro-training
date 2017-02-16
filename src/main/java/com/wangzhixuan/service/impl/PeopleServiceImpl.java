@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.mapper.*;
+import com.wangzhixuan.model.PeopleTotal;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -24,10 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleDeathMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
-import com.wangzhixuan.mapper.PeopleRetireMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleDeath;
 import com.wangzhixuan.model.PeopleRetire;
@@ -50,6 +48,9 @@ public class PeopleServiceImpl implements PeopleService{
 
 	@Autowired
 	private DictMapper dictMapper;
+
+	@Autowired
+	private PeopleTotalMapper peopleTotalMapper;
 
 
     @Override
@@ -148,7 +149,7 @@ public class PeopleServiceImpl implements PeopleService{
 	@Override
     public void deletePeopleById(Integer id) {
         peopleMapper.deleteById(id);
-    }
+}
 
     @Override
     public void batchDeletePeopleByIds(String[] ids){
@@ -176,27 +177,34 @@ public class PeopleServiceImpl implements PeopleService{
 
 	@Override
 	public void batchRetirePeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException {
-		List<PeopleVo> peopleVoList = peopleMapper.selectPeopleVoByIds(ids);
+		List<People> peopleList = peopleMapper.selectPeopleByIds(ids);
 
-		if ((peopleVoList == null) || (peopleVoList.size() < 1))
+		if ((peopleList == null) || (peopleList.size() < 1))
 			return;
 
-		for (PeopleVo peopleVo: peopleVoList) {
+		for (People people: peopleList) {
 
-			if (peopleVo == null)
+			if (people == null)
 				continue;
 
-			int status = peopleVo.getStatus();
+			int status = people.getStatus();
 
 			if (status != ConstUtil.PEOPLE_NORMAL)
 				continue;
 
-			UpdatePeopleDate(peopleVo);
-			People people = new People();
-			BeanUtils.copyProperties(people,peopleVo);
-			people.setStatus(ConstUtil.PEOPLE_RETIRE);
+			PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(people.getJobId());
 
-			peopleMapper.updatePeople(people);
+			if (peopleTotal == null)
+				continue;
+
+			//更新退休时的状态
+			peopleTotal.setRetireDate(DateUtil.GetToday());
+			peopleTotal.setRetireJobName(people.getJobName());
+			peopleTotal.setRetireJobId(people.getJobId());
+			peopleTotal.setRetireStatus(ConstUtil.PEOPLE_RETIRE_RETIRE);
+			peopleTotal.setStatus(ConstUtil.PEOPLE_RETIRE);
+
+			peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
 		}
 	}
 
@@ -774,8 +782,35 @@ public class PeopleServiceImpl implements PeopleService{
 		return peopleList;
 	}
 
-	private void UpdatePeopleDate(PeopleVo people) {
+	private void UpdatePeopleDate(People people) {
+
 		if (people != null){
+
+			if (StringUtils.isBlank(people.getBirthday())){
+				people.setBirthday(null);
+			}
+			if (StringUtils.isBlank(people.getPartyDate())){
+				people.setPartyDate(null);
+			}
+			if (StringUtils.isBlank(people.getWorkDate())){
+				people.setWorkDate(null);
+			}
+			if (StringUtils.isBlank(people.getSchoolDate())){
+				people.setSchoolDate(null);
+			}
+			if (StringUtils.isBlank(people.getJobDate())){
+				people.setJobDate(null);
+			}
+			if (StringUtils.isBlank(people.getJobLevelDate())){
+				people.setJobLevelDate(null);
+			}
+		}
+	}
+
+	private void UpdatePeopleDate(PeopleVo people) {
+
+		if (people != null){
+
 			if (StringUtils.isBlank(people.getBirthday())){
 				people.setBirthday(null);
 			}

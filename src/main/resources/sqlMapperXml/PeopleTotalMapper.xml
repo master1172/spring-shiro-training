@@ -26,7 +26,7 @@
         <result column="formation" jdbcType="VARCHAR" property="formation"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="marriage_id" jdbcType="INTEGER" property="marriageId"/>
-        <result column="photo_id" jdbcType="VARCHAR" property="photoId"/>
+        <result column="photo_id" jdbcType="INTEGER" property="photoId"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="hukou" jdbcType="VARCHAR" property="hukou"/>
         <result column="hukou_address" jdbcType="VARCHAR" property="hukouAddress"/>
@@ -128,13 +128,13 @@
         handicap_allowance, rent_fee, last_update_date
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleTotalKey" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from people_total
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleTotalKey">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from people_total
         where id = #{id,jdbcType=INTEGER}
     </delete>
@@ -185,7 +185,7 @@
         #{jobId,jdbcType=INTEGER}, #{jobDate,jdbcType=DATE}, #{jobLevelDate,jdbcType=DATE},
         #{age,jdbcType=INTEGER}, #{virtualAge,jdbcType=INTEGER}, #{workAge,jdbcType=INTEGER},
         #{formation,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{marriageId,jdbcType=INTEGER},
-        #{photoId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{hukou,jdbcType=VARCHAR},
+        #{photoId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{hukou,jdbcType=VARCHAR},
         #{hukouAddress,jdbcType=VARCHAR}, #{finalEducationName,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR},
         #{graduateSchool,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{relationship,jdbcType=VARCHAR},
         #{contactNumber,jdbcType=VARCHAR}, #{familyInfo1,jdbcType=VARCHAR}, #{familyInfo2,jdbcType=VARCHAR},
@@ -605,7 +605,7 @@
                 #{marriageId,jdbcType=INTEGER},
             </if>
             <if test="photoId != null">
-                #{photoId,jdbcType=VARCHAR},
+                #{photoId,jdbcType=INTEGER},
             </if>
             <if test="address != null">
                 #{address,jdbcType=VARCHAR},
@@ -920,7 +920,7 @@
                 marriage_id = #{marriageId,jdbcType=INTEGER},
             </if>
             <if test="photoId != null">
-                photo_id = #{photoId,jdbcType=VARCHAR},
+                photo_id = #{photoId,jdbcType=INTEGER},
             </if>
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
@@ -1188,7 +1188,7 @@
         formation = #{formation,jdbcType=VARCHAR},
         mobile = #{mobile,jdbcType=VARCHAR},
         marriage_id = #{marriageId,jdbcType=INTEGER},
-        photo_id = #{photoId,jdbcType=VARCHAR},
+        photo_id = #{photoId,jdbcType=INTEGER},
         address = #{address,jdbcType=VARCHAR},
         hukou = #{hukou,jdbcType=VARCHAR},
         hukou_address = #{hukouAddress,jdbcType=VARCHAR},
