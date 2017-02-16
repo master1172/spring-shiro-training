@@ -87,21 +87,7 @@
             });
         }
 
-        function exportExcel(){
-            var checkedItems = $("#dataGrid").datagrid("getChecked");
-            if(checkedItems.length > 0){
-                var ids=[];
-                $.each(checkedItems,function(index,item){
-                    ids.push(item.id);
-                });
-                var form=$("#downLoadForm");
-                form.find("input[name='ids']").val(ids.join(","));
-                form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
-                $("#downLoadForm").submit();
-            }else{
-                parent.$.messager.alert("提示", "请选择至少一条记录", "warning");
-            }
-        }
+
 
         function transferBack(){
             var checkedItems = $('#dataGrid').datagrid('getChecked');
@@ -182,22 +168,17 @@
         //导出Excel
         function exportExcel(){
             var checkedItems = $('#dataGrid').datagrid('getChecked');
-
-            alert(checkedItems.length);
-
             if(checkedItems.length > 0){
-
                 var ids=[];
                 $.each(checkedItems, function(index,item){
                     ids.push(item.id);
                 });
-
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids.join(","));
                 form.attr("action",'${path}'+"/peopleTransfer/exportExcel");
                 $("#downLoadForm").submit();
             }else{
-                parent.$.messager.alert("提示", "请选择有效数据", "warning");
+                parent.$.messager.alert("提示", "请选择至少一条数据", "warning");
             }
         }
 
