@@ -3,7 +3,6 @@ package com.wangzhixuan.service.impl;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleContract2Mapper;
 import com.wangzhixuan.model.PeopleContract;
-import com.wangzhixuan.service.PeopleContract2Service;
 import com.wangzhixuan.service.PeopleContractService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.utils.StringUtilExtra;
@@ -13,6 +12,8 @@ import com.wangzhixuan.vo.PeopleContractVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -29,8 +30,8 @@ import java.util.Map;
  * Created by administrator_cernet on 2016/11/27.
  */
 @Service
-public class PeopleContract2ServiceImpl implements PeopleContract2Service {
-
+public class PeopleContract2ServiceImpl implements PeopleContractService{
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private PeopleContract2Mapper peopleContractMapper;
@@ -39,7 +40,7 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
     private DictMapper dictMapper;
 
     @Override
-    public PeopleContract findPeopleContractById(Long id) {
+    public PeopleContract findPeopleContractById(Integer id) {
         return peopleContractMapper.findPeopleContractById(id);
     }
 
@@ -78,6 +79,7 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                peopleContract.setPhoto(uploadPath);
                 peopleContractMapper.insert(peopleContract);
             }
         }else{
@@ -108,6 +110,7 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleContract.setPhoto(uploadPath);
                 peopleContractMapper.updatePeopleContract(peopleContract);
             }
         }else{
@@ -116,7 +119,7 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
     }
 
     @Override
-    public void deletePeopleContractById(Long id) {
+    public void deletePeopleContractById(Integer id) {
         peopleContractMapper.deleteById(id);
     }
 
@@ -177,6 +180,7 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
                         p.setPhoto(uploadPath);
                     }
                 }
+
 
                 //姓名
                 if(row.getCell(1)!=null&&!row.getCell(1).toString().trim().equals("")){
@@ -294,6 +298,7 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
                 //工种
                 if(row.getCell(17)!=null&&!row.getCell(17).toString().trim().equals("")){
                     String jobName=row.getCell(17).toString().trim();
+
                     Integer jobId = dictMapper.findJobLevelIdByName(jobName);
                     p.setJobId(jobId);
                 }
@@ -387,12 +392,12 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleContractVo p= peopleContractMapper.findPeopleContractVoById(Long.valueOf(id));
+        PeopleContractVo p= peopleContractMapper.findPeopleContractVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;
             String filePath=this.getClass().getResource("/template/custInfoContract.docx").getPath();
-            String newFileName="无固定期合同制人员信息.docx";
+            String newFileName="固定期合同制人员信息.docx";
 
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
@@ -446,9 +451,15 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
 
         return ids;
     }
+
     @Override
     public PeopleContract findPeopleContractByCode(String code) {
         return peopleContractMapper.findPeopleContractByCode(code);
     }
 
+
+    @Override
+    public int insert(PeopleContract peopleContract) {
+        return peopleContractMapper.insert(peopleContract);
+    }
 }

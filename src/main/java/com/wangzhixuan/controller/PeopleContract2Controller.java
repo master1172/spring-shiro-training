@@ -4,6 +4,7 @@ import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.service.PeopleContract2Service;
 import com.wangzhixuan.service.PeopleContractService;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractVo;
 import org.apache.commons.lang3.StringUtils;
@@ -46,7 +47,7 @@ public class PeopleContract2Controller extends BaseController{
     /**
      * 人员管理列表
      *
-     * @param peopleContract
+     * @param request
      * @param page
      * @param rows
      * @param sort
@@ -58,6 +59,7 @@ public class PeopleContract2Controller extends BaseController{
     public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleContractvo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String,Object> condition = PeopleContractVo.CreateCondition(peopleContractvo);
+        condition.put("status", ConstUtil.PEOPLE_CONTRACT_2);
         pageInfo.setCondition(condition);
         peopleContractService.findDataGrid(pageInfo);
 
@@ -79,6 +81,7 @@ public class PeopleContract2Controller extends BaseController{
         Result result = new Result();
 
         Map<String,Object> condition = PeopleContractVo.CreateCondition(peopleContractvo);
+        condition.put("status",ConstUtil.PEOPLE_CONTRACT_2);
 
         PageInfo pageInfo = new PageInfo();
         pageInfo.setCondition(condition);
@@ -106,6 +109,7 @@ public class PeopleContract2Controller extends BaseController{
     public String addPage(){
         return "admin/peopleContract2/peopleAdd";
     }
+
     @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
     public String importExcelPage(){
         return "admin/peopleContract2/importExcelPage";
@@ -133,7 +137,7 @@ public class PeopleContract2Controller extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleContract peopleContract = peopleContractService.findPeopleContractById(id);
         model.addAttribute("peopleContract",peopleContract);
         return "/admin/peopleContract2/peopleEdit";
@@ -157,10 +161,11 @@ public class PeopleContract2Controller extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleContractService.deletePeopleContractById(id);
+
             result.setMsg("删除成功！");
             result.setSuccess(true);
             return result;
@@ -185,6 +190,7 @@ public class PeopleContract2Controller extends BaseController{
         try{
             String[] idList = ids.split(",");
             peopleContractService.batchDeletePeopleContractByIds(idList);
+
             result.setSuccess(true);
             result.setMsg("批量删除人员成功");
             return result;
@@ -243,5 +249,6 @@ public class PeopleContract2Controller extends BaseController{
             LOGGER.error("导出Word:{}",exp);
         }
     }
+
 }
 
