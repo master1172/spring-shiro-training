@@ -53,8 +53,12 @@
                     </td>
                     <td>出生日期</td>
                     <td>
-                        <input name="birthday" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
+                        <input id="birthday" name="birthday" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d'
+                                })"
                                readonly="readonly"/>
                     </td>
                     <td>文化程度</td>
@@ -94,9 +98,7 @@
                                readonly="readonly"/>
                     </td>
                     <td>联系电话</td>
-                    <td>
-                        <input type="text" name="mobile" class="easyui-validatebox" data-options="validType:'length[1,11]'">
-                    </td>
+                    <td><input type="text" name="mobile" class="easyui-validatebox" data-options="validType:'length[1,11]'"></td>
                     <td>现住址</td>
                     <td>
                         <input type="text" name="address"/>
@@ -104,7 +106,10 @@
                 </tr>
                 <tr>
                     <td>部门</td>
-                    <td><input type="text" name="departmentName"></td>
+                    <td>
+                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
+                    </td>
                     <td>职级</td>
                     <td>
                         <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">

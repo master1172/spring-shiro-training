@@ -103,6 +103,7 @@
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f,"/peopleContract2/add",function(data){
                                 if(!data["success"]){
+                                    parent.progressClose();
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
                                     parent.progressClose();
@@ -287,10 +288,10 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-            <shiro:hasPermission name="/peopleContract2/edit">
+            <shiro:hasPermission name="/peopleContract/edit">
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
             </shiro:hasPermission>
-            <shiro:hasPermission name="/peopleContract2/delete">
+            <shiro:hasPermission name="/peopleContract/delete">
             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
             </shiro:hasPermission>
@@ -338,46 +339,57 @@
     <table id="dataGrid" data-options="fit:true,border:false">
         <thead>
         <tr>
-            <th field="ck"              data-options="checkbox:true"></th>
-            <th field="name"            data-options="sortable:true" width="80">姓名</th>
-            <th field="sex"             data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
-            <th field="nationalName"    data-options="sortable:true" width="80">民族</th>
-            <th field="province"        data-options="sortable:true" width="80">来自省</th>
-            <th field="city"            data-options="sortable:true" width="80">来自市/区</th>
-            <th field="birthday"        data-options="sortable:true" width="80">生日</th>
-            <th field="jobName"         data-options="sortable:false" width="80">职级</th>
-            <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="ck"       data-options="checkbox:true"></th>
+            <th field="name"     data-options="sortable:true" width="80">姓名</th>
+            <th field="sex"      data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
+            <th field="nationalName"     data-options="sortable:true" width="80">民族</th>
+            <th field="province"     data-options="sortable:true" width="80">来自省</th>
+            <th field="city"     data-options="sortable:true" width="80">来自市/区</th>
+            <th field="birthday" data-options="sortable:true" width="80">生日</th>
+            <th field="educationName"     data-options="sortable:true" width="80">文化程度</th>
+            <th field="politicalName"     data-options="sortable:true" width="80">政治面貌</th>
+            <th field="speciality"     data-options="sortable:true" width="80">特长</th>
+            <th field="height"     data-options="sortable:true" width="80">身高</th>
+            <th field="marriageName"     data-options="sortable:true" width="80">婚姻状况</th>
+            <th field="hukou"      data-options="sortable:true,formatter:hukouFormatter" width="40">户籍</th>
+            <th field="schoolDate"     data-options="sortable:true" width="80">来院日期</th>
+            <th field="mobile"     data-options="sortable:true" width="80">联系电话</th>
+            <th field="address"  data-options="sortable:true" width="130">现住址</th>
+            <th field="departmentName"     data-options="sortable:true" width="80">部门</th>
+            <th field="jobName"     data-options="sortable:true" width="80">工种</th>
+            <th field="comment"     data-options="sortable:true" width="130">备注</th>
+            <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
 </div>
 
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/peopleContract2/add">
+    <shiro:hasPermission name="/peopleContract/add">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleContract2/batchDel">
+    <shiro:hasPermission name="/peopleContract/batchDel">
         <a onclick="batchDel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-del'">批量删除</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleContract2/importExcel">
+    <shiro:hasPermission name="/peopleContract/importExcel">
         <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导入</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleContract2/exportExcel">
+    <shiro:hasPermission name="/peopleContract/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleContract2/exportWord">
+    <shiro:hasPermission name="/peopleContract/exportWord">
         <a onclick="exportWord();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导出Word</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleContract2/advSearch">
+    <shiro:hasPermission name="/peopleContract/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/peopleContract2/exportSearch">
+    <shiro:hasPermission name="/peopleContract/exportSearch">
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>

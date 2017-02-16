@@ -9,8 +9,9 @@
         $('#hukou').val('${peopleContract.hukou}');
         $('#marriageId').val('${peopleContract.marriageId}');
         $('#nationalId').val('${peopleContract.nationalId}');
-        $('#imgShow').attr('src','${staticPath}/${peopleContract.photo}');
         $('#jobId').val('${peopleContract.jobId}');
+        $('#departmentId').val('${peopleContract.departmentId}');
+        $('#imgShow').attr('src','${staticPath}/${peopleContract.photo}');
     });
     $(function(){
         if("${peopleContract.province}" == ""){
@@ -109,7 +110,7 @@
                             <option value="1" >农业</option>
                         </select>
                     </td>
-                    <td>到院工作日期</td>
+                    <td>来院日期</td>
                     <td>
                         <input name="schoolDate" placeholder="点击选择时间"
                                onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
@@ -127,7 +128,8 @@
                 <tr>
                     <td>部门</td>
                     <td>
-                        <input type="text" name="departmentName" value="${peopleContract.departmentName}">
+                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>职级</td>
                     <td>
