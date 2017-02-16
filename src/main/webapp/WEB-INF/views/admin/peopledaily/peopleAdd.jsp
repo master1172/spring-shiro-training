@@ -73,7 +73,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>部门</td>
+                    <td>部门 </td>
                     <td>
                         <input type="text" name="extraDepartmentName">
                     </td>
