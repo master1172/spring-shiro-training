@@ -1,7 +1,7 @@
 package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.service.PeopleSalaryService;
+import com.wangzhixuan.model.PeopleTotal;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.utils.ConstUtil;
@@ -171,16 +171,7 @@ public class PeopleController extends BaseController{
     public Result transfer(PeopleTransferVo peopleTransferVo){
         Result result = new Result();
         try{
-            PeopleVo peopleVo = peopleService.findPeopleVoById(peopleTransferVo.getId());
-
-            //更新人员状态
-            if (peopleVo != null){
-                peopleVo.setStatus(ConstUtil.PEOPLE_TRANSFER);
-                peopleService.updatePeople(peopleVo);
-                //添加一条人员调动记录
-                peopleTransferService.addPeopleTransfer(peopleTransferVo,null);
-            }
-
+            peopleService.transferPeople(peopleTransferVo);
             result.setSuccess(true);
             result.setMsg("调动成功");
             return result;

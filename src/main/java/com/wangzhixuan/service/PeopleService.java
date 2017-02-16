@@ -2,6 +2,7 @@ package com.wangzhixuan.service;
 
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleTransferVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -107,4 +108,5 @@ public interface PeopleService {
     List findPeopleListByIds(String[] idList);
 
 
+    void transferPeople(PeopleTransferVo peopleTransferVo);
 }

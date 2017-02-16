@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.mapper.*;
-import com.wangzhixuan.model.PeopleTotal;
+import com.wangzhixuan.model.*;
+import com.wangzhixuan.vo.PeopleTransferVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -26,9 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleDeath;
-import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.DateUtil;
@@ -51,6 +49,9 @@ public class PeopleServiceImpl implements PeopleService{
 
 	@Autowired
 	private PeopleTotalMapper peopleTotalMapper;
+
+	@Autowired
+	private PeopleTransferMapper peopleTransferMapper;
 
 
     @Override
@@ -235,6 +236,54 @@ public class PeopleServiceImpl implements PeopleService{
 			peopleTotal.setDeathDate(DateUtil.GetToday());
 			peopleTotal.setStatus(ConstUtil.PEOPLE_DEATH);
 			peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+		}
+	}
+
+	@Override
+	public void transferPeople(PeopleTransferVo peopleTransferVo) {
+		if (peopleTransferVo == null)
+			return;
+
+		People people = peopleMapper.findPeopleByCode(peopleTransferVo.getPeopleCode());
+
+		if (people == null)
+			return;
+
+		Integer status = people.getStatus();
+
+		if (status != ConstUtil.PEOPLE_NORMAL)
+			return;
+
+		PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(people.getId());
+
+		if (peopleTotal == null)
+			return;
+
+		peopleTotal.setStatus(ConstUtil.PEOPLE_TRANSFER);
+		peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+
+
+		//为peopleTransfer添加一条新的记录
+		try{
+
+			if (StringUtils.isBlank(peopleTransferVo.getTransferDate())){
+				peopleTransferVo.setTransferDate(DateUtil.GetToday());
+			}
+
+			if(StringUtils.isBlank(peopleTransferVo.getSalaryEndDate())){
+				peopleTransferVo.setSalaryEndDate(null);
+			}
+
+			if(StringUtils.isBlank(peopleTransferVo.getPartyTransferDate())){
+				peopleTransferVo.setPartyTransferDate(null);
+			}
+
+			PeopleTransfer peopleTransfer = new PeopleTransfer();
+			BeanUtils.copyProperties(peopleTransfer,peopleTransferVo);
+			peopleTransfer.setId(null);
+			peopleTransferMapper.insert(peopleTransfer);
+		}catch (Exception exp){
+			exp.printStackTrace();
 		}
 	}
 
@@ -784,6 +833,8 @@ public class PeopleServiceImpl implements PeopleService{
 
 		return peopleList;
 	}
+
+
 
 	private void UpdatePeopleDate(People people) {
 

@@ -33,14 +33,14 @@
         id, people_code, people_name, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo
         </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from people_transfer
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleTransferVoById" resultMap="PeopleTransferVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleTransferVoById" resultMap="PeopleTransferVoResultMap" parameterType="java.lang.Integer">
         SELECT
           code as people_code,
           name as people_name
@@ -52,7 +52,7 @@
         </where>
     </select>
 
-    <select id="findPeopleTransferById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleTransferById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from people_transfer
@@ -161,13 +161,13 @@
         where people_code = #{peopleCode}
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
+    <delete id="deleteById" parameterType="java.lang.Integer">
         delete from people_transfer
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTransfer">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into people_transfer (people_code, people_name, people_type, from_school, to_school, transfer_date, ref_letter_no, salary_end_date, party_transfer_date, photo)
