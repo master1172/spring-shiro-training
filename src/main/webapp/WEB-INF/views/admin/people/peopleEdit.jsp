@@ -9,7 +9,7 @@
         $('#nativeId').val('${peopleVo.nativeId}');
         $('#degreeId').val('${peopleVo.degreeId}');
         $('#jobCategory').val('${peopleVo.jobCategory}');
-        $('#jobLevelId').val('${peopleVo.jobLevelId}');
+        $('#jobId').val('${peopleVo.jobId}');
         $('#marriageId').val('${peopleVo.marriageId}');
         $('#identityId').val('${peopleVo.identityId}');
         $('#imgShow').attr('src','${staticPath}/${peopleVo.photo}');
@@ -133,7 +133,7 @@
                     </td>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobLevelId" name="jobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>

@@ -21,9 +21,9 @@ public interface PeopleService {
      * @param id
      * @return
      */
-    People findPeopleById(Long id);
+    People findPeopleById(Integer id);
 
-    PeopleVo findPeopleVoById(Long id);
+    PeopleVo findPeopleVoById(Integer id);
 
     /**
      * 根据人员姓名查询人员
@@ -48,8 +48,6 @@ public interface PeopleService {
      */
     void addPeople(PeopleVo peoplevo,CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
-
-
     /**
      * 修改人员
      *
@@ -57,14 +55,14 @@ public interface PeopleService {
      */
     void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException;
 
-    void updatePeople(People people);
+    void updatePeople(PeopleVo peopleVo);
 
     /**
      * 删除人员
      *
      * @param id
      */
-    void deletePeopleById(Long id);
+    void deletePeopleById(Integer id);
 
     void batchDeletePeopleByIds(String[] ids);
 
@@ -75,20 +73,20 @@ public interface PeopleService {
     void batchDeathPeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException;
     /**
      * 数据导入
-     * @param list
+     * @param
      */
     boolean insertByImport(CommonsMultipartFile[] files);
     /**
      * 导出Excel
      * @param response
-     * @param id
+     * @param
      * @return
      */
     void exportExcel(HttpServletResponse response,String[] idList);
     
     /**
      * 导出Word
-     * @param request
+     * @param
      * @param response
      * @param id
      * @return
@@ -97,9 +95,9 @@ public interface PeopleService {
 
     /**
      * 根据条件搜索ids
-     * @param request
-     * @param response
-     * @param id
+     * @param
+     * @param
+     * @param
      * @return
      */
     String findPeopleIDsByCondition(PageInfo pageInfo);

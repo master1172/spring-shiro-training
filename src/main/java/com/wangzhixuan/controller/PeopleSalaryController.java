@@ -69,7 +69,7 @@ public class PeopleSalaryController extends BaseController{
     }
 
     @RequestMapping(value="/salaryListPage", method = RequestMethod.GET)
-    public String salaryListPage(Long id, Model model){
+    public String salaryListPage(Integer id, Model model){
 
         People people = peopleService.findPeopleById(id);
         if (people != null){
@@ -238,7 +238,7 @@ public class PeopleSalaryController extends BaseController{
             People people = peopleService.findPeopleByCode(peopleCode);
             if (people != null){
                 peopleSalaryBaseVo.setPeopleName(people.getName());
-                peopleSalaryBaseVo.setJobId(people.getJobLevelId());
+                peopleSalaryBaseVo.setJobId(people.getJobId());
             }
         }
 

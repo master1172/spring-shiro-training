@@ -17,7 +17,7 @@
         <result column="school_date"    property="schoolDate" jdbcType="DATE"/>
         <result column="job_name"       property="jobName"  jdbcType="VARCHAR"/>
         <result column="job_category"   property="jobCategory" jdbcType="VARCHAR"/>
-        <result column="job_level_id"   property="jobLevelId"  jdbcType="INTEGER"/>
+        <result column="job_id"         property="jobId"       jdbcType="INTEGER"/>
         <result column="job_date"       property="jobDate"  jdbcType="DATE"/>
         <result column="job_level_date" property="jobLevelDate" jdbcType="DATE"/>
         <result column="age"            property="age"  jdbcType="INTEGER"/>
@@ -64,7 +64,7 @@
         <result column="school_date"    property="schoolDate"   jdbcType="DATE"/>
         <result column="job_name"       property="jobName"      jdbcType="VARCHAR"/>
         <result column="job_category"   property="jobCategory"  jdbcType="VARCHAR"/>
-        <result column="job_level_id"   property="jobLevelId"   jdbcType="INTEGER"/>
+        <result column="job_id"         property="jobId"        jdbcType="INTEGER"/>
         <result column="job_level_name" property="jobLevelName" jdbcType="VARCHAR"/>
         <result column="job_date"       property="jobDate"      jdbcType="DATE"/>
         <result column="job_level_date" property="jobLevelDate" jdbcType="DATE"/>
@@ -117,20 +117,20 @@
 
     <sql id="Base_Column_List">
         id, code, name, sex, national_id, birthday, native_id, education_name, degree_id, political_name,
-        party_date, work_date, school_date, job_name, job_category, job_level_id, job_date, job_level_date,
+        party_date, work_date, school_date, job_name, job_category, job_id, job_date, job_level_date,
         age, virtual_age, work_age, formation, mobile, marriage_id, photo_id, address, hukou, hukou_address,
         final_education_name, major, graduate_school, contact, relationship, contact_number, family_info_1,
         family_info_2, family_info_3, family_info_4, photo, identity_id, status
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people
+        from people_total
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleVoById" resultMap="peopleVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleVoById" resultMap="peopleVoResultMap" parameterType="java.lang.Integer">
         SELECT
           t.id,
           t.code,
@@ -150,7 +150,7 @@
           t.school_date,
           t.job_name,
           t.job_category,
-          t.job_level_id,
+          t.job_id,
           j.job_level as job_level_name,
           t.job_date,
           t.job_level_date,
@@ -180,7 +180,7 @@
           i.name as identity_name,
           t.status
         FROM
-          people t
+          people_total t
         LEFT JOIN
           dict_national n ON n.id = t.national_id
         LEFT JOIN
@@ -188,7 +188,7 @@
         LEFT JOIN
           dict_degree de ON de.id = t.degree_id
         LEFT JOIN
-          job j ON j.id = t.job_level_id
+          job j ON j.id = t.job_id
         LEFT JOIN
           dict_marriage m ON m.id = t.marriage_id
         LEFT JOIN
@@ -198,31 +198,31 @@
         </where>
     </select>
 
-    <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people
+        from people_total
         where id = #{id}
     </select>
 
     <select id="findPeopleByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM people
+        FROM people_total
         WHERE code = #{code, jdbcType=VARCHAR}
     </select>
 
     <select id="findPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from people
+        from people_total
         where name LIKE concat('%',#{name},'%')
     </select>
 
     <select id="findFirstPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List" />
-        from people
+        from people_total
         where name = #{name, jdbcType=VARCHAR}
         LIMIT 0,1
     </select>
@@ -247,7 +247,7 @@
             t.school_date,
             t.job_name,
             t.job_category,
-            t.job_level_id,
+            t.job_id,
             j.job_level as job_level_name,
             t.job_date,
             t.job_level_date,
@@ -277,7 +277,7 @@
             i.name as identity_name,
             t.status
         FROM
-          people t
+          people_total t
         LEFT JOIN
           dict_national n ON n.id = t.national_id
         LEFT JOIN
@@ -285,7 +285,7 @@
         LEFT JOIN
           dict_degree de ON de.id = t.degree_id
         LEFT JOIN
-          job j ON j.id = t.job_level_id
+          job j ON j.id = t.job_id
         LEFT JOIN
           dict_marriage m ON m.id = t.degree_id
         LEFT JOIN
@@ -360,9 +360,9 @@
                     #{item}
                 </foreach>
             </if>
-            <if test=" condition.jobLevelIdList != null">
-                and t.job_level_id in
-                <foreach item="item" index="index" collection="condition.jobLevelIdList" open="(" separator="," close=")">
+            <if test=" condition.jobIdList != null">
+                and t.job_id in
+                <foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
@@ -391,7 +391,7 @@
     <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(t.id) count
         FROM
-          people t
+          people_total t
         LEFT JOIN
         dict_national n ON n.id = t.national_id
         LEFT JOIN
@@ -399,7 +399,7 @@
         LEFT JOIN
         dict_degree de ON de.id = t.degree_id
         LEFT JOIN
-        job j ON j.id = t.job_level_id
+        job j ON j.id = t.job_id
         LEFT JOIN
         dict_marriage m ON m.id = t.degree_id
         LEFT JOIN
@@ -474,9 +474,9 @@
                     #{item}
                 </foreach>
             </if>
-            <if test=" condition.jobLevelIdList != null">
-                and t.job_level_id in
-                <foreach item="item" index="index" collection="condition.jobLevelIdList" open="(" separator="," close=")">
+            <if test=" condition.jobIdList != null">
+                and t.job_id in
+                <foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
@@ -521,7 +521,7 @@
         t.school_date,
         t.job_name,
         t.job_category,
-        t.job_level_id,
+        t.job_id,
         j.job_level as job_level_name,
         t.job_date,
         t.job_level_date,
@@ -551,7 +551,7 @@
         i.name as identity_name,
         t.status
         FROM
-        people t
+          people_total t
         LEFT JOIN
         dict_national n ON n.id = t.national_id
         LEFT JOIN
@@ -559,7 +559,7 @@
         LEFT JOIN
         dict_degree de ON de.id = t.degree_id
         LEFT JOIN
-        job j ON j.id = t.job_level_id
+        job j ON j.id = t.job_id
         LEFT JOIN
         dict_marriage m ON m.id = t.degree_id
         LEFT JOIN
@@ -579,7 +579,7 @@
     <select id="findPeopleNearRetirePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(t.id) count
         FROM
-        people t
+        people_total t
         LEFT JOIN
         dict_national n ON n.id = t.national_id
         LEFT JOIN
@@ -587,7 +587,7 @@
         LEFT JOIN
         dict_degree de ON de.id = t.degree_id
         LEFT JOIN
-        job j ON j.id = t.job_level_id
+        job j ON j.id = t.job_id
         LEFT JOIN
         dict_marriage m ON m.id = t.degree_id
         LEFT JOIN
@@ -603,13 +603,13 @@
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from people_total
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people
+        delete from people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -618,12 +618,12 @@
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.People">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people (
+        insert into people_total (
           code, name, sex, national_id, birthday, native_id, education_name, degree_id,
-          political_name, party_date, work_date, school_date, job_name, job_category, job_level_id,
+          political_name, party_date, work_date, school_date, job_name, job_category, job_id,
           job_date, job_level_date, age, virtual_age, work_age, formation, mobile, marriage_id,
           photo_id, address, hukou, hukou_address, final_education_name, major, graduate_school,
           contact, relationship, contact_number, family_info_1, family_info_2, family_info_3,
@@ -643,7 +643,7 @@
           #{schoolDate, jdbcType=DATE},
           #{jobName, jdbcType=VARCHAR},
           #{jobCategory, jdbcType=VARCHAR},
-          #{jobLevelId, jdbcType=INTEGER},
+          #{jobId, jdbcType=INTEGER},
           #{jobDate, jdbcType=DATE},
           #{jobLevelDate, jdbcType=DATE},
           #{age, jdbcType=INTEGER},
@@ -672,9 +672,9 @@
          )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people (
+        insert into people_total (
           code, name, sex, national_id, birthday, native_id, education_name, degree_id,
-          political_name, party_date, work_date, school_date, job_name, job_category, job_level_id,
+          political_name, party_date, work_date, school_date, job_name, job_category, job_id,
           job_date, job_level_date, age, virtual_age, work_age, formation, mobile, marriage_id,
           photo_id, address, hukou, hukou_address, final_education_name, major, graduate_school,
           contact, relationship, contact_number, family_info_1, family_info_2, family_info_3,
@@ -696,7 +696,7 @@
             #{item.schoolDate, jdbcType=DATE},
             #{item.jobName, jdbcType=VARCHAR},
             #{item.jobCategory, jdbcType=VARCHAR},
-            #{item.jobLevelId, jdbcType=INTEGER},
+            #{item.jobId, jdbcType=INTEGER},
             #{item.jobDate, jdbcType=DATE},
             #{item.jobLevelDate, jdbcType=DATE},
             #{item.age, jdbcType=INTEGER},
@@ -726,7 +726,7 @@
         </foreach>
     </insert>
     <update id="updatePeople" parameterType="com.wangzhixuan.model.People">
-        update people
+        update people_total
         <set>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
@@ -767,8 +767,8 @@
             job_name = #{jobName, jdbcType=VARCHAR},
             job_category = #{jobCategory,jdbcType=VARCHAR},
 
-            <if test="jobLevelId != null">
-                job_level_id = #{jobLevelId, jdbcType=INTEGER},
+            <if test="jobId != null">
+                job_id = #{jobId, jdbcType=INTEGER},
             </if>
 
             <if test="jobDate != null">
@@ -828,7 +828,7 @@
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
         <include refid="Base_Column_List" />
-        from people
+        from people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -855,7 +855,7 @@
             t.school_date,
             t.job_name,
             t.job_category,
-            t.job_level_id,
+            t.job_id,
             j.job_level as job_level_name,
             t.job_date,
             t.job_level_date,
@@ -885,7 +885,7 @@
             i.name as identity_name,
             t.status
         FROM
-          people t
+        people_total t
         LEFT JOIN
           dict_national n ON n.id = t.national_id
         LEFT JOIN
@@ -893,7 +893,7 @@
         LEFT JOIN
           dict_degree de ON de.id = t.degree_id
         LEFT JOIN
-          job j ON j.id = t.job_level_id
+          job j ON j.id = t.job_id
         LEFT JOIN
           dict_marriage m ON m.id = t.degree_id
         LEFT JOIN

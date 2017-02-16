@@ -1,11 +1,13 @@
 package com.wangzhixuan.controller;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.wangzhixuan.code.Result;
 import com.wangzhixuan.service.PeopleSalaryService;
+import com.wangzhixuan.service.PeopleService;
+import com.wangzhixuan.service.PeopleTransferService;
+import com.wangzhixuan.utils.ConstUtil;
+import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.PeopleTransferVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.code.Result;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleTransfer;
-import com.wangzhixuan.service.PeopleService;
-import com.wangzhixuan.service.PeopleTransferService;
-import com.wangzhixuan.utils.ConstUtil;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleVo;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * Created by liushaoyang on 2016/9/8.
@@ -42,9 +39,6 @@ public class PeopleController extends BaseController{
 
     @Autowired
     private PeopleTransferService peopleTransferService;
-
-    @Autowired
-    private PeopleSalaryService peopleSalaryService;
 
     /**
      * 人员管理页
@@ -73,7 +67,6 @@ public class PeopleController extends BaseController{
         Map<String,Object> condition = PeopleVo.CreateCondition(peoplevo);
         pageInfo.setCondition(condition);
         peopleService.findDataGrid(pageInfo, request);
-
         return pageInfo;
     }
 
@@ -119,10 +112,7 @@ public class PeopleController extends BaseController{
     public String addPage(){
         return "admin/people/peopleAdd";
     }
-    @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
-    public String importExcelPage(){
-        return "admin/people/importExcelPage";
-    }
+
     /**
      * 添加用户
      *
@@ -147,7 +137,7 @@ public class PeopleController extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleVo peopleVo = peopleService.findPeopleVoById(id);
         model.addAttribute("peopleVo",peopleVo);
         return "/admin/people/peopleEdit";
@@ -159,8 +149,6 @@ public class PeopleController extends BaseController{
         Result result = new Result();
         try{
             peopleService.updatePeople(peoplevo,file);
-            //如果修改人员信息的时候，同时也修改了人员的职级，那么同时也需要修改此人base salary里面的岗位和岗位工资
-            peopleSalaryService.updateSalaryJobLevel(peoplevo);
             result.setSuccess(true);
             result.setMsg("修改成功!");
             return result;
@@ -172,7 +160,7 @@ public class PeopleController extends BaseController{
     }
 
     @RequestMapping("/transferPage")
-    public String transferPage(Long id, Model model){
+    public String transferPage(Integer id, Model model){
         PeopleVo peopleVo = peopleService.findPeopleVoById(id);
         model.addAttribute("peopleVo", peopleVo);
         return "/admin/people/peopleTransfer";
@@ -180,17 +168,17 @@ public class PeopleController extends BaseController{
 
     @RequestMapping("/transfer")
     @ResponseBody
-    public Result transfer(PeopleTransfer peopleTransfer){
+    public Result transfer(PeopleTransferVo peopleTransferVo){
         Result result = new Result();
         try{
-            People people = peopleService.findPeopleById(peopleTransfer.getId());
+            PeopleVo peopleVo = peopleService.findPeopleVoById(peopleTransferVo.getId());
 
             //更新人员状态
-            if (people != null){
-                people.setStatus(ConstUtil.PEOPLE_TRANSFER);
-                peopleService.updatePeople(people);
+            if (peopleVo != null){
+                peopleVo.setStatus(ConstUtil.PEOPLE_TRANSFER);
+                peopleService.updatePeople(peopleVo);
                 //添加一条人员调动记录
-                peopleTransferService.addPeopleTransfer(peopleTransfer,null);
+                peopleTransferService.addPeopleTransfer(peopleTransferVo,null);
             }
 
             result.setSuccess(true);
@@ -205,7 +193,7 @@ public class PeopleController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleService.deletePeopleById(id);
@@ -291,6 +279,11 @@ public class PeopleController extends BaseController{
         }
     }
 
+
+    @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
+    public String importExcelPage(){
+        return "admin/people/importExcelPage";
+    }
 
     /**
      * 批量调入W

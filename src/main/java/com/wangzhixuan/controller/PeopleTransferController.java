@@ -137,7 +137,7 @@ public class PeopleTransferController extends BaseController{
     }
 
     @RequestMapping(value="/transferListPage", method = RequestMethod.GET)
-    public String transferListPage(Long id, Model model){
+    public String transferListPage(Integer id, Model model){
 
         People people = peopleService.findPeopleById(id);
 
@@ -150,7 +150,7 @@ public class PeopleTransferController extends BaseController{
     }
 
     @RequestMapping(value="/transferPage", method=RequestMethod.GET)
-    public String transferPage(Long id, String code, Model model){
+    public String transferPage(Integer id, String code, Model model){
 
         People people = null;
 
@@ -172,19 +172,19 @@ public class PeopleTransferController extends BaseController{
     /**
      * 添加用户
      *
-     * @param peopleTransfer
+     * @param
      * @return
      */
     @RequestMapping(value = "/transfer", method = RequestMethod.POST, headers = "Accept=application/json")
     @ResponseBody
-    public Result add(PeopleTransfer peopleTransfer,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
+    public Result add(PeopleTransferVo peopleTransferVo,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
         Result result = new Result();
         try {
-            peopleTransferService.addPeopleTransfer(peopleTransfer,file);
-            People people = peopleService.findPeopleByCode(peopleTransfer.getPeopleCode());
+            peopleTransferService.addPeopleTransfer(peopleTransferVo,file);
+            People people = peopleService.findPeopleByCode(peopleTransferVo.getPeopleCode());
             if (people != null){
                 people.setStatus(ConstUtil.PEOPLE_TRANSFER);
-                peopleService.updatePeople(people);
+                //peopleService.updatePeople(people);
             }
             result.setSuccess(true);
             result.setMsg("人员调动成功");

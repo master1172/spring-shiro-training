@@ -9,6 +9,7 @@ import com.wangzhixuan.model.PeopleTransfer;
 import com.wangzhixuan.service.PeopleTransferService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleTransferVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.util.StringUtil;
 import org.apache.poi.xssf.usermodel.*;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,31 +87,29 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
     }
 
     @Override
-    public void addPeopleTransfer(PeopleTransfer peopleTransfer,CommonsMultipartFile file) {
+    public void addPeopleTransfer(PeopleTransferVo peopleTransferVo,CommonsMultipartFile file) {
 
         //当TransferDate不为空，而是""的时候，需要修改为null，否则插入会有错误
-        if (peopleTransfer != null){
-            if (StringUtils.isEmpty(peopleTransfer.getTransferDate())){
-                peopleTransfer.setTransferDate(null);
+        if (peopleTransferVo != null){
+            if (StringUtils.isEmpty(peopleTransferVo.getTransferDate())){
+                peopleTransferVo.setTransferDate(null);
             }
         }
 
         //当partyTransferDate不为空，而是""的时候，需要修改为null，否则插入会有错误
-        if (peopleTransfer != null){
-            if (StringUtils.isEmpty(peopleTransfer.getPartyTransferDate())){
-                peopleTransfer.setPartyTransferDate(null);
+        if (peopleTransferVo != null){
+            if (StringUtils.isEmpty(peopleTransferVo.getPartyTransferDate())){
+                peopleTransferVo.setPartyTransferDate(null);
             }
         }
 
-        if(file!=null){//上传附件
-            //获取头像上传路径
-            String filePath = StringUtilExtra.getPictureUploadPath();
-            String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
-            if(StringUtils.isNotEmpty(uploadPath) ){
-                peopleTransferMapper.insert(peopleTransfer);
-            }
-        }else{
+
+        try {
+            PeopleTransfer peopleTransfer = new PeopleTransfer();
+            BeanUtils.copyProperties(peopleTransfer,peopleTransferVo);
             peopleTransferMapper.insert(peopleTransfer);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -421,7 +421,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
         if (people == null)
             return;
 
-        Integer jobLevelId = people.getJobLevelId();
+        Integer jobLevelId = people.getJobId();
         PeopleJob peopleJob = null;
         if (jobLevelId != null)
             peopleJob = peopleJobMapper.findPeopleJobById(jobLevelId.longValue());
@@ -486,7 +486,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
 
         sum = jobSalary.add(rankSalary).add(reserverSalary);
 
-        Integer jobLevelId = people.getJobLevelId();
+        Integer jobLevelId = people.getJobId();
         PeopleJob peopleJob = null;
         if (jobLevelId != null)
             peopleJob = peopleJobMapper.findPeopleJobById(jobLevelId.longValue());

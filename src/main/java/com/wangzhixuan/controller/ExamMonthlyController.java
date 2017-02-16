@@ -64,7 +64,7 @@ public class ExamMonthlyController extends BaseController {
 	}
 
 	@RequestMapping(value="/examMonthlyListPage", method = RequestMethod.GET)
-	public String examMonthlyListPage(Long id, Model model){
+	public String examMonthlyListPage(Integer id, Model model){
 
 		People people = peopleService.findPeopleById(id);
 		if (people != null){

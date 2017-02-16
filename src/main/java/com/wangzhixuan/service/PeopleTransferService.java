@@ -2,6 +2,7 @@ package com.wangzhixuan.service;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.vo.PeopleTransferVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.wangzhixuan.model.PeopleTransfer;
@@ -46,7 +47,7 @@ public interface PeopleTransferService {
      *
      * @param peopleTransfer
      */
-    void addPeopleTransfer(PeopleTransfer peopleTransfer,CommonsMultipartFile file);
+    void addPeopleTransfer(PeopleTransferVo peopleTransferVo, CommonsMultipartFile file);
 
 
 

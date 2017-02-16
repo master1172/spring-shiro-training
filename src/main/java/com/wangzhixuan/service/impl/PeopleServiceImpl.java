@@ -51,19 +51,14 @@ public class PeopleServiceImpl implements PeopleService{
 	@Autowired
 	private DictMapper dictMapper;
 
-	@Autowired
-	private PeopleDeathMapper peopleDeathMapper;
-
-	@Autowired
-	private PeopleRetireMapper peopleRetireMapper;
 
     @Override
-    public People findPeopleById(Long id) {
+    public People findPeopleById(Integer id) {
         return peopleMapper.findPeopleById(id);
     }
 
 	@Override
-	public PeopleVo findPeopleVoById(Long id){
+	public PeopleVo findPeopleVoById(Integer id){
 		PeopleVo peopleVo = peopleMapper.findPeopleVoById(id);
 		SplitFamilyInfo(peopleVo);
 		return peopleVo;
@@ -77,7 +72,6 @@ public class PeopleServiceImpl implements PeopleService{
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
 		String nearRetire = request.getParameter("nearRetire");
-
 		if (StringUtils.isNoneBlank(nearRetire)){
 			pageInfo.setRows(peopleMapper.findPeopleNearRetirePageCondition(pageInfo));
 			pageInfo.setTotal(peopleMapper.findPeopleNearRetirePageCount(pageInfo));
@@ -101,6 +95,7 @@ public class PeopleServiceImpl implements PeopleService{
 
 		//将peoplevo里分散的familyInfo放入people实体中
 		UpdatePeopleFamilyInfo(peoplevo,people);
+
 		if(file!=null){//上传附件
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
@@ -119,11 +114,13 @@ public class PeopleServiceImpl implements PeopleService{
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
 		UpdatePeopleDate(peoplevo);
+
 		People people = new People();
 		BeanUtils.copyProperties(people,peoplevo);
 		people.setStatus(ConstUtil.PEOPLE_NORMAL);
 		//将peoplevo里分散的familyInfo放入people实体中
 		UpdatePeopleFamilyInfo(peoplevo,people);
+
 		if (file != null){
 			//获取头像上传路径
 			String filePath = StringUtilExtra.getPictureUploadPath();
@@ -138,12 +135,18 @@ public class PeopleServiceImpl implements PeopleService{
     }
 
 	@Override
-	public void updatePeople(People people){
-		peopleMapper.updatePeople(people);
+	public void updatePeople(PeopleVo peopleVo){
+		People people = new People();
+		try {
+			BeanUtils.copyProperties(people,peopleVo);
+			peopleMapper.updatePeople(people);
+		} catch (Exception e) {
+
+		}
 	}
 
 	@Override
-    public void deletePeopleById(Long id) {
+    public void deletePeopleById(Integer id) {
         peopleMapper.deleteById(id);
     }
 
@@ -179,68 +182,21 @@ public class PeopleServiceImpl implements PeopleService{
 			return;
 
 		for (PeopleVo peopleVo: peopleVoList) {
+
 			if (peopleVo == null)
 				continue;
+
 			int status = peopleVo.getStatus();
 
 			if (status != ConstUtil.PEOPLE_NORMAL)
 				continue;
-			String code = peopleVo.getCode();
 
-			if (StringUtils.isNoneBlank(code)){
-				//在将在编人员转入退休人员库之前，需要先判断该人是否已经在退休人员库中有记录了。
-				//如果有，那么只需要更新该人的信息就可以了
-				PeopleRetire oldPeopleRetire = peopleRetireMapper.findPeopleRetireByCode(code);
+			UpdatePeopleDate(peopleVo);
+			People people = new People();
+			BeanUtils.copyProperties(people,peopleVo);
+			people.setStatus(ConstUtil.PEOPLE_RETIRE);
 
-				if (oldPeopleRetire != null){
-					oldPeopleRetire.setName(peopleVo.getName());
-					oldPeopleRetire.setRetireJobName(peopleVo.getJobName());
-					oldPeopleRetire.setRetireJobLevelId(peopleVo.getJobLevelId());
-					oldPeopleRetire.setSex(peopleVo.getSex());
-					oldPeopleRetire.setNationalId(peopleVo.getNationalId());
-					oldPeopleRetire.setEducationName(peopleVo.getEducationName());
-					oldPeopleRetire.setBirthday(peopleVo.getBirthday());
-					oldPeopleRetire.setPoliticalName(peopleVo.getPoliticalName());
-					oldPeopleRetire.setWorkDate(peopleVo.getWorkDate());
-					oldPeopleRetire.setRetireDate(DateUtil.GetDate(new Date()));
-					oldPeopleRetire.setAddress(peopleVo.getAddress());
-					oldPeopleRetire.setMobile(peopleVo.getMobile());
-					oldPeopleRetire.setContact(peopleVo.getContact());
-					oldPeopleRetire.setContactNumber(peopleVo.getContactNumber());
-					oldPeopleRetire.setStatus(ConstUtil.PEOPLE_RETIRE_RETIRE);
-					oldPeopleRetire.setPhoto(peopleVo.getPhoto());
-					peopleRetireMapper.updatePeopleRetire(oldPeopleRetire);
-				}else{
-					//在退休人员数据库中没有查到，插入一条新的记录
-					PeopleRetire peopleRetire = new PeopleRetire();
-
-					peopleRetire.setCode(peopleVo.getCode());
-					peopleRetire.setName(peopleVo.getName());
-					peopleRetire.setRetireJobName(peopleVo.getJobName());
-					peopleRetire.setRetireJobLevelId(peopleVo.getJobLevelId());
-					peopleRetire.setSex(peopleVo.getSex());
-					peopleRetire.setNationalId(peopleVo.getNationalId());
-					peopleRetire.setEducationName(peopleVo.getEducationName());
-					peopleRetire.setBirthday(peopleVo.getBirthday());
-					peopleRetire.setPoliticalName(peopleVo.getPoliticalName());
-					peopleRetire.setWorkDate(peopleVo.getWorkDate());
-					peopleRetire.setRetireDate(DateUtil.GetDate(new Date()));
-					peopleRetire.setAddress(peopleVo.getAddress());
-					peopleRetire.setMobile(peopleVo.getMobile());
-					peopleRetire.setContact(peopleVo.getContact());
-					peopleRetire.setContactNumber(peopleVo.getContactNumber());
-					peopleRetire.setStatus(ConstUtil.PEOPLE_RETIRE_RETIRE);
-					peopleRetire.setPhoto(peopleVo.getPhoto());
-
-					peopleRetireMapper.insert(peopleRetire);
-				}
-
-				//更新在编人员数据库，将其状态改为退休
-				People people = new People();
-				BeanUtils.copyProperties(people,peopleVo);
-				people.setStatus(ConstUtil.PEOPLE_RETIRE);
-				peopleMapper.updatePeople(people);
-			}
+			peopleMapper.updatePeople(people);
 		}
 	}
 
@@ -259,46 +215,15 @@ public class PeopleServiceImpl implements PeopleService{
 
 			if (status != ConstUtil.PEOPLE_NORMAL)
 				continue;
-			String code = peopleVo.getCode();
 
-			if (StringUtils.isNoneBlank(code)){
-				//在将在编人员转入已故人员库之前，需要先判断该人是否已经在已故人员库中有记录了。如果有，那么只需要更新该人的信息就可以了
-				PeopleDeath oldPeopleDeath = peopleDeathMapper.findPeopleByCode(code);
 
-				if (oldPeopleDeath != null){
-					oldPeopleDeath.setName(peopleVo.getName());
-					oldPeopleDeath.setSex(peopleVo.getSex());
-					oldPeopleDeath.setNational(peopleVo.getNationalId());
-					oldPeopleDeath.setBirthday(peopleVo.getBirthday());
-					oldPeopleDeath.setSchool_date(peopleVo.getSchoolDate());
-					oldPeopleDeath.setCategory(peopleVo.getJobCategory());
-					oldPeopleDeath.setJob_level_id(peopleVo.getJobLevelId());
-					oldPeopleDeath.setPhoto(peopleVo.getPhoto());
-					oldPeopleDeath.setDeath_date(DateUtil.GetDate(new Date()));
-					peopleDeathMapper.updatePeople(oldPeopleDeath);
-				}else{
-					//在已故人员数据库中没有查到，插入一条新的记录
-					PeopleDeath peopleDeath = new PeopleDeath();
+			//更新在编人员数据库，将其状态改为死亡
+			UpdatePeopleDate(peopleVo);
+			People people = new People();
+			BeanUtils.copyProperties(people,peopleVo);
+			people.setStatus(ConstUtil.PEOPLE_DEATH);
 
-					peopleDeath.setName(peopleVo.getName());
-					peopleDeath.setCode(peopleVo.getCode());
-					peopleDeath.setSex(peopleVo.getSex());
-					peopleDeath.setNational(peopleVo.getNationalId());
-					peopleDeath.setBirthday(peopleVo.getBirthday());
-					peopleDeath.setSchool_date(peopleVo.getSchoolDate());
-					peopleDeath.setCategory(peopleVo.getJobCategory());
-					peopleDeath.setJob_level_id(peopleVo.getJobLevelId());
-					peopleDeath.setPhoto(peopleVo.getPhoto());
-					peopleDeath.setDeath_date(DateUtil.GetDate(new Date()));
-					peopleDeathMapper.insert(peopleDeath);
-				}
-
-				//更新在编人员数据库，将其状态改为死亡
-				People people = new People();
-				BeanUtils.copyProperties(people,peopleVo);
-				people.setStatus(ConstUtil.PEOPLE_DEATH);
-				peopleMapper.updatePeople(people);
-			}
+			peopleMapper.updatePeople(people);
 		}
 	}
 
@@ -467,7 +392,7 @@ public class PeopleServiceImpl implements PeopleService{
 
 					Integer jobLevelId = dictMapper.findJobLevelIdByName(jobLevelName);
 					if (jobLevelId != null)
-						p.setJobLevelId(jobLevelId);
+						p.setJobId(jobLevelId);
 				}
 
 				//现职务时间
@@ -722,7 +647,7 @@ public class PeopleServiceImpl implements PeopleService{
 	//导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-		PeopleVo p= peopleMapper.findPeopleVoById(Long.valueOf(id));
+		PeopleVo p= peopleMapper.findPeopleVoById(Integer.valueOf(id));
     	if(p!=null){
         	XWPFDocument doc;
     		OutputStream os;
@@ -833,9 +758,9 @@ public class PeopleServiceImpl implements PeopleService{
 		for(String idString: idList){
 			if (StringUtils.isBlank(idString))
 				continue;
-			Long id;
+			Integer id;
 			try{
-				id = Long.parseLong(idString);
+				id = Integer.valueOf(idString);
 			}catch (Exception exp){
 				continue;
 			}

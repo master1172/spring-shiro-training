@@ -70,7 +70,7 @@ public class ExamYearlyController extends BaseController {
 		return pageInfo;
 	}
 	@RequestMapping(value="/examYearlyListPage", method = RequestMethod.GET)
-	public String examYearlyListPage(Long id, Model model){
+	public String examYearlyListPage(Integer id, Model model){
 
 		People people = peopleService.findPeopleById(id);
 		if (people != null){

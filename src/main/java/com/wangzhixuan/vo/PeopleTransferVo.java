@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class PeopleTransferVo implements Serializable {
 
-    private Long id;
+    private Integer id;
 
     private String peopleName;
 
@@ -49,11 +49,11 @@ public class PeopleTransferVo implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

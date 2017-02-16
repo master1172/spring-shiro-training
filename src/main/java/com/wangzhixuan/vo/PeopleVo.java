@@ -2,6 +2,7 @@ package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.util.StringUtil;
 
@@ -48,46 +49,6 @@ public class PeopleVo implements Serializable{
 
     private Integer degreeId;
 
-    public String getNativeIdList() {
-        return nativeIdList;
-    }
-
-    public void setNativeIdList(String nativeIdList) {
-        this.nativeIdList = nativeIdList;
-    }
-
-    public String getDegreeIdList() {
-        return degreeIdList;
-    }
-
-    public void setDegreeIdList(String degreeIdList) {
-        this.degreeIdList = degreeIdList;
-    }
-
-    public String getJobLevelIdList() {
-        return jobLevelIdList;
-    }
-
-    public void setJobLevelIdList(String jobLevelIdList) {
-        this.jobLevelIdList = jobLevelIdList;
-    }
-
-    public String getMarriageIdList() {
-        return marriageIdList;
-    }
-
-    public void setMarriageIdList(String marriageIdList) {
-        this.marriageIdList = marriageIdList;
-    }
-
-    public String getIdentityIdList() {
-        return identityIdList;
-    }
-
-    public void setIdentityIdList(String identityIdList) {
-        this.identityIdList = identityIdList;
-    }
-
     private String degreeName;
 
     private String degreeIdList;
@@ -123,21 +84,13 @@ public class PeopleVo implements Serializable{
 
     private String jobName;
 
-    public String getJobCategoryList() {
-        return jobCategoryList;
-    }
-
-    public void setJobCategoryList(String jobCategoryList) {
-        this.jobCategoryList = jobCategoryList;
-    }
-
     private String jobCategory;
 
     private String jobCategoryList;
 
-    private Integer jobLevelId;
+    private Integer jobId;
 
-    private String jobLevelIdList;
+    private String jobIdList;
 
     private String jobLevelName;
 
@@ -341,6 +294,54 @@ public class PeopleVo implements Serializable{
         this.birthdayMax = birthdayMax;
     }
 
+    public String getNativeIdList() {
+        return nativeIdList;
+    }
+
+    public void setNativeIdList(String nativeIdList) {
+        this.nativeIdList = nativeIdList;
+    }
+
+    public String getDegreeIdList() {
+        return degreeIdList;
+    }
+
+    public void setDegreeIdList(String degreeIdList) {
+        this.degreeIdList = degreeIdList;
+    }
+
+    public String getJobIdList() {
+        return jobIdList;
+    }
+
+    public void setJobIdList(String jobIdList) {
+        this.jobIdList = jobIdList;
+    }
+
+    public String getMarriageIdList() {
+        return marriageIdList;
+    }
+
+    public void setMarriageIdList(String marriageIdList) {
+        this.marriageIdList = marriageIdList;
+    }
+
+    public String getIdentityIdList() {
+        return identityIdList;
+    }
+
+    public void setIdentityIdList(String identityIdList) {
+        this.identityIdList = identityIdList;
+    }
+
+    public String getJobCategoryList() {
+        return jobCategoryList;
+    }
+
+    public void setJobCategoryList(String jobCategoryList) {
+        this.jobCategoryList = jobCategoryList;
+    }
+
     public Integer getNativeId() {
         return nativeId;
     }
@@ -475,12 +476,12 @@ public class PeopleVo implements Serializable{
         this.jobCategory = jobCategory;
     }
 
-    public Integer getJobLevelId() {
-        return jobLevelId;
+    public Integer getJobId() {
+        return jobId;
     }
 
-    public void setJobLevelId(Integer jobLevelId) {
-        this.jobLevelId = jobLevelId;
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public String getJobLevelName() {
@@ -1026,12 +1027,12 @@ public class PeopleVo implements Serializable{
             condition.put("jobCategoryList", peoplevo.getJobCategoryList().split(","));
         }
 
-        if (peoplevo.getJobLevelId() != null){
-            condition.put("jobLevelId", peoplevo.getJobLevelId());
+        if (peoplevo.getJobId() != null){
+            condition.put("jobId", peoplevo.getJobId());
         }
 
-        if (StringUtils.isNoneBlank(peoplevo.getJobLevelIdList())){
-            condition.put("jobLevelIdList", peoplevo.getJobLevelIdList().split(","));
+        if (StringUtils.isNoneBlank(peoplevo.getJobIdList())){
+            condition.put("jobIdList", peoplevo.getJobIdList().split(","));
         }
 
         if (StringUtils.isNoneBlank(peoplevo.getJobDateMin())){
@@ -1049,6 +1050,8 @@ public class PeopleVo implements Serializable{
         if(StringUtils.isNoneBlank(peoplevo.getJobLevelDateMax())){
             condition.put("jobLevelDateMax", peoplevo.getJobLevelDateMax());
         }
+
+        condition.put("status", ConstUtil.PEOPLE_NORMAL);
 
         return condition;
     }

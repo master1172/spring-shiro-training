@@ -78,7 +78,7 @@ public class PeopleTimeSheetController extends BaseController {
 	}
 
 	@RequestMapping(value="/timesheetListPage", method = RequestMethod.GET)
-	public String timesheetListPage(Long id, Model model){
+	public String timesheetListPage(Integer id, Model model){
 
 		People people = peopleService.findPeopleById(id);
 		if (people != null){

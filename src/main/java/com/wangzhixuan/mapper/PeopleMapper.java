@@ -19,7 +19,7 @@ public interface PeopleMapper {
      * @param id
      * @return
      */
-    int deleteById(Long id);
+    int deleteById(Integer id);
 
     /**
      * 添加人员
@@ -51,7 +51,7 @@ public interface PeopleMapper {
      * @param id
      * @return
      */
-    People findPeopleById(Long id);
+    People findPeopleById(Integer id);
 
     /**
      * 人员列表
@@ -100,7 +100,7 @@ public interface PeopleMapper {
      * @param id
      * @return
      */
-    PeopleVo findPeopleVoById(Long id);
+    PeopleVo findPeopleVoById(Integer id);
 
     People findPeopleByCode(String code);
 

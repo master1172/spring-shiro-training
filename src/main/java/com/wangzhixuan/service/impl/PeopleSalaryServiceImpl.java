@@ -216,10 +216,10 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Override
     public void updateSalaryJobLevel(PeopleVo peopleVo) {
-        if (peopleVo == null || peopleVo.getJobLevelId() == null)
+        if (peopleVo == null || peopleVo.getJobId() == null)
             return;
 
-        PeopleJob peopleJob = peopleJobMapper.findPeopleJobById((long) peopleVo.getJobLevelId());
+        PeopleJob peopleJob = peopleJobMapper.findPeopleJobById((long) peopleVo.getJobId());
 
         if (peopleJob != null){
             Long jobId = peopleJob.getId();

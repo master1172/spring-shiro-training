@@ -46,7 +46,7 @@ public class People extends PeopleBase implements Serializable {
 
     private String jobCategory;
 
-    private Integer jobLevelId;
+    private Integer jobId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String jobDate;
@@ -220,12 +220,12 @@ public class People extends PeopleBase implements Serializable {
         this.jobCategory = jobCategory;
     }
 
-    public Integer getJobLevelId() {
-        return jobLevelId;
+    public Integer getJobId() {
+        return jobId;
     }
 
-    public void setJobLevelId(Integer jobLevelId) {
-        this.jobLevelId = jobLevelId;
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public String getJobDate() {
