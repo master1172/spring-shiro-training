@@ -192,7 +192,7 @@ public class PeopleServiceImpl implements PeopleService{
 			if (status != ConstUtil.PEOPLE_NORMAL)
 				continue;
 
-			PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(people.getJobId());
+			PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(people.getId());
 
 			if (peopleTotal == null)
 				continue;
@@ -211,27 +211,30 @@ public class PeopleServiceImpl implements PeopleService{
 	@Override
 	public void batchDeathPeopleByIds(String[] ids) throws InvocationTargetException, IllegalAccessException {
 
-		List<PeopleVo> peopleVoList = peopleMapper.selectPeopleVoByIds(ids);
+		List<People> peopleList = peopleMapper.selectPeopleByIds(ids);
 
-		if ((peopleVoList == null) || (peopleVoList.size() < 1))
+		if ((peopleList == null) || (peopleList.size() < 1))
 			return;
 
-		for (PeopleVo peopleVo: peopleVoList) {
-			if (peopleVo == null)
+		for (People people: peopleList) {
+
+			if (people == null)
 				continue;
-			int status = peopleVo.getStatus();
+
+			int status = people.getStatus();
 
 			if (status != ConstUtil.PEOPLE_NORMAL)
 				continue;
 
+			PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(people.getId());
 
-			//更新在编人员数据库，将其状态改为死亡
-			UpdatePeopleDate(peopleVo);
-			People people = new People();
-			BeanUtils.copyProperties(people,peopleVo);
-			people.setStatus(ConstUtil.PEOPLE_DEATH);
+			if (peopleTotal == null)
+				continue;
 
-			peopleMapper.updatePeople(people);
+			//更新死亡时的状态
+			peopleTotal.setDeathDate(DateUtil.GetToday());
+			peopleTotal.setStatus(ConstUtil.PEOPLE_DEATH);
+			peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
 		}
 	}
 

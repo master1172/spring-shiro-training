@@ -17,7 +17,7 @@ public class Recruit implements Serializable{
 
     private Integer age;
 
-    private String speciality;
+    private String major;
 
     private String applyJob;
 
@@ -64,6 +64,8 @@ public class Recruit implements Serializable{
 
     private String award;
 
+    private String photo;
+
 
     public Integer getId() {
         return id;
@@ -97,12 +99,12 @@ public class Recruit implements Serializable{
         this.age = age;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getMajor() {
+        return major;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public String getApplyJob() {
@@ -279,5 +281,13 @@ public class Recruit implements Serializable{
 
     public void setAward(String award) {
         this.award = award;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
