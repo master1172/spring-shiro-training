@@ -59,26 +59,16 @@ public class ConstUtil {
         };
     }
 
-    //在编人员
+    public static String[] getAbroadPeopleHeader(){
+        return new String[]{
+                "序号","人员姓名","人员所在部门","职级","出国境日期","所赴国家","申请因私证件情况","是由","经费形式","办理日期","取证日期","还证日期","备注"
+        };
+    }
+
     public static int PEOPLE_NORMAL = 0;
-    //退休人员
     public static int PEOPLE_RETIRE = 1;
-    //死亡人员
     public static int PEOPLE_DEATH  = 2;
-    //调出人员
     public static int PEOPLE_TRANSFER = 3;
-    //固定期合同制
-    public static int PEOPLE_CONTRACT = 4;
-    //无固定请合同制
-    public static int PEOPLE_CONTRACT_2 = 5;
-    //临时聘用人员
-    public static int PEOPLE_TEMP = 6;
-    //返聘人员
-    public static int PEOPLE_REHIRE = 7;
-    //派遣人员
-    public static int PEOPLE_DISPATCH = 8;
-    //日工资人员
-    public static int PEOPLE_DAILY = 9;
 
     public static int PEOPLE_RETIRE_RETIRE = 0;
     public static int PEOPLE_RETIRE_REHIRE = 1;

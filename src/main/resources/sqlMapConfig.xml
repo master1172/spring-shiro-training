@@ -64,6 +64,9 @@
 
 		<typeAlias type="com.wangzhixuan.model.PeopleRank" alias="PeopleRank" />
 		<typeAlias type="com.wangzhixuan.vo.PeopleRankVo" alias="PeopleRankVo" />
+
+		<typeAlias type="com.wangzhixuan.model.Abroad" alias="Abroad" />
+		<typeAlias type="com.wangzhixuan.vo.AbroadVo" alias="AbroadVo" />
 	</typeAliases>
 
 	<!-- 引入自定义 mapper 文件 -->
@@ -102,6 +105,6 @@
 		<mapper resource="sqlMapperXml/PeopleRetireSalaryMapper.xml" />
 		<mapper resource="sqlMapperXml/PeopleTimesheetMapper.xml" />
 		<mapper resource="sqlMapperXml/TrainingMapper.xml"/>
-		<mapper resource="sqlMapperXml/PeopleTotalMapper.xml"/>
+		<mapper resource="sqlMapperXml/AbroadMapper.xml"/>
 	</mappers>
 </configuration> 
