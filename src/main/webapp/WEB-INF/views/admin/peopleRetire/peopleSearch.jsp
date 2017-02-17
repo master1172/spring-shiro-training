@@ -42,7 +42,7 @@
                     </td>
                     <td>退休时职级</td>
                     <td>
-                        <input class="easyui-combobox" id="retireJobLevelId" name="retireJobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="retireJobId" name="retireJobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>
