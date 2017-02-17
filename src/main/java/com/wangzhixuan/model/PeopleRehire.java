@@ -59,7 +59,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
 
     private String photo;
 
-    private String category;
+    private String rehireCategory;
 
     public Integer getId() {
         return id;
@@ -98,7 +98,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
     }
 
     public void setNationalId(Integer nationalId) {
-        this.nationalId = nationalId;
+        this.nativeId = nationalId;
     }
 
     public Integer getNativeId() {
@@ -237,12 +237,12 @@ public class PeopleRehire extends PeopleBase implements Serializable {
         this.photo = photo;
     }
 
-    public String getCategory() {
-        return category;
+    public String getRehireCategory() {
+        return rehireCategory;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setRehireCategory(String category) {
+        this.rehireCategory = category;
     }
 
     public Integer getAfterDepartmentId() {

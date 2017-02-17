@@ -104,6 +104,7 @@
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f,"/peopleRehire/add",function(data){
                                 if(!data["success"]){
+                                    parent.progressClose();
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
                                     parent.progressClose();
@@ -349,7 +350,7 @@
             <th field="photoId"             data-options="sortable:true" width="80">身份证号</th>
             <th field="address"             data-options="sortable:true" width="80">家庭住址</th>
             <th field="hukouAddress"        data-options="sortable:true" width="80">户籍所在地</th>
-            <th field="category"            data-options="sortable:true" width="130">返聘人员类型</th>
+            <th field="rehireCategory"      data-options="sortable:true" width="130">返聘人员类型</th>
             <th field="id"                  data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>

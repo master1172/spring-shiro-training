@@ -86,7 +86,7 @@ public class PeopleRehireVo implements Serializable {
 
     private String photo;
 
-    private String category;
+    private String rehireCategory;
 
     public Integer getId() {
         return id;
@@ -278,12 +278,12 @@ public class PeopleRehireVo implements Serializable {
         this.photo = photo;
     }
 
-    public String getCategory() {
-        return category;
+    public String getRehireCategory() {
+        return rehireCategory;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setRehireCategory(String category) {
+        this.rehireCategory = category;
     }
 
     public String getNationalName() {
@@ -453,8 +453,8 @@ public class PeopleRehireVo implements Serializable {
             condition.put("hukouAddress", peopleRehirevo.getHukouAddress());
         }
 
-        if(StringUtils.isNoneBlank(peopleRehirevo.getCategory())){
-            condition.put("category", peopleRehirevo.getCategory());
+        if(StringUtils.isNoneBlank(peopleRehirevo.getRehireCategory())){
+            condition.put("rehireCategory", peopleRehirevo.getRehireCategory());
         }
 
         condition.put("status", ConstUtil.PEOPLE_REHIRE);

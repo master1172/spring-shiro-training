@@ -2,6 +2,7 @@ package com.wangzhixuan.service;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.vo.PeopleRehireVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.wangzhixuan.model.PeopleRehire;
@@ -39,18 +40,18 @@ public interface PeopleRehireService {
     /**
      * 添加人员
      *
-     * @param peopleRehire
+     * @param peopleRehireVo
      */
-    void addPeopleRehire(PeopleRehire peopleRehire,CommonsMultipartFile file);
+    void addPeopleRehire(PeopleRehireVo peopleRehireVo, CommonsMultipartFile file);
 
 
 
     /**
      * 修改人员
      *
-     * @param peopleRehire
+     * @param peopleRehireVo
      */
-    void updatePeopleRehire(PeopleRehire peopleRehire, CommonsMultipartFile file);
+    void updatePeopleRehire(PeopleRehireVo peopleRehireVo, CommonsMultipartFile file);
 
     /**
      * 删除人员

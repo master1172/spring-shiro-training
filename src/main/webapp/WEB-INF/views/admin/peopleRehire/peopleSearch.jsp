@@ -145,7 +145,7 @@
                     </td>
                     <td>返聘人员类型</td>
                     <td>
-                        <input type="text" name="category"/>
+                        <input type="text" name="rehireCategory"/>
                     </td>
                 </tr>
             </table>

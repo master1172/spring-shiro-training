@@ -9,6 +9,7 @@ import com.wangzhixuan.utils.StringUtilExtra;
 import com.wangzhixuan.utils.UploadUtil;
 import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleRehireVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -55,23 +56,31 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
     }
 
     @Override
-    public void addPeopleRehire(PeopleRehire peopleRehire,CommonsMultipartFile file) {
+    public void addPeopleRehire(PeopleRehireVo peopleRehireVo,CommonsMultipartFile file) {
 
         //当birthday不为空，而是""的时候，需要修改为null，否则插入会有错误
-        if (peopleRehire != null){
-            if (StringUtils.isEmpty(peopleRehire.getBirthday())){
-                peopleRehire.setBirthday(null);
+        if (peopleRehireVo != null){
+            if (StringUtils.isEmpty(peopleRehireVo.getBirthday())){
+                peopleRehireVo.setBirthday(null);
             }
         }
 
         //当rehireDate不为空，而是""的时候，需要修改为null，否则插入会有错误
-        if (peopleRehire != null){
-            if (StringUtils.isEmpty(peopleRehire.getRetireDate())){
-                peopleRehire.setRetireDate(null);
+        if (peopleRehireVo != null){
+            if (StringUtils.isEmpty(peopleRehireVo.getRetireDate())){
+                peopleRehireVo.setRetireDate(null);
             }
         }
 
-        peopleRehire.setCode(StringUtilExtra.generateUUID());
+        peopleRehireVo.setCode(StringUtilExtra.generateUUID());
+
+        PeopleRehire peopleRehire = new PeopleRehire();
+        try{
+            BeanUtils.copyProperties(peopleRehire,peopleRehireVo);
+        }catch (Exception exp){
+
+        }
+
 
         if(file!=null){//上传附件
             //获取头像上传路径
@@ -86,22 +95,28 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
     }
 
     @Override
-    public void updatePeopleRehire(PeopleRehire peopleRehire, CommonsMultipartFile file) {
+    public void updatePeopleRehire(PeopleRehireVo peopleRehireVo, CommonsMultipartFile file) {
 
         //当birthday不为空，而是""的时候，需要修改为null，否则插入会有错误
-        if (peopleRehire != null){
-            if (StringUtils.isEmpty(peopleRehire.getBirthday())){
-                peopleRehire.setBirthday(null);
+        if (peopleRehireVo != null){
+            if (StringUtils.isEmpty(peopleRehireVo.getBirthday())){
+                peopleRehireVo.setBirthday(null);
             }
         }
 
         //当retireDate不为空，而是""的时候，需要修改为null，否则插入会有错误
-        if (peopleRehire != null){
-            if (StringUtils.isEmpty(peopleRehire.getRetireDate())){
-                peopleRehire.setRetireDate(null);
+        if (peopleRehireVo != null){
+            if (StringUtils.isEmpty(peopleRehireVo.getRetireDate())){
+                peopleRehireVo.setRetireDate(null);
             }
         }
 
+        PeopleRehire peopleRehire = new PeopleRehire();
+        try{
+            BeanUtils.copyProperties(peopleRehire,peopleRehireVo);
+        }catch (Exception exp){
+
+        }
 
         if (file != null){
             //获取头像上传路径
@@ -343,7 +358,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 //返聘人员类型
                 if(row.getCell(21)!=null&&!row.getCell(21).toString().trim().equals("")){
                     String category=row.getCell(21).toString().trim();
-                    p.setCategory(category);
+                    p.setRehireCategory(category);
                 }
 
                 list.add(p);
@@ -415,7 +430,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                     row.createCell(18).setCellValue(p.getPhotoId());row.getCell(18).setCellStyle(setBorder);
                     row.createCell(19).setCellValue(p.getAddress());row.getCell(19).setCellStyle(setBorder);
                     row.createCell(20).setCellValue(p.getHukouAddress());row.getCell(20).setCellStyle(setBorder);
-                    row.createCell(21).setCellValue(p.getCategory());row.getCell(21).setCellStyle(setBorder);
+                    row.createCell(21).setCellValue(p.getRehireCategory());row.getCell(21).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
@@ -464,7 +479,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             params.put("${photoId}",p.getPhotoId()==null?"":p.getPhotoId());
             params.put("${address}",p.getAddress()==null?"":p.getAddress());
             params.put("${hukouAddress}",p.getHukouAddress()==null?"":p.getHukouAddress());
-            params.put("${category}",p.getCategory()==null?"":p.getCategory());
+            params.put("${category}",p.getRehireCategory()==null?"":p.getRehireCategory());
 
 
             //判断是否有头像

@@ -141,7 +141,7 @@
                     </td>
                     <td>返聘人员类型</td>
                     <td>
-                        <input type="text" name="category" value="${peopleRehire.category}"/>
+                        <input type="text" name="rehireCategory" value="${peopleRehire.rehireCategory}"/>
                     </td>
                 </tr>
                 <tr>

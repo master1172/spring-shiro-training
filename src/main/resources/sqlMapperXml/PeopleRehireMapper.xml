@@ -25,7 +25,7 @@
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="hukou_address" property="hukouAddress" jdbcType="VARCHAR"/>
         <result column="photo" property="photo" jdbcType="VARCHAR"/>
-        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="rehire_category" property="rehireCategory" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="peopleRehireVoResultMap" type="com.wangzhixuan.vo.PeopleRehireVo">
@@ -58,13 +58,13 @@
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="hukou_address" property="hukouAddress" jdbcType="VARCHAR"/>
         <result column="photo" property="photo" jdbcType="VARCHAR"/>
-        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="rehire_category" property="rehireCategory" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id, code, name, sex, national_id, native_id, birth_place, birthday, education_name, political_name,
         health_status, retire_date, speciality, before_department_id, before_job_name, before_job_id,
-        after_department_id, after_job_name, after_job_id, photo_id, address, hukou_address, photo, category
+        after_department_id, after_job_name, after_job_id, photo_id, address, hukou_address, photo, rehire_category
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -105,7 +105,7 @@
         t.address,
         t.hukou_address,
         t.photo,
-        t.category
+        t.rehire_category
         FROM
         people_total t
         LEFT JOIN
@@ -172,7 +172,7 @@
         t.address,
         t.hukou_address,
         t.photo,
-        t.category
+        t.rehire_category
         FROM
         people_total t
         LEFT JOIN
@@ -259,8 +259,8 @@
             <if test=" condition.hukouAddress != null and condition.hukouAddress != ''">
                 and t.hukou_address LIKE concat('%',#{condition.hukouAddress},'%')
             </if>
-            <if test=" condition.category != null and condition.category != ''">
-                and t.category LIKE concat('%',#{condition.category},'%')
+            <if test=" condition.rehireCategory != null and condition.rehireCategory != ''">
+                and t.rehire_category LIKE concat('%',#{condition.rehireCategory},'%')
             </if>
             <if test=" condition.status != null and condition.status != ''">
                 and t.status = #{condition.status}
@@ -342,8 +342,8 @@
             <if test=" condition.hukouAddress != null and condition.hukouAddress != ''">
                 and t.hukou_address LIKE concat('%',#{condition.hukouAddress},'%')
             </if>
-            <if test=" condition.category != null and condition.category != ''">
-                and t.category LIKE concat('%',#{condition.category},'%')
+            <if test=" condition.rehireCategory != null and condition.rehireCategory != ''">
+                and t.rehire_category LIKE concat('%',#{condition.rehireCategory},'%')
             </if>
             <if test=" condition.status != null and condition.status != ''">
                 and t.status = #{condition.status}
@@ -378,7 +378,7 @@
           code, name, sex, national_id, native_id, birth_place, birthday, education_name, political_name,
           health_status, retire_date, speciality, before_department_id, before_job_name, before_job_id,
           after_department_id, after_job_name, after_job_id, photo_id, address, hukou_address, photo,
-          category, status)
+          rehire_category, status)
         values
         (
             #{code,jdbcType=VARCHAR},
@@ -403,7 +403,7 @@
             #{address, jdbcType=VARCHAR},
             #{hukouAddress, jdbcType=VARCHAR},
             #{photo, jdbcType=VARCHAR},
-            #{category, jdbcType=VARCHAR},
+            #{rehireCategory, jdbcType=VARCHAR},
             7
         )
     </insert>
@@ -412,7 +412,7 @@
           code, name, sex, national_id, native_id, birth_place, birthday,
           education_name, political_name, health_status, retire_date, speciality, before_department_id,
           before_job_name, before_job_id, after_department_id, after_job_name, after_job_id,
-          photo_id, address, hukou_address, photo, category, status)
+          photo_id, address, hukou_address, photo, rehire_category, status)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
@@ -438,7 +438,7 @@
             #{item.address, jdbcType=VARCHAR},
             #{item.hukouAddress, jdbcType=VARCHAR},
             #{item.photo, jdbcType=VARCHAR},
-            #{item.category, jdbcType=VARCHAR},
+            #{item.rehireCategory, jdbcType=VARCHAR},
             7
             )
         </foreach>
@@ -512,8 +512,8 @@
             <if test="photo != null">
                 photo = #{photo,jdbcType=VARCHAR},
             </if>
-            <if test="speciality != null">
-                category = #{category, jdbcType=VARCHAR}
+            <if test="rehireCategory != null">
+                rehire_category = #{rehireCategory, jdbcType=VARCHAR}
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -543,7 +543,7 @@
         t.address,
         t.hukou_address,
         t.photo,
-        t.category
+        t.rehire_category
         from people_total t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -582,7 +582,7 @@
         t.address,
         t.hukou_address,
         t.photo,
-        t.category
+        t.rehire_category
         FROM
         people_total t
         LEFT JOIN
