@@ -98,7 +98,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
     }
 
     public void setNationalId(Integer nationalId) {
-        this.nativeId = nationalId;
+        this.nationalId = nationalId;
     }
 
     public Integer getNativeId() {
@@ -106,7 +106,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
     }
 
     public void setNativeId(Integer nativeId) {
-        this.nationalId = nativeId;
+        this.nativeId = nativeId;
     }
 
     public String getBirthPlace() {
@@ -201,7 +201,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
         return afterJobId;
     }
 
-    public void setAfterJobId(Integer afterJobLevelId) {
+    public void setAfterJobId(Integer afterJobId) {
         this.afterJobId = afterJobId;
     }
 
