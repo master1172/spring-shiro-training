@@ -23,7 +23,7 @@ public interface PeopleDispatchMapper {
     /**
      * 添加人员
      *
-     * @param people
+     * @param
      * @return
      */
     int insert(PeopleDispatch peopleDispatch);
@@ -31,7 +31,7 @@ public interface PeopleDispatchMapper {
     /**
      * 修改人员
      *
-     * @param people
+     * @param
      * @return
      */
     int updatePeopleDispatch(PeopleDispatch peopleDispatch);

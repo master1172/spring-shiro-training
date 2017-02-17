@@ -3,6 +3,7 @@ package com.wangzhixuan.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.model.PeopleRehire;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Map;
  */
 public class PeopleRehireVo implements Serializable {
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -24,6 +25,8 @@ public class PeopleRehireVo implements Serializable {
     private Integer nationalId;
 
     private String nationalName;
+
+    private Integer nativeId;
 
     private String nativeName;
 
@@ -85,11 +88,11 @@ public class PeopleRehireVo implements Serializable {
 
     private String category;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -347,6 +350,14 @@ public class PeopleRehireVo implements Serializable {
         this.retireDateMax = retireDateMax;
     }
 
+    public Integer getNativeId() {
+        return nativeId;
+    }
+
+    public void setNativeId(Integer nativeId) {
+        this.nativeId = nativeId;
+    }
+
     public static Map<String,Object> CreateCondition(PeopleRehireVo peopleRehirevo){
         Map<String, Object> condition = Maps.newHashMap();
 
@@ -366,8 +377,8 @@ public class PeopleRehireVo implements Serializable {
             condition.put("nationalId", peopleRehirevo.getNationalId());
         }
 
-        if(StringUtils.isNoneBlank(peopleRehirevo.getNativeName())){
-            condition.put("nativeName", peopleRehirevo.getNativeName());
+        if(peopleRehirevo.getNationalId() != null){
+            condition.put("nativeId", peopleRehirevo.getNativeId());
         }
 
         if(StringUtils.isNoneBlank(peopleRehirevo.getBirthPlace())){
@@ -446,7 +457,8 @@ public class PeopleRehireVo implements Serializable {
             condition.put("category", peopleRehirevo.getCategory());
         }
 
+        condition.put("status", ConstUtil.PEOPLE_REHIRE);
+
         return condition;
     }
-
 }

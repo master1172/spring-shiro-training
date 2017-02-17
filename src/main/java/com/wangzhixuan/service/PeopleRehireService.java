@@ -18,7 +18,7 @@ public interface PeopleRehireService {
      * @param id
      * @return
      */
-    PeopleRehire findPeopleRehireById(Long id);
+    PeopleRehire findPeopleRehireById(Integer id);
 
     /**
      * 根据人员姓名查询人员
@@ -57,24 +57,24 @@ public interface PeopleRehireService {
      *
      * @param id
      */
-    void deletePeopleRehireById(Long id);
+    void deletePeopleRehireById(Integer id);
 
     void batchDeletePeopleRehireByIds(String[] ids);
     /**
      * 数据导入
-     * @param list
+     * @param
      */
     boolean insertByImport(CommonsMultipartFile[] files);
     /**
      * 导出Excel
      * @param response
-     * @param id
+     * @param
      * @return
      */
     void exportExcel(HttpServletResponse response,String[] idList);
     /**
      * 导出Word
-     * @param request
+     * @param
      * @param response
      * @param id
      * @return
@@ -83,9 +83,9 @@ public interface PeopleRehireService {
 
     /**
      * 根据条件搜索ids
-     * @param request
-     * @param response
-     * @param id
+     * @param
+     * @param
+     * @param
      * @return
      */
     String findPeopleRehireIDsByCondition(PageInfo pageInfo);

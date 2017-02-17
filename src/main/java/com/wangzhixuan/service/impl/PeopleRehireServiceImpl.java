@@ -39,7 +39,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
     private DictMapper dictMapper;
 
     @Override
-    public PeopleRehire findPeopleRehireById(Long id) {
+    public PeopleRehire findPeopleRehireById(Integer id) {
         return peopleRehireMapper.findPeopleRehireById(id);
     }
 
@@ -116,7 +116,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
     }
 
     @Override
-    public void deletePeopleRehireById(Long id) {
+    public void deletePeopleRehireById(Integer id) {
         peopleRehireMapper.deleteById(id);
     }
 
@@ -208,7 +208,8 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 //籍贯
                 if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
                     String nativeName=row.getCell(4).toString().trim();
-                    p.setNativeName(nativeName);
+                    Integer nativeId = dictMapper.findNativeIdByName(nativeName);
+                    p.setNativeId(nativeId);
                 }
 
                 //出生地
@@ -434,7 +435,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleRehireVo p= peopleRehireMapper.findPeopleRehireVoById(Long.valueOf(id));
+        PeopleRehireVo p= peopleRehireMapper.findPeopleRehireVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;

@@ -7,7 +7,7 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="national_id" property="nationalId" jdbcType="INTEGER" />
-        <result column="native_name" property="nativeName" jdbcType="VARCHAR"/>
+        <result column="native_id"   property="nativeId" jdbcType="INTEGER" />
         <result column="birth_place" property="birthPlace" jdbcType="VARCHAR"/>
         <result column="birthday" property="birthday" jdbcType="DATE"/>
         <result column="education_name" property="educationName" jdbcType="VARCHAR"/>
@@ -35,6 +35,7 @@
         <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="national_id" property="nationalId" jdbcType="INTEGER" />
         <result column="national_name" property="nationalName" jdbcType="VARCHAR"/>
+        <result column="native_id"   property="nativeId"   jdbcType="INTEGER"/>
         <result column="native_name" property="nativeName" jdbcType="VARCHAR"/>
         <result column="birth_place" property="birthPlace" jdbcType="VARCHAR"/>
         <result column="birthday" property="birthday" jdbcType="DATE"/>
@@ -61,17 +62,19 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category
+        id, code, name, sex, national_id, native_id, birth_place, birthday, education_name, political_name,
+        health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id,
+        after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_rehire
+        from people_total
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleRehireVoById" resultMap="peopleRehireVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleRehireVoById" resultMap="peopleRehireVoResultMap" parameterType="java.lang.Integer">
         SELECT
         t.id,
         t.code,
@@ -79,7 +82,8 @@
         t.sex,
         t.national_id,
         s.name as national_name,
-        t.native_name,
+        t.native_id,
+        v.name, as native_name,
         t.birth_place,
         t.birthday,
         t.education_name,
@@ -103,7 +107,7 @@
         t.photo,
         t.category
         FROM
-        people_rehire t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -116,23 +120,25 @@
         dict_department o ON o.id = t.after_department_id
         LEFT JOIN
         dict_department n ON n.id = t.before_department_id
+        LEFT JOIN
+        dict_native v ON v.id = t.native_id
         <where>
             t.id = #{id}
         </where>
     </select>
 
-    <select id="findPeopleRehireById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleRehireById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_rehire
+        from people_total
         where id = #{id}
     </select>
 
     <select id="findPeopleRehireByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from people_rehire
-        where name LIKE concat('%',#{name},'%')
+        from people_total
+        where name LIKE concat('%',#{name},'%') and status = 7
     </select>
 
     <select id="findPeopleRehirePageCondition" resultMap="peopleRehireVoResultMap" parameterType="PageInfo">
@@ -143,7 +149,8 @@
         t.sex,
         t.national_id,
         s.name as national_name,
-        t.native_name,
+        t.native_id,
+        v.name as native_name,
         t.birth_place,
         t.birthday,
         t.education_name,
@@ -167,7 +174,7 @@
         t.photo,
         t.category
         FROM
-        people_rehire t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -180,6 +187,8 @@
         dict_department o ON o.id = t.after_department_id
         LEFT JOIN
         dict_department n ON n.id = t.before_department_id
+        LEFT JOIN
+        dict_native v ON v.id = t.native_id
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -193,8 +202,8 @@
             <if test=" condition.nationalId != null">
                 and t.national_id = #{condition.nationalId}
             </if>
-            <if test=" condition.native != null and condition.native != ''">
-                and t.native LIKE concat('%',#{condition.native},'%')
+            <if test=" condition.nativeId != null and condition.nativeId != ''">
+                and t.native_id LIKE concat('%',#{condition.nativeId},'%')
             </if>
             <if test=" condition.birthPlace != null and condition.birthPlace != ''">
                 and t.birthPlace LIKE concat('%',#{condition.birthPlace},'%')
@@ -253,13 +262,16 @@
             <if test=" condition.category != null and condition.category != ''">
                 and t.category LIKE concat('%',#{condition.category},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
         LIMIT #{from}, #{size}
     </select>
 
     <select id="findPeopleRehirePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_rehire t
+        from people_total t
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -273,8 +285,8 @@
             <if test=" condition.nationalId != null">
                 and t.national_id = #{condition.nationalId}
             </if>
-            <if test=" condition.native != null and condition.native != ''">
-                and t.native LIKE concat('%',#{condition.native},'%')
+            <if test=" condition.nativeId != null and condition.nativeId != ''">
+                and t.native_id LIKE concat('%',#{condition.nativeId},'%')
             </if>
             <if test=" condition.birthPlace != null and condition.birthPlace != ''">
                 and t.birthPlace LIKE concat('%',#{condition.birthPlace},'%')
@@ -333,16 +345,19 @@
             <if test=" condition.category != null and condition.category != ''">
                 and t.category LIKE concat('%',#{condition.category},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_rehire
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from people_total
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_rehire
+        delete from people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -350,44 +365,54 @@
     </delete>
 
     <delete id="deleteByCode" parameterType="java.lang.String">
-        delete from people_rehire
+        delete from people_total
         where code = #{code, jdbcType=VARCHAR}
     </delete>
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleRehire">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
-        values (
-        #{code,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT},
-        #{nationalId, jdbcType=INTEGER},
-        #{nativeName,jdbcType=VARCHAR},
-        #{birthPlace,jdbcType=VARCHAR},
-        #{birthday,jdbcType=DATE},
-        #{educationName,jdbcType=VARCHAR},
-        #{politicalName,jdbcType=VARCHAR},
-        #{healthStatus,jdbcType=VARCHAR},
-        #{retireDate,jdbcType=DATE},
-        #{speciality,jdbcType=VARCHAR},
-        #{beforeDepartmentId, jdbcType=INTEGER},
-        #{beforeJobName, jdbcType=VARCHAR},
-        #{beforeJobLevelId, jdbcType=INTEGER},
-        #{afterDepartmentId, jdbcType=INTEGER},
-        #{afterJobName, jdbcType=VARCHAR},
-        #{afterJobLevelId, jdbcType=INTEGER},
-        #{photoId, jdbcType=INTEGER},
-        #{address, jdbcType=VARCHAR},
-        #{hukouAddress, jdbcType=VARCHAR},
-        #{photo, jdbcType=VARCHAR},
-        #{category, jdbcType=VARCHAR}
+        insert into people_total (
+          code, name, sex, national_id, native_id, birth_place, birthday, education_name, political_name,
+          health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id,
+          after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo,
+          category, status)
+        values
+        (
+            #{code,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{sex,jdbcType=TINYINT},
+            #{nationalId, jdbcType=INTEGER},
+            #{nativeId,jdbcType=INTEGER},
+            #{birthPlace,jdbcType=VARCHAR},
+            #{birthday,jdbcType=DATE},
+            #{educationName,jdbcType=VARCHAR},
+            #{politicalName,jdbcType=VARCHAR},
+            #{healthStatus,jdbcType=VARCHAR},
+            #{retireDate,jdbcType=DATE},
+            #{speciality,jdbcType=VARCHAR},
+            #{beforeDepartmentId, jdbcType=INTEGER},
+            #{beforeJobName, jdbcType=VARCHAR},
+            #{beforeJobLevelId, jdbcType=INTEGER},
+            #{afterDepartmentId, jdbcType=INTEGER},
+            #{afterJobName, jdbcType=VARCHAR},
+            #{afterJobLevelId, jdbcType=INTEGER},
+            #{photoId, jdbcType=INTEGER},
+            #{address, jdbcType=VARCHAR},
+            #{hukouAddress, jdbcType=VARCHAR},
+            #{photo, jdbcType=VARCHAR},
+            #{category, jdbcType=VARCHAR},
+            7
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_rehire (code, name, sex, national_id, native_name, birth_place, birthday, education_name, political_name, health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category)
+        insert into people_total (
+          code, name, sex, national_id, native_id, birth_place, birthday,
+          education_name, political_name, health_status, retire_date, speciality, before_department_id,
+          before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id,
+          photo_id, address, hukou_address, photo, category, status)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
@@ -395,7 +420,7 @@
             #{item.name,jdbcType=VARCHAR},
             #{item.sex,jdbcType=TINYINT},
             #{item.nationalId, jdbcType=INTEGER},
-            #{item.nativeName,jdbcType=VARCHAR},
+            #{item.nativeId,   jdbcType=INTEGER},
             #{item.birthPlace,jdbcType=VARCHAR},
             #{item.birthday,jdbcType=DATE},
             #{item.educationName,jdbcType=VARCHAR},
@@ -413,12 +438,13 @@
             #{item.address, jdbcType=VARCHAR},
             #{item.hukouAddress, jdbcType=VARCHAR},
             #{item.photo, jdbcType=VARCHAR},
-            #{item.category, jdbcType=VARCHAR}
+            #{item.category, jdbcType=VARCHAR},
+            7
             )
         </foreach>
     </insert>
     <update id="updatePeopleRehire" parameterType="com.wangzhixuan.model.PeopleRehire">
-        update people_rehire
+        update people_total
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -432,8 +458,8 @@
             <if test="nationalId != null">
                 national_id = #{nationalId,jdbcType=INTEGER},
             </if>
-            <if test="nativeName != null">
-                native_name = #{nativeName,jdbcType=VARCHAR},
+            <if test="nativeId != null">
+                native_id = #{nativeId,jdbcType=INTEGER},
             </if>
             <if test="birthPlace != null">
                 birth_place = #{birthPlace,jdbcType=VARCHAR},
@@ -499,7 +525,7 @@
         t.name,
         t.sex,
         t.national_id,
-        t.native_name,
+        t.native_id,
         t.birth_place,
         t.birthday,
         t.education_name,
@@ -518,7 +544,7 @@
         t.hukou_address,
         t.photo,
         t.category
-        from people_rehire t
+        from people_total t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -533,7 +559,8 @@
         t.sex,
         t.national_id,
         s.name as national_name,
-        t.native_name,
+        t.native_id,
+        v.name as native_name,
         t.birth_place,
         t.birthday,
         t.education_name,
@@ -557,7 +584,7 @@
         t.photo,
         t.category
         FROM
-        people_rehire t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -570,6 +597,8 @@
         dict_department o ON o.id = t.after_department_id
         LEFT JOIN
         dict_department n ON n.id = t.before_department_id
+        LEFT JOIN
+          dict_native v ON v.id = t.native_id
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}

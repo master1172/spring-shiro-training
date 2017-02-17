@@ -18,12 +18,12 @@ public interface PeopleRehireMapper {
      * @param id
      * @return
      */
-    int deleteById(Long id);
+    int deleteById(Integer id);
 
     /**
      * 添加人员
      *
-     * @param people
+     * @param
      * @return
      */
     int insert(PeopleRehire peopleRehire);
@@ -31,7 +31,7 @@ public interface PeopleRehireMapper {
     /**
      * 修改人员
      *
-     * @param people
+     * @param
      * @return
      */
     int updatePeopleRehire(PeopleRehire peopleRehire);
@@ -50,7 +50,7 @@ public interface PeopleRehireMapper {
      * @param id
      * @return
      */
-    PeopleRehire findPeopleRehireById(Long id);
+    PeopleRehire findPeopleRehireById(Integer id);
 
     /**
      * 人员列表
@@ -93,7 +93,7 @@ public interface PeopleRehireMapper {
      * @param id
      * @return
      */
-    PeopleRehireVo findPeopleRehireVoById(Long id);
+    PeopleRehireVo findPeopleRehireVoById(Integer id);
 
     void deleteByCode(String code);
 }

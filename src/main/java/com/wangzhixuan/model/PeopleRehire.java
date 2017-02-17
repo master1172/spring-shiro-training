@@ -11,7 +11,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -6771435680301413458L;
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -21,7 +21,7 @@ public class PeopleRehire extends PeopleBase implements Serializable {
 
     private Integer nationalId;
 
-    private String nativeName;
+    private Integer nativeId;
 
     private String birthPlace;
 
@@ -61,11 +61,11 @@ public class PeopleRehire extends PeopleBase implements Serializable {
 
     private String category;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -101,12 +101,12 @@ public class PeopleRehire extends PeopleBase implements Serializable {
         this.nationalId = nationalId;
     }
 
-    public String getNativeName() {
-        return nativeName;
+    public Integer getNativeId() {
+        return nativeId;
     }
 
-    public void setNativeName(String nativeName) {
-        this.nativeName = nativeName;
+    public void setNativeId(Integer nativeId) {
+        this.nationalId = nativeId;
     }
 
     public String getBirthPlace() {

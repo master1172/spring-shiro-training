@@ -6,6 +6,7 @@
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
         $("#sex").val('${peopleRehire.sex}');
         $('#nationalId').val('${peopleRehire.nationalId}');
+        $('#nativeId').val('${peopleRehire.nativeId}');
         $('#beforeDepartmentId').val('${peopleRehire.beforeDepartmentId}');
         $('#beforeJobLevelId').val('${peopleRehire.beforeJobLevelId}');
         $('#afterDepartmentId').val('${peopleRehire.afterDepartmentId}');
@@ -49,7 +50,8 @@
                 <tr>
                     <td>籍贯</td>
                     <td>
-                        <input name="nativeName" value="${peopleRehire.nativeName}"/>
+                        <input class="easyui-combobox" id="nativeId" name="nativeId" url="${path}/dict/native" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>出生地</td>
                     <td>

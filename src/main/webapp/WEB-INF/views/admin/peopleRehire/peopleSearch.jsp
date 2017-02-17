@@ -44,7 +44,8 @@
                 <tr>
                     <td>籍贯</td>
                     <td>
-                        <input name="nativeName"/>
+                        <input class="easyui-combobox" id="nativeId" name="nativeId" url="${path}/dict/native" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>出生地</td>
                     <td>

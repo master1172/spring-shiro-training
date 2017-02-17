@@ -132,7 +132,7 @@ public class PeopleRehireController extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleRehire peopleRehire = peopleRehireService.findPeopleRehireById(id);
         model.addAttribute("peopleRehire",peopleRehire);
         return "/admin/peopleRehire/peopleEdit";
@@ -156,7 +156,7 @@ public class PeopleRehireController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleRehireService.deletePeopleRehireById(id);
