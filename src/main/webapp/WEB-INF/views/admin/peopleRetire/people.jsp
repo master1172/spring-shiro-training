@@ -375,7 +375,6 @@
             <th field="mobile"     data-options="sortable:true" width="80">联系电话</th>
             <th field="contact"     data-options="sortable:true" width="80">固定联系人</th>
             <th field="contactNumber"     data-options="sortable:true" width="80">联系人电话</th>
-            <th field="status"      data-options="sortable:true,formatter:statusFormatter" width="80">当前状态</th>
             <th field="comment"       data-options="sortable:true" width="130">备注</th>
             <th field="id"       data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>

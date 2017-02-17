@@ -11,7 +11,7 @@ public class PeopleRetire extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -8187664532609757193L;
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -19,7 +19,7 @@ public class PeopleRetire extends PeopleBase implements Serializable {
 
     private String retireJobName;
 
-    private Integer retireJobLevelId;
+    private Integer retireJobId;
 
     private Integer sex;
 
@@ -52,11 +52,11 @@ public class PeopleRetire extends PeopleBase implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -80,12 +80,12 @@ public class PeopleRetire extends PeopleBase implements Serializable {
         this.retireJobName = retireJobName;
     }
 
-    public Integer getRetireJobLevelId() {
-        return retireJobLevelId;
+    public Integer getRetireJobId() {
+        return retireJobId;
     }
 
-    public void setRetireJobLevelId(Integer retireJobLevelId) {
-        this.retireJobLevelId = retireJobLevelId;
+    public void setRetireJobId(Integer retireJobId) {
+        this.retireJobId = retireJobId;
     }
 
     public Integer getSex() {

@@ -119,14 +119,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>当前状态</td>
-                    <td>
-                        <select name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="">请选择</option>
-                            <option value="0" >退休</option>
-                            <option value="1" >返聘</option>
-                        </select>
-                    </td>
                     <td>备注</td>
                     <td>
                         <input type="text" name="comment">

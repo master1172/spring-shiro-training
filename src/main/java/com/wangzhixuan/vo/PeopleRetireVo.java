@@ -3,6 +3,7 @@ package com.wangzhixuan.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.model.PeopleRetire;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Map;
  */
 public class PeopleRetireVo implements Serializable {
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -21,7 +22,7 @@ public class PeopleRetireVo implements Serializable {
 
     private String retireJobName;
 
-    private Integer retireJobLevelId;
+    private Integer retireJobId;
 
     private String retireJobLevelName;
 
@@ -76,11 +77,11 @@ public class PeopleRetireVo implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -104,12 +105,12 @@ public class PeopleRetireVo implements Serializable {
         this.retireJobName = retireJobName;
     }
 
-    public Integer getRetireJobLevelId() {
-        return retireJobLevelId;
+    public Integer getRetireJobId() {
+        return retireJobId;
     }
 
-    public void setRetireJobLevelId(Integer retireJobLevelId) {
-        this.retireJobLevelId = retireJobLevelId;
+    public void setRetireJobId(Integer retireJobLevelId) {
+        this.retireJobId = retireJobLevelId;
     }
 
     public String getRetireJobLevelName() {
@@ -303,8 +304,8 @@ public class PeopleRetireVo implements Serializable {
             condition.put("retireJobName", peopleRetirevo.getRetireJobName());
         }
 
-        if (peopleRetirevo.getRetireJobLevelId() != null){
-            condition.put("retireJobLevelId", peopleRetirevo.getRetireJobLevelId());
+        if (peopleRetirevo.getRetireJobId() != null){
+            condition.put("retireJobId", peopleRetirevo.getRetireJobId());
         }
 
         if (peopleRetirevo.getSex() != null){
@@ -363,13 +364,11 @@ public class PeopleRetireVo implements Serializable {
             condition.put("contactNumber", peopleRetirevo.getContactNumber());
         }
 
-        if (peopleRetirevo.getStatus() != null){
-            condition.put("status", peopleRetirevo.getStatus());
-        }
-
         if(StringUtils.isNoneBlank(peopleRetirevo.getComment())){
             condition.put("comment", peopleRetirevo.getComment());
         }
+
+        condition.put("status", ConstUtil.PEOPLE_RETIRE);
 
         return condition;
     }

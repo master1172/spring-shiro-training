@@ -63,7 +63,7 @@ public class PeopleRetireSalaryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/salaryListPage", method = RequestMethod.GET)
-	public String salaryListPage(Long id, Model model) {
+	public String salaryListPage(Integer id, Model model) {
 
 		PeopleRetire people = peopleRetireService.findPeopleRetireById(id);
 

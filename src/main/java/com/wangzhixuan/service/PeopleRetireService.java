@@ -18,7 +18,7 @@ public interface PeopleRetireService {
      * @param id
      * @return
      */
-    PeopleRetire findPeopleRetireById(Long id);
+    PeopleRetire findPeopleRetireById(Integer id);
     
     PeopleRetire findPeopleRetireByCode(String code);
     
@@ -59,26 +59,26 @@ public interface PeopleRetireService {
      *
      * @param id
      */
-    void deletePeopleRetireById(Long id);
+    void deletePeopleRetireById(Integer id);
 
     void batchDeletePeopleRetireByIds(String[] ids);
 
     void batchConvertFromRetireToRehireByIds(String[] ids);
     /**
      * 数据导入
-     * @param list
+     * @param
      */
     boolean insertByImport(CommonsMultipartFile[] files);
     /**
      * 导出Excel
      * @param response
-     * @param id
+     * @param
      * @return
      */
     void exportExcel(HttpServletResponse response,String[] idList);
     /**
      * 导出Word
-     * @param request
+     * @param
      * @param response
      * @param id
      * @return
@@ -87,9 +87,9 @@ public interface PeopleRetireService {
 
     /**
      * 根据条件搜索ids
-     * @param request
-     * @param response
-     * @param id
+     * @param
+     * @param
+     * @param
      * @return
      */
     String findPeopleRetireIDsByCondition(PageInfo pageInfo);

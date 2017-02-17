@@ -10,7 +10,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.mapper.PeopleRehireMapper;
+import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleRehire;
+import com.wangzhixuan.model.PeopleTotal;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFPictureData;
@@ -40,7 +42,7 @@ import com.wangzhixuan.vo.PeopleRetireVo;
 public class PeopleRetireServiceImpl implements PeopleRetireService{
 
     @Autowired
-    private PeopleRehireMapper peopleRehireMapper;
+    private PeopleTotalMapper peopleTotalMapper;
 
     @Autowired
     private PeopleRetireMapper peopleRetireMapper;
@@ -49,7 +51,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
     private DictMapper dictMapper;
 
     @Override
-    public PeopleRetire findPeopleRetireById(Long id) {
+    public PeopleRetire findPeopleRetireById(Integer id) {
         return peopleRetireMapper.findPeopleRetireById(id);
     }
 
@@ -96,6 +98,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                peopleRetire.setPhoto(uploadPath);
                 peopleRetireMapper.insert(peopleRetire);
             }
         }else{
@@ -133,6 +136,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleRetire.setPhoto(uploadPath);
                 peopleRetireMapper.updatePeopleRetire(peopleRetire);
             }
         }else{
@@ -141,7 +145,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
     }
 
     @Override
-    public void deletePeopleRetireById(Long id) {
+    public void deletePeopleRetireById(Integer id) {
         peopleRetireMapper.deleteById(id);
     }
 
@@ -157,32 +161,9 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
 
         for(int i=0; i<ids.length; i++){
             String id = ids[i];
-            PeopleRetire peopleRetire = peopleRetireMapper.findPeopleRetireById(StringUtilExtra.StringToLong(id));
-
-            if (peopleRetire == null || StringUtils.isBlank(peopleRetire.getCode()) || StringUtils.isBlank(peopleRetire.getName()))
-                continue;
-
-            //首先删除原有people rehire表里对应的人员信息
-            peopleRehireMapper.deleteByCode(peopleRetire.getCode());
-
-            PeopleRehire peopleRehire = new PeopleRehire();
-            peopleRehire.setCode(peopleRetire.getCode());
-            peopleRehire.setName(peopleRetire.getName());
-            peopleRehire.setSex(peopleRetire.getSex());
-            peopleRehire.setNationalId(peopleRetire.getNationalId());
-            peopleRehire.setBirthday(peopleRetire.getBirthday());
-            peopleRehire.setEducationName(peopleRetire.getEducationName());
-            peopleRehire.setPoliticalName(peopleRetire.getPoliticalName());
-            peopleRehire.setRetireDate(peopleRetire.getRetireDate());
-            peopleRehire.setBeforeJobName(peopleRetire.getRetireJobName());
-            peopleRehire.setBeforeJobId(peopleRetire.getRetireJobLevelId());
-            peopleRehire.setAddress(peopleRetire.getAddress());
-            peopleRehire.setPhoto(peopleRetire.getPhoto());
-
-            peopleRehireMapper.insert(peopleRehire);
-
-            peopleRetire.setStatus(1);
-            peopleRetireMapper.updatePeopleRetire(peopleRetire);
+            PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
+            peopleTotal.setStatus(ConstUtil.PEOPLE_REHIRE);
+            peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
         }
     }
 
@@ -240,8 +221,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
 
                 //code自动生成
                 p.setCode(StringUtilExtra.generateUUID());
-                //导入的都是退休的
-                p.setStatus(ConstUtil.PEOPLE_RETIRE_RETIRE);
+                p.setStatus(ConstUtil.PEOPLE_RETIRE);
 
                 //人员姓名
                 if(row.getCell(1)==null||row.getCell(1).toString().trim().equals("")){
@@ -263,7 +243,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                     try{
                         Integer retireJobLevelId = dictMapper.findJobIdByName(retireJobLevelName);
                         if (retireJobLevelId != null){
-                            p.setRetireJobLevelId(retireJobLevelId);
+                            p.setRetireJobId(retireJobLevelId);
                         }
                     }catch(Exception exp){
 
@@ -388,7 +368,6 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                 row.createCell(13).setCellValue("固定联系人");row.getCell(13).setCellStyle(setBorder);
                 row.createCell(14).setCellValue("联系人电话");row.getCell(14).setCellStyle(setBorder);
                 row.createCell(15).setCellValue("备注");row.getCell(15).setCellStyle(setBorder);
-                row.createCell(16).setCellValue("当前状态");row.getCell(16).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
@@ -409,7 +388,6 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                     row.createCell(13).setCellValue(p.getContact());row.getCell(13).setCellStyle(setBorder);
                     row.createCell(14).setCellValue(p.getContactNumber());row.getCell(14).setCellStyle(setBorder);
                     row.createCell(15).setCellValue(p.getComment());row.getCell(15).setCellStyle(setBorder);
-                    row.createCell(16).setCellValue(p.getStatus()==null?"":(p.getStatus()==0?"退休":"返聘"));row.getCell(16).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
@@ -429,7 +407,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleRetireVo p= peopleRetireMapper.findPeopleRetireVoById(Long.valueOf(id));
+        PeopleRetireVo p= peopleRetireMapper.findPeopleRetireVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;
@@ -452,7 +430,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
             params.put("${mobile}",p.getMobile());
             params.put("${contact}",p.getContact());
             params.put("${contactNumber}",p.getContactNumber());
-            params.put("${status}",p.getStatus()==0?"退休":"返聘");
+            params.put("${status}","退休");
             params.put("${comment}",p.getComment());
 
             //判断是否有头像

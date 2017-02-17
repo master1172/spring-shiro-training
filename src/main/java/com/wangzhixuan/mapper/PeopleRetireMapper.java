@@ -18,7 +18,7 @@ public interface PeopleRetireMapper {
      * @param id
      * @return
      */
-    int deleteById(Long id);
+    int deleteById(Integer id);
 
     /**
      * 添加人员
@@ -50,7 +50,7 @@ public interface PeopleRetireMapper {
      * @param id
      * @return
      */
-    PeopleRetire findPeopleRetireById(Long id);
+    PeopleRetire findPeopleRetireById(Integer id);
 
     PeopleRetire findPeopleRetireByCode(String code);
 
@@ -95,7 +95,7 @@ public interface PeopleRetireMapper {
      * @param id
      * @return
      */
-    PeopleRetireVo findPeopleRetireVoById(Long id);
+    PeopleRetireVo findPeopleRetireVoById(Integer id);
 
     PeopleRetire findFirstPeopleByName(String name);
 

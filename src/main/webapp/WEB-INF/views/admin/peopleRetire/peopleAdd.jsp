@@ -37,7 +37,7 @@
                     </td>
                     <td>退休时职级</td>
                     <td>
-                        <input class="easyui-combobox" id="retireJobLevelId" name="retireJobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="retireJobId" name="retireJobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>
@@ -98,13 +98,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>当前状态</td>
-                    <td>
-                        <select name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0" >退休</option>
-                            <option value="1" >返聘</option>
-                        </select>
-                    </td>
                     <td>备注</td>
                     <td>
                         <input type="text" name="comment">
