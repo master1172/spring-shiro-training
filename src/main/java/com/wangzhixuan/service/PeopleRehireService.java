@@ -90,6 +90,8 @@ public interface PeopleRehireService {
      * @return
      */
     String findPeopleRehireIDsByCondition(PageInfo pageInfo);
+
+    void batchRetirePeopleByIds(String[] idList);
 }
 
 

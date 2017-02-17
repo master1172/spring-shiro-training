@@ -2,12 +2,11 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleRehireMapper;
+import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleRehire;
+import com.wangzhixuan.model.PeopleTotal;
 import com.wangzhixuan.service.PeopleRehireService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleRehireVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +31,8 @@ import java.util.Map;
 @Service
 public class PeopleRehireServiceImpl implements PeopleRehireService{
 
+    @Autowired
+    private PeopleTotalMapper peopleTotalMapper;
 
     @Autowired
     private PeopleRehireMapper peopleRehireMapper;
@@ -512,6 +513,19 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
         ids = ids.substring(0, ids.lastIndexOf(','));
 
         return ids;
+    }
+
+    @Override
+    public void batchRetirePeopleByIds(String[] idList) {
+        if (idList == null || idList.length < 1)
+            return;
+
+        for(String id: idList){
+            Integer peopleId = Integer.valueOf(id);
+            PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(peopleId);
+            peopleTotal.setStatus(ConstUtil.PEOPLE_RETIRE);
+            peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+        }
     }
 }
 
