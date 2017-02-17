@@ -267,6 +267,30 @@ public class PeopleRetireController extends BaseController{
         }
     }
 
+    @RequestMapping("/batchDeath")
+    @ResponseBody
+    public Result batchDeath(String ids){
+        Result result = new Result();
+
+        if (StringUtils.isEmpty(ids)){
+            result.setSuccess(true);
+            result.setMsg("请选择至少一个人");
+            return result;
+        }
+
+        try{
+            String[] idList = ids.split(",");
+            peopleRetireService.batchConvertFromRetireToDeathByIds(idList);
+            result.setSuccess(true);
+            result.setMsg("转为已故人员成功");
+            return result;
+        }catch(Exception exp){
+            LOGGER.error("转为已故人员失败:{}",exp);
+            result.setMsg(exp.getMessage());
+            return result;
+        }
+    }
+
 }
 
 

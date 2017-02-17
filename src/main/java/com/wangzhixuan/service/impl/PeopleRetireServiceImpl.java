@@ -465,7 +465,20 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
         return ids;
     }
 
-	@Override
+    @Override
+    public void batchConvertFromRetireToDeathByIds(String[] ids) {
+        if (ids == null || ids.length < 1)
+            return;
+
+        for(int i=0; i<ids.length; i++){
+            String id = ids[i];
+            PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
+            peopleTotal.setStatus(ConstUtil.PEOPLE_DEATH);
+            peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+        }
+    }
+
+    @Override
 	public PeopleRetire findPeopleRetireByCode(String code) {
 		return peopleRetireMapper.findPeopleRetireByCode(code);
 	}

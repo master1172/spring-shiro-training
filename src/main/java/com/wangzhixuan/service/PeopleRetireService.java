@@ -93,6 +93,8 @@ public interface PeopleRetireService {
      * @return
      */
     String findPeopleRetireIDsByCondition(PageInfo pageInfo);
+
+    void batchConvertFromRetireToDeathByIds(String[] idList);
 }
 
 
