@@ -134,7 +134,7 @@
                 <tr>
                     <td>部门</td>
                     <td>
-                        <input type="text" name="departmentName" value="${peopleTemp.departmentName}">
+                        <input type="text" name="extraDepartmentName" value="${peopleTemp.extraDepartmentName}">
                     </td>
                     <td>工种</td>
                     <td>

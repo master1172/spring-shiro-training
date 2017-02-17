@@ -19,7 +19,7 @@
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="extra_department_name" property="extraDepartmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
@@ -45,24 +45,26 @@
         <result column="school_date" property="schoolDate" jdbcType="DATE" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="address" property="address" jdbcType="VARCHAR" />
-        <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+        <result column="extra_department_name" property="extraDepartmentName" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo
+        id, code, name, sex, national_id, province, city, birthday, education_name,
+        political_name, speciality, height, marriage_id, hukou, school_date, mobile, address,
+        extra_department_name, job_name, comment, photo
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_Temp
+        from people_total
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="findPeopleTempVoById" resultMap="peopleTempVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleTempVoById" resultMap="peopleTempVoResultMap" parameterType="java.lang.Integer">
         SELECT
         t.id,
         t.code,
@@ -83,12 +85,12 @@
         t.school_date,
         t.mobile,
         t.address,
-        t.department_name,
+        t.extra_department_name,
         t.job_name,
         t.comment,
         t.photo
         FROM
-        people_Temp t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -98,18 +100,18 @@
         </where>
     </select>
 
-    <select id="findPeopleTempById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleTempById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_Temp
+        from people_total
         where id = #{id}
     </select>
 
     <select id="findPeopleTempByName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from people_Temp
-        where name LIKE concat('%',#{name},'%')
+        from people_total
+        where name LIKE concat('%',#{name},'%') and status = 6
     </select>
 
     <select id="findPeopleTempPageCondition" resultMap="peopleTempVoResultMap" parameterType="PageInfo">
@@ -133,12 +135,12 @@
         t.school_date,
         t.mobile,
         t.address,
-        t.department_name,
+        t.extra_department_name,
         t.job_name,
         t.comment,
         t.photo
         FROM
-        people_Temp t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN
@@ -198,8 +200,8 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.departmentName != null and condition.departmentName != ''">
-                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            <if test=" condition.extraDepartmentName != null and condition.extraDepartmentName != ''">
+                and t.extra_department_name LIKE concat('%',#{condition.extraDepartmentName},'%')
             </if>
             <if test=" condition.jobName != null and condition.jobName != ''">
                 and t.job_name LIKE concat('%',#{condition.jobName},'%')
@@ -207,13 +209,16 @@
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
         LIMIT #{from}, #{size}
     </select>
 
     <select id="findPeopleTempPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_Temp t
+        from people_total t
         <where>
             <if test=" condition.code != null and condition.code != '' ">
                 and t.code LIKE concat('%',#{condition.code},'%')
@@ -269,8 +274,8 @@
             <if test=" condition.address != null and condition.address != ''">
                 and t.address LIKE concat('%',#{condition.address},'%')
             </if>
-            <if test=" condition.departmentName != null and condition.departmentName != ''">
-                and t.department_name LIKE concat('%',#{condition.departmentName},'%')
+            <if test=" condition.extraDepartmentName != null and condition.extraDepartmentName != ''">
+                and t.extra_department_name LIKE concat('%',#{condition.extraDepartmentName},'%')
             </if>
             <if test=" condition.jobName != null and condition.jobName != ''">
                 and t.job_name LIKE concat('%',#{condition.jobName},'%')
@@ -278,16 +283,19 @@
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
             </if>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_Temp
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from people_total
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_Temp
+        delete from people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -296,63 +304,71 @@
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleTemp">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_Temp (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_total (
+          code, name, sex, national_id, province, city, birthday, education_name, political_name,
+          speciality, height, marriage_id, hukou, school_date, mobile, address, extra_department_name,
+          job_name, comment, photo, status)
         values (
-        #{code,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT},
-        #{nationalId, jdbcType=INTEGER},
-        #{province,jdbcType=VARCHAR},
-        #{city,jdbcType=VARCHAR},
-        #{birthday,jdbcType=DATE},
-        #{educationName,jdbcType=VARCHAR},
-        #{politicalName,jdbcType=VARCHAR},
-        #{speciality,jdbcType=VARCHAR},
-        #{height,jdbcType=VARCHAR},
-        #{marriageId, jdbcType=INTEGER},
-        #{hukou, jdbcType=TINYINT},
-        #{schoolDate,jdbcType=DATE},
-        #{mobile, jdbcType=VARCHAR},
-        #{address, jdbcType=VARCHAR},
-        #{departmentName, jdbcType=VARCHAR},
-        #{jobName, jdbcType=VARCHAR},
-        #{comment, jdbcType=VARCHAR},
-        #{photo, jdbcType=VARCHAR}
+            #{code,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{sex,jdbcType=TINYINT},
+            #{nationalId, jdbcType=INTEGER},
+            #{province,jdbcType=VARCHAR},
+            #{city,jdbcType=VARCHAR},
+            #{birthday,jdbcType=DATE},
+            #{educationName,jdbcType=VARCHAR},
+            #{politicalName,jdbcType=VARCHAR},
+            #{speciality,jdbcType=VARCHAR},
+            #{height,jdbcType=VARCHAR},
+            #{marriageId, jdbcType=INTEGER},
+            #{hukou, jdbcType=TINYINT},
+            #{schoolDate,jdbcType=DATE},
+            #{mobile, jdbcType=VARCHAR},
+            #{address, jdbcType=VARCHAR},
+            #{extraDepartmentName, jdbcType=VARCHAR},
+            #{jobName, jdbcType=VARCHAR},
+            #{comment, jdbcType=VARCHAR},
+            #{photo, jdbcType=VARCHAR},
+            6
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_Temp (code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_name, job_name, comment, photo)
+        insert into people_total (
+          code, name, sex, national_id, province, city, birthday, education_name, political_name,
+          speciality, height, marriage_id, hukou, school_date, mobile, address, extra_department_name,
+          job_name, comment, photo, status)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
-            #{item.code,jdbcType=VARCHAR},
-            #{item.name,jdbcType=VARCHAR},
-            #{item.sex,jdbcType=TINYINT},
-            #{item.nationalId, jdbcType=INTEGER},
-            #{item.province,jdbcType=VARCHAR},
-            #{item.city,jdbcType=VARCHAR},
-            #{item.birthday,jdbcType=DATE},
-            #{item.educationName,jdbcType=VARCHAR},
-            #{item.politicalName,jdbcType=VARCHAR},
-            #{item.speciality,jdbcType=VARCHAR},
-            #{item.height,jdbcType=VARCHAR},
-            #{item.marriageId, jdbcType=INTEGER},
-            #{item.hukou, jdbcType=TINYINT},
-            #{item.schoolDate,jdbcType=DATE},
-            #{item.mobile, jdbcType=VARCHAR},
-            #{item.address, jdbcType=VARCHAR},
-            #{item.departmentName, jdbcType=VARCHAR},
-            #{item.jobName, jdbcType=VARCHAR},
-            #{item.comment, jdbcType=VARCHAR},
-            #{item.photo, jdbcType=VARCHAR}
+                #{item.code,jdbcType=VARCHAR},
+                #{item.name,jdbcType=VARCHAR},
+                #{item.sex,jdbcType=TINYINT},
+                #{item.nationalId, jdbcType=INTEGER},
+                #{item.province,jdbcType=VARCHAR},
+                #{item.city,jdbcType=VARCHAR},
+                #{item.birthday,jdbcType=DATE},
+                #{item.educationName,jdbcType=VARCHAR},
+                #{item.politicalName,jdbcType=VARCHAR},
+                #{item.speciality,jdbcType=VARCHAR},
+                #{item.height,jdbcType=VARCHAR},
+                #{item.marriageId, jdbcType=INTEGER},
+                #{item.hukou, jdbcType=TINYINT},
+                #{item.schoolDate,jdbcType=DATE},
+                #{item.mobile, jdbcType=VARCHAR},
+                #{item.address, jdbcType=VARCHAR},
+                #{item.extraDepartmentName, jdbcType=VARCHAR},
+                #{item.jobName, jdbcType=VARCHAR},
+                #{item.comment, jdbcType=VARCHAR},
+                #{item.photo, jdbcType=VARCHAR},
+                6
             )
         </foreach>
     </insert>
     <update id="updatePeopleTemp" parameterType="com.wangzhixuan.model.PeopleTemp">
-        update people_Temp
+        update people_total
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -402,8 +418,8 @@
             <if test="address!= null">
                 address = #{address, jdbcType=VARCHAR},
             </if>
-            <if test="departmentName != null">
-                department_name = #{departmentName, jdbcType=VARCHAR},
+            <if test="extraDepartmentName != null">
+                extra_department_name = #{extraDepartmentName, jdbcType=VARCHAR},
             </if>
             <if test="jobName != null">
                 job_name = #{jobName, jdbcType=VARCHAR},
@@ -436,11 +452,11 @@
         t.school_date,
         t.mobile,
         t.address,
-        t.department_name,
+        t.extra_department_name,
         t.job_name,
         t.comment,
         t.photo
-        from people_Temp t
+        from people_total t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -468,12 +484,12 @@
         t.school_date,
         t.mobile,
         t.address,
-        t.department_name,
+        t.extra_department_name,
         t.job_name,
         t.comment,
         t.photo
         FROM
-        people_Temp t
+        people_total t
         LEFT JOIN
         dict_national s ON s.id = t.national_id
         LEFT JOIN

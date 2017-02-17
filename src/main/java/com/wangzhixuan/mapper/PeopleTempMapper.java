@@ -18,12 +18,12 @@ public interface PeopleTempMapper {
      * @param id
      * @return
      */
-    int deleteById(Long id);
+    int deleteById(Integer id);
 
     /**
      * 添加人员
      *
-     * @param people
+     * @param
      * @return
      */
     int insert(PeopleTemp peopleTemp);
@@ -50,7 +50,7 @@ public interface PeopleTempMapper {
      * @param id
      * @return
      */
-    PeopleTemp findPeopleTempById(Long id);
+    PeopleTemp findPeopleTempById(Integer id);
 
     /**
      * 人员列表
@@ -93,7 +93,7 @@ public interface PeopleTempMapper {
      * @param id
      * @return
      */
-    PeopleTempVo findPeopleTempVoById(Long id);
+    PeopleTempVo findPeopleTempVoById(Integer id);
 
 
 }

@@ -39,7 +39,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
     private DictMapper dictMapper;
 
     @Override
-    public PeopleTemp findPeopleTempById(Long id) {
+    public PeopleTemp findPeopleTempById(Integer id) {
         return peopleTempMapper.findPeopleTempById(id);
     }
 
@@ -116,7 +116,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
     }
 
     @Override
-    public void deletePeopleTempById(Long id) {
+    public void deletePeopleTempById(Integer id) {
         peopleTempMapper.deleteById(id);
     }
 
@@ -288,7 +288,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
                 //部门
                 if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
                     String departmentName=row.getCell(16).toString().trim();
-                    p.setDepartmentName(departmentName);
+                    p.setExtraDepartmentName(departmentName);
                 }
 
                 //工种
@@ -364,7 +364,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
                     row.createCell(13).setCellValue(p.getSchoolDate()==null?"":(p.getBirthday().toString()));row.getCell(13).setCellStyle(setBorder);
                     row.createCell(14).setCellValue(p.getMobile());row.getCell(14).setCellStyle(setBorder);
                     row.createCell(15).setCellValue(p.getAddress());row.getCell(15).setCellStyle(setBorder);
-                    row.createCell(16).setCellValue(p.getDepartmentName());row.getCell(16).setCellStyle(setBorder);
+                    row.createCell(16).setCellValue(p.getExtraDepartmentName());row.getCell(16).setCellStyle(setBorder);
                     row.createCell(17).setCellValue(p.getJobName());row.getCell(17).setCellStyle(setBorder);
                     row.createCell(18).setCellValue(p.getComment());row.getCell(18).setCellStyle(setBorder);
                     row.setHeight((short) 400);
@@ -386,7 +386,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleTempVo p= peopleTempMapper.findPeopleTempVoById(Long.valueOf(id));
+        PeopleTempVo p= peopleTempMapper.findPeopleTempVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;
@@ -410,7 +410,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
             params.put("${schoolDate}",p.getSchoolDate());
             params.put("${mobile}",p.getMobile());
             params.put("${address}",p.getAddress());
-            params.put("${departmentName}",p.getDepartmentName());
+            params.put("${departmentName}",p.getExtraDepartmentName());
             params.put("${jobName}",p.getJobName());
             params.put("${comment}",p.getComment());
 

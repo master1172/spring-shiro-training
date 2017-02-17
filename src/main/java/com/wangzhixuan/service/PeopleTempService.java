@@ -21,7 +21,7 @@ public interface PeopleTempService {
      * @param id
      * @return
      */
-    PeopleTemp findPeopleTempById(Long id);
+    PeopleTemp findPeopleTempById(Integer id);
 
     /**
      * 根据人员姓名查询人员
@@ -60,24 +60,24 @@ public interface PeopleTempService {
      *
      * @param id
      */
-    void deletePeopleTempById(Long id);
+    void deletePeopleTempById(Integer id);
 
     void batchDeletePeopleTempByIds(String[] ids);
     /**
      * 数据导入
-     * @param list
+     * @param
      */
     boolean insertByImport(CommonsMultipartFile[] files);
     /**
      * 导出Excel
      * @param response
-     * @param id
+     * @param
      * @return
      */
     void exportExcel(HttpServletResponse response,String[] idList);
     /**
      * 导出Word
-     * @param request
+     * @param
      * @param response
      * @param id
      * @return
@@ -86,9 +86,9 @@ public interface PeopleTempService {
 
     /**
      * 根据条件搜索ids
-     * @param request
-     * @param response
-     * @param id
+     * @param
+     * @param
+     * @param
      * @return
      */
     String findPeopleTempIDsByCondition(PageInfo pageInfo);

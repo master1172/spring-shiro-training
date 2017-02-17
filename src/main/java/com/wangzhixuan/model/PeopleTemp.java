@@ -11,7 +11,7 @@ public class PeopleTemp extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = 407002500615373950L;
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -47,7 +47,7 @@ public class PeopleTemp extends PeopleBase implements Serializable {
 
     private String address;
 
-    private String departmentName;
+    private String extraDepartmentName;
 
     private String jobName;
 
@@ -55,11 +55,11 @@ public class PeopleTemp extends PeopleBase implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -183,12 +183,12 @@ public class PeopleTemp extends PeopleBase implements Serializable {
         this.address = address;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getExtraDepartmentName() {
+        return extraDepartmentName;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setExtraDepartmentName(String departmentName) {
+        this.extraDepartmentName = departmentName;
     }
 
     public String getJobName() {
