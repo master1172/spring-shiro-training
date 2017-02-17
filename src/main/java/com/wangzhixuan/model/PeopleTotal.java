@@ -185,6 +185,12 @@ public class PeopleTotal implements Serializable {
     //拟返聘部门
     private Integer afterDepartmentId;
 
+    //返聘岗位名称
+    private String afterJobName;
+
+    //返聘职级
+    private Integer afterJobId;
+
     //返聘人员类型
     private String rehireCategory;
 
@@ -1160,6 +1166,22 @@ public class PeopleTotal implements Serializable {
 
     public void setLastUpdateDate(String lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public String getAfterJobName() {
+        return afterJobName;
+    }
+
+    public void setAfterJobName(String afterJobName) {
+        this.afterJobName = afterJobName;
+    }
+
+    public Integer getAfterJobId() {
+        return afterJobId;
+    }
+
+    public void setAfterJobId(Integer afterJobId) {
+        this.afterJobId = afterJobId;
     }
 
     public String toString(){

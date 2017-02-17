@@ -281,7 +281,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                     try{
                         Integer beforeJobLevelId = dictMapper.findJobIdByName(beforeJobLevelName);
                         if (beforeJobLevelId != null){
-                            p.setBeforeJobLevelId(beforeJobLevelId);
+                            p.setBeforeJobId(beforeJobLevelId);
                         }
                     }catch(Exception exp){
 
@@ -315,7 +315,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                     try{
                         Integer afterJobLevelId = dictMapper.findJobIdByName(afterJobLevelName);
                         if (afterJobLevelId != null){
-                            p.setAfterJobLevelId(afterJobLevelId);
+                            p.setAfterJobId(afterJobLevelId);
                         }
                     }catch(Exception exp){
 

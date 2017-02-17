@@ -17,10 +17,10 @@
         <result column="speciality" property="speciality" jdbcType="VARCHAR"/>
         <result column="before_department_id" property="beforeDepartmentId" jdbcType="INTEGER"/>
         <result column="before_job_name" property="beforeJobName" jdbcType="VARCHAR"/>
-        <result column="before_job_level_id" property="beforeJobLevelId" jdbcType="INTEGER"/>
+        <result column="before_job_id" property="beforeJobId" jdbcType="INTEGER"/>
         <result column="after_department_id" property="afterDepartmentId" jdbcType="INTEGER"/>
         <result column="after_job_name" property="afterJobName" jdbcType="VARCHAR"/>
-        <result column="after_job_level_id" property="afterJobLevelId" jdbcType="INTEGER"/>
+        <result column="after_job_id" property="afterJobId" jdbcType="INTEGER"/>
         <result column="photo_id" property="photoId" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="hukou_address" property="hukouAddress" jdbcType="VARCHAR"/>
@@ -47,12 +47,12 @@
         <result column="before_department_id" property="beforeDepartmentId" jdbcType="INTEGER"/>
         <result column="before_department_name" property="beforeDepartmentName" jdbcType="VARCHAR"/>
         <result column="before_job_name" property="beforeJobName" jdbcType="VARCHAR"/>
-        <result column="before_job_level_id" property="beforeJobLevelId" jdbcType="INTEGER"/>
+        <result column="before_job_id" property="beforeJobId" jdbcType="INTEGER"/>
         <result column="before_job_level_name" property="beforeJobLevelName" jdbcType="VARCHAR"/>
         <result column="after_department_id" property="afterDepartmentId" jdbcType="INTEGER"/>
         <result column="after_department_name" property="afterDepartmentName" jdbcType="VARCHAR"/>
         <result column="after_job_name" property="afterJobName" jdbcType="VARCHAR"/>
-        <result column="after_job_level_id" property="afterJobLevelId" jdbcType="INTEGER"/>
+        <result column="after_job_id" property="afterJobId" jdbcType="INTEGER"/>
         <result column="after_job_level_name" property="afterJobLevelName" jdbcType="VARCHAR"/>
         <result column="photo_id" property="photoId" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
@@ -63,8 +63,8 @@
 
     <sql id="Base_Column_List">
         id, code, name, sex, national_id, native_id, birth_place, birthday, education_name, political_name,
-        health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id,
-        after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo, category
+        health_status, retire_date, speciality, before_department_id, before_job_name, before_job_id,
+        after_department_id, after_job_name, after_job_id, photo_id, address, hukou_address, photo, category
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -94,12 +94,12 @@
         t.before_department_id,
         n.name as before_department_name,
         t.before_job_name,
-        t.before_job_level_id,
+        t.before_job_id,
         m.job_level as before_job_level_name,
         t.after_department_id,
         o.name as after_department_name,
         t.after_job_name,
-        t.after_job_level_id,
+        t.after_job_id,
         p.job_level as after_job_level_name,
         t.photo_id,
         t.address,
@@ -112,10 +112,10 @@
         dict_national s ON s.id = t.national_id
         LEFT JOIN
         job m
-        ON m.id = t.before_job_level_id
+        ON m.id = t.before_job_id
         LEFT JOIN
         job p
-        ON p.id = t.after_job_level_id
+        ON p.id = t.after_job_id
         LEFT JOIN
         dict_department o ON o.id = t.after_department_id
         LEFT JOIN
@@ -161,12 +161,12 @@
         t.before_department_id,
         n.name as before_department_name,
         t.before_job_name,
-        t.before_job_level_id,
+        t.before_job_id,
         m.job_level as before_job_level_name,
         t.after_department_id,
         o.name as after_department_name,
         t.after_job_name,
-        t.after_job_level_id,
+        t.after_job_id,
         p.job_level as after_job_level_name,
         t.photo_id,
         t.address,
@@ -179,10 +179,10 @@
         dict_national s ON s.id = t.national_id
         LEFT JOIN
         job m
-        ON m.id = t.before_job_level_id
+        ON m.id = t.before_job_id
         LEFT JOIN
         job p
-        ON p.id = t.after_job_level_id
+        ON p.id = t.after_job_id
         LEFT JOIN
         dict_department o ON o.id = t.after_department_id
         LEFT JOIN
@@ -238,8 +238,8 @@
             <if test=" condition.beforeJobName != null and condition.beforeJobName != ''">
                 and t.before_job_name LIKE concat('%',#{condition.beforeJobName},'%')
             </if>
-            <if test=" condition.beforeJobLevelId != null">
-                and t.before_job_level_id = #{condition.beforeJobLevelId}
+            <if test=" condition.beforeJobId != null">
+                and t.before_job_id = #{condition.beforeJobId}
             </if>
             <if test=" condition.afterDepartmentId != null">
                 and t.after_department_id = #{condition.afterDepartmentId}
@@ -247,8 +247,8 @@
             <if test=" condition.afterJobName != null and condition.afterJobName != ''">
                 and t.after_job_name LIKE concat('%',#{condition.afterJobName},'%')
             </if>
-            <if test=" condition.afterJobLevelId != null">
-                and t.after_job_level_id = #{condition.afterJobLevelId}
+            <if test=" condition.afterJobId != null">
+                and t.after_job_id = #{condition.afterJobId}
             </if>
             <if test=" condition.photoId != null and condition.photoId != ''">
                 and t.photo_id LIKE concat('%',#{condition.photoId},'%')
@@ -321,8 +321,8 @@
             <if test=" condition.beforeJobName != null and condition.beforeJobName != ''">
                 and t.before_job_name LIKE concat('%',#{condition.beforeJobName},'%')
             </if>
-            <if test=" condition.beforeJobLevelId != null">
-                and t.before_job_level_id = #{condition.beforeJobLevelId}
+            <if test=" condition.beforeJobId != null">
+                and t.before_job_id = #{condition.beforeJobId}
             </if>
             <if test=" condition.afterDepartmentId != null">
                 and t.after_department_id = #{condition.afterDepartmentId}
@@ -330,8 +330,8 @@
             <if test=" condition.afterJobName != null and condition.afterJobName != ''">
                 and t.after_job_name LIKE concat('%',#{condition.afterJobName},'%')
             </if>
-            <if test=" condition.afterJobLevelId != null">
-                and t.after_job_level_id = #{condition.afterJobLevelId}
+            <if test=" condition.afterJobId != null">
+                and t.after_job_id = #{condition.afterJobId}
             </if>
             <if test=" condition.photoId != null and condition.photoId != ''">
                 and t.photo_id LIKE concat('%',#{condition.photoId},'%')
@@ -376,8 +376,8 @@
         </selectKey>
         insert into people_total (
           code, name, sex, national_id, native_id, birth_place, birthday, education_name, political_name,
-          health_status, retire_date, speciality, before_department_id, before_job_name, before_job_level_id,
-          after_department_id, after_job_name, after_job_level_id, photo_id, address, hukou_address, photo,
+          health_status, retire_date, speciality, before_department_id, before_job_name, before_job_id,
+          after_department_id, after_job_name, after_job_id, photo_id, address, hukou_address, photo,
           category, status)
         values
         (
@@ -395,10 +395,10 @@
             #{speciality,jdbcType=VARCHAR},
             #{beforeDepartmentId, jdbcType=INTEGER},
             #{beforeJobName, jdbcType=VARCHAR},
-            #{beforeJobLevelId, jdbcType=INTEGER},
+            #{beforeJobId, jdbcType=INTEGER},
             #{afterDepartmentId, jdbcType=INTEGER},
             #{afterJobName, jdbcType=VARCHAR},
-            #{afterJobLevelId, jdbcType=INTEGER},
+            #{afterJobId, jdbcType=INTEGER},
             #{photoId, jdbcType=INTEGER},
             #{address, jdbcType=VARCHAR},
             #{hukouAddress, jdbcType=VARCHAR},
@@ -411,7 +411,7 @@
         insert into people_total (
           code, name, sex, national_id, native_id, birth_place, birthday,
           education_name, political_name, health_status, retire_date, speciality, before_department_id,
-          before_job_name, before_job_level_id, after_department_id, after_job_name, after_job_level_id,
+          before_job_name, before_job_id, after_department_id, after_job_name, after_job_id,
           photo_id, address, hukou_address, photo, category, status)
         values
         <foreach item="item" index="index" collection="list" separator=",">
@@ -430,10 +430,10 @@
             #{item.speciality,jdbcType=VARCHAR},
             #{item.beforeDepartmentId, jdbcType=INTEGER},
             #{item.beforeJobName, jdbcType=VARCHAR},
-            #{item.beforeJobLevelId, jdbcType=INTEGER},
+            #{item.beforeJobId, jdbcType=INTEGER},
             #{item.afterDepartmentId, jdbcType=INTEGER},
             #{item.afterJobName, jdbcType=VARCHAR},
-            #{item.afterJobLevelId, jdbcType=INTEGER},
+            #{item.afterJobId, jdbcType=INTEGER},
             #{item.photoId, jdbcType=INTEGER},
             #{item.address, jdbcType=VARCHAR},
             #{item.hukouAddress, jdbcType=VARCHAR},
@@ -488,8 +488,8 @@
             <if test="beforeJobName != null">
                 before_job_name = #{beforeJobName, jdbcType=VARCHAR},
             </if>
-            <if test="beforeJobLevelId != null">
-                before_job_level_id = #{beforeJobLevelId, jdbcType=INTEGER},
+            <if test="beforeJobId != null">
+                before_job_id = #{beforeJobId, jdbcType=INTEGER},
             </if>
             <if test="afterDepartmentId != null">
                 after_department_id = #{afterDepartmentId, jdbcType=INTEGER},
@@ -497,8 +497,8 @@
             <if test="afterJobName != null">
                 after_job_name = #{afterJobName, jdbcType=VARCHAR},
             </if>
-            <if test="afterJobLevelId!= null">
-                after_job_level_id = #{afterJobLevelId, jdbcType=INTEGER},
+            <if test="afterJobId!= null">
+                after_job_id = #{afterJobId, jdbcType=INTEGER},
             </if>
             <if test="photoId != null">
                 photo_id = #{photoId, jdbcType=INTEGER},
@@ -535,10 +535,10 @@
         t.speciality,
         t.before_department_id,
         t.before_job_name,
-        t.before_job_level_id,
+        t.before_job_id,
         t.after_department_id,
         t.after_job_name,
-        t.after_job_level_id,
+        t.after_job_id,
         t.photo_id,
         t.address,
         t.hukou_address,
@@ -571,12 +571,12 @@
         t.before_department_id,
         n.name as before_department_name,
         t.before_job_name,
-        t.before_job_level_id,
+        t.before_job_id,
         m.job_level as before_job_level_name,
         t.after_department_id,
         o.name as after_department_name,
         t.after_job_name,
-        t.after_job_level_id,
+        t.after_job_id,
         p.job_level as after_job_level_name,
         t.photo_id,
         t.address,
@@ -589,10 +589,10 @@
         dict_national s ON s.id = t.national_id
         LEFT JOIN
         job m
-        ON m.id = t.before_job_level_id
+        ON m.id = t.before_job_id
         LEFT JOIN
         job p
-        ON p.id = t.after_job_level_id
+        ON p.id = t.after_job_id
         LEFT JOIN
         dict_department o ON o.id = t.after_department_id
         LEFT JOIN

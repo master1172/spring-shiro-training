@@ -8,9 +8,9 @@
         $('#nationalId').val('${peopleRehire.nationalId}');
         $('#nativeId').val('${peopleRehire.nativeId}');
         $('#beforeDepartmentId').val('${peopleRehire.beforeDepartmentId}');
-        $('#beforeJobLevelId').val('${peopleRehire.beforeJobLevelId}');
+        $('#beforeJobId').val('${peopleRehire.beforeJobId}');
         $('#afterDepartmentId').val('${peopleRehire.afterDepartmentId}');
-        $('#afterJobLevelId').val('${peopleRehire.afterJobLevelId}');
+        $('#afterJobId').val('${peopleRehire.afterJobId}');
         $('#imgShow').attr('src','${staticPath}/${peopleRehire.photo}');
     });
     function checkForm(){
@@ -104,7 +104,7 @@
                 <tr>
                     <td>返聘前职级</td>
                     <td>
-                        <input class="easyui-combobox" id="beforeJobLevelId" name="beforeJobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="beforeJobId" name="beforeJobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                     <td>拟返聘工作部门</td>
@@ -120,7 +120,7 @@
                     </td>
                     <td>拟返聘职级</td>
                     <td>
-                        <input class="easyui-combobox" id="afterJobLevelId" name="afterJobLevelId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="afterJobId" name="afterJobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                 </tr>

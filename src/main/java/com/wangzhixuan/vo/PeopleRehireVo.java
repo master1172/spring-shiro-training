@@ -64,7 +64,7 @@ public class PeopleRehireVo implements Serializable {
 
     private String beforeJobName;
 
-    private Integer beforeJobLevelId;
+    private Integer beforeJobId;
 
     private String beforeJobLevelName;
 
@@ -74,7 +74,7 @@ public class PeopleRehireVo implements Serializable {
 
     private String afterJobName;
 
-    private Integer afterJobLevelId;
+    private Integer afterJobId;
 
     private String afterJobLevelName;
 
@@ -214,12 +214,12 @@ public class PeopleRehireVo implements Serializable {
         this.beforeJobName = beforeJobName;
     }
 
-    public Integer getBeforeJobLevelId() {
-        return beforeJobLevelId;
+    public Integer getBeforeJobId() {
+        return beforeJobId;
     }
 
-    public void setBeforeJobLevelId(Integer beforeJobLevelId) {
-        this.beforeJobLevelId = beforeJobLevelId;
+    public void setBeforeJobId(Integer beforeJobId) {
+        this.beforeJobId = beforeJobId;
     }
 
     public Integer getAfterDepartmentId() {
@@ -238,12 +238,12 @@ public class PeopleRehireVo implements Serializable {
         this.afterJobName = afterJobName;
     }
 
-    public Integer getAfterJobLevelId() {
-        return afterJobLevelId;
+    public Integer getAfterJobId() {
+        return afterJobId;
     }
 
-    public void setAfterJobLevelId(Integer afterJobLevelId) {
-        this.afterJobLevelId = afterJobLevelId;
+    public void setAfterJobId(Integer afterJobId) {
+        this.afterJobId = afterJobId;
     }
 
     public String getPhotoId() {
@@ -425,8 +425,8 @@ public class PeopleRehireVo implements Serializable {
             condition.put("beforeJobName", peopleRehirevo.getBeforeJobName());
         }
 
-        if (peopleRehirevo.getBeforeJobLevelId() != null){
-            condition.put("beforeJobLevelId", peopleRehirevo.getBeforeJobLevelId());
+        if (peopleRehirevo.getBeforeJobId() != null){
+            condition.put("beforeJobId", peopleRehirevo.getBeforeJobId());
         }
 
         if (peopleRehirevo.getAfterDepartmentId() != null){
@@ -437,8 +437,8 @@ public class PeopleRehireVo implements Serializable {
             condition.put("afterJobName", peopleRehirevo.getAfterJobName());
         }
 
-        if (peopleRehirevo.getAfterJobLevelId() != null){
-            condition.put("afterJobLevelId", peopleRehirevo.getAfterJobLevelId());
+        if (peopleRehirevo.getAfterJobId() != null){
+            condition.put("afterJobId", peopleRehirevo.getAfterJobId());
         }
 
         if(StringUtils.isNoneBlank(peopleRehirevo.getPhotoId())){

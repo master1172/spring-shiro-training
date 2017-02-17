@@ -43,13 +43,13 @@ public class PeopleRehire extends PeopleBase implements Serializable {
 
     private String beforeJobName;
 
-    private Integer beforeJobLevelId;
+    private Integer beforeJobId;
 
     private Integer afterDepartmentId;
 
     private String afterJobName;
 
-    private Integer afterJobLevelId;
+    private Integer afterJobId;
 
     private String photoId;
 
@@ -181,12 +181,12 @@ public class PeopleRehire extends PeopleBase implements Serializable {
         this.beforeJobName = beforeJobName;
     }
 
-    public Integer getBeforeJobLevelId() {
-        return beforeJobLevelId;
+    public Integer getBeforeJobId() {
+        return beforeJobId;
     }
 
-    public void setBeforeJobLevelId(Integer beforeJobLevelId) {
-        this.beforeJobLevelId = beforeJobLevelId;
+    public void setBeforeJobId(Integer beforeJobId) {
+        this.beforeJobId = beforeJobId;
     }
 
     public String getAfterJobName() {
@@ -197,12 +197,12 @@ public class PeopleRehire extends PeopleBase implements Serializable {
         this.afterJobName = afterJobName;
     }
 
-    public Integer getAfterJobLevelId() {
-        return afterJobLevelId;
+    public Integer getAfterJobId() {
+        return afterJobId;
     }
 
-    public void setAfterJobLevelId(Integer afterJobLevelId) {
-        this.afterJobLevelId = afterJobLevelId;
+    public void setAfterJobId(Integer afterJobLevelId) {
+        this.afterJobId = afterJobId;
     }
 
     public String getPhotoId() {

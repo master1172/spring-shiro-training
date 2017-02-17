@@ -175,7 +175,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
             peopleRehire.setPoliticalName(peopleRetire.getPoliticalName());
             peopleRehire.setRetireDate(peopleRetire.getRetireDate());
             peopleRehire.setBeforeJobName(peopleRetire.getRetireJobName());
-            peopleRehire.setBeforeJobLevelId(peopleRetire.getRetireJobLevelId());
+            peopleRehire.setBeforeJobId(peopleRetire.getRetireJobLevelId());
             peopleRehire.setAddress(peopleRetire.getAddress());
             peopleRehire.setPhoto(peopleRetire.getPhoto());
 
