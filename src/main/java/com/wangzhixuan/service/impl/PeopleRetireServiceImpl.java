@@ -479,6 +479,19 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
     }
 
     @Override
+    public void batchConvertFromRetireToNormalByIds(String[] ids) {
+        if (ids == null || ids.length < 1)
+            return;
+
+        for(int i=0; i<ids.length; i++){
+            String id = ids[i];
+            PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
+            peopleTotal.setStatus(ConstUtil.PEOPLE_NORMAL);
+            peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+        }
+    }
+
+    @Override
 	public PeopleRetire findPeopleRetireByCode(String code) {
 		return peopleRetireMapper.findPeopleRetireByCode(code);
 	}

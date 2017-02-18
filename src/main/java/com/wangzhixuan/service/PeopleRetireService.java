@@ -95,6 +95,8 @@ public interface PeopleRetireService {
     String findPeopleRetireIDsByCondition(PageInfo pageInfo);
 
     void batchConvertFromRetireToDeathByIds(String[] idList);
+
+    void batchConvertFromRetireToNormalByIds(String[] idList);
 }
 
 

@@ -199,6 +199,52 @@
             });
         }
 
+        function batchRetire(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要将所选转入退休？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/peopleDeath/batchRetire', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+        }
+
+        function batchNormal(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要将所选人员转回正常？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/peopleDeath/batchNormal', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+        }
+
         function searchFun() {
             dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
         }
@@ -375,6 +421,10 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>
+    <a onclick="batchRetire();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-del'">转为退休人员</a>
+    <a onclick="batchNormal();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-del'">转为正常人员</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

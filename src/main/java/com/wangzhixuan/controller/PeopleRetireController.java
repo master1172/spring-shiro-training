@@ -243,6 +243,30 @@ public class PeopleRetireController extends BaseController{
         }
     }
 
+    @RequestMapping("/batchNormal")
+    @ResponseBody
+    public Result batchNormal(String ids){
+        Result result = new Result();
+
+        if (StringUtils.isEmpty(ids)){
+            result.setSuccess(true);
+            result.setMsg("请选择至少一个人");
+            return result;
+        }
+
+        try{
+            String[] idList = ids.split(",");
+            peopleRetireService.batchConvertFromRetireToNormalByIds(idList);
+            result.setSuccess(true);
+            result.setMsg("批量正常人员成功");
+            return result;
+        }catch(Exception exp){
+            LOGGER.error("批量正常人员失败:{}",exp);
+            result.setMsg(exp.getMessage());
+            return result;
+        }
+    }
+
     @RequestMapping("/batchRehire")
     @ResponseBody
     public Result batchRehire(String ids){

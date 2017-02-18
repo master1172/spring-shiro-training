@@ -78,4 +78,8 @@ public interface PeopleDeathService {
      * @return
      */
     String findPeopleIDsByCondition(PageInfo pageInfo);
+
+    void batchRetirePeopleByIds(String[] idList);
+
+    void batchNormalPeopleByIds(String[] idList);
 }

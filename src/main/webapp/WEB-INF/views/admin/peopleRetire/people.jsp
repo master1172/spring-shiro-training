@@ -221,6 +221,29 @@
             });
         }
 
+        function batchNormal(){
+            var checkedItems = $('#dataGrid').datagrid('getChecked');
+            var ids = [];
+            $.each(checkedItems, function(index,item){
+                ids.push(item.id);
+            });
+
+            parent.$.messager.confirm('询问', '您是否要将所选人员转回正常？', function (b) {
+                if (b) {
+                    progressLoad();
+                    $.post('${path}/peopleRetire/batchNormal', {
+                        ids: ids.join(",")
+                    }, function (result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                }
+            });
+        }
+
         function batchDeath(){
             var checkedItems = $('#dataGrid').datagrid('getChecked');
             var ids = [];
@@ -438,6 +461,8 @@
         <a onclick="batchRehire();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">转入返聘人员</a>
     </shiro:hasPermission>
+    <a onclick="batchNormal();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">转入正常人员</a>
     <a onclick="batchDeath();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">转入已故人员</a>
 

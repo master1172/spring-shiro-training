@@ -2,12 +2,11 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleDeathMapper;
+import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleDeath;
+import com.wangzhixuan.model.PeopleTotal;
 import com.wangzhixuan.service.PeopleDeathService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleDeathVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
@@ -38,6 +37,9 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
 
     @Autowired
     private DictMapper dictMapper;
+
+    @Autowired
+    private PeopleTotalMapper peopleTotalMapper;
 
     @Override
     public PeopleDeath findPeopleById(Integer id) {
@@ -381,5 +383,31 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
         ids = ids.substring(0, ids.lastIndexOf(','));
 
         return ids;
+    }
+
+    @Override
+    public void batchRetirePeopleByIds(String[] ids) {
+        if (ids == null || ids.length < 1)
+            return;
+
+        for(int i=0; i<ids.length; i++){
+            String id = ids[i];
+            PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
+            peopleTotal.setStatus(ConstUtil.PEOPLE_RETIRE);
+            peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+        }
+    }
+
+    @Override
+    public void batchNormalPeopleByIds(String[] ids) {
+        if (ids == null || ids.length < 1)
+            return;
+
+        for(int i=0; i<ids.length; i++){
+            String id = ids[i];
+            PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
+            peopleTotal.setStatus(ConstUtil.PEOPLE_NORMAL);
+            peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+        }
     }
 }
