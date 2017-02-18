@@ -11,7 +11,7 @@
         <result column="school_date" property="school_date" jdbcType="DATE"/>
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="job_id" property="job_level_id" jdbcType="INTEGER" />
-        <result column="departmen_id" property="department" jdbcType="INTEGER" />
+        <result column="department_id" property="department" jdbcType="INTEGER" />
         <result column="death_date" property="death_date" jdbcType="DATE" />
         <result column="death_reason" property="death_reason" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
@@ -299,14 +299,14 @@
             <if test="school_date != null">
                 school_date = #{school_date,jdbcType=DATE},
             </if>
-            <if test="category != null">
-                job_name = #{category,jdbcType=VARCHAR},
+            <if test="jobName != null">
+                job_name = #{jobName,jdbcType=VARCHAR},
             </if>
             <if test="job_level_id != null">
                 job_id = #{job_level_id, jdbcType=INTEGER},
             </if>
             <if test="department != null">
-                department = #{department,jdbcType=VARCHAR},
+                department_id = #{department,jdbcType=VARCHAR},
             </if>
             <if test="death_date != null">
                 death_date = #{death_date, jdbcType=DATE},
