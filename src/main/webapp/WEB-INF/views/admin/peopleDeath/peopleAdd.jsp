@@ -52,7 +52,7 @@
                     </td>
                     <td>职务</td>
                     <td>
-                        <input type="text" name="category" placeholder="请输入职务" />
+                        <input type="text" name="jobName" placeholder="请输入职务" />
                     </td>
                 </tr>
                 <tr>
@@ -63,7 +63,8 @@
                     </td>
                     <td>部门</td>
                     <td>
-                        <input type="text" name="department">
+                        <input class="easyui-combobox" id="department" name="department" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                 </tr>
                 <tr>

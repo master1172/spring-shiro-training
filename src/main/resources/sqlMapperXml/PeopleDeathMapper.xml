@@ -78,7 +78,7 @@
         LEFT JOIN
           dict_national s ON s.id = t.national_id
         LEFT JOIN
-          job j ON j.id = t.job_level_id
+          job j ON j.id = t.job_id
         <where>
             t.id = #{id}
         </where>
@@ -102,7 +102,7 @@
         t.birthday,
         t.school_date,
         t.job_name,
-        t.job_level_id,
+        t.job_id,
         j.job_level as job_level_name,
         t.department_id,
         t.death_date,
@@ -111,7 +111,7 @@
         t.photo
         FROM
         people_total t
-        LEFT JOIN dict_national s ON s.id = t.national
+        LEFT JOIN dict_national s ON s.id = t.national_id
         LEFT JOIN job j ON j.id = t.job_id
         <where>
             <if test=" condition.code != null">
@@ -294,16 +294,16 @@
                 sex = #{sex,jdbcType=TINYINT},
             </if>
             <if test="national != null">
-                national = #{national,jdbcType=INTEGER},
+                national_id = #{national,jdbcType=INTEGER},
             </if>
             <if test="school_date != null">
                 school_date = #{school_date,jdbcType=DATE},
             </if>
             <if test="category != null">
-                category = #{category,jdbcType=VARCHAR},
+                job_name = #{category,jdbcType=VARCHAR},
             </if>
             <if test="job_level_id != null">
-                job_level_id = #{job_level_id, jdbcType=INTEGER},
+                job_id = #{job_level_id, jdbcType=INTEGER},
             </if>
             <if test="department != null">
                 department = #{department,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-          t.id,t.code,t.name, t.sex,t.national,t.birthday,t.school_date,t.category,t.job_level_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
+          t.id,t.code,t.name, t.sex,t.national_id,t.birthday,t.school_date,t.job_name,t.job_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
         from people_death t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -342,7 +342,7 @@
             t.national_id,
             s.name as nationalName,
             t.birthday,
-            t.school_date,t.category,t.job_level_id,j.job_level as job_level_name,t.department,t.death_date,t.death_reason,t.comment,t.photo
+            t.school_date,t.job_name,t.job_id,j.job_level as job_level_name,t.department,t.death_date,t.death_reason,t.comment,t.photo
         from people_total t
         left join
           dict_national s ON s.id = t.national_id

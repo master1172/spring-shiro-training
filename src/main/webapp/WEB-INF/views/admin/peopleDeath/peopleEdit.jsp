@@ -7,6 +7,7 @@
         $("#sex").val('${people.sex}');
         $('#national').val('${people.national}');
         $('#job_level_id').val('${people.job_level_id}');
+        $('#department').val('${people.department}');
         $('#imgShow').attr('src','${staticPath}/${people.photo}');
     });
 
@@ -59,7 +60,7 @@
                     </td>
                     <td>职务</td>
                     <td>
-                        <input type="text" name="category" placeholder="请输入职务" value="${people.category}"/>
+                        <input type="text" name="jobName" placeholder="请输入职务" value="${people.jobName}"/>
                     </td>
                 </tr>
                 <tr>
@@ -69,7 +70,10 @@
                         </input>
                     </td>
                     <td>部门</td>
-                    <td><input type="text" name="department" value="${people.department}"></td>
+                    <td>
+                        <input class="easyui-combobox" id="department" name="department" url="${path}/dict/department" valueField="id" textField="name" editable="false">
+                        </input>
+                    </td>
                 </tr>
                 <tr>
                     <td>死亡日期</td>
