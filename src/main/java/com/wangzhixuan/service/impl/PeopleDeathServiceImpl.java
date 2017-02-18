@@ -40,7 +40,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
     private DictMapper dictMapper;
 
     @Override
-    public PeopleDeath findPeopleById(Long id) {
+    public PeopleDeath findPeopleById(Integer id) {
         return peopleDeathMapper.findPeopleById(id);
     }
 
@@ -107,7 +107,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
     }
 
     @Override
-    public void deletePeopleById(Long id) {
+    public void deletePeopleById(Integer id) {
         peopleDeathMapper.deleteById(id);
     }
 
@@ -316,7 +316,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
     //导出word
     @Override
     public void exportWord(HttpServletResponse response,String id){
-        PeopleDeathVo p= peopleDeathMapper.findPeopleVoById(Long.valueOf(id));
+        PeopleDeathVo p= peopleDeathMapper.findPeopleVoById(Integer.valueOf(id));
         if(p!=null){
             XWPFDocument doc;
             OutputStream os;

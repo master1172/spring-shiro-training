@@ -18,7 +18,7 @@ public interface PeopleDeathMapper  {
      * @param id
      * @return
      */
-    int deleteById(Long id);
+    int deleteById(Integer id);
 
     /**
      * 添加人员
@@ -42,7 +42,7 @@ public interface PeopleDeathMapper  {
      * @param id
      * @return
      */
-    PeopleDeath findPeopleById(Long id);
+    PeopleDeath findPeopleById(Integer id);
 
     /**
      * 人员列表
@@ -87,7 +87,7 @@ public interface PeopleDeathMapper  {
      * @param id
      * @return
      */
-    PeopleDeathVo findPeopleVoById(Long id);
+    PeopleDeathVo findPeopleVoById(Integer id);
 
     PeopleDeath findPeopleByCode(String code);
 }

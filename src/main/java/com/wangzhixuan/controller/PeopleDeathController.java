@@ -132,7 +132,7 @@ public class PeopleDeathController extends BaseController{
     }
 
     @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
+    public String editPage(Integer id, Model model){
         PeopleDeath people = peopleDeathService.findPeopleById(id);
         model.addAttribute("people",people);
         return "/admin/peopleDeath/peopleEdit";
@@ -156,7 +156,7 @@ public class PeopleDeathController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(Long id){
+    public Result delete(Integer id){
         Result result = new Result();
         try{
             peopleDeathService.deletePeopleById(id);

@@ -16,7 +16,7 @@ public interface PeopleDeathService {
      * @param id
      * @return
      */
-    PeopleDeath findPeopleById(Long id);
+    PeopleDeath findPeopleById(Integer id);
 
     /**
      * 人员列表
@@ -46,7 +46,7 @@ public interface PeopleDeathService {
      *
      * @param id
      */
-    void deletePeopleById(Long id);
+    void deletePeopleById(Integer id);
 
     void batchDeletePeopleByIds(String[] ids);
     /**
