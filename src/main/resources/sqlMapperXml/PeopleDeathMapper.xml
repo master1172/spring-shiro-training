@@ -325,7 +325,7 @@
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-          t.id,t.code,t.name, t.sex,t.national_id,t.birthday,t.school_date,t.job_name,t.job_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
+          t.id,t.code,t.name, t.sex,t.national_id,t.birthday,t.school_date,t.job_name,t.job_id,t.department_id,t.death_date,t.death_reason,t.comment,t.photo
         from people_death t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -342,7 +342,7 @@
             t.national_id,
             s.name as nationalName,
             t.birthday,
-            t.school_date,t.job_name,t.job_id,j.job_level as job_level_name,t.department,t.death_date,t.death_reason,t.comment,t.photo
+            t.school_date,t.job_name,t.job_id,j.job_level as job_level_name,t.department_id,t.death_date,t.death_reason,t.comment,t.photo
         from people_total t
         left join
           dict_national s ON s.id = t.national_id

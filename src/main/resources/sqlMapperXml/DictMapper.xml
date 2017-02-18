@@ -137,6 +137,12 @@
         where name = #{name}
     </select>
 
+    <select id="findDepartmentNameById" resultType="java.lang.String" parameterType="java.lang.Integer">
+        SELECT name
+        from dict_department
+        where id = #{id}
+    </select>
+
     <select id="findJobNameDict" resultMap="JobNameResultMap">
         select
         id, job_category

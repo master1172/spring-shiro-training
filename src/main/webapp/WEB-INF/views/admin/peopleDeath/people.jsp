@@ -295,9 +295,9 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>部门:</th>
+                <th>姓名:</th>
                 <td>
-                    <input name="department" placeholder="请输入部门名称"/>
+                    <input name="name" placeholder="请输入姓名名称"/>
                 </td>
                 <th>性别:</th>
                 <td>

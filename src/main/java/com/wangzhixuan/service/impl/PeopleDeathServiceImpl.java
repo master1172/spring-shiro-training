@@ -285,6 +285,13 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
                     PeopleDeathVo p=(PeopleDeathVo)list.get(i);
+
+                    String departmentName = "";
+                    Integer departmentId = p.getDepartment();
+                    if (departmentId != null){
+                        departmentName = dictMapper.findDepartmentNameById(departmentId);
+                    }
+
                     row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
                     row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
                     row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
@@ -293,7 +300,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     row.createCell(5).setCellValue(p.getSchool_date()==null?"":(p.getSchool_date().toString()));row.getCell(5).setCellStyle(setBorder);
                     row.createCell(6).setCellValue(p.getJobName());row.getCell(6).setCellStyle(setBorder);
                     row.createCell(7).setCellValue(p.getJob_level_name());row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getDepartment());row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(departmentName==null?"":departmentName);row.getCell(8).setCellStyle(setBorder);
                     row.createCell(9).setCellValue(p.getDeath_date()==null?"":(p.getDeath_date().toString()));row.getCell(9).setCellStyle(setBorder);
                     row.createCell(10).setCellValue(p.getDeath_reason());row.getCell(10).setCellStyle(setBorder);
                     row.createCell(11).setCellValue(p.getComment());row.getCell(11).setCellStyle(setBorder);
@@ -323,6 +330,12 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             String filePath=this.getClass().getResource("/template/custInfoDeath.docx").getPath();
             String newFileName="已故人员信息.docx";
 
+            String departmentName = "";
+            Integer departmentId = p.getDepartment();
+            if (departmentId != null){
+                departmentName = dictMapper.findDepartmentNameById(departmentId);
+            }
+
             Map<String,Object> params = new HashMap<String,Object>();
             params.put("${code}",p.getCode());
             params.put("${name}",p.getName());
@@ -332,7 +345,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             params.put("${school_date}",p.getSchool_date());
             params.put("${category}",p.getJobName());
             params.put("${job_level_name}",p.getJob_level_name());
-            params.put("${department}",p.getDepartment());
+            params.put("${department}",departmentName);
             params.put("${death_date}",p.getDeath_date());
             params.put("${death_reason}",p.getDeath_reason());
             params.put("${comment}",p.getComment());
