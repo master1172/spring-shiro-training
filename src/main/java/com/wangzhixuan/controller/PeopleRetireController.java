@@ -45,7 +45,7 @@ public class PeopleRetireController extends BaseController{
     /**
      * 人员管理列表
      *
-     * @param peopleRetire
+     * @param
      * @param page
      * @param rows
      * @param sort

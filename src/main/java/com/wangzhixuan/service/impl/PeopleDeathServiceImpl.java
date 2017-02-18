@@ -206,7 +206,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 //职务
                 if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
                     String category=row.getCell(6).toString().trim();
-                    p.setCategory(category);
+                    p.setJobName(category);
                 }
 
                 //职级
@@ -226,7 +226,8 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 //部门
                 if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
                     String department=row.getCell(8).toString().trim();
-                    p.setDepartment(department);
+                    Integer departmentId = dictMapper.findDepartmentIdByName(department);
+                    p.setDepartment(departmentId);
                 }
 
                 //死亡日期
@@ -290,7 +291,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     row.createCell(3).setCellValue(p.getNationalName());row.getCell(3).setCellStyle(setBorder);
                     row.createCell(4).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));row.getCell(4).setCellStyle(setBorder);
                     row.createCell(5).setCellValue(p.getSchool_date()==null?"":(p.getSchool_date().toString()));row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getCategory());row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getJobName());row.getCell(6).setCellStyle(setBorder);
                     row.createCell(7).setCellValue(p.getJob_level_name());row.getCell(7).setCellStyle(setBorder);
                     row.createCell(8).setCellValue(p.getDepartment());row.getCell(8).setCellStyle(setBorder);
                     row.createCell(9).setCellValue(p.getDeath_date()==null?"":(p.getDeath_date().toString()));row.getCell(9).setCellStyle(setBorder);
@@ -329,7 +330,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             params.put("${national}",p.getNationalName());
             params.put("${birthday}",p.getBirthday());
             params.put("${school_date}",p.getSchool_date());
-            params.put("${category}",p.getCategory());
+            params.put("${category}",p.getJobName());
             params.put("${job_level_name}",p.getJob_level_name());
             params.put("${department}",p.getDepartment());
             params.put("${death_date}",p.getDeath_date());

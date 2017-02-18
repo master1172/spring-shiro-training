@@ -11,11 +11,9 @@ public class PeopleDeath extends PeopleBase implements Serializable {
 
     private static final long serialVersionUID = -3874035833405975520L;
 
-    private Long id;
+    private Integer id;
 
     private String code;
-
-
 
     private String name;
 
@@ -29,11 +27,11 @@ public class PeopleDeath extends PeopleBase implements Serializable {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private String school_date;
 
-    private String category;
+    private String jobName;
 
     private Integer job_level_id;
 
-    private String department;
+    private Integer department;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private String death_date;
@@ -44,11 +42,11 @@ public class PeopleDeath extends PeopleBase implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -100,12 +98,12 @@ public class PeopleDeath extends PeopleBase implements Serializable {
         this.school_date = school_date;
     }
 
-    public String getCategory() {
-        return category;
+    public String getJobName() {
+        return jobName;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     public Integer getJob_level_id() {
@@ -116,11 +114,11 @@ public class PeopleDeath extends PeopleBase implements Serializable {
         this.job_level_id = job_level_id;
     }
 
-    public String getDepartment() {
+    public Integer getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Integer department) {
         this.department = department;
     }
 

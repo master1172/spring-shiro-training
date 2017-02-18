@@ -2,6 +2,7 @@ package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Map;
  */
 public class PeopleDeathVo implements Serializable {
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -42,13 +43,13 @@ public class PeopleDeathVo implements Serializable {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private String school_dateMax;
 
-    private String category;
+    private String jobName;
 
     private Integer job_level_id;
 
     private String job_level_name;
 
-    private String department;
+    private Integer department;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private String death_date;
@@ -65,11 +66,11 @@ public class PeopleDeathVo implements Serializable {
 
     private String photo;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -149,12 +150,12 @@ public class PeopleDeathVo implements Serializable {
         this.school_dateMax = school_dateMax;
     }
 
-    public String getCategory() {
-        return category;
+    public String getJobName() {
+        return jobName;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     public Integer getJob_level_id() {
@@ -165,11 +166,11 @@ public class PeopleDeathVo implements Serializable {
         this.job_level_id = job_level_id;
     }
 
-    public String getDepartment() {
+    public Integer getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Integer department) {
         this.department = department;
     }
 
@@ -264,15 +265,15 @@ public class PeopleDeathVo implements Serializable {
             condition.put("school_dateMax",peopleDeathvo.getSchool_dateMax());
         }
 
-        if(StringUtils.isNoneBlank(peopleDeathvo.getCategory())){
-            condition.put("category", peopleDeathvo.getCategory());
+        if(StringUtils.isNoneBlank(peopleDeathvo.getJobName())){
+            condition.put("jobName", peopleDeathvo.getJobName());
         }
 
         if (peopleDeathvo.getJob_level_id() != null){
             condition.put("job_level_id", peopleDeathvo.getJob_level_id());
         }
 
-        if(StringUtils.isNoneBlank(peopleDeathvo.getDepartment())){
+        if(peopleDeathvo.getDepartment()!=null){
             condition.put("department", peopleDeathvo.getDepartment());
         }
 
@@ -291,6 +292,8 @@ public class PeopleDeathVo implements Serializable {
         if(StringUtils.isNoneBlank(peopleDeathvo.getComment())){
             condition.put("comment", peopleDeathvo.getComment());
         }
+
+        condition.put("status", ConstUtil.PEOPLE_DEATH);
 
         return condition;
     }

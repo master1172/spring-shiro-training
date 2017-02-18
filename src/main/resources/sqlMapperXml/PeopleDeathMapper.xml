@@ -6,12 +6,12 @@
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
-        <result column="national" property="national" jdbcType="INTEGER"/>
+        <result column="national_id" property="national" jdbcType="INTEGER"/>
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="school_date" property="school_date" jdbcType="DATE"/>
-        <result column="category" property="category" jdbcType="VARCHAR" />
-        <result column="job_level_id" property="job_level_id" jdbcType="INTEGER" />
-        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="job_id" property="job_level_id" jdbcType="INTEGER" />
+        <result column="departmen_id" property="department" jdbcType="INTEGER" />
         <result column="death_date" property="death_date" jdbcType="DATE" />
         <result column="death_reason" property="death_reason" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
@@ -23,14 +23,14 @@
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sex" property="sex" jdbcType="TINYINT"/>
-        <result column="national" property="national" jdbcType="INTEGER"/>
+        <result column="national_id" property="national" jdbcType="INTEGER"/>
         <result column="nationalName" property="nationalName" jdbcType="VARCHAR"/>
         <result column="birthday" property="birthday" jdbcType="DATE" />
         <result column="school_date" property="school_date" jdbcType="DATE"/>
-        <result column="category" property="category" jdbcType="VARCHAR" />
-        <result column="job_level_id" property="job_level_id" jdbcType="INTEGER" />
-        <result column="job_level_Name" property="job_level_name" jdbcType="VARCHAR" />
-        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="job_id" property="job_level_id" jdbcType="INTEGER" />
+        <result column="job_level_name" property="job_level_name" jdbcType="VARCHAR" />
+        <result column="department_id" property="department" jdbcType="INTEGER" />
         <result column="death_date" property="death_date" jdbcType="DATE" />
         <result column="death_reason" property="death_reason" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
@@ -38,56 +38,56 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo
+        id, code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_death
+        from people_total
         where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="findPeopleByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM people_death
+        FROM people_total
         where code = #{code, jdbcType=VARCHAR}
     </select>
 
-    <select id="findPeopleVoById" resultMap="peopleDeathVoResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleVoById" resultMap="peopleDeathVoResultMap" parameterType="java.lang.Integer">
         SELECT
-        t.id,
-        t.code,
-        t.name,
-        t.sex,
-        t.national,
-        s.name as nationalName,
-        t.birthday,
-        t.school_date,
-        t.category,
-        t.job_level_id,
-        j.job_level as job_level_name,
-        t.department,
-        t.death_date,
-        t.death_reason,
-        t.comment,
-        t.photo
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            s.name as nationalName,
+            t.birthday,
+            t.school_date,
+            t.job_name,
+            t.job_id,
+            j.job_level as job_level_name,
+            t.department_id,
+            t.death_date,
+            t.death_reason,
+            t.comment,
+            t.photo
         FROM
-        people_death t
+          people_total t
         LEFT JOIN
-        dict_national s ON s.id = t.national
+          dict_national s ON s.id = t.national_id
         LEFT JOIN
-        job j ON j.id = t.job_level_id
+          job j ON j.id = t.job_level_id
         <where>
             t.id = #{id}
         </where>
     </select>
 
-    <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="findPeopleById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from people_death
+        from people_total
         where id = #{id}
     </select>
 
@@ -97,22 +97,22 @@
         t.code,
         t.name,
         t.sex,
-        t.national,
+        t.national_id,
         s.name as nationalName,
         t.birthday,
         t.school_date,
-        t.category,
+        t.job_name,
         t.job_level_id,
         j.job_level as job_level_name,
-        t.department,
+        t.department_id,
         t.death_date,
         t.death_reason,
         t.comment,
         t.photo
         FROM
-        people_death t
+        people_total t
         LEFT JOIN dict_national s ON s.id = t.national
-        LEFT JOIN job j ON j.id = t.job_level_id
+        LEFT JOIN job j ON j.id = t.job_id
         <where>
             <if test=" condition.code != null">
                 and t.code = #{condition.code}
@@ -124,7 +124,7 @@
                 and t.sex = #{condition.sex}
             </if>
             <if test=" condition.national != null">
-                and t.national = #{condition.national}
+                and t.national_id = #{condition.national}
             </if>
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
@@ -138,14 +138,14 @@
             <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
                 <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
             </if>
-            <if test=" condition.category != null and condition.category != ''">
-                and t.category LIKE concat('%',#{condition.category},'%')
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
             </if>
             <if test=" condition.jobe_level_id != null">
-                and t.jobe_level_id = #{condition.jobe_level_id}
+                and t.job_id = #{condition.jobe_level_id}
             </if>
-            <if test=" condition.department != null and condition.department != ''">
-                and t.department LIKE concat('%',#{condition.department},'%')
+            <if test=" condition.department != null">
+                and t.department_id = #{condition.department}
             </if>
             <if test=" condition.death_dateMin != null and condition.death_dateMin != ''">
                 <![CDATA[ and t.death_date >= #{condition.death_dateMin} ]]>
@@ -158,6 +158,9 @@
             </if>
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
+            </if>
+            <if test="condition.status != null">
+                and t.status = #{condition.status}
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -165,7 +168,7 @@
 
     <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(*) count
-        from people_death t
+        from people_total t
         <where>
             <if test=" condition.code != null">
                 and t.code = #{condition.code}
@@ -177,7 +180,7 @@
                 and t.sex = #{condition.sex}
             </if>
             <if test=" condition.national != null">
-                and t.national = #{condition.national}
+                and t.national_id = #{condition.national}
             </if>
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
@@ -191,14 +194,14 @@
             <if test=" condition.school_dateMax != null and condition.school_dateMax != ''">
                 <![CDATA[ and t.school_date <= #{condition.school_dateMax} ]]>
             </if>
-            <if test=" condition.category != null and condition.category != ''">
-                and t.job_name LIKE concat('%',#{condition.job_name},'%')
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
             </if>
             <if test=" condition.jobe_level_id != null">
-                and t.jobe_level_id = #{condition.jobe_level_id}
+                and t.job_id = #{condition.jobe_level_id}
             </if>
-            <if test=" condition.department != null and condition.department != ''">
-                and t.department LIKE concat('%',#{condition.department},'%')
+            <if test=" condition.department != null">
+                and t.department_id = #{condition.department}
             </if>
             <if test=" condition.death_dateMin != null and condition.death_dateMin != ''">
                 <![CDATA[ and t.death_date >= #{condition.death_dateMin} ]]>
@@ -212,16 +215,19 @@
             <if test=" condition.comment != null and condition.comment != ''">
                 and t.comment LIKE concat('%',#{condition.comment},'%')
             </if>
+            <if test="condition.status != null">
+                and t.status = #{condition.status}
+            </if>
         </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from people_death
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from people_total
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
     <delete id="batchDeleteByIds" parameterType="java.util.ArrayList">
-        delete from people_death
+        delete from people_total
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
@@ -230,49 +236,53 @@
 
 
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleDeath">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into people_death (code, name, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
+        insert into people_total (
+          code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo, status)
         values (
-        #{code,jdbcType=VARCHAR},
-        #{name, jdbcType=VARCHAR},
-        #{sex,jdbcType=TINYINT},
-        #{national,jdbcType=INTEGER},
-        #{birthday,jdbcType=DATE},
-        #{school_date,jdbcType=DATE},
-        #{category,jdbcType=VARCHAR},
+        #{code,     jdbcType=VARCHAR},
+        #{name,     jdbcType=VARCHAR},
+        #{sex,      jdbcType=TINYINT},
+        #{national, jdbcType=INTEGER},
+        #{birthday, jdbcType=DATE},
+        #{school_date,  jdbcType=DATE},
+        #{jobName,      jdbcType=VARCHAR},
         #{job_level_id, jdbcType=INTEGER},
-        #{department,jdbcType=VARCHAR},
-        #{death_date, jdbcType=DATE},
-        #{death_reason,jdbcType=VARCHAR},
-        #{comment, jdbcType=VARCHAR},
-        #{photo, jdbcType=VARCHAR}
+        #{department,   jdbcType=INTEGER},
+        #{death_date,   jdbcType=DATE},
+        #{death_reason, jdbcType=VARCHAR},
+        #{comment,      jdbcType=VARCHAR},
+        #{photo,        jdbcType=VARCHAR},
+        2
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_death (code, name, sex, national, birthday, school_date, category, job_level_id, department, death_date, death_reason, comment, photo)
+        insert into people_total (
+          code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo, status)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
-            #{item.code,jdbcType=VARCHAR},
-            #{item.name, jdbcType=VARCHAR},
-            #{item.sex,jdbcType=TINYINT},
-            #{item.national,jdbcType=INTEGER},
-            #{item.birthday,jdbcType=DATE},
-            #{item.school_date,jdbcType=DATE},
-            #{item.category,jdbcType=VARCHAR},
-            #{item.job_level_id, jdbcType=INTEGER},
-            #{item.department,jdbcType=VARCHAR},
-            #{item.death_date, jdbcType=DATE},
-            #{item.death_reason,jdbcType=VARCHAR},
-            #{item.comment, jdbcType=VARCHAR},
-            #{item.photo, jdbcType=VARCHAR}
+                #{item.code,     jdbcType=VARCHAR},
+                #{item.name,     jdbcType=VARCHAR},
+                #{item.sex,      jdbcType=TINYINT},
+                #{item.national, jdbcType=INTEGER},
+                #{item.birthday, jdbcType=DATE},
+                #{item.school_date,  jdbcType=DATE},
+                #{item.jobName,      jdbcType=VARCHAR},
+                #{item.job_level_id, jdbcType=INTEGER},
+                #{item.department,   jdbcType=INTEGER},
+                #{item.death_date,   jdbcType=DATE},
+                #{item.death_reason, jdbcType=VARCHAR},
+                #{item.comment,      jdbcType=VARCHAR},
+                #{item.photo,        jdbcType=VARCHAR},
+                2
             )
         </foreach>
     </insert>
     <update id="updatePeople" parameterType="com.wangzhixuan.model.PeopleDeath">
-        update people_death
+        update people_total
         <set>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -315,7 +325,7 @@
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-        t.id,t.code,t.name, t.sex,t.national,t.birthday,t.school_date,t.category,t.job_level_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
+          t.id,t.code,t.name, t.sex,t.national,t.birthday,t.school_date,t.category,t.job_level_id,t.department,t.death_date,t.death_reason,t.comment,t.photo
         from people_death t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -325,12 +335,19 @@
 
     <select id="selectPeopleVoByIds" resultMap="peopleDeathVoResultMap" parameterType="java.util.ArrayList">
         select
-        t.id,t.code,t.name, t.sex,t.national,s.name as nationalName,t.birthday,t.school_date,t.category,t.job_level_id,j.job_level as job_level_name,t.department,t.death_date,t.death_reason,t.comment,t.photo
-        from people_death t
+            t.id,
+            t.code,
+            t.name,
+            t.sex,
+            t.national_id,
+            s.name as nationalName,
+            t.birthday,
+            t.school_date,t.category,t.job_level_id,j.job_level as job_level_name,t.department,t.death_date,t.death_reason,t.comment,t.photo
+        from people_total t
         left join
-        dict_national s ON s.id = t.national
+          dict_national s ON s.id = t.national_id
         left join
-        job j ON j.id = t.job_level_id
+          job j ON j.id = t.job_id
         where t.id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
