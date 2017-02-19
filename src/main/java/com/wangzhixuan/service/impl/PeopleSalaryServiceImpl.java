@@ -254,6 +254,9 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         if (StringUtils.isBlank(peopleSalary.getWorkDate())){
             peopleSalary.setWorkDate(null);
         }
+        if(StringUtils.isBlank(peopleSalary.getPayDate())){
+            peopleSalary.setPayDate(DateUtil.GetCurrentYear() + "-" + DateUtil.GetCurrentMonth());
+        }
     }
 
     private List<PeopleSalary> getPeopleSalaryInfoByExcel(List<PeopleSalary> list,String path){

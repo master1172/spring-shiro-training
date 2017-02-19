@@ -418,4 +418,53 @@
         </where>
     </select>
 
+    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleSalary">
+        insert into people_salary (
+          people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result, job_allowance,
+          performance_allowance, rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance,
+          extra_allowance, telephone_allowance, traffic_allowance, on_duty_fee, on_duty_date, on_duty_fee_total,
+          property_allowance, extra_job_allowance, temperature_allowance, reissue_fee, medicare, yearly_bonus,
+          gross_salary, life_insurance, job_insurance, health_insurance, annuity, house_fund, expense, tax,
+          net_income, pay_date
+        )
+        values (
+            #{peopleCode,jdbcType=VARCHAR},
+            #{jobId,jdbcType=INTEGER},
+            #{jobSalary,jdbcType=DECIMAL},
+            #{rankId,jdbcType=INTEGER},
+            #{rankSalary,jdbcType=DECIMAL},
+            #{reserveSalary,jdbcType=DECIMAL},
+            #{examResult,jdbcType=VARCHAR},
+            #{jobAllowance,jdbcType=DECIMAL},
+            #{performanceAllowance,jdbcType=DECIMAL},
+            #{rentAllowance,jdbcType=DECIMAL},
+            #{houseAllowance,jdbcType=DECIMAL},
+            #{workDate,jdbcType=DATE},
+            #{timesheetStatus,jdbcType=DECIMAL},
+            #{dutyAllowance,jdbcType=DECIMAL},
+            #{extraAllowance,jdbcType=DECIMAL},
+            #{telephoneAllowance,jdbcType=DECIMAL},
+            #{trafficAllowance,jdbcType=DECIMAL},
+            #{onDutyFee,jdbcType=DECIMAL},
+            #{onDutyDate,jdbcType=DECIMAL},
+            #{onDutyFeeTotal,jdbcType=DECIMAL},
+            #{propertyAllowance,jdbcType=DECIMAL},
+            #{extraJobAllowance,jdbcType=DECIMAL},
+            #{temperatureAllowance,jdbcType=DECIMAL},
+            #{reissueFee,jdbcType=DECIMAL},
+            #{medicare,jdbcType=DECIMAL},
+            #{yearlyBonus,jdbcType=DECIMAL},
+            #{grossSalary,jdbcType=DECIMAL},
+            #{lifeInsurance,jdbcType=DECIMAL},
+            #{jobInsurance,jdbcType=DECIMAL},
+            #{healthInsurance,jdbcType=DECIMAL},
+            #{annuity,jdbcType=DECIMAL},
+            #{houseFund,jdbcType=DECIMAL},
+            #{expense,jdbcType=DECIMAL},
+            #{tax,jdbcType=DECIMAL},
+            #{netIncome,jdbcType=DECIMAL},
+            #{payDate,jdbcType=VARCHAR}
+        )
+    </insert>
+
 </mapper>

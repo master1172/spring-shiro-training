@@ -178,10 +178,7 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
-
-
-
-
+    
     @RequestMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response, String ids){
 
