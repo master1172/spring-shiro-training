@@ -74,6 +74,7 @@
         <result column="rank_id" jdbcType="INTEGER" property="rankId"/>
         <result column="rank_salary" jdbcType="DECIMAL" property="rankSalary"/>
         <result column="reserve_salary" jdbcType="DECIMAL" property="reserveSalary"/>
+        <result column="job_allowance"  jdbcType="DECIMAL" property="jobAllowance"/>
         <result column="performance_allowance" jdbcType="DECIMAL" property="performanceAllowance"/>
         <result column="rent_allowance" jdbcType="DECIMAL" property="rentAllowance"/>
         <result column="house_allowance" jdbcType="DECIMAL" property="houseAllowance"/>
@@ -84,7 +85,7 @@
         <result column="traffic_allowance" jdbcType="DECIMAL" property="trafficAllowance"/>
         <result column="on_duty_fee" jdbcType="DECIMAL" property="onDutyFee"/>
         <result column="property_allowance" jdbcType="DECIMAL" property="propertyAllowance"/>
-        <result column="extrajob_allowance" jdbcType="DECIMAL" property="extrajobAllowance"/>
+        <result column="extra_job_allowance" jdbcType="DECIMAL" property="extraJobAllowance"/>
         <result column="temperature_allowance" jdbcType="DECIMAL" property="temperatureAllowance"/>
         <result column="reissue_fee" jdbcType="DECIMAL" property="reissueFee"/>
         <result column="medicare" jdbcType="DECIMAL" property="medicare"/>
@@ -122,9 +123,9 @@
         after_job_id,rehire_category,
         retire_job_name, retire_job_id, retire_status, death_date, death_reason, branch_id,
         party_status_id, party_in_date, party_out_date, job_salary, rank_id, rank_salary,
-        reserve_salary, performance_allowance, rent_allowance, house_allowance, timesheet_result,
+        reserve_salary, job_allowance, performance_allowance, rent_allowance, house_allowance, timesheet_result,
         duty_allowance, extra_allowance, telephone_allowance, traffic_allowance, on_duty_fee,
-        property_allowance, extrajob_allowance, temperature_allowance, reissue_fee, medicare,
+        property_allowance, extra_job_allowance, temperature_allowance, reissue_fee, medicare,
         yearly_bonus, life_insurance, job_insurance, health_insurance, annuity, house_fund,
         school_salary, exam_result, job_exam_salary, special_allowance, head_allowance, bonus,
         base_salary, retire_allowance, retire_fee_increase, health_allowance, heating_fee,
@@ -166,10 +167,10 @@
         death_date, death_reason, branch_id,
         party_status_id, party_in_date, party_out_date,
         job_salary, rank_id, rank_salary,
-        reserve_salary, performance_allowance, rent_allowance,
+        reserve_salary, job_allowance, performance_allowance, rent_allowance,
         house_allowance, timesheet_result, duty_allowance,
         extra_allowance, telephone_allowance, traffic_allowance,
-        on_duty_fee, property_allowance, extrajob_allowance,
+        on_duty_fee, property_allowance, extra_job_allowance,
         temperature_allowance, reissue_fee, medicare,
         yearly_bonus, life_insurance, job_insurance,
         health_insurance, annuity, house_fund,
@@ -205,10 +206,11 @@
         #{deathDate,jdbcType=DATE}, #{deathReason,jdbcType=VARCHAR}, #{branchId,jdbcType=INTEGER},
         #{partyStatusId,jdbcType=INTEGER}, #{partyInDate,jdbcType=DATE}, #{partyOutDate,jdbcType=DATE},
         #{jobSalary,jdbcType=DECIMAL}, #{rankId,jdbcType=INTEGER}, #{rankSalary,jdbcType=DECIMAL},
-        #{reserveSalary,jdbcType=DECIMAL}, #{performanceAllowance,jdbcType=DECIMAL}, #{rentAllowance,jdbcType=DECIMAL},
+        #{reserveSalary,jdbcType=DECIMAL}, #{jobAllowance,jdbcType=DECIMAL},
+        #{performanceAllowance,jdbcType=DECIMAL}, #{rentAllowance,jdbcType=DECIMAL},
         #{houseAllowance,jdbcType=DECIMAL}, #{timesheetResult,jdbcType=DECIMAL}, #{dutyAllowance,jdbcType=DECIMAL},
         #{extraAllowance,jdbcType=DECIMAL}, #{telephoneAllowance,jdbcType=DECIMAL}, #{trafficAllowance,jdbcType=DECIMAL},
-        #{onDutyFee,jdbcType=DECIMAL}, #{propertyAllowance,jdbcType=DECIMAL}, #{extrajobAllowance,jdbcType=DECIMAL},
+        #{onDutyFee,jdbcType=DECIMAL}, #{propertyAllowance,jdbcType=DECIMAL}, #{extraJobAllowance,jdbcType=DECIMAL},
         #{temperatureAllowance,jdbcType=DECIMAL}, #{reissueFee,jdbcType=DECIMAL}, #{medicare,jdbcType=DECIMAL},
         #{yearlyBonus,jdbcType=DECIMAL}, #{lifeInsurance,jdbcType=DECIMAL}, #{jobInsurance,jdbcType=DECIMAL},
         #{healthInsurance,jdbcType=DECIMAL}, #{annuity,jdbcType=DECIMAL}, #{houseFund,jdbcType=DECIMAL},
@@ -439,6 +441,9 @@
             <if test="reserveSalary != null">
                 reserve_salary,
             </if>
+            <if test="jobAllowance != null">
+                job_allowance,
+            </if>
             <if test="performanceAllowance != null">
                 performance_allowance,
             </if>
@@ -469,8 +474,8 @@
             <if test="propertyAllowance != null">
                 property_allowance,
             </if>
-            <if test="extrajobAllowance != null">
-                extrajob_allowance,
+            <if test="extraJobAllowance != null">
+                extra_job_allowance,
             </if>
             <if test="temperatureAllowance != null">
                 temperature_allowance,
@@ -759,6 +764,9 @@
             <if test="reserveSalary != null">
                 #{reserveSalary,jdbcType=DECIMAL},
             </if>
+            <if test="jobAllowance != null">
+                #{jobAllowance, jdbcType=DECIMAL},
+            </if>
             <if test="performanceAllowance != null">
                 #{performanceAllowance,jdbcType=DECIMAL},
             </if>
@@ -789,8 +797,8 @@
             <if test="propertyAllowance != null">
                 #{propertyAllowance,jdbcType=DECIMAL},
             </if>
-            <if test="extrajobAllowance != null">
-                #{extrajobAllowance,jdbcType=DECIMAL},
+            <if test="extraJobAllowance != null">
+                #{extraJobAllowance,jdbcType=DECIMAL},
             </if>
             <if test="temperatureAllowance != null">
                 #{temperatureAllowance,jdbcType=DECIMAL},
@@ -1080,6 +1088,9 @@
             <if test="reserveSalary != null">
                 reserve_salary = #{reserveSalary,jdbcType=DECIMAL},
             </if>
+            <if test="jobAllowance != null">
+                job_allowance = #{jobAllowance, jdbcType=DECIMAL},
+            </if>
             <if test="performanceAllowance != null">
                 performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
             </if>
@@ -1110,8 +1121,8 @@
             <if test="propertyAllowance != null">
                 property_allowance = #{propertyAllowance,jdbcType=DECIMAL},
             </if>
-            <if test="extrajobAllowance != null">
-                extrajob_allowance = #{extrajobAllowance,jdbcType=DECIMAL},
+            <if test="extraJobAllowance != null">
+                extra_job_allowance = #{extraJobAllowance,jdbcType=DECIMAL},
             </if>
             <if test="temperatureAllowance != null">
                 temperature_allowance = #{temperatureAllowance,jdbcType=DECIMAL},
@@ -1259,6 +1270,7 @@
         rank_id = #{rankId,jdbcType=INTEGER},
         rank_salary = #{rankSalary,jdbcType=DECIMAL},
         reserve_salary = #{reserveSalary,jdbcType=DECIMAL},
+        job_allowance = #{jobAllowance,jdbcType=DECIMAL},
         performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
         rent_allowance = #{rentAllowance,jdbcType=DECIMAL},
         house_allowance = #{houseAllowance,jdbcType=DECIMAL},
@@ -1269,7 +1281,7 @@
         traffic_allowance = #{trafficAllowance,jdbcType=DECIMAL},
         on_duty_fee = #{onDutyFee,jdbcType=DECIMAL},
         property_allowance = #{propertyAllowance,jdbcType=DECIMAL},
-        extrajob_allowance = #{extrajobAllowance,jdbcType=DECIMAL},
+        extra_job_allowance = #{extraJobAllowance,jdbcType=DECIMAL},
         temperature_allowance = #{temperatureAllowance,jdbcType=DECIMAL},
         reissue_fee = #{reissueFee,jdbcType=DECIMAL},
         medicare = #{medicare,jdbcType=DECIMAL},

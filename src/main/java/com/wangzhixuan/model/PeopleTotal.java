@@ -234,6 +234,9 @@ public class PeopleTotal implements Serializable {
     //工改保留工资
     private BigDecimal reserveSalary;
 
+    //岗位津贴
+    private BigDecimal jobAllowance;
+
     //绩效津贴
     private BigDecimal performanceAllowance;
 
@@ -265,7 +268,7 @@ public class PeopleTotal implements Serializable {
     private BigDecimal propertyAllowance;
 
     //挂职补贴
-    private BigDecimal extrajobAllowance;
+    private BigDecimal extraJobAllowance;
 
     //降温补贴
     private BigDecimal temperatureAllowance;
@@ -976,12 +979,12 @@ public class PeopleTotal implements Serializable {
         this.propertyAllowance = propertyAllowance;
     }
 
-    public BigDecimal getExtrajobAllowance() {
-        return extrajobAllowance;
+    public BigDecimal getExtraJobAllowance() {
+        return extraJobAllowance;
     }
 
-    public void setExtrajobAllowance(BigDecimal extrajobAllowance) {
-        this.extrajobAllowance = extrajobAllowance;
+    public void setExtraJobAllowance(BigDecimal extrajobAllowance) {
+        this.extraJobAllowance = extrajobAllowance;
     }
 
     public BigDecimal getTemperatureAllowance() {
@@ -1182,6 +1185,14 @@ public class PeopleTotal implements Serializable {
 
     public void setAfterJobId(Integer afterJobId) {
         this.afterJobId = afterJobId;
+    }
+
+    public BigDecimal getJobAllowance() {
+        return jobAllowance;
+    }
+
+    public void setJobAllowance(BigDecimal jobAllowance) {
+        this.jobAllowance = jobAllowance;
     }
 
     public String toString(){

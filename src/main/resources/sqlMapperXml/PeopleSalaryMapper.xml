@@ -86,10 +86,42 @@
         <result column="pay_date"               jdbcType="VARCHAR" property="payDate" />
     </resultMap>
 
+    <resultMap id="peopleSalaryBaseResultMap" type="com.wangzhixuan.model.PeopleSalaryBase">
+        <id     column="id"             jdbcType="BIGINT" property="id" />
+        <result column="code"           jdbcType="VARCHAR" property="peopleCode" />
+        <result column="name"           jdbcType="VARCHAR" property="peopleName" />
+        <result column="job_id"         jdbcType="INTEGER" property="jobId" />
+        <result column="job_salary"     jdbcType="DECIMAL" property="jobSalary" />
+        <result column="rank_id"        jdbcType="INTEGER" property="rankId" />
+        <result column="rank_salary"    jdbcType="DECIMAL" property="rankSalary" />
+        <result column="reserve_salary" jdbcType="DECIMAL" property="reserveSalary" />
+        <result column="job_allowance"  jdbcType="DECIMAL" property="jobAllowance" />
+        <result column="performance_allowance"  jdbcType="DECIMAL" property="performanceAllowance" />
+        <result column="rent_allowance"         jdbcType="DECIMAL" property="rentAllowance" />
+        <result column="house_allowance"        jdbcType="DECIMAL" property="houseAllowance" />
+        <result column="duty_allowance"         jdbcType="DECIMAL" property="dutyAllowance" />
+        <result column="extra_allowance"        jdbcType="DECIMAL" property="extraAllowance" />
+        <result column="telephone_allowance"    jdbcType="DECIMAL" property="telephoneAllowance" />
+        <result column="traffic_allowance"      jdbcType="DECIMAL" property="trafficAllowance" />
+        <result column="on_duty_fee"            jdbcType="DECIMAL" property="onDutyFee" />
+        <result column="property_allowance"     jdbcType="DECIMAL" property="propertyAllowance" />
+        <result column="extra_job_allowance"    jdbcType="DECIMAL" property="extraJobAllowance" />
+        <result column="temperature_allowance"  jdbcType="DECIMAL" property="temperatureAllowance" />
+        <result column="reissue_fee"            jdbcType="DECIMAL" property="reissueFee" />
+        <result column="medicare"               jdbcType="DECIMAL" property="medicare" />
+        <result column="yearly_bonus"           jdbcType="DECIMAL" property="yearlyBonus" />
+        <result column="life_insurance"         jdbcType="DECIMAL" property="lifeInsurance" />
+        <result column="job_insurance"          jdbcType="DECIMAL" property="jobInsurance" />
+        <result column="health_insurance"       jdbcType="DECIMAL" property="healthInsurance" />
+        <result column="annuity"                jdbcType="DECIMAL" property="annuity" />
+        <result column="house_fund"             jdbcType="DECIMAL" property="houseFund" />
+        <result column="last_update_date"       jdbcType="VARCHAR" property="lastUpdateDate"/>
+    </resultMap>
+
     <resultMap id="peopleSalaryBaseVoResultMap" type="com.wangzhixuan.vo.PeopleSalaryBaseVo">
         <id     column="id"             jdbcType="BIGINT" property="id" />
-        <result column="people_code"    jdbcType="VARCHAR" property="peopleCode" />
-        <result column="people_name"    jdbcType="VARCHAR" property="peopleName" />
+        <result column="code"           jdbcType="VARCHAR" property="peopleCode" />
+        <result column="name"           jdbcType="VARCHAR" property="peopleName" />
         <result column="age"            jdbcType="INTEGER" property="age" />
         <result column="job_id"         jdbcType="INTEGER" property="jobId" />
         <result column="job_category"   jdbcType="VARCHAR" property="jobCategory"/>
@@ -99,40 +131,31 @@
         <result column="rank_level"     jdbcType="VARCHAR" property="rankLevel"/>
         <result column="rank_salary"    jdbcType="DECIMAL" property="rankSalary" />
         <result column="reserve_salary" jdbcType="DECIMAL" property="reserveSalary" />
-        <result column="exam_result"    jdbcType="VARCHAR" property="examResult" />
         <result column="job_allowance"  jdbcType="DECIMAL" property="jobAllowance" />
         <result column="performance_allowance"  jdbcType="DECIMAL" property="performanceAllowance" />
         <result column="rent_allowance"         jdbcType="DECIMAL" property="rentAllowance" />
         <result column="house_allowance"        jdbcType="DECIMAL" property="houseAllowance" />
-        <result column="work_date"              jdbcType="DATE"    property="workDate" />
-        <result column="timesheet_status"       jdbcType="DECIMAL" property="timesheetStatus" />
         <result column="duty_allowance"         jdbcType="DECIMAL" property="dutyAllowance" />
         <result column="extra_allowance"        jdbcType="DECIMAL" property="extraAllowance" />
         <result column="telephone_allowance"    jdbcType="DECIMAL" property="telephoneAllowance" />
         <result column="traffic_allowance"      jdbcType="DECIMAL" property="trafficAllowance" />
         <result column="on_duty_fee"            jdbcType="DECIMAL" property="onDutyFee" />
-        <result column="on_duty_date"           jdbcType="DECIMAL" property="onDutyDate" />
-        <result column="on_duty_fee_total"      jdbcType="DECIMAL" property="onDutyFeeTotal" />
         <result column="property_allowance"     jdbcType="DECIMAL" property="propertyAllowance" />
         <result column="extra_job_allowance"    jdbcType="DECIMAL" property="extraJobAllowance" />
         <result column="temperature_allowance"  jdbcType="DECIMAL" property="temperatureAllowance" />
         <result column="reissue_fee"            jdbcType="DECIMAL" property="reissueFee" />
         <result column="medicare"               jdbcType="DECIMAL" property="medicare" />
         <result column="yearly_bonus"           jdbcType="DECIMAL" property="yearlyBonus" />
-        <result column="gross_salary"           jdbcType="DECIMAL" property="grossSalary" />
         <result column="life_insurance"         jdbcType="DECIMAL" property="lifeInsurance" />
         <result column="job_insurance"          jdbcType="DECIMAL" property="jobInsurance" />
         <result column="health_insurance"       jdbcType="DECIMAL" property="healthInsurance" />
         <result column="annuity"                jdbcType="DECIMAL" property="annuity" />
         <result column="house_fund"             jdbcType="DECIMAL" property="houseFund" />
-        <result column="expense"                jdbcType="DECIMAL" property="expense" />
-        <result column="tax"                    jdbcType="DECIMAL" property="tax" />
-        <result column="net_income"             jdbcType="DECIMAL" property="netIncome" />
-        <result column="last_change_date"       jdbcType="DATE"    property="lastChangeDate" />
+        <result column="last_update_date"       jdbcType="VARCHAR" property="lastUpdateDate" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result,
+        id, code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result,
         job_allowance, performance_allowance, rent_allowance, house_allowance, work_date,
         timesheet_status, duty_allowance, extra_allowance, telephone_allowance, traffic_allowance,
         on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
@@ -140,121 +163,21 @@
         job_insurance, health_insurance, annuity, house_fund, expense, tax, net_income, pay_date
     </sql>
 
-    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from people_salary
-        where id = #{id,jdbcType=INTEGER}
-    </select>
+    <sql id="PeopleSalaryBase_Column_List">
+        id, code, name, job_id, job_salary, rank_id, rank_salary, reserve_salary,
+        job_allowance, performance_allowance, rent_allowance, house_allowance,
+        duty_allowance, extra_allowance, telephone_allowance, traffic_allowance,
+        on_duty_fee, property_allowance, extra_job_allowance,
+        temperature_allowance, reissue_fee, medicare, yearly_bonus, life_insurance,
+        job_insurance, health_insurance, annuity, house_fund, last_update_date
+    </sql>
 
-    <select id="findLatestPeopleSalaryByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List" />
-        from people_salary
-        where people_code = #{code, jdbcType=VARCHAR}
-        order BY pay_date
-        limit 0,1
-    </select>
-
-    <delete id="deleteSalaryById" parameterType="java.lang.Long">
-        delete from people_salary
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
-
-    <insert id="insert" parameterType="com.wangzhixuan.model.PeopleSalary">
-        insert into people_salary (
-          people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result, job_allowance, performance_allowance,
-          rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance, extra_allowance, telephone_allowance,
-          traffic_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
-          temperature_allowance, reissue_fee, medicare, yearly_bonus, gross_salary, life_insurance, job_insurance,
-          health_insurance, annuity, house_fund, expense, tax, net_income, pay_date)
-        values (
-          #{peopleCode,jdbcType=VARCHAR},
-          #{jobId,jdbcType=INTEGER},
-          #{jobSalary,jdbcType=DECIMAL},
-          #{rankId,jdbcType=INTEGER},
-          #{rankSalary,jdbcType=DECIMAL},
-          #{reserveSalary,jdbcType=DECIMAL},
-          #{examResult,jdbcType=VARCHAR},
-          #{jobAllowance,jdbcType=DECIMAL},
-          #{performanceAllowance,jdbcType=DECIMAL},
-          #{rentAllowance,jdbcType=DECIMAL},
-          #{houseAllowance,jdbcType=DECIMAL},
-          #{workDate,jdbcType=DATE},
-          #{timesheetStatus,jdbcType=DECIMAL},
-          #{dutyAllowance,jdbcType=DECIMAL},
-          #{extraAllowance,jdbcType=DECIMAL},
-          #{telephoneAllowance,jdbcType=DECIMAL},
-          #{trafficAllowance,jdbcType=DECIMAL},
-          #{onDutyFee,jdbcType=DECIMAL},
-          #{onDutyDate,jdbcType=DECIMAL},
-          #{onDutyFeeTotal,jdbcType=DECIMAL},
-          #{propertyAllowance,jdbcType=DECIMAL},
-          #{extraJobAllowance,jdbcType=DECIMAL},
-          #{temperatureAllowance,jdbcType=DECIMAL},
-          #{reissueFee,jdbcType=DECIMAL},
-          #{medicare,jdbcType=DECIMAL},
-          #{yearlyBonus,jdbcType=DECIMAL},
-          #{grossSalary,jdbcType=DECIMAL},
-          #{lifeInsurance,jdbcType=DECIMAL},
-          #{jobInsurance,jdbcType=DECIMAL},
-          #{healthInsurance,jdbcType=DECIMAL},
-          #{annuity,jdbcType=DECIMAL},
-          #{houseFund,jdbcType=DECIMAL},
-          #{expense,jdbcType=DECIMAL},
-          #{tax,jdbcType=DECIMAL},
-          #{netIncome,jdbcType=DECIMAL},
-          #{payDate,jdbcType=VARCHAR})
-    </insert>
-
-    <update id="update" parameterType="com.wangzhixuan.model.PeopleSalary">
-        update people_salary
-        set
-        people_code         = #{peopleCode,jdbcType=VARCHAR},
-        job_id              = #{jobId,jdbcType=INTEGER},
-        job_salary          = #{jobSalary,jdbcType=DECIMAL},
-        rank_id             = #{rankId,jdbcType=INTEGER},
-        rank_salary         = #{rankSalary,jdbcType=DECIMAL},
-        reserve_salary      = #{reserveSalary,jdbcType=DECIMAL},
-        exam_result         = #{examResult,jdbcType=VARCHAR},
-        job_allowance       = #{jobAllowance,jdbcType=DECIMAL},
-        performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
-        rent_allowance      = #{rentAllowance,jdbcType=DECIMAL},
-        house_allowance     = #{houseAllowance,jdbcType=DECIMAL},
-        work_date           = #{workDate,jdbcType=DATE},
-        timesheet_status    = #{timesheetStatus,jdbcType=DECIMAL},
-        duty_allowance      = #{dutyAllowance,jdbcType=DECIMAL},
-        extra_allowance     = #{extraAllowance,jdbcType=DECIMAL},
-        telephone_allowance = #{telephoneAllowance,jdbcType=DECIMAL},
-        traffic_allowance   = #{trafficAllowance,jdbcType=DECIMAL},
-        on_duty_fee         = #{onDutyFee,jdbcType=DECIMAL},
-        on_duty_date        = #{onDutyDate,jdbcType=DECIMAL},
-        on_duty_fee_total   = #{onDutyFeeTotal,jdbcType=DECIMAL},
-        property_allowance  = #{propertyAllowance,jdbcType=DECIMAL},
-        extra_job_allowance = #{extraJobAllowance,jdbcType=DECIMAL},
-        temperature_allowance = #{temperatureAllowance,jdbcType=DECIMAL},
-        reissue_fee         = #{reissueFee,jdbcType=DECIMAL},
-        medicare            = #{medicare,jdbcType=DECIMAL},
-        yearly_bonus        = #{yearlyBonus,jdbcType=DECIMAL},
-        gross_salary        = #{grossSalary,jdbcType=DECIMAL},
-        life_insurance      = #{lifeInsurance,jdbcType=DECIMAL},
-        job_insurance       = #{jobInsurance,jdbcType=DECIMAL},
-        health_insurance    = #{healthInsurance,jdbcType=DECIMAL},
-        annuity             = #{annuity,jdbcType=DECIMAL},
-        house_fund          = #{houseFund,jdbcType=DECIMAL},
-        expense             = #{expense,jdbcType=DECIMAL},
-        tax                 = #{tax,jdbcType=DECIMAL},
-        net_income          = #{netIncome,jdbcType=DECIMAL},
-        pay_date            = #{payDate,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-
-    <select id="findPeopleSalaryVoListByCode" resultMap="peopleSalaryVoResultMap" parameterType="java.lang.String">
+    <select id="findPeopleSalaryBasePageCondition" resultMap="peopleSalaryBaseVoResultMap" parameterType="PageInfo">
         SELECT
         t.id,
-        t.people_code,
-        p.name as people_name,
-        p.age  as age,
+        t.code,
+        t.name,
+        t.age,
         t.job_id,
         j.job_category as job_category,
         j.job_level as job_level,
@@ -263,394 +186,53 @@
         r.rank_level as rank_level,
         t.rank_salary,
         t.reserve_salary,
-        t.exam_result,
         t.job_allowance,
         t.performance_allowance,
         t.rent_allowance,
         t.house_allowance,
-        t.work_date,
-        t.timesheet_status,
         t.duty_allowance,
         t.extra_allowance,
         t.telephone_allowance,
         t.traffic_allowance,
         t.on_duty_fee,
-        t.on_duty_date,
-        t.on_duty_fee_total,
         t.property_allowance,
         t.extra_job_allowance,
         t.temperature_allowance,
         t.reissue_fee,
         t.medicare,
         t.yearly_bonus,
-        t.gross_salary,
         t.life_insurance,
         t.job_insurance,
         t.health_insurance,
         t.annuity,
-        t.house_fund,
-        t.expense,
-        t.tax,
-        t.net_income,
-        t.pay_date
-        FROM
-        people_salary t
+        t.house_fund
+        FROM people_total t
         LEFT JOIN
-        people p ON t.people_code = p.code
+        job j ON j.id = t.job_id
         LEFT JOIN
-        job j ON t.job_id = j.id
-        LEFT JOIN
-        rank r ON t.rank_id = r.id
+        rank r ON r.id = t.rank_id
         <where>
-            t.people_code = #{code,jdbcType=VARCHAR}
-        </where>
-        ORDER BY
-        t.pay_date desc
-    </select>
-
-    <select id="findPeopleSalaryPageCondition" resultMap="peopleSalaryVoResultMap" parameterType="PageInfo">
-        SELECT
-          t.id,
-          t.people_code,
-          p.name as people_name,
-          p.age  as age,
-          t.job_id,
-          j.job_category as job_category,
-          j.job_level as job_level,
-          t.job_salary,
-          t.rank_id,
-          r.rank_level as rank_level,
-          t.rank_salary,
-          t.reserve_salary,
-          t.exam_result,
-          t.job_allowance,
-          t.performance_allowance,
-          t.rent_allowance,
-          t.house_allowance,
-          t.work_date,
-          t.timesheet_status,
-          t.duty_allowance,
-          t.extra_allowance,
-          t.telephone_allowance,
-          t.traffic_allowance,
-          t.on_duty_fee,
-          t.on_duty_date,
-          t.on_duty_fee_total,
-          t.property_allowance,
-          t.extra_job_allowance,
-          t.temperature_allowance,
-          t.reissue_fee,
-          t.medicare,
-          t.yearly_bonus,
-          t.gross_salary,
-          t.life_insurance,
-          t.job_insurance,
-          t.health_insurance,
-          t.annuity,
-          t.house_fund,
-          t.expense,
-          t.tax,
-          t.net_income,
-          t.pay_date
-        FROM
-          people_salary t
-        LEFT JOIN
-          people p ON t.people_code = p.code
-        LEFT JOIN
-          job j ON t.job_id = j.id
-        LEFT JOIN
-          rank r ON t.rank_id = r.id
-        <where>
-            <if test=" condition.peopleCode != null and condition.peopleCode != ''">
-                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
+            <if test=" condition.peopleName != null and condition.peopleName != ''">
+                and t.name LIKE concat('%',#{condition.peopleName},'%')
             </if>
-            <if test=" condition.peopleName != null and condition.peopleName != '' ">
-                and p.name LIKE concat('%',#{condition.peopleName},'%')
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
             </if>
         </where>
-        ORDER BY
-        t.pay_date desc
         LIMIT #{from}, #{size}
     </select>
 
-    <select id="findPeopleSalaryPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+    <select id="findPeopleSalaryBasePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
         select count(t.id) count
-        FROM
-          people_salary t
-        LEFT JOIN
-          people p ON t.people_code = p.code
-        LEFT JOIN
-          job j ON t.job_id = j.id
-        LEFT JOIN
-          rank r ON t.rank_id = r.id
+        FROM people_total t
         <where>
-            <if test=" condition.peopleCode != null and condition.peopleCode != ''">
-                and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
+            <if test=" condition.peopleName != null and condition.peopleName != ''">
+                and t.name LIKE concat('%',#{condition.peopleName},'%')
             </if>
-            <if test=" condition.peopleName != null and condition.peopleName != '' ">
-                and p.name LIKE concat('%',#{condition.peopleName},'%')
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
             </if>
         </where>
     </select>
 
-    <select id="findPeopleSalaryVoById" resultMap="peopleSalaryVoResultMap" parameterType="java.lang.Long">
-        SELECT
-        t.id,
-        t.people_code,
-        p.name as people_name,
-        p.age  as age,
-        t.job_id,
-        j.job_category as job_category,
-        j.job_level as job_level,
-        t.job_salary,
-        t.rank_id,
-        r.rank_level as rank_level,
-        t.rank_salary,
-        t.reserve_salary,
-        t.exam_result,
-        t.job_allowance,
-        t.performance_allowance,
-        t.rent_allowance,
-        t.house_allowance,
-        t.work_date,
-        t.timesheet_status,
-        t.duty_allowance,
-        t.extra_allowance,
-        t.telephone_allowance,
-        t.traffic_allowance,
-        t.on_duty_fee,
-        t.on_duty_date,
-        t.on_duty_fee_total,
-        t.property_allowance,
-        t.extra_job_allowance,
-        t.temperature_allowance,
-        t.reissue_fee,
-        t.medicare,
-        t.yearly_bonus,
-        t.gross_salary,
-        t.life_insurance,
-        t.job_insurance,
-        t.health_insurance,
-        t.annuity,
-        t.house_fund,
-        t.expense,
-        t.tax,
-        t.net_income,
-        t.pay_date
-        FROM
-        people_salary t
-        LEFT JOIN
-        people p ON t.people_code = p.code
-        LEFT JOIN
-        job j ON t.job_id = j.id
-        LEFT JOIN
-        rank r ON t.rank_id = r.id
-        <where>
-            t.id = #{id}
-        </where>
-    </select>
-
-    <select id="findPeopleSalaryBaseVoByCode" resultMap="peopleSalaryBaseVoResultMap" parameterType="java.lang.String">
-        SELECT
-        t.id,
-        t.people_code,
-        p.name as people_name,
-        p.age  as age,
-        t.job_id,
-        j.job_category as job_category,
-        j.job_level as job_level,
-        t.job_salary,
-        t.rank_id,
-        r.rank_level as rank_level,
-        t.rank_salary,
-        t.reserve_salary,
-        t.exam_result,
-        t.job_allowance,
-        t.performance_allowance,
-        t.rent_allowance,
-        t.house_allowance,
-        t.work_date,
-        t.timesheet_status,
-        t.duty_allowance,
-        t.extra_allowance,
-        t.telephone_allowance,
-        t.traffic_allowance,
-        t.on_duty_fee,
-        t.on_duty_date,
-        t.on_duty_fee_total,
-        t.property_allowance,
-        t.extra_job_allowance,
-        t.temperature_allowance,
-        t.reissue_fee,
-        t.medicare,
-        t.yearly_bonus,
-        t.gross_salary,
-        t.life_insurance,
-        t.job_insurance,
-        t.health_insurance,
-        t.annuity,
-        t.house_fund,
-        t.expense,
-        t.tax,
-        t.net_income,
-        t.last_change_date
-        FROM
-        people_salary_base t
-        LEFT JOIN
-          people p ON t.people_code = p.code
-        LEFT JOIN
-          job j ON t.job_id = j.id
-        LEFT JOIN
-          rank r ON t.rank_id = r.id
-        <where>
-            t.people_code = #{code}
-        </where>
-    </select>
-
-    <insert id="insertByImport" parameterType="java.util.List">
-        insert into people_salary (
-        people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result, job_allowance, performance_allowance,
-        rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance, extra_allowance, telephone_allowance,
-        traffic_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
-        temperature_allowance, reissue_fee, medicare, yearly_bonus, gross_salary, life_insurance, job_insurance,
-        health_insurance, annuity, house_fund, expense, tax, net_income, pay_date)
-        values
-        <foreach item="item" index="index" collection="list" separator=",">
-            (
-            #{item.peopleCode,jdbcType=VARCHAR},
-            #{item.jobId,jdbcType=INTEGER},
-            #{item.jobSalary,jdbcType=DECIMAL},
-            #{item.rankId,jdbcType=INTEGER},
-            #{item.rankSalary,jdbcType=DECIMAL},
-            #{item.reserveSalary,jdbcType=DECIMAL},
-            #{item.examResult,jdbcType=VARCHAR},
-            #{item.jobAllowance,jdbcType=DECIMAL},
-            #{item.performanceAllowance,jdbcType=DECIMAL},
-            #{item.rentAllowance,jdbcType=DECIMAL},
-            #{item.houseAllowance,jdbcType=DECIMAL},
-            #{item.workDate,jdbcType=DATE},
-            #{item.timesheetStatus,jdbcType=DECIMAL},
-            #{item.dutyAllowance,jdbcType=DECIMAL},
-            #{item.extraAllowance,jdbcType=DECIMAL},
-            #{item.telephoneAllowance,jdbcType=DECIMAL},
-            #{item.trafficAllowance,jdbcType=DECIMAL},
-            #{item.onDutyFee,jdbcType=DECIMAL},
-            #{item.onDutyDate,jdbcType=DECIMAL},
-            #{item.onDutyFeeTotal,jdbcType=DECIMAL},
-            #{item.propertyAllowance,jdbcType=DECIMAL},
-            #{item.extraJobAllowance,jdbcType=DECIMAL},
-            #{item.temperatureAllowance,jdbcType=DECIMAL},
-            #{item.reissueFee,jdbcType=DECIMAL},
-            #{item.medicare,jdbcType=DECIMAL},
-            #{item.yearlyBonus,jdbcType=DECIMAL},
-            #{item.grossSalary,jdbcType=DECIMAL},
-            #{item.lifeInsurance,jdbcType=DECIMAL},
-            #{item.jobInsurance,jdbcType=DECIMAL},
-            #{item.healthInsurance,jdbcType=DECIMAL},
-            #{item.annuity,jdbcType=DECIMAL},
-            #{item.houseFund,jdbcType=DECIMAL},
-            #{item.expense,jdbcType=DECIMAL},
-            #{item.tax,jdbcType=DECIMAL},
-            #{item.netIncome,jdbcType=DECIMAL},
-            #{item.payDate,jdbcType=VARCHAR}
-            )
-        </foreach>
-    </insert>
-
-    <insert id="addSalaryBase" parameterType="com.wangzhixuan.model.PeopleSalaryBase">
-        insert into people_salary_base (
-        people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result, job_allowance, performance_allowance,
-        rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance, extra_allowance, telephone_allowance,
-        traffic_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
-        temperature_allowance, reissue_fee, medicare, yearly_bonus, gross_salary, life_insurance, job_insurance,
-        health_insurance, annuity, house_fund, expense, tax, net_income, last_change_date)
-        values (
-        #{peopleCode,jdbcType=VARCHAR},
-        #{jobId,jdbcType=INTEGER},
-        #{jobSalary,jdbcType=DECIMAL},
-        #{rankId,jdbcType=INTEGER},
-        #{rankSalary,jdbcType=DECIMAL},
-        #{reserveSalary,jdbcType=DECIMAL},
-        #{examResult,jdbcType=VARCHAR},
-        #{jobAllowance,jdbcType=DECIMAL},
-        #{performanceAllowance,jdbcType=DECIMAL},
-        #{rentAllowance,jdbcType=DECIMAL},
-        #{houseAllowance,jdbcType=DECIMAL},
-        #{workDate,jdbcType=DATE},
-        #{timesheetStatus,jdbcType=DECIMAL},
-        #{dutyAllowance,jdbcType=DECIMAL},
-        #{extraAllowance,jdbcType=DECIMAL},
-        #{telephoneAllowance,jdbcType=DECIMAL},
-        #{trafficAllowance,jdbcType=DECIMAL},
-        #{onDutyFee,jdbcType=DECIMAL},
-        #{onDutyDate,jdbcType=DECIMAL},
-        #{onDutyFeeTotal,jdbcType=DECIMAL},
-        #{propertyAllowance,jdbcType=DECIMAL},
-        #{extraJobAllowance,jdbcType=DECIMAL},
-        #{temperatureAllowance,jdbcType=DECIMAL},
-        #{reissueFee,jdbcType=DECIMAL},
-        #{medicare,jdbcType=DECIMAL},
-        #{yearlyBonus,jdbcType=DECIMAL},
-        #{grossSalary,jdbcType=DECIMAL},
-        #{lifeInsurance,jdbcType=DECIMAL},
-        #{jobInsurance,jdbcType=DECIMAL},
-        #{healthInsurance,jdbcType=DECIMAL},
-        #{annuity,jdbcType=DECIMAL},
-        #{houseFund,jdbcType=DECIMAL},
-        #{expense,jdbcType=DECIMAL},
-        #{tax,jdbcType=DECIMAL},
-        #{netIncome,jdbcType=DECIMAL},
-        #{lastChangeDate,jdbcType=DATE})
-    </insert>
-
-    <update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleSalaryBase">
-        update people_salary_base
-        set
-        people_code         = #{peopleCode,jdbcType=VARCHAR},
-        job_id              = #{jobId,jdbcType=INTEGER},
-        job_salary          = #{jobSalary,jdbcType=DECIMAL},
-        rank_id             = #{rankId,jdbcType=INTEGER},
-        rank_salary         = #{rankSalary,jdbcType=DECIMAL},
-        reserve_salary      = #{reserveSalary,jdbcType=DECIMAL},
-        exam_result         = #{examResult,jdbcType=VARCHAR},
-        job_allowance       = #{jobAllowance,jdbcType=DECIMAL},
-        performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
-        rent_allowance      = #{rentAllowance,jdbcType=DECIMAL},
-        house_allowance     = #{houseAllowance,jdbcType=DECIMAL},
-        work_date           = #{workDate,jdbcType=DATE},
-        timesheet_status    = #{timesheetStatus,jdbcType=DECIMAL},
-        duty_allowance      = #{dutyAllowance,jdbcType=DECIMAL},
-        extra_allowance     = #{extraAllowance,jdbcType=DECIMAL},
-        telephone_allowance = #{telephoneAllowance,jdbcType=DECIMAL},
-        traffic_allowance   = #{trafficAllowance,jdbcType=DECIMAL},
-        on_duty_fee         = #{onDutyFee,jdbcType=DECIMAL},
-        on_duty_date        = #{onDutyDate,jdbcType=DECIMAL},
-        on_duty_fee_total   = #{onDutyFeeTotal,jdbcType=DECIMAL},
-        property_allowance  = #{propertyAllowance,jdbcType=DECIMAL},
-        extra_job_allowance = #{extraJobAllowance,jdbcType=DECIMAL},
-        temperature_allowance = #{temperatureAllowance,jdbcType=DECIMAL},
-        reissue_fee         = #{reissueFee,jdbcType=DECIMAL},
-        medicare            = #{medicare,jdbcType=DECIMAL},
-        yearly_bonus        = #{yearlyBonus,jdbcType=DECIMAL},
-        gross_salary        = #{grossSalary,jdbcType=DECIMAL},
-        life_insurance      = #{lifeInsurance,jdbcType=DECIMAL},
-        job_insurance       = #{jobInsurance,jdbcType=DECIMAL},
-        health_insurance    = #{healthInsurance,jdbcType=DECIMAL},
-        annuity             = #{annuity,jdbcType=DECIMAL},
-        house_fund          = #{houseFund,jdbcType=DECIMAL},
-        expense             = #{expense,jdbcType=DECIMAL},
-        tax                 = #{tax,jdbcType=DECIMAL},
-        net_income          = #{netIncome,jdbcType=DECIMAL},
-        last_change_date    = #{lastChangeDate,jdbcType=DATE}
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-
-    <update id="updateSalaryBaseJobLevel" parameterType="java.util.Map">
-        update people_salary_base
-        set
-          job_id      = #{jobId, jdbcType=INTEGER},
-          job_salary  = #{jobSalary, jdbcType=DECIMAL}
-        WHERE
-          people_code = #{peopleCode, jdbcType=VARCHAR}
-    </update>
 </mapper>

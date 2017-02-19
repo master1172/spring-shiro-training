@@ -45,4 +45,20 @@ public interface PeopleSalaryMapper {
     void updateSalaryBaseJobLevel(Map<String,Object> condition);
 
     void updateSalaryBaseRankLevel(Map<String,Object> condition);
+
+    PeopleSalaryBase selectPeopleSalaryBaseById(Integer id);
+
+    PeopleSalaryBase selectPeopleSalaryBaseByCode(String code);
+
+    PeopleSalaryBaseVo selectPeopleSalaryBaseVoById(Integer id);
+
+    void updatePeopleSalaryBaseById(PeopleSalaryBase peopleSalaryBase);
+
+    void deletePeopleSalaryBaseById(Integer id);
+
+    List findPeopleSalaryBasePageCondition(PageInfo pageInfo);
+
+    int findPeopleSalaryBasePageCount(PageInfo pageInfo);
+
+
 }

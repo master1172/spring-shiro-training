@@ -46,8 +46,8 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
-        pageInfo.setRows(peopleSalaryMapper.findPeopleSalaryPageCondition(pageInfo));
-        pageInfo.setTotal(peopleSalaryMapper.findPeopleSalaryPageCount(pageInfo));
+        pageInfo.setRows(peopleSalaryMapper.findPeopleSalaryBasePageCondition(pageInfo));
+        pageInfo.setTotal(peopleSalaryMapper.findPeopleSalaryBasePageCount(pageInfo));
     }
 
     @Override
@@ -91,8 +91,8 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         if(peopleSalaryBase == null)
             return;
 
-        if (StringUtils.isBlank(peopleSalaryBase.getLastChangeDate())){
-            peopleSalaryBase.setLastChangeDate(DateUtil.GetToday());
+        if (StringUtils.isBlank(peopleSalaryBase.getLastUpdateDate())){
+            peopleSalaryBase.setLastUpdateDate(DateUtil.GetToday());
         }
 
         if (peopleSalaryBase.getId() == null)

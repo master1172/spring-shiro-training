@@ -59,11 +59,11 @@ public class PeopleSalaryController extends BaseController{
 
     @RequestMapping(value="/dataGrid", method = RequestMethod.POST)
     @ResponseBody
-    public PageInfo dataGrid(HttpServletRequest request, PeopleVo peopleVo, Integer page, Integer rows, String sort, String order){
+    public PageInfo dataGrid(HttpServletRequest request, PeopleSalaryBaseVo peopleSalaryBaseVo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String,Object> condition = PeopleVo.CreateCondition(peopleVo);
+        Map<String,Object> condition = PeopleSalaryBaseVo.CreateCondition(peopleSalaryBaseVo);
         pageInfo.setCondition(condition);
-        peopleService.findDataGrid(pageInfo,request);
+        peopleSalaryService.findDataGrid(pageInfo,request);
 
         return pageInfo;
     }

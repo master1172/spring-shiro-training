@@ -12,9 +12,11 @@ public class PeopleSalaryBase implements Serializable {
 
     private static final long serialVersionUID = -5321613594382537452L;
 
-    private Long id;
+    private Integer id;
 
     private String peopleCode;
+
+    private String peopleName;
 
     private Integer jobId;
 
@@ -86,13 +88,13 @@ public class PeopleSalaryBase implements Serializable {
     private BigDecimal netIncome;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private String lastChangeDate;
+    private String lastUpdateDate;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -376,12 +378,20 @@ public class PeopleSalaryBase implements Serializable {
         this.netIncome = netIncome;
     }
 
-    public String getLastChangeDate() {
-        return lastChangeDate;
+    public String getLastUpdateDate() {
+        return lastUpdateDate;
     }
 
-    public void setLastChangeDate(String lastChangeDate) {
-        this.lastChangeDate = lastChangeDate;
+    public void setLastUpdateDate(String lastChangeDate) {
+        this.lastUpdateDate = lastChangeDate;
+    }
+
+    public String getPeopleName() {
+        return peopleName;
+    }
+
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
     }
 
     @Override

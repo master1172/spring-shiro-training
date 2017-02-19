@@ -2,6 +2,7 @@ package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
+import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -440,20 +441,15 @@ public class PeopleSalaryBaseVo implements Serializable{
         return "";
     }
 
-    public static Map<String,Object> createCondition(PeopleSalaryBaseVo peopleSalaryBaseVo) {
-        Map<String,Object> condition = Maps.newHashMap();
+    public static Map<String,Object> CreateCondition(PeopleSalaryBaseVo peopleSalaryBaseVo) {
 
+        Map<String,Object> condition = Maps.newHashMap();
 
         if(StringUtils.isNoneBlank(peopleSalaryBaseVo.getPeopleName())){
             condition.put("name", peopleSalaryBaseVo.getPeopleName());
         }
 
-
-
-        condition.put("jobId", peopleSalaryBaseVo.getJobId());
-        condition.put("rankId", peopleSalaryBaseVo.getRankId());
-
-
+        condition.put("status", ConstUtil.PEOPLE_NORMAL);
         return condition;
     }
 }
