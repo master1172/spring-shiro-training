@@ -38,4 +38,6 @@ public interface PeopleSalaryService {
     boolean insertByImport(CommonsMultipartFile[] files);
 
     void updateSalaryJobLevel(PeopleVo peopleVo);
+
+    PeopleSalaryBase findPeopleSalaryBaseById(Integer id);
 }

@@ -68,6 +68,30 @@ public class PeopleSalaryController extends BaseController{
         return pageInfo;
     }
 
+    @RequestMapping("/editPage")
+    public String editPage(Integer id, Model model){
+        PeopleSalaryBase peopleSalaryBase = peopleSalaryService.findPeopleSalaryBaseById(id);
+        model.addAttribute("peopleSalaryBase",peopleSalaryBase);
+        return "/admin/peopleSalary/peopleSalaryBaseEdit";
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public Result edit(PeopleSalaryBase peopleSalaryBase){
+        Result result = new Result();
+        try{
+            peopleSalaryService.updateSalaryBase(peopleSalaryBase);
+            result.setSuccess(true);
+            result.setMsg("修改成功!");
+            return result;
+        }catch(Exception e){
+            LOGGER.error("修改工资失败：{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
+    }
+
+
     @RequestMapping(value="/salaryListPage", method = RequestMethod.GET)
     public String salaryListPage(Integer id, Model model){
 
@@ -95,21 +119,7 @@ public class PeopleSalaryController extends BaseController{
         return pageInfo;
     }
 
-    @RequestMapping("/delete")
-    @ResponseBody
-    public Result delete(Long id){
-        Result result = new Result();
-        try{
-            peopleSalaryService.deleteSalaryById(id);
-            result.setMsg("删除成功！");
-            result.setSuccess(true);
-            return result;
-        }catch(RuntimeException e){
-            LOGGER.error("删除工资记录失败：{}",e);
-            result.setMsg(e.getMessage());
-            return result;
-        }
-    }
+
 
     @RequestMapping("/addPage")
     public String addPage(String peopleCode, Model model){
@@ -166,28 +176,9 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
-    @RequestMapping("/editPage")
-    public String editPage(Long id, Model model){
-        PeopleSalaryVo peopleSalaryVo = peopleSalaryService.findPeopleSalaryVoById(id);
-        model.addAttribute("peopleSalaryVo",peopleSalaryVo);
-        return "/admin/peopleSalary/peopleSalaryEdit";
-    }
 
-    @RequestMapping("/edit")
-    @ResponseBody
-    public Result edit(PeopleSalary peopleSalary){
-        Result result = new Result();
-        try{
-            peopleSalaryService.updateSalary(peopleSalary);
-            result.setSuccess(true);
-            result.setMsg("修改成功!");
-            return result;
-        }catch(Exception e){
-            LOGGER.error("修改工资失败：{}",e);
-            result.setMsg(e.getMessage());
-            return result;
-        }
-    }
+
+
 
     @RequestMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response, String ids){

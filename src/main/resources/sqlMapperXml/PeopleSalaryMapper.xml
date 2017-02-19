@@ -231,4 +231,99 @@
         </where>
     </select>
 
+    <select id="selectPeopleSalaryBaseById" resultMap="peopleSalaryBaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="PeopleSalaryBase_Column_List"/>
+        from people_total
+        where id=#{id, jdbcType=INTEGER}
+    </select>
+
+    <update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleSalaryBase">
+        update people_total
+        <set>
+            <if test="peopleName != null">
+                name = #{peopleName, jdbcType=VARCHAR},
+            </if>
+            <if test="jobId != null">
+                job_id = #{jobId, jdbcType=INTEGER},
+            </if>
+            <if test="jobSalary != null">
+                job_salary = #{jobSalary, jdbcType=DECIMAL},
+            </if>
+            <if test="rankId != null">
+                rank_id = #{rankId, jdbcType=DECIMAL},
+            </if>
+            <if test="rankSalary != null">
+                rank_salary = #{rankSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="reserveSalary != null">
+                reserve_salary = #{reserveSalary, jdbcType=DECIMAL},
+            </if>
+            <if test="jobAllowance != null">
+                job_allowance = #{jobAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="performanceAllowance != null">
+                performance_allowance = #{performanceAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="rentAllowance != null">
+                rent_allowance = #{rentAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="houseAllowance != null">
+                house_allowance = #{houseAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="dutyAllowance != null">
+                duty_allowance = #{dutyAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="extraAllowance != null">
+                extra_allowance = #{extraAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="telephoneAllowance != null">
+                telephone_allowance = #{telephoneAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="trafficAllowance != null">
+                traffic_allowance = #{trafficAllowance,jdbcType=DECIMAL},
+            </if>
+            <if test="onDutyFee != null">
+                on_duty_fee = #{onDutyFee, jdbcType=DECIMAL},
+            </if>
+            <if test="propertyAllowance != null">
+                property_allowance = #{propertyAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="extraJobAllowance != null">
+                extra_job_allowance = #{extraJobAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="temperatureAllowance != null">
+                temperature_allowance = #{temperatureAllowance, jdbcType=DECIMAL},
+            </if>
+            <if test="reissueFee != null">
+                reissue_fee = #{reissueFee, jdbcType=DECIMAL},
+            </if>
+            <if test="medicare != null">
+                medicare = #{medicare, jdbcType=DECIMAL},
+            </if>
+            <if test="yearlyBonus != null">
+                yearly_bonus = #{yearlyBonus, jdbcType=DECIMAL},
+            </if>
+            <if test="lifeInsurance != null">
+                life_insurance = #{lifeInsurance, jdbcType=DECIMAL},
+            </if>
+            <if test="jobInsurance != null">
+                job_insurance = #{jobInsurance, jdbcType=DECIMAL},
+            </if>
+            <if test="healthInsurance != null">
+                health_insurance = #{healthInsurance, jdbcType=DECIMAL},
+            </if>
+            <if test="annuity != null">
+                annuity = #{annuity, jdbcType=DECIMAL},
+            </if>
+            <if test="houseFund != null">
+                house_fund = #{houseFund, jdbcType=DECIMAL},
+            </if>
+            <if test="lastUpdateDate != null">
+                last_update_date = #{lastUpdateDate, jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+
 </mapper>

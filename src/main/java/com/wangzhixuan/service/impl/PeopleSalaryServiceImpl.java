@@ -95,8 +95,6 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
             peopleSalaryBase.setLastUpdateDate(DateUtil.GetToday());
         }
 
-        if (peopleSalaryBase.getId() == null)
-            peopleSalaryMapper.addSalaryBase(peopleSalaryBase);
         peopleSalaryMapper.updateSalaryBase(peopleSalaryBase);
     }
 
@@ -231,6 +229,13 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
             condition.put("jobSalary", jobSalary);
             peopleSalaryMapper.updateSalaryBaseJobLevel(condition);
         }
+    }
+
+    @Override
+    public PeopleSalaryBase findPeopleSalaryBaseById(Integer id) {
+        if (id == null)
+            return new PeopleSalaryBase();
+        return peopleSalaryMapper.selectPeopleSalaryBaseById(id);
     }
 
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){
