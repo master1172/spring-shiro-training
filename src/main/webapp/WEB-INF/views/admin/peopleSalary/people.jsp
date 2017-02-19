@@ -76,14 +76,14 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
-                href: '${path}/people/advSearchPage',
+                href: '${path}/peopleSalary/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         if(parent.checkForm()){
                             parent.progressClose();
-                            var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                            var f = parent.$.modalDialog.handler.find("#salarySearchForm");
                             dataGrid.datagrid("load",$.serializeObject(f));
                             parent.$.modalDialog.handler.dialog("close");
                         }
@@ -217,7 +217,7 @@
             <tr>
                 <th>姓名:</th>
                 <td>
-                    <input name="name" placeholder="请输入人员姓名"/>
+                    <input name="peopleName" placeholder="请输入人员姓名"/>
                 </td>
                 <th>性别:</th>
                 <td>

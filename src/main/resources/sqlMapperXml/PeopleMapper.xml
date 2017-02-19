@@ -378,10 +378,7 @@
             <if test=" condition.jobLevelDateMax != null and condition.jobLevelDateMax != ''">
                 <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
             </if>
-            <if test=" condition.status != null and condition.status != ''">
-                and t.status = #{condition.status}
-            </if>
-            <if test=" condition.status == null or condition.status == ''">
+            <if test=" condition.status != null">
                 and t.status = 0
             </if>
         </where>
@@ -492,10 +489,7 @@
             <if test=" condition.jobLevelDateMax != null and condition.jobLevelDateMax != ''">
                 <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
             </if>
-            <if test=" condition.status != null and condition.status != ''">
-                and t.status = #{condition.status}
-            </if>
-            <if test=" condition.status == null or condition.status == ''">
+            <if test=" condition.status != null">
                 and t.status = 0
             </if>
         </where>

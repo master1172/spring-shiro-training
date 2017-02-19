@@ -212,9 +212,29 @@
         LEFT JOIN
         rank r ON r.id = t.rank_id
         <where>
-            t.status = 0
-            <if test=" condition.peopleName != null and condition.peopleName != ''">
-                and t.name LIKE concat('%',#{condition.peopleName},'%')
+            <if test=" condition.name != null and condition.name != ''">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.jobIdList != null">
+                and t.job_id in
+                <foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.rankIdList != null">
+                and t.rank_id in
+                <foreach item="item" index="index" collection="condition.rankIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.status != null ">
+                and t.status = 0
             </if>
         </where>
         LIMIT #{from}, #{size}
@@ -224,9 +244,32 @@
         select count(t.id) count
         FROM people_total t
         <where>
-            t.status = 0
-            <if test=" condition.peopleName != null and condition.peopleName != ''">
-                and t.name LIKE concat('%',#{condition.peopleName},'%')
+            <if test=" condition.name != null and condition.name != ''">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.jobIdList != null">
+                and t.job_id in
+                <foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.rankIdList != null">
+                and t.rank_id in
+                <foreach item="item" index="index" collection="condition.rankIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.status != null">
+                and t.status = 0
             </if>
         </where>
     </select>

@@ -272,4 +272,9 @@ public class PeopleSalaryController extends BaseController{
 
         return result;
     }
+
+    @RequestMapping("/advSearchPage")
+    public String advSearchPage(){
+        return "/admin/peopleSalary/salarySearch";
+    }
 }

@@ -23,6 +23,16 @@ public class PeopleSalaryBaseVo implements Serializable{
 
     private Integer age;
 
+    private Integer sex;
+
+    private String birthdayMin;
+
+    private String birthdayMax;
+
+    private String jobIdList;
+
+    private String rankIdList;
+
     private int jobId;
 
     private String jobCategory;
@@ -441,6 +451,46 @@ public class PeopleSalaryBaseVo implements Serializable{
         return "";
     }
 
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getBirthdayMin() {
+        return birthdayMin;
+    }
+
+    public void setBirthdayMin(String birthdayMin) {
+        this.birthdayMin = birthdayMin;
+    }
+
+    public String getBirthdayMax() {
+        return birthdayMax;
+    }
+
+    public void setBirthdayMax(String birthdayMax) {
+        this.birthdayMax = birthdayMax;
+    }
+
+    public String getJobIdList() {
+        return jobIdList;
+    }
+
+    public void setJobIdList(String jobIdList) {
+        this.jobIdList = jobIdList;
+    }
+
+    public String getRankIdList() {
+        return rankIdList;
+    }
+
+    public void setRankIdList(String rankIdList) {
+        this.rankIdList = rankIdList;
+    }
+
     public static Map<String,Object> CreateCondition(PeopleSalaryBaseVo peopleSalaryBaseVo) {
 
         Map<String,Object> condition = Maps.newHashMap();
@@ -449,7 +499,28 @@ public class PeopleSalaryBaseVo implements Serializable{
             condition.put("name", peopleSalaryBaseVo.getPeopleName());
         }
 
+        if(StringUtils.isNoneBlank(peopleSalaryBaseVo.getJobIdList())){
+            condition.put("jobIdList", peopleSalaryBaseVo.getJobIdList().split(","));
+        }
+
+        if(StringUtils.isNoneBlank(peopleSalaryBaseVo.getRankIdList())){
+            condition.put("rankIdList",peopleSalaryBaseVo.getRankIdList().split(","));
+        }
+
+        if(peopleSalaryBaseVo.getSex() != null){
+            condition.put("sex", peopleSalaryBaseVo.getSex());
+        }
+
+        if(StringUtils.isNoneBlank(peopleSalaryBaseVo.getBirthdayMin())){
+            condition.put("birthdayMin",peopleSalaryBaseVo.getBirthdayMin());
+        }
+
+        if(StringUtils.isNoneBlank(peopleSalaryBaseVo.getBirthdayMax())){
+            condition.put("birthdayMax",peopleSalaryBaseVo.getBirthdayMax());
+        }
+
         condition.put("status", ConstUtil.PEOPLE_NORMAL);
+
         return condition;
     }
 }
