@@ -169,7 +169,7 @@
                 <tr>
                     <td>一次性年终奖励</td>
                     <td>
-                        <input name="yearlyBonus" id="yearlyBonus" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="yearlyBonus" id="yearlyBonus" type="text" value="${peopleSalaryBase.yearlyBonus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>应发合计</td>
                     <td>

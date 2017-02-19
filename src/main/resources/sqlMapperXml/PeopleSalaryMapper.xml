@@ -474,5 +474,46 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <update id="update" parameterType="com.wangzhixuan.model.PeopleSalary">
+        update people_salary
+        set
+        people_code         = #{peopleCode,jdbcType=VARCHAR},
+        job_id              = #{jobId,jdbcType=INTEGER},
+        job_salary          = #{jobSalary,jdbcType=DECIMAL},
+        rank_id             = #{rankId,jdbcType=INTEGER},
+        rank_salary         = #{rankSalary,jdbcType=DECIMAL},
+        reserve_salary      = #{reserveSalary,jdbcType=DECIMAL},
+        exam_result         = #{examResult,jdbcType=VARCHAR},
+        job_allowance       = #{jobAllowance,jdbcType=DECIMAL},
+        performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
+        rent_allowance      = #{rentAllowance,jdbcType=DECIMAL},
+        house_allowance     = #{houseAllowance,jdbcType=DECIMAL},
+        work_date           = #{workDate,jdbcType=DATE},
+        timesheet_status    = #{timesheetStatus,jdbcType=DECIMAL},
+        duty_allowance      = #{dutyAllowance,jdbcType=DECIMAL},
+        extra_allowance     = #{extraAllowance,jdbcType=DECIMAL},
+        telephone_allowance = #{telephoneAllowance,jdbcType=DECIMAL},
+        traffic_allowance   = #{trafficAllowance,jdbcType=DECIMAL},
+        on_duty_fee         = #{onDutyFee,jdbcType=DECIMAL},
+        on_duty_date        = #{onDutyDate,jdbcType=DECIMAL},
+        on_duty_fee_total   = #{onDutyFeeTotal,jdbcType=DECIMAL},
+        property_allowance  = #{propertyAllowance,jdbcType=DECIMAL},
+        extra_job_allowance = #{extraJobAllowance,jdbcType=DECIMAL},
+        temperature_allowance = #{temperatureAllowance,jdbcType=DECIMAL},
+        reissue_fee         = #{reissueFee,jdbcType=DECIMAL},
+        medicare            = #{medicare,jdbcType=DECIMAL},
+        yearly_bonus        = #{yearlyBonus,jdbcType=DECIMAL},
+        gross_salary        = #{grossSalary,jdbcType=DECIMAL},
+        life_insurance      = #{lifeInsurance,jdbcType=DECIMAL},
+        job_insurance       = #{jobInsurance,jdbcType=DECIMAL},
+        health_insurance    = #{healthInsurance,jdbcType=DECIMAL},
+        annuity             = #{annuity,jdbcType=DECIMAL},
+        house_fund          = #{houseFund,jdbcType=DECIMAL},
+        expense             = #{expense,jdbcType=DECIMAL},
+        tax                 = #{tax,jdbcType=DECIMAL},
+        net_income          = #{netIncome,jdbcType=DECIMAL},
+        pay_date            = #{payDate,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>
