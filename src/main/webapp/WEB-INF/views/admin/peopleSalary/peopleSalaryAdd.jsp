@@ -3,13 +3,8 @@
 <script type="text/javascript">
 
     $(function(){
-        if (${peopleSalaryBase.jobId}){
-            $("#jobId").val('${peopleSalaryBase.jobId}');
-        }
-
-        if (${peopleSalaryBase.rankId}){
-            $("#rankId").val('${peopleSalaryBase.rankId}');
-        }
+        $("#jobId").val('${peopleSalaryBase.jobId}');
+        $("#rankId").val('${peopleSalaryBase.rankId}');
 
         $("#jobId").combobox({
             onChange:function(newValue,oldValue){

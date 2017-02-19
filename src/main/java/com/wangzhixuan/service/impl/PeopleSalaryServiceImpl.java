@@ -106,8 +106,6 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         return peopleSalaryMapper.findPeopleSalaryVoById(id);
     }
 
-
-
     @Override
     public void updateSalaryBase(PeopleSalaryBase peopleSalaryBase){
         if(peopleSalaryBase == null)
@@ -122,6 +120,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Override
     public void exportExcel(HttpServletResponse response, String[] idList) {
+
         List list = peopleMapper.selectPeopleVoByIds(idList);
 
         if (list != null && list.size() > 0){

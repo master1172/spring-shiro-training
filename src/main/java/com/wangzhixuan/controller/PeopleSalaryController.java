@@ -207,6 +207,7 @@ public class PeopleSalaryController extends BaseController{
 
         if (StringUtils.isBlank(ids)){
             LOGGER.error("Excel:{}","请选择有效数据!");
+            return;
         }
         try{
             peopleSalaryService.exportExcel(response,ids.split(","));
