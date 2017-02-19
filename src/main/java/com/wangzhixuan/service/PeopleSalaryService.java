@@ -31,7 +31,7 @@ public interface PeopleSalaryService {
 
     PeopleSalaryVo findPeopleSalaryVoById(Long id);
 
-    PeopleSalaryBaseVo findPeopleSalaryBaseByCode(String code);
+
 
     void updateSalaryBase(PeopleSalaryBase peopleSalaryBase);
 
@@ -43,5 +43,5 @@ public interface PeopleSalaryService {
 
     PeopleSalaryBase findPeopleSalaryBaseById(Integer id);
 
-
+    PeopleSalaryBase findPeopleSalaryBaseByCode(String code);
 }

@@ -123,41 +123,43 @@ public class PeopleSalaryController extends BaseController{
 
     @RequestMapping("/addPage")
     public String addPage(String peopleCode, Model model){
-        People people = peopleService.findPeopleByCode(peopleCode);
-        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);
-        if (people == null)
-            people = new People();
-        if (peopleSalaryBaseVo == null)
-            peopleSalaryBaseVo = new PeopleSalaryBaseVo();
+        PeopleSalaryBase peopleSalaryBase = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);
 
-        Integer currentMonth = DateUtil.GetCurrentMonth();
-        Integer currentYear  = DateUtil.GetCurrentYear();
+        if (peopleSalaryBase == null)
+            peopleSalaryBase = new PeopleSalaryBase();
 
-        List<PeopleTimesheet> peopleTimeSheetList = peopleTimesheetService.findPeopleTimesheetListByCodeAndDate(people.getCode(), currentYear, currentMonth);
-        ExamMonthly peopleExamMonthlyResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(people.getCode(), currentYear, currentMonth);
-
-        BigDecimal sumVacationPeriod = BigDecimal.valueOf(0.0);
-
-        if (peopleTimeSheetList != null && peopleTimeSheetList.size() > 0){
-            for (int i=0; i<peopleTimeSheetList.size(); i++){
-                PeopleTimesheet peopleTimesheet = peopleTimeSheetList.get(i);
-                if (peopleTimesheet == null || StringUtils.isBlank(peopleTimesheet.getPeopleCode()))
-                    continue;
-                sumVacationPeriod = sumVacationPeriod.add(peopleTimesheet.getVacationPeriod());
-            }
-        }
-
-        String examResult = "";
-
-        if (peopleExamMonthlyResult != null){
-            examResult = peopleExamMonthlyResult.getExamResult();
-        }
-
-        model.addAttribute("timesheetStatus", sumVacationPeriod);
-        model.addAttribute("examResult",examResult);
-        model.addAttribute("people",people);
-        model.addAttribute("peopleSalaryBaseVo", peopleSalaryBaseVo);
+        model.addAttribute("peopleSalaryBase", peopleSalaryBase);
         return "/admin/peopleSalary/peopleSalaryAdd";
+
+        //if (people == null)
+        //    people = new People();
+        //Integer currentMonth = DateUtil.GetCurrentMonth();
+        //Integer currentYear  = DateUtil.GetCurrentYear();
+
+        //List<PeopleTimesheet> peopleTimeSheetList = peopleTimesheetService.findPeopleTimesheetListByCodeAndDate(people.getCode(), currentYear, currentMonth);
+        //ExamMonthly peopleExamMonthlyResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(people.getCode(), currentYear, currentMonth);
+
+        //BigDecimal sumVacationPeriod = BigDecimal.valueOf(0.0);
+
+        //if (peopleTimeSheetList != null && peopleTimeSheetList.size() > 0){
+        //    for (int i=0; i<peopleTimeSheetList.size(); i++){
+        //        PeopleTimesheet peopleTimesheet = peopleTimeSheetList.get(i);
+        //        if (peopleTimesheet == null || StringUtils.isBlank(peopleTimesheet.getPeopleCode()))
+        //            continue;
+        //        sumVacationPeriod = sumVacationPeriod.add(peopleTimesheet.getVacationPeriod());
+        //    }
+        //}
+
+        //String examResult = "";
+
+        //if (peopleExamMonthlyResult != null){
+        //    examResult = peopleExamMonthlyResult.getExamResult();
+        //}
+
+        //model.addAttribute("timesheetStatus", sumVacationPeriod);
+        //model.addAttribute("examResult",examResult);
+        //model.addAttribute("people",people);
+
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -218,24 +220,7 @@ public class PeopleSalaryController extends BaseController{
         return result;
     }
 
-    @RequestMapping("/salaryBasePage")
-    public String salaryBasePage(String peopleCode, Model model){
-        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);
 
-        if (peopleSalaryBaseVo == null){
-            peopleSalaryBaseVo = new PeopleSalaryBaseVo();
-            peopleSalaryBaseVo.setPeopleCode(peopleCode);
-
-            People people = peopleService.findPeopleByCode(peopleCode);
-            if (people != null){
-                peopleSalaryBaseVo.setPeopleName(people.getName());
-                peopleSalaryBaseVo.setJobId(people.getJobId());
-            }
-        }
-
-        model.addAttribute("peopleSalaryBaseVo",peopleSalaryBaseVo);
-        return "/admin/peopleSalary/peopleSalaryBase";
-    }
 
     @RequestMapping("/salaryBaseEdit")
     @ResponseBody

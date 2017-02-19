@@ -61,4 +61,6 @@ public interface PeopleSalaryMapper {
     int findPeopleSalaryBasePageCount(PageInfo pageInfo);
 
     PeopleSalaryBaseVo findPeopleSalaryBaseVoById(Integer id);
+
+    PeopleSalaryBase findPeopleSalaryBaseByCode(String code);
 }

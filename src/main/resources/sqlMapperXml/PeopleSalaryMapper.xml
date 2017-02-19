@@ -238,6 +238,13 @@
         where id=#{id, jdbcType=INTEGER}
     </select>
 
+    <select id="selectPeopleSalaryBaseByCode" resultMap="peopleSalaryBaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="PeopleSalaryBase_Column_List"/>
+        from people_total
+        where code=#{code, jdbcType=VARCHAR}
+    </select>
+
     <update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleSalaryBase">
         update people_total
         <set>

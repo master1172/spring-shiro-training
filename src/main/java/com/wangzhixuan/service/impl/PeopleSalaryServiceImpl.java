@@ -57,6 +57,22 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     }
 
     @Override
+    public PeopleSalaryBase findPeopleSalaryBaseById(Integer id) {
+        if (id == null)
+            return new PeopleSalaryBase();
+        return peopleSalaryMapper.selectPeopleSalaryBaseById(id);
+    }
+
+    @Override
+    public PeopleSalaryBase findPeopleSalaryBaseByCode(String code) {
+
+        if (StringUtils.isBlank(code))
+            return new PeopleSalaryBase();
+
+        return peopleSalaryMapper.selectPeopleSalaryBaseByCode(code);
+    }
+
+    @Override
     public void addSalary(PeopleSalary peopleSalary){
         UpdatePeopleSalaryDate(peopleSalary);
         peopleSalaryMapper.insert(peopleSalary);
@@ -83,14 +99,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         return peopleSalaryMapper.findPeopleSalaryVoById(id);
     }
 
-    @Override
-    public PeopleSalaryBaseVo findPeopleSalaryBaseByCode(String code) {
 
-        if (StringUtils.isBlank(code))
-            return null;
-
-        return peopleSalaryMapper.findPeopleSalaryBaseVoByCode(code);
-    }
 
     @Override
     public void updateSalaryBase(PeopleSalaryBase peopleSalaryBase){
@@ -237,12 +246,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         }
     }
 
-    @Override
-    public PeopleSalaryBase findPeopleSalaryBaseById(Integer id) {
-        if (id == null)
-            return new PeopleSalaryBase();
-        return peopleSalaryMapper.selectPeopleSalaryBaseById(id);
-    }
+
 
     private void UpdatePeopleSalaryDate(PeopleSalary peopleSalary){
         if (peopleSalary == null)
