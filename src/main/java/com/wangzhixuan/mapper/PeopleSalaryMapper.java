@@ -18,7 +18,7 @@ public interface PeopleSalaryMapper {
 
     int batchDeleteByIds(String[] ids);
 
-    int deleteSalaryById(Long id);
+    int deleteSalaryById(Integer id);
 
     int insert(PeopleSalary peopleSalary);
 

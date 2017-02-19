@@ -119,7 +119,7 @@
                 }, function (result) {
                     if (result.success) {
                         parent.$.messager.alert('提示', result.msg, 'info');
-                        salaryGrid.datagrid('reload');
+                        salaryGrid.datagrid("reload");
                     }
                     progressClose();
                 }, 'JSON');

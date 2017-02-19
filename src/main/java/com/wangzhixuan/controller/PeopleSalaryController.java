@@ -255,4 +255,20 @@ public class PeopleSalaryController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Result delete(Integer id){
+        Result result = new Result();
+        try{
+            peopleSalaryService.deleteSalaryById(id);
+            result.setSuccess(true);
+            result.setMsg("删除成功");
+        }catch (Exception e){
+            result.setSuccess(false);
+            result.setMsg(e.toString());
+        }
+
+        return result;
+    }
 }

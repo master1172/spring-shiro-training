@@ -516,4 +516,9 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <delete id="deleteSalaryById" parameterType="java.lang.Integer">
+        delete from people_salary
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
 </mapper>

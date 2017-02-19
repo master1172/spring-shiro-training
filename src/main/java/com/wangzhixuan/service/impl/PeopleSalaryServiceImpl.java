@@ -92,7 +92,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     }
 
     @Override
-    public void deleteSalaryById(Long id) {
+    public void deleteSalaryById(Integer id) {
         peopleSalaryMapper.deleteSalaryById(id);
     }
 
