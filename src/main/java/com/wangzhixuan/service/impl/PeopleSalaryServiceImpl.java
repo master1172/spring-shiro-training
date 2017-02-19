@@ -51,6 +51,12 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     }
 
     @Override
+    public void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+        pageInfo.setRows(peopleSalaryMapper.findPeopleSalaryPageCondition(pageInfo));
+        pageInfo.setTotal(peopleSalaryMapper.findPeopleSalaryPageCount(pageInfo));
+    }
+
+    @Override
     public void addSalary(PeopleSalary peopleSalary){
         UpdatePeopleSalaryDate(peopleSalary);
         peopleSalaryMapper.insert(peopleSalary);

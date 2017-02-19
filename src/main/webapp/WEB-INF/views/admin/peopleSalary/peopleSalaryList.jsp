@@ -39,35 +39,6 @@
         });
     });
 
-    function addSalaryBaseFun() {
-        parent.$.modalDialog({
-            title: '修改工资基数',
-            width: 1000,
-            height: 600,
-            href: '${path}/peopleSalary/salaryBasePage?peopleCode=${code}',
-            buttons:[{
-                text: '修改',
-                handler: function(){
-                    parent.$.modalDialog.openner_dataGrid = salaryGrid;
-                    var f = parent.$.modalDialog.handler.find('#salaryBaseForm');
-                    if(parent.checkForm()) {
-                        parent.SYS_SUBMIT_FORM(f, "/peopleSalary/salaryBaseEdit", function (data) {
-                            if (!data["success"]) {
-                                parent.progressClose();
-                                parent.$.messager.alert("提示", data["msg"], "warning");
-                            } else {
-                                parent.progressClose();
-                                salaryGrid.datagrid("reload");
-                                parent.$.modalDialog.handler.dialog("close");
-                            }
-                        });
-                    }
-
-                }
-            }]
-        });
-    }
-
     function addFun(){
         parent.$.modalDialog({
             title: '添加',
@@ -184,7 +155,5 @@
     <div id="salarytoolbar" style="display: none;">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
-        <a onclick="addSalaryBaseFun()" href="javascript:void(0)" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">修改工资基数</a>
     </div>
 </div>

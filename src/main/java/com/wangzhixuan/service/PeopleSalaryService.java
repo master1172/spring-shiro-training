@@ -19,6 +19,8 @@ public interface PeopleSalaryService {
 
     void findDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
+    void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
     void addSalary(PeopleSalary peopleSalary);
 
     void updateSalary(PeopleSalary peopleSalary);
@@ -40,4 +42,6 @@ public interface PeopleSalaryService {
     void updateSalaryJobLevel(PeopleVo peopleVo);
 
     PeopleSalaryBase findPeopleSalaryBaseById(Integer id);
+
+
 }
