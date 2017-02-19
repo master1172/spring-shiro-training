@@ -212,7 +212,7 @@
         <thead>
         <tr>
             <th field="ck"            data-options="checkbox:true"></th>
-            <th field="pepleName"     data-options="sortable:true" width="80">姓名</th>
+            <th field="peopleName"    data-options="sortable:true" width="80">姓名</th>
             <th field="jobLevel"      data-options="sortable:true" width="80">职级</th>
             <th field="jobSalary"     data-options="sortable:true" width="80">职级工资</th>
             <th field="rankLevel"     data-options="sortable:true" width="80">薪级</th>
