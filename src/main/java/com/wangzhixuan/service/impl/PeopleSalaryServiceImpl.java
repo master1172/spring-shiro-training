@@ -73,6 +73,13 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     }
 
     @Override
+    public PeopleSalary findPeopleSalaryById(Integer id) {
+        if (id == null)
+            return new PeopleSalary();
+        return peopleSalaryMapper.findPeopleSalaryById(id);
+    }
+
+    @Override
     public void addSalary(PeopleSalary peopleSalary){
         UpdatePeopleSalaryDate(peopleSalary);
         peopleSalaryMapper.insert(peopleSalary);

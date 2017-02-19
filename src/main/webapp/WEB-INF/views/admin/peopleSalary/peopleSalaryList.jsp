@@ -80,7 +80,7 @@
             title: '修改',
             width: 1000,
             height: 600,
-            href: '${path}/peopleSalary/editPage?id='+id,
+            href: '${path}/peopleSalary/editSalaryPage?id='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
@@ -88,7 +88,7 @@
                     var f = parent.$.modalDialog.handler.find("#salaryEditForm");
 
                     if(parent.checkForm()){
-                        parent.SYS_SUBMIT_FORM(f,"/peopleSalary/edit",function(data){
+                        parent.SYS_SUBMIT_FORM(f,"/peopleSalary/editSalary",function(data){
                             if(!data["success"]){
                                 parent.$.messager.alert("提示", data["msg"], "warning");
                             }else{

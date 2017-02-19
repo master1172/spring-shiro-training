@@ -178,7 +178,30 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
-    
+    @RequestMapping(value="/editSalaryPage")
+    public String editSalaryBase(Integer id, Model model){
+        PeopleSalary peopleSalary = peopleSalaryService.findPeopleSalaryById(id);
+        model.addAttribute("peopleSalary",peopleSalary);
+        return "/admin/peopleSalary/peopleSalaryEdit";
+    }
+
+    @RequestMapping(value = "/editSalary")
+    @ResponseBody
+    public Result editSalary(PeopleSalary peopleSalary){
+        Result result = new Result();
+        try{
+            peopleSalaryService.updateSalary(peopleSalary);
+            result.setSuccess(true);
+            result.setMsg("修改成功!");
+            return result;
+        }catch(Exception e){
+            LOGGER.error("修改工资失败：{}",e);
+            result.setMsg(e.getMessage());
+            return result;
+        }
+    }
+
+
     @RequestMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response, String ids){
 
@@ -216,8 +239,6 @@ public class PeopleSalaryController extends BaseController{
         }
         return result;
     }
-
-
 
     @RequestMapping("/salaryBaseEdit")
     @ResponseBody

@@ -44,4 +44,6 @@ public interface PeopleSalaryService {
     PeopleSalaryBase findPeopleSalaryBaseById(Integer id);
 
     PeopleSalaryBase findPeopleSalaryBaseByCode(String code);
+
+    PeopleSalary findPeopleSalaryById(Integer id);
 }
