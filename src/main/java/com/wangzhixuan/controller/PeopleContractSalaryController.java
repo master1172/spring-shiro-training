@@ -248,4 +248,8 @@ public class PeopleContractSalaryController extends BaseController {
 		}
 	}
 
+	@RequestMapping("/advSearchPage")
+	public String advSearchPage(){
+		return "/admin/peopleContractSalary/salarySearch";
+	}
 }

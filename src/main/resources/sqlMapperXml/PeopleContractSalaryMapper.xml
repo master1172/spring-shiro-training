@@ -151,6 +151,21 @@
 			<if test=" condition.name != null and condition.name != ''">
 				and t.name LIKE concat('%',#{condition.name},'%')
 			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+				<![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+			</if>
+			<if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+				<![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+			</if>
+			<if test=" condition.jobIdList != null">
+				and t.job_id in
+				<foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
 			<if test=" condition.status != null">
 				and t.status = 4
 			</if>
@@ -164,6 +179,21 @@
 		<where>
 			<if test=" condition.name != null and condition.name != ''">
 				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+				<![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+			</if>
+			<if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+				<![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+			</if>
+			<if test=" condition.jobIdList != null">
+				and t.job_id in
+				<foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
+					#{item}
+				</foreach>
 			</if>
 			<if test=" condition.status != null">
 				and t.status = 4

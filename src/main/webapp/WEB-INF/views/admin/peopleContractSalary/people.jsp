@@ -76,14 +76,14 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
-                href: '${path}/people/advSearchPage',
+                href: '${path}/peopleContractSalary/advSearchPage',
                 buttons:[{
                     text: '提交',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         if(parent.checkForm()){
                             parent.progressClose();
-                            var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                            var f = parent.$.modalDialog.handler.find("#salarySearchForm");
                             dataGrid.datagrid("load",$.serializeObject(f));
                             parent.$.modalDialog.handler.dialog("close");
                         }
@@ -265,8 +265,6 @@
            data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-        <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">查询导出</a>
         <!-- 附件下载使用 -->
         <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,7 +18,11 @@ public class PeopleContractSalaryBaseVo implements Serializable{
     private Integer    id;
     private String     peopleCode;
     private String     peopleName;
+    private Integer    sex;
+    private String     birthdayMin;
+    private String     birthdayMax;
     private Integer    jobId;
+    private String     jobIdList;
     private BigDecimal jobSalary;
     private String     jobLevel;
     private BigDecimal schoolSalary;
@@ -250,11 +255,60 @@ public class PeopleContractSalaryBaseVo implements Serializable{
         this.lastUpdateDate = lastUpdateDate;
     }
 
+    public String getJobIdList() {
+        return jobIdList;
+    }
+
+    public void setJobIdList(String jobIdList) {
+        this.jobIdList = jobIdList;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getBirthdayMin() {
+        return birthdayMin;
+    }
+
+    public void setBirthdayMin(String birthdayMin) {
+        this.birthdayMin = birthdayMin;
+    }
+
+    public String getBirthdayMax() {
+        return birthdayMax;
+    }
+
+    public void setBirthdayMax(String birthdayMax) {
+        this.birthdayMax = birthdayMax;
+    }
+
     public static Map<String,Object> CreateCondition(PeopleContractSalaryBaseVo peopleContractSalaryBaseVo) {
         Map<String,Object> condition = Maps.newHashMap();
         if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getPeopleName())){
             condition.put("name", peopleContractSalaryBaseVo.getPeopleName());
         }
+
+        if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getJobIdList())){
+            condition.put("jobIdList", peopleContractSalaryBaseVo.getJobIdList());
+        }
+
+        if(peopleContractSalaryBaseVo.getSex() != null){
+            condition.put("sex", peopleContractSalaryBaseVo.getSex());
+        }
+
+        if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getBirthdayMin())){
+            condition.put("birthdayMin", peopleContractSalaryBaseVo.getBirthdayMin());
+        }
+
+        if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getBirthdayMax())){
+            condition.put("birthdayMax", peopleContractSalaryBaseVo.getBirthdayMax());
+        }
+
         condition.put("status", ConstUtil.PEOPLE_CONTRACT);
         return condition;
     }

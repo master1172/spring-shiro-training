@@ -215,6 +215,9 @@
             <if test=" condition.name != null and condition.name != ''">
                 and t.name LIKE concat('%',#{condition.name},'%')
             </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
             <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
                 <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
             </if>
