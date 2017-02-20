@@ -56,6 +56,29 @@ public class PeopleContractSalaryController extends BaseController {
 		return pageInfo;
 	}
 
+	@RequestMapping("/editPage")
+	public String editPage(Integer id, Model model) {
+		PeopleContractSalaryBase peopleContractBase = peopleContractSalaryService.findPeopleContractSalaryBaseById(id);
+		model.addAttribute("peopleContractSalaryBase", peopleContractBase);
+		return "/admin/peopleContractSalary/peopleSalaryBaseEdit";
+	}
+
+	@RequestMapping("/edit")
+	@ResponseBody
+	public Result edit(PeopleContractSalaryBase peopleContractSalaryBase) {
+		Result result = new Result();
+		try {
+			peopleContractSalaryService.updateSalaryBase(peopleContractSalaryBase);
+			result.setSuccess(true);
+			result.setMsg("修改成功!");
+			return result;
+		} catch (Exception e) {
+			logger.error("修改工资失败：{}", e);
+			result.setMsg(e.getMessage());
+			return result;
+		}
+	}
+
 	@RequestMapping(value = "/salaryListPage", method = RequestMethod.GET)
 	public String salaryListPage(Integer id, Model model) {
 
@@ -131,30 +154,9 @@ public class PeopleContractSalaryController extends BaseController {
 		}
 	}
 
-	@RequestMapping("/editPage")
-	public String editPage(Long id, Model model) {
-		PeopleContractSalaryVo peopleContractVo = peopleContractSalaryService.findPeopleContractSalaryVoById(id);
-		model.addAttribute("peopleContractSalary", peopleContractVo);
-		
-		logger.info("peopleContractSalary:"+JSON.toJSONString(peopleContractVo));
-		return "/admin/peopleContractSalary/peopleSalaryEdit";
-	}
 
-	@RequestMapping("/edit")
-	@ResponseBody
-	public Result edit(PeopleContractSalary peopleContractSalary) {
-		Result result = new Result();
-		try {
-			peopleContractSalaryService.updateSalary(peopleContractSalary);
-			result.setSuccess(true);
-			result.setMsg("修改成功!");
-			return result;
-		} catch (Exception e) {
-			logger.error("修改工资失败：{}", e);
-			result.setMsg(e.getMessage());
-			return result;
-		}
-	}
+
+
 	
 	/**
 	 * 批量调入W

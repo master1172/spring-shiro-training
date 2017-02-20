@@ -119,7 +119,7 @@
 		job_insurance, health_insurance, house_fund,last_update_date
 	</sql>
 
-	<select id="findPeopleContractSalaryBasePageCondition" resultMap="peopleContractSalaryBaseMap" parameterType="PageInfo">
+	<select id="findPeopleContractSalaryBasePageCondition" resultMap="peopleContractSalaryBaseVoMap" parameterType="PageInfo">
 		SELECT
 			t.id,
 			t.code,
@@ -142,7 +142,6 @@
 			t.health_insurance,
 			t.house_fund,
 			t.last_update_date
-
 		FROM
 			people_total t
 		LEFT JOIN
@@ -170,4 +169,70 @@
 			</if>
 		</where>
 	</select>
+
+	<select id="findPeopleContractSalaryBaseById" resultMap="peopleContractSalaryBaseMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="PeopleContractSalaryBase_Column_List"/>
+		from people_total
+		where id=#{id, jdbcType=INTEGER}
+	</select>
+
+	<update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleContractSalaryBase">
+		update people_total
+		SET
+			<if test="jobId != null">
+				job_id 				= #{jobId,jdbcType=INTEGER},
+			</if>
+			<if test=" jobSalary != null">
+				job_salary 			= #{jobSalary,jdbcType=DECIMAL},
+			</if>
+			<if test=" schoolSalary != null">
+				school_salary 		= #{schoolSalary,jdbcType=DECIMAL},
+			</if>
+			<if test=" jobExamSalary != null">
+				job_exam_salary 	= #{jobExamSalary,jdbcType=DECIMAL},
+			</if>
+			<if test=" telephoneAllowance != null">
+				telephone_allowance = #{telephoneAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test=" trafficAllowance != null">
+				traffic_allowance 	= #{trafficAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="specialAllowance != null">
+				special_allowance 	= #{specialAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="headAllowance != null">
+				head_allowance 		= #{headAllowance,jdbcType=DECIMAL},
+			</if>
+			<if test="onDutyFee != null">
+				on_duty_fee = #{onDutyFee,jdbcType=DECIMAL},
+			</if>
+			<if test="bonus != null">
+				bonus 				= #{bonus,jdbcType=DECIMAL},
+			</if>
+			<if test="reissueFee != null">
+				reissue_fee = #{reissueFee, jdbcType=DECIMAL},
+			</if>
+			<if test="temperatureAllowance != null">
+				temperature_allowance = #{temperatureAllowance, jdbcType=DECIMAL},
+			</if>
+
+			<if test="lifeInsurance != null">
+				life_insurance = #{lifeInsurance, jdbcType=DECIMAL},
+			</if>
+			<if test="jobInsurance != null">
+				job_insurance = #{jobInsurance, jdbcType=DECIMAL},
+			</if>
+			<if test="healthInsurance != null">
+				health_insurance = #{healthInsurance, jdbcType=DECIMAL},
+			</if>
+			<if test="houseFund != null">
+				house_fund = #{houseFund, jdbcType=DECIMAL},
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date = #{lastUpdateDate, jdbcType=VARCHAR}
+			</if>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
 </mapper>

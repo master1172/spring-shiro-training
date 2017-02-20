@@ -42,6 +42,7 @@ import static com.wangzhixuan.utils.WordUtil.getCellString;
  */
 @Service
 public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryService {
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private PeopleMapper peopleMapper;
@@ -54,6 +55,11 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
 		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryBasePageCondition(pageInfo));
 		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryBasePageCount(pageInfo));
+	}
+
+	@Override
+	public PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id) {
+		return peopleContractSalaryMapper.findPeopleContractSalaryBaseById(id);
 	}
 
 	@Override
@@ -262,11 +268,10 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
             peopleContractSalaryBase.setLastUpdateDate(DateUtil.GetToday());
         }
 
-        if (peopleContractSalaryBase.getId() == null)
-            peopleContractSalaryMapper.addSalaryBase(peopleContractSalaryBase);
-        else
-            peopleContractSalaryMapper.updateSalaryBase(peopleContractSalaryBase);
+		peopleContractSalaryMapper.updateSalaryBase(peopleContractSalaryBase);
 	}
+
+
 
 
 }

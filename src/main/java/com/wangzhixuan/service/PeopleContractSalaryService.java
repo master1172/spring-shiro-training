@@ -33,4 +33,6 @@ public interface PeopleContractSalaryService {
     PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
 
     void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
+
+    PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
 }

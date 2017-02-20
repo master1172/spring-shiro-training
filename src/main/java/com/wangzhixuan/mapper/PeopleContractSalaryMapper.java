@@ -44,4 +44,6 @@ public interface PeopleContractSalaryMapper {
     List findPeopleContractSalaryBasePageCondition(PageInfo pageInfo);
 
     int findPeopleContractSalaryBasePageCount(PageInfo pageInfo);
+
+    PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
 }

@@ -28,11 +28,48 @@
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
 
                 onLoadSuccess: function (data) {
-                    $('.user-easyui-linkbutton-edit').linkbutton({text: '工资明细', plain: true, iconCls: 'icon-edit'});
+                    $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
+                    $('.user-easyui-linkbutton-add').linkbutton({text: '工资明细', plain: true, iconCls: 'icon-add'});
                 },
                 toolbar: '#toolbar'
             });
         });
+
+        function editFun(id) {
+            if (id == undefined) {
+                var rows = dataGrid.datagrid('getSelections');
+                id = rows[0].id;
+            } else {
+                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            }
+
+            parent.$.modalDialog({
+                title: '修改',
+                width: 1500,
+                height: 600,
+                href: '${path}/peopleContractSalary/editPage?id=' + id,
+                buttons: [{
+                    text: '修改',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#salaryBaseEditForm");
+                        //f.submit();
+                        if (parent.checkForm()) {
+                            parent.SYS_SUBMIT_FORM(f, "/peopleContractSalary/edit", function (data) {
+                                if (!data["success"]) {
+                                    parent.progressClose();
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                } else {
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
 
         function advSearch(){
             parent.$.modalDialog({
@@ -164,9 +201,9 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="salaryList(\'{0}\');" >工资明细</a>', row.id);
-
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
+            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-add" data-options="plain:true,iconCls:\'icon-edit\'" onclick="salaryList(\'{0}\');" >工资明细</a>', row.id);
             return str;
         }
     </script>
@@ -215,7 +252,7 @@
             <th field="peopleName"    data-options="sortable:true" width="80">姓名</th>
             <th field="jobLevel"      data-options="sortable:true" width="80">职级</th>
             <th field="jobSalary"     data-options="sortable:false" width="80">职级工资</th>
-            <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
