@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.model.*;
+import com.wangzhixuan.vo.PeopleContractSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,11 +48,11 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows, String sort, String order) {
+	public PageInfo dataGrid(HttpServletRequest request, PeopleContractSalaryBaseVo peopleContractSalaryBaseVo, Integer page, Integer rows, String sort, String order) {
 		PageInfo pageInfo = new PageInfo(page, rows);
-		Map<String, Object> condition = PeopleContractVo.CreateCondition(peopleVo);
+		Map<String, Object> condition = PeopleContractSalaryBaseVo.CreateCondition(peopleContractSalaryBaseVo);
 		pageInfo.setCondition(condition);
-		peopleContractService.findDataGrid(pageInfo);
+		peopleContractSalaryService.findDataGrid(pageInfo,request);
 		return pageInfo;
 	}
 

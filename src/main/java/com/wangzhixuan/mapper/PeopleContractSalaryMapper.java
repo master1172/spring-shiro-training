@@ -40,4 +40,8 @@ public interface PeopleContractSalaryMapper {
     void addSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
 
     void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
+
+    List findPeopleContractSalaryBasePageCondition(PageInfo pageInfo);
+
+    int findPeopleContractSalaryBasePageCount(PageInfo pageInfo);
 }

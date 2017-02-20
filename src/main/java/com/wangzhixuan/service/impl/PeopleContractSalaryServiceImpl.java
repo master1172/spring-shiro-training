@@ -52,8 +52,8 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
-		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
-		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
+		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryBasePageCondition(pageInfo));
+		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryBasePageCount(pageInfo));
 	}
 
 	@Override
@@ -123,9 +123,9 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 						row.createCell(9).setCellValue(peopleContractSalaryVo.getSpecialAllowance() == null ? "" : peopleContractSalaryVo.getSpecialAllowance().toString());
 						row.createCell(10).setCellValue(peopleContractSalaryVo.getHeadAllowance() == null ? "" : peopleContractSalaryVo.getHeadAllowance().toString());
 						row.createCell(11).setCellValue(peopleContractSalaryVo.getTemperatureAllowance() == null ? "" : peopleContractSalaryVo.getTemperatureAllowance().toString());
-						row.createCell(12).setCellValue(peopleContractSalaryVo.getExtraWorkFee() == null? "" : peopleContractSalaryVo.getExtraWorkFee().toString());
-						row.createCell(13).setCellValue(peopleContractSalaryVo.getExtraWorkDate() == null ? "" : peopleContractSalaryVo.getExtraWorkDate().toString());
-						row.createCell(14).setCellValue(peopleContractSalaryVo.getExtraWorkAllowance() == null ? "" : peopleContractSalaryVo.getExtraWorkAllowance().toString());
+						row.createCell(12).setCellValue(peopleContractSalaryVo.getOnDutyFee() == null? "" : peopleContractSalaryVo.getOnDutyFee().toString());
+						row.createCell(13).setCellValue(peopleContractSalaryVo.getOnDutyDate() == null ? "" : peopleContractSalaryVo.getOnDutyDate().toString());
+						row.createCell(14).setCellValue(peopleContractSalaryVo.getOnDutyFeeTotal() == null ? "" : peopleContractSalaryVo.getOnDutyFeeTotal().toString());
 						row.createCell(15).setCellValue(peopleContractSalaryVo.getBonus() == null ? "" : peopleContractSalaryVo.getBonus().toString());
 						row.createCell(16).setCellValue(peopleContractSalaryVo.getReissueFee() == null ? "" : peopleContractSalaryVo.getReissueFee().toString());
 						row.createCell(17).setCellValue(peopleContractSalaryVo.getGrossIncome() == null ? "" : peopleContractSalaryVo.getGrossIncome().toString());
@@ -221,10 +221,10 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 				peopleContractSalary.setTrafficAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(8))));
 				peopleContractSalary.setSpecialAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(9))));
 				peopleContractSalary.setHeadAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(10))));
-				peopleContractSalary.setExtraWorkFee(StringUtilExtra.StringToDecimal("0"));
+				peopleContractSalary.setOnDutyFee(StringUtilExtra.StringToDecimal("0"));
 				peopleContractSalary.setTemperatureAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
-				peopleContractSalary.setExtraWorkDate(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
-				peopleContractSalary.setExtraWorkAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(13))));
+				peopleContractSalary.setOnDutyDate(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
+				peopleContractSalary.setOnDutyFeeTotal(StringUtilExtra.StringToDecimal(getCellString(row.getCell(13))));
 				peopleContractSalary.setBonus(StringUtilExtra.StringToDecimal(getCellString(row.getCell(14))));
 				peopleContractSalary.setReissueFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
 				peopleContractSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
@@ -258,8 +258,8 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
         if(peopleContractSalaryBase == null)
             return;
 
-        if(StringUtils.isBlank(peopleContractSalaryBase.getLastChangeDate())){
-            peopleContractSalaryBase.setLastChangeDate(DateUtil.GetToday());
+        if(StringUtils.isBlank(peopleContractSalaryBase.getLastUpdateDate())){
+            peopleContractSalaryBase.setLastUpdateDate(DateUtil.GetToday());
         }
 
         if (peopleContractSalaryBase.getId() == null)
