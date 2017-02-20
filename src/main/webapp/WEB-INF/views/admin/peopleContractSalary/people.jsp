@@ -184,7 +184,7 @@
         function salaryList(id) {
             parent.$.modalDialog({
                 title:'工资列表',
-                width:1200,
+                width:1000,
                 height:600,
                 href:'${path}/peopleContractSalary/salaryListPage?id='+id,
             });

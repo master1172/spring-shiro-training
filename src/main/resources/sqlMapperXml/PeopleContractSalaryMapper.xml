@@ -38,6 +38,7 @@
         <result column="job_category"   jdbcType="VARCHAR" property="jobCategory"/>
         <result column="job_level"      jdbcType="VARCHAR" property="jobLevel" />
 		<result column="school_salary"   property="schoolSalary" jdbcType="DECIMAL" />
+		<result column="exam_result"     property="examResult" jdbcType="VARCHAR" />
 		<result column="job_exam_salary" property="jobExamSalary" jdbcType="DECIMAL" />
 		<result column="telephone_allowance" property="telephoneAllowance" jdbcType="DECIMAL" />
 		<result column="traffic_allowance"   property="trafficAllowance" jdbcType="DECIMAL" />
@@ -170,12 +171,7 @@
 		</where>
 	</select>
 
-	<select id="findPeopleContractSalaryBaseById" resultMap="peopleContractSalaryBaseMap" parameterType="java.lang.Integer">
-		SELECT
-		<include refid="PeopleContractSalaryBase_Column_List"/>
-		from people_total
-		where id=#{id, jdbcType=INTEGER}
-	</select>
+
 
 	<update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleContractSalaryBase">
 		update people_total
@@ -234,5 +230,122 @@
 			</if>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+
+	<select id="findPeopleContractSalaryPageCondition" resultMap="peopleContractSalaryVoResultMap" parameterType="PageInfo">
+		SELECT
+		t.id,
+		t.people_code,
+		p.name as people_name,
+		t.job_id,
+		t.job_salary,
+		j.job_category as job_category,
+		j.job_level as job_level,
+		t.school_salary,
+		t.exam_result,
+		t.job_exam_salary,
+		t.telephone_allowance,
+		t.traffic_allowance,
+		t.special_allowance,
+		t.head_allowance,
+		t.on_duty_fee,
+		t.on_duty_date,
+		t.on_duty_fee_total,
+		t.bonus,
+		t.reissue_fee,
+		t.temperature_allowance,
+		t.gross_income,
+		t.life_insurance,
+		t.job_insurance,
+		t.health_insurance,
+		t.house_fund,
+		t.expense,
+		t.net_income,
+		t.pay_date
+		FROM
+		people_contract_salary t LEFT JOIN people_total p
+		ON t.people_code = p.code
+		LEFT JOIN job j ON
+		t.job_id = j.id
+		<where>
+			<if test=" condition.peopleCode != null and condition.peopleCode != ''">
+				and t.people_code LIKE
+				concat('%',#{condition.peopleCode},'%')
+			</if>
+			<if test=" condition.peopleName != null and condition.peopleName != '' ">
+				and p.name LIKE concat('%',#{condition.peopleName},'%')
+			</if>
+		</where>
+		ORDER BY
+		t.pay_date desc
+		LIMIT #{from}, #{size}
+	</select>
+
+	<select id="findPeopleContractSalaryPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+		select count(t.id) count
+		FROM
+			people_contract_salary t
+		LEFT JOIN
+			people_total p ON t.people_code = p.code
+		LEFT JOIN
+			job j ON t.job_id = j.id
+		<where>
+			<if test=" condition.peopleCode != null and condition.peopleCode != ''">
+				and t.people_code LIKE
+				concat('%',#{condition.peopleCode},'%')
+			</if>
+			<if test=" condition.peopleName != null and condition.peopleName != '' ">
+				and p.name LIKE concat('%',#{condition.peopleName},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="findPeopleContractSalaryBaseById" resultMap="peopleContractSalaryBaseMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="PeopleContractSalaryBase_Column_List"/>
+		from people_total
+		where id=#{id, jdbcType=INTEGER}
+	</select>
+
+	<select id="findPeopleContractSalaryBaseByCode" resultMap="peopleContractSalaryBaseMap" parameterType="java.lang.String">
+		SELECT
+		<include refid="PeopleContractSalaryBase_Column_List"/>
+		from people_total
+		where code=#{peopleCode, jdbcType=VARCHAR}
+	</select>
+
+	<insert id="insert" parameterType="java.util.List">
+		insert into people_contract_salary (
+			people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
+			special_allowance, head_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, bonus, reissue_fee,
+			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
+		)
+		VALUES
+		(
+			#{peopleCode,jdbcType=VARCHAR},
+			#{jobId,jdbcType=INTEGER},
+			#{jobSalary,jdbcType=DECIMAL},
+			#{schoolSalary,jdbcType=DECIMAL},
+			#{examResult,jdbcType=VARCHAR},
+			#{jobExamSalary,jdbcType=DECIMAL},
+			#{telephoneAllowance,jdbcType=DECIMAL},
+			#{trafficAllowance,jdbcType=DECIMAL},
+			#{specialAllowance,jdbcType=DECIMAL},
+			#{headAllowance,jdbcType=DECIMAL},
+			#{onDutyFee,jdbcType=DECIMAL},
+			#{onDutyDate,jdbcType=DECIMAL},
+			#{onDutyFeeTotal,jdbcType=DECIMAL},
+			#{bonus,jdbcType=DECIMAL},
+			#{reissueFee,jdbcType=DECIMAL},
+			#{temperatureAllowance,jdbcType=DECIMAL},
+			#{grossIncome,jdbcType=DECIMAL},
+			#{lifeInsurance,jdbcType=DECIMAL},
+			#{jobInsurance,jdbcType=DECIMAL},
+			#{healthInsurance,jdbcType=DECIMAL},
+			#{houseFund,jdbcType=DECIMAL},
+			#{expense,jdbcType=DECIMAL},
+			#{netIncome,jdbcType=DECIMAL},
+			#{payDate,jdbcType=VARCHAR}
+		)
+	</insert>
 
 </mapper>

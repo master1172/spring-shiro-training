@@ -104,10 +104,8 @@ public class PeopleContractSalaryController extends BaseController {
 		Map<String, Object> condition = Maps.newHashMap();
 		condition.put("peopleCode", peopleCode);
 		pageInfo.setCondition(condition);
+		peopleContractSalaryService.findSalaryDataGrid(pageInfo, request);
 
-		peopleContractSalaryService.findDataGrid(pageInfo, request);
-
-		logger.info("salaryGrid"+JSON.toJSONString(pageInfo));
 		return pageInfo;
 	}
 
@@ -130,11 +128,11 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@RequestMapping("/addPage")
 	public String addPage(String peopleCode, Model model) {
-		PeopleContract peopleContract = peopleContractService.findPeopleContractByCode(peopleCode);
-		if (peopleContract == null) {
-			peopleContract = new PeopleContract();
+		PeopleContractSalaryBase peopleContractSalaryBase = peopleContractSalaryService.findPeopleContractSalaryBaseByCode(peopleCode);
+		if (peopleContractSalaryBase == null) {
+			peopleContractSalaryBase = new PeopleContractSalaryBase();
 		}
-		model.addAttribute("people", peopleContract);
+		model.addAttribute("people", peopleContractSalaryBase);
 		return "/admin/peopleContractSalary/peopleSalaryAdd";
 	}
 

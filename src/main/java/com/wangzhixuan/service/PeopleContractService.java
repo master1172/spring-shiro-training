@@ -2,6 +2,7 @@ package com.wangzhixuan.service;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.model.PeopleContractSalaryBase;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.wangzhixuan.model.PeopleContract;

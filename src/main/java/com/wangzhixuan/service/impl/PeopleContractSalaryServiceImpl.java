@@ -58,6 +58,12 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	}
 
 	@Override
+	public void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
+		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
+	}
+
+	@Override
 	public PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id) {
 		return peopleContractSalaryMapper.findPeopleContractSalaryBaseById(id);
 	}
@@ -67,7 +73,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 		// 设置默认日期今天
 		if (peopleSalary != null && StringUtils.isBlank(peopleSalary.getPayDate())) {
-			peopleSalary.setPayDate(DateUtil.GetDate(new Date()));
+			peopleSalary.setPayDate(DateUtil.GetCurrentYear()+"-"+DateUtil.GetCurrentMonth());
 		}
 
 		peopleContractSalaryMapper.insert(peopleSalary);
@@ -253,6 +259,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 	@Override
 	public PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode) {
+
 		if(StringUtils.isBlank(peopleCode))
             return null;
 

@@ -35,4 +35,6 @@ public interface PeopleContractSalaryService {
     void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
 
     PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
+
+    void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request);
 }
