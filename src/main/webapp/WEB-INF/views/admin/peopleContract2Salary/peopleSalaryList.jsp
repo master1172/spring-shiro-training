@@ -42,7 +42,7 @@
     function addFun(){
         parent.$.modalDialog({
             title: '添加',
-            width: 1200,
+            width: 1000,
             height: 600,
             href: '${path}/peopleContract2Salary/addPage?peopleCode=${code}',
             buttons: [{
@@ -50,17 +50,19 @@
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为添加成功之后，需要刷新这个salaryGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find("#salaryAddForm");
-					if(parent.checkForm()) {
-                    parent.SYS_SUBMIT_FORM(f,"/peopleContract2Salary/add",function(data){
-                        if(!data["success"]){
-                            parent.$.messager.alert("提示", data["msg"], "warning");
-                        }else{
-                            parent.progressClose();
-                            salaryGrid.datagrid("reload");
-                            parent.$.modalDialog.handler.dialog("close");
-                        }
-                    });
+                    if(parent.checkForm()) {
+                        parent.SYS_SUBMIT_FORM(f, "/peopleContract2Salary/add", function (data) {
+                            if (!data["success"]) {
+                                parent.progressClose();
+                                parent.$.messager.alert("提示", data["msg"], "warning");
+                            } else {
+                                parent.progressClose();
+                                salaryGrid.datagrid("reload");
+                                parent.$.modalDialog.handler.dialog("close");
+                            }
+                        });
                     }
+
                 }
             }]
         });
@@ -78,7 +80,7 @@
             title: '修改',
             width: 1200,
             height: 600,
-            href: '${path}/peopleContract2Salary/editPage?id='+id,
+            href: '${path}/peopleContract2Salary/editSalaryPage?id='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
@@ -86,8 +88,9 @@
                     var f = parent.$.modalDialog.handler.find("#salaryEditForm");
 
                     if(parent.checkForm()){
-                        parent.SYS_SUBMIT_FORM(f,"/peopleContract2Salary/edit",function(data){
+                        parent.SYS_SUBMIT_FORM(f,"/peopleContract2Salary/editSalary",function(data){
                             if(!data["success"]){
+                                parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
                             }else{
                                 parent.progressClose();
@@ -111,7 +114,7 @@
         parent.$.messager.confirm('询问', '您是否要删除当前工资记录？', function (b) {
             if (b) {
                 progressLoad();
-                $.post('${path}/peopleContractSalary/delete',{
+                $.post('${path}/peopleContract2Salary/delete',{
                     id: id
                 }, function (result) {
                     if (result.success) {
@@ -123,6 +126,7 @@
             }
         });
     }
+
     function addSalaryBaseFun() {
         parent.$.modalDialog({
             title: '修改工资基数',
@@ -151,6 +155,7 @@
             }]
         });
     }
+
     function operateFormatter(value,row,index){
         var str = '';
         str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
@@ -170,8 +175,8 @@
                 <th field="jobCategory"     data-options="sortable:false" width="80">岗位分类</th>
                 <th field="jobLevel"        data-options="sortable:false" width="80">职级</th>
                 <th field="jobSalary"       data-options="sortable:false" width="80">岗位工资</th>
-                <th field="examResult"       data-options="sortable:false" width="80">岗位考核结果</th>
-                <th field="jobExamSalary"      data-options="sortable:false" width="80">岗位考核工资</th>
+                <th field="examResult"      data-options="sortable:false" width="80">岗位考核结果</th>
+                <th field="jobExamSalary"   data-options="sortable:false" width="80">岗位考核工资</th>
                 <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>
@@ -180,7 +185,5 @@
     <div id="salarytoolbar" style="display: none;">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
-        <a onclick="addSalaryBaseFun()" href="javascript:void(0)" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">修改工资基数</a>
     </div>
 </div>

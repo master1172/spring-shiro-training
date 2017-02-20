@@ -1,15 +1,27 @@
 package com.wangzhixuan.service.impl;
 
-import com.wangzhixuan.mapper.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.wangzhixuan.mapper.DictMapper;
+import com.wangzhixuan.mapper.PeopleContractMapper;
+import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleContract;
-import com.wangzhixuan.model.PeopleContract2SalaryBase;
-import com.wangzhixuan.model.PeopleContractSalary;
+import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.service.PeopleContract2SalaryService;
-import com.wangzhixuan.service.PeopleContractSalaryService;
 import com.wangzhixuan.utils.*;
-import com.wangzhixuan.vo.PeopleContractSalaryVo;
 import com.wangzhixuan.vo.PeopleContractVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -20,13 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.wangzhixuan.mapper.PeopleContractSalaryMapper;
+import com.wangzhixuan.model.PeopleContractSalary;
+import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
 import static com.wangzhixuan.utils.WordUtil.getCellString;
 
@@ -35,18 +43,36 @@ import static com.wangzhixuan.utils.WordUtil.getCellString;
  */
 @Service
 public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalaryService {
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
-	private PeopleMapper peopleMapper;
+	private PeopleContractSalaryMapper peopleContractSalaryMapper;
 	@Autowired
-	private PeopleContract2SalaryMapper peopleContract2SalaryMapper;
+	private PeopleContractMapper peopleContractMapper;
 	@Autowired
-	private PeopleContract2Mapper peopleContract2Mapper;
+	private DictMapper dictMapper;
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
-		pageInfo.setRows(peopleContract2SalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
-		pageInfo.setTotal(peopleContract2SalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
+		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryBasePageCondition(pageInfo));
+		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryBasePageCount(pageInfo));
+	}
+
+	@Override
+	public void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleContractSalaryMapper.findPeopleContractSalaryPageCondition(pageInfo));
+		pageInfo.setTotal(peopleContractSalaryMapper.findPeopleContractSalaryPageCount(pageInfo));
+	}
+
+	@Override
+	public PeopleContractSalary findPeopleContractSalaryById(Integer id) {
+		return peopleContractSalaryMapper.findPeopleContractSalaryById(id);
+	}
+
+	@Override
+	public PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id) {
+		return peopleContractSalaryMapper.findPeopleContractSalaryBaseById(id);
 	}
 
 	@Override
@@ -54,59 +80,62 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 
 		// 设置默认日期今天
 		if (peopleSalary != null && StringUtils.isBlank(peopleSalary.getPayDate())) {
-			peopleSalary.setPayDate(DateUtil.GetDate(new Date()));
+			peopleSalary.setPayDate(DateUtil.GetCurrentYear()+"-"+DateUtil.GetCurrentMonth());
 		}
 
-		peopleContract2SalaryMapper.insert(peopleSalary);
+		peopleContractSalaryMapper.insert(peopleSalary);
 	}
 
 	@Override
 	public void updateSalary(PeopleContractSalary peopleSalary) {
-		peopleContract2SalaryMapper.updateByPrimaryKeySelective(peopleSalary);
+		peopleContractSalaryMapper.updateByPrimaryKey(peopleSalary);
 	}
 
 	@Override
-	public void deleteSalaryById(Long id) {
-		int count = peopleContract2SalaryMapper.deleteByPrimaryKey(id);
+	public void deleteSalaryById(Integer id) {
+		int count = peopleContractSalaryMapper.deleteByPrimaryKey(id);
 		logger.info("delete:" + count);
 	}
 
 	@Override
 	public PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id) {
-		return peopleContract2SalaryMapper.findPeopleContractSalaryVoById(id);
+		return peopleContractSalaryMapper.findPeopleContractSalaryVoById(id);
 	}
 
 	@Override
 	public void exportExcel(HttpServletResponse response, String[] idList) {
 		// TODO Auto-generated method stub
-		List list = peopleContract2Mapper.selectPeopleContractVoByIds(idList);
+		List list = peopleContractMapper.selectPeopleContractVoByIds(idList);
 		if (list != null && list.size() > 0) {
 			XSSFWorkbook workBook;
 			OutputStream os;
-			String newFileName = "无固定期合同制人员工资.xlsx";
+			String newFileName = "非固定期合同制人员工资.xlsx";
 			try {
 				workBook = new XSSFWorkbook();
-				XSSFSheet sheet = workBook.createSheet("无固定期合同制人员工资");
+				XSSFSheet sheet = workBook.createSheet("非固定期合同制人员工资");
 				XSSFCellStyle setBorder = WordUtil.setCellStyle(workBook, true);
 				// 创建表头
 				XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleContractSalaryHeaders());
+
 				int count = 0;
+
 				setBorder = WordUtil.setCellStyle(workBook, false);
 				for (int i = 0; i < list.size(); i++) {
-					row = sheet.createRow(i + 1);
 					PeopleContractVo peopleContractVo = (PeopleContractVo) list.get(i);
 					if(peopleContractVo ==null || StringUtils.isBlank(peopleContractVo.getCode()))
 						continue;
+
 					String peopleCode = peopleContractVo.getCode();
-					List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContract2SalaryMapper.findPeopleContractSalaryVoListByCode(peopleCode);
+					List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContractSalaryMapper.findPeopleContractSalaryVoListByCode(peopleCode);
 					if(peopleContractSalaryVoList == null || peopleContractSalaryVoList.size()<1)
 						continue;
 					for(int j=0; j<peopleContractSalaryVoList.size();j++) {
+
 						row = sheet.createRow(count+1);
 						PeopleContractSalaryVo peopleContractSalaryVo = peopleContractSalaryVoList.get(j);
 						row.createCell(0).setCellValue(count + 1);
 						row.createCell(1).setCellValue(peopleContractSalaryVo.getPeopleName());
-						row.createCell(2).setCellValue(peopleContractSalaryVo.getJobId());
+						row.createCell(2).setCellValue(peopleContractSalaryVo.getJobLevel());
 						row.createCell(3).setCellValue(peopleContractSalaryVo.getJobSalary() == null ? "" : peopleContractSalaryVo.getJobSalary().toString());
 						row.createCell(4).setCellValue(peopleContractSalaryVo.getSchoolSalary() == null ? "" : peopleContractSalaryVo.getSchoolSalary().toString());
 						row.createCell(5).setCellValue(peopleContractSalaryVo.getExamResult() == null ? "" : peopleContractSalaryVo.getExamResult().toString());
@@ -129,7 +158,7 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 						row.createCell(22).setCellValue(peopleContractSalaryVo.getExpense() == null ? "" : peopleContractSalaryVo.getExpense().toString());
 						row.createCell(23).setCellValue(peopleContractSalaryVo.getNetIncome() == null ? "" : peopleContractSalaryVo.getNetIncome().toString());
 						row.createCell(24).setCellValue(peopleContractSalaryVo.getPayDate() == null ? "" : peopleContractSalaryVo.getPayDate().toString());
-                        count ++;
+						count ++;
 						for (int k = 0; k < 25; k++) {
 							row.getCell(k).setCellStyle(setBorder);
 						}
@@ -171,15 +200,15 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 				}
 			}
 			if (list.size() > 0) {
-				flag = peopleContract2SalaryMapper.insertByImport(list) > 0;
+				flag = peopleContractSalaryMapper.insertByImport(list) > 0;
 			}
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * 文件读取
-	 * 
+	 *
 	 * @param list
 	 * @param path
 	 * @return
@@ -197,15 +226,19 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 					continue;
 
 				String peopleName = row.getCell(1).toString().trim();
-				PeopleContract peopleContract = peopleContract2Mapper.findFirstPeopleByName(peopleName);
-				String peopleCode = peopleContract.getCode();
-				if (peopleContract == null || StringUtils.isBlank(peopleCode))
+				PeopleContract peopleContract = peopleContractMapper.findFirstPeopleByName(peopleName);
+				String peopleCodeString = peopleContract.getCode();
+				if (peopleContract == null || StringUtils.isBlank(peopleCodeString))
 					continue;
-				peopleContractSalary.setPeopleCode(peopleCode);
 
-				Double peopleCodeDoubleType = Double.parseDouble(getCellString(row.getCell(2)));
-
-				peopleContractSalary.setJobId(peopleCodeDoubleType.intValue());
+				peopleContractSalary.setPeopleCode(peopleCodeString);
+				String jobName = getCellString(row.getCell(2));
+				Integer jobId = null;
+				try{
+					jobId = dictMapper.findJobIdByName(jobName);
+				}catch(Exception exp){
+				}
+				peopleContractSalary.setJobId(jobId);
 				peopleContractSalary.setJobSalary(StringUtilExtra.StringToDecimal(getCellString(row.getCell(3))));
 				peopleContractSalary.setSchoolSalary(StringUtilExtra.StringToDecimal(getCellString(row.getCell(4))));
 				peopleContractSalary.setExamResult(getCellString(row.getCell(5)));
@@ -214,20 +247,21 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 				peopleContractSalary.setTrafficAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(8))));
 				peopleContractSalary.setSpecialAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(9))));
 				peopleContractSalary.setHeadAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(10))));
-				peopleContractSalary.setOnDutyFee(StringUtilExtra.StringToDecimal("0"));
-				peopleContractSalary.setTemperatureAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
+
+				peopleContractSalary.setOnDutyFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
 				peopleContractSalary.setOnDutyDate(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
 				peopleContractSalary.setOnDutyFeeTotal(StringUtilExtra.StringToDecimal(getCellString(row.getCell(13))));
 				peopleContractSalary.setBonus(StringUtilExtra.StringToDecimal(getCellString(row.getCell(14))));
-				peopleContractSalary.setReissueFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
-				peopleContractSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
-				peopleContractSalary.setLifeInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(17))));
-				peopleContractSalary.setJobInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(18))));
-				peopleContractSalary.setHealthInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(19))));
-				peopleContractSalary.setHouseFund(StringUtilExtra.StringToDecimal(getCellString(row.getCell(20))));
-				peopleContractSalary.setExpense(StringUtilExtra.StringToDecimal(getCellString(row.getCell(21))));
-				peopleContractSalary.setNetIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(22))));
-				peopleContractSalary.setPayDate(getCellString(row.getCell(23)));
+				peopleContractSalary.setTemperatureAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
+				peopleContractSalary.setReissueFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
+				peopleContractSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(17))));
+				peopleContractSalary.setLifeInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(18))));
+				peopleContractSalary.setJobInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(19))));
+				peopleContractSalary.setHealthInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(20))));
+				peopleContractSalary.setHouseFund(StringUtilExtra.StringToDecimal(getCellString(row.getCell(21))));
+				peopleContractSalary.setExpense(StringUtilExtra.StringToDecimal(getCellString(row.getCell(22))));
+				peopleContractSalary.setNetIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(23))));
+				peopleContractSalary.setPayDate(getCellString(row.getCell(24)));
 
 				list.add(peopleContractSalary);
 			}
@@ -237,27 +271,25 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 		}
 		return list;
 	}
+
 	@Override
-	public PeopleContract2SalaryBase findPeopleContractSalaryBaseByCode(String peopleCode) {
+	public PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode) {
+
 		if(StringUtils.isBlank(peopleCode))
 			return null;
 
-		return peopleContract2SalaryMapper.findPeopleContract2SalaryBaseByCode(peopleCode);
+		return peopleContractSalaryMapper.findPeopleContractSalaryBaseByCode(peopleCode);
 	}
 
 	@Override
-	public void updateSalaryBase(PeopleContract2SalaryBase peopleContract2SalaryBase) {
-		if(peopleContract2SalaryBase == null)
+	public void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase) {
+		if(peopleContractSalaryBase == null)
 			return;
 
-		if(StringUtils.isBlank(peopleContract2SalaryBase.getLastChangeDate())){
-			peopleContract2SalaryBase.setLastChangeDate(DateUtil.GetToday());
+		if(StringUtils.isBlank(peopleContractSalaryBase.getLastUpdateDate())){
+			peopleContractSalaryBase.setLastUpdateDate(DateUtil.GetToday());
 		}
 
-		if (peopleContract2SalaryBase.getId() == null)
-			peopleContract2SalaryMapper.addSalaryBase(peopleContract2SalaryBase);
-		else
-			peopleContract2SalaryMapper.updateSalaryBase(peopleContract2SalaryBase);
+		peopleContractSalaryMapper.updateSalaryBase(peopleContractSalaryBase);
 	}
-
 }

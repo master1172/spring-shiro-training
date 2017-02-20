@@ -28,11 +28,48 @@
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
 
                 onLoadSuccess: function (data) {
-                    $('.user-easyui-linkbutton-edit').linkbutton({text: '工资明细', plain: true, iconCls: 'icon-edit'});
+                    $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
+                    $('.user-easyui-linkbutton-add').linkbutton({text: '工资明细', plain: true, iconCls: 'icon-add'});
                 },
                 toolbar: '#toolbar'
             });
         });
+
+        function editFun(id) {
+            if (id == undefined) {
+                var rows = dataGrid.datagrid('getSelections');
+                id = rows[0].id;
+            } else {
+                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            }
+
+            parent.$.modalDialog({
+                title: '修改',
+                width: 1500,
+                height: 600,
+                href: '${path}/peopleContract2Salary/editPage?id=' + id,
+                buttons: [{
+                    text: '修改',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#salaryBaseEditForm");
+                        //f.submit();
+                        if (parent.checkForm()) {
+                            parent.SYS_SUBMIT_FORM(f, "/peopleContract2Salary/edit", function (data) {
+                                if (!data["success"]) {
+                                    parent.progressClose();
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                } else {
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
 
         function advSearch(){
             parent.$.modalDialog({
@@ -46,7 +83,7 @@
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
                         if(parent.checkForm()){
                             parent.progressClose();
-                            var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                            var f = parent.$.modalDialog.handler.find("#salarySearchForm");
                             dataGrid.datagrid("load",$.serializeObject(f));
                             parent.$.modalDialog.handler.dialog("close");
                         }
@@ -147,7 +184,7 @@
         function salaryList(id) {
             parent.$.modalDialog({
                 title:'工资列表',
-                width:1200,
+                width:1000,
                 height:600,
                 href:'${path}/peopleContract2Salary/salaryListPage?id='+id,
             });
@@ -164,9 +201,9 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="salaryList(\'{0}\');" >工资明细</a>', row.id);
-
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
+            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-add" data-options="plain:true,iconCls:\'icon-edit\'" onclick="salaryList(\'{0}\');" >工资明细</a>', row.id);
             return str;
         }
     </script>
@@ -212,33 +249,24 @@
         <thead>
         <tr>
             <th field="ck"            data-options="checkbox:true"></th>
-            <th field="name"          data-options="sortable:true" width="80">姓名</th>
-            <th field="sex"           data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
-            <th field="nationalName"  data-options="sortable:true" width="80">民族</th>
-            <th field="birthday"      data-options="sortable:true" width="130">生日</th>
-            <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
-            <th field="educationName" data-options="sortable:true" width="80">学历</th>
-            <th field="degreeName"    data-options="sortable:true" width="80">学位</th>
-            <th field="jobName"       data-options="sortable:true" width="80">职务</th>
-            <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
-            <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
-            <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="peopleName"    data-options="sortable:true" width="80">姓名</th>
+            <th field="jobLevel"      data-options="sortable:true" width="80">职级</th>
+            <th field="jobSalary"     data-options="sortable:false" width="80">职级工资</th>
+            <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
 </div>
 
 <div id="toolbar" style="display: none;">
-        <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导入</a>
-        <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
-        <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">高级查询</a>
-        <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">查询导出</a>
-        <!-- 附件下载使用 -->
-        <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+    <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导入</a>
+    <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
+    <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+    <!-- 附件下载使用 -->
+    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
 </body>
 </html>

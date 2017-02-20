@@ -21,14 +21,21 @@ public interface PeopleContract2SalaryService {
 
     void updateSalary(PeopleContractSalary peopleSalary);
 
-    void deleteSalaryById(Long id);
-    PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
-    
-    
-    public boolean insertByImport(CommonsMultipartFile[] files);
-    
-    void exportExcel(HttpServletResponse response, String[] idList);
-    PeopleContract2SalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
+    void deleteSalaryById(Integer id);
 
-    void updateSalaryBase(PeopleContract2SalaryBase peopleContractSalaryBase);
+    PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
+
+    boolean insertByImport(CommonsMultipartFile[] files);
+
+    void exportExcel(HttpServletResponse response, String[] idList);
+
+    PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
+
+    void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
+
+    PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
+
+    void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+    PeopleContractSalary findPeopleContractSalaryById(Integer id);
 }

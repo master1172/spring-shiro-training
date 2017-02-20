@@ -45,8 +45,7 @@ import static com.wangzhixuan.utils.WordUtil.getCellString;
 public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	@Autowired
-	private PeopleMapper peopleMapper;
+
 	@Autowired
 	private PeopleContractSalaryMapper peopleContractSalaryMapper;
 	@Autowired
@@ -293,8 +292,4 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 		peopleContractSalaryMapper.updateSalaryBase(peopleContractSalaryBase);
 	}
-
-
-
-
 }
