@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.PeopleContract2SalaryService;
 import com.wangzhixuan.service.PeopleContract2Service;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.vo.PeopleContractSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ public class PeopleContract2SalaryController extends BaseController {
 	public PageInfo dataGrid(HttpServletRequest request, PeopleContractSalaryBaseVo peopleContractSalaryBaseVo, Integer page, Integer rows, String sort, String order) {
 		PageInfo pageInfo = new PageInfo(page, rows);
 		Map<String, Object> condition = PeopleContractSalaryBaseVo.CreateCondition(peopleContractSalaryBaseVo);
+		condition.put("status", ConstUtil.PEOPLE_CONTRACT_2);
 		pageInfo.setCondition(condition);
 		peopleContract2SalaryService.findDataGrid(pageInfo,request);
 		return pageInfo;

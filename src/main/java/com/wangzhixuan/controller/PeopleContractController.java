@@ -3,6 +3,7 @@ package com.wangzhixuan.controller;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.service.PeopleContractService;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractVo;
 import org.apache.commons.lang3.StringUtils;
@@ -57,6 +58,7 @@ public class PeopleContractController extends BaseController{
     public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleContractvo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String,Object> condition = PeopleContractVo.CreateCondition(peopleContractvo);
+        condition.put("status", ConstUtil.PEOPLE_CONTRACT);
         pageInfo.setCondition(condition);
         peopleContractService.findDataGrid(pageInfo);
 
