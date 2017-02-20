@@ -22,7 +22,7 @@
                 <tr>
                     <td>姓名</td>
                     <td>
-                        <input name="name" type="text" value="" class="easyui-validatebox" data-options="required:true">
+                        <input name="name" type="text" value="" class="easyui-validatebox" >
                     </td>
                 </tr>
                 <tr>

@@ -294,7 +294,7 @@ public class PeopleContractSalaryBaseVo implements Serializable{
         }
 
         if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getJobIdList())){
-            condition.put("jobIdList", peopleContractSalaryBaseVo.getJobIdList());
+            condition.put("jobIdList", peopleContractSalaryBaseVo.getJobIdList().split(","));
         }
 
         if(peopleContractSalaryBaseVo.getSex() != null){
