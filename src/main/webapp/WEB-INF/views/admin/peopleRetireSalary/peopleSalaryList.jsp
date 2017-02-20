@@ -182,7 +182,5 @@
     <div id="salarytoolbar" style="display: none;">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">添加</a>
-        <a onclick="addSalaryBaseFun()" href="javascript:void(0)" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">修改工资基数</a>
     </div>
 </div>

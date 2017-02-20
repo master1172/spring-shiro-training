@@ -270,7 +270,7 @@
 		FROM
 		people_retire_salary t
 		LEFT JOIN
-		people_retire p ON t.people_code = p.code
+		people_total p ON t.people_code = p.code
 		<where>
 			<if test=" condition.peopleCode != null and condition.peopleCode != ''">
 				and t.people_code LIKE
@@ -287,8 +287,6 @@
 		t.id,
 		t.people_code,
 		p.name as people_name,
-		p.retire_job_name as retire_job_name,
-		p.retire_job_level_id as retire_job_level_id,
 		t.base_salary,
 		t.extra_allowance,
 		t.rent_allowance,
@@ -306,7 +304,7 @@
 		t.net_income,
 		t.pay_date
 		FROM people_retire_salary t
-		LEFT JOIN people_retire p
+		LEFT JOIN people_total p
 		ON t.people_code = p.code
 		<where>
 			<if test=" condition.peopleCode != null and condition.peopleCode != ''">

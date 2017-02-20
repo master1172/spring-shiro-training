@@ -109,9 +109,7 @@ public class PeopleRetireSalaryController extends BaseController {
 		Map<String, Object> condition = Maps.newHashMap();
 		condition.put("peopleCode", peopleCode);
 		pageInfo.setCondition(condition);
-
-		peopleRetireSalaryService.findDataGrid(pageInfo, request);
-
+		peopleRetireSalaryService.findSalaryDataGrid(pageInfo, request);
 		return pageInfo;
 	}
 

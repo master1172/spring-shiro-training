@@ -262,4 +262,10 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 		return peopleRetireSalaryMapper.findPeopleRetireSalaryBaseById(id);
 	}
 
+	@Override
+	public void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleRetireSalaryMapper.findPeopleRetireSalaryPageCondition(pageInfo));
+		pageInfo.setTotal(peopleRetireSalaryMapper.findPeopleRetireSalaryPageCount(pageInfo));
+	}
+
 }
