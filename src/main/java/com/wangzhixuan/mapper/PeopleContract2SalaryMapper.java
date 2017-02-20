@@ -2,13 +2,14 @@ package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.PeopleContract2SalaryBase;
 import com.wangzhixuan.model.PeopleContractSalary;
+import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
 import java.util.List;
 
 public interface PeopleContract2SalaryMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(PeopleContractSalary record);
 
@@ -27,16 +28,25 @@ public interface PeopleContract2SalaryMapper {
     void batchDeleteByIds(String[] ids);
 
     PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
-    
+
     List selectPeopleContractSalaryVoByIds(String[] idList);
 
-	int insertByImport(List<PeopleContractSalary> list);
+    int insertByImport(List<PeopleContractSalary> list);
 
     List findPeopleContractSalaryVoListByCode(String peopleCode);
-    PeopleContract2SalaryBase findPeopleContract2SalaryBaseByCode(String peopleCode);
 
-    void addSalaryBase(PeopleContract2SalaryBase peopleContract2SalaryBase);
+    PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
 
-    void updateSalaryBase(PeopleContract2SalaryBase peopleContract2SalaryBase);
+    void addSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
+
+    void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
+
+    List findPeopleContractSalaryBasePageCondition(PageInfo pageInfo);
+
+    int findPeopleContractSalaryBasePageCount(PageInfo pageInfo);
+
+    PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
+
+    PeopleContractSalary findPeopleContractSalaryById(Integer id);
 
 }

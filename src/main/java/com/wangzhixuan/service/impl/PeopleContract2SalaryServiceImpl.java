@@ -10,9 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleContractMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.model.PeopleContractSalaryBase;
@@ -32,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.mapper.PeopleContractSalaryMapper;
 import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
@@ -47,9 +44,9 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private PeopleContractSalaryMapper peopleContractSalaryMapper;
+	private PeopleContract2SalaryMapper peopleContractSalaryMapper;
 	@Autowired
-	private PeopleContractMapper peopleContractMapper;
+	private PeopleContract2Mapper peopleContractMapper;
 	@Autowired
 	private DictMapper dictMapper;
 
