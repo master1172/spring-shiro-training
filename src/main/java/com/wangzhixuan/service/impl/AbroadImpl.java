@@ -140,19 +140,20 @@ public class AbroadImpl implements AbroadService {
                 for(int i=0; i<list.size(); i++){
                     row=sheet.createRow(i+1);
                     AbroadVo p = (AbroadVo)list.get(i);
+
                     row.createCell(0).setCellValue(i+1);
-                    row.createCell(1).setCellValue(p.getName());
-                    row.createCell(2).setCellValue(p.getDepartmentId());
-                    row.createCell(3).setCellValue(p.getJobId());
-                    row.createCell(4).setCellValue(p.getAbroadDate());
-                    row.createCell(5).setCellValue(p.getCountry());
-                    row.createCell(6).setCellValue(p.getPassportStatus());
-                    row.createCell(7).setCellValue(p.getReason());
-                    row.createCell(8).setCellValue(p.getFunding());
-                    row.createCell(9).setCellValue(p.getIssueDate());
-                    row.createCell(10).setCellValue(p.getPickPassportDate());
-                    row.createCell(11).setCellValue(p.getReturnPassportDate());
-                    row.createCell(12).setCellValue(p.getComment());
+                    row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getDepartmentId());row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getJobId());row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getAbroadDate()==null?"":(p.getAbroadDate().toString()));row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getCountry());row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getPassportStatus());row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getReason());row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(p.getFunding());row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getIssueDate()==null?"":(p.getIssueDate().toString()));row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getPickPassportDate()==null?"":(p.getPickPassportDate().toString()));row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getReturnPassportDate()==null?"":(p.getReturnPassportDate().toString()));row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getComment());row.getCell(12).setCellStyle(setBorder);
 
                     for(int j=0; j<13; j++){
                         row.getCell(j).setCellStyle(setBorder);
@@ -231,7 +232,7 @@ public class AbroadImpl implements AbroadService {
                 }
                 //出国境日期
                 if(row.getCell(4) != null && !row.getCell(4).toString().trim().equals("")){
-                    String abroadDate = row.getCell(40).toString().trim();
+                    String abroadDate = row.getCell(4).toString().trim();
                     p.setAbroadDate(abroadDate);
                 }
                 //所赴国家

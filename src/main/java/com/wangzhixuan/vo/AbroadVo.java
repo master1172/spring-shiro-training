@@ -18,6 +18,7 @@ public class AbroadVo implements Serializable {
 
     private String departmentName;
 
+    private String jobName;
 
     private String jobId;
 
@@ -116,6 +117,10 @@ public class AbroadVo implements Serializable {
     public void setFunding(String funding) {
         this.funding = funding == null ? null : funding.trim();
     }
+
+    public String getJobName() {return jobName;}
+
+    public void setJobName(String jobName) {this.jobName = jobName;}
 
     public Date getIssueDate() {
         return issueDate;

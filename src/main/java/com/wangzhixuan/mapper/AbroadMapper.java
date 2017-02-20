@@ -17,7 +17,7 @@ public interface AbroadMapper {
 
     int update(Abroad abroad);
 
-    void batchDeleteByIds(String[] idList);
+    int batchDeleteByIds(String[] idList);
 
     int insertByImport(List<Abroad> list);
 

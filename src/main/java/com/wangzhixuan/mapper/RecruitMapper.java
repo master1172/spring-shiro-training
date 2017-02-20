@@ -17,13 +17,13 @@ public interface RecruitMapper {
 
     Recruit findRecruitById(Integer id);
 
-    void insert(Recruit recruit);
+    int insert(Recruit recruit);
 
-    void update(Recruit recruit);
+    int update(Recruit recruit);
 
-    void delete(Integer id);
+    int delete(Integer id);
 
-    void batchDeleteByIds(String[] idList);
+    int batchDeleteByIds(String[] idList);
 
     int insertByImport(List<Recruit> list);
 

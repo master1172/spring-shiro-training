@@ -15,7 +15,7 @@
     <result column="health" property="health" jdbcType="VARCHAR" />
     <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
     <result column="degree" property="degree" jdbcType="VARCHAR" />
-    <result column="degree_ontime" property="degreeOntime" jdbcType="VARCHAR" />
+    <result column="degree_ontime" property="degreeOnTime" jdbcType="VARCHAR" />
     <result column="school_address" property="schoolAddress" jdbcType="VARCHAR" />
     <result column="graduate_status" property="graduateStatus" jdbcType="VARCHAR" />
     <result column="foreign_language_level" property="foreignLanguageLevel" jdbcType="VARCHAR" />
@@ -46,7 +46,7 @@
     <result column="health" property="health" jdbcType="VARCHAR" />
     <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
     <result column="degree" property="degree" jdbcType="VARCHAR" />
-    <result column="degree_ontime" property="degreeOntime" jdbcType="VARCHAR" />
+    <result column="degree_ontime" property="degreeOnTime" jdbcType="VARCHAR" />
     <result column="school_address" property="schoolAddress" jdbcType="VARCHAR" />
     <result column="graduate_status" property="graduateStatus" jdbcType="VARCHAR" />
     <result column="foreign_language_level" property="foreignLanguageLevel" jdbcType="VARCHAR" />
@@ -102,7 +102,7 @@
       #{major,jdbcType=VARCHAR}, #{applyJob,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
       #{nationalId,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{politicalName,jdbcType=VARCHAR}, 
       #{health,jdbcType=VARCHAR}, #{graduateSchool,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, 
-      #{degreeOntime,jdbcType=VARCHAR}, #{schoolAddress,jdbcType=VARCHAR}, #{graduateStatus,jdbcType=VARCHAR}, 
+      #{degreeOnTime,jdbcType=VARCHAR}, #{schoolAddress,jdbcType=VARCHAR}, #{graduateStatus,jdbcType=VARCHAR},
       #{foreignLanguageLevel,jdbcType=VARCHAR}, #{marriageId,jdbcType=INTEGER}, #{cellphone,jdbcType=VARCHAR}, 
       #{photoId,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{zipcode,jdbcType=VARCHAR}, #{studyExperience,jdbcType=VARCHAR}, #{specialityAndAbility,jdbcType=VARCHAR}, 
@@ -112,7 +112,7 @@
 
   <select id="findPeoplePageCondition" resultMap="recruitVoResultMap" parameterType="PageInfo">
     SELECT
-      t.name, t.sex, t.age,
+      t.id,t.name, t.sex, t.age,
       t.major, t.apply_job, t.origin,
       t.national_id, n.name as national_name,t.birthday, t.political_name,
       t.health, t.graduate_school, t.degree,
@@ -184,7 +184,7 @@
         health = #{health,jdbcType=VARCHAR},
         graduate_school = #{graduateSchool,jdbcType=VARCHAR},
         degree = #{degree,jdbcType=VARCHAR},
-        degree_ontime = #{degreeOntime,jdbcType=VARCHAR},
+        degree_ontime = #{degreeOnTime,jdbcType=VARCHAR},
         school_address = #{schoolAddress,jdbcType=VARCHAR},
       <if test="graduateStatus != null" >
         graduate_status = #{graduateStatus,jdbcType=VARCHAR},
@@ -235,7 +235,7 @@
     health = #{health,jdbcType=VARCHAR},
     graduate_school = #{graduateSchool,jdbcType=VARCHAR},
     degree = #{degree,jdbcType=VARCHAR},
-    degree_ontime = #{degreeOntime,jdbcType=VARCHAR},
+    degree_ontime = #{degreeOnTime,jdbcType=VARCHAR},
     school_address = #{schoolAddress,jdbcType=VARCHAR},
     graduate_status = #{graduateStatus,jdbcType=VARCHAR},
     foreign_language_level = #{foreignLanguageLevel,jdbcType=VARCHAR},

@@ -25,16 +25,12 @@
                         <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
+                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false"  multiple="true">
                         </input>
                     </td>
-                </tr>
 
-                <tr>
                     <td>出国境日期</td>
                     <td>
                         <input id="abroadDate" name="abroadDate" placeholder="点击选择时间"
@@ -44,6 +40,8 @@
                                 maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
+                    </tr>
+                <tr>
                     <td>所赴国家</td>
                     <td>
                         <input type="text" name="country">
@@ -70,6 +68,8 @@
                             <option value="其它">其它</option>
                         </select>
                     </td>
+                    </tr>
+                <tr>
                     <td>办理日期</td>
                     <td>
                         <input id="issueDate" name="issueDate" placeholder="点击选择时间"
@@ -97,6 +97,7 @@
                                 maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
+                    </tr>
                 </tr>
                     <td>备注</td>
                     <td>

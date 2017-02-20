@@ -50,7 +50,7 @@ public class RecruitImpl implements RecruitService {
         String ids = "";
         pageInfo.setFrom(0);
         pageInfo.setSize(100000);
-        List<TrainingVo> recruitList = recruitMapper.findPeoplePageCondition(pageInfo);
+        List<RecruitVo> recruitList = recruitMapper.findPeoplePageCondition(pageInfo);
 
         if (recruitList == null || recruitList.size() < 0)
             return ids;

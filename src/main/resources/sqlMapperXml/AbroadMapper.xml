@@ -23,7 +23,9 @@
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
     <result column="job_id" property="jobId" jdbcType="INTEGER" />
+    <result column="job_level" property="jobName" jdbcType="VARCHAR" />
     <result column="abroad_date" property="abroadDate" jdbcType="DATE" />
     <result column="country" property="country" jdbcType="VARCHAR" />
     <result column="passport_status" property="passportStatus" jdbcType="VARCHAR" />
@@ -46,6 +48,7 @@
        t.code,
        t.name,
        t.department_id,
+       d.name as department_name,
        t.job_id,
        j.job_level as job_name,
        t.abroad_date,
@@ -94,7 +97,7 @@
     id = #{id, jdbcType=INTEGER}
   </select>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from abroad
@@ -118,19 +121,19 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into abroad (code, name, department_id, job_id,
+      INSERT INTO abroad (code, name, department_id, job_id,
       abroad_date, country, passport_status, 
       reason, funding, issue_date, 
       pick_passport_date, return_passport_date, comment
       )
-    values (
+      VALUES (
       #{code,           jdbcType=VARCHAR},
       #{name,           jdbcType=VARCHAR},
       #{departmentId,   jdbcType=INTEGER},
       #{jobId,          jdbcType=INTEGER},
       #{abroadDate,     jdbcType=DATE},
       #{country,        jdbcType=VARCHAR},
-      #{passportStatus, jdbcType=VARCHAR},
+     #{passportStatus, jdbcType=VARCHAR},
       #{reason,         jdbcType=VARCHAR},
       #{funding,        jdbcType=VARCHAR},
       #{issueDate,       jdbcType=DATE},
@@ -156,42 +159,6 @@
     </foreach>
   </insert>
 
-  <insert id="insertSelective" parameterType="com.wangzhixuan.model.Abroad" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into abroad
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-        code,
-        name,
-        department_id,
-        job_id,
-        abroad_date,
-        country,
-        passport_status,
-        reason,
-        funding,
-        issue_date,
-        pick_passport_date,
-        return_passport_date,
-        comment
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-        #{code,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{departmentId,jdbcType=INTEGER},
-        #{jobId,jdbcType=INTEGER},
-        #{abroadDate,jdbcType=DATE},
-        #{country,jdbcType=VARCHAR},
-        #{passportStatus,jdbcType=VARCHAR},
-        #{reason,jdbcType=VARCHAR},
-        #{funding,jdbcType=VARCHAR},
-        #{issueDate,jdbcType=DATE},
-        #{pickPassportDate,jdbcType=DATE},
-        #{returnPassportDate,jdbcType=DATE},
-        #{comment,jdbcType=VARCHAR}
-    </trim>
-  </insert>
 
     <update id="update" parameterType="com.wangzhixuan.model.Abroad" >
     update abroad
@@ -213,7 +180,7 @@
 
    <select id="selectAbroadVoByIds" resultMap="abroadVoResultMap" parameterType="java.util.ArrayList">
       SELECT
-        t.id
+        t.id,
         t.code,
         t.name,
         t.department_id,

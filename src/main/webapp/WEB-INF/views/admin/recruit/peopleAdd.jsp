@@ -35,6 +35,8 @@
                     <td>
                         <input type="text" id="major" name="major">
                     </td>
+                </tr>
+                <tr>
                     <td>应聘岗位</td>
                     <td>
                         <input type="text" id="applyJob" name="applyJob">
@@ -45,7 +47,8 @@
                     </td>
                     <td>民族</td>
                     <td>
-                        <input type="text" id="nationalId" name="nationalId">
+                        <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>出生日期</td>
                     <td>
@@ -56,6 +59,8 @@
                                 maxDate:'%y-%M-%d'})"
                                readonly="readonly"/>
                     </td>
+            </tr>
+                <tr>
                     <td>政治面貌</td>
                     <td>
                         <input type="text" id="politicalName" name="politicalName">
@@ -72,6 +77,8 @@
                     <td>
                         <input type="text" id="degree" name="degree">
                     </td>
+                </tr>
+                <tr>
                     <td>是否能按期获得学位</td>
                     <td>
                         <select name="degreeOntime" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -83,8 +90,6 @@
                     <td>
                         <input type="text" id="schoolAddress" name="schoolAddress">
                     </td>
-
-                <tr>
                     <td>毕业生性质</td>
                     <td>
                         <select name="graduateStatus" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -97,6 +102,8 @@
                     <td>
                     <input type="text" id="foreignLanguageLevel" name="degree">
                     </td>
+            </tr>
+                <tr>
                     <td>婚姻状况</td>
                     <td>
                     <input type="text" id="marriageId" name="marriageId">
@@ -109,13 +116,14 @@
                     <td>
                         <input type="text" name="photoId">
                     </td>
-                </tr>
-                <tr>
+
 
                     <td>邮箱</td>
                     <td>
                         <input type="text" id="email" name="email">
                     </td>
+                    </tr>
+                <tr>
                     <td>联系地址</td>
                     <td>
                         <input type="text" id="address" name="address">
@@ -132,6 +140,8 @@
                     <td>
                         <input type="text" id="specialityAndAbility" name="specialityAndAbility">
                     </td>
+                </tr>
+                <tr>
                     <td>主要社会实践</td>
                     <td>
                         <input type="text" id="socialExperience" name="socialExperience">
@@ -140,6 +150,7 @@
                     <td>
                         <input type="text" id="award" name="award">
                     </td>
+                </tr>
                 <tr>
                     <td>头像上传</td>
                     <td colspan="3">
