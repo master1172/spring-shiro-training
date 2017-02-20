@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleContractMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.People;
@@ -50,6 +51,8 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	private PeopleContractSalaryMapper peopleContractSalaryMapper;
 	@Autowired
 	private PeopleContractMapper peopleContractMapper;
+	@Autowired
+	private DictMapper dictMapper;
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -228,11 +231,15 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 				String peopleCodeString = peopleContract.getCode();
 				if (peopleContract == null || StringUtils.isBlank(peopleCodeString))
 					continue;
+
 				peopleContractSalary.setPeopleCode(peopleCodeString);
-
-				Double peopleCodeDoubleType = Double.parseDouble(getCellString(row.getCell(2)));
-
-				peopleContractSalary.setJobId(peopleCodeDoubleType.intValue());
+				String jobName = getCellString(row.getCell(2));
+				Integer jobId = null;
+				try{
+					jobId = dictMapper.findJobIdByName(jobName);
+				}catch(Exception exp){
+				}
+				peopleContractSalary.setJobId(jobId);
 				peopleContractSalary.setJobSalary(StringUtilExtra.StringToDecimal(getCellString(row.getCell(3))));
 				peopleContractSalary.setSchoolSalary(StringUtilExtra.StringToDecimal(getCellString(row.getCell(4))));
 				peopleContractSalary.setExamResult(getCellString(row.getCell(5)));
@@ -241,20 +248,21 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 				peopleContractSalary.setTrafficAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(8))));
 				peopleContractSalary.setSpecialAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(9))));
 				peopleContractSalary.setHeadAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(10))));
-				peopleContractSalary.setOnDutyFee(StringUtilExtra.StringToDecimal("0"));
-				peopleContractSalary.setTemperatureAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
+
+				peopleContractSalary.setOnDutyFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
 				peopleContractSalary.setOnDutyDate(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
 				peopleContractSalary.setOnDutyFeeTotal(StringUtilExtra.StringToDecimal(getCellString(row.getCell(13))));
 				peopleContractSalary.setBonus(StringUtilExtra.StringToDecimal(getCellString(row.getCell(14))));
-				peopleContractSalary.setReissueFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
-				peopleContractSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
-				peopleContractSalary.setLifeInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(17))));
-				peopleContractSalary.setJobInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(18))));
-				peopleContractSalary.setHealthInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(19))));
-				peopleContractSalary.setHouseFund(StringUtilExtra.StringToDecimal(getCellString(row.getCell(20))));
-				peopleContractSalary.setExpense(StringUtilExtra.StringToDecimal(getCellString(row.getCell(21))));
-				peopleContractSalary.setNetIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(22))));
-				peopleContractSalary.setPayDate(getCellString(row.getCell(23)));
+				peopleContractSalary.setTemperatureAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
+				peopleContractSalary.setReissueFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
+				peopleContractSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(17))));
+				peopleContractSalary.setLifeInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(18))));
+				peopleContractSalary.setJobInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(19))));
+				peopleContractSalary.setHealthInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(20))));
+				peopleContractSalary.setHouseFund(StringUtilExtra.StringToDecimal(getCellString(row.getCell(21))));
+				peopleContractSalary.setExpense(StringUtilExtra.StringToDecimal(getCellString(row.getCell(22))));
+				peopleContractSalary.setNetIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(23))));
+				peopleContractSalary.setPayDate(getCellString(row.getCell(24)));
 
 				list.add(peopleContractSalary);
 			}

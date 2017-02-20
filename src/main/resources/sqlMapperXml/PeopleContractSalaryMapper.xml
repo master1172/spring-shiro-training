@@ -449,4 +449,41 @@
 		where t.people_code = #{peopleCode}
 	</select>
 
+	<insert id="insertByImport" parameterType="java.util.List">
+		insert into people_contract_salary (
+			people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
+			special_allowance, head_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, bonus, reissue_fee,
+			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
+		)
+		VALUES
+		<foreach item="item" index="index" collection="list" separator=",">
+			(
+			#{item.peopleCode,jdbcType=VARCHAR},
+			#{item.jobId,jdbcType=INTEGER},
+			#{item.jobSalary,jdbcType=DECIMAL},
+			#{item.schoolSalary,jdbcType=DECIMAL},
+			#{item.examResult,jdbcType=VARCHAR},
+			#{item.jobExamSalary,jdbcType=DECIMAL},
+			#{item.telephoneAllowance,jdbcType=DECIMAL},
+			#{item.trafficAllowance,jdbcType=DECIMAL},
+			#{item.specialAllowance,jdbcType=DECIMAL},
+			#{item.headAllowance,jdbcType=DECIMAL},
+			#{item.onDutyFee,jdbcType=DECIMAL},
+			#{item.onDutyDate,jdbcType=DECIMAL},
+			#{item.onDutyFeeTotal,jdbcType=DECIMAL},
+			#{item.bonus,jdbcType=DECIMAL},
+			#{item.reissueFee,jdbcType=DECIMAL},
+			#{item.temperatureAllowance,jdbcType=DECIMAL},
+			#{item.grossIncome,jdbcType=DECIMAL},
+			#{item.lifeInsurance,jdbcType=DECIMAL},
+			#{item.jobInsurance,jdbcType=DECIMAL},
+			#{item.healthInsurance,jdbcType=DECIMAL},
+			#{item.houseFund,jdbcType=DECIMAL},
+			#{item.expense,jdbcType=DECIMAL},
+			#{item.netIncome,jdbcType=DECIMAL},
+			#{item.payDate,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+
 </mapper>
