@@ -104,6 +104,7 @@
         <result column="base_salary" jdbcType="DECIMAL" property="baseSalary"/>
         <result column="retire_allowance" jdbcType="DECIMAL" property="retireAllowance"/>
         <result column="retire_fee_increase" jdbcType="DECIMAL" property="retireFeeIncrease"/>
+        <result column="food_allowance"      jdbcType="DECIMAL" property="foodAllowance"/>
         <result column="health_allowance" jdbcType="DECIMAL" property="healthAllowance"/>
         <result column="heating_fee" jdbcType="DECIMAL" property="heatingFee"/>
         <result column="handicap_allowance" jdbcType="DECIMAL" property="handicapAllowance"/>
@@ -128,7 +129,7 @@
         property_allowance, extra_job_allowance, temperature_allowance, reissue_fee, medicare,
         yearly_bonus, life_insurance, job_insurance, health_insurance, annuity, house_fund,
         school_salary, exam_result, job_exam_salary, special_allowance, head_allowance, bonus,
-        base_salary, retire_allowance, retire_fee_increase, health_allowance, heating_fee,
+        base_salary, retire_allowance, retire_fee_increase, food_allowance, health_allowance, heating_fee,
         handicap_allowance, rent_fee, last_update_date
     </sql>
 
@@ -176,7 +177,7 @@
         health_insurance, annuity, house_fund,
         school_salary, exam_result, job_exam_salary,
         special_allowance, head_allowance, bonus,
-        base_salary, retire_allowance, retire_fee_increase,
+        base_salary, retire_allowance, retire_fee_increase,food_allowance,
         health_allowance, heating_fee, handicap_allowance,
         rent_fee, last_update_date
         )
@@ -217,6 +218,7 @@
         #{schoolSalary,jdbcType=DECIMAL}, #{examResult,jdbcType=VARCHAR}, #{jobExamSalary,jdbcType=DECIMAL},
         #{specialAllowance,jdbcType=DECIMAL}, #{headAllowance,jdbcType=DECIMAL}, #{bonus,jdbcType=DECIMAL},
         #{baseSalary,jdbcType=DECIMAL}, #{retireAllowance,jdbcType=DECIMAL}, #{retireFeeIncrease,jdbcType=DECIMAL},
+        #{foodAllowance, jdbcType=DECIMAL},
         #{healthAllowance,jdbcType=DECIMAL}, #{heatingFee,jdbcType=DECIMAL}, #{handicapAllowance,jdbcType=DECIMAL},
         #{rentFee,jdbcType=DECIMAL}, #{lastUpdateDate,jdbcType=VARCHAR}
         )
@@ -530,6 +532,9 @@
             </if>
             <if test="retireFeeIncrease != null">
                 retire_fee_increase,
+            </if>
+            <if test="foodAllowance != null">
+                food_allowance,
             </if>
             <if test="healthAllowance != null">
                 health_allowance,
@@ -853,6 +858,9 @@
             </if>
             <if test="retireFeeIncrease != null">
                 #{retireFeeIncrease,jdbcType=DECIMAL},
+            </if>
+            <if test="foodAllowance != null">
+                #{foodAllowance, jdbcType=DECIMAL},
             </if>
             <if test="healthAllowance != null">
                 #{healthAllowance,jdbcType=DECIMAL},
@@ -1178,6 +1186,9 @@
             <if test="retireFeeIncrease != null">
                 retire_fee_increase = #{retireFeeIncrease,jdbcType=DECIMAL},
             </if>
+            <if test="foodAllowance != null">
+                food_allowance = #{foodAllowance,jdbcType=DECIMAL},
+            </if>
             <if test="healthAllowance != null">
                 health_allowance = #{healthAllowance,jdbcType=DECIMAL},
             </if>
@@ -1300,6 +1311,7 @@
         base_salary = #{baseSalary,jdbcType=DECIMAL},
         retire_allowance = #{retireAllowance,jdbcType=DECIMAL},
         retire_fee_increase = #{retireFeeIncrease,jdbcType=DECIMAL},
+        food_allowance = #{foodAllowance,jdbcType=DECIMAL},
         health_allowance = #{healthAllowance,jdbcType=DECIMAL},
         heating_fee = #{heatingFee,jdbcType=DECIMAL},
         handicap_allowance = #{handicapAllowance,jdbcType=DECIMAL},

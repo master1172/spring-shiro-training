@@ -324,6 +324,9 @@ public class PeopleTotal implements Serializable {
     //退休费调增
     private BigDecimal retireFeeIncrease;
 
+    //伙食补贴
+    private BigDecimal foodAllowance;
+
     //卫生补贴
     private BigDecimal healthAllowance;
 
@@ -1193,6 +1196,14 @@ public class PeopleTotal implements Serializable {
 
     public void setJobAllowance(BigDecimal jobAllowance) {
         this.jobAllowance = jobAllowance;
+    }
+
+    public BigDecimal getFoodAllowance() {
+        return foodAllowance;
+    }
+
+    public void setFoodAllowance(BigDecimal foodAllowance) {
+        this.foodAllowance = foodAllowance;
     }
 
     public String toString(){
