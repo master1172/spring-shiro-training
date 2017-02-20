@@ -21,7 +21,7 @@ public interface PeopleContractSalaryService {
 
     void updateSalary(PeopleContractSalary peopleSalary);
 
-    void deleteSalaryById(Long id);
+    void deleteSalaryById(Integer id);
 
     PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
     

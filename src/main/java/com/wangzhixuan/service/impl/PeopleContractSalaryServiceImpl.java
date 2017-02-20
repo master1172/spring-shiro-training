@@ -85,7 +85,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	}
 
 	@Override
-	public void deleteSalaryById(Long id) {
+	public void deleteSalaryById(Integer id) {
 		int count = peopleContractSalaryMapper.deleteByPrimaryKey(id);
 		logger.info("delete:" + count);
 	}

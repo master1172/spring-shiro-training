@@ -9,7 +9,7 @@ import com.wangzhixuan.vo.PeopleContractSalaryVo;
 import java.util.List;
 
 public interface PeopleContractSalaryMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(PeopleContractSalary record);
 

@@ -171,8 +171,6 @@
 		</where>
 	</select>
 
-
-
 	<update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleContractSalaryBase">
 		update people_total
 		SET
@@ -347,5 +345,11 @@
 			#{payDate,jdbcType=VARCHAR}
 		)
 	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		people_contract_salary
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
 
 </mapper>
