@@ -216,7 +216,7 @@
         select
         <include refid="Base_Column_List" />
         from people_total
-        where name LIKE concat('%',#{name},'%')
+        where name LIKE concat('%',#{name},'%') and status = 0
     </select>
 
     <select id="findFirstPeopleByName" resultMap="BaseResultMap" parameterType="java.lang.String">

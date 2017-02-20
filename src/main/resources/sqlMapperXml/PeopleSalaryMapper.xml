@@ -623,4 +623,54 @@
           t.pay_date desc
     </select>
 
+    <insert id="insertByImport" parameterType="java.util.List">
+        insert into people_salary (
+          people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result, job_allowance, performance_allowance,
+          rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance, extra_allowance, telephone_allowance,
+          traffic_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
+          temperature_allowance, reissue_fee, medicare, yearly_bonus, gross_salary, life_insurance, job_insurance,
+          health_insurance, annuity, house_fund, expense, tax, net_income, pay_date)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (
+            #{item.peopleCode,jdbcType=VARCHAR},
+            #{item.jobId,jdbcType=INTEGER},
+            #{item.jobSalary,jdbcType=DECIMAL},
+            #{item.rankId,jdbcType=INTEGER},
+            #{item.rankSalary,jdbcType=DECIMAL},
+            #{item.reserveSalary,jdbcType=DECIMAL},
+            #{item.examResult,jdbcType=VARCHAR},
+            #{item.jobAllowance,jdbcType=DECIMAL},
+            #{item.performanceAllowance,jdbcType=DECIMAL},
+            #{item.rentAllowance,jdbcType=DECIMAL},
+            #{item.houseAllowance,jdbcType=DECIMAL},
+            #{item.workDate,jdbcType=DATE},
+            #{item.timesheetStatus,jdbcType=DECIMAL},
+            #{item.dutyAllowance,jdbcType=DECIMAL},
+            #{item.extraAllowance,jdbcType=DECIMAL},
+            #{item.telephoneAllowance,jdbcType=DECIMAL},
+            #{item.trafficAllowance,jdbcType=DECIMAL},
+            #{item.onDutyFee,jdbcType=DECIMAL},
+            #{item.onDutyDate,jdbcType=DECIMAL},
+            #{item.onDutyFeeTotal,jdbcType=DECIMAL},
+            #{item.propertyAllowance,jdbcType=DECIMAL},
+            #{item.extraJobAllowance,jdbcType=DECIMAL},
+            #{item.temperatureAllowance,jdbcType=DECIMAL},
+            #{item.reissueFee,jdbcType=DECIMAL},
+            #{item.medicare,jdbcType=DECIMAL},
+            #{item.yearlyBonus,jdbcType=DECIMAL},
+            #{item.grossSalary,jdbcType=DECIMAL},
+            #{item.lifeInsurance,jdbcType=DECIMAL},
+            #{item.jobInsurance,jdbcType=DECIMAL},
+            #{item.healthInsurance,jdbcType=DECIMAL},
+            #{item.annuity,jdbcType=DECIMAL},
+            #{item.houseFund,jdbcType=DECIMAL},
+            #{item.expense,jdbcType=DECIMAL},
+            #{item.tax,jdbcType=DECIMAL},
+            #{item.netIncome,jdbcType=DECIMAL},
+            #{item.payDate,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
 </mapper>
