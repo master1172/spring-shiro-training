@@ -64,6 +64,11 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	}
 
 	@Override
+	public PeopleContractSalary findPeopleContractSalaryById(Integer id) {
+		return peopleContractSalaryMapper.findPeopleContractSalaryById(id);
+	}
+
+	@Override
 	public PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id) {
 		return peopleContractSalaryMapper.findPeopleContractSalaryBaseById(id);
 	}
@@ -81,7 +86,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 	@Override
 	public void updateSalary(PeopleContractSalary peopleSalary) {
-		peopleContractSalaryMapper.updateByPrimaryKeySelective(peopleSalary);
+		peopleContractSalaryMapper.updateByPrimaryKey(peopleSalary);
 	}
 
 	@Override

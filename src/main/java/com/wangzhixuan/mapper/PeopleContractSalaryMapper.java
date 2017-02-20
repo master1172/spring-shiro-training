@@ -46,4 +46,6 @@ public interface PeopleContractSalaryMapper {
     int findPeopleContractSalaryBasePageCount(PageInfo pageInfo);
 
     PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
+
+    PeopleContractSalary findPeopleContractSalaryById(Integer id);
 }

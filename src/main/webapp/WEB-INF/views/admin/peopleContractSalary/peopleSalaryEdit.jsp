@@ -5,6 +5,18 @@
     $(function(){
         $("#jobId").val('${peopleContractSalary.jobId}');
         $("#payDate").val('${peopleContractSalary.payDate}');
+
+        $("#jobId").combobox({
+            onChange:function(newValue,oldValue){
+                if (newValue == oldValue)
+                    return;
+
+                $.post('${path}/peopleJob/getValue', {id:newValue},
+                        function(data){
+                            $("#jobSalary").numberbox('setValue',data);
+                        });
+            }
+        });
     });
 
     function checkForm(){
@@ -26,16 +38,12 @@
                <input type="hidden" name="id" value="${peopleContractSalary.id}">
                <input type="hidden" name="peopleCode" value="${peopleContractSalary.peopleCode}">
                <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input name="name" type="text" value="${peopleContractSalary.peopleName}" class="easyui-validatebox" data-options="required:true">
-                    </td>
                     <td>职级</td>
                     <td>
                         <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false" data-options="required:true">
                         </input>
                     </td>
-                    <td>岗位工资</td>
+                    <td>职级工资</td>
                     <td>
                         <input name="jobSalary" id="jobSalary" type="text" value="${peopleContractSalary.jobSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
@@ -73,17 +81,17 @@
                     </td>
                     <td>每日加班费</td>
                     <td>
-                        <input name="extraWorkFee" id="extraWorkFee" type="text"  value="${peopleContractSalary.extraWorkFee}"  class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="onDutyFee" id="onDutyFee" type="text"  value="${peopleContractSalary.onDutyFee}"  class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>加班天数</td>
                     <td>
-                        <input name="extraWorkDate" id="extraWorkDate" type="text"  value="${peopleContractSalary.extraWorkDate}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="onDutyDate" id="onDutyDate" type="text"  value="${peopleContractSalary.onDutyDate}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
 				</tr>
                  <tr>
                     <td>加班补贴</td>
                     <td>
-                        <input name="extraWorkAllowance" id="extraWorkAllowance"  value="${peopleContractSalary.extraWorkAllowance}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="onDutyFeeTotal" id="onDutyFeeTotal"  value="${peopleContractSalary.onDutyFeeTotal}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>奖金</td>
                     <td>
@@ -134,7 +142,7 @@
                         <input id="payDate" name="payDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
+                                dateFmt:'yyyy-MM',
                                 maxDate:'%y-%M-%d',
                                 })"
                                readonly="readonly"/>

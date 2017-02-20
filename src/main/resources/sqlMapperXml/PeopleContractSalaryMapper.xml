@@ -352,4 +352,63 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 
+	<select id="findPeopleContractSalaryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		people_contract_salary
+		where id = #{id, jdbcType=INTEGER}
+	</select>
+
+	<update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.PeopleContractSalary">
+		update
+		people_contract_salary
+		set people_code =
+		#{peopleCode,jdbcType=VARCHAR},
+		job_id = #{jobId,jdbcType=INTEGER},
+		job_salary =
+		#{jobSalary,jdbcType=DECIMAL},
+		school_salary =
+		#{schoolSalary,jdbcType=DECIMAL},
+		exam_result =
+		#{examResult,jdbcType=VARCHAR},
+		job_exam_salary =
+		#{jobExamSalary,jdbcType=DECIMAL},
+		telephone_allowance =
+		#{telephoneAllowance,jdbcType=DECIMAL},
+		traffic_allowance =
+		#{trafficAllowance,jdbcType=DECIMAL},
+		special_allowance =
+		#{specialAllowance,jdbcType=DECIMAL},
+		head_allowance =
+		#{headAllowance,jdbcType=DECIMAL},
+		on_duty_fee =
+		#{onDutyFee,jdbcType=DECIMAL},
+		on_duty_date =
+		#{onDutyDate,jdbcType=DECIMAL},
+		on_duty_fee_total =
+		#{onDutyFeeTotal,jdbcType=DECIMAL},
+		bonus =
+		#{bonus,jdbcType=DECIMAL},
+		reissue_fee =
+		#{reissueFee,jdbcType=DECIMAL},
+		temperature_allowance =
+		#{temperatureAllowance,jdbcType=DECIMAL},
+		gross_income =
+		#{grossIncome,jdbcType=DECIMAL},
+		life_insurance =
+		#{lifeInsurance,jdbcType=DECIMAL},
+		job_insurance =
+		#{jobInsurance,jdbcType=DECIMAL},
+		health_insurance =
+		#{healthInsurance,jdbcType=DECIMAL},
+		house_fund =
+		#{houseFund,jdbcType=DECIMAL},
+		expense = #{expense,jdbcType=DECIMAL},
+		net_income = #{netIncome,jdbcType=DECIMAL},
+		pay_date =
+		#{payDate,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
 </mapper>

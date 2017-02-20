@@ -152,10 +152,28 @@ public class PeopleContractSalaryController extends BaseController {
 		}
 	}
 
+	@RequestMapping(value="/editSalaryPage")
+	public String editSalaryBase(Integer id, Model model){
+		PeopleContractSalary peopleContractSalary = peopleContractSalaryService.findPeopleContractSalaryById(id);
+		model.addAttribute("peopleContractSalary",peopleContractSalary);
+		return "/admin/peopleContractSalary/peopleSalaryEdit";
+	}
 
+	@RequestMapping(value = "editSalary")
+	@ResponseBody
+	public Result editSalary(PeopleContractSalary peopleContractSalary){
+		Result result = new Result();
+		try{
+			peopleContractSalaryService.updateSalary(peopleContractSalary);
+			result.setSuccess(true);
+			result.setMsg("修改成功");
+			return result;
+		}catch(Exception exp){
+			result.setMsg(exp.getMessage());
+			return result;
+		}
+	}
 
-
-	
 	/**
 	 * 批量调入W
 	 */
