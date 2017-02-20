@@ -52,8 +52,8 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
-		pageInfo.setRows(peopleRetireSalaryMapper.findPeopleRetireSalaryPageCondition(pageInfo));
-		pageInfo.setTotal(peopleRetireSalaryMapper.findPeopleRetireSalaryPageCount(pageInfo));
+		pageInfo.setRows(peopleRetireSalaryMapper.findPeopleRetireSalaryBasePageCondition(pageInfo));
+		pageInfo.setTotal(peopleRetireSalaryMapper.findPeopleRetireSalaryBasePageCount(pageInfo));
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 						row.createCell(6).setCellValue(peopleRetireSalaryVo.getRetireFeeIncrease()==null?"":peopleRetireSalaryVo.getRetireFeeIncrease().toString());
 						row.createCell(7).setCellValue(peopleRetireSalaryVo.getFoodAllowance()==null?	"":peopleRetireSalaryVo.getFoodAllowance().toString());
 						row.createCell(8).setCellValue(peopleRetireSalaryVo.getHealthAllowance()==null?	"":peopleRetireSalaryVo.getHealthAllowance().toString());
-						row.createCell(9).setCellValue(peopleRetireSalaryVo.getMedicareFee()==null?		"":peopleRetireSalaryVo.getMedicareFee().toString());
+						row.createCell(9).setCellValue(peopleRetireSalaryVo.getMedicare()==null?		"":peopleRetireSalaryVo.getMedicare().toString());
 						row.createCell(10).setCellValue(peopleRetireSalaryVo.getPropertyAllowance()==null?"":peopleRetireSalaryVo.getPropertyAllowance().toString());
 						row.createCell(11).setCellValue(peopleRetireSalaryVo.getHeatingFee()==null?		"":peopleRetireSalaryVo.getHeatingFee().toString());
 						row.createCell(12).setCellValue(peopleRetireSalaryVo.getHandicapAllowance()==null?"":peopleRetireSalaryVo.getHandicapAllowance().toString());
@@ -219,7 +219,7 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 				peopleRetireSalary.setRetireFeeIncrease(StringUtilExtra.StringToDecimal(getCellString(row.getCell(6))));
 				peopleRetireSalary.setFoodAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(7))));
 				peopleRetireSalary.setHealthAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(8))));
-				peopleRetireSalary.setMedicareFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(9))));
+				peopleRetireSalary.setMedicare(StringUtilExtra.StringToDecimal(getCellString(row.getCell(9))));
 				peopleRetireSalary.setPropertyAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(10))));
 				peopleRetireSalary.setHeatingFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
 				peopleRetireSalary.setHandicapAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
@@ -250,14 +250,16 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 		if(peopleRetireSalaryBase == null)
 			return;
 
-		if(StringUtils.isBlank(peopleRetireSalaryBase.getLastChangeDate())){
-			peopleRetireSalaryBase.setLastChangeDate(DateUtil.GetToday());
+		if(StringUtils.isBlank(peopleRetireSalaryBase.getLastUpdateDate())){
+			peopleRetireSalaryBase.setLastUpdateDate(DateUtil.GetToday());
 		}
 
-		if (peopleRetireSalaryBase.getId() == null)
-			peopleRetireSalaryMapper.addSalaryBase(peopleRetireSalaryBase);
-		else
-			peopleRetireSalaryMapper.updateSalaryBase(peopleRetireSalaryBase);
+		peopleRetireSalaryMapper.updateSalaryBase(peopleRetireSalaryBase);
+	}
+
+	@Override
+	public PeopleRetireSalaryBase findPeopleRetireSalaryBaseById(Integer id) {
+		return peopleRetireSalaryMapper.findPeopleRetireSalaryBaseById(id);
 	}
 
 }

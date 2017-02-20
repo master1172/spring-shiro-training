@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import com.alibaba.fastjson.JSON;
 
 public class PeopleRetireSalaryVo implements Serializable {
+
 	private Integer id;
 
 	private String peopleCode;
@@ -26,7 +27,7 @@ public class PeopleRetireSalaryVo implements Serializable {
 
 	private BigDecimal healthAllowance;
 
-	private BigDecimal medicareFee;
+	private BigDecimal medicare;
 
 	private BigDecimal propertyAllowance;
 
@@ -112,12 +113,12 @@ public class PeopleRetireSalaryVo implements Serializable {
 		this.healthAllowance = healthAllowance;
 	}
 
-	public BigDecimal getMedicareFee() {
-		return medicareFee;
+	public BigDecimal getMedicare() {
+		return medicare;
 	}
 
-	public void setMedicareFee(BigDecimal medicareFee) {
-		this.medicareFee = medicareFee;
+	public void setMedicare(BigDecimal medicare) {
+		this.medicare = medicare;
 	}
 
 	public BigDecimal getPropertyAllowance() {

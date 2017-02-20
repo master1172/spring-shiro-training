@@ -38,5 +38,10 @@ public interface PeopleRetireSalaryMapper {
     void addSalaryBase(PeopleRetireSalaryBase peopleRetireSalaryBase);
 
     void updateSalaryBase(PeopleRetireSalaryBase peopleRetireSalaryBase);
-    
+
+    List findPeopleRetireSalaryBasePageCondition(PageInfo pageInfo);
+
+    int findPeopleRetireSalaryBasePageCount(PageInfo pageInfo);
+
+    PeopleRetireSalaryBase findPeopleRetireSalaryBaseById(Integer id);
 }

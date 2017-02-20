@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class PeopleRetireSalary implements Serializable {
+
     private Integer id;
 
     private String peopleCode;
@@ -22,7 +23,7 @@ public class PeopleRetireSalary implements Serializable {
 
     private BigDecimal healthAllowance;
 
-    private BigDecimal medicareFee;
+    private BigDecimal medicare;
 
     private BigDecimal propertyAllowance;
 
@@ -106,12 +107,12 @@ public class PeopleRetireSalary implements Serializable {
         this.healthAllowance = heathAllowance;
     }
 
-    public BigDecimal getMedicareFee() {
-        return medicareFee;
+    public BigDecimal getMedicare() {
+        return medicare;
     }
 
-    public void setMedicareFee(BigDecimal medicareFee) {
-        this.medicareFee = medicareFee;
+    public void setMedicare(BigDecimal medicare) {
+        this.medicare = medicare;
     }
 
     public BigDecimal getPropertyAllowance() {
@@ -201,7 +202,7 @@ public class PeopleRetireSalary implements Serializable {
         sb.append(", retireFeeAllowance=").append(retireFeeIncrease);
         sb.append(", foodAllowance=").append(foodAllowance);
         sb.append(", healthAllowance=").append(healthAllowance);
-        sb.append(", medicareFee=").append(medicareFee);
+        sb.append(", medicareFee=").append(medicare);
         sb.append(", propertyAllowance=").append(propertyAllowance);
         sb.append(", heatingFee=").append(heatingFee);
         sb.append(", handicapAllowance=").append(handicapAllowance);

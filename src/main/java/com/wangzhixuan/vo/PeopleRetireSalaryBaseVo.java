@@ -1,11 +1,16 @@
 package com.wangzhixuan.vo;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
+import com.wangzhixuan.utils.ConstUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class PeopleRetireSalaryBaseVo implements Serializable {
+
 	private Integer id;
 
 	private String peopleCode;
@@ -26,7 +31,7 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 
 	private BigDecimal healthAllowance;
 
-	private BigDecimal medicareFee;
+	private BigDecimal medicare;
 
 	private BigDecimal propertyAllowance;
 
@@ -42,7 +47,7 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 
 	private BigDecimal netIncome;
 
-	private String lastPayDate;
+	private String lastUpdateDate;
 
 	private static final long serialVersionUID = 1L;
 
@@ -70,7 +75,6 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 		this.baseSalary = baseSalary;
 	}
 
-
 	public BigDecimal getExtraAllowance() {
 		return extraAllowance;
 	}
@@ -94,7 +98,6 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 	public void setRetireAllowance(BigDecimal retireAllowance) {
 		this.retireAllowance = retireAllowance;
 	}
-
 	
 	public BigDecimal getFoodAllowance() {
 		return foodAllowance;
@@ -112,12 +115,12 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 		this.healthAllowance = healthAllowance;
 	}
 
-	public BigDecimal getMedicareFee() {
-		return medicareFee;
+	public BigDecimal getMedicare() {
+		return medicare;
 	}
 
-	public void setMedicareFee(BigDecimal medicareFee) {
-		this.medicareFee = medicareFee;
+	public void setMedicare(BigDecimal medicareFee) {
+		this.medicare = medicareFee;
 	}
 
 	public BigDecimal getPropertyAllowance() {
@@ -176,8 +179,6 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 		this.netIncome = netIncome;
 	}
 
-
-
 	public String getPeopleName() {
 		return peopleName;
 	}
@@ -193,12 +194,22 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 	public void setRetireFeeIncrease(BigDecimal retireFeeIncrease) {
 		this.retireFeeIncrease = retireFeeIncrease;
 	}
-	public String getLastPayDate() {return lastPayDate;}
 
-	public void setLastPayDate(String lastPayDate) {this.lastPayDate = lastPayDate;}
+	public String getLastUpdateDate() {return lastUpdateDate;}
+
+	public void setLastUpdateDate(String lastUpdateDate) {this.lastUpdateDate = lastUpdateDate;}
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);
 	}
 
+	public static Map<String,Object> CreateCondition(PeopleRetireSalaryBaseVo peopleRetireSalaryBaseVo) {
+		Map<String,Object> condition = Maps.newHashMap();
+		if (StringUtils.isNoneBlank(peopleRetireSalaryBaseVo.getPeopleName())){
+			condition.put("name",peopleRetireSalaryBaseVo.getPeopleName());
+		}
+		condition.put("status", ConstUtil.PEOPLE_RETIRE);
+
+		return condition;
+	}
 }

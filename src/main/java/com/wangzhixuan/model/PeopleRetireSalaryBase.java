@@ -6,12 +6,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class PeopleRetireSalaryBase implements Serializable {
+
     private Integer id;
 
     private String peopleCode;
 
-    private BigDecimal baseSalary;
+    private String peopleName;
 
+    private BigDecimal baseSalary;
 
     private BigDecimal extraAllowance;
 
@@ -25,7 +27,7 @@ public class PeopleRetireSalaryBase implements Serializable {
 
     private BigDecimal healthAllowance;
 
-    private BigDecimal medicareFee;
+    private BigDecimal medicare;
 
     private BigDecimal propertyAllowance;
 
@@ -41,11 +43,9 @@ public class PeopleRetireSalaryBase implements Serializable {
 
     private BigDecimal netIncome;
 
+    private String lastUpdateDate;
 
     private static final long serialVersionUID = 1L;
-
-    @JsonFormat(pattern = "yyyy-MM")
-    private String lastChangeDate;
 
     public Integer getId() {
         return id;
@@ -111,12 +111,10 @@ public class PeopleRetireSalaryBase implements Serializable {
         this.healthAllowance = heathAllowance;
     }
 
-    public BigDecimal getMedicareFee() {
-        return medicareFee;
-    }
+    public BigDecimal getMedicare() { return medicare; }
 
-    public void setMedicareFee(BigDecimal medicareFee) {
-        this.medicareFee = medicareFee;
+    public void setMedicare(BigDecimal medicareFee) {
+        this.medicare = medicareFee;
     }
 
     public BigDecimal getPropertyAllowance() {
@@ -183,13 +181,20 @@ public class PeopleRetireSalaryBase implements Serializable {
 		this.retireFeeIncrease = retireFeeIncrease;
 	}
 
-
-    public String getLastChangeDate() {
-        return lastChangeDate;
+    public String getPeopleName() {
+        return peopleName;
     }
 
-    public void setLastChangeDate(String lastChangeDate) {
-        this.lastChangeDate = lastChangeDate;
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
+    }
+
+    public String getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(String lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
     }
 
     @Override
@@ -201,14 +206,13 @@ public class PeopleRetireSalaryBase implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", peopleCode=").append(peopleCode);
         sb.append(", baseSalary=").append(baseSalary);
-//        sb.append(", rankId=").append(rankId);
         sb.append(", extraAllowance=").append(extraAllowance);
         sb.append(", rentAllowance=").append(rentAllowance);
         sb.append(", retireAllowance=").append(retireAllowance);
         sb.append(", retireFeeAllowance=").append(retireFeeIncrease);
         sb.append(", foodAllowance=").append(foodAllowance);
         sb.append(", healthAllowance=").append(healthAllowance);
-        sb.append(", medicareFee=").append(medicareFee);
+        sb.append(", medicare=").append(medicare);
         sb.append(", propertyAllowance=").append(propertyAllowance);
         sb.append(", heatingFee=").append(heatingFee);
         sb.append(", handicapAllowance=").append(handicapAllowance);
@@ -216,7 +220,6 @@ public class PeopleRetireSalaryBase implements Serializable {
         sb.append(", expense=").append(expense);
         sb.append(", rentFee=").append(rentFee);
         sb.append(", netIncome=").append(netIncome);
-//        sb.append(", payDate=").append(payDate);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.model.PeopleRetireSalaryBase;
+import com.wangzhixuan.vo.PeopleRetireSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,14 +53,37 @@ public class PeopleRetireSalaryController extends BaseController {
 
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows, String sort, String order) {
+	public PageInfo dataGrid(HttpServletRequest request, PeopleRetireSalaryBaseVo peopleRetireSalaryBaseVo, Integer page, Integer rows, String sort, String order) {
 		PageInfo pageInfo = new PageInfo(page, rows);
-		Map<String, Object> condition = PeopleContractVo.CreateCondition(peopleVo);
+		Map<String, Object> condition = PeopleRetireSalaryBaseVo.CreateCondition(peopleRetireSalaryBaseVo);
 		pageInfo.setCondition(condition);
 
-		peopleRetireService.findDataGrid(pageInfo);
+		peopleRetireSalaryService.findDataGrid(pageInfo,request);
 
 		return pageInfo;
+	}
+
+	@RequestMapping("/editPage")
+	public String editPage(Integer id, Model model) {
+		PeopleRetireSalaryBase peopleRetireSalaryBase = peopleRetireSalaryService.findPeopleRetireSalaryBaseById(id);
+		model.addAttribute("peopleRetireSalaryBase", peopleRetireSalaryBase);
+		return "/admin/peopleRetireSalary/peopleSalaryBaseEdit";
+	}
+
+	@RequestMapping("/edit")
+	@ResponseBody
+	public Result edit(PeopleRetireSalaryBase peopleRetireSalaryBase) {
+		Result result = new Result();
+		try {
+			peopleRetireSalaryService.updateSalaryBase(peopleRetireSalaryBase);
+			result.setSuccess(true);
+			result.setMsg("修改成功!");
+			return result;
+		} catch (Exception e) {
+			logger.error("修改工资失败：{}", e);
+			result.setMsg(e.getMessage());
+			return result;
+		}
 	}
 
 	@RequestMapping(value = "/salaryListPage", method = RequestMethod.GET)
@@ -136,31 +160,7 @@ public class PeopleRetireSalaryController extends BaseController {
 		}
 	}
 
-	@RequestMapping("/editPage")
-	public String editPage(Long id, Model model) {
-		PeopleRetireSalaryVo peopleContractVo = peopleRetireSalaryService.findPeopleRetireSalaryVoById(id);
-		model.addAttribute("peopleRetireSalary", peopleContractVo);
 
-		logger.info("peopleRetireSalary:" + JSON.toJSONString(peopleContractVo));
-		return "/admin/peopleRetireSalary/peopleSalaryEdit";
-	}
-
-	@RequestMapping("/edit")
-	@ResponseBody
-	public Result edit(PeopleRetireSalary peopleRetireSalary) {
-		Result result = new Result();
-		try {
-			logger.info("PeopleRetireSalary123:" + JSON.toJSONString(peopleRetireSalary));
-			peopleRetireSalaryService.updateSalary(peopleRetireSalary);
-			result.setSuccess(true);
-			result.setMsg("修改成功!");
-			return result;
-		} catch (Exception e) {
-			logger.error("修改工资失败：{}", e);
-			result.setMsg(e.getMessage());
-			return result;
-		}
-	}
 	
 	@RequestMapping(value = "/importExcelPage", method = RequestMethod.GET)
 	public String importExcelPage() {

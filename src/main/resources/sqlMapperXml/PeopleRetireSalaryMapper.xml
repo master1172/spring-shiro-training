@@ -11,7 +11,7 @@
 		<result column="retire_fee_increase" property="retireFeeIncrease" jdbcType="DECIMAL" />
 		<result column="food_allowance" property="foodAllowance" jdbcType="DECIMAL" />
 		<result column="health_allowance" property="healthAllowance" jdbcType="DECIMAL" />
-		<result column="medicare_fee" property="medicareFee" jdbcType="DECIMAL" />
+		<result column="medicare" property="medicare" jdbcType="DECIMAL" />
 		<result column="property_allowance" property="propertyAllowance" jdbcType="DECIMAL" />
 		<result column="heating_fee" property="heatingFee" jdbcType="DECIMAL" />
 		<result column="handicap_allowance" property="handicapAllowance" jdbcType="DECIMAL" />
@@ -32,7 +32,7 @@
 		<result column="retire_fee_increase" property="retireFeeIncrease" jdbcType="DECIMAL" />
 		<result column="food_allowance" property="foodAllowance" jdbcType="DECIMAL" />
 		<result column="health_allowance" property="healthAllowance" jdbcType="DECIMAL" />
-		<result column="medicare_fee" property="medicareFee" jdbcType="DECIMAL" />
+		<result column="medicare" property="medicare" jdbcType="DECIMAL" />
 		<result column="property_allowance" property="propertyAllowance" jdbcType="DECIMAL" />
 		<result column="heating_fee" property="heatingFee" jdbcType="DECIMAL" />
 		<result column="handicap_allowance" property="handicapAllowance" jdbcType="DECIMAL" />
@@ -43,10 +43,10 @@
 		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<resultMap id="peopleRetireSalaryBaseMap" type="com.wangzhixuan.vo.PeopleRetireSalaryBaseVo">
+	<resultMap id="peopleRetireSalaryBaseMap" type="com.wangzhixuan.model.PeopleRetireSalaryBase">
 		<id column="id" property="id" jdbcType="INTEGER" />
-		<result column="people_code" property="peopleCode" jdbcType="VARCHAR" />
-		<result column="people_name" property="peopleName" jdbcType="VARCHAR" />
+		<result column="code" property="peopleCode" jdbcType="VARCHAR" />
+		<result column="name" property="peopleName" jdbcType="VARCHAR" />
 		<result column="base_salary" property="baseSalary" jdbcType="DECIMAL" />
 		<result column="extra_allowance" property="extraAllowance" jdbcType="DECIMAL" />
 		<result column="rent_allowance" property="rentAllowance" jdbcType="DECIMAL" />
@@ -54,7 +54,26 @@
 		<result column="retire_fee_increase" property="retireFeeIncrease" jdbcType="DECIMAL" />
 		<result column="food_allowance" property="foodAllowance" jdbcType="DECIMAL" />
 		<result column="health_allowance" property="healthAllowance" jdbcType="DECIMAL" />
-		<result column="medicare_fee" property="medicareFee" jdbcType="DECIMAL" />
+		<result column="medicare" property="medicare" jdbcType="DECIMAL" />
+		<result column="property_allowance" property="propertyAllowance" jdbcType="DECIMAL" />
+		<result column="heating_fee" property="heatingFee" jdbcType="DECIMAL" />
+		<result column="handicap_allowance" property="handicapAllowance" jdbcType="DECIMAL" />
+		<result column="rent_fee" property="rentFee" jdbcType="DECIMAL" />
+		<result column="last_update_date" property="lastUpdateDate" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="peopleRetireSalaryBaseVoMap" type="com.wangzhixuan.vo.PeopleRetireSalaryBaseVo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="peopleCode" jdbcType="VARCHAR" />
+		<result column="name" property="peopleName" jdbcType="VARCHAR" />
+		<result column="base_salary" property="baseSalary" jdbcType="DECIMAL" />
+		<result column="extra_allowance" property="extraAllowance" jdbcType="DECIMAL" />
+		<result column="rent_allowance" property="rentAllowance" jdbcType="DECIMAL" />
+		<result column="retire_allowance" property="retireAllowance" jdbcType="DECIMAL" />
+		<result column="retire_fee_increase" property="retireFeeIncrease" jdbcType="DECIMAL" />
+		<result column="food_allowance" property="foodAllowance" jdbcType="DECIMAL" />
+		<result column="health_allowance" property="healthAllowance" jdbcType="DECIMAL" />
+		<result column="medicare" property="medicare" jdbcType="DECIMAL" />
 		<result column="property_allowance" property="propertyAllowance" jdbcType="DECIMAL" />
 		<result column="heating_fee" property="heatingFee" jdbcType="DECIMAL" />
 		<result column="handicap_allowance" property="handicapAllowance" jdbcType="DECIMAL" />
@@ -62,20 +81,108 @@
 		<result column="expense" property="expense" jdbcType="DECIMAL" />
 		<result column="rent_fee" property="rentFee" jdbcType="DECIMAL" />
 		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
-		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
+		<result column="last_update_date" property="lastUpdateDate" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
 		id, people_code, base_salary, extra_allowance, rent_allowance, retire_allowance,
-		retire_fee_increase, food_allowance, health_allowance, medicare_fee, property_allowance,
+		retire_fee_increase, food_allowance, health_allowance, medicare, property_allowance,
 		heating_fee, handicap_allowance, gross_income, expense, rent_fee, net_income, pay_date
 	</sql>
+
+	<sql id="PeopleRetireSalaryBase_Column_List">
+		id, code, name, base_salary, extra_allowance, rent_allowance, retire_allowance,
+		retire_fee_increase, food_allowance, health_allowance, medicare, property_allowance,
+		heating_fee, handicap_allowance, rent_fee, last_update_date
+	</sql>
+
+	<select id="findPeopleRetireSalaryBasePageCondition" resultMap="peopleRetireSalaryBaseVoMap" parameterType="PageInfo">
+		SELECT
+			t.id,
+			t.code,
+			t.name,
+			t.base_salary,
+			t.extra_allowance,
+			t.rent_allowance,
+			t.retire_allowance,
+			t.retire_fee_increase,
+			t.food_allowance,
+			t.health_allowance,
+			t.medicare,
+			t.property_allowance,
+			t.heating_fee,
+			t.handicap_allowance,
+			t.rent_fee,
+			t.last_update_date
+		FROM
+			people_total t
+	  	<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.status != null ">
+				and t.status = 1
+			</if>
+		</where>
+	</select>
+
+	<select id="findPeopleRetireSalaryBasePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+		SELECT count(t.id) count
+		FROM people_total t
+		<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.status != null ">
+				and t.status = 1
+			</if>
+		</where>
+	</select>
+
+	<select id="findPeopleRetireSalaryBaseById" resultMap="peopleRetireSalaryBaseMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="PeopleRetireSalaryBase_Column_List"/>
+		FROM people_total
+		where id = #{id, jdbcType=INTEGER}
+	</select>
+
+	<select id="findPeopleRetireSalaryBaseByCode" resultMap="peopleRetireSalaryBaseMap" parameterType="java.lang.String">
+		SELECT
+		t.id,
+		t.people_code,
+		p.name as people_name,
+		t.base_salary,
+		t.extra_allowance,
+		t.rent_allowance,
+		t.retire_allowance,
+		t.retire_fee_increase,
+		t.food_allowance,
+		t.health_allowance,
+		t.medicare,
+		t.property_allowance,
+		t.heating_fee,
+		t.handicap_allowance,
+		t.gross_income,
+		t.expense,
+		t.rent_fee,
+		t.net_income,
+		t.last_update_date
+		FROM people_retire_salary_base t
+		LEFT JOIN people_retire p
+		ON t.people_code = p.code
+		<where>
+			t.people_code = #{peopleCode}
+		</where>
+	</select>
+
+
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from people_retire_salary
 		where id = #{id,jdbcType=INTEGER}
 	</select>
+
 	<select id="findPeopleRetireSalaryVoById" resultMap="peopleRetireSalaryVoResultMap" parameterType="java.lang.Long">
 		SELECT
 		t.id,
@@ -88,7 +195,7 @@
 		t.retire_fee_increase,
 		t.food_allowance,
 		t.health_allowance,
-		t.medicare_fee,
+		t.medicare,
 		t.property_allowance,
 		t.heating_fee,
 		t.handicap_allowance,
@@ -98,7 +205,7 @@
 		t.net_income,
 		t.pay_date
 		FROM
-			people_retire_salary t LEFT JOIN people_retire p
+			people_retire_salary t LEFT JOIN people_total p
 		ON t.people_code = p.code
 			where t.id = #{id,jdbcType=INTEGER}
 	</select>
@@ -111,7 +218,7 @@
 	<insert id="insert" parameterType="com.wangzhixuan.model.PeopleRetireSalary">
 		insert into people_retire_salary (
 			people_code, base_salary, extra_allowance, rent_allowance, retire_allowance,
-			retire_fee_increase, food_allowance, health_allowance, medicare_fee, property_allowance,
+			retire_fee_increase, food_allowance, health_allowance, medicare, property_allowance,
 			heating_fee, handicap_allowance, gross_income, expense, rent_fee, net_income, pay_date
 		)
 		values (
@@ -123,7 +230,7 @@
 			#{retireFeeIncrease,jdbcType=DECIMAL},
 			#{foodAllowance,jdbcType=DECIMAL},
 			#{healthAllowance,jdbcType=DECIMAL},
-			#{medicareFee,jdbcType=DECIMAL},
+			#{medicare,jdbcType=DECIMAL},
 			#{propertyAllowance,jdbcType=DECIMAL},
 			#{heatingFee,jdbcType=DECIMAL},
 			#{handicapAllowance,jdbcType=DECIMAL},
@@ -146,7 +253,7 @@
 			retire_fee_increase = #{retireFeeIncrease,jdbcType=DECIMAL},
 			food_allowance = #{foodAllowance,jdbcType=DECIMAL},
 			health_allowance = #{healthAllowance,jdbcType=DECIMAL},
-			medicare_fee = #{medicareFee,jdbcType=DECIMAL},
+			medicare = #{medicare,jdbcType=DECIMAL},
 			property_allowance = #{propertyAllowance,jdbcType=DECIMAL},
 			heating_fee = #{heatingFee,jdbcType=DECIMAL},
 			handicap_allowance = #{handicapAllowance,jdbcType=DECIMAL},
@@ -189,7 +296,7 @@
 		t.retire_fee_increase,
 		t.food_allowance,
 		t.health_allowance,
-		t.medicare_fee,
+		t.medicare,
 		t.property_allowance,
 		t.heating_fee,
 		t.handicap_allowance,
@@ -227,7 +334,7 @@
 			t.retire_fee_increase,
 			t.food_allowance,
 			t.health_allowance,
-			t.medicare_fee,
+			t.medicare,
 			t.property_allowance,
 			t.heating_fee,
 			t.handicap_allowance,
@@ -245,7 +352,7 @@
 	<insert id="insertByImport" parameterType="java.util.List">
 		insert into people_retire_salary(
 	  		people_code, base_salary, extra_allowance, rent_allowance, retire_allowance,
-			retire_fee_increase, food_allowance, health_allowance, medicare_fee, property_allowance,
+			retire_fee_increase, food_allowance, health_allowance, medicare, property_allowance,
 			heating_fee, handicap_allowance, gross_income, expense, rent_fee, net_income, pay_date
 		)
 		VALUES
@@ -259,7 +366,7 @@
 			#{item.retireFeeIncrease,jdbcType=DECIMAL},
 			#{item.foodAllowance,jdbcType=DECIMAL},
 			#{item.healthAllowance,jdbcType=DECIMAL},
-			#{item.medicareFee,jdbcType=DECIMAL},
+			#{item.medicare,jdbcType=DECIMAL},
 			#{item.propertyAllowance,jdbcType=DECIMAL},
 			#{item.heatingFee,jdbcType=DECIMAL},
 			#{item.handicapAllowance,jdbcType=DECIMAL},
@@ -271,38 +378,11 @@
 		)
 		</foreach>
 	</insert>
-	<select id="findPeopleRetireSalaryBaseByCode" resultMap="peopleRetireSalaryBaseMap" parameterType="java.lang.String">
-		SELECT
-		t.id,
-			t.people_code,
-			p.name as people_name,
-			t.base_salary,
-			t.extra_allowance,
-			t.rent_allowance,
-			t.retire_allowance,
-			t.retire_fee_increase,
-			t.food_allowance,
-			t.health_allowance,
-			t.medicare_fee,
-			t.property_allowance,
-			t.heating_fee,
-			t.handicap_allowance,
-			t.gross_income,
-			t.expense,
-			t.rent_fee,
-			t.net_income,
-			t.last_change_date
-		FROM people_retire_salary_base t
-		LEFT JOIN people_retire p
-		ON t.people_code = p.code
-		<where>
-		t.people_code = #{peopleCode}
-		</where>
-	</select>
+
 
 	<insert id="addSalaryBase" parameterType="com.wangzhixuan.model.PeopleRetireSalaryBase">
 		INSERT INTO people_retire_salary_base(
-		people_code,base_salary,extra_allowance,rent_allowance,retire_allowance,retire_fee_increase,food_allowance,
+			people_code,base_salary,extra_allowance,rent_allowance,retire_allowance,retire_fee_increase,food_allowance,
 		health_allowance,medicare_fee,property_allowance,heating_fee,handicap_allowance,gross_income,expense,rent_fee,net_income,
 		last_change_date
 		)
@@ -328,25 +408,21 @@
 	</insert>
 
 	<update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleContractSalaryBase">
-		update people_contract_salary_base
+		update people_total
 		SET
-		    people_code         = #{peopleCode,jdbcType=VARCHAR},
-			base_salary         = #{baseSalary,jdbcType=DECIMAL},
+		    base_salary         = #{baseSalary,jdbcType=DECIMAL},
 			extra_allowance     = #{extraAllowance,jdbcType=DECIMAL},
 			rent_allowance      = #{rentAllowance,jdbcType=DECIMAL},
 			retire_allowance    = #{retireAllowance,jdbcType=DECIMAL},
 			retire_fee_increase = #{retireFeeIncrease,jdbcType=DECIMAL},
 			food_allowance      = #{foodAllowance,jdbcType=DECIMAL},
 			health_allowance    = #{healthAllowance,jdbcType=DECIMAL},
-			medicare_fee        = #{medicareFee,jdbcType=DECIMAL},
+			medicare        	= #{medicare,jdbcType=DECIMAL},
 			property_allowance  = #{propertyAllowance,jdbcType=DECIMAL},
 			heating_fee         = #{heatingFee,jdbcType=DECIMAL},
 			handicap_allowance  = #{handicapAllowance,jdbcType=DECIMAL},
-			gross_income        = #{grossIncome,jdbcType=DECIMAL},
-			expense             = #{expense,jdbcType=DECIMAL},
 			rent_fee            = #{rentFee,jdbcType=DECIMAL},
-			net_income          = #{netIncome,jdbcType=DECIMAL},
-		last_change_date 	    = #{lastChangeDate,jdbcType=VARCHAR}
+			last_update_date 	= #{lastUpdateDate,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

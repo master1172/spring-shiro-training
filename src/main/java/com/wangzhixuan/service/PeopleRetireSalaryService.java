@@ -29,5 +29,7 @@ public interface PeopleRetireSalaryService {
     PeopleRetireSalaryBase findPeopleRetireSalaryBaseByCode(String peopleCode);
 
     void updateSalaryBase(PeopleRetireSalaryBase peopleRetireSalaryBase);
+
+    PeopleRetireSalaryBase findPeopleRetireSalaryBaseById(Integer id);
 }
 
