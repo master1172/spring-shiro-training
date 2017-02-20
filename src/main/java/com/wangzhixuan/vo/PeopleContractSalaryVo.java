@@ -25,9 +25,9 @@ public class PeopleContractSalaryVo implements Serializable{
 	private BigDecimal trafficAllowance;
 	private BigDecimal specialAllowance;
 	private BigDecimal headAllowance;
-	private BigDecimal extraWorkFee;
-	private BigDecimal extraWorkDate;
-	private BigDecimal extraWorkAllowance;
+	private BigDecimal onDutyFee;
+	private BigDecimal onDutyDate;
+	private BigDecimal onDutyFeeTotal;
 	private BigDecimal bonus;
 	private BigDecimal reissueFee;
 	private BigDecimal temperatureAllowance;
@@ -131,30 +131,6 @@ public class PeopleContractSalaryVo implements Serializable{
 
 	public void setHeadAllowance(BigDecimal headAllowance) {
 		this.headAllowance = headAllowance;
-	}
-
-	public BigDecimal getExtraWorkFee() {
-		return extraWorkFee;
-	}
-
-	public void setExtraWorkFee(BigDecimal extraWorkFee) {
-		this.extraWorkFee = extraWorkFee;
-	}
-
-	public BigDecimal getExtraWorkDate() {
-		return extraWorkDate;
-	}
-
-	public void setExtraWorkDate(BigDecimal extraWorkDate) {
-		this.extraWorkDate = extraWorkDate;
-	}
-
-	public BigDecimal getExtraWorkAllowance() {
-		return extraWorkAllowance;
-	}
-
-	public void setExtraWorkAllowance(BigDecimal extraWorkAllowance) {
-		this.extraWorkAllowance = extraWorkAllowance;
 	}
 
 	public BigDecimal getBonus() {
@@ -267,6 +243,30 @@ public class PeopleContractSalaryVo implements Serializable{
 
 	public void setJobLevel(String jobLevel) {
 		this.jobLevel = jobLevel;
+	}
+
+	public BigDecimal getOnDutyFeeTotal() {
+		return onDutyFeeTotal;
+	}
+
+	public void setOnDutyFeeTotal(BigDecimal onDutyFeeTotal) {
+		this.onDutyFeeTotal = onDutyFeeTotal;
+	}
+
+	public BigDecimal getOnDutyDate() {
+		return onDutyDate;
+	}
+
+	public void setOnDutyDate(BigDecimal onDutyDate) {
+		this.onDutyDate = onDutyDate;
+	}
+
+	public BigDecimal getOnDutyFee() {
+		return onDutyFee;
+	}
+
+	public void setOnDutyFee(BigDecimal onDutyFee) {
+		this.onDutyFee = onDutyFee;
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public interface PeopleContractSalaryService {
 
     void updateSalary(PeopleContractSalary peopleSalary);
 
-    void deleteSalaryById(Long id);
+    void deleteSalaryById(Integer id);
 
     PeopleContractSalaryVo findPeopleContractSalaryVoById(Long id);
     
@@ -33,4 +33,10 @@ public interface PeopleContractSalaryService {
     PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
 
     void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
+
+    PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
+
+    void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+    PeopleContractSalary findPeopleContractSalaryById(Integer id);
 }

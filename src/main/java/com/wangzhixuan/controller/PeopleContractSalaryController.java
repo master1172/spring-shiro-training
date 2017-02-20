@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.model.*;
+import com.wangzhixuan.vo.PeopleContractSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,12 +48,35 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows, String sort, String order) {
+	public PageInfo dataGrid(HttpServletRequest request, PeopleContractSalaryBaseVo peopleContractSalaryBaseVo, Integer page, Integer rows, String sort, String order) {
 		PageInfo pageInfo = new PageInfo(page, rows);
-		Map<String, Object> condition = PeopleContractVo.CreateCondition(peopleVo);
+		Map<String, Object> condition = PeopleContractSalaryBaseVo.CreateCondition(peopleContractSalaryBaseVo);
 		pageInfo.setCondition(condition);
-		peopleContractService.findDataGrid(pageInfo);
+		peopleContractSalaryService.findDataGrid(pageInfo,request);
 		return pageInfo;
+	}
+
+	@RequestMapping("/editPage")
+	public String editPage(Integer id, Model model) {
+		PeopleContractSalaryBase peopleContractBase = peopleContractSalaryService.findPeopleContractSalaryBaseById(id);
+		model.addAttribute("peopleContractSalaryBase", peopleContractBase);
+		return "/admin/peopleContractSalary/peopleSalaryBaseEdit";
+	}
+
+	@RequestMapping("/edit")
+	@ResponseBody
+	public Result edit(PeopleContractSalaryBase peopleContractSalaryBase) {
+		Result result = new Result();
+		try {
+			peopleContractSalaryService.updateSalaryBase(peopleContractSalaryBase);
+			result.setSuccess(true);
+			result.setMsg("修改成功!");
+			return result;
+		} catch (Exception e) {
+			logger.error("修改工资失败：{}", e);
+			result.setMsg(e.getMessage());
+			return result;
+		}
 	}
 
 	@RequestMapping(value = "/salaryListPage", method = RequestMethod.GET)
@@ -80,16 +104,14 @@ public class PeopleContractSalaryController extends BaseController {
 		Map<String, Object> condition = Maps.newHashMap();
 		condition.put("peopleCode", peopleCode);
 		pageInfo.setCondition(condition);
+		peopleContractSalaryService.findSalaryDataGrid(pageInfo, request);
 
-		peopleContractSalaryService.findDataGrid(pageInfo, request);
-
-		logger.info("salaryGrid"+JSON.toJSONString(pageInfo));
 		return pageInfo;
 	}
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Result delete(Long id) {
+	public Result delete(Integer id) {
 		Result result = new Result();
 		try {
 			peopleContractSalaryService.deleteSalaryById(id);
@@ -106,11 +128,11 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@RequestMapping("/addPage")
 	public String addPage(String peopleCode, Model model) {
-		PeopleContract peopleContract = peopleContractService.findPeopleContractByCode(peopleCode);
-		if (peopleContract == null) {
-			peopleContract = new PeopleContract();
+		PeopleContractSalaryBase peopleContractSalaryBase = peopleContractSalaryService.findPeopleContractSalaryBaseByCode(peopleCode);
+		if (peopleContractSalaryBase == null) {
+			peopleContractSalaryBase = new PeopleContractSalaryBase();
 		}
-		model.addAttribute("people", peopleContract);
+		model.addAttribute("people", peopleContractSalaryBase);
 		return "/admin/peopleContractSalary/peopleSalaryAdd";
 	}
 
@@ -130,31 +152,28 @@ public class PeopleContractSalaryController extends BaseController {
 		}
 	}
 
-	@RequestMapping("/editPage")
-	public String editPage(Long id, Model model) {
-		PeopleContractSalaryVo peopleContractVo = peopleContractSalaryService.findPeopleContractSalaryVoById(id);
-		model.addAttribute("peopleContractSalary", peopleContractVo);
-		
-		logger.info("peopleContractSalary:"+JSON.toJSONString(peopleContractVo));
+	@RequestMapping(value="/editSalaryPage")
+	public String editSalaryBase(Integer id, Model model){
+		PeopleContractSalary peopleContractSalary = peopleContractSalaryService.findPeopleContractSalaryById(id);
+		model.addAttribute("peopleContractSalary",peopleContractSalary);
 		return "/admin/peopleContractSalary/peopleSalaryEdit";
 	}
 
-	@RequestMapping("/edit")
+	@RequestMapping(value = "editSalary")
 	@ResponseBody
-	public Result edit(PeopleContractSalary peopleContractSalary) {
+	public Result editSalary(PeopleContractSalary peopleContractSalary){
 		Result result = new Result();
-		try {
+		try{
 			peopleContractSalaryService.updateSalary(peopleContractSalary);
 			result.setSuccess(true);
-			result.setMsg("修改成功!");
+			result.setMsg("修改成功");
 			return result;
-		} catch (Exception e) {
-			logger.error("修改工资失败：{}", e);
-			result.setMsg(e.getMessage());
+		}catch(Exception exp){
+			result.setMsg(exp.getMessage());
 			return result;
 		}
 	}
-	
+
 	/**
 	 * 批量调入W
 	 */
@@ -229,4 +248,8 @@ public class PeopleContractSalaryController extends BaseController {
 		}
 	}
 
+	@RequestMapping("/advSearchPage")
+	public String advSearchPage(){
+		return "/admin/peopleContractSalary/salarySearch";
+	}
 }

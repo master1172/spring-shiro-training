@@ -1,19 +1,30 @@
-package com.wangzhixuan.model;
+package com.wangzhixuan.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Maps;
+import com.wangzhixuan.utils.ConstUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
- * Created by sterm on 2017/2/12.
+ * Created by sterm on 2017/2/20.
  */
-public class PeopleContractSalaryBase implements Serializable {
+public class PeopleContractSalaryBaseVo implements Serializable{
+
     private Integer    id;
     private String     peopleCode;
     private String     peopleName;
+    private Integer    sex;
+    private String     birthdayMin;
+    private String     birthdayMax;
     private Integer    jobId;
+    private String     jobIdList;
     private BigDecimal jobSalary;
+    private String     jobLevel;
     private BigDecimal schoolSalary;
     private String     examResult;
     private BigDecimal baseSalary;
@@ -52,11 +63,15 @@ public class PeopleContractSalaryBase implements Serializable {
         this.peopleCode = peopleCode;
     }
 
-    public BigDecimal getBaseSalary() {return baseSalary;}
+    public String getPeopleName() {
+        return peopleName;
+    }
 
-    public void setBaseSalary(BigDecimal baseSalary) {this.baseSalary = baseSalary;}
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
+    }
 
-    public int getJobId() {
+    public Integer getJobId() {
         return jobId;
     }
 
@@ -70,6 +85,14 @@ public class PeopleContractSalaryBase implements Serializable {
 
     public void setJobSalary(BigDecimal jobSalary) {
         this.jobSalary = jobSalary;
+    }
+
+    public String getJobLevel() {
+        return jobLevel;
+    }
+
+    public void setJobLevel(String jobLevel) {
+        this.jobLevel = jobLevel;
     }
 
     public BigDecimal getSchoolSalary() {
@@ -86,6 +109,14 @@ public class PeopleContractSalaryBase implements Serializable {
 
     public void setExamResult(String examResult) {
         this.examResult = examResult;
+    }
+
+    public BigDecimal getBaseSalary() {
+        return baseSalary;
+    }
+
+    public void setBaseSalary(BigDecimal baseSalary) {
+        this.baseSalary = baseSalary;
     }
 
     public BigDecimal getJobExamSalary() {
@@ -126,6 +157,14 @@ public class PeopleContractSalaryBase implements Serializable {
 
     public void setHeadAllowance(BigDecimal headAllowance) {
         this.headAllowance = headAllowance;
+    }
+
+    public BigDecimal getOnDutyFee() {
+        return onDutyFee;
+    }
+
+    public void setOnDutyFee(BigDecimal onDutyFee) {
+        this.onDutyFee = onDutyFee;
     }
 
     public BigDecimal getBonus() {
@@ -208,22 +247,6 @@ public class PeopleContractSalaryBase implements Serializable {
         this.netIncome = netIncome;
     }
 
-    public BigDecimal getOnDutyFee() {
-        return onDutyFee;
-    }
-
-    public String getPeopleName() {
-        return peopleName;
-    }
-
-    public void setPeopleName(String peopleName) {
-        this.peopleName = peopleName;
-    }
-
-    public void setOnDutyFee(BigDecimal onDutyFee) {
-        this.onDutyFee = onDutyFee;
-    }
-
     public String getLastUpdateDate() {
         return lastUpdateDate;
     }
@@ -232,8 +255,61 @@ public class PeopleContractSalaryBase implements Serializable {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    @Override
-    public String toString() {
-        return "PeopleContractSalaryBase{" + "id=" + id + "}";
+    public String getJobIdList() {
+        return jobIdList;
+    }
+
+    public void setJobIdList(String jobIdList) {
+        this.jobIdList = jobIdList;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getBirthdayMin() {
+        return birthdayMin;
+    }
+
+    public void setBirthdayMin(String birthdayMin) {
+        this.birthdayMin = birthdayMin;
+    }
+
+    public String getBirthdayMax() {
+        return birthdayMax;
+    }
+
+    public void setBirthdayMax(String birthdayMax) {
+        this.birthdayMax = birthdayMax;
+    }
+
+    public static Map<String,Object> CreateCondition(PeopleContractSalaryBaseVo peopleContractSalaryBaseVo) {
+        Map<String,Object> condition = Maps.newHashMap();
+        if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getPeopleName())){
+            condition.put("name", peopleContractSalaryBaseVo.getPeopleName());
+        }
+
+        if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getJobIdList())){
+            condition.put("jobIdList", peopleContractSalaryBaseVo.getJobIdList().split(","));
+        }
+
+        if(peopleContractSalaryBaseVo.getSex() != null){
+            condition.put("sex", peopleContractSalaryBaseVo.getSex());
+        }
+
+        if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getBirthdayMin())){
+            condition.put("birthdayMin", peopleContractSalaryBaseVo.getBirthdayMin());
+        }
+
+        if(StringUtils.isNoneBlank(peopleContractSalaryBaseVo.getBirthdayMax())){
+            condition.put("birthdayMax", peopleContractSalaryBaseVo.getBirthdayMax());
+        }
+
+        condition.put("status", ConstUtil.PEOPLE_CONTRACT);
+        return condition;
     }
 }

@@ -9,21 +9,21 @@ import java.math.BigDecimal;
  */
 public class PeopleContractSalary implements Serializable {
 
-	private Long id;
-	private String peopleCode;
-	private Integer jobId;
+	private Integer    id;
+	private String     peopleCode;
+	private Integer    jobId;
 	private BigDecimal jobSalary;
 	private BigDecimal schoolSalary;
-	private String examResult;
+	private String     examResult;
 	private BigDecimal baseSalary;
 	private BigDecimal jobExamSalary;
 	private BigDecimal telephoneAllowance;
 	private BigDecimal trafficAllowance;
 	private BigDecimal specialAllowance;
 	private BigDecimal headAllowance;
-	private BigDecimal extraWorkFee;
-	private BigDecimal extraWorkDate;
-	private BigDecimal extraWorkAllowance;
+	private BigDecimal onDutyFee;
+	private BigDecimal onDutyDate;
+	private BigDecimal onDutyFeeTotal;
 	private BigDecimal bonus;
 	private BigDecimal reissueFee;
 	private BigDecimal temperatureAllowance;
@@ -37,11 +37,11 @@ public class PeopleContractSalary implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM")
 	private String payDate;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -127,30 +127,6 @@ public class PeopleContractSalary implements Serializable {
 
 	public void setHeadAllowance(BigDecimal headAllowance) {
 		this.headAllowance = headAllowance;
-	}
-
-	public BigDecimal getExtraWorkFee() {
-		return extraWorkFee;
-	}
-
-	public void setExtraWorkFee(BigDecimal extraWorkFee) {
-		this.extraWorkFee = extraWorkFee;
-	}
-
-	public BigDecimal getExtraWorkDate() {
-		return extraWorkDate;
-	}
-
-	public void setExtraWorkDate(BigDecimal extraWorkDate) {
-		this.extraWorkDate = extraWorkDate;
-	}
-
-	public BigDecimal getExtraWorkAllowance() {
-		return extraWorkAllowance;
-	}
-
-	public void setExtraWorkAllowance(BigDecimal extraWorkAllowance) {
-		this.extraWorkAllowance = extraWorkAllowance;
 	}
 
 	public BigDecimal getBonus() {
@@ -239,6 +215,30 @@ public class PeopleContractSalary implements Serializable {
 
 	public void setPayDate(String payDate) {
 		this.payDate = payDate;
+	}
+
+	public BigDecimal getOnDutyFee() {
+		return onDutyFee;
+	}
+
+	public void setOnDutyFee(BigDecimal onDutyFee) {
+		this.onDutyFee = onDutyFee;
+	}
+
+	public BigDecimal getOnDutyDate() {
+		return onDutyDate;
+	}
+
+	public void setOnDutyDate(BigDecimal onDutyDate) {
+		this.onDutyDate = onDutyDate;
+	}
+
+	public BigDecimal getOnDutyFeeTotal() {
+		return onDutyFeeTotal;
+	}
+
+	public void setOnDutyFeeTotal(BigDecimal onDutyFeeTotal) {
+		this.onDutyFeeTotal = onDutyFeeTotal;
 	}
 
 	@Override

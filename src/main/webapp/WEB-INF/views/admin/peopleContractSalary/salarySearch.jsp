@@ -31,11 +31,6 @@
                         <input class="easyui-combobox" id="jobIdList" name="jobIdList" url="${path}/dict/job" valueField="id" textField="name" editable="false" multiple="true">
                         </input>
                     </td>
-                    <td>薪级</td>
-                    <td>
-                        <input class="easyui-combobox" id="rankIdList" name="rankIdList" url="${path}/dict/rank" valueField="id" textField="name" editable="false" data-options="required:true" multiple="true">
-                        </input>
-                    </td>
                 </tr>
             </table>
         </form>

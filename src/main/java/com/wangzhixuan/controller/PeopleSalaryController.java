@@ -119,8 +119,6 @@ public class PeopleSalaryController extends BaseController{
         return pageInfo;
     }
 
-
-
     @RequestMapping("/addPage")
     public String addPage(String peopleCode, Model model){
         PeopleSalaryBase peopleSalaryBase = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);

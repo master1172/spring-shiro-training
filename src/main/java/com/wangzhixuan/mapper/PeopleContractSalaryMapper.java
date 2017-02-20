@@ -9,7 +9,7 @@ import com.wangzhixuan.vo.PeopleContractSalaryVo;
 import java.util.List;
 
 public interface PeopleContractSalaryMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(PeopleContractSalary record);
 
@@ -40,4 +40,12 @@ public interface PeopleContractSalaryMapper {
     void addSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
 
     void updateSalaryBase(PeopleContractSalaryBase peopleContractSalaryBase);
+
+    List findPeopleContractSalaryBasePageCondition(PageInfo pageInfo);
+
+    int findPeopleContractSalaryBasePageCount(PageInfo pageInfo);
+
+    PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
+
+    PeopleContractSalary findPeopleContractSalaryById(Integer id);
 }
