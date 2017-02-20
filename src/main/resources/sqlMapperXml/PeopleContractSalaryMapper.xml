@@ -411,4 +411,42 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 
+	<select id="findPeopleContractSalaryVoListByCode" resultMap="peopleContractSalaryVoResultMap" parameterType="java.lang.String">
+		SELECT
+		t.id,
+		t.people_code,
+		p.name as people_name,
+		t.job_id,
+		j.job_category as job_category,
+		j.job_level as job_level,
+		t.job_salary,
+		t.school_salary,
+		t.exam_result,
+		t.job_exam_salary,
+		t.telephone_allowance,
+		t.traffic_allowance,
+		t.special_allowance,
+		t.head_allowance,
+		t.on_duty_fee,
+		t.on_duty_date,
+		t.on_duty_fee_total,
+		t.bonus,
+		t.reissue_fee,
+		t.temperature_allowance,
+		t.gross_income,
+		t.life_insurance,
+		t.job_insurance,
+		t.health_insurance,
+		t.house_fund,
+		t.expense,
+		t.net_income,
+		t.pay_date
+		FROM people_contract_salary t
+		LEFT JOIN people_total p
+		ON t.people_code = p.code
+		LEFT JOIN job j
+		ON j.id = t.job_id
+		where t.people_code = #{peopleCode}
+	</select>
+
 </mapper>

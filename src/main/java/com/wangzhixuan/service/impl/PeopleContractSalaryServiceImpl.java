@@ -114,23 +114,26 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 				XSSFCellStyle setBorder = WordUtil.setCellStyle(workBook, true);
 				// 创建表头
 				XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleContractSalaryHeaders());
+
 				int count = 0;
+
 				setBorder = WordUtil.setCellStyle(workBook, false);
 				for (int i = 0; i < list.size(); i++) {
-					row = sheet.createRow(i + 1);
 					PeopleContractVo peopleContractVo = (PeopleContractVo) list.get(i);
 					if(peopleContractVo ==null || StringUtils.isBlank(peopleContractVo.getCode()))
 						continue;
+
 					String peopleCode = peopleContractVo.getCode();
 					List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContractSalaryMapper.findPeopleContractSalaryVoListByCode(peopleCode);
 					if(peopleContractSalaryVoList == null || peopleContractSalaryVoList.size()<1)
 						continue;
 					for(int j=0; j<peopleContractSalaryVoList.size();j++) {
+
 						row = sheet.createRow(count+1);
 						PeopleContractSalaryVo peopleContractSalaryVo = peopleContractSalaryVoList.get(j);
 						row.createCell(0).setCellValue(count + 1);
 						row.createCell(1).setCellValue(peopleContractSalaryVo.getPeopleName());
-						row.createCell(2).setCellValue(peopleContractSalaryVo.getJobId());
+						row.createCell(2).setCellValue(peopleContractSalaryVo.getJobLevel());
 						row.createCell(3).setCellValue(peopleContractSalaryVo.getJobSalary() == null ? "" : peopleContractSalaryVo.getJobSalary().toString());
 						row.createCell(4).setCellValue(peopleContractSalaryVo.getSchoolSalary() == null ? "" : peopleContractSalaryVo.getSchoolSalary().toString());
 						row.createCell(5).setCellValue(peopleContractSalaryVo.getExamResult() == null ? "" : peopleContractSalaryVo.getExamResult().toString());
