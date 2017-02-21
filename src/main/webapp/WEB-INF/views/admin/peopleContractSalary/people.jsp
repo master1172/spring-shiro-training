@@ -30,6 +30,7 @@
                 onLoadSuccess: function (data) {
                     $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
                     $('.user-easyui-linkbutton-add').linkbutton({text: '工资明细', plain: true, iconCls: 'icon-add'});
+                    $('.user-easyui-linkbutton-query').linkbutton({text: '工资变动记录', plain: true, iconCls: 'icon-add'});
                 },
                 toolbar: '#toolbar'
             });
@@ -190,6 +191,15 @@
             });
         }
 
+        function changeList(id){
+            parent.$.modalDialog({
+                title:'工资变动记录',
+                width:1000,
+                height:600,
+                href:'${path}/salaryChangeRecord/changeListPage?id='+id,
+            });
+        }
+
         function sexFormatter(value,row,index){
             switch (value) {
                 case 0:
@@ -204,6 +214,8 @@
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-add" data-options="plain:true,iconCls:\'icon-edit\'" onclick="salaryList(\'{0}\');" >工资明细</a>', row.id);
+            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-query" data-options="plain:true,iconCls:\'icon-edit\'" onclick="changeList(\'{0}\');" >工资变动记录</a>', row.id);
             return str;
         }
     </script>
