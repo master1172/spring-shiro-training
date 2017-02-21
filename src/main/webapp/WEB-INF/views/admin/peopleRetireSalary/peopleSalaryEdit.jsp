@@ -25,10 +25,6 @@
                <input type="hidden" name="id" value="${peopleRetireSalary.id}">
                <input type="hidden" name="peopleCode" value="${peopleRetireSalary.peopleCode}">
                <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input name="name" type="text" value="${peopleRetireSalary.peopleName}" class="easyui-validatebox" data-options="required:true">
-                    </td>
                     <td>基本工资</td>
                     <td>
                         <input name="baseSalary" id="baseSalary" type="text" value="${peopleRetireSalary.baseSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
@@ -63,7 +59,7 @@
                  <tr>
                     <td>医药费报销</td>
                     <td>
-                        <input name="medicareFee" id="medicareFee" type="text"  value="${peopleRetireSalary.medicareFee}"  class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="medicare" id="medicare" type="text"  value="${peopleRetireSalary.medicare}"  class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>物业补贴</td>
                     <td>

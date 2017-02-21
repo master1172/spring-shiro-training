@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.druid.stat.TableStat;
 import com.wangzhixuan.model.PeopleRetireSalaryBase;
 import com.wangzhixuan.vo.PeopleRetireSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
@@ -135,6 +136,28 @@ public class PeopleRetireSalaryController extends BaseController {
 		} catch (Exception e) {
 			logger.error("添加工资失败：{}", e);
 			result.setMsg(e.getMessage());
+			return result;
+		}
+	}
+
+	@RequestMapping(value = "/editSalaryPage")
+	public String editSalaryPage(Integer id, Model model){
+		PeopleRetireSalary peopleRetireSalary = peopleRetireSalaryService.findPeopleRetireSalaryById(id);
+		model.addAttribute("peopleRetireSalary", peopleRetireSalary);
+		return "/admin/peopleRetireSalary/peopleSalaryEdit";
+	}
+
+	@RequestMapping(value="/editSalary")
+	@ResponseBody
+	public Result editSalary(PeopleRetireSalary peopleRetireSalary){
+		Result result = new Result();
+		try{
+			peopleRetireSalaryService.updateSalary(peopleRetireSalary);
+			result.setSuccess(true);
+			result.setMsg("修改成功");
+			return result;
+		}catch (Exception exp){
+			result.setMsg(exp.getMessage());
 			return result;
 		}
 	}

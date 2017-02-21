@@ -266,4 +266,9 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 		pageInfo.setTotal(peopleRetireSalaryMapper.findPeopleRetireSalaryPageCount(pageInfo));
 	}
 
+	@Override
+	public PeopleRetireSalary findPeopleRetireSalaryById(Integer id) {
+		return peopleRetireSalaryMapper.selectByPrimaryKey(id);
+	}
+
 }

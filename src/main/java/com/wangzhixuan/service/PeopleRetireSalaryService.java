@@ -33,5 +33,7 @@ public interface PeopleRetireSalaryService {
     PeopleRetireSalaryBase findPeopleRetireSalaryBaseById(Integer id);
 
     void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+    PeopleRetireSalary findPeopleRetireSalaryById(Integer id);
 }
 

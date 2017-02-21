@@ -15,7 +15,7 @@ public interface PeopleRetireSalaryMapper {
 
     int insertSelective(PeopleRetireSalary record);
 
-    PeopleRetireSalary selectByPrimaryKey(Long id);
+    PeopleRetireSalary selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(PeopleRetireSalary record);
 
