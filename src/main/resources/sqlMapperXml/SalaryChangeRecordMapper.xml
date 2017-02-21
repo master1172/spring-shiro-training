@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzhixuan.mapper.SalaryChangeRecordMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.SalaryChangeRecord">
+        <id     column="id"             jdbcType="INTEGER" property="id" />
+        <result column="people_code"    jdbcType="VARCHAR" property="peopleCode" />
+        <result column="prev_job_id"     jdbcType="INTEGER" property="prevJobId" />
+        <result column="prev_job_salary" jdbcType="DECIMAL" property="prevJobSalary" />
+        <result column="new_job_id"     jdbcType="INTEGER" property="newJobId" />
+        <result column="new_job_salary" jdbcType="DECIMAL" property="newJobSalary" />
+        <result column="prev_rank_id"   jdbcType="INTEGER" property="prevRankId" />
+        <result column="prev_rank_salary" jdbcType="DECIMAL" property="prevRankSalary" />
+        <result column="new_rank_id"    jdbcType="INTEGER" property="newRankId" />
+        <result column="new_rank_salary" jdbcType="DECIMAL" property="newRankSalary" />
+        <result column="prev_reserve_salary" jdbcType="DECIMAL" property="prevReserveSalary" />
+        <result column="new_reserve_salary" jdbcType="DECIMAL" property="newReserveSalary" />
+        <result column="change_reason"  jdbcType="VARCHAR" property="changeReason" />
+        <result column="change_date"    jdbcType="DATE" property="changeDate" />
+        <result column="effect_date"    jdbcType="DATE" property="effectDate" />
+        <result column="people_opinion" jdbcType="VARCHAR" property="peopleOpinion" />
+        <result column="people_check_date"  jdbcType="DATE" property="peopleCheckDate" />
+        <result column="comment"            jdbcType="VARCHAR" property="comment" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, people_code, prev_job_id, prev_job_salary, new_job_id, new_job_salary, prev_rank_id,
+        prev_rank_salary, new_rank_id, new_rank_salary, prev_reserve_salary, new_reserve_salary,
+        change_reason, change_date, effect_date, people_opinion, people_check_date, comment
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from salary_change_record
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from salary_change_record
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.wangzhixuan.model.SalaryChangeRecord">
+        insert into salary_change_record (
+          id, people_code, prev_job_id,
+          prev_job_salary, new_job_id, new_job_salary,
+          prev_rank_id, prev_rank_salary, new_rank_id,
+          new_rank_salary, prev_reserve_salary, new_reserve_salary,
+          change_reason, change_date, effect_date,
+          people_opinion, people_check_date, comment
+        )
+        values (#{id,jdbcType=INTEGER}, #{peopleCode,jdbcType=VARCHAR}, #{prevJobId,jdbcType=INTEGER},
+        #{prevJobSalary,jdbcType=DECIMAL}, #{newJobId,jdbcType=INTEGER}, #{newJobSalary,jdbcType=DECIMAL},
+        #{prevRankId,jdbcType=INTEGER}, #{prevRankSalary,jdbcType=DECIMAL}, #{newRankId,jdbcType=INTEGER},
+        #{newRankSalary,jdbcType=DECIMAL}, #{prevReserveSalary,jdbcType=DECIMAL}, #{newReserveSalary,jdbcType=DECIMAL},
+        #{changeReason,jdbcType=VARCHAR}, #{changeDate,jdbcType=DATE}, #{effectDate,jdbcType=DATE},
+        #{peopleOpinion,jdbcType=VARCHAR}, #{peopleCheckDate,jdbcType=DATE}, #{comment,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.wangzhixuan.model.SalaryChangeRecord">
+        insert into salary_change_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="peopleCode != null">
+                people_code,
+            </if>
+            <if test="prevJobId != null">
+                prev_job_id,
+            </if>
+            <if test="prevJobSalary != null">
+                prev_job_salary,
+            </if>
+            <if test="newJobId != null">
+                new_job_id,
+            </if>
+            <if test="newJobSalary != null">
+                new_job_salary,
+            </if>
+            <if test="prevRankId != null">
+                prev_rank_id,
+            </if>
+            <if test="prevRankSalary != null">
+                prev_rank_salary,
+            </if>
+            <if test="newRankId != null">
+                new_rank_id,
+            </if>
+            <if test="newRankSalary != null">
+                new_rank_salary,
+            </if>
+            <if test="prevReserveSalary != null">
+                prev_reserve_salary,
+            </if>
+            <if test="newReserveSalary != null">
+                new_reserve_salary,
+            </if>
+            <if test="changeReason != null">
+                change_reason,
+            </if>
+            <if test="changeDate != null">
+                change_date,
+            </if>
+            <if test="effectDate != null">
+                effect_date,
+            </if>
+            <if test="peopleOpinion != null">
+                people_opinion,
+            </if>
+            <if test="peopleCheckDate != null">
+                people_check_date,
+            </if>
+            <if test="comment != null">
+                comment,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="peopleCode != null">
+                #{peopleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="prevJobId != null">
+                #{prevJobId,jdbcType=INTEGER},
+            </if>
+            <if test="prevJobSalary != null">
+                #{prevJobSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="newJobId != null">
+                #{newJobId,jdbcType=INTEGER},
+            </if>
+            <if test="newJobSalary != null">
+                #{newJobSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="prevRankId != null">
+                #{prevRankId,jdbcType=INTEGER},
+            </if>
+            <if test="prevRankSalary != null">
+                #{prevRankSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="newRankId != null">
+                #{newRankId,jdbcType=INTEGER},
+            </if>
+            <if test="newRankSalary != null">
+                #{newRankSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="prevReserveSalary != null">
+                #{prevReserveSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="newReserveSalary != null">
+                #{newReserveSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="changeReason != null">
+                #{changeReason,jdbcType=VARCHAR},
+            </if>
+            <if test="changeDate != null">
+                #{changeDate,jdbcType=DATE},
+            </if>
+            <if test="effectDate != null">
+                #{effectDate,jdbcType=DATE},
+            </if>
+            <if test="peopleOpinion != null">
+                #{peopleOpinion,jdbcType=VARCHAR},
+            </if>
+            <if test="peopleCheckDate != null">
+                #{peopleCheckDate,jdbcType=DATE},
+            </if>
+            <if test="comment != null">
+                #{comment,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wangzhixuan.model.SalaryChangeRecord">
+        update salary_change_record
+        <set>
+            <if test="peopleCode != null">
+                people_code = #{peopleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="prevJobId != null">
+                prev_job_id = #{prevJobId,jdbcType=INTEGER},
+            </if>
+            <if test="prevJobSalary != null">
+                prev_job_salary = #{prevJobSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="newJobId != null">
+                new_job_id = #{newJobId,jdbcType=INTEGER},
+            </if>
+            <if test="newJobSalary != null">
+                new_job_salary = #{newJobSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="prevRankId != null">
+                prev_rank_id = #{prevRankId,jdbcType=INTEGER},
+            </if>
+            <if test="prevRankSalary != null">
+                prev_rank_salary = #{prevRankSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="newRankId != null">
+                new_rank_id = #{newRankId,jdbcType=INTEGER},
+            </if>
+            <if test="newRankSalary != null">
+                new_rank_salary = #{newRankSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="prevReserveSalary != null">
+                prev_reserve_salary = #{prevReserveSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="newReserveSalary != null">
+                new_reserve_salary = #{newReserveSalary,jdbcType=DECIMAL},
+            </if>
+            <if test="changeReason != null">
+                change_reason = #{changeReason,jdbcType=VARCHAR},
+            </if>
+            <if test="changeDate != null">
+                change_date = #{changeDate,jdbcType=DATE},
+            </if>
+            <if test="effectDate != null">
+                effect_date = #{effectDate,jdbcType=DATE},
+            </if>
+            <if test="peopleOpinion != null">
+                people_opinion = #{peopleOpinion,jdbcType=VARCHAR},
+            </if>
+            <if test="peopleCheckDate != null">
+                people_check_date = #{peopleCheckDate,jdbcType=DATE},
+            </if>
+            <if test="comment != null">
+                comment = #{comment,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wangzhixuan.model.SalaryChangeRecord">
+        update salary_change_record
+        set people_code = #{peopleCode,jdbcType=VARCHAR},
+        prev_job_id = #{prevJobId,jdbcType=INTEGER},
+        prev_job_salary = #{prevJobSalary,jdbcType=DECIMAL},
+        new_job_id = #{newJobId,jdbcType=INTEGER},
+        new_job_salary = #{newJobSalary,jdbcType=DECIMAL},
+        prev_rank_id = #{prevRankId,jdbcType=INTEGER},
+        prev_rank_salary = #{prevRankSalary,jdbcType=DECIMAL},
+        new_rank_id = #{newRankId,jdbcType=INTEGER},
+        new_rank_salary = #{newRankSalary,jdbcType=DECIMAL},
+        prev_reserve_salary = #{prevReserveSalary,jdbcType=DECIMAL},
+        new_reserve_salary = #{newReserveSalary,jdbcType=DECIMAL},
+        change_reason = #{changeReason,jdbcType=VARCHAR},
+        change_date = #{changeDate,jdbcType=DATE},
+        effect_date = #{effectDate,jdbcType=DATE},
+        people_opinion = #{peopleOpinion,jdbcType=VARCHAR},
+        people_check_date = #{peopleCheckDate,jdbcType=DATE},
+        comment = #{comment,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
