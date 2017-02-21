@@ -94,4 +94,27 @@ public class SalaryChangeRecordController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping("/editSalaryPage")
+    public String editSalaryPage(Integer id, Model model){
+        SalaryChangeRecord salaryChangeRecord = salaryChangeRecordService.findSalaryChangeRecordById(id);
+        model.addAttribute("people", salaryChangeRecord);
+        return "admin/salaryChangeRecord/salaryChangeEdit";
+    }
+
+    @RequestMapping("/editSalary")
+    @ResponseBody
+    public Result editSalary(SalaryChangeRecord salaryChangeRecord){
+        Result result = new Result();
+        try{
+            salaryChangeRecordService.update(salaryChangeRecord);
+            result.setSuccess(true);
+            result.setMsg("修改成功");
+            return result;
+        }catch (Exception exp){
+            result.setSuccess(false);
+            result.setMsg(exp.toString());
+            return result;
+        }
+    }
 }

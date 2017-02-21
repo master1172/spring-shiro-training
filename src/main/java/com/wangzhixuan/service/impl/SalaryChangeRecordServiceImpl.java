@@ -37,6 +37,19 @@ public class SalaryChangeRecordServiceImpl implements SalaryChangeRecordService{
         salaryChangeRecordMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public SalaryChangeRecord findSalaryChangeRecordById(Integer id) {
+        if (id == null)
+            return new SalaryChangeRecord();
+        return salaryChangeRecordMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void update(SalaryChangeRecord salaryChangeRecord) {
+        UpdateDate(salaryChangeRecord);
+        salaryChangeRecordMapper.updateByPrimaryKey(salaryChangeRecord);
+    }
+
     private void UpdateDate(SalaryChangeRecord salaryChangeRecord){
 
         if (StringUtils.isBlank(salaryChangeRecord.getChangeDate()))

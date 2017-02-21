@@ -14,4 +14,8 @@ public interface SalaryChangeRecordService {
     void addSalaryChangeRecord(SalaryChangeRecord salaryChangeRecord);
 
     void delete(Integer id);
+
+    SalaryChangeRecord findSalaryChangeRecordById(Integer id);
+
+    void update(SalaryChangeRecord salaryChangeRecord);
 }
