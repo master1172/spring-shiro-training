@@ -140,6 +140,13 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from people_total
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from people_total
         where id = #{id,jdbcType=INTEGER}

@@ -15,6 +15,8 @@ public interface PeopleTotalMapper {
 
     PeopleTotal selectByPrimaryKey(Integer id);
 
+    PeopleTotal selectByCode(String code);
+
     int updateByPrimaryKeySelective(PeopleTotal record);
 
     int updateByPrimaryKey(PeopleTotal record);

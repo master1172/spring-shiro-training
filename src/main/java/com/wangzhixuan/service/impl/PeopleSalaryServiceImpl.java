@@ -2,10 +2,7 @@ package com.wangzhixuan.service.impl;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.*;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleJob;
-import com.wangzhixuan.model.PeopleSalary;
-import com.wangzhixuan.model.PeopleSalaryBase;
+import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
@@ -43,7 +40,6 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Autowired
     private PeopleJobMapper peopleJobMapper;
-
 
 
     @Override

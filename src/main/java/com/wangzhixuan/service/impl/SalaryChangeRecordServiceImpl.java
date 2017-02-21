@@ -1,8 +1,11 @@
 package com.wangzhixuan.service.impl;
 
+import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.mapper.SalaryChangeRecordMapper;
+import com.wangzhixuan.model.SalaryChangeRecord;
 import com.wangzhixuan.service.SalaryChangeRecordService;
 import com.wangzhixuan.utils.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,26 @@ public class SalaryChangeRecordServiceImpl implements SalaryChangeRecordService{
     public void findSalaryChangeDataGrid(PageInfo pageInfo, HttpServletRequest request) {
         pageInfo.setRows(salaryChangeRecordMapper.findSalaryChangeRecordPageCondition(pageInfo));
         pageInfo.setTotal(salaryChangeRecordMapper.findSalaryChangeRecordPageCount(pageInfo));
+    }
+
+    @Override
+    public void addSalaryChangeRecord(SalaryChangeRecord salaryChangeRecord) {
+        UpdateDate(salaryChangeRecord);
+        salaryChangeRecordMapper.insert(salaryChangeRecord);
+    }
+
+    private void UpdateDate(SalaryChangeRecord salaryChangeRecord){
+
+        if (StringUtils.isBlank(salaryChangeRecord.getChangeDate()))
+            salaryChangeRecord.setChangeDate(null);
+
+        if (StringUtils.isBlank(salaryChangeRecord.getEffectDate())){
+            salaryChangeRecord.setEffectDate(null);
+        }
+
+        if (StringUtils.isBlank(salaryChangeRecord.getPeopleCheckDate())){
+            salaryChangeRecord.setPeopleCheckDate(null);
+        }
     }
 
 }

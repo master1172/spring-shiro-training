@@ -1,7 +1,11 @@
 package com.wangzhixuan.controller;
 
 import com.google.common.collect.Maps;
+import com.wangzhixuan.code.Result;
+import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleTotal;
+import com.wangzhixuan.model.SalaryChangeRecord;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.service.SalaryChangeRecordService;
@@ -28,6 +32,9 @@ public class SalaryChangeRecordController extends BaseController{
     @Autowired
     private SalaryChangeRecordService salaryChangeRecordService;
 
+    @Autowired
+    private PeopleTotalMapper peopleTotalMapper;
+
     @RequestMapping("/changeListPage")
     public String changeListPage(Integer id, Model model){
         People people = peopleService.findPeopleById(id);
@@ -47,5 +54,28 @@ public class SalaryChangeRecordController extends BaseController{
 
         salaryChangeRecordService.findSalaryChangeDataGrid(pageInfo,request);
         return pageInfo;
+    }
+
+    @RequestMapping("/addPage")
+    public String addPage(String peopleCode, Model model){
+        PeopleTotal peopleTotal = peopleTotalMapper.selectByCode(peopleCode);
+        model.addAttribute("people", peopleTotal);
+        return "admin/salaryChangeRecord/salaryChangeAdd";
+    }
+
+    @RequestMapping("/add")
+    @ResponseBody
+    public Result add(SalaryChangeRecord salaryChangeRecord){
+        Result result = new Result();
+        try{
+            salaryChangeRecordService.addSalaryChangeRecord(salaryChangeRecord);
+            result.setMsg("添加成功");
+            result.setSuccess(true);
+            return result;
+        }catch (Exception exp){
+            result.setMsg(exp.toString());
+            result.setSuccess(false);
+            return result;
+        }
     }
 }

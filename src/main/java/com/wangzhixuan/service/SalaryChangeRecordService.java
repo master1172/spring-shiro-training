@@ -1,5 +1,6 @@
 package com.wangzhixuan.service;
 
+import com.wangzhixuan.model.SalaryChangeRecord;
 import com.wangzhixuan.utils.PageInfo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,4 +10,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface SalaryChangeRecordService {
     void findSalaryChangeDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+    void addSalaryChangeRecord(SalaryChangeRecord salaryChangeRecord);
 }

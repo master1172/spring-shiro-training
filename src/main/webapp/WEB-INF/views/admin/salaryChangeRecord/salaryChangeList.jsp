@@ -44,14 +44,14 @@
             title: '添加',
             width: 1000,
             height: 600,
-            href: '${path}/peopleSalary/addPage?peopleCode=${code}',
+            href: '${path}/salaryChangeRecord/addPage?peopleCode=${code}',
             buttons: [{
                 text: '添加',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = salaryGrid;//因为添加成功之后，需要刷新这个salaryGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find("#salaryAddForm");
                     if(parent.checkForm()) {
-                        parent.SYS_SUBMIT_FORM(f, "/peopleSalary/add", function (data) {
+                        parent.SYS_SUBMIT_FORM(f, "/salaryChangeRecord/add", function (data) {
                             if (!data["success"]) {
                                 parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
@@ -80,7 +80,7 @@
             title: '修改',
             width: 1000,
             height: 600,
-            href: '${path}/peopleSalary/editSalaryPage?id='+id,
+            href: '${path}/salaryChangeRecord/editSalaryPage?id='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
@@ -88,7 +88,7 @@
                     var f = parent.$.modalDialog.handler.find("#salaryEditForm");
 
                     if(parent.checkForm()){
-                        parent.SYS_SUBMIT_FORM(f,"/peopleSalary/editSalary",function(data){
+                        parent.SYS_SUBMIT_FORM(f,"/salaryChangeRecord/editSalary",function(data){
                             if(!data["success"]){
                                 parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
@@ -114,7 +114,7 @@
         parent.$.messager.confirm('询问', '您是否要删除当前工资记录？', function (b) {
             if (b) {
                 progressLoad();
-                $.post('${path}/peopleSalary/delete',{
+                $.post('${path}/salaryChangeRecord/delete',{
                     id: id
                 }, function (result) {
                     if (result.success) {
