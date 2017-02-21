@@ -25,7 +25,7 @@
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
     <result column="job_id" property="jobId" jdbcType="INTEGER" />
-    <result column="job_level" property="jobName" jdbcType="VARCHAR" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
     <result column="abroad_date" property="abroadDate" jdbcType="DATE" />
     <result column="country" property="country" jdbcType="VARCHAR" />
     <result column="passport_status" property="passportStatus" jdbcType="VARCHAR" />
@@ -144,17 +144,17 @@
   </insert>
 
   <insert id="insertByImport" parameterType="java.util.List">
-    INSERT INTO abroad(code, name, department_id, job_id
+    INSERT INTO abroad(code, name, department_id, job_id,
       abroad_date, country, passport_status,
       reason, funding, issue_date,
       pick_passport_date, return_passport_date, comment
     )
     values
     <foreach item="item" index="index" collection="list" separator=",">
-    (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER},
-    #{abroadDate,jdbcType=DATE}, #{country,jdbcType=VARCHAR}, #{passportStatus,jdbcType=VARCHAR},
-    #{reason,jdbcType=VARCHAR}, #{funding,jdbcType=VARCHAR}, #{issueDate,jdbcType=DATE},
-    #{pickPassportDate,jdbcType=DATE}, #{returnPassportDate,jdbcType=DATE}, #{comment,jdbcType=VARCHAR}
+    (#{item.code,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.departmentId,jdbcType=INTEGER}, #{item.jobId,jdbcType=INTEGER},
+    #{item.abroadDate,jdbcType=DATE}, #{item.country,jdbcType=VARCHAR}, #{item.passportStatus,jdbcType=VARCHAR},
+    #{item.reason,jdbcType=VARCHAR}, #{item.unding,jdbcType=VARCHAR}, #{item.issueDate,jdbcType=DATE},
+    #{item.pickPassportDate,jdbcType=DATE}, #{item.returnPassportDate,jdbcType=DATE}, #{item.comment,jdbcType=VARCHAR}
     )
     </foreach>
   </insert>

@@ -41,6 +41,7 @@
     <result column="apply_job" property="applyJob" jdbcType="VARCHAR" />
     <result column="origin" property="origin" jdbcType="VARCHAR" />
     <result column="national_id" property="nationalId" jdbcType="INTEGER" />
+    <result column="national_name" property="nationalName" jdbcType="VARCHAR" />
     <result column="birthday" property="birthday" jdbcType="DATE" />
     <result column="political_name" property="politicalName" jdbcType="VARCHAR" />
     <result column="health" property="health" jdbcType="VARCHAR" />
@@ -51,6 +52,7 @@
     <result column="graduate_status" property="graduateStatus" jdbcType="VARCHAR" />
     <result column="foreign_language_level" property="foreignLanguageLevel" jdbcType="VARCHAR" />
     <result column="marriage_id" property="marriageId" jdbcType="INTEGER" />
+    <result column="marriage_status" property="marriageStatus" jdbcType="VARCHAR" />
     <result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
     <result column="photo_id" property="photoId" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
@@ -88,25 +90,62 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into recruit (
-      name, sex, age,
-      major, apply_job, origin, 
-      national_id, birthday, political_name, 
-      health, graduate_school, degree, 
-      degree_ontime, school_address, graduate_status, 
-      foreign_language_level, marriage_id, cellphone, 
-      photo_id, email, address, 
-      zipcode, study_experience, speciality_and_ability, 
-      social_experience, award, photo
+    name,
+    sex,
+    age,
+    major,
+    apply_job,
+    origin,
+    national_id,
+    birthday,
+    political_name,
+    health,
+    graduate_school,
+    degree,
+    degree_ontime,
+    school_address,
+    graduate_status,
+    foreign_language_level,
+    marriage_id,
+    cellphone,
+    photo_id,
+    email,
+    address,
+    zipcode,
+    study_experience,
+    speciality_and_ability,
+    social_experience,
+    award,
+    photo
       )
-    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, 
-      #{major,jdbcType=VARCHAR}, #{applyJob,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, 
-      #{nationalId,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{politicalName,jdbcType=VARCHAR}, 
-      #{health,jdbcType=VARCHAR}, #{graduateSchool,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, 
-      #{degreeOnTime,jdbcType=VARCHAR}, #{schoolAddress,jdbcType=VARCHAR}, #{graduateStatus,jdbcType=VARCHAR},
-      #{foreignLanguageLevel,jdbcType=VARCHAR}, #{marriageId,jdbcType=INTEGER}, #{cellphone,jdbcType=VARCHAR}, 
-      #{photoId,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{zipcode,jdbcType=VARCHAR}, #{studyExperience,jdbcType=VARCHAR}, #{specialityAndAbility,jdbcType=VARCHAR}, 
-      #{socialExperience,jdbcType=VARCHAR}, #{award,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}
+    values (
+    #{name,jdbcType=VARCHAR},
+    #{sex,jdbcType=INTEGER},
+    #{age,jdbcType=INTEGER},
+    #{major,jdbcType=VARCHAR},
+    #{applyJob,jdbcType=VARCHAR},
+    #{origin,jdbcType=VARCHAR},
+    #{nationalId,jdbcType=INTEGER},
+    #{birthday,jdbcType=DATE},
+    #{politicalName,jdbcType=VARCHAR},
+    #{health,jdbcType=VARCHAR},
+    #{graduateSchool,jdbcType=VARCHAR},
+    #{degree,jdbcType=VARCHAR},
+    #{degreeOnTime,jdbcType=VARCHAR},
+    #{schoolAddress,jdbcType=VARCHAR},
+    #{graduateStatus,jdbcType=VARCHAR},
+    #{foreignLanguageLevel,jdbcType=VARCHAR},
+    #{marriageId,jdbcType=INTEGER},
+    #{cellphone,jdbcType=VARCHAR},
+    #{photoId,jdbcType=VARCHAR},
+    #{email,jdbcType=VARCHAR},
+    #{address,jdbcType=VARCHAR},
+    #{zipcode,jdbcType=VARCHAR},
+    #{studyExperience,jdbcType=VARCHAR},
+    #{specialityAndAbility,jdbcType=VARCHAR},
+    #{socialExperience,jdbcType=VARCHAR},
+    #{award,jdbcType=VARCHAR},
+    #{photo,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -117,7 +156,7 @@
       t.national_id, n.name as national_name,t.birthday, t.political_name,
       t.health, t.graduate_school, t.degree,
       t.degree_ontime, t.school_address, t.graduate_status,
-      t.foreign_language_level,t.marriage_id, t.cellphone,
+      t.foreign_language_level,t.marriage_id, m.name AS marriage_status, t.cellphone,
       t.photo_id, t.email, t.address,
       t.zipcode, t.study_experience, t.speciality_and_ability,
       t.social_experience, t.award, t.photo
@@ -125,6 +164,8 @@
       recruit t
     LEFT JOIN
           dict_national n ON n.id = t.national_id
+    LEFT JOIN
+          dict_marriage m ON m.id =  t.marriage_id
     <where>
       <if test=" condition.name != null and condition.name != '' ">
         and t.name LIKE concat('%',#{condition.name},'%')
@@ -138,10 +179,16 @@
     recruit t
     LEFT JOIN
     dict_national n ON n.id = t.national_id
+    LEFT JOIN
+    dict_marriage m ON m.id = t.marriage_id
     <where>
       <if test="condition.name != null and condition.name != ''">
         and t.name LIKE concat('%',#{condition.name},'%')
       </if>
+      <if test=" condition.sex != null">
+        and t.sex = #{condition.sex}
+      </if>
+
     </where>
   </select>
 
@@ -153,7 +200,27 @@
     WHERE
     id = #{id, jdbcType=INTEGER}
   </select>
-
+  <select id="findRecruitVoById" resultMap="recruitVoResultMap" parameterType="java.lang.Integer">
+  SELECT
+      t.id,t.name, t.sex, t.age,
+      t.major, t.apply_job, t.origin,
+      t.national_id, n.name as national_name,t.birthday, t.political_name,
+      t.health, t.graduate_school, t.degree,
+      t.degree_ontime, t.school_address, t.graduate_status,
+      t.foreign_language_level,t.marriage_id, m.name AS marriage_status, t.cellphone,
+      t.photo_id, t.email, t.address,
+      t.zipcode, t.study_experience, t.speciality_and_ability,
+      t.social_experience, t.award, t.photo
+  FROM
+      recruit t
+    LEFT JOIN
+          dict_national n ON n.id = t.national_id
+    LEFT JOIN
+          dict_marriage m ON m.id =  t.marriage_id
+    <where>
+      t.id = #{id}
+    </where>
+  </select>
 
   <update id="update" parameterType="com.wangzhixuan.model.Recruit" >
     update recruit
@@ -223,33 +290,33 @@
     VALUES
     <foreach item="item" index="index" collection="list" separator=",">
     (
-    name = #{name,jdbcType=VARCHAR},
-    sex = #{sex,jdbcType=INTEGER},
-    age = #{age,jdbcType=INTEGER},
-    major = #{major,jdbcType=VARCHAR},
-    apply_job = #{applyJob,jdbcType=VARCHAR},
-    origin = #{origin,jdbcType=VARCHAR},
-    national_id = #{nationalId,jdbcType=INTEGER},
-    birthday = #{birthday,jdbcType=DATE},
-    political_name = #{politicalName,jdbcType=VARCHAR},
-    health = #{health,jdbcType=VARCHAR},
-    graduate_school = #{graduateSchool,jdbcType=VARCHAR},
-    degree = #{degree,jdbcType=VARCHAR},
-    degree_ontime = #{degreeOnTime,jdbcType=VARCHAR},
-    school_address = #{schoolAddress,jdbcType=VARCHAR},
-    graduate_status = #{graduateStatus,jdbcType=VARCHAR},
-    foreign_language_level = #{foreignLanguageLevel,jdbcType=VARCHAR},
-    marriage_id = #{marriageId,jdbcType=INTEGER},
-    cellphone = #{cellphone,jdbcType=VARCHAR},
-    photo_id = #{photoId,jdbcType=VARCHAR},
-    email = #{email,jdbcType=VARCHAR},
-    address = #{address,jdbcType=VARCHAR},
-    zipcode = #{zipcode,jdbcType=VARCHAR},
-    study_experience = #{studyExperience,jdbcType=VARCHAR},
-    speciality_and_ability = #{specialityAndAbility,jdbcType=VARCHAR},
-    social_experience = #{socialExperience,jdbcType=VARCHAR},
-    award = #{award,jdbcType=VARCHAR},
-    photo = #{photo,jdbcType=VARCHAR}
+    #{item.name,jdbcType=VARCHAR},
+    #{item.sex,jdbcType=INTEGER},
+    #{item.age,jdbcType=INTEGER},
+    #{item.major,jdbcType=VARCHAR},
+    #{item.applyJob,jdbcType=VARCHAR},
+    #{item.origin,jdbcType=VARCHAR},
+    #{item.nationalId,jdbcType=INTEGER},
+    #{item.birthday,jdbcType=DATE},
+    #{item.politicalName,jdbcType=VARCHAR},
+    #{item.health,jdbcType=VARCHAR},
+    #{item.graduateSchool,jdbcType=VARCHAR},
+    #{item.degree,jdbcType=VARCHAR},
+    #{item.degreeOnTime,jdbcType=VARCHAR},
+    #{item.schoolAddress,jdbcType=VARCHAR},
+    #{item.graduateStatus,jdbcType=VARCHAR},
+    #{item.foreignLanguageLevel,jdbcType=VARCHAR},
+    #{item.marriageId,jdbcType=INTEGER},
+    #{item.cellphone,jdbcType=VARCHAR},
+    #{item.photoId,jdbcType=VARCHAR},
+    #{item.email,jdbcType=VARCHAR},
+    #{item.address,jdbcType=VARCHAR},
+    #{item.zipcode,jdbcType=VARCHAR},
+    #{item.studyExperience,jdbcType=VARCHAR},
+    #{item.specialityAndAbility,jdbcType=VARCHAR},
+    #{item.socialExperience,jdbcType=VARCHAR},
+    #{item.award,jdbcType=VARCHAR},
+    #{item.photo,jdbcType=VARCHAR}
     )
     </foreach>
   </insert>

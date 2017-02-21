@@ -51,6 +51,8 @@ public class RecruitVo implements Serializable{
 
     private Integer marriageId;
 
+    private String marriageStatus;
+
     private String cellphone;
 
     private String photoId;
@@ -127,6 +129,10 @@ public class RecruitVo implements Serializable{
     public void setOrigin(String origin) {
         this.origin = origin;
     }
+
+    public String getMarriageStatus() {return marriageStatus;}
+
+    public void setMarriageStatus(String marriageStatus) {this.marriageStatus = marriageStatus;}
 
     public Integer getNationalId() {
         return nationalId;

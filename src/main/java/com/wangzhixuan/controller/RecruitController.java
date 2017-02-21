@@ -96,10 +96,10 @@ public class RecruitController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers="Accept=application/json")
     @ResponseBody
-    public Result add(Recruit recruit){
+    public Result add(RecruitVo recruitVo,@RequestParam(value="fileName",required=false)CommonsMultipartFile file){
         Result result = new Result();
         try{
-            recruitService.add(recruit);
+            recruitService.add(recruitVo,file);
             result.setMsg("添加成功");
             result.setSuccess(true);
         }catch(Exception exp){
@@ -112,17 +112,17 @@ public class RecruitController {
 
     @RequestMapping("/editPage")
     public String editPage(Integer id, Model model){
-        Recruit recruit = recruitService.findRecruitById(id);
-        model.addAttribute("recruit", recruit);
+        RecruitVo recruitVo =recruitService.findRecruitVoById(id);
+        model.addAttribute("recruit", recruitVo);
         return "/admin/recruit/peopleEdit";
     }
 
     @RequestMapping("/edit")
     @ResponseBody
-    public Result edit(Recruit recruit){
+    public Result edit(RecruitVo recruitVo){
         Result result = new Result();
         try{
-            recruitService.update(recruit);
+            recruitService.update(recruitVo);
             result.setSuccess(true);
             result.setMsg("修改成功");
         }catch (Exception exp){

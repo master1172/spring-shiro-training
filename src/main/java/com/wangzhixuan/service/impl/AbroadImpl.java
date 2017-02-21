@@ -2,14 +2,10 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.AbroadMapper;
 import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.TrainingMapper;
 import com.wangzhixuan.model.Abroad;
-import com.wangzhixuan.model.Training;
 import com.wangzhixuan.service.AbroadService;
-import com.wangzhixuan.service.TrainingService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.AbroadVo;
-import com.wangzhixuan.vo.TrainingVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -49,7 +45,7 @@ public class AbroadImpl implements AbroadService {
         String ids = "";
         pageInfo.setFrom(0);
         pageInfo.setSize(100000);
-        List<TrainingVo> trainingList = abroadMapper.findPeoplePageCondition(pageInfo);
+        List<AbroadVo> trainingList = abroadMapper.findPeoplePageCondition(pageInfo);
 
         if (trainingList == null || trainingList.size() < 0)
             return ids;

@@ -3,7 +3,10 @@ package com.wangzhixuan.mapper;
 import com.wangzhixuan.model.Recruit;
 import com.wangzhixuan.model.Training;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.RecruitVo;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -19,7 +22,9 @@ public interface RecruitMapper {
 
     int insert(Recruit recruit);
 
-    int update(Recruit recruit);
+
+
+    void update(Recruit recruit);
 
     int delete(Integer id);
 
@@ -28,4 +33,6 @@ public interface RecruitMapper {
     int insertByImport(List<Recruit> list);
 
     List selectRecruitVoByIds(String[] idList);
+
+    RecruitVo findRecruitVoById(Integer id);
 }

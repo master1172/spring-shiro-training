@@ -32,11 +32,11 @@ public class AbroadVo implements Serializable {
 
     private String funding;
 
-    private Date issueDate;
+    private String issueDate;
 
-    private Date pickPassportDate;
+    private String pickPassportDate;
 
-    private Date returnPassportDate;
+    private String returnPassportDate;
 
     private String comment;
 
@@ -122,27 +122,27 @@ public class AbroadVo implements Serializable {
 
     public void setJobName(String jobName) {this.jobName = jobName;}
 
-    public Date getIssueDate() {
+    public String getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(String issueDate) {
         this.issueDate = issueDate;
     }
 
-    public Date getPickPassportDate() {
+    public String getPickPassportDate() {
         return pickPassportDate;
     }
 
-    public void setPickPassportDate(Date pickPassportDate) {
+    public void setPickPassportDate(String pickPassportDate) {
         this.pickPassportDate = pickPassportDate;
     }
 
-    public Date getReturnPassportDate() {
+    public String getReturnPassportDate() {
         return returnPassportDate;
     }
 
-    public void setReturnPassportDate(Date returnPassportDate) {
+    public void setReturnPassportDate(String returnPassportDate) {
         this.returnPassportDate = returnPassportDate;
     }
 

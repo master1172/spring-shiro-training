@@ -33,7 +33,7 @@
                     </td>
                     <td>专业</td>
                     <td>
-                        <input type="text" id="major" name="major">
+                        <input type="text" name="major">
                     </td>
                 </tr>
                 <tr>
@@ -75,7 +75,7 @@
                     </td>
                     <td>学历</td>
                     <td>
-                        <input type="text" id="degree" name="degree">
+                        <input type="text" name="degree">
                     </td>
                 </tr>
                 <tr>
@@ -100,13 +100,14 @@
                     </td>
                     <td>外语水平</td>
                     <td>
-                    <input type="text" id="foreignLanguageLevel" name="degree">
+                    <input type="text" id="foreignLanguageLevel" name="foreignLanguageLevel">
                     </td>
             </tr>
                 <tr>
                     <td>婚姻状况</td>
                     <td>
-                    <input type="text" id="marriageId" name="marriageId">
+                        <input class="easyui-combobox" id="marriageId" name="marriageId" url="${path}/dict/marriage" valueField="id" textField="name" editable="false">
+                        </input>
                     </td>
                     <td>联系电话</td>
                     <td>

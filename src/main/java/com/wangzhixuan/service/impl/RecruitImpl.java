@@ -2,15 +2,12 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.RecruitMapper;
-import com.wangzhixuan.mapper.TrainingMapper;
-import com.wangzhixuan.model.Abroad;
 import com.wangzhixuan.model.Recruit;
-import com.wangzhixuan.model.Training;
 import com.wangzhixuan.service.RecruitService;
-import com.wangzhixuan.service.TrainingService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.RecruitVo;
 import com.wangzhixuan.vo.TrainingVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -24,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,23 +60,71 @@ public class RecruitImpl implements RecruitService {
 
         return ids;
     }
-
     @Override
+    public void add(RecruitVo recruitVo,CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        //当日期不为空，而是""的时候，需要修改为null，否则插入会有错误
+        UpdateDate(recruitVo);
+
+        Recruit recruit = new Recruit();
+        BeanUtils.copyProperties(recruit,recruitVo);
+
+
+        if(file!=null){//上传附件
+            //获取头像上传路径
+            String filePath = StringUtilExtra.getPictureUploadPath();
+            String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
+            if(StringUtils.isNotEmpty(uploadPath) ){
+                recruit.setPhoto(uploadPath);
+                recruitMapper.insert(recruit);
+            }
+        }else{
+            recruitMapper.insert(recruit);
+        }
+
+
+}
+
+        @Override
     public Recruit findRecruitById(Integer id) {
         return recruitMapper.findRecruitById(id);
     }
 
     @Override
-    public void add(Recruit recruit) {
-        UpdateDate(recruit);
-        recruitMapper.insert(recruit);
+    public RecruitVo findRecruitVoById(Integer id){
+        RecruitVo recruitVo = recruitMapper.findRecruitVoById(id);
+        return recruitVo;
     }
 
 
     @Override
-    public void update(Recruit recruit) {
-        UpdateDate(recruit);
-        recruitMapper.update(recruit);
+    public void update(RecruitVo recruitVo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException {
+        UpdateDate(recruitVo);
+
+        Recruit recruit = new Recruit();
+        BeanUtils.copyProperties(recruit,recruitVo);
+
+        if (file != null){
+            //获取头像上传路径
+            String filePath = StringUtilExtra.getPictureUploadPath();
+            String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
+            if(StringUtils.isNotEmpty(uploadPath)){
+                recruit.setPhoto(uploadPath);
+                recruitMapper.update(recruit);
+            }
+        }else{
+            recruitMapper.update(recruit);
+        }
+    }
+
+    @Override
+    public void update(RecruitVo recruitVo){
+        Recruit recruit = new Recruit();
+        try {
+            BeanUtils.copyProperties(recruit,recruitVo);
+            recruitMapper.update(recruit);
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -138,32 +184,32 @@ public class RecruitImpl implements RecruitService {
                     row = sheet.createRow(i + 1);
                     RecruitVo p = (RecruitVo) list.get(i);
                     row.createCell(0).setCellValue(i + 1);
-                    row.createCell(1).setCellValue(p.getName());
-                    row.createCell(2).setCellValue(p.getSex() == null ? "" : (p.getSex() == 0 ? "男" : "女"));
-                    row.createCell(3).setCellValue(p.getAge() == null ? "" : p.getAge().toString());
-                    row.createCell(4).setCellValue(p.getMajor());
-                    row.createCell(5).setCellValue(p.getApplyJob());
-                    row.createCell(6).setCellValue(p.getOrigin());
-                    row.createCell(7).setCellValue(p.getNationalName());
-                    row.createCell(8).setCellValue(p.getBirthday());
-                    row.createCell(9).setCellValue(p.getPoliticalName());
-                    row.createCell(10).setCellValue(p.getHealth());
-                    row.createCell(11).setCellValue(p.getGraduateSchool());
-                    row.createCell(12).setCellValue(p.getDegree());
-                    row.createCell(13).setCellValue(p.getDegreeOnTime() == null ? "" : (p.getDegreeOnTime() == 0 ? "是" : "否"));
-                    row.createCell(14).setCellValue(p.getSchoolAddress());
-                    row.createCell(15).setCellValue(p.getGraduateStatus());
-                    row.createCell(16).setCellValue(p.getForeignLanguageLevel());
-                    row.createCell(17).setCellValue(p.getMarriageId());
-                    row.createCell(18).setCellValue(p.getCellphone());
-                    row.createCell(19).setCellValue(p.getPhotoId());
-                    row.createCell(10).setCellValue(p.getEmail());
-                    row.createCell(21).setCellValue(p.getAddress());
-                    row.createCell(22).setCellValue(p.getZipcode());
-                    row.createCell(23).setCellValue(p.getStudyExperience());
-                    row.createCell(24).setCellValue(p.getSpecialityAndAbility());
-                    row.createCell(25).setCellValue(p.getSocialExperience());
-                    row.createCell(26).setCellValue(p.getAward());
+                    row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getSex() == null ? "" : (p.getSex() == 0 ? "男" : "女"));row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getAge() == null ? "" : p.getAge().toString());row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getMajor());row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getApplyJob());row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getOrigin());row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getNationalName());row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(p.getBirthday());row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getPoliticalName());row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getHealth());row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getGraduateSchool());row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getDegree());row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(13).setCellValue(p.getDegreeOnTime() == null ? "" : (p.getDegreeOnTime() == 0 ? "是" : "否"));row.getCell(13).setCellStyle(setBorder);
+                    row.createCell(14).setCellValue(p.getSchoolAddress());row.getCell(14).setCellStyle(setBorder);
+                    row.createCell(15).setCellValue(p.getGraduateStatus());row.getCell(15).setCellStyle(setBorder);
+                    row.createCell(16).setCellValue(p.getForeignLanguageLevel());row.getCell(16).setCellStyle(setBorder);
+                    row.createCell(17).setCellValue(p.getMarriageId());row.getCell(17).setCellStyle(setBorder);
+                    row.createCell(18).setCellValue(p.getCellphone());row.getCell(18).setCellStyle(setBorder);
+                    row.createCell(19).setCellValue(p.getPhotoId());row.getCell(19).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getEmail());row.getCell(20).setCellStyle(setBorder);
+                    row.createCell(21).setCellValue(p.getAddress());row.getCell(21).setCellStyle(setBorder);
+                    row.createCell(22).setCellValue(p.getZipcode());row.getCell(22).setCellStyle(setBorder);
+                    row.createCell(23).setCellValue(p.getStudyExperience());row.getCell(23).setCellStyle(setBorder);
+                    row.createCell(24).setCellValue(p.getSpecialityAndAbility());row.getCell(24).setCellStyle(setBorder);
+                    row.createCell(25).setCellValue(p.getSocialExperience());row.getCell(25).setCellStyle(setBorder);
+                    row.createCell(26).setCellValue(p.getAward());row.getCell(26).setCellStyle(setBorder);
                     for (int j = 0; j < 27; j++) {
                         row.getCell(j).setCellStyle(setBorder);
                     }
@@ -185,9 +231,9 @@ public class RecruitImpl implements RecruitService {
         }
     }
 
-    private void UpdateDate(Recruit recruit) {
-        if (StringUtils.isBlank(recruit.getBirthday()))
-            recruit.setBirthday(null);
+    private void UpdateDate(RecruitVo recruitVo) {
+        if (StringUtils.isBlank(recruitVo.getBirthday()))
+            recruitVo.setBirthday(null);
     }
 
     private List<Recruit> getPeopleInfoByExcel(List<Recruit> list, String path) {
