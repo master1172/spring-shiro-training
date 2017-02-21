@@ -15,7 +15,7 @@
     <result column="health" property="health" jdbcType="VARCHAR" />
     <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
     <result column="degree" property="degree" jdbcType="VARCHAR" />
-    <result column="degree_ontime" property="degreeOnTime" jdbcType="VARCHAR" />
+    <result column="degree_ontime" property="degreeOnTime" jdbcType="INTEGER" />
     <result column="school_address" property="schoolAddress" jdbcType="VARCHAR" />
     <result column="graduate_status" property="graduateStatus" jdbcType="VARCHAR" />
     <result column="foreign_language_level" property="foreignLanguageLevel" jdbcType="VARCHAR" />
@@ -47,7 +47,7 @@
     <result column="health" property="health" jdbcType="VARCHAR" />
     <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
     <result column="degree" property="degree" jdbcType="VARCHAR" />
-    <result column="degree_ontime" property="degreeOnTime" jdbcType="VARCHAR" />
+    <result column="degree_ontime" property="degreeOnTime" jdbcType="INTEGER" />
     <result column="school_address" property="schoolAddress" jdbcType="VARCHAR" />
     <result column="graduate_status" property="graduateStatus" jdbcType="VARCHAR" />
     <result column="foreign_language_level" property="foreignLanguageLevel" jdbcType="VARCHAR" />
@@ -64,7 +64,6 @@
     <result column="award" property="award" jdbcType="VARCHAR" />
     <result column="photo" property="photo" jdbcType="VARCHAR" />
   </resultMap>
-
   <sql id="Base_Column_List" >
     id, name, sex, age, major, apply_job, origin, national_id, birthday, political_name, 
     health, graduate_school, degree, degree_ontime, school_address, graduate_status, 
