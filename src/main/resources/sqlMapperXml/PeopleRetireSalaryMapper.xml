@@ -316,7 +316,7 @@
 			t.net_income,
 			t.pay_date
 		FROM people_retire_salary t
-		LEFT JOIN people_retire p
+		LEFT JOIN people_total p
 		ON t.people_code = p.code
 		where t.people_code = #{peopleCode}
 	</select>
