@@ -95,7 +95,7 @@
       FROM
       exam_monthly t
       LEFT JOIN
-      people p ON t.people_code = p.code
+      people_total p ON t.people_code = p.code
       <where>
         t.people_code = #{code,jdbcType=VARCHAR}
       </where>
