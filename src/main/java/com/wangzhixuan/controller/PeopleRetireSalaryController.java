@@ -199,7 +199,6 @@ public class PeopleRetireSalaryController extends BaseController {
 	public Result importExcel(@RequestParam(value = "fileName", required = false) CommonsMultipartFile[] files) {
 		Result result = new Result();
 		if (files != null && files.length > 0) {
-			logger.info(JSON.toJSONString(files));
 			boolean flag = peopleRetireSalaryService.insertByImport(files);
 			result.setSuccess(flag);
 			if (!flag) {
