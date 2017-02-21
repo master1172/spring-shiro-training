@@ -204,6 +204,31 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 	public String getLastUpdateDate() {return lastUpdateDate;}
 
 	public void setLastUpdateDate(String lastUpdateDate) {this.lastUpdateDate = lastUpdateDate;}
+
+	public Integer getSex() {
+		return sex;
+	}
+
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+
+	public String getBirthdayMin() {
+		return birthdayMin;
+	}
+
+	public void setBirthdayMin(String birthdayMin) {
+		this.birthdayMin = birthdayMin;
+	}
+
+	public String getBirthdayMax() {
+		return birthdayMax;
+	}
+
+	public void setBirthdayMax(String birthdayMax) {
+		this.birthdayMax = birthdayMax;
+	}
+
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);
@@ -212,8 +237,21 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 	public static Map<String,Object> CreateCondition(PeopleRetireSalaryBaseVo peopleRetireSalaryBaseVo) {
 		Map<String,Object> condition = Maps.newHashMap();
 		if (StringUtils.isNoneBlank(peopleRetireSalaryBaseVo.getPeopleName())){
-			condition.put("name",peopleRetireSalaryBaseVo.getPeopleName());
+			condition.put("peopleName",peopleRetireSalaryBaseVo.getPeopleName());
 		}
+
+		if (peopleRetireSalaryBaseVo.getSex() != null){
+			condition.put("sex",peopleRetireSalaryBaseVo.getSex());
+		}
+
+		if (StringUtils.isNoneBlank(peopleRetireSalaryBaseVo.getBirthdayMin())){
+			condition.put("birthdayMin", peopleRetireSalaryBaseVo.getBirthdayMin());
+		}
+
+		if(StringUtils.isNoneBlank(peopleRetireSalaryBaseVo.getBirthdayMax())){
+			condition.put("birthdayMax", peopleRetireSalaryBaseVo.getBirthdayMax());
+		}
+
 		condition.put("status", ConstUtil.PEOPLE_RETIRE);
 
 		return condition;

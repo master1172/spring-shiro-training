@@ -117,8 +117,17 @@
 		FROM
 			people_total t
 	  	<where>
-			<if test=" condition.name != null and condition.name != ''">
-				and t.name LIKE concat('%',#{condition.name},'%')
+			<if test=" condition.peopleName != null and condition.peopleName != ''">
+				and t.name LIKE concat('%',#{condition.peopleName},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.birthdayMin != null and condition.birthdayMax != ''">
+				<![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+			</if>
+			<if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+				<![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
 			</if>
 			<if test=" condition.status != null ">
 				and t.status = 1
@@ -130,8 +139,17 @@
 		SELECT count(t.id) count
 		FROM people_total t
 		<where>
-			<if test=" condition.name != null and condition.name != ''">
-				and t.name LIKE concat('%',#{condition.name},'%')
+			<if test=" condition.peopleName != null and condition.peopleName != ''">
+				and t.name LIKE concat('%',#{condition.peopleName},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.birthdayMin != null and condition.birthdayMax != ''">
+				<![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+			</if>
+			<if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+				<![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
 			</if>
 			<if test=" condition.status != null ">
 				and t.status = 1

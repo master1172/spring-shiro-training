@@ -216,7 +216,7 @@
             <tr>
                 <th>姓名:</th>
                 <td>
-                    <input name="name" placeholder="请输入人员姓名"/>
+                    <input name="peopleName" placeholder="请输入人员姓名"/>
                 </td>
                 <th>性别:</th>
                 <td>
