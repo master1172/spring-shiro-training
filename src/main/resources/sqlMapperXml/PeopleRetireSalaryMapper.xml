@@ -269,24 +269,13 @@
 		select count(t.id) count
 		FROM
 		people_retire_salary t
-		LEFT JOIN
-		people_total p ON t.people_code = p.code
-		<where>
-			<if test=" condition.peopleCode != null and condition.peopleCode != ''">
-				and t.people_code LIKE
-				concat('%',#{condition.peopleCode},'%')
-			</if>
-			<if test=" condition.peopleName != null and condition.peopleName != '' ">
-				and p.name LIKE concat('%',#{condition.peopleName},'%')
-			</if>
-		</where>
+		where t.people_code = #{condition.peopleCode}
 	</select>
 
 	<select id="findPeopleRetireSalaryPageCondition" resultMap="peopleRetireSalaryVoResultMap" parameterType="PageInfo">
 	SELECT
 		t.id,
 		t.people_code,
-		p.name as people_name,
 		t.base_salary,
 		t.extra_allowance,
 		t.rent_allowance,
@@ -304,17 +293,7 @@
 		t.net_income,
 		t.pay_date
 		FROM people_retire_salary t
-		LEFT JOIN people_total p
-		ON t.people_code = p.code
-		<where>
-			<if test=" condition.peopleCode != null and condition.peopleCode != ''">
-				and t.people_code LIKE
-				concat('%',#{condition.peopleCode},'%')
-			</if>
-			<if test=" condition.peopleName != null and condition.peopleName != '' ">
-				and p.name LIKE concat('%',#{condition.peopleName},'%')
-			</if>
-		</where>
+		where t.people_code = #{condition.peopleCode}
 		ORDER BY
 		t.pay_date desc
 		LIMIT #{from}, #{size}
