@@ -113,6 +113,33 @@ public class PeopleRetireSalaryController extends BaseController {
 		return pageInfo;
 	}
 
+	@RequestMapping("/addPage")
+	public String addPage(String peopleCode, Model model) {
+		PeopleRetireSalaryBase peopleRetireSalaryBase = peopleRetireSalaryService.findPeopleRetireSalaryBaseByCode(peopleCode);
+		if (peopleRetireSalaryBase == null) {
+			peopleRetireSalaryBase = new PeopleRetireSalaryBase();
+		}
+		model.addAttribute("people", peopleRetireSalaryBase);
+		return "/admin/peopleRetireSalary/peopleSalaryAdd";
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	@ResponseBody
+	public Result add(PeopleRetireSalary peopleRetireSalary, @RequestParam(value = "fileName", required = false) CommonsMultipartFile file) {
+		Result result = new Result();
+		try {
+			peopleRetireSalaryService.addSalary(peopleRetireSalary);
+			result.setSuccess(true);
+			result.setMsg("添加成功!");
+			return result;
+		} catch (Exception e) {
+			logger.error("添加工资失败：{}", e);
+			result.setMsg(e.getMessage());
+			return result;
+		}
+	}
+
+
 	@RequestMapping("/delete")
 	@ResponseBody
 	public Result delete(Long id) {
@@ -130,33 +157,9 @@ public class PeopleRetireSalaryController extends BaseController {
 		}
 	}
 
-	@RequestMapping("/addPage")
-	public String addPage(String peopleCode, Model model) {
-		PeopleRetire peopleRetire = peopleRetireService.findPeopleRetireByCode(peopleCode);
-		if (peopleRetire == null) {
-			peopleRetire = new PeopleRetire();
-		}
-		model.addAttribute("people", peopleRetire);
-		return "/admin/peopleRetireSalary/peopleSalaryAdd";
-	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	@ResponseBody
-	public Result add(PeopleRetireSalary peopleRetireSalary,
-			@RequestParam(value = "fileName", required = false) CommonsMultipartFile file) {
-		Result result = new Result();
-		try {
-			peopleRetireSalaryService.addSalary(peopleRetireSalary);
 
-			result.setSuccess(true);
-			result.setMsg("添加成功!");
-			return result;
-		} catch (Exception e) {
-			logger.error("添加工资失败：{}", e);
-			result.setMsg(e.getMessage());
-			return result;
-		}
-	}
+
 
 
 	

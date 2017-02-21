@@ -149,8 +149,8 @@
 	<select id="findPeopleRetireSalaryBaseByCode" resultMap="peopleRetireSalaryBaseMap" parameterType="java.lang.String">
 		SELECT
 		t.id,
-		t.people_code,
-		p.name as people_name,
+		t.code,
+		t.name,
 		t.base_salary,
 		t.extra_allowance,
 		t.rent_allowance,
@@ -162,16 +162,11 @@
 		t.property_allowance,
 		t.heating_fee,
 		t.handicap_allowance,
-		t.gross_income,
-		t.expense,
 		t.rent_fee,
-		t.net_income,
 		t.last_update_date
-		FROM people_retire_salary_base t
-		LEFT JOIN people_retire p
-		ON t.people_code = p.code
+		FROM people_total t
 		<where>
-			t.people_code = #{peopleCode}
+			t.code = #{peopleCode}
 		</where>
 	</select>
 

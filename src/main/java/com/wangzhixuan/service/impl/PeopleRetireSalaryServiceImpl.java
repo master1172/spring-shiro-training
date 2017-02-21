@@ -63,10 +63,8 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 		if (peopleSalary != null && StringUtils.isBlank(peopleSalary.getPayDate())) {
 			peopleSalary.setPayDate(DateUtil.GetDate(new Date()));
 		}
-		logger.info("PeopleRetireSalary123:"+JSON.toJSONString(peopleSalary));
 
 		peopleRetireSalaryMapper.insert(peopleSalary);
-
 	}
 
 	@Override
