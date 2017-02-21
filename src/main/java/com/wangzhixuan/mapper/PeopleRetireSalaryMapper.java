@@ -9,7 +9,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleRetireSalaryVo;
 
 public interface PeopleRetireSalaryMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(PeopleRetireSalary record);
 

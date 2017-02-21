@@ -165,7 +165,7 @@ public class PeopleRetireSalaryController extends BaseController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Result delete(Long id) {
+	public Result delete(Integer id) {
 		Result result = new Result();
 		try {
 			peopleRetireSalaryService.deleteSalaryById(id);

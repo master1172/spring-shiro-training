@@ -73,7 +73,7 @@ public class PeopleRetireSalaryServiceImpl implements PeopleRetireSalaryService 
 	}
 
 	@Override
-	public void deleteSalaryById(Long id) {
+	public void deleteSalaryById(Integer id) {
 		peopleRetireSalaryMapper.deleteByPrimaryKey(id);
 	}
 

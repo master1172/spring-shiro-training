@@ -18,7 +18,7 @@ public interface PeopleRetireSalaryService {
 
     void updateSalary(PeopleRetireSalary peopleSalary);
 
-    void deleteSalaryById(Long id);
+    void deleteSalaryById(Integer id);
 
     PeopleRetireSalaryVo findPeopleRetireSalaryVoById(Long id);
     

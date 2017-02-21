@@ -205,7 +205,7 @@
 			where t.id = #{id,jdbcType=INTEGER}
 	</select>
 
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from people_retire_salary
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
