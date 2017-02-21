@@ -8,6 +8,7 @@
     <result column="month"       property="month"      jdbcType="INTEGER" />
     <result column="exam_result" property="examResult" jdbcType="VARCHAR" />
     <result column="exam_operation" property="examOperation" jdbcType="VARCHAR" />
+    <result column="exam_date"   property="examDate"   jdbcType="VARCHAR"/>
   </resultMap>
 
   <resultMap id="ExamMonthlyVoMap" type="com.wangzhixuan.vo.ExamMonthlyVo">
@@ -18,10 +19,11 @@
     <result column="month" property="month" jdbcType="INTEGER"/>
     <result column="exam_result" property="examResult" jdbcType="VARCHAR"/>
     <result column="exam_operation" property="examOperation" jdbcType="VARCHAR"/>
+    <result column="exam_date" property="examDate" jdbcType="VARCHAR"/>
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, people_code, year, month, exam_result, exam_operation
+    id, people_code, year, month, exam_result, exam_operation, exam_date
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -40,13 +42,14 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into exam_monthly (people_code, year, month, exam_result, exam_operation)
+    insert into exam_monthly (people_code, year, month, exam_result, exam_operation, exam_date)
     values (
       #{peopleCode,jdbcType=VARCHAR},
       #{year,jdbcType=INTEGER},
       #{month,jdbcType=INTEGER},
       #{examResult,jdbcType=VARCHAR},
-      #{examOperation,jdbcType=VARCHAR}
+      #{examOperation,jdbcType=VARCHAR},
+      #{examDate, jdbcType=VARCHAR}
     )
   </insert>
 
@@ -57,7 +60,8 @@
       year            = #{year,jdbcType=INTEGER},
       month           = #{month,jdbcType=INTEGER},
       exam_result     = #{examResult,jdbcType=VARCHAR},
-      exam_operation  = #{examOperation,jdbcType=VARCHAR}
+      exam_operation  = #{examOperation,jdbcType=VARCHAR},
+      exam_date       = #{examDate, jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -91,7 +95,8 @@
       t.year,
       t.month,
       t.exam_result,
-      t.exam_operation
+      t.exam_operation,
+      t.exam_date
       FROM
       exam_monthly t
       LEFT JOIN
@@ -110,7 +115,8 @@
       #{item.year, jdbcType=INTEGER},
       #{item.month, jdbcType=INTEGER},
       #{item.examResult,jdbcType=VARCHAR},
-      #{item.examOperation, jdbcType=VARCHAR}
+      #{item.examOperation, jdbcType=VARCHAR},
+      #{item.examDate, jdbcType=VARCHAR}
       )
     </foreach>
   </insert>
@@ -121,10 +127,12 @@
     FROM exam_monthly t
     WHERE
       t.people_code = #{peopleCode}
-      AND
-      t.year = #{year}
-      AND
-      t.month = #{month}
+      <if test=" startDate != null and startDate != ''">
+          <![CDATA[ and t.exam_date >= #{startDate} ]]>
+      </if>
+      <if test=" endDate != null and endDate != ''">
+        <![CDATA[ and t.exam_date <= #{endDate} ]]>
+      </if>
       LIMIT 0,1
   </select>
 </mapper>

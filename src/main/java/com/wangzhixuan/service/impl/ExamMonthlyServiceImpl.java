@@ -44,25 +44,17 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
   @Autowired
   private ExamMonthlyMapper examMonthlyMapper;
 
-  @Autowired
-  private DictMapper dictMapper;
-
   @Override
   public ExamMonthly findExamMonthlyById(Long id) {
     return examMonthlyMapper.selectByPrimaryKey(id.intValue());
   }
 
   @Override
-  public ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(String code, Integer year, Integer month) {
+  public ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(String code, String startDate, String endDate) {
     Map<String, Object> condition = Maps.newHashMap();
     condition.put("peopleCode",code);
-    String checkDateMin = year.toString() + "-" + month.toString() + "-" + "1";
-    String checkDateMax = year.toString() + "-" + month.toString() + "-" + "31";
-    condition.put("checkDateMin",checkDateMin);
-    condition.put("checkDateMax",checkDateMax);
-    condition.put("year",year);
-    condition.put("month",month);
-
+    condition.put("starDate",startDate);
+    condition.put("endDate",endDate);
     return examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(condition);
   }
 
@@ -124,14 +116,13 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
           ExamMonthlyVo examMonthlyVo = examMonthlyVoList.get(j);
           row.createCell(0).setCellValue(count+1);
           row.createCell(1).setCellValue(examMonthlyVo.getName());
-          row.createCell(2).setCellValue(examMonthlyVo.getYear());
-          row.createCell(3).setCellValue(examMonthlyVo.getMonth());
-          row.createCell(4).setCellValue(examMonthlyVo.getExamResult());
-          row.createCell(5).setCellValue(examMonthlyVo.getExamOperation());
+          row.createCell(2).setCellValue(examMonthlyVo.getExamResult());
+          row.createCell(3).setCellValue(examMonthlyVo.getExamOperation());
+          row.createCell(4).setCellValue(examMonthlyVo.getExamDate());
 
           count++;
 
-          for(int k=0; k<6; k++){
+          for(int k=0; k<5; k++){
             row.getCell(k).setCellStyle(setBorder);
           }
           row.setHeight((short) 400);
@@ -201,24 +192,18 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
           continue;
         examMonthly.setPeopleCode(people.getCode());
 
+
+
         if(row.getCell(2)!=null && !row.getCell(2).toString().trim().equals("")){
-          Double yearValue = Double.parseDouble(row.getCell(2).toString().trim());
-          if (yearValue != null)
-            examMonthly.setYear(yearValue.intValue());
+          examMonthly.setExamResult(row.getCell(2).toString().trim());
         }
 
         if(row.getCell(3)!=null && !row.getCell(3).toString().trim().equals("")){
-          Double monthValue = Double.parseDouble(row.getCell(3).toString().trim());
-          if (monthValue != null)
-            examMonthly.setMonth(monthValue.intValue());
+          examMonthly.setExamOperation(row.getCell(3).toString().trim());
         }
 
         if(row.getCell(4)!=null && !row.getCell(4).toString().trim().equals("")){
-          examMonthly.setExamResult(row.getCell(4).toString().trim());
-        }
-
-        if(row.getCell(5)!=null && !row.getCell(5).toString().trim().equals("")){
-          examMonthly.setExamOperation(row.getCell(5).toString().trim());
+          examMonthly.setExamDate(row.getCell(4).toString().trim());
         }
 
         list.add(examMonthly);

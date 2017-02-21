@@ -25,13 +25,17 @@
                 <input type="hidden" name="id" value="${examMonthly.id}">
                 <input type="hidden" name="peopleCode" value="${examMonthly.peopleCode}">
                 <tr>
-                    <td>年份信息</td>
+                    <td>考核日期</td>
                     <td>
-                        <input name="year" id="year" type="text" value="${examMonthly.year}" class="easyui-numberbox" precision="0" style="text-align:right;"/>
-                    </td>
-                    <td>月份信息</td>
-                    <td>
-                        <input name="month" id="month" type="text" value="${examMonthly.month}" class="easyui-numberbox" precision="0" style="text-align:right;"/>
+                        <input id="examDate" name="examDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                    readOnly:true,
+                                    dateFmt:'yyyy-MM',
+                                    maxDate:'%y-%M-%d'
+                                })"
+                               readonly="readonly"
+                               value="${examMonthly.examDate}"
+                        />
                     </td>
                 </tr>
                 <tr>

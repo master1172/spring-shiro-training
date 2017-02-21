@@ -35,6 +35,12 @@ public class ExamMonthlyVo implements Serializable{
 
   private String examOperation;
 
+  private String examDate;
+
+  private String examDateMin;
+
+  private String examDateMax;
+
   public Integer getId() {
     return id;
   }
@@ -123,6 +129,30 @@ public class ExamMonthlyVo implements Serializable{
     this.examOperation = examOperation;
   }
 
+  public String getExamDate() {
+    return examDate;
+  }
+
+  public void setExamDate(String examDate) {
+    this.examDate = examDate;
+  }
+
+  public String getExamDateMin() {
+    return examDateMin;
+  }
+
+  public void setExamDateMin(String examDateMin) {
+    this.examDateMin = examDateMin;
+  }
+
+  public String getExamDateMax() {
+    return examDateMax;
+  }
+
+  public void setExamDateMax(String examDateMax) {
+    this.examDateMax = examDateMax;
+  }
+
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder("ExamMonthlyVo{");
@@ -165,6 +195,19 @@ public class ExamMonthlyVo implements Serializable{
     if(StringUtils.isNotBlank(vo.getExamOperation())){
       condition.put("examOperation",vo.getExamOperation());
     }
+
+    if(StringUtils.isNoneBlank(vo.getExamDate())){
+      condition.put("examDate",vo.getExamDate());
+    }
+
+    if(StringUtils.isNoneBlank(vo.getExamDateMin())){
+      condition.put("examDateMin",vo.getExamDateMin());
+    }
+
+    if(StringUtils.isNoneBlank(vo.getExamDateMax())){
+      condition.put("examDateMax", vo.getExamDateMax());
+    }
+
     return condition;
   }
 }

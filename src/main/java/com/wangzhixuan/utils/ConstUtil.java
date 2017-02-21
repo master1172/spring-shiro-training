@@ -91,7 +91,7 @@ public class ConstUtil {
 
     public static String[] getExamMonthlyHeaders(){
         return new String[]{
-                "序号","姓名","年份","月份","考核结果","考核运用"
+                "序号","姓名","考核结果","考核运用","考核日期"
         };
     }
 

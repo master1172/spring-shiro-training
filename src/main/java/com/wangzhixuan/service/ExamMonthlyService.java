@@ -29,5 +29,5 @@ public interface ExamMonthlyService {
 
   ExamMonthly findExamMonthlyById(Long id);
 
-  ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(String code, Integer year, Integer month);
+  ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(String code, String startDate, String endDate);
 }

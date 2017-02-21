@@ -142,10 +142,9 @@
             <thead>
             <tr>
                 <th field="ck"              data-options="checkbox:true"></th>
-                <th field="year"            data-options="sortable:false" width="80">考核年</th>
-                <th field="month"           data-options="sortable:false" width="80">考核月</th>
                 <th field="examResult"      data-options="sortable:false" width="80">考核结果</th>
                 <th field="examOperation"   data-options="sortable:false" width="80">考核运用</th>
+                <th field="examDate"        data-options="sortable:false" width="80">考核日期</th>
                 <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>

@@ -23,15 +23,16 @@
                     <td>
                         <input name="name" type="text" value="${people.name}" class="easyui-validatebox" data-options="required:true">
                     </td>
-                </tr>
-                <tr>
-                    <td>年份信息</td>
+                    <td>考核日期</td>
                     <td>
-                        <input name="year" id="year" type="text" class="easyui-numberbox" precision="0" style="text-align:right;"/>
-                    </td>
-                    <td>月份信息</td>
-                    <td>
-                        <input name="month" id="month" type="text" class="easyui-numberbox" precision="0" style="text-align:right;"/>
+                        <input id="examDate" name="examDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                    readOnly:true,
+                                    dateFmt:'yyyy-MM',
+                                    maxDate:'%y-%M-%d'
+                                })"
+                               readonly="readonly"
+                        />
                     </td>
                 </tr>
                 <tr>

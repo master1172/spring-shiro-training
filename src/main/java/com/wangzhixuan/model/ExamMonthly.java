@@ -19,6 +19,8 @@ public class ExamMonthly implements Serializable {
 
     private String examOperation;
 
+    private String examDate;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -83,6 +85,14 @@ public class ExamMonthly implements Serializable {
 
     public void setExamOperation(String examOperation) {
         this.examOperation = examOperation == null ? null : examOperation.trim();
+    }
+
+    public String getExamDate() {
+        return examDate;
+    }
+
+    public void setExamDate(String examDate) {
+        this.examDate = examDate;
     }
 
     @Override
