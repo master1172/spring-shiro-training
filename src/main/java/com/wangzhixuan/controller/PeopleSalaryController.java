@@ -1,5 +1,7 @@
 package com.wangzhixuan.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.service.PeopleTimesheetService;
+import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -121,37 +124,26 @@ public class PeopleSalaryController extends BaseController{
             peopleSalaryBase = new PeopleSalaryBase();
 
         model.addAttribute("peopleSalaryBase", peopleSalaryBase);
+
+        String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfCurrentMonth();
+        String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfCurrentMonth();
+
+        BigDecimal sumVacationPeriod = peopleTimesheetService.findVacationSumByCodeAndDate(
+                peopleSalaryBase.getPeopleCode(),
+                firstDayOfCurrentMonth,
+                lastDayOfCurrentMonth);
+
+        model.addAttribute("sumVacationPeriod",sumVacationPeriod);
+
+        String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
+                peopleSalaryBase.getPeopleCode(),
+                firstDayOfCurrentMonth,
+                lastDayOfCurrentMonth
+        );
+
+        model.addAttribute("examResult",examResult);
+
         return "/admin/peopleSalary/peopleSalaryAdd";
-
-        //if (people == null)
-        //    people = new People();
-        //Integer currentMonth = DateUtil.GetCurrentMonth();
-        //Integer currentYear  = DateUtil.GetCurrentYear();
-
-        //List<PeopleTimesheet> peopleTimeSheetList = peopleTimesheetService.findPeopleTimesheetListByCodeAndDate(people.getCode(), currentYear, currentMonth);
-        //ExamMonthly peopleExamMonthlyResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(people.getCode(), currentYear, currentMonth);
-
-        //BigDecimal sumVacationPeriod = BigDecimal.valueOf(0.0);
-
-        //if (peopleTimeSheetList != null && peopleTimeSheetList.size() > 0){
-        //    for (int i=0; i<peopleTimeSheetList.size(); i++){
-        //        PeopleTimesheet peopleTimesheet = peopleTimeSheetList.get(i);
-        //        if (peopleTimesheet == null || StringUtils.isBlank(peopleTimesheet.getPeopleCode()))
-        //            continue;
-        //        sumVacationPeriod = sumVacationPeriod.add(peopleTimesheet.getVacationPeriod());
-        //    }
-        //}
-
-        //String examResult = "";
-
-        //if (peopleExamMonthlyResult != null){
-        //    examResult = peopleExamMonthlyResult.getExamResult();
-        //}
-
-        //model.addAttribute("timesheetStatus", sumVacationPeriod);
-        //model.addAttribute("examResult",examResult);
-        //model.addAttribute("people",people);
-
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")

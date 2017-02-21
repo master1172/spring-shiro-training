@@ -8,6 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.wangzhixuan.model.PeopleTimesheet;
 import com.wangzhixuan.utils.PageInfo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ public interface PeopleTimesheetService {
 
     PeopleTimesheetVo findPeopleTimesheetVoById(Integer id);
 
-    List<PeopleTimesheet> findPeopleTimesheetListByCodeAndDate(String code, Integer year, Integer month);
+    List<PeopleTimesheet> findPeopleTimesheetListByCodeAndDate(String code, String checkDateMin, String checkDateMax);
+
+    BigDecimal findVacationSumByCodeAndDate(String code, String checkDateMin, String checkDateMax);
 }
 

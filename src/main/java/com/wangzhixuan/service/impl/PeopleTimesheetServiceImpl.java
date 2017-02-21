@@ -40,6 +40,7 @@ import com.wangzhixuan.vo.PeopleTimesheetVo;
  */
 @Service
 public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
@@ -241,14 +242,36 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	}
 
 	@Override
-	public List<PeopleTimesheet> findPeopleTimesheetListByCodeAndDate(String code, Integer year, Integer month) {
+	public List<PeopleTimesheet> findPeopleTimesheetListByCodeAndDate(String code, String checkDateMin, String checkDateMax) {
 		Map<String, Object> condition = Maps.newHashMap();
 		condition.put("peopleCode",code);
-		String checkDateMin = year.toString() + "-" + month.toString() + "-" + "1";
-		String checkDateMax = year.toString() + "-" + month.toString() + "-" + "31";
 		condition.put("checkDateMin",checkDateMin);
 		condition.put("checkDateMax",checkDateMax);
-
 		return peopleTimesheetMapper.findTimesheetListByCodeAndDate(condition);
+	}
+
+	@Override
+	public BigDecimal findVacationSumByCodeAndDate(String code, String checkDateMin, String checkDateMax) {
+		Map<String, Object> condition = Maps.newHashMap();
+		condition.put("peopleCode",code);
+		condition.put("checkDateMin",checkDateMin);
+		condition.put("checkDateMax",checkDateMax);
+		List<PeopleTimesheet> peopleTimesheetList = peopleTimesheetMapper.findTimesheetListByCodeAndDate(condition);
+
+		BigDecimal sumVacationPeriod = BigDecimal.valueOf(0.0);
+
+		if (peopleTimesheetList == null || peopleTimesheetList.size()<1)
+			return sumVacationPeriod;
+
+		for (int i=0; i<peopleTimesheetList.size(); i++){
+			PeopleTimesheet peopleTimesheet = peopleTimesheetList.get(i);
+			if (peopleTimesheet == null || StringUtils.isBlank(peopleTimesheet.getPeopleCode()))
+			            continue;
+			if (peopleTimesheet.getVacationPeriod() == null)
+				continue;
+			sumVacationPeriod = sumVacationPeriod.add(peopleTimesheet.getVacationPeriod());
+		}
+
+		return sumVacationPeriod;
 	}
 }

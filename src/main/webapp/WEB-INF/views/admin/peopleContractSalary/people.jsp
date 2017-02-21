@@ -264,7 +264,7 @@
             <th field="peopleName"    data-options="sortable:true" width="80">姓名</th>
             <th field="jobLevel"      data-options="sortable:true" width="80">职级</th>
             <th field="jobSalary"     data-options="sortable:false" width="80">职级工资</th>
-            <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="300">操作</th>
         </tr>
         </thead>
     </table>
