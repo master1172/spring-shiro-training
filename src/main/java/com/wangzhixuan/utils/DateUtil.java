@@ -110,4 +110,19 @@ public class DateUtil {
     public static Integer GetCurrentYear(){
         return Calendar.getInstance().get(Calendar.YEAR);
     }
+
+    public static String GetFirstDayOfCurrentMonth(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar   today = Calendar.getInstance();//获取当前日期
+        today.add(Calendar.MONTH, 0);
+        today.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天
+        return format.format(today.getTime());
+    }
+
+    public static String GetLastDayOfCurrentMonth(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.DAY_OF_MONTH, today.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return format.format(today.getTime());
+    }
 }

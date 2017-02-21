@@ -232,7 +232,7 @@
             <th field="peopleName"      data-options="sortable:true" width="80">姓名</th>
             <th field="baseSalary"      data-options="sortable:true" width="80">基础工资</th>
             <th field="extraAllowance"  data-options="sortable:true" width="80">适当补贴</th>
-            <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="300">操作</th>
         </tr>
         </thead>
     </table>

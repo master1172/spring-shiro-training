@@ -40,6 +40,8 @@
         return true;
     }
 
+    function calculateSalary(){
+    }
 
 </script>
 
@@ -53,6 +55,10 @@
                     <td>姓名</td>
                     <td>
                         <input name="name" type="text" value="${peopleSalaryBase.peopleName}" class="easyui-validatebox" data-options="required:true">
+                    </td>
+                    <td colspan="3">
+                        <a href="javascript:void(0);" class="easyui-linkbutton"
+                           data-options="iconCls:'icon-cancel',plain:true" onclick="calculateSalary();">自动计算工资</a>
                     </td>
                 </tr>
                 <tr>
@@ -82,7 +88,7 @@
                     </td>
                     <td>岗位考核结果</td>
                     <td>
-                        <input type="text" name="examResult" value="">
+                        <input type="text" name="examResult" value="${examResult}">
                     </td>
                     <td>岗位津贴</td>
                     <td>
@@ -104,7 +110,7 @@
                     </td>
                     <td>考勤情况</td>
                     <td>
-                        <input name="timesheetStatus" id="timesheetStatus" type="text" value="" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="timesheetStatus" id="timesheetStatus" type="text" value="${sumVacationPeriod}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>

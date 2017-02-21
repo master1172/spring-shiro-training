@@ -50,12 +50,21 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
   }
 
   @Override
-  public ExamMonthly findPeopleExamMonthlyResultByCodeAndDate(String code, String startDate, String endDate) {
+  public String findPeopleExamMonthlyResultByCodeAndDate(String code, String startDate, String endDate) {
     Map<String, Object> condition = Maps.newHashMap();
     condition.put("peopleCode",code);
     condition.put("starDate",startDate);
     condition.put("endDate",endDate);
-    return examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(condition);
+    ExamMonthly examMonthly =  examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(condition);
+
+    if (examMonthly == null)
+      return "A";
+
+    if (StringUtils.isBlank(examMonthly.getExamResult()))
+      return "A";
+
+    return examMonthly.getExamResult();
+
   }
 
   @Override
