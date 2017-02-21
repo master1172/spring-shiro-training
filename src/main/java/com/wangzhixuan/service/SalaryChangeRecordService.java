@@ -12,4 +12,6 @@ public interface SalaryChangeRecordService {
     void findSalaryChangeDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
     void addSalaryChangeRecord(SalaryChangeRecord salaryChangeRecord);
+
+    void delete(Integer id);
 }

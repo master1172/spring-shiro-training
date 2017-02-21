@@ -78,4 +78,20 @@ public class SalaryChangeRecordController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Result delete(Integer id){
+        Result result = new Result();
+        try{
+            salaryChangeRecordService.delete(id);
+            result.setMsg("删除成功");
+            result.setSuccess(true);
+            return result;
+        }catch (Exception exp){
+            result.setMsg(exp.toString());
+            result.setSuccess(false);
+            return result;
+        }
+    }
 }
