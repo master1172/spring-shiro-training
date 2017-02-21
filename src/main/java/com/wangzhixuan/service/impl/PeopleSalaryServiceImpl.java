@@ -44,8 +44,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     @Autowired
     private PeopleJobMapper peopleJobMapper;
 
-    @Autowired
-    private SalaryChangeRecordMapper salaryChangeRecordMapper;
+
 
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -59,11 +58,6 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         pageInfo.setTotal(peopleSalaryMapper.findPeopleSalaryPageCount(pageInfo));
     }
 
-    @Override
-    public void findSalaryChangeDataGrid(PageInfo pageInfo, HttpServletRequest request) {
-        pageInfo.setRows(salaryChangeRecordMapper.findSalaryChangeRecordPageCondition(pageInfo));
-        pageInfo.setTotal(salaryChangeRecordMapper.findSalaryChangeRecordPageCount(pageInfo));
-    }
 
     @Override
     public PeopleSalaryBase findPeopleSalaryBaseById(Integer id) {

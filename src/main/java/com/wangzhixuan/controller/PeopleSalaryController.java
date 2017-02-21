@@ -269,25 +269,4 @@ public class PeopleSalaryController extends BaseController{
     public String advSearchPage(){
         return "/admin/peopleSalary/salarySearch";
     }
-
-    @RequestMapping("/changeListPage")
-    public String changeListPage(Integer id, Model model){
-        People people = peopleService.findPeopleById(id);
-        model.addAttribute("code",people.getCode());
-
-        return "admin/salaryChangeRecord/salaryChangeList";
-    }
-
-    @RequestMapping("/changeGrid")
-    @ResponseBody
-    public PageInfo changeGrid(HttpServletRequest request, Integer page, Integer rows, String sort, String order ){
-        PageInfo pageInfo = new PageInfo(page,rows);
-        String peopleCode = request.getParameter("code");
-        Map<String,Object> condition = Maps.newHashMap();
-        condition.put("peopleCode",peopleCode);
-        pageInfo.setCondition(condition);
-
-        peopleSalaryService.findSalaryChangeDataGrid(pageInfo,request);
-        return pageInfo;
-    }
 }

@@ -196,7 +196,7 @@
                 title:'工资变动记录',
                 width:1000,
                 height:600,
-                href:'${path}/peopleSalary/changeListPage?id='+id,
+                href:'${path}/salaryChangeRecord/changeListPage?id='+id,
             });
         }
 

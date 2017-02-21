@@ -15,7 +15,7 @@
 
     $(function () {
         salaryGrid = $('#salaryGrid').datagrid({
-            url: '${path}/peopleSalary/changeGrid',
+            url: '${path}/salaryChangeRecord/changeGrid',
             fit: true,
             striped: true,
             queryParams: {code : '${code}'},

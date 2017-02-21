@@ -47,5 +47,5 @@ public interface PeopleSalaryService {
 
     PeopleSalary findPeopleSalaryById(Integer id);
 
-    void findSalaryChangeDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
 }
