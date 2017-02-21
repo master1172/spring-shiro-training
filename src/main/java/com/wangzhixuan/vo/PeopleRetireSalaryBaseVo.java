@@ -17,6 +17,12 @@ public class PeopleRetireSalaryBaseVo implements Serializable {
 
 	private String peopleName;
 
+	private Integer sex;
+
+	private String birthdayMin;
+
+	private String birthdayMax;
+
 	private BigDecimal baseSalary;
 
 	private BigDecimal extraAllowance;
