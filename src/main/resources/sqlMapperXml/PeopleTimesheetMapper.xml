@@ -40,7 +40,7 @@
 		FROM
 			people_timesheet t
 		LEFT JOIN
-			people p
+			people_total p
 		ON
 			t.people_code = p.code
 		WHERE
@@ -152,7 +152,7 @@
 			t.status,
 			t.vacation_period
         from people_timesheet t
-		left JOIN people p
+		left JOIN people_total p
 			on t.people_code = p.code
         where t.id in
           <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -169,7 +169,7 @@
 			t.status,
 			t.vacation_period
 		from people_timesheet t
-		left join people p
+		left join people_total p
 			on t.people_code = p.code
 		where t.people_code = #{peopleCode}
 	</select>
