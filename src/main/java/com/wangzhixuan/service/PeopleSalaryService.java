@@ -46,4 +46,6 @@ public interface PeopleSalaryService {
     PeopleSalaryBase findPeopleSalaryBaseByCode(String code);
 
     PeopleSalary findPeopleSalaryById(Integer id);
+
+    void findSalaryChangeDataGrid(PageInfo pageInfo, HttpServletRequest request);
 }

@@ -70,6 +70,9 @@
 
 		<typeAlias type="com.wangzhixuan.model.Recruit" alias="Recruit" />
 		<typeAlias type="com.wangzhixuan.vo.RecruitVo" alias="RecruitVo" />
+
+		<typeAlias type="com.wangzhixuan.model.SalaryChangeRecord" alias="SalaryChangeRecord"/>
+		<typeAlias type="com.wangzhixuan.vo.SalaryChangeRecordVo"  alias="SalaryChangeRecordVo"/>
 	</typeAliases>
 
 	<!-- 引入自定义 mapper 文件 -->
@@ -111,6 +114,6 @@
 		<mapper resource="sqlMapperXml/AbroadMapper.xml"/>
 		<mapper resource="sqlMapperXml/PeopleTotalMapper.xml"/>
 		<mapper resource="sqlMapperXml/RecruitMapper.xml"/>
-
+		<mapper resource="sqlMapperXml/SalaryChangeRecordMapper.xml"/>
 	</mappers>
 </configuration> 

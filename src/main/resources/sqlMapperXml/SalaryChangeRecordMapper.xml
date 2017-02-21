@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wangzhixuan.mapper.SalaryChangeRecordMapper">
+
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.SalaryChangeRecord">
         <id     column="id"             jdbcType="INTEGER" property="id" />
         <result column="people_code"    jdbcType="VARCHAR" property="peopleCode" />
@@ -21,12 +22,106 @@
         <result column="people_check_date"  jdbcType="DATE" property="peopleCheckDate" />
         <result column="comment"            jdbcType="VARCHAR" property="comment" />
     </resultMap>
+
+    <resultMap id="SalaryChangeRecordVoMap" type="com.wangzhixuan.vo.SalaryChangeRecordVo">
+        <id     column="id"             jdbcType="INTEGER" property="id" />
+        <result column="people_code"    jdbcType="VARCHAR" property="peopleCode" />
+        <result column="people_name"    jdbcType="VARCHAR" property="peopleName" />
+        <result column="prev_job_id"     jdbcType="INTEGER" property="prevJobId" />
+        <result column="prev_job_salary" jdbcType="DECIMAL" property="prevJobSalary" />
+        <result column="prev_job_level"  jdbcType="VARCHAR" property="prevJobLevel"/>
+        <result column="new_job_id"     jdbcType="INTEGER" property="newJobId" />
+        <result column="new_job_salary" jdbcType="DECIMAL" property="newJobSalary" />
+        <result column="new_job_level"  jdbcType="VARCHAR" property="newJobLevel" />
+        <result column="prev_rank_id"   jdbcType="INTEGER" property="prevRankId" />
+        <result column="prev_rank_salary" jdbcType="DECIMAL" property="prevRankSalary" />
+        <result column="prev_rank_level" jdbcType="VARCHAR" property="prevRankLevel"/>
+        <result column="new_rank_id"    jdbcType="INTEGER" property="newRankId" />
+        <result column="new_rank_salary" jdbcType="DECIMAL" property="newRankSalary" />
+        <result column="new_rank_level"  jdbcType="VARCHAR" property="newRankLevel"/>
+        <result column="prev_reserve_salary" jdbcType="DECIMAL" property="prevReserveSalary" />
+        <result column="new_reserve_salary" jdbcType="DECIMAL" property="newReserveSalary" />
+        <result column="change_reason"  jdbcType="VARCHAR" property="changeReason" />
+        <result column="change_date"    jdbcType="DATE" property="changeDate" />
+        <result column="effect_date"    jdbcType="DATE" property="effectDate" />
+        <result column="people_opinion" jdbcType="VARCHAR" property="peopleOpinion" />
+        <result column="people_check_date"  jdbcType="DATE" property="peopleCheckDate" />
+        <result column="comment"            jdbcType="VARCHAR" property="comment" />
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, people_code, prev_job_id, prev_job_salary, new_job_id, new_job_salary, prev_rank_id,
         prev_rank_salary, new_rank_id, new_rank_salary, prev_reserve_salary, new_reserve_salary,
         change_reason, change_date, effect_date, people_opinion, people_check_date, comment
     </sql>
 
+    <select id="findSalaryChangeRecordPageCondition" resultMap="SalaryChangeRecordVoMap" parameterType="PageInfo">
+        SELECT
+          t.id,
+          t.people_code,
+          p.name as people_name,
+          t.prev_job_id,
+          j1.job_level as prev_job_level,
+          t.prev_job_salary,
+          t.new_job_id,
+          j2.job_level as new_job_level,
+          t.new_job_salary,
+          t.prev_rank_id,
+          r1.rank_level as prev_rank_level,
+          t.prev_rank_salary,
+          t.new_rank_id,
+          r2.rank_level as new_rank_level,
+          t.new_rank_salary,
+          t.prev_reserve_salary,
+          t.new_reserve_salary,
+          t.change_reason,
+          t.change_date,
+          t.effect_date,
+          t.people_opinion,
+          t.people_check_date,
+          t.comment
+        FROM
+          salary_change_record t
+        LEFT JOIN
+          people_total p ON p.code = t.people_code
+        LEFT JOIN
+          job j1 ON j1.id = t.prev_job_id
+        LEFT JOIN
+          job j2 ON j2.id = t.new_job_id
+        LEFT JOIN
+          rank r1 ON r1.id = t.prev_rank_id
+        LEFT JOIN
+          rank r2 ON r2.id = t.new_rank_id
+        <where>
+            <if test=" condition.peopleCode != null and condition.peopleCode != ''">
+                and t.people_code = #{condition.peopleCode}
+            </if>
+        </where>
+        ORDER BY
+          t.change_date DESC
+        LIMIT #{from},#{size}
+    </select>
+
+    <select id="findSalaryChangeRecordPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        SELECT count(t.id) count
+        FROM salary_change_record t
+        LEFT JOIN
+          people_total p ON p.code = t.people_code
+        LEFT JOIN
+          job j1 ON j1.id = t.prev_job_id
+        LEFT JOIN
+          job j2 ON j2.id = t.new_job_id
+        LEFT JOIN
+          rank r1 ON r1.id = t.prev_rank_id
+        LEFT JOIN
+          rank r2 ON r2.id = t.new_rank_id
+        <where>
+            <if test=" condition.peopleCode != null and condition.peopleCode != ''">
+                and t.people_code = #{condition.peopleCode}
+            </if>
+        </where>
+    </select>
+    
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />

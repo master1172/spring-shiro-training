@@ -1,7 +1,5 @@
 package com.wangzhixuan.controller;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.service.PeopleTimesheetService;
-import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -29,8 +26,6 @@ import com.wangzhixuan.code.Result;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleSalaryVo;
-import com.wangzhixuan.vo.PeopleVo;
 
 /**
  * Created by sterm on 2017/1/13.
@@ -90,7 +85,6 @@ public class PeopleSalaryController extends BaseController{
             return result;
         }
     }
-
 
     @RequestMapping(value="/salaryListPage", method = RequestMethod.GET)
     public String salaryListPage(Integer id, Model model){
@@ -274,5 +268,26 @@ public class PeopleSalaryController extends BaseController{
     @RequestMapping("/advSearchPage")
     public String advSearchPage(){
         return "/admin/peopleSalary/salarySearch";
+    }
+
+    @RequestMapping("/changeListPage")
+    public String changeListPage(Integer id, Model model){
+        People people = peopleService.findPeopleById(id);
+        model.addAttribute("code",people.getCode());
+
+        return "admin/salaryChangeRecord/salaryChangeList";
+    }
+
+    @RequestMapping("/changeGrid")
+    @ResponseBody
+    public PageInfo changeGrid(HttpServletRequest request, Integer page, Integer rows, String sort, String order ){
+        PageInfo pageInfo = new PageInfo(page,rows);
+        String peopleCode = request.getParameter("code");
+        Map<String,Object> condition = Maps.newHashMap();
+        condition.put("peopleCode",peopleCode);
+        pageInfo.setCondition(condition);
+
+        peopleSalaryService.findSalaryChangeDataGrid(pageInfo,request);
+        return pageInfo;
     }
 }
