@@ -40,6 +40,8 @@
         return true;
     }
 
+    function calculateSalary(){
+    }
 
 </script>
 
@@ -53,6 +55,10 @@
                     <td>姓名</td>
                     <td>
                         <input name="name" type="text" value="${peopleSalaryBase.peopleName}" class="easyui-validatebox" data-options="required:true">
+                    </td>
+                    <td colspan="3">
+                        <a href="javascript:void(0);" class="easyui-linkbutton"
+                           data-options="iconCls:'icon-cancel',plain:true" onclick="calculateSalary();">自动计算工资</a>
                     </td>
                 </tr>
                 <tr>
