@@ -20,4 +20,6 @@ public interface PeopleTotalMapper {
     int updateByPrimaryKeySelective(PeopleTotal record);
 
     int updateByPrimaryKey(PeopleTotal record);
+
+    void findFirstPeopleByName(String name);
 }

@@ -140,6 +140,15 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+
+    <select id="findFirstPeopleByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from people_total
+        where name = #{name, jdbcType=VARCHAR}
+        LIMIT 0,1
+    </select>
+
     <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
