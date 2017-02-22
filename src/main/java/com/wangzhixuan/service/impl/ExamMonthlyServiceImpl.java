@@ -200,7 +200,7 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
         if (people == null || StringUtils.isBlank(people.getCode()))
           continue;
         examMonthly.setPeopleCode(people.getCode());
-        
+
         if(row.getCell(2)!=null && !row.getCell(2).toString().trim().equals("")){
           examMonthly.setExamResult(row.getCell(2).toString().trim());
         }
