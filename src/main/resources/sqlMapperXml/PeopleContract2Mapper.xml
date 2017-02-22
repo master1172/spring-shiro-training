@@ -68,7 +68,7 @@
         SELECT
         <include refid="Base_Column_List" />
         from people_total
-        where name = #{name, jdbcType=VARCHAR} and status = 5
+        where name = #{name, jdbcType=VARCHAR}
         LIMIT 0,1
     </select>
     <select id="findPeopleContractByCode" resultMap="BaseResultMap" parameterType="java.lang.String">

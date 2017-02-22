@@ -2,10 +2,7 @@ package com.wangzhixuan.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.ExamMonthlyMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
-import com.wangzhixuan.mapper.PeopleSalaryMapper;
+import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.model.ExamYearly;
 import com.wangzhixuan.model.People;
@@ -43,6 +40,9 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
 
   @Autowired
   private ExamMonthlyMapper examMonthlyMapper;
+
+  @Autowired
+  private PeopleTotalMapper peopleTotalMapper;
 
   @Override
   public ExamMonthly findExamMonthlyById(Long id) {
@@ -200,8 +200,6 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
         if (people == null || StringUtils.isBlank(people.getCode()))
           continue;
         examMonthly.setPeopleCode(people.getCode());
-
-
 
         if(row.getCell(2)!=null && !row.getCell(2).toString().trim().equals("")){
           examMonthly.setExamResult(row.getCell(2).toString().trim());

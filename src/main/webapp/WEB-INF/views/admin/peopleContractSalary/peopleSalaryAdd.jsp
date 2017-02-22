@@ -78,6 +78,10 @@
 
 				 </tr>
                  <tr>
+                     <td>考勤结果</td>
+                     <td>
+                         <input name="timesheetStatus" id="timesheetStatus" type="text" value="" class="easyui-numberbox" precision="1" style="text-align:right;"/>
+                     </td>
                      <td>每日加班费</td>
                      <td>
                          <input name="onDutyFee" id="onDutyFee" type="text" value="${people.onDutyFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>

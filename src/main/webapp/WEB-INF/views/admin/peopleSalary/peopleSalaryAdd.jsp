@@ -28,6 +28,23 @@
                });
            }
         });
+
+        $("#timesheetStatus").numberbox({
+            "onChange" : function(newValue, oldValue){
+                if(newValue == oldValue)
+                    return;
+
+                if (isNaN(newValue)) {
+                    alert("请输入一个数字");
+                    return;
+                }
+                var trafficAllowance = 300.00-((300.00/21.75)*newValue);
+                var temperatureAllowance = 100.00-((100.00/21.75)*newValue);
+
+                $("#trafficAllowance").numberbox('setValue',trafficAllowance.toFixed(2));
+                $("#temperatureAllowance").numberbox('setValue',temperatureAllowance.toFixed(2));
+            }
+        })
     });
 
     function checkForm(){
@@ -40,7 +57,14 @@
         return true;
     }
 
+
+
     function calculateSalary(){
+        $.post('${path}/peopleSalary/calculateSalary',
+                $.serializeObject($('#salaryAddForm')),
+                function(data){
+                    $("#grossSalary").numberbox('setValue',data);
+                });
     }
 
 </script>

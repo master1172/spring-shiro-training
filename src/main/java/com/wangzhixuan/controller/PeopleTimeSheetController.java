@@ -56,6 +56,16 @@ public class PeopleTimeSheetController extends BaseController {
 		return "admin/peopleTimesheet/people";
 	}
 
+	@RequestMapping(value = "/contractmanager", method = RequestMethod.GET)
+	public String contractManager(){
+		return "admin/peopleTimesheet/peopleContract";
+	}
+
+	@RequestMapping(value = "/contract2manager", method = RequestMethod.GET)
+	public String contract2Manager(){
+		return "admin/peopleTimesheet/peopleContract2";
+	}
+
 	/**
 	 * 人员管理列表
 	 *

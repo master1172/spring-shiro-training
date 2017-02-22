@@ -49,18 +49,18 @@ public class ExamYearlyController extends BaseController {
 		return "/admin/examYearly/people";
 	}
 
+	@RequestMapping(value = "/contractmanager", method = RequestMethod.GET)
+	public String contractManager(){
+		return "/admin/examYearly/peopleContract";
+	}
+
+	@RequestMapping(value = "/contract2manager", method = RequestMethod.GET)
+	public String contract2Manager(){
+		return "/admin/examYearly/peopleContract2";
+	}
+
 	@RequestMapping(value = "/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
-//	public PageInfo dataGrid(ExamYearlyVo examYearlyVo, Integer page,
-//			Integer rows, String sort, String order) {
-//		PageInfo pageInfo = new PageInfo(page, rows);
-//		Map<String, Object> condition = ExamYearlyVo
-//				.CreateCondition(examYearlyVo);
-//		pageInfo.setCondition(condition);
-//		examYearlyService.findDataGrid(pageInfo);
-//
-//		return pageInfo;
-//	}
 	public PageInfo dataGrid(HttpServletRequest request, PeopleVo peopleVo, Integer page, Integer rows, String sort, String order){
 		PageInfo pageInfo = new PageInfo(page, rows);
 		Map<String,Object> condition = PeopleVo.CreateCondition(peopleVo);

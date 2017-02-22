@@ -27,6 +27,7 @@
 		<result column="expense" property="expense" jdbcType="DECIMAL" />
 		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
 		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
+		<result column="timesheet_status" property="timesheetStatus" jdbcType="DECIMAL"/>
 	</resultMap>
 
 	<resultMap id="peopleContractSalaryVoResultMap" type="com.wangzhixuan.vo.PeopleContractSalaryVo">
@@ -58,6 +59,7 @@
 		<result column="expense" property="expense" jdbcType="DECIMAL" />
 		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
 		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
+		<result column="timesheet_status" property="timesheetStatus" jdbcType="DECIMAL"/>
 	</resultMap>
 
 	<resultMap id="peopleContractSalaryBaseMap" type="com.wangzhixuan.model.PeopleContractSalaryBase">
@@ -111,7 +113,7 @@
 		id, people_code, job_id, job_salary, school_salary, exam_result,
 		job_exam_salary, telephone_allowance, traffic_allowance, special_allowance, head_allowance, on_duty_fee,
 		on_duty_date, on_duty_fee_total, bonus, reissue_fee, temperature_allowance,
-		gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
+		gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date, timesheet_status
 	</sql>
 
 	<sql id="PeopleContractSalaryBase_Column_List">
@@ -288,7 +290,8 @@
 		t.house_fund,
 		t.expense,
 		t.net_income,
-		t.pay_date
+		t.pay_date,
+		t.timesheet_status
 		FROM
 		people_contract_salary t LEFT JOIN people_total p
 		ON t.people_code = p.code
@@ -345,7 +348,8 @@
 		insert into people_contract_salary (
 			people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
 			special_allowance, head_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, bonus, reissue_fee,
-			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
+			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income,
+			pay_date,timesheet_status
 		)
 		VALUES
 		(
@@ -372,7 +376,8 @@
 			#{houseFund,jdbcType=DECIMAL},
 			#{expense,jdbcType=DECIMAL},
 			#{netIncome,jdbcType=DECIMAL},
-			#{payDate,jdbcType=VARCHAR}
+			#{payDate,jdbcType=VARCHAR},
+			#{timesheetStatus, jdbcType=DECIMAL}
 		)
 	</insert>
 
@@ -437,7 +442,9 @@
 		expense = #{expense,jdbcType=DECIMAL},
 		net_income = #{netIncome,jdbcType=DECIMAL},
 		pay_date =
-		#{payDate,jdbcType=VARCHAR}
+		#{payDate,jdbcType=VARCHAR},
+		timesheet_status =
+		#{timesheetStatus, jdbcType=DECIMAL}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 
@@ -470,7 +477,8 @@
 		t.house_fund,
 		t.expense,
 		t.net_income,
-		t.pay_date
+		t.pay_date,
+		t.timesheet_status
 		FROM people_contract_salary t
 		LEFT JOIN people_total p
 		ON t.people_code = p.code
@@ -483,7 +491,8 @@
 		insert into people_contract_salary (
 			people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
 			special_allowance, head_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, bonus, reissue_fee,
-			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income, pay_date
+			temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income,
+			pay_date,timesheet_status
 		)
 		VALUES
 		<foreach item="item" index="index" collection="list" separator=",">
@@ -511,7 +520,8 @@
 			#{item.houseFund,jdbcType=DECIMAL},
 			#{item.expense,jdbcType=DECIMAL},
 			#{item.netIncome,jdbcType=DECIMAL},
-			#{item.payDate,jdbcType=VARCHAR}
+			#{item.payDate,jdbcType=VARCHAR},
+			#{item.timesheetStatus, jdbcType=DECIMAL}
 			)
 		</foreach>
 	</insert>

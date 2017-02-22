@@ -1,6 +1,7 @@
 package com.wangzhixuan.controller;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.service.PeopleTimesheetService;
 import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
+import org.apache.commons.beanutils.converters.DoubleConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,7 +125,7 @@ public class PeopleSalaryController extends BaseController{
         if (peopleSalaryBase == null)
             peopleSalaryBase = new PeopleSalaryBase();
 
-        model.addAttribute("peopleSalaryBase", peopleSalaryBase);
+
 
         String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfCurrentMonth();
         String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfCurrentMonth();
@@ -133,6 +135,20 @@ public class PeopleSalaryController extends BaseController{
                 firstDayOfCurrentMonth,
                 lastDayOfCurrentMonth);
 
+        if (sumVacationPeriod != null){
+            Double trafficAllowance = 300.0 - 300 / 21.75 * sumVacationPeriod.doubleValue();
+            Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
+
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            ;
+            peopleSalaryBase.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
+            peopleSalaryBase.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
+        }else{
+            peopleSalaryBase.setTrafficAllowance(new BigDecimal(300.00));
+            peopleSalaryBase.setTemperatureAllowance(new BigDecimal(100.00));
+        }
+
+        model.addAttribute("peopleSalaryBase", peopleSalaryBase);
         model.addAttribute("sumVacationPeriod",sumVacationPeriod);
 
         String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
@@ -260,5 +276,12 @@ public class PeopleSalaryController extends BaseController{
     @RequestMapping("/advSearchPage")
     public String advSearchPage(){
         return "/admin/peopleSalary/salarySearch";
+    }
+
+    @RequestMapping("/calculateSalary")
+    @ResponseBody
+    public String calculateSalary(PeopleSalary peopleSalary){
+        BigDecimal grossIncome = peopleSalaryService.CalculateGrossIncome(peopleSalary);
+        return grossIncome.toString();
     }
 }
