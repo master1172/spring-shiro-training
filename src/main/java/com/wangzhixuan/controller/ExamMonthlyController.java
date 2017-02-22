@@ -52,6 +52,16 @@ public class ExamMonthlyController extends BaseController {
 		return "/admin/examMonthly/people";
 	}
 
+	@RequestMapping(value = "/contractmanager", method = RequestMethod.GET)
+	public String contractManager(){
+		return "/admin/examMonthly/peopleContract";
+	}
+
+	@RequestMapping(value="/contract2manager", method = RequestMethod.GET)
+	public String contract2Manager(){
+		return "/admin/examMonthly/peopleContract2";
+	}
+
 	@RequestMapping(value="/dataGrid", method = RequestMethod.POST)
 	@ResponseBody
 	public PageInfo dataGrid(HttpServletRequest request, PeopleVo peopleVo, Integer page, Integer rows, String sort, String order){

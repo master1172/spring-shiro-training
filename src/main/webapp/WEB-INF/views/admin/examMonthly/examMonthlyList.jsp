@@ -111,7 +111,7 @@
         } else {//点击操作里面的删除图标会触发这个
             examMonthlyGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
-        parent.$.messager.confirm('询问', '您是否要删除当前工资记录？', function (b) {
+        parent.$.messager.confirm('询问', '您是否要删除当前记录？', function (b) {
             if (b) {
                 progressLoad();
                 $.post('${path}/examMonthly/delete',{
@@ -137,7 +137,7 @@
 </script>
 
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:true,title:'工资发放列表'">
+    <div data-options="region:'center',border:true,title:'月度考核列表'">
         <table id="examMonthlyGrid" data-options="fit:true,border:false">
             <thead>
             <tr>
