@@ -81,7 +81,7 @@
                 <tr>
                     <td>是否能按期获得学位</td>
                     <td>
-                        <select name="degreeOntime" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                        <select name="degreeOnTime" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value="0" selected="selected">是</option>
                             <option value="1" >否</option>
                         </select>

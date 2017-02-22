@@ -9,6 +9,7 @@
         $('#nationalId').val('${recruit.nationalId}');
         $("#degreeOnTime").val('${recruit.degreeOnTime}');
         $("#graduateStatus").val('${recruit.graduateStatus}');
+        $('#marriageId').val('${recruit.marriageId}');
         $('#imgShow').attr('src','${staticPath}/${recruit.photo}');
     });
 
@@ -40,8 +41,8 @@
                     <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true" value="${recruit.name}"></td>
                     <td>性别</td>
                     <td>
-                        <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0" selected="selected">男</option>
+                        <select name="sex" id="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="0" >男</option>
                             <option value="1" >女</option>
                         </select>
                     </td>
@@ -100,8 +101,8 @@
                 <tr>
                     <td>是否能按期获得学位</td>
                     <td>
-                        <select name="degreeOntime" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0" selected="selected">是</option>
+                        <select name="degreeOnTime" id="degreeOnTime" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="0" >是</option>
                             <option value="1" >否</option>
                         </select>
                     </td>
@@ -111,8 +112,8 @@
                     </td>
                     <td>毕业生性质</td>
                     <td>
-                        <select name="graduateStatus" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="统分" selected="selected">统分</option>
+                        <select name="graduateStatus" id="graduateStatus" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="统分" >统分</option>
                             <option value="委培">委培</option>
                             <option value="定向">定向</option>
                         </select>

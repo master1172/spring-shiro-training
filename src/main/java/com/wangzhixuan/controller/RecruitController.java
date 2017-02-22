@@ -119,10 +119,10 @@ public class RecruitController {
 
     @RequestMapping("/edit")
     @ResponseBody
-    public Result edit(RecruitVo recruitVo){
+    public Result edit(RecruitVo recruitVo, @RequestParam(value="fileName",required=false)CommonsMultipartFile file){
         Result result = new Result();
         try{
-            recruitService.update(recruitVo);
+            recruitService.update(recruitVo,file);
             result.setSuccess(true);
             result.setMsg("修改成功");
         }catch (Exception exp){

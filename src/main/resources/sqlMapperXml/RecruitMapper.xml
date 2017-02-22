@@ -215,11 +215,13 @@
     LEFT JOIN
           dict_national n ON n.id = t.national_id
     LEFT JOIN
-          dict_marriage m ON m.id =  t.marriage_id
+          dict_marriage m ON m.id = t.marriage_id
     <where>
       t.id = #{id}
     </where>
   </select>
+
+
 
   <update id="update" parameterType="com.wangzhixuan.model.Recruit" >
     update recruit
