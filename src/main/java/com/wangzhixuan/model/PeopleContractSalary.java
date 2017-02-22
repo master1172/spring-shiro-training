@@ -36,6 +36,7 @@ public class PeopleContractSalary implements Serializable {
 	private BigDecimal netIncome;
 	@JsonFormat(pattern = "yyyy-MM")
 	private String payDate;
+	private BigDecimal timesheetStatus;
 
 	public Integer getId() {
 		return id;
@@ -239,6 +240,14 @@ public class PeopleContractSalary implements Serializable {
 
 	public void setOnDutyFeeTotal(BigDecimal onDutyFeeTotal) {
 		this.onDutyFeeTotal = onDutyFeeTotal;
+	}
+
+	public BigDecimal getTimesheetStatus() {
+		return timesheetStatus;
+	}
+
+	public void setTimesheetStatus(BigDecimal timesheetStatus) {
+		this.timesheetStatus = timesheetStatus;
 	}
 
 	@Override

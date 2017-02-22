@@ -51,6 +51,10 @@
                     <td>
                         <input name="schoolSalary" id="schoolSalary" type="text" value="${peopleContractSalary.schoolSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
+                   <td>考勤结果</td>
+                   <td>
+                       <input name="timesheetStatus" id="timesheetStatus" type="text" value="${peopleContractSalary.timesheetStatus}" class="easyui-numberbox" precision="1" style="text-align:right;"/>
+                   </td>
                  </tr>
                  <tr>
                     <td>岗位考核结果</td>

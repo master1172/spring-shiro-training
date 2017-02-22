@@ -145,21 +145,22 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 						row.createCell(9).setCellValue(peopleContractSalaryVo.getSpecialAllowance() == null ? "" : peopleContractSalaryVo.getSpecialAllowance().toString());
 						row.createCell(10).setCellValue(peopleContractSalaryVo.getHeadAllowance() == null ? "" : peopleContractSalaryVo.getHeadAllowance().toString());
 						row.createCell(11).setCellValue(peopleContractSalaryVo.getTemperatureAllowance() == null ? "" : peopleContractSalaryVo.getTemperatureAllowance().toString());
-						row.createCell(12).setCellValue(peopleContractSalaryVo.getOnDutyFee() == null? "" : peopleContractSalaryVo.getOnDutyFee().toString());
-						row.createCell(13).setCellValue(peopleContractSalaryVo.getOnDutyDate() == null ? "" : peopleContractSalaryVo.getOnDutyDate().toString());
-						row.createCell(14).setCellValue(peopleContractSalaryVo.getOnDutyFeeTotal() == null ? "" : peopleContractSalaryVo.getOnDutyFeeTotal().toString());
-						row.createCell(15).setCellValue(peopleContractSalaryVo.getBonus() == null ? "" : peopleContractSalaryVo.getBonus().toString());
-						row.createCell(16).setCellValue(peopleContractSalaryVo.getReissueFee() == null ? "" : peopleContractSalaryVo.getReissueFee().toString());
-						row.createCell(17).setCellValue(peopleContractSalaryVo.getGrossIncome() == null ? "" : peopleContractSalaryVo.getGrossIncome().toString());
-						row.createCell(18).setCellValue(peopleContractSalaryVo.getLifeInsurance() == null ? "" : peopleContractSalaryVo.getLifeInsurance().toString());
-						row.createCell(19).setCellValue(peopleContractSalaryVo.getJobInsurance() == null ? "" : peopleContractSalaryVo.getJobInsurance().toString());
-						row.createCell(20).setCellValue(peopleContractSalaryVo.getHealthInsurance() == null ? "" : peopleContractSalaryVo.getHealthInsurance().toString());
-						row.createCell(21).setCellValue(peopleContractSalaryVo.getHouseFund() == null ? "" : peopleContractSalaryVo.getHouseFund().toString());
-						row.createCell(22).setCellValue(peopleContractSalaryVo.getExpense() == null ? "" : peopleContractSalaryVo.getExpense().toString());
-						row.createCell(23).setCellValue(peopleContractSalaryVo.getNetIncome() == null ? "" : peopleContractSalaryVo.getNetIncome().toString());
-						row.createCell(24).setCellValue(peopleContractSalaryVo.getPayDate() == null ? "" : peopleContractSalaryVo.getPayDate().toString());
+						row.createCell(12).setCellValue(peopleContractSalaryVo.getTimesheetStatus() == null? "" : peopleContractSalaryVo.getTimesheetStatus().toString());
+						row.createCell(13).setCellValue(peopleContractSalaryVo.getOnDutyFee() == null? "" : peopleContractSalaryVo.getOnDutyFee().toString());
+						row.createCell(14).setCellValue(peopleContractSalaryVo.getOnDutyDate() == null ? "" : peopleContractSalaryVo.getOnDutyDate().toString());
+						row.createCell(15).setCellValue(peopleContractSalaryVo.getOnDutyFeeTotal() == null ? "" : peopleContractSalaryVo.getOnDutyFeeTotal().toString());
+						row.createCell(16).setCellValue(peopleContractSalaryVo.getBonus() == null ? "" : peopleContractSalaryVo.getBonus().toString());
+						row.createCell(17).setCellValue(peopleContractSalaryVo.getReissueFee() == null ? "" : peopleContractSalaryVo.getReissueFee().toString());
+						row.createCell(18).setCellValue(peopleContractSalaryVo.getGrossIncome() == null ? "" : peopleContractSalaryVo.getGrossIncome().toString());
+						row.createCell(19).setCellValue(peopleContractSalaryVo.getLifeInsurance() == null ? "" : peopleContractSalaryVo.getLifeInsurance().toString());
+						row.createCell(20).setCellValue(peopleContractSalaryVo.getJobInsurance() == null ? "" : peopleContractSalaryVo.getJobInsurance().toString());
+						row.createCell(21).setCellValue(peopleContractSalaryVo.getHealthInsurance() == null ? "" : peopleContractSalaryVo.getHealthInsurance().toString());
+						row.createCell(22).setCellValue(peopleContractSalaryVo.getHouseFund() == null ? "" : peopleContractSalaryVo.getHouseFund().toString());
+						row.createCell(23).setCellValue(peopleContractSalaryVo.getExpense() == null ? "" : peopleContractSalaryVo.getExpense().toString());
+						row.createCell(24).setCellValue(peopleContractSalaryVo.getNetIncome() == null ? "" : peopleContractSalaryVo.getNetIncome().toString());
+						row.createCell(25).setCellValue(peopleContractSalaryVo.getPayDate() == null ? "" : peopleContractSalaryVo.getPayDate().toString());
                         count ++;
-						for (int k = 0; k < 25; k++) {
+						for (int k = 0; k < 26; k++) {
 							row.getCell(k).setCellStyle(setBorder);
 						}
 						row.setHeight((short) 400);
@@ -247,21 +248,21 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 				peopleContractSalary.setTrafficAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(8))));
 				peopleContractSalary.setSpecialAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(9))));
 				peopleContractSalary.setHeadAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(10))));
-
-				peopleContractSalary.setOnDutyFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
-				peopleContractSalary.setOnDutyDate(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
-				peopleContractSalary.setOnDutyFeeTotal(StringUtilExtra.StringToDecimal(getCellString(row.getCell(13))));
-				peopleContractSalary.setBonus(StringUtilExtra.StringToDecimal(getCellString(row.getCell(14))));
-				peopleContractSalary.setTemperatureAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
-				peopleContractSalary.setReissueFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
-				peopleContractSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(17))));
-				peopleContractSalary.setLifeInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(18))));
-				peopleContractSalary.setJobInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(19))));
-				peopleContractSalary.setHealthInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(20))));
-				peopleContractSalary.setHouseFund(StringUtilExtra.StringToDecimal(getCellString(row.getCell(21))));
-				peopleContractSalary.setExpense(StringUtilExtra.StringToDecimal(getCellString(row.getCell(22))));
-				peopleContractSalary.setNetIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(23))));
-				peopleContractSalary.setPayDate(getCellString(row.getCell(24)));
+				peopleContractSalary.setTemperatureAllowance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(11))));
+				peopleContractSalary.setTimesheetStatus(StringUtilExtra.StringToDecimal(getCellString(row.getCell(12))));
+				peopleContractSalary.setOnDutyFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(13))));
+				peopleContractSalary.setOnDutyDate(StringUtilExtra.StringToDecimal(getCellString(row.getCell(14))));
+				peopleContractSalary.setOnDutyFeeTotal(StringUtilExtra.StringToDecimal(getCellString(row.getCell(15))));
+				peopleContractSalary.setBonus(StringUtilExtra.StringToDecimal(getCellString(row.getCell(16))));
+				peopleContractSalary.setReissueFee(StringUtilExtra.StringToDecimal(getCellString(row.getCell(17))));
+				peopleContractSalary.setGrossIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(18))));
+				peopleContractSalary.setLifeInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(19))));
+				peopleContractSalary.setJobInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(20))));
+				peopleContractSalary.setHealthInsurance(StringUtilExtra.StringToDecimal(getCellString(row.getCell(21))));
+				peopleContractSalary.setHouseFund(StringUtilExtra.StringToDecimal(getCellString(row.getCell(22))));
+				peopleContractSalary.setExpense(StringUtilExtra.StringToDecimal(getCellString(row.getCell(23))));
+				peopleContractSalary.setNetIncome(StringUtilExtra.StringToDecimal(getCellString(row.getCell(24))));
+				peopleContractSalary.setPayDate(getCellString(row.getCell(25)));
 
 				list.add(peopleContractSalary);
 			}
