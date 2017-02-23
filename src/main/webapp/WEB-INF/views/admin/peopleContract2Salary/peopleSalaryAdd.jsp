@@ -15,6 +15,22 @@
                         });
             }
         });
+
+        $("#timesheetStatus").numberbox({
+            "onChange" : function(newValue, oldValue){
+                if(newValue == oldValue)
+                    return;
+
+                if (isNaN(newValue)) {
+                    alert("请输入一个数字");
+                    return;
+                }
+
+                var temperatureAllowance = 100.00-((100.00/21.75)*newValue);
+                $("#temperatureAllowance").numberbox('setValue',temperatureAllowance.toFixed(2));
+            }
+        });
+
     });
 
     function checkForm(){
@@ -26,6 +42,15 @@
         }
         return true;
     }
+
+    function calculateSalary(){
+        $.post('${path}/peopleContractSalary/calculateSalary',
+                $.serializeObject($('#salaryAddForm')),
+                function(data){
+                    $("#grossIncome").numberbox('setValue',data);
+                });
+    }
+
 </script>
 
 
@@ -34,6 +59,12 @@
         <form id="salaryAddForm" method="post">
             <table class="grid" border=1>
                 <input type="hidden" name="peopleCode" value="${people.peopleCode}">
+                <tr>
+                    <td colspan="3">
+                        <a href="javascript:void(0);" class="easyui-linkbutton"
+                           data-options="iconCls:'icon-cancel',plain:true" onclick="calculateSalary();">自动计算工资</a>
+                    </td>
+                </tr>
                 <tr>
                     <td>职级</td>
                     <td>
@@ -51,7 +82,7 @@
                 <tr>
                     <td>岗位考核结果</td>
                     <td>
-                        <input type="text" name="examResult">
+                        <input type="text" name="examResult" value="${examResult}">
                     </td>
                     <td>岗位考核工资</td>
                     <td>
@@ -78,6 +109,10 @@
 
                 </tr>
                 <tr>
+                    <td>考勤结果</td>
+                    <td>
+                        <input name="timesheetStatus" id="timesheetStatus" type="text" value="${sumVacationPeriod}" class="easyui-numberbox" precision="1" style="text-align:right;"/>
+                    </td>
                     <td>每日加班费</td>
                     <td>
                         <input name="onDutyFee" id="onDutyFee" type="text" value="${people.onDutyFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>

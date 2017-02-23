@@ -57,8 +57,6 @@
         return true;
     }
 
-
-
     function calculateSalary(){
         $.post('${path}/peopleSalary/calculateSalary',
                 $.serializeObject($('#salaryAddForm')),

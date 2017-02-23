@@ -140,7 +140,7 @@ public class PeopleSalaryController extends BaseController{
             Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
 
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            ;
+
             peopleSalaryBase.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
             peopleSalaryBase.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
         }else{

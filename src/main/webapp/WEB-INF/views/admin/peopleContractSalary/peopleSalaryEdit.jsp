@@ -17,6 +17,21 @@
                         });
             }
         });
+
+        $("#timesheetStatus").numberbox({
+            "onChange" : function(newValue, oldValue){
+                if(newValue == oldValue)
+                    return;
+
+                if (isNaN(newValue)) {
+                    alert("请输入一个数字");
+                    return;
+                }
+
+                var temperatureAllowance = 100.00-((100.00/21.75)*newValue);
+                $("#temperatureAllowance").numberbox('setValue',temperatureAllowance.toFixed(2));
+            }
+        });
     });
 
     function checkForm(){
@@ -28,6 +43,14 @@
         }
         return true;
     }
+
+    function calculateSalary(){
+        $.post('${path}/peopleContractSalary/calculateSalary',
+                $.serializeObject($('#salaryEditForm')),
+                function(data){
+                    $("#grossIncome").numberbox('setValue',data);
+                });
+    }
 </script>
 
 
@@ -37,6 +60,10 @@
             <table class="grid" border=1>
                <input type="hidden" name="id" value="${peopleContractSalary.id}">
                <input type="hidden" name="peopleCode" value="${peopleContractSalary.peopleCode}">
+               <tr>
+                   <a href="javascript:void(0);" class="easyui-linkbutton"
+                      data-options="iconCls:'icon-cancel',plain:true" onclick="calculateSalary();">自动计算工资</a>
+               </tr>
                <tr>
                     <td>职级</td>
                     <td>

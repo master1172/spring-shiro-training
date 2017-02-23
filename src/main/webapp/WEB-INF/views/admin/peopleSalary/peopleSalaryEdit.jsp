@@ -45,7 +45,7 @@
                 $("#trafficAllowance").numberbox('setValue',trafficAllowance.toFixed(2));
                 $("#temperatureAllowance").numberbox('setValue',temperatureAllowance.toFixed(2));
             }
-        })
+        });
 
     });
 

@@ -1,12 +1,17 @@
 package com.wangzhixuan.controller;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.model.*;
+import com.wangzhixuan.service.ExamMonthlyService;
+import com.wangzhixuan.service.PeopleTimesheetService;
 import com.wangzhixuan.utils.ConstUtil;
+import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleContractSalaryBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -41,6 +46,12 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@Autowired
 	private PeopleContractService peopleContractService;
+
+	@Autowired
+	private PeopleTimesheetService peopleTimesheetService;
+
+	@Autowired
+	private ExamMonthlyService examMonthlyService;
 
 	@RequestMapping(value = "/manager", method = RequestMethod.GET)
 	public String manager() {
@@ -134,7 +145,34 @@ public class PeopleContractSalaryController extends BaseController {
 		if (peopleContractSalaryBase == null) {
 			peopleContractSalaryBase = new PeopleContractSalaryBase();
 		}
+
+		String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfCurrentMonth();
+		String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfCurrentMonth();
+
+		BigDecimal sumVacationPeriod = peopleTimesheetService.findVacationSumByCodeAndDate(
+				peopleContractSalaryBase.getPeopleCode(),
+				firstDayOfCurrentMonth,
+				lastDayOfCurrentMonth);
+
+		if (sumVacationPeriod != null){
+			Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
+			DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			peopleContractSalaryBase.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
+		}else{
+			peopleContractSalaryBase.setTemperatureAllowance(new BigDecimal(100.00));
+		}
+
 		model.addAttribute("people", peopleContractSalaryBase);
+		model.addAttribute("sumVacationPeriod",sumVacationPeriod);
+
+		String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
+				peopleContractSalaryBase.getPeopleCode(),
+				firstDayOfCurrentMonth,
+				lastDayOfCurrentMonth
+		);
+
+		model.addAttribute("examResult",examResult);
+
 		return "/admin/peopleContractSalary/peopleSalaryAdd";
 	}
 
@@ -253,5 +291,12 @@ public class PeopleContractSalaryController extends BaseController {
 	@RequestMapping("/advSearchPage")
 	public String advSearchPage(){
 		return "/admin/peopleContractSalary/salarySearch";
+	}
+
+	@RequestMapping("/calculateSalary")
+	@ResponseBody
+	public String calculateSalary(PeopleContractSalary peopleContractSalary){
+		BigDecimal grossIncome = peopleContractSalaryService.CalculateGrossIncome(peopleContractSalary);
+		return grossIncome.toString();
 	}
 }

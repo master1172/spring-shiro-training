@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.math.BigDecimal;
+
 /**
  * Created by fengjunfeng on 2017/1/22.
  */
@@ -39,4 +41,6 @@ public interface PeopleContractSalaryService {
     void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
     PeopleContractSalary findPeopleContractSalaryById(Integer id);
+
+    BigDecimal CalculateGrossIncome(PeopleContractSalary peopleContractSalary);
 }
