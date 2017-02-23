@@ -132,7 +132,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public List<Tree> findTree2(User user, boolean displayMenuOnly){
         List<Tree> trees = Lists.newArrayList();
-        if (user.getLoginname().equals("admin")){
+
             List<Resource> rootResourceList = resourceMapper.findResourceAllByTypeAndPidNull(Config.RESOURCE_MENU);
             if (rootResourceList == null){
                 return null;
@@ -155,7 +155,7 @@ public class ResourceServiceImpl implements ResourceService {
                     trees.add(rootTree);
                 }
             }
-        }
+
 
         return trees;
     }
