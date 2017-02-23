@@ -154,7 +154,14 @@ public class UserController extends BaseController {
             return result;
         }
         try {
-            userVo.setPassword(DigestUtils.md5Hex(userVo.getPassword()));
+            if (StringUtils.isBlank(userVo.getPassword())){
+                User existUser = userService.findUserById(userVo.getId());
+                if (existUser != null){
+                    userVo.setPassword(existUser.getPassword());
+                }
+            }else{
+                userVo.setPassword(DigestUtils.md5Hex(userVo.getPassword()));
+            }
             userService.updateUser(userVo);
             result.setSuccess(true);
             result.setMsg("修改成功！");
