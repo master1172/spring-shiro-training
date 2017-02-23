@@ -40,7 +40,7 @@ public class ResourceController extends BaseController {
     public List<Tree> tree() {
         User currentUser = getCurrentUser();
         List<Tree> tree = resourceService.findTree2(currentUser,true);
-        //List<Tree> tree = resourceService.findAllTrees();
+
         return tree;
     }
 

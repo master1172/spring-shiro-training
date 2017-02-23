@@ -70,7 +70,7 @@ public class ResourceServiceImpl implements ResourceService {
         return subTreeList;
     }
 
-    private List<Tree> buildSubTree(Tree tree, boolean displaySubTreeOnly){
+    private List<Tree> buildSubTree(Tree tree, boolean displaySubTreeOnly, Set<Long> resourceIdList){
 
         if (tree == null)
             return null;
@@ -85,6 +85,9 @@ public class ResourceServiceImpl implements ResourceService {
 
         for(Resource resource:subTreeResources){
 
+            if (!resourceIdList.contains(resource.getId()))
+                continue;
+
             if (displaySubTreeOnly){
                 if (resource.getIcon().equals(ICON_COMPANY) || resource.getIcon().equals(ICON_FOLDER)){
                     Tree subTree = new Tree();
@@ -94,7 +97,7 @@ public class ResourceServiceImpl implements ResourceService {
                     subTree.setIconCls(resource.getIcon());
                     subTree.setAttributes(resource.getUrl());
 
-                    List<Tree> nextLevelTrees = buildSubTree(subTree,displaySubTreeOnly);
+                    List<Tree> nextLevelTrees = buildSubTree(subTree,displaySubTreeOnly, resourceIdList);
 
                     if (nextLevelTrees != null){
                         subTree.setChildren(nextLevelTrees);
@@ -112,7 +115,7 @@ public class ResourceServiceImpl implements ResourceService {
                 subTree.setIconCls(resource.getIcon());
                 subTree.setAttributes(resource.getUrl());
 
-                List<Tree> nextLevelTrees = buildSubTree(subTree,displaySubTreeOnly);
+                List<Tree> nextLevelTrees = buildSubTree(subTree,displaySubTreeOnly, resourceIdList);
 
                 if (nextLevelTrees != null){
                     subTree.setChildren(nextLevelTrees);
@@ -133,28 +136,40 @@ public class ResourceServiceImpl implements ResourceService {
     public List<Tree> findTree2(User user, boolean displayMenuOnly){
         List<Tree> trees = Lists.newArrayList();
 
-            List<Resource> rootResourceList = resourceMapper.findResourceAllByTypeAndPidNull(Config.RESOURCE_MENU);
-            if (rootResourceList == null){
-                return null;
+        List<Resource> rootResourceList = resourceMapper.findResourceAllByTypeAndPidNull(Config.RESOURCE_MENU);
+
+        if (rootResourceList == null){
+            return null;
+        }
+
+        List<Long> roleIdList = userRoleMapper.findRoleIdListByUserId(user.getId());
+        Set<Long> resourceIdList = Sets.newHashSet();
+        for (Long i : roleIdList) {
+            List<Resource> resourceList = roleMapper.findResourceIdListByRoleIdAndType(i);
+            for (Resource resource: resourceList) {
+                resourceIdList.add(resource.getId());
             }
+        }
 
-            for(Resource rootResource: rootResourceList){
+        for(Resource rootResource: rootResourceList){
+            
+            if (rootResource.getIcon().equals(ICON_COMPANY)  || rootResource.getIcon().equals(ICON_FOLDER)){
 
-                if (rootResource.getIcon().equals(ICON_COMPANY)  || rootResource.getIcon().equals(ICON_FOLDER)){
-                    Tree rootTree = new Tree();
-                    rootTree.setId(rootResource.getId());
-                    rootTree.setText(rootResource.getName());
-                    rootTree.setIconCls(rootResource.getIcon());
-                    rootTree.setAttributes(rootResource.getUrl());
+                Tree rootTree = new Tree();
+                rootTree.setId(rootResource.getId());
+                rootTree.setText(rootResource.getName());
+                rootTree.setIconCls(rootResource.getIcon());
+                rootTree.setAttributes(rootResource.getUrl());
 
-                    List<Tree> subTree = this.buildSubTree(rootTree,displayMenuOnly);
+                List<Tree> subTree = this.buildSubTree(rootTree,displayMenuOnly,resourceIdList);
 
-                    if (subTree != null){
-                        rootTree.setChildren(subTree);
-                    }
-                    trees.add(rootTree);
+                if (subTree != null){
+                    rootTree.setChildren(subTree);
                 }
+
+                trees.add(rootTree);
             }
+        }
 
 
         return trees;
