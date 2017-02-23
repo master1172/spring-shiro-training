@@ -112,7 +112,7 @@ public class PeopleRehireController extends BaseController{
     /**
      * 添加用户
      *
-     * @param peopleRehire
+     * @param
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -269,5 +269,15 @@ public class PeopleRehireController extends BaseController{
         }
     }
 
+    @RequestMapping("/printReview")
+    public void printReview(HttpServletResponse response,String ids){
+        if (StringUtils.isBlank(ids))
+            return;
+
+        try{
+            peopleRehireService.printPreview(response,ids);
+        }catch (Exception exp){
+        }
+    }
 }
 

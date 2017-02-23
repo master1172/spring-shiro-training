@@ -3,6 +3,7 @@ package com.wangzhixuan.utils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * Created by sterm on 2016/12/5.
@@ -19,5 +20,10 @@ public class ExcelUtil {
         }
 
         return row;
+    }
+
+    public static void exportExcel(){
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
     }
 }

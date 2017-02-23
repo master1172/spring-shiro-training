@@ -89,7 +89,7 @@
                 <tr>
                     <td>电话</td>
                     <td>
-                        <input type="text" name="phone" class="easyui-numberbox" value="${user.phone}"/>
+                        <input type="text" name="phone" class="easyui-numberbox" value="${user.phone}" data-options="validType:'length[1,11]'"/>
                     </td>
                     <td>用户类型</td>
                     <td><select id="state" name="status" value="${user.status}" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">

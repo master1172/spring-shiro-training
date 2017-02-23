@@ -86,7 +86,7 @@
                 <tr>
                     <td>电话</td>
                     <td>
-                        <input type="text" name="phone" class="easyui-numberbox"/>
+                        <input type="text" name="phone" class="easyui-numberbox" data-options="validType:'length[1,11]'"/>
                     </td>
                     <td>用户状态</td>
                     <td>

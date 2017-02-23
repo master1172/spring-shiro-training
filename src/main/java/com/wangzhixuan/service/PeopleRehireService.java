@@ -92,6 +92,8 @@ public interface PeopleRehireService {
     String findPeopleRehireIDsByCondition(PageInfo pageInfo);
 
     void batchRetirePeopleByIds(String[] idList);
+
+    void printPreview(HttpServletResponse response, String ids);
 }
 
 
