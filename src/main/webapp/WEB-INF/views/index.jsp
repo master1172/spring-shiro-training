@@ -168,12 +168,14 @@
             <ul id="layout_west_tree"></ul>
         </div>
     </div>
+
     <div data-options="region:'center'" style="overflow: hidden;">
         <div id="index_tabs" style="overflow: hidden;">
             <div title="首页" data-options="border:false" style="overflow: hidden;">
             </div>
         </div>
     </div>
+
     <div data-options="region:'south',border:false"
          style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee">Copyright ©
         2015 power by <a href="http://www.yzjkeji.com/" target="_blank">亿中景</a></div>

@@ -7,7 +7,7 @@
             url : '${path }/resource/tree',
             parentField : 'pid',
             lines : true,
-            panelHeight : 'auto',
+            panelHeight : 300,
             value : '${resource.pid}'
         });
         

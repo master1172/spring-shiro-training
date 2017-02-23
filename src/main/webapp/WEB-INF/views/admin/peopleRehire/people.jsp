@@ -230,6 +230,20 @@
             $('#searchForm input').val('');
             dataGrid.datagrid('load', {});
         }
+
+        function printReview(){
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if(checkedItems.length == 1){
+                var id = checkedItems[0]["id"];
+                var form = $("#downloadform");
+                form.find("input[name='ids']").val(id);
+                form.attr("action", '${path}' + "/peopleRehire/printReview");
+                $("#downLoadForm").submit();
+            }else{
+                parent.$.messager.alert("提示","请选择一条有效数据","warning");
+            }
+        }
+
         //导入Excel
         function importExcel(){
             parent.$.modalDialog({
@@ -411,6 +425,8 @@
     </shiro:hasPermission>
     <a onclick="batchRetire();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">转回退休</a>
+    <a onclick="printReview();" href="javascript:void(0)" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">生成审批表</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

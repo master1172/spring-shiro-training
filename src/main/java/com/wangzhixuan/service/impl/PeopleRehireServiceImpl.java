@@ -527,5 +527,23 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
         }
     }
+
+    @Override
+    public void printPreview(HttpServletResponse response, String ids) {
+        try{
+            PeopleRehire peopleRehire = peopleRehireMapper.findPeopleRehireById(Integer.valueOf(ids));
+            if (peopleRehire == null)
+                peopleRehire = new PeopleRehire();
+
+            String filePath=this.getClass().getResource("/template/rehireReview.xlsx").getPath();
+            String newFileName="返聘人员审批表.xlsx";
+
+
+
+        }catch (Exception exp){
+
+        }
+
+    }
 }
 
