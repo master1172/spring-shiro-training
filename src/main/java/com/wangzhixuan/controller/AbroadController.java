@@ -43,7 +43,7 @@ public class AbroadController {
     @ResponseBody
     public PageInfo dataGrid(HttpServletRequest request, AbroadVo abroadVo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String, Object> condition = abroadVo.CreateCondition(abroadVo);
+        Map<String, Object> condition = AbroadVo.CreateCondition(abroadVo);
         pageInfo.setCondition(condition);
         abroadService.findDataGrid(pageInfo, request);
 

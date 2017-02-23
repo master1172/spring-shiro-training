@@ -139,8 +139,8 @@ public class AbroadImpl implements AbroadService {
 
                     row.createCell(0).setCellValue(i+1);
                     row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getDepartmentId());row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getJobId());row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getDepartmentName());row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getJobName());row.getCell(3).setCellStyle(setBorder);
                     row.createCell(4).setCellValue(p.getAbroadDate()==null?"":(p.getAbroadDate().toString()));row.getCell(4).setCellStyle(setBorder);
                     row.createCell(5).setCellValue(p.getCountry());row.getCell(5).setCellStyle(setBorder);
                     row.createCell(6).setCellValue(p.getPassportStatus());row.getCell(6).setCellStyle(setBorder);

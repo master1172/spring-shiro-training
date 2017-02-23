@@ -46,7 +46,7 @@ public class RecruitController {
     @ResponseBody
     public PageInfo dataGrid(HttpServletRequest request, RecruitVo recruitVo, Integer page, Integer rows, String sort, String order){
         PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String, Object> condition = recruitVo.CreateCondition(recruitVo);
+        Map<String, Object> condition = RecruitVo.CreateCondition(recruitVo);
         pageInfo.setCondition(condition);
         recruitService.findDataGrid(pageInfo, request);
 

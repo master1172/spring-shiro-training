@@ -189,11 +189,11 @@ public class AbroadVo implements Serializable {
         if(StringUtils.isNoneBlank(abroadVo.getName())){
             condition.put("name",abroadVo.getName());
         }
-        if(abroadVo.getDepartmentId() != null){
-            condition.put("departmentId", abroadVo.getDepartmentId());
+        if(abroadVo.getDepartmentName() != null){
+            condition.put("departmentName", abroadVo.getDepartmentName());
         }
-        if(abroadVo.getJobId() != null){
-            condition.put("jobId", abroadVo.getJobId());
+        if(abroadVo.getJobName() != null){
+            condition.put("jobName", abroadVo.getJobName());
         }
         if(abroadVo.getAbroadDate() != null){
             condition.put("abroadDate", abroadVo.getAbroadDate());

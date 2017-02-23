@@ -315,29 +315,38 @@ public class RecruitVo implements Serializable{
             condition.put("sex", recruitVo.getSex());
         }
 
-        if(recruitVo.getAge() != null){
-            condition.put("age", recruitVo.getAge());
+        if(recruitVo.getMajor() != null){
+            condition.put("major", recruitVo.getMajor());
         }
 
-        if(recruitVo.getNationalId() != null){
-            condition.put("nationalId", recruitVo.getNationalId());
+        if(StringUtils.isNoneBlank(recruitVo.getApplyJob())){
+            condition.put("applyJob", recruitVo.getApplyJob());
         }
 
-        if(StringUtils.isNoneBlank(recruitVo.getPoliticalName())){
-            condition.put("politicalName",recruitVo.getPoliticalName());
+        if(recruitVo.getMarriageStatus() != null){
+            condition.put("marriageStatus", recruitVo.getMarriageStatus());
         }
 
-        if(recruitVo.getGraduateSchool() != null){
-            condition.put("graduateSchool", recruitVo.getGraduateSchool());
+        if(recruitVo.getDegreeOnTime() != null){
+            condition.put("degreeOnTime", recruitVo.getDegreeOnTime());
         }
 
-        if(StringUtils.isNoneBlank(recruitVo.getGraduateStatus())){
+        if (StringUtils.isNoneBlank(recruitVo.getBirthday())){
+            condition.put("birthday",recruitVo.getBirthday());
+        }
+
+        if(recruitVo.getOrigin() != null){
+            condition.put("origin", recruitVo.getOrigin());
+        }
+
+        if(recruitVo.getNationalName() != null){
+            condition.put("nationalName", recruitVo.getNationalName());
+        }
+
+        if(recruitVo.getGraduateStatus() != null){
             condition.put("graduateStatus", recruitVo.getGraduateStatus());
         }
 
-        if(StringUtils.isNoneBlank(recruitVo.getDegree())){
-            condition.put("degree", recruitVo.getDegree());
-        }
         if(StringUtils.isNoneBlank(recruitVo.getForeignLanguageLevel())){
             condition.put("foreignLanguageLevel", recruitVo.getForeignLanguageLevel());
         }
