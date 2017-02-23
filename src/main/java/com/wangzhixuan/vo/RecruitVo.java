@@ -323,9 +323,17 @@ public class RecruitVo implements Serializable{
             condition.put("applyJob", recruitVo.getApplyJob());
         }
 
-        if(recruitVo.getMarriageStatus() != null){
-            condition.put("marriageStatus", recruitVo.getMarriageStatus());
+        if(StringUtils.isNoneBlank(recruitVo.getOrigin())){
+            condition.put("origin", recruitVo.getOrigin());
         }
+
+//        if(recruitVo.getMarriageId() != null){
+//            condition.put("marriageId", recruitVo.getMarriageId());
+//        }
+//
+//        if(StringUtils.isNoneBlank(recruitVo.getMarriageStatus())){
+//            condition.put("marriageStatus", recruitVo.getMarriageStatus());
+//        }
 
         if(recruitVo.getDegreeOnTime() != null){
             condition.put("degreeOnTime", recruitVo.getDegreeOnTime());

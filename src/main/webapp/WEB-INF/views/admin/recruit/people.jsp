@@ -311,7 +311,7 @@
             <th field="major"           data-options="sortable:true" width="80">专业</th>
             <th field="applyJob"   data-options="sortable:true" width="80">应聘岗位</th>
             <th field="origin"       data-options="sortable:true" width="80">生源地</th>
-            <th field="nationalId"       data-options="sortable:true" width="80">民族</th>
+            <th field="nationalName"       data-options="sortable:true" width="80">民族</th>
             <th field="graduateStatus"         data-options="sortable:true" width="80">毕业生性质</th>
             <th field="foreignLanguageLevel"         data-options="sortable:true" width="80">外语水平</th>
             <th field="id" data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
