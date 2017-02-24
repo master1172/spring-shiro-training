@@ -165,37 +165,38 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 			XSSFSheet sheet = xwb.getSheetAt(0);
 
 			XSSFRow row;
-			for (int i = sheet.getFirstRowNum() + 1; i < sheet
-					.getPhysicalNumberOfRows(); i++) {
+			for (int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 				row = sheet.getRow(i);
 				ExamYearly examYearly = new ExamYearly();
 				// 姓名
-				if (row.getCell(1) == null
-						|| row.getCell(1).toString().trim().equals("")) {
+				if (row.getCell(1) == null || row.getCell(1).toString().trim().equals("")) {
 					continue;
 				}
+
 				String name = row.getCell(1).toString().trim();
-//				examYearly.setName(name);
+
 				People people = peopleMapper.findPeopleByName(name);
+
 				if (people == null || StringUtils.isBlank(people.getCode())) {
 					continue;
 				}
+
 				examYearly.setPeopleCode(people.getCode());
-				if (row.getCell(2) != null
-						&& !row.getCell(2).toString().trim().equals("")) {
-					Double yearValue = Double.parseDouble(row.getCell(2).toString().trim());
-					if (yearValue != null)
-						examYearly.setYear(yearValue.intValue());
+
+				if (row.getCell(2) != null && !row.getCell(2).toString().trim().equals("")) {
+					String yearValue = row.getCell(2).toString().trim();
+					examYearly.setYear(StringUtilExtra.StrToInteger(yearValue));
 				}
+
+
 				if(row.getCell(3)!=null && !row.getCell(3).toString().trim().equals("")){
 					examYearly.setExamResult(row.getCell(3).toString().trim());
 				}
-				if (row.getCell(4) != null
-						&& !row.getCell(4).toString().trim().equals("")) {
-					examYearly.setExamOperation(row.getCell(4).toString()
-							.trim());
+
+				if (row.getCell(4) != null && !row.getCell(4).toString().trim().equals("")) {
+					examYearly.setExamOperation(row.getCell(4).toString().trim());
 				}
-				examYearly.setName(null);// 不继续维护姓名，联查
+
 				list.add(examYearly);
 			}
 		} catch (IOException e1) {

@@ -14,6 +14,15 @@ import java.util.UUID;
 public class StringUtilExtra {
 
 
+    public static Integer StrToInteger(String value){
+        try{
+            Double yearValue = Double.parseDouble(value);
+            return yearValue.intValue();
+        }catch (Exception exp){
+            return new Integer(0);
+        }
+    }
+
     public static Long StringToLong(String value){
         if (StringUtils.isBlank(value))
             return Long.valueOf(-1);
