@@ -126,7 +126,7 @@
         function addFun() {
             parent.$.modalDialog({
                 title: '添加',
-                width: 1500,
+                width: 1000,
                 height: 600,
                 href: '${path}/people/addPage',
                 buttons: [{
@@ -161,7 +161,7 @@
 
             parent.$.modalDialog({
                 title: '修改',
-                width: 1500,
+                width: 1000,
                 height: 600,
                 href: '${path}/people/editPage?id=' + id,
                 buttons: [{

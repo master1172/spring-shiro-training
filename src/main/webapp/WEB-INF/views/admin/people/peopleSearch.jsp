@@ -12,7 +12,8 @@
     }
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+    <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
+        <div style="width:1500px">
         <form id="peopleSearchForm" method="post">
             <table class="grid" border=1>
                 <tr>
@@ -140,5 +141,6 @@
                 </tr>
             </table>
         </form>
+        </div>
     </div>
 </div>
