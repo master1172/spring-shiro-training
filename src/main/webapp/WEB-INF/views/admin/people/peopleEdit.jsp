@@ -210,23 +210,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>紧急联系人</td>
-                    <td>
-                        <input type="text" name="contact" value="${peopleVo.contact}">
-                    </td>
-                    <td>与本人关系</td>
-                    <td>
-                        <input type="text" name="relationship" value="${peopleVo.relationship}">
-                    </td>
-                    <td>联系人电话</td>
-                    <td>
-                        <input type="text" name="contactNumber" value="${peopleVo.contactNumber}">
-                    </td>
-                    <td>身份</td>
-                    <td>
-                        <input class="easyui-combobox" id="identityId" name="identityId" url="${path}/dict/identity" valueField="id" textField="name" editable="false">
-                        </input>
-                    </td>
+                    <td>紧急联系人与本人关系</td>
+                    <td></td>
+                    <td>紧急联系人姓名</td>
+                    <td></td>
+                    <td>工作单位</td>
+                    <td></td>
+                    <td>职务</td>
+                    <td></td>
+                    <td>联系方式</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>称谓</td>
