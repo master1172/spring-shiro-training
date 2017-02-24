@@ -136,14 +136,13 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
           }
           row.setHeight((short) 400);
         }
-
-        sheet.setDefaultRowHeightInPoints(21);
-        response.reset();
-        os = response.getOutputStream();
-        response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
-        workBook.write(os);
-        os.close();
       }
+      sheet.setDefaultRowHeightInPoints(21);
+      response.reset();
+      os = response.getOutputStream();
+      response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+      workBook.write(os);
+      os.close();
     }catch (IOException e) {
       e.printStackTrace();
     }
