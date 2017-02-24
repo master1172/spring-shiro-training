@@ -83,7 +83,7 @@
         t.national_id,
         s.name as national_name,
         t.native_id,
-        v.name, as native_name,
+        v.name as native_name,
         t.birth_place,
         t.birthday,
         t.education_name,

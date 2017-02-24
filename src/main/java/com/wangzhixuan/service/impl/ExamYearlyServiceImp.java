@@ -53,6 +53,9 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 
 	@Override
 	public void add(ExamYearly examYearly) {
+		if (examYearly.getYear() == null){
+			examYearly.setYear(DateUtil.GetCurrentYear());
+		}
 		examYearlyMapper.insert(examYearly);
 	}
 
@@ -63,6 +66,9 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 
 	@Override
 	public void update(ExamYearly examYearly) {
+		if (examYearly.getYear() == null){
+			examYearly.setYear(DateUtil.GetCurrentYear());
+		}
 		examYearlyMapper.updateByPrimaryKey(examYearly);
 	}
 
@@ -103,7 +109,7 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 					ExamYearlyVo examYearlyVo = examYearlyVoList.get(j);
 					row.createCell(0).setCellValue(count+1);
 					row.createCell(1).setCellValue(examYearlyVo.getName());
-					row.createCell(2).setCellValue(examYearlyVo.getYear());//please pay more attention about this row
+					row.createCell(2).setCellValue(examYearlyVo.getYear());
 					row.createCell(3).setCellValue(examYearlyVo.getExamResult());
 					row.createCell(4).setCellValue(examYearlyVo.getExamOperation());
 
@@ -186,6 +192,8 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 				if (row.getCell(2) != null && !row.getCell(2).toString().trim().equals("")) {
 					String yearValue = row.getCell(2).toString().trim();
 					examYearly.setYear(StringUtilExtra.StrToInteger(yearValue));
+				}else{
+					examYearly.setYear(DateUtil.GetCurrentYear());
 				}
 
 
