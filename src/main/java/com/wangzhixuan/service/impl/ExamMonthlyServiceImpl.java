@@ -75,11 +75,17 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
 
   @Override
   public void add(ExamMonthly examMonthly){
+    if (StringUtils.isBlank(examMonthly.getExamDate())){
+      examMonthly.setExamDate(DateUtil.GetCurrnetYearAndMonth());
+    }
     examMonthlyMapper.insert(examMonthly);
   }
 
   @Override
   public void update(ExamMonthly examMonthly) {
+    if (StringUtils.isBlank(examMonthly.getExamDate())){
+      examMonthly.setExamDate(DateUtil.GetCurrnetYearAndMonth());
+    }
     examMonthlyMapper.updateByPrimaryKey(examMonthly);
   }
 
@@ -210,6 +216,8 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
 
         if(row.getCell(4)!=null && !row.getCell(4).toString().trim().equals("")){
           examMonthly.setExamDate(row.getCell(4).toString().trim());
+        }else{
+          examMonthly.setExamDate(DateUtil.GetCurrnetYearAndMonth());
         }
 
         list.add(examMonthly);

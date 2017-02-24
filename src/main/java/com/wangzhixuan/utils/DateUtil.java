@@ -125,4 +125,10 @@ public class DateUtil {
         today.set(Calendar.DAY_OF_MONTH, today.getActualMaximum(Calendar.DAY_OF_MONTH));
         return format.format(today.getTime());
     }
+
+    public static String GetCurrnetYearAndMonth(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        Calendar today = Calendar.getInstance().getInstance();
+        return format.format(today.getTime());
+    }
 }
