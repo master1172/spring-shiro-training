@@ -137,7 +137,7 @@
                 <tr>
                     <td>人员类别</td>
                     <td>
-                        <input type="text" name="pjeopleType">
+                        <input type="text" name="peopleType">
                     </td>
                 </tr>
                 <tr>
