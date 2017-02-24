@@ -169,8 +169,19 @@
       <if test=" condition.name != null and condition.name != '' ">
         and t.name LIKE concat('%',#{condition.name},'%')
       </if>
+      <if test=" condition.sex != null">
+        and t.sex = #{condition.sex}
+      </if>
+      <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+        <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+      </if>
+      <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+        <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+      </if>
     </where>
+    LIMIT #{from}, #{size}
   </select>
+
 
   <select id="findPeoplePageCount" resultType="java.lang.Integer" parameterType="PageInfo">
     SELECT count(t.id) count
@@ -187,6 +198,7 @@
       <if test=" condition.sex != null">
         and t.sex = #{condition.sex}
       </if>
+
 
     </where>
   </select>
@@ -329,7 +341,7 @@
       t.national_id, n.name as national_name,t.birthday, t.political_name,
       t.health, t.graduate_school, t.degree,
       t.degree_ontime, t.school_address, t.graduate_status,
-      t.foreign_language_level,t.marriage_id, t.cellphone,
+      t.foreign_language_level,t.marriage_id, m.name AS marriage_status,t.cellphone,
       t.photo_id, t.email, t.address,
       t.zipcode, t.study_experience, t.speciality_and_ability,
       t.social_experience, t.award, t.photo
@@ -337,6 +349,8 @@
       recruit t
     LEFT JOIN
           dict_national n ON n.id = t.national_id
+    LEFT JOIN
+    dict_marriage m ON m.id = t.marriage_id
     WHERE
     t.id IN
     <foreach item="item" index="index" collection="array" open="(" separator="," close=")">

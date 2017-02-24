@@ -51,14 +51,17 @@
                         <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                    <td>出生日期</td>
-                    <td>
-                        <input id="birthday" name="birthday" placeholder="点击选择时间"
-                               onclick="WdatePicker({
-                                readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d'})"
-                               readonly="readonly" value="${recruit.birthday}"/>
+                </tr>
+                <tr>
+                    <td>出生日期范围</td>
+                    <td colspan="3">
+                        <input name="birthdayMin" placeholder="点击选择起始时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
+                        ~
+                        <input name="birthdayMax" placeholder="点击选择结束时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               readonly="readonly"/>
                     </td>
                 </tr>
                 <tr>

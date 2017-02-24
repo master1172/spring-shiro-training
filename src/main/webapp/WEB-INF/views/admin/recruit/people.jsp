@@ -291,6 +291,15 @@
                         <option value="0">男</option>
                         <option value="1">女</option>
                     </select>
+                </td>
+                <th>出生日期</th>
+                <td>
+                    <input name="birthdayMin" placeholder="点击选择起始时间"
+                           onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                           readonly="readonly"/>至
+                    <input name="birthdayMax" placeholder="点击选择结束时间"
+                           onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                           readonly="readonly"/>
                     <a href="javascript:void(0);" class="easyui-linkbutton"
                        data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
                     <a href="javascript:void(0);" class="easyui-linkbutton"

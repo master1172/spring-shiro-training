@@ -136,6 +136,9 @@
                     <td>主要学习工作经历</td>
                     <td>
                         <input type="text" id="studyExperience" name="studyExperience">
+
+
+
                     </td>
                     <td>特长及能力</td>
                     <td>

@@ -9,10 +9,7 @@ import com.wangzhixuan.vo.RecruitVo;
 import com.wangzhixuan.vo.TrainingVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -241,20 +238,28 @@ public class RecruitImpl implements RecruitService {
             XSSFWorkbook xwb = new XSSFWorkbook(path);
             XSSFSheet sheet = xwb.getSheetAt(0);
             //
-
+            List<XSSFPictureData> pictureList = xwb.getAllPictures();
             XSSFRow row;
             for (int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
                 row = sheet.getRow(i);
                 Recruit p = new Recruit();
 
 //                p.setCode(StringUtilExtra.generateUUID());
+             //将Excel中的图片插入到数据库中
+                if (pictureList != null && pictureList.size() > 0){
+                    XSSFPictureData picture = pictureList.get(0);
+                    String filePath = StringUtilExtra.getPictureUploadPath();
+                    String uploadPath = UploadUtil.pictureUpLoad(filePath,picture);
 
+                    if (StringUtils.isNotBlank(uploadPath)){
+                        p.setPhoto(uploadPath);
+                    }
+                }
                 //姓名
                 if (row.getCell(1) == null || row.getCell(1).toString().trim().equals("")) {
                     continue;
                 }
-
-                String name = row.getCell(1).toString().trim();
+                String name=row.getCell(1).toString().trim();
                 p.setName(name);
 
                 //性别
@@ -278,14 +283,14 @@ public class RecruitImpl implements RecruitService {
 
                 //专业
                 if (row.getCell(4) != null && !row.getCell(4).toString().trim().equals("")) {
-                    continue;
+                    String major = row.getCell(4).toString().trim();
+                    p.setMajor(major);
                 }
-                String major = row.getCell(4).toString().trim();
-                p.setMajor(major);
+
                 //应聘岗位
                 if (row.getCell(5) != null && !row.getCell(5).toString().trim().equals("")) {
-                    String politicalName = row.getCell(5).toString().trim();
-                    p.setPoliticalName(politicalName);
+                    String applyJob = row.getCell(5).toString().trim();
+                    p.setApplyJob(applyJob);
                 }
                 //生源地
                 if (row.getCell(6) != null && !row.getCell(6).toString().trim().equals("")) {
@@ -309,7 +314,7 @@ public class RecruitImpl implements RecruitService {
                 //出生日期
                 if (row.getCell(8) != null && !row.getCell(8).toString().trim().equals("")) {
                     String birthday = row.getCell(8).toString().trim();
-                    p.setOrigin(birthday);
+                    p.setBirthday(birthday);
                 }
                 //政治面貌
                 if (row.getCell(9) != null && !row.getCell(9).toString().trim().equals("")) {
@@ -333,8 +338,8 @@ public class RecruitImpl implements RecruitService {
                 }
                 //是否能按期获得学位
                 if (row.getCell(13) != null && !row.getCell(13).toString().trim().equals("")) {
-                    String sex = row.getCell(13).toString().trim();
-                    p.setSex(sex.equals("是") ? 1 : 0);
+                    String degreeOnTime = row.getCell(13).toString().trim();
+                    p.setDegreeOnTime(degreeOnTime.equals("否") ? 1 : 0);
                 }
                 //院校所在地
                 if (row.getCell(14) != null && !row.getCell(14).toString().trim().equals("")) {
@@ -364,7 +369,9 @@ public class RecruitImpl implements RecruitService {
                 if (row.getCell(18) != null && !row.getCell(18).toString().trim().equals("")) {
                     String cellphone = row.getCell(18).toString().trim();
                     p.setCellphone(cellphone);
+
                 }
+
                 //身份证号码
                 if(row.getCell(19) != null && !row.getCell(19).toString().trim().equals("")){
                     String photoId = row.getCell(19).toString().trim();
@@ -405,8 +412,6 @@ public class RecruitImpl implements RecruitService {
                     String award = row.getCell(26).toString().trim();
                     p.setAward(award);
                 }
-
-
                 list.add(p);
             }
         } catch (IOException e1) {

@@ -33,6 +33,10 @@ public class RecruitVo implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String birthday;
 
+    private String birthdayMin;
+
+    private String birthdayMax;
+
     private String politicalName;
 
     private String health;
@@ -153,6 +157,14 @@ public class RecruitVo implements Serializable{
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
+
+    public String getBirthdayMax() {return birthdayMax;}
+
+    public void setBirthdayMax(String birthdayMax) {this.birthdayMax = birthdayMax;}
+
+    public String getBirthdayMin() {return birthdayMin;}
+
+    public void setBirthdayMin(String birthdayMin) {this.birthdayMin = birthdayMin;}
 
     public String getPoliticalName() {
         return politicalName;
@@ -341,6 +353,14 @@ public class RecruitVo implements Serializable{
 
         if (StringUtils.isNoneBlank(recruitVo.getBirthday())){
             condition.put("birthday",recruitVo.getBirthday());
+        }
+
+        if (StringUtils.isNoneBlank(recruitVo.getBirthdayMin())){
+            condition.put("birthdayMin",recruitVo.getBirthdayMin());
+        }
+
+        if (StringUtils.isNoneBlank(recruitVo.getBirthdayMax())){
+            condition.put("birthdayMax",recruitVo.getBirthdayMax());
         }
 
         if(recruitVo.getOrigin() != null){
