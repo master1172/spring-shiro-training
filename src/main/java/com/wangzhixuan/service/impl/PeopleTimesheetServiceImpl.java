@@ -61,11 +61,17 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 	@Override
 	public Integer insert(PeopleTimesheet record) {
+		if (StringUtils.isBlank(record.getCheckDate())){
+			record.setCheckDate(null);
+		}
 		return peopleTimesheetMapper.insert(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(PeopleTimesheet record) {
+		if (StringUtils.isBlank(record.getCheckDate())){
+			record.setCheckDate(null);
+		}
 		return peopleTimesheetMapper.updateByPrimaryKey(record);
 	}
 
