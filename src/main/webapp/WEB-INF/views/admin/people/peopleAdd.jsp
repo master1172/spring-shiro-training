@@ -29,20 +29,21 @@
     }
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+    <div data-options="region:'center',border:false" title="" style="overflow:scroll;padding: 3px;">
+        <div style="width:1500px">
         <form id="peopleAddForm" method="post" enctype=”multipart/form-data”>
             <table class="grid" border=1>
                 <tr>
-                    <td>姓名</td>
+                    <td width="50">姓名</td>
                     <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true" value=""></td>
-                    <td>性别</td>
+                    <td width="50">性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value="0" selected="selected">男</option>
                             <option value="1" >女</option>
                         </select>
                     </td>
-                    <td>民族</td>
+                    <td width="50">民族</td>
                     <td>
                         <input class="easyui-combobox" id="nationalId" name="nationalId" url="${path}/dict/national" valueField="id" textField="name" editable="false">
                         </input>
@@ -310,5 +311,6 @@
                 </tr>
             </table>
         </form>
+        </div>
     </div>
 </div>

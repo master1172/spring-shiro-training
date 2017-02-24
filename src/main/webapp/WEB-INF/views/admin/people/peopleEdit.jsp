@@ -42,7 +42,8 @@
 
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+    <div data-options="region:'center',border:false" title="" style="overflow: scroll;padding: 3px;">
+        <div style="width:1500px">
         <form id="peopleEditForm" method="post" enctype=”multipart/form-data”>
             <input type="hidden" name="id" value="${peopleVo.id}">
             <input type="hidden" name="code" value="${peopleVo.code}">
@@ -326,5 +327,6 @@
                 </tr>
             </table>
         </form>
+        </div>
     </div>
 </div>

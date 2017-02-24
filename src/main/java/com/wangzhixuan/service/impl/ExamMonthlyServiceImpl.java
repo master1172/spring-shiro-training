@@ -75,11 +75,17 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
 
   @Override
   public void add(ExamMonthly examMonthly){
+    if (StringUtils.isBlank(examMonthly.getExamDate())){
+      examMonthly.setExamDate(DateUtil.GetCurrnetYearAndMonth());
+    }
     examMonthlyMapper.insert(examMonthly);
   }
 
   @Override
   public void update(ExamMonthly examMonthly) {
+    if (StringUtils.isBlank(examMonthly.getExamDate())){
+      examMonthly.setExamDate(DateUtil.GetCurrnetYearAndMonth());
+    }
     examMonthlyMapper.updateByPrimaryKey(examMonthly);
   }
 
@@ -136,14 +142,13 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
           }
           row.setHeight((short) 400);
         }
-
-        sheet.setDefaultRowHeightInPoints(21);
-        response.reset();
-        os = response.getOutputStream();
-        response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
-        workBook.write(os);
-        os.close();
       }
+      sheet.setDefaultRowHeightInPoints(21);
+      response.reset();
+      os = response.getOutputStream();
+      response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+      workBook.write(os);
+      os.close();
     }catch (IOException e) {
       e.printStackTrace();
     }
@@ -211,6 +216,8 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
 
         if(row.getCell(4)!=null && !row.getCell(4).toString().trim().equals("")){
           examMonthly.setExamDate(row.getCell(4).toString().trim());
+        }else{
+          examMonthly.setExamDate(DateUtil.GetCurrnetYearAndMonth());
         }
 
         list.add(examMonthly);

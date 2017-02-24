@@ -421,10 +421,6 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>
-    <a onclick="batchRetire();" href="javascript:void(0);" class="easyui-linkbutton"
-       data-options="plain:true,iconCls:'icon-del'">转为退休人员</a>
-    <a onclick="batchNormal();" href="javascript:void(0);" class="easyui-linkbutton"
-       data-options="plain:true,iconCls:'icon-del'">转为正常人员</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

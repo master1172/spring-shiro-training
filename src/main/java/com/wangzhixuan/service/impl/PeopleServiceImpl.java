@@ -83,7 +83,13 @@ public class PeopleServiceImpl implements PeopleService{
 		}
     }
 
-    @Override
+	@Override
+	public void findDataGrid2(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleMapper.findPeoplePageCondition2(pageInfo));
+		pageInfo.setTotal(peopleMapper.findPeoplePageCount2(pageInfo));
+	}
+
+	@Override
     public void addPeople(PeopleVo peoplevo,CommonsMultipartFile file) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误

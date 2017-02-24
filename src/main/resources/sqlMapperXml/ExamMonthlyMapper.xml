@@ -107,7 +107,7 @@
   </select>
 
   <insert id="insertByImport" parameterType="java.util.List">
-    insert into exam_monthly (people_code, year, month, exam_result, exam_operation)
+    insert into exam_monthly (people_code, year, month, exam_result, exam_operation, exam_date)
     values
     <foreach item="item" index="index" collection="list" separator=",">
       (

@@ -42,6 +42,8 @@ public interface PeopleService {
      */
     void findDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
+    void findDataGrid2(PageInfo pageInfo, HttpServletRequest request);
+
     /**
      * 添加人员
      *
@@ -106,7 +108,6 @@ public interface PeopleService {
     People findPeopleByCode(String code);
 
     List findPeopleListByIds(String[] idList);
-
 
     void transferPeople(PeopleTransferVo peopleTransferVo);
 }

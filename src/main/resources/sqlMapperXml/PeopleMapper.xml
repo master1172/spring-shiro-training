@@ -287,7 +287,7 @@
         LEFT JOIN
           job j ON j.id = t.job_id
         LEFT JOIN
-          dict_marriage m ON m.id = t.degree_id
+          dict_marriage m ON m.id = t.marriage_id
         LEFT JOIN
           dict_identity i ON i.id = t.identity_id
         <where>
@@ -398,7 +398,7 @@
         LEFT JOIN
         job j ON j.id = t.job_id
         LEFT JOIN
-        dict_marriage m ON m.id = t.degree_id
+        dict_marriage m ON m.id = t.marriage_id
         LEFT JOIN
         dict_identity i ON i.id = t.identity_id
         <where>
@@ -495,6 +495,274 @@
         </where>
     </select>
 
+    <select id="findPeoplePageCondition2" resultMap="peopleVoResultMap" parameterType="PageInfo">
+        SELECT
+        t.id,
+        t.code,
+        t.name,
+        t.sex,
+        t.national_id,
+        n.name as national_name,
+        t.birthday,
+        t.native_id,
+        na.name as native_name,
+        t.education_name,
+        t.degree_id,
+        de.name as degree_name,
+        t.political_name,
+        t.party_date,
+        t.work_date,
+        t.school_date,
+        t.job_name,
+        t.job_category,
+        t.job_id,
+        j.job_level as job_level_name,
+        t.job_date,
+        t.job_level_date,
+        t.age,
+        t.virtual_age,
+        t.work_age,
+        t.formation,
+        t.mobile,
+        t.marriage_id,
+        m.name as marriage_name,
+        t.photo_id,
+        t.address,
+        t.hukou,
+        t.hukou_address,
+        t.final_education_name,
+        t.major,
+        t.graduate_school,
+        t.contact,
+        t.relationship,
+        t.contact_number,
+        t.family_info_1,
+        t.family_info_2,
+        t.family_info_3,
+        t.family_info_4,
+        t.photo,
+        t.identity_id,
+        i.name as identity_name,
+        t.status
+        FROM
+        people_total t
+        LEFT JOIN
+        dict_national n ON n.id = t.national_id
+        LEFT JOIN
+        dict_native na ON na.id = t.native_id
+        LEFT JOIN
+        dict_degree de ON de.id = t.degree_id
+        LEFT JOIN
+        job j ON j.id = t.job_id
+        LEFT JOIN
+        dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+        dict_identity i ON i.id = t.identity_id
+        <where>
+            <if test=" condition.name != null and condition.name != '' ">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.codeList != null">
+                and t.code in
+                <foreach item="item" index="index" collection="condition.codeList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.nationalIdList != null">
+                and t.national_id in
+                <foreach item="item" index="index" collection="condition.nationalIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.nativeIdList != null">
+                and t.native_id in
+                <foreach item="item" index="index" collection="condition.nativeIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%',#{condition.politicalName},'%')
+            </if>
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%',#{condition.educationName},'%')
+            </if>
+            <if test=" condition.degreeIdList != null ">
+                and t.degree_id in
+                <foreach item="item" index="index" collection="condition.degreeIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.partyDateMin != null and condition.partyDateMin != ''">
+                <![CDATA[ and t.party_date >= #{condition.partyDateMin} ]]>
+            </if>
+            <if test=" condition.partyDateMax != null and condition.partyDateMax != ''">
+                <![CDATA[ and t.party_date <= #{condition.partyDateMax} ]]>
+            </if>
+            <if test=" condition.workDateMin != null and condition.workDateMin != ''">
+                <![CDATA[ and t.work_date >= #{condition.workDateMin} ]]>
+            </if>
+            <if test=" condition.workDateMax != null and condition.workDateMax != ''">
+                <![CDATA[ and t.work_date <= #{condition.workDateMax} ]]>
+            </if>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
+            </if>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
+            <if test=" condition.jobCategoryList != null">
+                and t.job_category in
+                <foreach item="item" index="index" collection="condition.jobCategoryList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.jobIdList != null">
+                and t.job_id in
+                <foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.jobDateMin != null and condition.jobDateMin != ''">
+                <![CDATA[ and t.job_date >= #{condition.jobDateMin} ]]>
+            </if>
+            <if test=" condition.jobDateMax != null and condition.jobDateMax != ''">
+                <![CDATA[ and t.job_date <= #{condition.jobDateMax} ]]>
+            </if>
+            <if test=" condition.jobLevelDateMin != null and condition.jobLevelDateMin != ''">
+                <![CDATA[ and t.job_level_date >= #{condition.jobLevelDateMin} ]]>
+            </if>
+            <if test=" condition.jobLevelDateMax != null and condition.jobLevelDateMax != ''">
+                <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
+            </if>
+            <if test=" condition.status != null">
+                and t.status = #{condition.status}
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findPeoplePageCount2" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(t.id) count
+        FROM
+        people_total t
+        LEFT JOIN
+        dict_national n ON n.id = t.national_id
+        LEFT JOIN
+        dict_native na ON na.id = t.native_id
+        LEFT JOIN
+        dict_degree de ON de.id = t.degree_id
+        LEFT JOIN
+        job j ON j.id = t.job_id
+        LEFT JOIN
+        dict_marriage m ON m.id = t.marriage_id
+        LEFT JOIN
+        dict_identity i ON i.id = t.identity_id
+        <where>
+            <if test=" condition.name != null and condition.name != '' ">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+            <if test=" condition.sex != null">
+                and t.sex = #{condition.sex}
+            </if>
+            <if test=" condition.codeList != null">
+                and t.code in
+                <foreach item="item" index="index" collection="condition.codeList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.nationalIdList != null">
+                and t.national_id in
+                <foreach item="item" index="index" collection="condition.nationalIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.nativeIdList != null">
+                and t.native_id in
+                <foreach item="item" index="index" collection="condition.nativeIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.birthdayMin != null and condition.birthdayMin != ''">
+                <![CDATA[ and t.birthday >= #{condition.birthdayMin} ]]>
+            </if>
+            <if test=" condition.birthdayMax != null and condition.birthdayMax != ''">
+                <![CDATA[ and t.birthday <= #{condition.birthdayMax} ]]>
+            </if>
+            <if test=" condition.politicalName != null and condition.politicalName != ''">
+                and t.political_name LIKE concat('%',#{condition.politicalName},'%')
+            </if>
+            <if test=" condition.educationName != null and condition.educationName != ''">
+                and t.education_name LIKE concat('%',#{condition.educationName},'%')
+            </if>
+            <if test=" condition.degreeIdList != null ">
+                and t.degree_id in
+                <foreach item="item" index="index" collection="condition.degreeIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.partyDateMin != null and condition.partyDateMin != ''">
+                <![CDATA[ and t.party_date >= #{condition.partyDateMin} ]]>
+            </if>
+            <if test=" condition.partyDateMax != null and condition.partyDateMax != ''">
+                <![CDATA[ and t.party_date <= #{condition.partyDateMax} ]]>
+            </if>
+            <if test=" condition.workDateMin != null and condition.workDateMin != ''">
+                <![CDATA[ and t.work_date >= #{condition.workDateMin} ]]>
+            </if>
+            <if test=" condition.workDateMax != null and condition.workDateMax != ''">
+                <![CDATA[ and t.work_date <= #{condition.workDateMax} ]]>
+            </if>
+            <if test=" condition.schoolDateMin != null and condition.schoolDateMin != ''">
+                <![CDATA[ and t.school_date >= #{condition.schoolDateMin} ]]>
+            </if>
+            <if test=" condition.schoolDateMax != null and condition.schoolDateMax != ''">
+                <![CDATA[ and t.school_date <= #{condition.schoolDateMax} ]]>
+            </if>
+            <if test=" condition.jobName != null and condition.jobName != ''">
+                and t.job_name LIKE concat('%',#{condition.jobName},'%')
+            </if>
+            <if test=" condition.jobCategoryList != null">
+                and t.job_category in
+                <foreach item="item" index="index" collection="condition.jobCategoryList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.jobIdList != null">
+                and t.job_id in
+                <foreach item="item" index="index" collection="condition.jobIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test=" condition.jobDateMin != null and condition.jobDateMin != ''">
+                <![CDATA[ and t.job_date >= #{condition.jobDateMin} ]]>
+            </if>
+            <if test=" condition.jobDateMax != null and condition.jobDateMax != ''">
+                <![CDATA[ and t.job_date <= #{condition.jobDateMax} ]]>
+            </if>
+            <if test=" condition.jobLevelDateMin != null and condition.jobLevelDateMin != ''">
+                <![CDATA[ and t.job_level_date >= #{condition.jobLevelDateMin} ]]>
+            </if>
+            <if test=" condition.jobLevelDateMax != null and condition.jobLevelDateMax != ''">
+                <![CDATA[ and t.job_level_date <= #{condition.jobLevelDateMax} ]]>
+            </if>
+            <if test=" condition.status != null">
+                and t.status = #{condition.status}
+            </if>
+        </where>
+    </select>
+
     <select id="findPeopleNearRetirePageCondition" resultMap="peopleVoResultMap" parameterType="PageInfo">
         SELECT
         t.id,
@@ -555,7 +823,7 @@
         LEFT JOIN
         job j ON j.id = t.job_id
         LEFT JOIN
-        dict_marriage m ON m.id = t.degree_id
+        dict_marriage m ON m.id = t.marriage_id
         LEFT JOIN
         dict_identity i ON i.id = t.identity_id
         <where>
@@ -583,7 +851,7 @@
         LEFT JOIN
         job j ON j.id = t.job_id
         LEFT JOIN
-        dict_marriage m ON m.id = t.degree_id
+        dict_marriage m ON m.id = t.marriage_id
         LEFT JOIN
         dict_identity i ON i.id = t.identity_id
         <where>

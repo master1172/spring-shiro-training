@@ -107,4 +107,8 @@ public interface PeopleMapper {
     People findFirstPeopleByName(String name);
 
     List selectPeopleByCodes(List code);
+
+    List findPeoplePageCondition2(PageInfo pageInfo);
+
+    int findPeoplePageCount2(PageInfo pageInfo);
 }

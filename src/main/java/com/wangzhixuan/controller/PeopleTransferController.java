@@ -81,7 +81,7 @@ public class PeopleTransferController extends BaseController{
         }
 
         pageInfo.setCondition(condition);
-        peopleService.findDataGrid(pageInfo,request);
+        peopleService.findDataGrid2(pageInfo,request);
         return pageInfo;
     }
 
