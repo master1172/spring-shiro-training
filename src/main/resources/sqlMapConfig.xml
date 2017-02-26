@@ -115,5 +115,6 @@
 		<mapper resource="sqlMapperXml/PeopleTotalMapper.xml"/>
 		<mapper resource="sqlMapperXml/RecruitMapper.xml"/>
 		<mapper resource="sqlMapperXml/SalaryChangeRecordMapper.xml"/>
+		<mapper resource="sqlMapperXml/SocialSecurityMapper.xml"/>
 	</mappers>
 </configuration> 

@@ -70,9 +70,9 @@
                 </tr>
                 <tr>
                     <td>部门</td>
-                    <td><input type="text" name="extraDepartmentName"></td>
+                    <td><input type="text" name="departmentName"></td>
                     <td>工种</td>
-                    <td><input type="text" name="jobName"> </td>
+                    <td><input type="text" name="jobName"></td>
                 </tr>
             </table>
         </form>

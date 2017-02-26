@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangzhixuan.mapper.SocialSecurityMapper">
+    <resultMap id="BaseResultMap" type="com.wangzhixuan.model.SocialSecurity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
+        <result column="life_insurance_base" property="lifeInsuranceBase" jdbcType="DECIMAL"/>
+        <result column="life_insurance_school" property="lifeInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="life_insurance_people" property="lifeInsurancePeople" jdbcType="DECIMAL"/>
+    </resultMap>
+    <resultMap id="SocialSecurityBaseVoMap" type="com.wangzhixuan.vo.SocialSecurityBaseVo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="life_insurance_base" property="lifeInsuranceBase" jdbcType="DECIMAL"/>
+        <result column="job_insurance_base"  property="jobInsuranceBase"  jdbcType="DECIMAL"/>
+        <result column="wound_insurance_base" property="woundInsuranceBase" jdbcType="DECIMAL"/>
+        <result column="birth_insurance_base" property="birthInsuranceBase" jdbcType="DECIMAL"/>
+        <result column="annuity_base"         property="annuityBase"        jdbcType="DECIMAL"/>
+        <result column="status"               property="status"             jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, people_code, life_insurance_base, life_insurance_school, life_insurance_people
+    </sql>
+
+
+    <select id="findPageCondition" resultMap="SocialSecurityBaseVoMap" parameterType="PageInfo">
+        SELECT
+          t.id,
+          t.code,
+          t.name,
+          t.department_id,
+          t.life_insurance_base,
+          t.job_insurance_base,
+          t.wound_insurance_base,
+          t.birth_insurance_base,
+          t.annuity_base
+          t.status
+        FROM
+          people_total t
+        <where>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
+            <if test=" condition.name != null and condition.name !=''">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        SELECT count(t.id) count
+        FROM people_total t
+        <where>
+            <if test=" condition.status != null and condition.status != ''">
+                and t.status = #{condition.status}
+            </if>
+            <if test=" condition.name != null and condition.name !=''">
+                and t.name LIKE concat('%',#{condition.name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

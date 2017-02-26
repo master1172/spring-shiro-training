@@ -1,16 +1,22 @@
-package com.wangzhixuan.model;
+package com.wangzhixuan.vo;
+
+import com.google.common.collect.Maps;
+import com.wangzhixuan.model.SocialSecurityBase;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
- * Created by sterm on 2017/2/23.
+ * Created by sterm on 2017/2/26.
  */
-public class SocialSecurityBase implements Serializable {
-
+public class SocialSecurityBaseVo implements Serializable {
     private Integer id;
 
     private String code;
+
+    private String name;
 
     private Integer departmentId;
 
@@ -28,6 +34,14 @@ public class SocialSecurityBase implements Serializable {
 
     private Integer status;
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -42,6 +56,14 @@ public class SocialSecurityBase implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getDepartmentId() {
@@ -100,11 +122,17 @@ public class SocialSecurityBase implements Serializable {
         this.annuityBase = annuityBase;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
+    public static Map<String,Object> CreateCondition(SocialSecurityBaseVo socialSecurityBaseVo) {
+        Map<String,Object> condition = Maps.newHashMap();
 
-    public void setStatus(Integer status) {
-        this.status = status;
+        if(StringUtils.isNoneBlank(socialSecurityBaseVo.getName())){
+            condition.put("name",socialSecurityBaseVo.getName());
+        }
+
+        if(socialSecurityBaseVo.getStatus() != null){
+            condition.put("status",socialSecurityBaseVo.getStatus());
+        }
+
+        return condition;
     }
 }

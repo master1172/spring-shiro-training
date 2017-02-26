@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class SocialSecurity implements Serializable{
 
     private Integer id;
-    private Integer peopleId;
+    private String peopleCode;
 
     private BigDecimal lifeInsuranceBase;
     private BigDecimal lifeInsuranceSchool;
@@ -43,12 +43,12 @@ public class SocialSecurity implements Serializable{
         this.id = id;
     }
 
-    public Integer getPeopleId() {
-        return peopleId;
+    public String getPeopleCode() {
+        return peopleCode;
     }
 
-    public void setPeopleId(Integer peopleId) {
-        this.peopleId = peopleId;
+    public void setPeopleCode(String peopleCode) {
+        this.peopleCode = peopleCode;
     }
 
     public BigDecimal getLifeInsuranceBase() {
