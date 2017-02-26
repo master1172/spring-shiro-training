@@ -1,5 +1,7 @@
 package com.wangzhixuan.controller;
 
+import com.wangzhixuan.mapper.PeopleTotalMapper;
+import com.wangzhixuan.model.PeopleTotal;
 import com.wangzhixuan.model.SocialSecurity;
 import com.wangzhixuan.service.SocialSecurityService;
 import com.wangzhixuan.utils.PageInfo;
@@ -8,6 +10,7 @@ import com.wangzhixuan.vo.SocialSecurityBaseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +27,9 @@ public class SocialSecurityController extends BaseController{
 
     @Autowired
     SocialSecurityService socialSecurityService;
+
+    @Autowired
+    PeopleTotalMapper peopleTotalMapper;
 
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     public String manager() {
@@ -45,5 +51,12 @@ public class SocialSecurityController extends BaseController{
         pageInfo.setCondition(condition);
         socialSecurityService.findDataGrid(pageInfo, request);
         return pageInfo;
+    }
+
+    @RequestMapping(value="/editBasePage", method = RequestMethod.GET)
+    public String editBasePage(Integer id, Model model){
+        PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(id);
+        model.addAttribute("people",peopleTotal);
+        return "/admin/socialSecurity/baseEdit";
     }
 }

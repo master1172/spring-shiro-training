@@ -35,6 +35,41 @@
             });
         });
 
+        function editFun(id) {
+            if (id == undefined) {
+                var rows = dataGrid.datagrid('getSelections');
+                id = rows[0].id;
+            }else{
+                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            }
+
+            parent.$.modalDialog({
+                title: '修改',
+                width: 500,
+                height: 450,
+                href: "${path}/socialSecurity/editBasePage?id="+id,
+                buttons: [{
+                    text: '修改',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = parent.$.modalDialog.handler.find("#baseEditForm");
+                        if(parent.checkForm()){
+                            parent.SYS_SUBMIT_FORM(f,"/socialSecurity/editBase",function(data){
+                                if(!data["success"]){
+                                    parent.progressClose();
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                }else{
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            })
+        }
+
         function advSearch(){
             parent.$.modalDialog({
                 title: '高级查询',
@@ -166,9 +201,9 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="examMonthlyList(\'{0}\');" >月度考核明细</a>', row.id);
-
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="examMonthlyList(\'{0}\');" >社保明细</a>', row.id);
+            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFunc(\'{0}\');" >编辑</a>', row.id);
             return str;
         }
     </script>

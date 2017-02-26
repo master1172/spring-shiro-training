@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * Created by sterm on 2017/2/15.
@@ -341,6 +342,24 @@ public class PeopleTotal implements Serializable {
 
     //最后更新日期
     private String lastUpdateDate;
+
+    //养老保险基数
+    private BigDecimal lifeInsuranceBase;
+
+    //失业保险基数
+    private BigDecimal jobInsuranceBase;
+
+    //工伤保险基数
+    private BigDecimal woundInsuranceBase;
+
+    //生育保险基数
+    private BigDecimal birthInsuranceBase;
+
+    //医疗保险基数
+    private BigDecimal healthInsuranceBase;
+
+    //职业年金基数
+    private BigDecimal annuityBase;
 
     public Integer getId() {
         return id;
@@ -1204,6 +1223,54 @@ public class PeopleTotal implements Serializable {
 
     public void setFoodAllowance(BigDecimal foodAllowance) {
         this.foodAllowance = foodAllowance;
+    }
+
+    public BigDecimal getLifeInsuranceBase() {
+        return lifeInsuranceBase;
+    }
+
+    public void setLifeInsuranceBase(BigDecimal lifeInsuranceBase) {
+        this.lifeInsuranceBase = lifeInsuranceBase;
+    }
+
+    public BigDecimal getJobInsuranceBase() {
+        return jobInsuranceBase;
+    }
+
+    public void setJobInsuranceBase(BigDecimal jobInsuranceBase) {
+        this.jobInsuranceBase = jobInsuranceBase;
+    }
+
+    public BigDecimal getWoundInsuranceBase() {
+        return woundInsuranceBase;
+    }
+
+    public void setWoundInsuranceBase(BigDecimal woundInsuranceBase) {
+        this.woundInsuranceBase = woundInsuranceBase;
+    }
+
+    public BigDecimal getBirthInsuranceBase() {
+        return birthInsuranceBase;
+    }
+
+    public void setBirthInsuranceBase(BigDecimal birthInsuranceBase) {
+        this.birthInsuranceBase = birthInsuranceBase;
+    }
+
+    public BigDecimal getHealthInsuranceBase() {
+        return healthInsuranceBase;
+    }
+
+    public void setHealthInsuranceBase(BigDecimal healthInsuranceBase) {
+        this.healthInsuranceBase = healthInsuranceBase;
+    }
+
+    public BigDecimal getAnnuityBase() {
+        return annuityBase;
+    }
+
+    public void setAnnuityBase(BigDecimal annuityBase) {
+        this.annuityBase = annuityBase;
     }
 
     public String toString(){
