@@ -215,12 +215,12 @@
         <tr>
             <th field="ck"            data-options="checkbox:true"></th>
             <th field="name"          data-options="sortable:true" width="80">姓名</th>
-            <th field="lifeInsuranceBase"  data-options="sortable:true" width="80">养老保险基数</th>
-            <th field="jobInsuranceBase"      data-options="sortable:true" width="130">失业保险基数</th>
-            <th field="woundInsuranceBase"    data-options="sortable:true" width="80">工伤保险基数</th>
-            <th field="birthInsuranceBase" data-options="sortable:true" width="80">生育保险基数</th>
-            <th field="healthInsuranceBase"    data-options="sortable:true" width="80">医疗保险基数</th>
-            <th field="annuityBase"       data-options="sortable:true" width="80">职业年金基数</th>
+            <th field="lifeInsuranceBase"  data-options="sortable:true" width="100">养老保险基数</th>
+            <th field="jobInsuranceBase"      data-options="sortable:true" width="100">失业保险基数</th>
+            <th field="woundInsuranceBase"    data-options="sortable:true" width="100">工伤保险基数</th>
+            <th field="birthInsuranceBase" data-options="sortable:true" width="100">生育保险基数</th>
+            <th field="healthInsuranceBase"    data-options="sortable:true" width="100">医疗保险基数</th>
+            <th field="annuityBase"       data-options="sortable:true" width="100">职业年金基数</th>
             <th field="id"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>

@@ -25,23 +25,22 @@
         id, people_code, life_insurance_base, life_insurance_school, life_insurance_people
     </sql>
 
-
     <select id="findPageCondition" resultMap="SocialSecurityBaseVoMap" parameterType="PageInfo">
         SELECT
-          t.id,
-          t.code,
-          t.name,
-          t.department_id,
-          t.life_insurance_base,
-          t.job_insurance_base,
-          t.wound_insurance_base,
-          t.birth_insurance_base,
-          t.annuity_base
-          t.status
+        t.id,
+        t.code,
+        t.name,
+        t.department_id,
+        t.life_insurance_base,
+        t.job_insurance_base,
+        t.wound_insurance_base,
+        t.birth_insurance_base,
+        t.annuity_base,
+        t.status
         FROM
-          people_total t
+        people_total t
         <where>
-            <if test=" condition.status != null and condition.status != ''">
+            <if test=" condition.status != null">
                 and t.status = #{condition.status}
             </if>
             <if test=" condition.name != null and condition.name !=''">
@@ -55,7 +54,7 @@
         SELECT count(t.id) count
         FROM people_total t
         <where>
-            <if test=" condition.status != null and condition.status != ''">
+            <if test=" condition.status != null ">
                 and t.status = #{condition.status}
             </if>
             <if test=" condition.name != null and condition.name !=''">
@@ -63,4 +62,6 @@
             </if>
         </where>
     </select>
+
+
 </mapper>
