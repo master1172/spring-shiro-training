@@ -80,15 +80,15 @@
             title: '修改',
             width: 1000,
             height: 600,
-            href: '${path}/examMonthly/editPage?id='+id,
+            href: '${path}/socialSecurity/editPage?id='+id,
             buttons: [{
                 text: '修改',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = examMonthlyGrid;//因为修改成功之后，需要刷新这个dataGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find("#examMonthlyEditForm");
+                    var f = parent.$.modalDialog.handler.find("#editForm");
 
                     if(parent.checkForm()){
-                        parent.SYS_SUBMIT_FORM(f,"/examMonthly/edit",function(data){
+                        parent.SYS_SUBMIT_FORM(f,"/socialSecurity/edit",function(data){
                             if(!data["success"]){
                                 parent.progressClose();
                                 parent.$.messager.alert("提示", data["msg"], "warning");
@@ -137,11 +137,12 @@
 </script>
 
 <div class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'center',border:true,title:'月度考核列表'">
+    <div data-options="region:'center',border:true,title:'社保缴纳列表'">
         <table id="examMonthlyGrid" data-options="fit:true,border:false">
             <thead>
             <tr>
                 <th field="ck"              data-options="checkbox:true"></th>
+                <th field="payDate"                   data-options="sortable:false" width="100">日期</th>
                 <th field="lifeInsuranceSchool"       data-options="sortable:false" width="140">养老保险(单位缴纳) </th>
                 <th field="lifeInsurancePeople"       data-options="sortable:false" width="140">养老保险(个人缴纳) </th>
                 <th field="jobInsuranceSchool"        data-options="sortable:false" width="140">失业保险(单位缴纳) </th>

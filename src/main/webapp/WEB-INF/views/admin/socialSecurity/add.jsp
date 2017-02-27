@@ -98,6 +98,19 @@
                         <input name="annuityPeople" id="annuityPeople" type="text"  value="" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
+                <tr>
+                    <td>发放日期</td>
+                    <td>
+                        <input id="payDate" name="payDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                    readOnly:true,
+                                    dateFmt:'yyyy-MM',
+                                    maxDate:'%y-%M-%d'
+                                })"
+                               readonly="readonly"
+                        />
+                    </td>
+                </tr>
             </table>
         </form>
     </div>

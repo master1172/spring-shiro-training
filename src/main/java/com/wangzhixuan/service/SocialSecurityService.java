@@ -17,5 +17,11 @@ public interface SocialSecurityService {
 
     void updateBase(SocialSecurityBase socialSecurityBase);
 
+    SocialSecurity findSocialSecurityById(Integer id);
+
     void insert(SocialSecurity socialSecurity);
+
+    void update(SocialSecurity socialSecurity);
+
+    void delete(Integer id);
 }

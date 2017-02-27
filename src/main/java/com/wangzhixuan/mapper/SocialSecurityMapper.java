@@ -20,4 +20,10 @@ public interface SocialSecurityMapper {
     int findSocialSecurityCount(PageInfo pageInfo);
 
     void insert(SocialSecurity socialSecurity);
+
+    void update(SocialSecurity socialSecurity);
+
+    void delete(Integer id);
+
+    SocialSecurity findSocialSecurityById(Integer id);
 }

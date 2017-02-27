@@ -66,6 +66,32 @@ public class SocialSecurityServiceImpl implements SocialSecurityService {
     public void insert(SocialSecurity socialSecurity) {
         if (socialSecurity == null)
             return;
+        if (StringUtils.isBlank(socialSecurity.getPayDate()))
+            socialSecurity.setPayDate(null);
         socialSecurityMapper.insert(socialSecurity);
+    }
+
+    @Override
+    public void update(SocialSecurity socialSecurity) {
+        if (socialSecurity == null)
+            return;
+        if (StringUtils.isBlank(socialSecurity.getPayDate()))
+            socialSecurity.setPayDate(null);
+
+        socialSecurityMapper.update(socialSecurity);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        if (id == null)
+            return;
+        socialSecurityMapper.delete(id);
+    }
+
+    @Override
+    public SocialSecurity findSocialSecurityById(Integer id) {
+        if (id == null)
+            return null;
+        return socialSecurityMapper.findSocialSecurityById(id);
     }
 }

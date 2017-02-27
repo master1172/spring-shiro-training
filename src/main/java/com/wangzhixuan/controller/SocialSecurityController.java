@@ -134,4 +134,32 @@ public class SocialSecurityController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping(value = "/editPage")
+    public String editPage(Integer id, Model model){
+        SocialSecurity socialSecurity = socialSecurityService.findSocialSecurityById(id);
+        if (socialSecurity != null){
+            model.addAttribute("socialSecurity",socialSecurity);
+        }else{
+            model.addAttribute("socialSecurity", new SocialSecurity());
+        }
+
+        return "/admin/socialSecurity/edit";
+    }
+
+    @RequestMapping(value="/edit")
+    @ResponseBody
+    public Result edit(SocialSecurity socialSecurity){
+        Result result = new Result();
+        try{
+            socialSecurityService.update(socialSecurity);
+            result.setSuccess(true);
+            result.setMsg("修改成功");
+            return result;
+        }catch (Exception exp){
+            result.setSuccess(false);
+            result.setMsg(exp.toString());
+            return result;
+        }
+    }
 }

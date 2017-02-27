@@ -95,6 +95,7 @@
         <where>
               t.people_code = #{condition.peopleCode}
         </where>
+        order by pay_date desc
         LIMIT #{from}, #{size}
     </select>
 
@@ -137,4 +138,26 @@
             #{payDate,       jdbcType=VARCHAR}
         )
     </insert>
+
+    <select id="findSocialSecurityById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from social_security
+        where id=#{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="update" parameterType="com.wangzhixuan.model.SocialSecurity">
+        update social_security
+        <set>
+            life_insurance_base = #{lifeInsuranceBase,jdbcType=DECIMAL},
+            life_insurance_school = #{lifeInsuranceSchool, jdbcType=DECIMAL},
+            life_insurance_people = #{lifeInsurancePeople, jdbcType=DECIMAL}
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from social_security
+        where id = #{id, jdbcType=INTEGER}
+    </delete>
 </mapper>
