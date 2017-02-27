@@ -7,6 +7,7 @@ import com.wangzhixuan.model.PeopleTotal;
 import com.wangzhixuan.model.SocialSecurity;
 import com.wangzhixuan.model.SocialSecurityBase;
 import com.wangzhixuan.service.SocialSecurityService;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
 import com.wangzhixuan.vo.SocialSecurityBaseVo;
@@ -41,16 +42,46 @@ public class SocialSecurityController extends BaseController{
         return "/admin/socialSecurity/people";
     }
 
+    @RequestMapping(value = "/managercontract", method = RequestMethod.GET)
+    public String managercontract() {
+        return "/admin/socialSecurity/contractPeople";
+    }
+
+    @RequestMapping(value = "/managercontract2", method = RequestMethod.GET)
+    public String managercontract2() {
+        return "/admin/socialSecurity/contract2People";
+    }
+
 
     @RequestMapping(value="/dataGrid", method=RequestMethod.POST)
     @ResponseBody
     public PageInfo dataGrid(HttpServletRequest request, SocialSecurityBaseVo socialSecurityVo, Integer page, Integer rows, String sort, String order){
-        String status = request.getParameter("status");
 
-        if (StringUtils.isNoneBlank(status)){
-            socialSecurityVo.setStatus(Integer.valueOf(status));
-        }
+        socialSecurityVo.setStatus(ConstUtil.PEOPLE_NORMAL);
+        PageInfo pageInfo = new PageInfo(page, rows);
+        Map<String,Object> condition = SocialSecurityBaseVo.CreateCondition(socialSecurityVo);
+        pageInfo.setCondition(condition);
+        socialSecurityService.findDataGrid(pageInfo, request);
+        return pageInfo;
+    }
 
+    @RequestMapping(value="/contractDataGrid", method=RequestMethod.POST)
+    @ResponseBody
+    public PageInfo contractDataGrid(HttpServletRequest request, SocialSecurityBaseVo socialSecurityVo, Integer page, Integer rows, String sort, String order){
+
+        socialSecurityVo.setStatus(ConstUtil.PEOPLE_CONTRACT);
+        PageInfo pageInfo = new PageInfo(page, rows);
+        Map<String,Object> condition = SocialSecurityBaseVo.CreateCondition(socialSecurityVo);
+        pageInfo.setCondition(condition);
+        socialSecurityService.findDataGrid(pageInfo, request);
+        return pageInfo;
+    }
+
+    @RequestMapping(value="/contract2DataGrid", method=RequestMethod.POST)
+    @ResponseBody
+    public PageInfo contract2DataGrid(HttpServletRequest request, SocialSecurityBaseVo socialSecurityVo, Integer page, Integer rows, String sort, String order){
+
+        socialSecurityVo.setStatus(ConstUtil.PEOPLE_CONTRACT_2);
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String,Object> condition = SocialSecurityBaseVo.CreateCondition(socialSecurityVo);
         pageInfo.setCondition(condition);

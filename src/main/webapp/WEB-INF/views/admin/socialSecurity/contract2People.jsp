@@ -6,13 +6,13 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>在编人员薪资</title>
+    <title>无固定期合同制人员薪资</title>
     <script type="text/javascript">
         var dataGrid;
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/socialSecurity/dataGrid',
+                url: '${path}/socialSecurity/contract2DataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
