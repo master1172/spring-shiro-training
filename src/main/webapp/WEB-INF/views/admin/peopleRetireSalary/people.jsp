@@ -18,7 +18,6 @@
                 rownumbers: true,
                 pagination: true,
                 singleSelect: true,
-                idField: 'id',
                 singleSelect: false,
                 selectOnCheck: false,
                 checkOnSelect: true,

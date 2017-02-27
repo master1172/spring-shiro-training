@@ -18,7 +18,6 @@
                 rownumbers: true,
                 pagination: true,
                 singleSelect: true,
-                idField: 'id',
                 singleSelect: false,
                 selectOnCheck: false,
                 checkOnSelect: true,
@@ -189,7 +188,7 @@
             <th field="jobName"       data-options="sortable:true" width="80">职务</th>
             <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
             <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
-            <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
+            <th field="id"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
     </table>
