@@ -42,12 +42,12 @@ public class SocialSecurityController extends BaseController{
         return "/admin/socialSecurity/people";
     }
 
-    @RequestMapping(value = "/managercontract", method = RequestMethod.GET)
+    @RequestMapping(value = "/contractmanager", method = RequestMethod.GET)
     public String managercontract() {
         return "/admin/socialSecurity/contractPeople";
     }
 
-    @RequestMapping(value = "/managercontract2", method = RequestMethod.GET)
+    @RequestMapping(value = "/contract2manager", method = RequestMethod.GET)
     public String managercontract2() {
         return "/admin/socialSecurity/contract2People";
     }
