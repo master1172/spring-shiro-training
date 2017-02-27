@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -178,4 +179,18 @@ public class SocialSecurityController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping(value="/exportExcel")
+    public void exportExcel(HttpServletResponse response, String ids){
+        if(StringUtils.isBlank(ids)){
+            return;
+        }
+
+        try{
+            socialSecurityService.exportExcel(response, ids.split(","));
+        }catch (Exception exp){
+            return;
+        }
+    }
+
 }

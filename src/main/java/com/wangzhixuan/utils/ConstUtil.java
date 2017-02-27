@@ -5,7 +5,14 @@ package com.wangzhixuan.utils;
  */
 public class ConstUtil {
 	
-	
+	public static String[] getSocialSecurityHeader(){
+        return new String[]{
+                "序号","姓名", "养老保险基数","养老保险单位缴纳","养老保险个人缴纳","失业保险基数","失业保险单位缴纳","失业保险个人缴纳",
+                "工伤保险基数", "工伤保险单位缴纳", "生育保险基数", "生育保险单位缴纳", "医疗保险基数", "医疗保险单位缴纳", "医疗保险个人缴纳",
+                "职业年金基数", "职业年金单位缴纳", "职业年金个人缴纳", "发放日期"
+        };
+    }
+
 	public static String[] getTimesheetHeader(){
         return new  String[]{
                 "序号","人员姓名","请假日期","请假原因","假期长度"

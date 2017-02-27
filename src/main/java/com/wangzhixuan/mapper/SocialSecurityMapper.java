@@ -3,6 +3,7 @@ package com.wangzhixuan.mapper;
 import com.wangzhixuan.model.SocialSecurity;
 import com.wangzhixuan.model.SocialSecurityBase;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.SocialSecurityVo;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface SocialSecurityMapper {
     void delete(Integer id);
 
     SocialSecurity findSocialSecurityById(Integer id);
+
+    List<SocialSecurityVo> findSocialSecurityVoListByCode(String peopleCode);
 }

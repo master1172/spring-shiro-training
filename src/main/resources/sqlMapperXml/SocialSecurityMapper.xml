@@ -37,6 +37,29 @@
         <result column="status"               property="status"             jdbcType="INTEGER"/>
     </resultMap>
 
+    <resultMap id="SocialSecurityVoMap" type="com.wangzhixuan.vo.SocialSecurityVo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
+        <result column="people_name" property="peopleName" jdbcType="VARCHAR"/>
+        <result column="life_insurance_base"     property="lifeInsuranceBase" jdbcType="DECIMAL"/>
+        <result column="life_insurance_school"   property="lifeInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="life_insurance_people"   property="lifeInsurancePeople" jdbcType="DECIMAL"/>
+        <result column="job_insurance_base"      property="jobInsuranceBase"    jdbcType="DECIMAL"/>
+        <result column="job_insurance_school"    property="jobInsuranceSchool"  jdbcType="DECIMAL"/>
+        <result column="job_insurance_people"    property="jobInsurancePeople"  jdbcType="DECIMAL"/>
+        <result column="wound_insurance_base"    property="woundInsuranceBase"  jdbcType="DECIMAL"/>
+        <result column="wound_insurance_school"  property="woundInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="birth_insurance_base"    property="birthInsuranceBase"   jdbcType="DECIMAL"/>
+        <result column="birth_insurance_school"  property="birthInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="health_insurance_base"   property="healthInsuranceBase"  jdbcType="DECIMAL"/>
+        <result column="health_insurance_school" property="healthInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="health_insurance_people" property="healthInsurancePeople" jdbcType="DECIMAL"/>
+        <result column="annuity_base"            property="annuityBase"           jdbcType="DECIMAL"/>
+        <result column="annuity_school"          property="annuitySchool"         jdbcType="DECIMAL"/>
+        <result column="annuity_people"          property="annuityPeople"         jdbcType="DECIMAL"/>
+        <result column="pay_date"                property="payDate"               jdbcType="VARCHAR"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, people_code,
         life_insurance_base, life_insurance_school, life_insurance_people,
@@ -174,4 +197,36 @@
         delete from social_security
         where id = #{id, jdbcType=INTEGER}
     </delete>
+
+    <select id="findSocialSecurityVoListByCode" parameterType="java.lang.String" resultMap="SocialSecurityVoMap">
+        SELECT
+        t.id,
+        t.people_code,
+        p.name as people_name,
+        t.life_insurance_base,
+        t.life_insurance_school,
+        t.life_insurance_people,
+        t.job_insurance_base,
+        t.job_insurance_school,
+        t.job_insurance_people,
+        t.wound_insurance_base,
+        t.wound_insurance_school,
+        t.birth_insurance_base,
+        t.birth_insurance_school,
+        t.health_insurance_base,
+        t.health_insurance_school,
+        t.health_insurance_people,
+        t.annuity_base,
+        t.annuity_school,
+        t.annuity_people,
+        t.pay_date
+        FROM
+          social_security t
+        LEFT JOIN
+          people_total p
+        ON
+          p.code = t.people_code
+        WHERE
+          t.people_code = #{peopleCode, jdbcType=VARCHAR}
+    </select>
 </mapper>
