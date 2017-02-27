@@ -32,6 +32,12 @@ public class SocialSecurityServiceImpl implements SocialSecurityService {
     }
 
     @Override
+    public void findSocialSecurityGrid(PageInfo pageInfo) {
+        pageInfo.setRows(socialSecurityMapper.findSocialSecurityPageCondition(pageInfo));
+        pageInfo.setTotal(socialSecurityMapper.findSocialSecurityCount(pageInfo));
+    }
+
+    @Override
     public void updateBase(SocialSecurityBase socialSecurityBase) {
         if (socialSecurityBase == null)
             return;
@@ -54,5 +60,12 @@ public class SocialSecurityServiceImpl implements SocialSecurityService {
         }
 
         peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+    }
+
+    @Override
+    public void insert(SocialSecurity socialSecurity) {
+        if (socialSecurity == null)
+            return;
+        socialSecurityMapper.insert(socialSecurity);
     }
 }

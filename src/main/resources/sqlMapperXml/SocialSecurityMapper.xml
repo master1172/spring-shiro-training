@@ -4,10 +4,25 @@
     <resultMap id="BaseResultMap" type="com.wangzhixuan.model.SocialSecurity">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="people_code" property="peopleCode" jdbcType="VARCHAR"/>
-        <result column="life_insurance_base" property="lifeInsuranceBase" jdbcType="DECIMAL"/>
-        <result column="life_insurance_school" property="lifeInsuranceSchool" jdbcType="DECIMAL"/>
-        <result column="life_insurance_people" property="lifeInsurancePeople" jdbcType="DECIMAL"/>
+        <result column="life_insurance_base"     property="lifeInsuranceBase" jdbcType="DECIMAL"/>
+        <result column="life_insurance_school"   property="lifeInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="life_insurance_people"   property="lifeInsurancePeople" jdbcType="DECIMAL"/>
+        <result column="job_insurance_base"      property="jobInsuranceBase"    jdbcType="DECIMAL"/>
+        <result column="job_insurance_school"    property="jobInsuranceSchool"  jdbcType="DECIMAL"/>
+        <result column="job_insurance_people"    property="jobInsurancePeople"  jdbcType="DECIMAL"/>
+        <result column="wound_insurance_base"    property="woundInsuranceBase"  jdbcType="DECIMAL"/>
+        <result column="wound_insurance_school"  property="woundInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="birth_insurance_base"    property="birthInsuranceBase"   jdbcType="DECIMAL"/>
+        <result column="birth_insurance_school"  property="birthInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="health_insurance_base"   property="healthInsuranceBase"  jdbcType="DECIMAL"/>
+        <result column="health_insurance_school" property="healthInsuranceSchool" jdbcType="DECIMAL"/>
+        <result column="health_insurance_people" property="healthInsurancePeople" jdbcType="DECIMAL"/>
+        <result column="annuity_base"            property="annuityBase"           jdbcType="DECIMAL"/>
+        <result column="annuity_school"          property="annuitySchool"         jdbcType="DECIMAL"/>
+        <result column="annuity_people"          property="annuityPeople"         jdbcType="DECIMAL"/>
+        <result column="pay_date"                property="payDate"               jdbcType="VARCHAR"/>
     </resultMap>
+
     <resultMap id="SocialSecurityBaseVoMap" type="com.wangzhixuan.vo.SocialSecurityBaseVo">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
@@ -23,7 +38,14 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, people_code, life_insurance_base, life_insurance_school, life_insurance_people
+        id, people_code,
+        life_insurance_base, life_insurance_school, life_insurance_people,
+        job_insurance_base,  job_insurance_school, job_insurance_people,
+        wound_insurance_base, wound_insurance_school,
+        birth_insurance_base, birth_insurance_school,
+        health_insurance_base, health_insurance_school, health_insurance_people,
+        annuity_base, annuity_school, annuity_people,
+        pay_date
     </sql>
 
     <select id="findPageCondition" resultMap="SocialSecurityBaseVoMap" parameterType="PageInfo">
@@ -64,4 +86,55 @@
             </if>
         </where>
     </select>
+
+    <select id="findSocialSecurityPageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
+        SELECT
+          *
+        FROM
+          social_security t
+        <where>
+              t.people_code = #{condition.peopleCode}
+        </where>
+        LIMIT #{from}, #{size}
+    </select>
+
+    <select id="findSocialSecurityCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        SELECT count(t.id) count
+        FROM social_security t
+    </select>
+
+    <insert id="insert" parameterType="com.wangzhixuan.model.SocialSecurity">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into social_security(
+            people_code,
+            life_insurance_base, life_insurance_school, life_insurance_people,
+            job_insurance_base,  job_insurance_school, job_insurance_people,
+            wound_insurance_base, wound_insurance_school,
+            birth_insurance_base, birth_insurance_school,
+            health_insurance_base, health_insurance_school, health_insurance_people,
+            annuity_base, annuity_school, annuity_people,
+            pay_date
+        )VALUES (
+            #{peopleCode, jdbcType=VARCHAR},
+            #{lifeInsuranceBase, jdbcType=DECIMAL},
+            #{lifeInsuranceSchool, jdbcType=DECIMAL},
+            #{lifeInsurancePeople, jdbcType=DECIMAL},
+            #{jobInsuranceBase, jdbcType=DECIMAL},
+            #{jobInsuranceSchool, jdbcType=DECIMAL},
+            #{jobInsurancePeople, jdbcType=DECIMAL},
+            #{woundInsuranceBase, jdbcType=DECIMAL},
+            #{woundInsuranceSchool, jdbcType=DECIMAL},
+            #{birthInsuranceBase, jdbcType=DECIMAL},
+            #{birthInsuranceSchool, jdbcType=DECIMAL},
+            #{healthInsuranceBase, jdbcType=DECIMAL},
+            #{healthInsuranceSchool, jdbcType=DECIMAL},
+            #{healthInsurancePeople, jdbcType=DECIMAL},
+            #{annuityBase,   jdbcType=DECIMAL},
+            #{annuitySchool, jdbcType=DECIMAL},
+            #{annuityPeople, jdbcType=DECIMAL},
+            #{payDate,       jdbcType=VARCHAR}
+        )
+    </insert>
 </mapper>

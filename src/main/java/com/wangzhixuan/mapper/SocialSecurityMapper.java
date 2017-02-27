@@ -1,5 +1,6 @@
 package com.wangzhixuan.mapper;
 
+import com.wangzhixuan.model.SocialSecurity;
 import com.wangzhixuan.model.SocialSecurityBase;
 import com.wangzhixuan.utils.PageInfo;
 
@@ -13,4 +14,10 @@ public interface SocialSecurityMapper {
     List findPageCondition(PageInfo pageInfo);
 
     int findCount(PageInfo pageInfo);
+
+    List findSocialSecurityPageCondition(PageInfo pageInfo);
+
+    int findSocialSecurityCount(PageInfo pageInfo);
+
+    void insert(SocialSecurity socialSecurity);
 }

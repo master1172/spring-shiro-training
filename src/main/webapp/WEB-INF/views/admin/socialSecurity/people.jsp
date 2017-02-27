@@ -46,8 +46,8 @@
 
             parent.$.modalDialog({
                 title: '修改',
-                width: 500,
-                height: 450,
+                width: 600,
+                height: 300,
                 href: "${path}/socialSecurity/editBasePage?id="+id,
                 buttons: [{
                     text: '修改',
@@ -182,12 +182,12 @@
             }
         }
 
-        function examMonthlyList(id) {
+        function socialSecurityList(id) {
             parent.$.modalDialog({
-                title:'工资列表',
+                title:'社保列表',
                 width:1000,
                 height:600,
-                href:'${path}/examMonthly/examMonthlyListPage?id='+id,
+                href:'${path}/socialSecurity/socialSecurityListPage?id='+id,
             });
         }
 
@@ -202,7 +202,7 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-add" data-options="plain:true,iconCls:\'icon-add\'" onclick="examMonthlyList(\'{0}\');" >社保明细</a>', row.id);
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-add" data-options="plain:true,iconCls:\'icon-add\'" onclick="socialSecurityList(\'{0}\');" >社保明细</a>', row.id);
             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFunc(\'{0}\');" >编辑</a>', row.id);
             return str;

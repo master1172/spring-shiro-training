@@ -1,5 +1,6 @@
 package com.wangzhixuan.controller;
 
+import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleTotal;
@@ -10,6 +11,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
 import com.wangzhixuan.vo.SocialSecurityBaseVo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,6 +72,61 @@ public class SocialSecurityController extends BaseController{
             socialSecurityService.updateBase(socialSecurityBase);
             result.setSuccess(true);
             result.setMsg("修改成功");
+            return result;
+        }catch (Exception exp){
+            result.setSuccess(false);
+            result.setMsg(exp.toString());
+            return result;
+        }
+    }
+
+    @RequestMapping(value = "/socialSecurityListPage")
+    public String socialSecurityListPage(Integer id, Model model){
+        PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(id);
+        model.addAttribute("people",peopleTotal);
+        return "/admin/socialSecurity/socialSecurityList";
+    }
+
+    @RequestMapping(value = "/socialSecurityGrid")
+    @ResponseBody
+    public PageInfo socialSecurityGrid(HttpServletRequest request, Integer page, Integer rows, String sort, String order){
+        PageInfo pageInfo = new PageInfo(page,rows);
+        String peopleCode = request.getParameter("code");
+        Map<String,Object> condition = Maps.newHashMap();
+        condition.put("peopleCode",peopleCode);
+        pageInfo.setCondition(condition);
+        socialSecurityService.findSocialSecurityGrid(pageInfo);
+        return pageInfo;
+    }
+
+    @RequestMapping(value = "/addPage")
+    public String addPage(String peopleCode, Model model){
+        PeopleTotal peopleTotal = peopleTotalMapper.selectByCode(peopleCode);
+        SocialSecurityBase socialSecurityBase = new SocialSecurityBase();
+
+        if (peopleTotal != null){
+            socialSecurityBase.setCode(peopleTotal.getCode());
+            socialSecurityBase.setLifeInsuranceBase(peopleTotal.getLifeInsuranceBase());
+            socialSecurityBase.setJobInsuranceBase(peopleTotal.getJobInsuranceBase());
+            socialSecurityBase.setWoundInsuranceBase(peopleTotal.getWoundInsuranceBase());
+            socialSecurityBase.setBirthInsuranceBase(peopleTotal.getBirthInsuranceBase());
+            socialSecurityBase.setHealthInsuranceBase(peopleTotal.getHealthInsuranceBase());
+            socialSecurityBase.setAnnuityBase(peopleTotal.getAnnuityBase());
+        }
+
+        model.addAttribute("socialSecurityBase",socialSecurityBase);
+
+        return "/admin/socialSecurity/add";
+    }
+
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public Result add(SocialSecurity socialSecurity){
+        Result result = new Result();
+        try{
+            socialSecurityService.insert(socialSecurity);
+            result.setSuccess(true);
+            result.setMsg("添加成功");
             return result;
         }catch (Exception exp){
             result.setSuccess(false);
