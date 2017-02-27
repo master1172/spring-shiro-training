@@ -63,6 +63,7 @@ public class SocialSecurityController extends BaseController{
     }
 
     @RequestMapping(value="/editBase")
+    @ResponseBody
     public Result editBase(SocialSecurityBase socialSecurityBase){
         Result result = new Result();
         try{

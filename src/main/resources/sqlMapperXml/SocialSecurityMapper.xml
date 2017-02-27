@@ -17,6 +17,7 @@
         <result column="job_insurance_base"  property="jobInsuranceBase"  jdbcType="DECIMAL"/>
         <result column="wound_insurance_base" property="woundInsuranceBase" jdbcType="DECIMAL"/>
         <result column="birth_insurance_base" property="birthInsuranceBase" jdbcType="DECIMAL"/>
+        <result column="health_insurance_base" property="healthInsuranceBase" jdbcType="DECIMAL"/>
         <result column="annuity_base"         property="annuityBase"        jdbcType="DECIMAL"/>
         <result column="status"               property="status"             jdbcType="INTEGER"/>
     </resultMap>

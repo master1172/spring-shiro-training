@@ -98,7 +98,7 @@
                         <div id="imgdiv" style="height:100px;width:100px;">
                             <img id="imgShow" style="height:100px;width:100px;"/>
                         </div>
-                        <input type="file" id="up_img" name="fileName"/>
+                         <input type="file" id="up_img" name="fileName"/>
                     </td>
                 </tr>
             </table>
