@@ -97,6 +97,8 @@ public interface PeopleRetireService {
     void batchConvertFromRetireToDeathByIds(String[] idList);
 
     void batchConvertFromRetireToNormalByIds(String[] idList);
+
+    void retireReview(HttpServletResponse response, String ids);
 }
 
 

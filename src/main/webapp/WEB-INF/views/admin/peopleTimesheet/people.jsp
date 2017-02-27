@@ -201,6 +201,8 @@
        data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
     <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+    <a onclick="vacationSum();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">假期使用和剩余统计</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

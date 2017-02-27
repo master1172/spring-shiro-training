@@ -1,5 +1,6 @@
 package com.wangzhixuan.service.impl;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleRehire;
 import com.wangzhixuan.model.PeopleTotal;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFChart;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFPictureData;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -489,6 +495,56 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
             peopleTotal.setStatus(ConstUtil.PEOPLE_NORMAL);
             peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
         }
+    }
+
+    @Override
+    public void retireReview(HttpServletResponse response, String id) {
+        PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
+        PeopleRetireVo retireVo = peopleRetireMapper.findPeopleRetireVoById(Integer.valueOf(id));
+
+        String filePath=this.getClass().getResource("/template/retireReview.xls").getPath();
+
+        try{
+            POIFSFileSystem fileSystem = new POIFSFileSystem(new FileInputStream(filePath));
+            HSSFWorkbook workbook = new HSSFWorkbook(fileSystem);
+            HSSFSheet sheet = workbook.getSheetAt(0);
+
+            HSSFCell cell1 = sheet.getRow(1).getCell(2);
+            cell1.setCellValue(peopleTotal.getName());
+
+            HSSFCell cell2 = sheet.getRow(1).getCell(4);
+            String sex = "";
+            if (peopleTotal.getSex() != null){
+                sex = peopleTotal.getSex() == 0 ? "男" : "女";
+            }
+            cell2.setCellValue(sex);
+
+            HSSFCell cell3 = sheet.getRow(1).getCell(6);
+            cell3.setCellValue(retireVo.getNationalName());
+
+            HSSFCell cell4 = sheet.getRow(2).getCell(2);
+            cell4.setCellValue(peopleTotal.getBirthday());
+
+            HSSFCell cell5 = sheet.getRow(2).getCell(4);
+            cell5.setCellValue(peopleTotal.getPoliticalName());
+
+            HSSFCell cell6 = sheet.getRow(2).getCell(6);
+            cell6.setCellValue(retireVo.getEducationName());
+
+
+            OutputStream os;
+            String newFileName="退休人员审批.xls";
+            response.reset();
+            os = response.getOutputStream();
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+            workbook.write(os);
+            os.close();
+
+        }catch (Exception exp){
+
+        }
+
+
     }
 
     @Override

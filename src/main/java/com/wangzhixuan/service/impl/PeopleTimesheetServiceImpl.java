@@ -237,7 +237,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 						"attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
 				workBook.write(os);
 				os.close();
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

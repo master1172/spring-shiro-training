@@ -1,6 +1,7 @@
 package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
+import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.service.PeopleRetireService;
 import com.wangzhixuan.utils.PageInfo;
@@ -312,6 +313,15 @@ public class PeopleRetireController extends BaseController{
             LOGGER.error("转为已故人员失败:{}",exp);
             result.setMsg(exp.getMessage());
             return result;
+        }
+    }
+
+    @RequestMapping("/retireReview")
+    public void retireView(HttpServletResponse response,String ids){
+        try{
+            peopleRetireService.retireReview(response,ids);
+        }catch(Exception exp){
+            LOGGER.error("导出Word:{}",exp);
         }
     }
 

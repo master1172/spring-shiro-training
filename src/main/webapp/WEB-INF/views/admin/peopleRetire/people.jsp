@@ -334,6 +334,19 @@
             }
         }
 
+        function retireReview(){
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if(checkedItems.length==1){
+                var id=checkedItems[0]["id"];
+                var form=$("#downLoadForm");
+                form.find("input[name='ids']").val(id);
+                form.attr("action",'${path}'+"/peopleRetire/retireReview");
+                $("#downLoadForm").submit();
+            }else{
+                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+            }
+        }
+
         function sexFormatter(value,row,index){
             switch (value) {
                 case 0:
@@ -464,6 +477,8 @@
        data-options="plain:true,iconCls:'icon-add'">转入正常人员</a>
     <a onclick="batchDeath();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">转入已故人员</a>
+    <a onclick="retireReview();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">生成退休人员审批表</a>
 
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
