@@ -151,7 +151,21 @@
         <set>
             life_insurance_base = #{lifeInsuranceBase,jdbcType=DECIMAL},
             life_insurance_school = #{lifeInsuranceSchool, jdbcType=DECIMAL},
-            life_insurance_people = #{lifeInsurancePeople, jdbcType=DECIMAL}
+            life_insurance_people = #{lifeInsurancePeople, jdbcType=DECIMAL},
+            job_insurance_base = #{jobInsuranceBase, jdbcType=DECIMAL},
+            job_insurance_school = #{jobInsuranceSchool, jdbcType=DECIMAL},
+            job_insurance_people = #{jobInsurancePeople, jdbcType=DECIMAL},
+            wound_insurance_base = #{woundInsuranceBase, jdbcType=DECIMAL},
+            wound_insurance_school = #{woundInsuranceSchool, jdbcType=DECIMAL},
+            birth_insurance_base = #{birthInsuranceBase, jdbcType=DECIMAL},
+            birth_insurance_school = #{birthInsuranceSchool, jdbcType=DECIMAL},
+            health_insurance_base = #{healthInsuranceBase, jdbcType=DECIMAL},
+            health_insurance_school = #{healthInsuranceSchool, jdbcType=DECIMAL},
+            health_insurance_people = #{healthInsurancePeople, jdbcType=DECIMAL},
+            annuity_base  = #{annuityBase, jdbcType=DECIMAL},
+            annuity_school = #{annuitySchool, jdbcType=DECIMAL},
+            annuity_people = #{annuityPeople, jdbcType=DECIMAL},
+            pay_date = #{payDate, jdbcType=VARCHAR}
         </set>
         where id = #{id, jdbcType=INTEGER}
     </update>

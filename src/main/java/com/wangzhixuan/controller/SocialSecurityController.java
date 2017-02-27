@@ -162,4 +162,20 @@ public class SocialSecurityController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public Result delete(Integer id){
+        Result result = new Result();
+        try{
+            socialSecurityService.delete(id);
+            result.setSuccess(true);
+            result.setMsg("删除成功");
+            return result;
+        }catch (Exception exp){
+            result.setSuccess(false);
+            result.setMsg(exp.toString());
+            return result;
+        }
+    }
 }

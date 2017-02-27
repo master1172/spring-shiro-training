@@ -114,7 +114,7 @@
         parent.$.messager.confirm('询问', '您是否要删除当前记录？', function (b) {
             if (b) {
                 progressLoad();
-                $.post('${path}/examMonthly/delete',{
+                $.post('${path}/socialSecurity/delete',{
                     id: id
                 }, function (result) {
                     if (result.success) {
