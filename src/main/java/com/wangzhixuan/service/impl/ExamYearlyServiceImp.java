@@ -181,7 +181,7 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 
 				String name = row.getCell(1).toString().trim();
 
-				People people = peopleMapper.findPeopleByName(name);
+				People people = peopleMapper.findFirstPeopleByName(name);
 
 				if (people == null || StringUtils.isBlank(people.getCode())) {
 					continue;
