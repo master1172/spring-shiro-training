@@ -35,6 +35,7 @@
         t.job_insurance_base,
         t.wound_insurance_base,
         t.birth_insurance_base,
+        t.health_insurance_base,
         t.annuity_base,
         t.status
         FROM
@@ -62,6 +63,4 @@
             </if>
         </where>
     </select>
-
-
 </mapper>

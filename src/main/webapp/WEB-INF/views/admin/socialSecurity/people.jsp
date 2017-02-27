@@ -29,13 +29,14 @@
                 pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
 
                 onLoadSuccess: function (data) {
-                    $('.user-easyui-linkbutton-edit').linkbutton({text: '月度考评明细', plain: true, iconCls: 'icon-edit'});
+                    $('.user-easyui-linkbutton-add').linkbutton({text: '月度考评明细', plain: true, iconCls: 'icon-add'});
+                    $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
                 },
                 toolbar: '#toolbar'
             });
         });
 
-        function editFun(id) {
+        function editFunc(id) {
             if (id == undefined) {
                 var rows = dataGrid.datagrid('getSelections');
                 id = rows[0].id;
@@ -201,7 +202,7 @@
 
         function operateFormatter(value,row,index){
             var str = '';
-            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="examMonthlyList(\'{0}\');" >社保明细</a>', row.id);
+            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-add" data-options="plain:true,iconCls:\'icon-add\'" onclick="examMonthlyList(\'{0}\');" >社保明细</a>', row.id);
             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
             str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFunc(\'{0}\');" >编辑</a>', row.id);
             return str;

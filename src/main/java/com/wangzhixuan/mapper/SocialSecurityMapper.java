@@ -1,5 +1,6 @@
 package com.wangzhixuan.mapper;
 
+import com.wangzhixuan.model.SocialSecurityBase;
 import com.wangzhixuan.utils.PageInfo;
 
 import java.util.List;

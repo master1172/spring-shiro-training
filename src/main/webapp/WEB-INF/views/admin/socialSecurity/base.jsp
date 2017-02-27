@@ -2,12 +2,6 @@
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath}/static/easyui/plugins/uploadPreview.min.js" charset="utf-8"></script>
 <script type="text/javascript">
-    $(function() {
-        new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
-        $("#sex").val('${people.sex}');
-        $('#nationalId').val('${people.nationalId}');
-        $('#imgShow').attr('src','${staticPath}/${people.photo}');
-    });
     function checkForm(){
         progressLoad();
         var isValid = $("#baseEditForm").form("validate");
@@ -41,10 +35,14 @@
                     </td>
                     <td>生育保险基数</td>
                     <td>
-                        <input name="healthInsuranceBase" id="healthInsuranceBase" type="text"  value="${people.healthInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="birthInsuranceBase" id="birthInsuranceBase" type="text"  value="${people.birthInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
+                    <td>医疗保险基数</td>
+                    <td>
+                        <input name="healthInsuranceBase" id="healthInsuranceBase" type="text"  value="${people.healthInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
                     <td>职业年金基数</td>
                     <td>
                         <input name="annuityBase" id="annuityBase" type="text"  value="${people.annuityBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>

@@ -1,8 +1,10 @@
 package com.wangzhixuan.controller;
 
+import com.wangzhixuan.code.Result;
 import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleTotal;
 import com.wangzhixuan.model.SocialSecurity;
+import com.wangzhixuan.model.SocialSecurityBase;
 import com.wangzhixuan.service.SocialSecurityService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleVo;
@@ -57,6 +59,21 @@ public class SocialSecurityController extends BaseController{
     public String editBasePage(Integer id, Model model){
         PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(id);
         model.addAttribute("people",peopleTotal);
-        return "/admin/socialSecurity/baseEdit";
+        return "/admin/socialSecurity/base";
+    }
+
+    @RequestMapping(value="/editBase")
+    public Result editBase(SocialSecurityBase socialSecurityBase){
+        Result result = new Result();
+        try{
+            socialSecurityService.updateBase(socialSecurityBase);
+            result.setSuccess(true);
+            result.setMsg("修改成功");
+            return result;
+        }catch (Exception exp){
+            result.setSuccess(false);
+            result.setMsg(exp.toString());
+            return result;
+        }
     }
 }

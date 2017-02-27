@@ -1,5 +1,6 @@
 package com.wangzhixuan.service;
 
+import com.wangzhixuan.model.SocialSecurityBase;
 import com.wangzhixuan.utils.PageInfo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,4 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface SocialSecurityService {
 
     void findDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+    void updateBase(SocialSecurityBase socialSecurityBase);
 }
