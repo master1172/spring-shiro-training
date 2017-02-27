@@ -6,6 +6,7 @@
 		<result column="people_code" jdbcType="VARCHAR" property="peopleCode" />
 		<result column="check_date"  jdbcType="DATE" property="checkDate" />
 		<result column="status"      jdbcType="VARCHAR" property="status" />
+		<result column="status_extra" jdbcType="VARCHAR" property="statusExtra"/>
 		<result column="vacation_period" jdbcType="DECIMAL" property="vacationPeriod" />
 	</resultMap>
 
@@ -15,11 +16,12 @@
 		<result column="people_name" jdbcType="VARCHAR" property="peopleName" />
 		<result column="check_date"  jdbcType="DATE" property="checkDate" />
 		<result column="status"      jdbcType="VARCHAR" property="status" />
+		<result column="status_extra" jdbcType="VARCHAR" property="statusExtra"/>
 		<result column="vacation_period" jdbcType="DECIMAL" property="vacationPeriod" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, people_code, check_date, status, vacation_period
+		id, people_code, check_date, status, status_extra, vacation_period
 	</sql>
 
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -36,6 +38,7 @@
 			p.name as people_name,
 			t.check_date,
 			t.status,
+			t.status_extra,
 			t.vacation_period
 		FROM
 			people_timesheet t
@@ -54,11 +57,12 @@
 
 	<insert id="insert" parameterType="com.wangzhixuan.model.PeopleTimesheet">
 		insert into people_timesheet (
-			people_code, check_date, status, vacation_period)
+			people_code, check_date, status, status_extra, vacation_period)
 		values (
 			#{peopleCode,jdbcType=VARCHAR},
 			#{checkDate,jdbcType=DATE},
 			#{status,jdbcType=VARCHAR},
+			#{statusExtra, jdbcType=VARCHAR},
 			#{vacationPeriod,jdbcType=DECIMAL}
 			)
 	</insert>
@@ -69,6 +73,7 @@
 			people_code 	= #{peopleCode,jdbcType=VARCHAR},
 			check_date 		= #{checkDate,jdbcType=DATE},
 			status 			= #{status,jdbcType=VARCHAR},
+			status_extra    = #{statusExtra,jdbcType=VARCHAR},
 			vacation_period = #{vacationPeriod,jdbcType=DECIMAL}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
@@ -79,6 +84,7 @@
 			t.people_code,
 			t.check_date,
 			t.status,
+			t.status_extra,
 			t.vacation_period
 		FROM people_timesheet t
 		<where>
@@ -138,6 +144,7 @@
             #{item.peopleCode, 	jdbcType=VARCHAR},
             #{item.checkDate, 	jdbcType=VARCHAR},
             #{item.status, 		jdbcType=VARCHAR},
+			#{item.statusExtra, jdbcType=VARCHAR},
             #{item.vacationPeriod, jdbcType=DECIMAL}
 	      )  
         </foreach>
@@ -150,6 +157,7 @@
 			p.name as people_name,
 			t.check_date,
 			t.status,
+			t.status_extra,
 			t.vacation_period
         from people_timesheet t
 		left JOIN people_total p
@@ -167,6 +175,7 @@
 			p.name as people_name,
 			t.check_date,
 			t.status,
+			t.status_extra,
 			t.vacation_period
 		from people_timesheet t
 		left join people_total p

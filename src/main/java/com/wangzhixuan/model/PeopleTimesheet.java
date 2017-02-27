@@ -18,6 +18,8 @@ public class PeopleTimesheet implements Serializable {
 
 	private String status;
 
+	private String statusExtra;
+
 	private BigDecimal vacationPeriod;
 
 	public Integer getId() {
@@ -58,6 +60,14 @@ public class PeopleTimesheet implements Serializable {
 
 	public void setVacationPeriod(BigDecimal vacationPeriod) {
 		this.vacationPeriod = vacationPeriod;
+	}
+
+	public String getStatusExtra() {
+		return statusExtra;
+	}
+
+	public void setStatusExtra(String statusExtra) {
+		this.statusExtra = statusExtra;
 	}
 
 	@Override

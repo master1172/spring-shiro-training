@@ -159,9 +159,12 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					if (row.getCell(3) != null && !row.getCell(3).toString().trim().equals(""))
 						timesheet.setStatus(row.getCell(3).toString().trim());
 
-					//请假时长
 					if (row.getCell(4) != null && !row.getCell(4).toString().trim().equals(""))
-						timesheet.setVacationPeriod(StringUtilExtra.StringToDecimal(row.getCell(4).toString().trim()));
+						timesheet.setStatusExtra(row.getCell(4).toString().trim());
+
+					//请假时长
+					if (row.getCell(5) != null && !row.getCell(5).toString().trim().equals(""))
+						timesheet.setVacationPeriod(StringUtilExtra.StringToDecimal(row.getCell(5).toString().trim()));
 
 					list.add(timesheet);
 
@@ -213,11 +216,12 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 						row.createCell(1).setCellValue(timesheetVo.getPeopleName());
 						row.createCell(2).setCellValue(timesheetVo.getCheckDate());
 						row.createCell(3).setCellValue(timesheetVo.getStatus());
-						row.createCell(4).setCellValue(StringUtilExtra.DecimalToString(timesheetVo.getVacationPeriod()));
+						row.createCell(4).setCellValue(timesheetVo.getStatusExtra());
+						row.createCell(5).setCellValue(StringUtilExtra.DecimalToString(timesheetVo.getVacationPeriod()));
 
 						count++;
 
-						for (int k = 0; k < 5; k++) {
+						for (int k = 0; k < 6; k++) {
 							row.getCell(k).setCellStyle(setBorder);
 						}
 
@@ -226,16 +230,19 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				}
 
 				sheet.setDefaultRowHeightInPoints(21);
+
 				response.reset();
 				os = response.getOutputStream();
 				response.setHeader("Content-disposition",
 						"attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
 				workBook.write(os);
 				os.close();
-
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
+
 		}
 	}
 

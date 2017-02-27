@@ -37,8 +37,25 @@
                 <tr>
                     <td>请假原因</td>
                     <td>
-                        <input type="text" name="status">
+                        <select name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="事假" selected="selected">事假</option>
+                            <option value="病假" >病假</option>
+                            <option value="年休假" >年休假</option>
+                            <option value="公休假" >公休假</option>
+                            <option value="法定节假日" >法定节假日</option>
+                            <option value="产假" >产假</option>
+                            <option value="婚假" >婚假</option>
+                            <option value="丧假" >丧假</option>
+                            <option value="探亲假" >探亲假</option>
+                            <option value="其他" >其他</option>
+                        </select>
                     </td>
+                    <td>其他请假原因</td>
+                    <td>
+                        <input type="text" name="statusExtra">
+                    </td>
+                </tr>
+                <tr>
                     <td>假期长度</td>
                     <td>
                         <input name="vacationPeriod" id="vacationPeriod" type="text" class="easyui-numberbox" precision="1" style="text-align:right;"/>

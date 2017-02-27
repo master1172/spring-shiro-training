@@ -27,6 +27,8 @@ public class PeopleTimesheetVo implements Serializable {
 
 	private String status;
 
+	private String statusExtra;
+
 	private BigDecimal vacationPeriod;
 
 	private BigDecimal vacationPeriodMin;
@@ -113,6 +115,14 @@ public class PeopleTimesheetVo implements Serializable {
 
 	public void setCheckDateMax(String checkDateMax) {
 		this.checkDateMax = checkDateMax;
+	}
+
+	public String getStatusExtra() {
+		return statusExtra;
+	}
+
+	public void setStatusExtra(String statusExtra) {
+		this.statusExtra = statusExtra;
 	}
 
 	public static Map<String, Object> CreateCondition(PeopleTimesheetVo timesheetVo) {
