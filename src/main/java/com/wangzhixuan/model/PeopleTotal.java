@@ -361,6 +361,12 @@ public class PeopleTotal implements Serializable {
     //职业年金基数
     private BigDecimal annuityBase;
 
+    //丧葬费
+    private BigDecimal funeralFee;
+
+    //抚恤金
+    private BigDecimal deathFee;
+
     public Integer getId() {
         return id;
     }
@@ -1271,6 +1277,22 @@ public class PeopleTotal implements Serializable {
 
     public void setAnnuityBase(BigDecimal annuityBase) {
         this.annuityBase = annuityBase;
+    }
+
+    public BigDecimal getFuneralFee() {
+        return funeralFee;
+    }
+
+    public void setFuneralFee(BigDecimal funeralFee) {
+        this.funeralFee = funeralFee;
+    }
+
+    public BigDecimal getDeathFee() {
+        return deathFee;
+    }
+
+    public void setDeathFee(BigDecimal deathFee) {
+        this.deathFee = deathFee;
     }
 
     public String toString(){

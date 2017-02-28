@@ -80,6 +80,16 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>丧葬费</td>
+                    <td>
+                        <input name="funeralFee" id="funeralFee" type="text" value="" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>抚恤金</td>
+                    <td>
+                        <input name="deathFee" id="deathFee" type="text" value="" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
                     <td>备注</td>
                     <td>
                         <input type="text" name="comment"/>

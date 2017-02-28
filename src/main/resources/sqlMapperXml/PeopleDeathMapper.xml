@@ -16,6 +16,8 @@
         <result column="death_reason" property="death_reason" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="funeral_fee" property="funeralFee" jdbcType="DECIMAL"/>
+        <result column="death_fee"   property="deathFee"   jdbcType="DECIMAL"/>
     </resultMap>
 
     <resultMap id="peopleDeathVoResultMap" type="com.wangzhixuan.vo.PeopleDeathVo">
@@ -35,10 +37,12 @@
         <result column="death_reason" property="death_reason" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="funeral_fee" property="funeralFee" jdbcType="DECIMAL"/>
+        <result column="death_fee"   property="deathFee"   jdbcType="DECIMAL"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo
+        id, code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo, funeral_fee, death_fee
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -72,7 +76,9 @@
             t.death_date,
             t.death_reason,
             t.comment,
-            t.photo
+            t.photo,
+            t.funeral_fee,
+            t.death_fee
         FROM
           people_total t
         LEFT JOIN
@@ -108,7 +114,9 @@
         t.death_date,
         t.death_reason,
         t.comment,
-        t.photo
+        t.photo,
+        t.funeral_fee,
+        t.death_fee
         FROM
         people_total t
         LEFT JOIN dict_national s ON s.id = t.national_id
@@ -240,7 +248,7 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into people_total (
-          code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo, status)
+          code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo, status, funeral_fee, death_fee)
         values (
         #{code,     jdbcType=VARCHAR},
         #{name,     jdbcType=VARCHAR},
@@ -255,12 +263,14 @@
         #{death_reason, jdbcType=VARCHAR},
         #{comment,      jdbcType=VARCHAR},
         #{photo,        jdbcType=VARCHAR},
-        2
+        2,
+        #{funeralFee,  jdbcType=DECIMAL},
+        #{deathFee,    jdbcType=DECIMAL}
         )
     </insert>
     <insert id="insertByImport" parameterType="java.util.List">
         insert into people_total (
-          code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo, status)
+          code, name, sex, national_id, birthday, school_date, job_name, job_id, department_id, death_date, death_reason, comment, photo, status, funeral_fee, death_fee)
         values
         <foreach item="item" index="index" collection="list" separator=",">
             (
@@ -277,7 +287,9 @@
                 #{item.death_reason, jdbcType=VARCHAR},
                 #{item.comment,      jdbcType=VARCHAR},
                 #{item.photo,        jdbcType=VARCHAR},
-                2
+                2,
+                #{item.funeralFee, jdbcType=DECIMAL},
+                #{item.deathFee,   jdbcType=DECIMAL}
             )
         </foreach>
     </insert>
@@ -320,12 +332,19 @@
             <if test="photo != null">
                 photo = #{photo, jdbcType=VARCHAR},
             </if>
+            <if test="funeralFee != null">
+                funeral_fee = #{funeralFee, jdbcType=DECIMAL},
+            </if>
+            <if test="deathFee != null">
+                death_fee = #{deathFee,jdbcType=DECIMAL},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
     <select id="selectPeopleByIds" resultMap="BaseResultMap" parameterType="java.util.ArrayList">
         select
-          t.id,t.code,t.name, t.sex,t.national_id,t.birthday,t.school_date,t.job_name,t.job_id,t.department_id,t.death_date,t.death_reason,t.comment,t.photo
+          t.id,t.code,t.name, t.sex,t.national_id,t.birthday,t.school_date,t.job_name,t.job_id,t.department_id,t.death_date,t.death_reason,t.comment,t.photo,
+          t.funeral_fee, t.death_fee
         from people_death t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -342,7 +361,10 @@
             t.national_id,
             s.name as nationalName,
             t.birthday,
-            t.school_date,t.job_name,t.job_id,j.job_level as job_level_name,t.department_id,t.death_date,t.death_reason,t.comment,t.photo
+            t.school_date,t.job_name,t.job_id,j.job_level as job_level_name,
+            t.department_id,t.death_date,t.death_reason,t.comment,t.photo,
+            t.funeral_fee,
+            t.death_fee
         from people_total t
         left join
           dict_national s ON s.id = t.national_id

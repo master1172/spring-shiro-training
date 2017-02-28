@@ -6,6 +6,7 @@ import com.wangzhixuan.utils.ConstUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -65,6 +66,10 @@ public class PeopleDeathVo implements Serializable {
     private String comment;
 
     private String photo;
+
+    private BigDecimal funeralFee;
+
+    private BigDecimal deathFee;
 
     public Integer getId() {
         return id;
@@ -228,6 +233,22 @@ public class PeopleDeathVo implements Serializable {
 
     public void setNationalName(String nationalName) {
         this.nationalName = nationalName;
+    }
+
+    public BigDecimal getFuneralFee() {
+        return funeralFee;
+    }
+
+    public void setFuneralFee(BigDecimal funeralFee) {
+        this.funeralFee = funeralFee;
+    }
+
+    public BigDecimal getDeathFee() {
+        return deathFee;
+    }
+
+    public void setDeathFee(BigDecimal deathFee) {
+        this.deathFee = deathFee;
     }
 
     public static Map<String,Object> CreateCondition(PeopleDeathVo peopleDeathvo){

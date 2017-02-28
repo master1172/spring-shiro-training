@@ -3,6 +3,7 @@ package com.wangzhixuan.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by administrator_cernet on 2016/11/22.
@@ -41,6 +42,10 @@ public class PeopleDeath extends PeopleBase implements Serializable {
     private String comment;
 
     private String photo;
+
+    private BigDecimal funeralFee;
+
+    private BigDecimal deathFee;
 
     public Integer getId() {
         return id;
@@ -152,6 +157,22 @@ public class PeopleDeath extends PeopleBase implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public BigDecimal getFuneralFee() {
+        return funeralFee;
+    }
+
+    public void setFuneralFee(BigDecimal funeralFee) {
+        this.funeralFee = funeralFee;
+    }
+
+    public BigDecimal getDeathFee() {
+        return deathFee;
+    }
+
+    public void setDeathFee(BigDecimal deathFee) {
+        this.deathFee = deathFee;
     }
 
     @Override

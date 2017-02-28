@@ -116,6 +116,8 @@
         <result column="birth_insurance_base" jdbcType="DECIMAL" property="birthInsuranceBase"/>
         <result column="health_insurance_base" jdbcType="DECIMAL" property="healthInsuranceBase"/>
         <result column="annuity_base" jdbcType="DECIMAL" property="annuityBase"/>
+        <result column="funeral_fee"  jdbcType="DECIMAL" property="funeralFee"/>
+        <result column="death_fee"    jdbcType="DECIMAL" property="deathFee"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -137,7 +139,8 @@
         school_salary, exam_result, job_exam_salary, special_allowance, head_allowance, bonus,
         base_salary, retire_allowance, retire_fee_increase, food_allowance, health_allowance, heating_fee,
         handicap_allowance, rent_fee, last_update_date, life_insurance_base, job_insurance_base,
-        wound_insurance_base, birth_insurance_base, health_insurance_base, annuity_base
+        wound_insurance_base, birth_insurance_base, health_insurance_base, annuity_base,
+        funeral_fee, death_fee
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -203,7 +206,8 @@
         base_salary, retire_allowance, retire_fee_increase,food_allowance,
         health_allowance, heating_fee, handicap_allowance,
         rent_fee, last_update_date,life_insurance_base, job_insurance_base,
-        wound_insurance_base, birth_insurance_base, health_insurance_base, annuity_base
+        wound_insurance_base, birth_insurance_base, health_insurance_base, annuity_base,
+        funeral_fee, death_fee
         )
         values
         (
@@ -247,7 +251,8 @@
         #{rentFee,jdbcType=DECIMAL}, #{lastUpdateDate,jdbcType=VARCHAR},
         #{lifeInsuranceBase, jdbcType=DECIMAL},#{jobInsuranceBase, jdbcType=DECIMAL},
         #{woundInsuranceBase, jdbcType=DECIMAL},#{birthInsuranceBase, jdbcType=DECIMAL},
-        #{healthInsuranceBase, jdbcType=DECIMAL}, #{annuityBase, jdbcType=DECIMAL}
+        #{healthInsuranceBase, jdbcType=DECIMAL}, #{annuityBase, jdbcType=DECIMAL},
+        #{funeralFee, jdbcType=DECIMAL}, #{deathFee, jdbcType=DECIMAL}
         )
     </insert>
 
@@ -596,6 +601,12 @@
             <if test="annuityBase != null">
                 annuity_base,
             </if>
+            <if test="funeralFee != null">
+                funeral_fee,
+            </if>
+            <if test="deathFee != null">
+                death_fee,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -939,6 +950,12 @@
             </if>
             <if test="annuityBase != null">
                 #{annuityBase,jdbcType=DECIMAL},
+            </if>
+            <if test="funeralFee != null">
+                #{funeralFee, jdbcType=DECIMAL},
+            </if>
+            <if test="deathFee != null">
+                #{deathFee, jdbcType=DECIMAL},
             </if>
         </trim>
     </insert>
@@ -1285,6 +1302,12 @@
             <if test="annuityBase != null">
                 annuity_base = #{annuityBase,jdbcType=DECIMAL},
             </if>
+            <if test="funeralFee != null">
+                funeral_fee = #{funeralFee, jdbcType=DECIMAL},
+            </if>
+            <if test="deathFee != null">
+                death_fee = #{deathFee, jdbcType=DECIMAL},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -1403,7 +1426,9 @@
         wound_insurance_base = #{woundInsuranceBase, jdbcType=DECIMAL},
         birth_insurance_base = #{birthInsuranceBase, jdbcType=DECIMAL},
         health_insurance_base = #{healthInsuranceBase, jdbcType=DECIMAL},
-        annuity_base = #{annuityBase, jdbcType=DECIMAL}
+        annuity_base = #{annuityBase, jdbcType=DECIMAL},
+        funeral_fee = #{funeralFee, jdbcType=DECIMAL},
+        death_fee   = #{deathFee, jdbcType=DECIMAL}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

@@ -244,9 +244,21 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     p.setDeath_reason(death_reason);
                 }
 
-                //备注
+                //丧葬费
                 if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
-                    String comment=row.getCell(11).toString().trim();
+                    String funeralFee = row.getCell(11).toString().trim();
+                    p.setFuneralFee(StringUtilExtra.StringToDecimal(funeralFee));
+                }
+
+                //丧葬费
+                if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
+                    String deathFee = row.getCell(12).toString().trim();
+                    p.setFuneralFee(StringUtilExtra.StringToDecimal(deathFee));
+                }
+
+                //备注
+                if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
+                    String comment=row.getCell(13).toString().trim();
                     p.setComment(comment);
                 }
 
@@ -282,7 +294,9 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 row.createCell(8).setCellValue("部门");row.getCell(8).setCellStyle(setBorder);
                 row.createCell(9).setCellValue("死亡日期");row.getCell(9).setCellStyle(setBorder);
                 row.createCell(10).setCellValue("死亡原因");row.getCell(10).setCellStyle(setBorder);
-                row.createCell(11).setCellValue("备注");row.getCell(11).setCellStyle(setBorder);
+                row.createCell(11).setCellValue("丧葬费"); row.getCell(11).setCellStyle(setBorder);
+                row.createCell(12).setCellValue("抚恤金"); row.getCell(12).setCellStyle(setBorder);
+                row.createCell(13).setCellValue("备注");row.getCell(13).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
@@ -305,7 +319,9 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                     row.createCell(8).setCellValue(departmentName==null?"":departmentName);row.getCell(8).setCellStyle(setBorder);
                     row.createCell(9).setCellValue(p.getDeath_date()==null?"":(p.getDeath_date().toString()));row.getCell(9).setCellStyle(setBorder);
                     row.createCell(10).setCellValue(p.getDeath_reason());row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getComment());row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getFuneralFee()==null?"":p.getFuneralFee().toString()); row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getDeathFee()==null?"":p.getDeathFee().toString()); row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(13).setCellValue(p.getComment());row.getCell(13).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
