@@ -518,4 +518,45 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
         }catch (Exception exp){
         }
     }
+
+    @Override
+    public void deathFeeReceive(HttpServletResponse response, String id) {
+        PeopleDeathVo p= peopleDeathMapper.findPeopleVoById(Integer.valueOf(id));
+        if(p!=null){
+            XWPFDocument doc;
+            OutputStream os;
+            String filePath=this.getClass().getResource("/template/deathFeeReceive.docx").getPath();
+            String newFileName="丧葬费领取凭单.docx";
+
+            String departmentName = "";
+            Integer departmentId = p.getDepartment();
+            if (departmentId != null){
+                departmentName = dictMapper.findDepartmentNameById(departmentId);
+            }
+
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("${code}",p.getCode());
+            params.put("${name}",p.getName());
+            params.put("${sex}",p.getSex()==0?"男":"女");
+            params.put("${national}",p.getNationalName());
+            params.put("${birthday}",p.getBirthday());
+            params.put("${school_date}",p.getSchool_date());
+            params.put("${category}",p.getJobName());
+            params.put("${job_level_name}",p.getJob_level_name());
+            params.put("${department}",departmentName);
+            params.put("${death_date}",p.getDeath_date());
+            params.put("${death_reason}",p.getDeath_reason());
+            params.put("${comment}",p.getComment());
+
+            //判断是否有头像
+            if(p.getPhoto()!=null&&p.getPhoto().length()>0){
+                Map<String, Object> header = WordUtil.PutPhotoIntoWordParameter(p.getPhoto());
+                params.put("${photo}",header);
+            }else{
+                params.put("${photo}","");
+            }
+
+            WordUtil.OutputWord(response, filePath, newFileName, params);
+        }
+    }
 }

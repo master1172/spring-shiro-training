@@ -303,4 +303,16 @@ public class PeopleDeathController extends BaseController{
             LOGGER.error("导出Word:{}",exp);
         }
     }
+
+    @RequestMapping("/deathFeeReceive")
+    public void deathFeeReceive(HttpServletResponse response,String ids){
+        if (StringUtils.isEmpty(ids)){
+            LOGGER.error("导出Word:{}","请选择一条有效数据!");
+        }
+        try{
+            peopleDeathService.deathFeeReceive(response,ids);
+        }catch(Exception exp){
+            LOGGER.error("导出Word:{}",exp);
+        }
+    }
 }
