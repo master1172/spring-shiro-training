@@ -465,6 +465,48 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             HSSFCell cell6 = sheet.getRow(2).getCell(3);
             cell6.setCellValue(peopleDeath.getDeath_reason());
 
+            HSSFCell cell7 = sheet.getRow(2).getCell(3);
+            if (peopleTotal.getStatus() == ConstUtil.PEOPLE_NORMAL){
+                cell7.setCellValue("在编人员");
+            }
+            if (peopleTotal.getStatus() == ConstUtil.PEOPLE_CONTRACT){
+                cell7.setCellValue("固定期合同制人员");
+            }
+            if (peopleTotal.getStatus() == ConstUtil.PEOPLE_CONTRACT_2){
+                cell7.setCellValue("无固定期合同制人员");
+            }
+
+            HSSFCell cell8 = sheet.getRow(4).getCell(1);
+            cell8.setCellValue(peopleDeath.getSchool_date());
+
+            HSSFCell cell9 = sheet.getRow(4).getCell(4);
+            cell9.setCellValue(peopleTotal.getPoliticalName());
+
+            HSSFCell cell10 = sheet.getRow(5).getCell(1);
+            cell10.setCellValue(peopleDeath.getDeath_date());
+
+            HSSFCell cell11 = sheet.getRow(5).getCell(4);
+            cell11.setCellValue(peopleDeath.getDeath_reason());
+
+            HSSFCell cell12 = sheet.getRow(7).getCell(3);
+            cell12.setCellValue(peopleDeath.getFuneralFee()==null?"":peopleDeath.getFuneralFee().toString());
+
+            HSSFCell cell13 = sheet.getRow(8).getCell(3);
+            cell13.setCellValue(peopleDeath.getDeathFee()==null?"":peopleDeath.getDeathFee().toString());
+
+            HSSFCell cell14 = sheet.getRow(9).getCell(3);
+
+            BigDecimal result = new BigDecimal(0.00);
+
+            if (peopleDeath.getFuneralFee() != null){
+                result = result.add(peopleDeath.getFuneralFee());
+            }
+
+            if (peopleDeath.getDeathFee() != null){
+                result = result.add(peopleDeath.getDeathFee());
+            }
+
+            cell14.setCellValue(result.toString());
 
             OutputStream os;
             String newFileName="中央民族干部学院死亡人员丧抚费审批表.xls";
