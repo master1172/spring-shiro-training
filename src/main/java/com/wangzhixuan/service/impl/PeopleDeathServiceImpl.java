@@ -9,6 +9,10 @@ import com.wangzhixuan.service.PeopleDeathService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleDeathVo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -424,6 +428,52 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
             peopleTotal.setStatus(ConstUtil.PEOPLE_NORMAL);
             peopleTotalMapper.updateByPrimaryKeySelective(peopleTotal);
+        }
+    }
+
+    @Override
+    public void deathFeeReview(HttpServletResponse response, String id) {
+        PeopleTotal peopleTotal = peopleTotalMapper.selectByPrimaryKey(Integer.valueOf(id));
+        PeopleDeath peopleDeath = peopleDeathMapper.findPeopleById(Integer.valueOf(id));
+
+        String filePath=this.getClass().getResource("/template/deathFeeReview.xls").getPath();
+
+        try{
+            POIFSFileSystem fileSystem = new POIFSFileSystem(new FileInputStream(filePath));
+            HSSFWorkbook workbook = new HSSFWorkbook(fileSystem);
+            HSSFSheet sheet = workbook.getSheetAt(0);
+
+            HSSFCell cell1 = sheet.getRow(1).getCell(1);
+            cell1.setCellValue(peopleTotal.getName());
+
+            HSSFCell cell2 = sheet.getRow(1).getCell(3);
+            String sex = "";
+            if (peopleTotal.getSex() != null){
+                sex = peopleTotal.getSex() == 0 ? "男" : "女";
+            }
+            cell2.setCellValue(sex);
+
+            HSSFCell cell3 = sheet.getRow(1).getCell(5);
+            cell3.setCellValue(peopleTotal.getBirthday());
+
+            HSSFCell cell4 = sheet.getRow(2).getCell(1);
+            cell4.setCellValue(peopleTotal.getWorkDate());
+
+            HSSFCell cell5 = sheet.getRow(2).getCell(4);
+            cell5.setCellValue(peopleTotal.getPoliticalName());
+
+            HSSFCell cell6 = sheet.getRow(2).getCell(3);
+            cell6.setCellValue(peopleDeath.getDeath_reason());
+
+
+            OutputStream os;
+            String newFileName="中央民族干部学院死亡人员丧抚费审批表.xls";
+            response.reset();
+            os = response.getOutputStream();
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+            workbook.write(os);
+            os.close();
+        }catch (Exception exp){
         }
     }
 }

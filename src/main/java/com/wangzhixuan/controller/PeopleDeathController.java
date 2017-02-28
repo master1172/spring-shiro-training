@@ -290,4 +290,17 @@ public class PeopleDeathController extends BaseController{
             return result;
         }
     }
+
+    @RequestMapping("/deathFeeReview")
+    public void deathFeeReview(HttpServletResponse response,String ids){
+
+        if (StringUtils.isEmpty(ids)){
+            LOGGER.error("导出Word:{}","请选择一条有效数据!");
+        }
+        try{
+            peopleDeathService.deathFeeReview(response,ids);
+        }catch(Exception exp){
+            LOGGER.error("导出Word:{}",exp);
+        }
+    }
 }

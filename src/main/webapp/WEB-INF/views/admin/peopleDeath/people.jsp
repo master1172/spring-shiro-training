@@ -312,6 +312,20 @@
             }
         }
 
+        //丧抚费审批表
+        function deathFeeReview(){
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if(checkedItems.length==1){
+                var id=checkedItems[0]["id"];
+                var form=$("#downLoadForm");
+                form.find("input[name='ids']").val(id);
+                form.attr("action",'${path}'+"/peopleDeath/deathFeeReview");
+                $("#downLoadForm").submit();
+            }else{
+                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+            }
+        }
+
         function sexFormatter(value,row,index){
             switch (value) {
                 case 0:
@@ -420,6 +434,8 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>
+    <a onclick="deathFeeReview();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">丧抚费审批表</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

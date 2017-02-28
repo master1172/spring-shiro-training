@@ -82,4 +82,6 @@ public interface PeopleDeathService {
     void batchRetirePeopleByIds(String[] idList);
 
     void batchNormalPeopleByIds(String[] idList);
+
+    void deathFeeReview(HttpServletResponse response, String ids);
 }
