@@ -147,13 +147,6 @@
                         <input type="text" name="comment" value="${peopleParty.comment}">
                     </td>
                 </tr>
-                <td>人员类别</td>
-                <td>
-                    <input type="text" name="peopleType" value="${peopleParty.peopleType}">
-                </td>
-                <tr>
-
-                </tr>
                 <tr>
                     <td>头像上传</td>
                     <td colspan="3">

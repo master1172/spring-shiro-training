@@ -564,5 +564,52 @@
             #{item}
         </foreach>
     </select>
+
+    <select id="selectAllPeoplePartyVo" resultMap="peoplePartyVoResultMap">
+        SELECT
+        t.id,
+        t.people_code,
+        t.people_type,
+        t.people_name,
+        t.branch_id,
+        b.name as branch_name,
+        t.department_id,
+        d.name as department_name,
+        t.sex,
+        t.national_id,
+        s.name as national_name,
+        t.birthday,
+        t.native,
+        t.party_status_id,
+        p.name as party_status_name,
+        t.party_date,
+        t.degree_id,
+        g.name as degree_name,
+        t.work_date,
+        t.job_name,
+        t.job_level_id,
+        m.job_level as job_level_name,
+        t.job_date,
+        t.formation,
+        t.party_in_date,
+        t.party_out_date,
+        t.photo,
+        t.comment
+        FROM
+        people_party t
+        LEFT JOIN
+        dict_national s ON s.id = t.national_id
+        LEFT JOIN
+        job m ON m.id = t.job_level_id
+        LEFT JOIN
+        dict_branch b ON b.id = t.branch_id
+        LEFT JOIN
+        dict_department d ON d.id = t.department_id
+        LEFT JOIN
+        dict_party_status p ON p.id = t.party_status_id
+        LEFT JOIN
+        dict_degree g ON g.id = t.degree_id
+
+    </select>
 </mapper>
 

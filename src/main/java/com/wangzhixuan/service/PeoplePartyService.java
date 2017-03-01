@@ -89,6 +89,8 @@ public interface PeoplePartyService {
      * @return
      */
     String findPeoplePartyIDsByCondition(PageInfo pageInfo);
+
+    void exportPartyByEducation(HttpServletResponse response);
 }
 
 

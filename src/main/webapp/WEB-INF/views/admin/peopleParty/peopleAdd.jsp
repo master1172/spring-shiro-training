@@ -135,12 +135,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>人员类别</td>
-                    <td>
-                        <input type="text" name="peopleType">
-                    </td>
-                </tr>
-                <tr>
                     <td>头像上传</td>
                     <td colspan="3">
                         <div id="imgdiv" style="height:100px;width:100px;">

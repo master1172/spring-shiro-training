@@ -94,6 +94,8 @@ public interface PeoplePartyMapper {
      * @return
      */
     PeoplePartyVo findPeoplePartyVoById(Long id);
+
+    List selectAllPeoplePartyVo();
 }
 
 

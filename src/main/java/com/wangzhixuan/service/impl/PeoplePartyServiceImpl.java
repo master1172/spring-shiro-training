@@ -2,6 +2,7 @@ package com.wangzhixuan.service.impl;
 
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeoplePartyMapper;
+import com.wangzhixuan.model.Dict;
 import com.wangzhixuan.model.PeopleParty;
 import com.wangzhixuan.service.PeoplePartyService;
 import com.wangzhixuan.utils.PageInfo;
@@ -20,10 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by administrator_cernet on 2016/11/27.
@@ -235,21 +233,15 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 //人员编码
                 p.setPeopleCode(StringUtilExtra.generateUUID());
 
-                //人员类别
-                if(row.getCell(1)!=null&&!row.getCell(1).toString().trim().equals("")){
-                    String peopleType=row.getCell(1).toString().trim();
-                    p.setPeopleType(peopleType);
-                }
-
                 //人员姓名
-                if(row.getCell(2)!=null&&!row.getCell(2).toString().trim().equals("")){
-                    String peopleName=row.getCell(2).toString().trim();
+                if(row.getCell(1)!=null&&!row.getCell(1).toString().trim().equals("")){
+                    String peopleName=row.getCell(1).toString().trim();
                     p.setPeopleName(peopleName);
                 }
 
                 //所在支部
-                if(row.getCell(3) != null && !row.getCell(3).toString().trim().equals("")){
-                    String branchName = row.getCell(3).toString().trim();
+                if(row.getCell(2) != null && !row.getCell(2).toString().trim().equals("")){
+                    String branchName = row.getCell(2).toString().trim();
 
                     try{
                         Integer branchId = dictMapper.findBranchIdByName(branchName);
@@ -262,8 +254,8 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 }
 
                 //部门
-                if(row.getCell(4) != null && !row.getCell(4).toString().trim().equals("")){
-                    String departmentName = row.getCell(4).toString().trim();
+                if(row.getCell(3) != null && !row.getCell(3).toString().trim().equals("")){
+                    String departmentName = row.getCell(3).toString().trim();
 
                     try{
                         Integer departmentId = dictMapper.findDepartmentIdByName(departmentName);
@@ -276,14 +268,14 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 }
 
                 //性别
-                if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
-                    String sex=row.getCell(5).toString().trim();
+                if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
+                    String sex=row.getCell(4).toString().trim();
                     p.setSex(sex.equals("女")?1:0);
                 }
 
                 //民族
-                if(row.getCell(6) != null && !row.getCell(6).toString().trim().equals("")){
-                    String nationalName = row.getCell(6).toString().trim();
+                if(row.getCell(5) != null && !row.getCell(5).toString().trim().equals("")){
+                    String nationalName = row.getCell(5).toString().trim();
 
                     try{
                         Integer nationalId = dictMapper.findNationalIdByName(nationalName);
@@ -296,20 +288,20 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 }
 
                 //出生日期
-                if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
-                    String birthday=row.getCell(7).toString().trim();
+                if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
+                    String birthday=row.getCell(6).toString().trim();
                     p.setBirthday(birthday);
                 }
 
                 //籍贯
-                if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
-                    String nativeName=row.getCell(8).toString().trim();
+                if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
+                    String nativeName=row.getCell(7).toString().trim();
                     p.setNativeName(nativeName);
                 }
 
                 //党员状态
-                if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
-                    String partyStatusName = row.getCell(9).toString().trim();
+                if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
+                    String partyStatusName = row.getCell(8).toString().trim();
 
                     try{
                         Integer partyStatusId = dictMapper.findPartyStatusIdByName(partyStatusName);
@@ -322,14 +314,14 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 }
 
                 //入党日期
-                if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
-                    String partyDate=row.getCell(10).toString().trim();
+                if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
+                    String partyDate=row.getCell(9).toString().trim();
                     p.setPartyDate(partyDate);
                 }
 
                 //学历情况
-                if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
-                    String degreeName = row.getCell(11).toString().trim();
+                if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
+                    String degreeName = row.getCell(10).toString().trim();
 
                     try{
                         Integer degreeId = dictMapper.findDegreeIdByName(degreeName);
@@ -342,20 +334,20 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 }
 
                 //参加工作日期
-                if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
-                    String workDate=row.getCell(12).toString().trim();
+                if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
+                    String workDate=row.getCell(11).toString().trim();
                     p.setWorkDate(workDate);
                 }
 
                 //职务岗位
-                if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
-                    String jobName=row.getCell(13).toString().trim();
+                if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
+                    String jobName=row.getCell(12).toString().trim();
                     p.setJobName(jobName);
                 }
 
                 //职级
-                if(row.getCell(14)!=null&&!row.getCell(14).toString().trim().equals("")){
-                    String jobLevelName = row.getCell(14).toString().trim();
+                if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
+                    String jobLevelName = row.getCell(13).toString().trim();
 
                     try{
                         Integer jobLevelId = dictMapper.findJobLevelIdByName(jobLevelName);
@@ -368,32 +360,32 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 }
 
                 //现任职级日期
-                if(row.getCell(15)!=null&&!row.getCell(15).toString().trim().equals("")){
-                    String jobDate=row.getCell(15).toString().trim();
+                if(row.getCell(14)!=null&&!row.getCell(14).toString().trim().equals("")){
+                    String jobDate=row.getCell(14).toString().trim();
                     p.setJobDate(jobDate);
                 }
 
                 //编制
-                if(row.getCell(16)!=null&&!row.getCell(16).toString().trim().equals("")){
-                    String formation=row.getCell(16).toString().trim();
+                if(row.getCell(15)!=null&&!row.getCell(15).toString().trim().equals("")){
+                    String formation=row.getCell(15).toString().trim();
                     p.setFormation(formation);
                 }
 
                 //党组织关系转入日期
-                if(row.getCell(17) != null && !row.getCell(17).toString().trim().equals("")){
-                    String partyInDate=row.getCell(17).toString().trim();
+                if(row.getCell(16) != null && !row.getCell(16).toString().trim().equals("")){
+                    String partyInDate=row.getCell(16).toString().trim();
                     p.setPartyInDate(partyInDate);
                 }
 
                 //党组织关系转出日期
-                if(row.getCell(18) != null && !row.getCell(18).toString().trim().equals("")){
-                    String partyOutDate=row.getCell(18).toString().trim();
+                if(row.getCell(17) != null && !row.getCell(17).toString().trim().equals("")){
+                    String partyOutDate=row.getCell(17).toString().trim();
                     p.setPartyOutDate(partyOutDate);
                 }
 
                 //备注
-                if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")){
-                    String comment=row.getCell(19).toString().trim();
+                if(row.getCell(18)!=null&&!row.getCell(18).toString().trim().equals("")){
+                    String comment=row.getCell(18).toString().trim();
                     p.setComment(comment);
                 }
 
@@ -420,49 +412,47 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 //创建表头
                 XSSFRow row=sheet.createRow(0);
                 row.createCell(0).setCellValue("序号");row.getCell(0).setCellStyle(setBorder);
-                row.createCell(1).setCellValue("人员类别");row.getCell(1).setCellStyle(setBorder);
-                row.createCell(2).setCellValue("人员姓名");row.getCell(2).setCellStyle(setBorder);
-                row.createCell(3).setCellValue("所在支部");row.getCell(3).setCellStyle(setBorder);
-                row.createCell(4).setCellValue("部门");row.getCell(4).setCellStyle(setBorder);
-                row.createCell(5).setCellValue("性别");row.getCell(5).setCellStyle(setBorder);
-                row.createCell(6).setCellValue("民族");row.getCell(6).setCellStyle(setBorder);
-                row.createCell(7).setCellValue("出生日期");row.getCell(7).setCellStyle(setBorder);
-                row.createCell(8).setCellValue("籍贯");row.getCell(8).setCellStyle(setBorder);
-                row.createCell(9).setCellValue("党员状态");row.getCell(9).setCellStyle(setBorder);
-                row.createCell(10).setCellValue("入党日期");row.getCell(10).setCellStyle(setBorder);
-                row.createCell(11).setCellValue("学历情况");row.getCell(11).setCellStyle(setBorder);
-                row.createCell(12).setCellValue("参加工作日期");row.getCell(12).setCellStyle(setBorder);
-                row.createCell(13).setCellValue("职务岗位");row.getCell(13).setCellStyle(setBorder);
-                row.createCell(14).setCellValue("职级");row.getCell(14).setCellStyle(setBorder);
-                row.createCell(15).setCellValue("现任职级日期");row.getCell(15).setCellStyle(setBorder);
-                row.createCell(16).setCellValue("编制");row.getCell(16).setCellStyle(setBorder);
-                row.createCell(17).setCellValue("党组织关系转入日期");row.getCell(17).setCellStyle(setBorder);
-                row.createCell(18).setCellValue("党组织关系转出日期");row.getCell(18).setCellStyle(setBorder);
-                row.createCell(19).setCellValue("备注");row.getCell(19).setCellStyle(setBorder);
+                row.createCell(1).setCellValue("人员姓名");row.getCell(1).setCellStyle(setBorder);
+                row.createCell(2).setCellValue("所在支部");row.getCell(2).setCellStyle(setBorder);
+                row.createCell(3).setCellValue("部门");row.getCell(3).setCellStyle(setBorder);
+                row.createCell(4).setCellValue("性别");row.getCell(4).setCellStyle(setBorder);
+                row.createCell(5).setCellValue("民族");row.getCell(5).setCellStyle(setBorder);
+                row.createCell(6).setCellValue("出生日期");row.getCell(6).setCellStyle(setBorder);
+                row.createCell(7).setCellValue("籍贯");row.getCell(7).setCellStyle(setBorder);
+                row.createCell(8).setCellValue("党员状态");row.getCell(8).setCellStyle(setBorder);
+                row.createCell(9).setCellValue("入党日期");row.getCell(9).setCellStyle(setBorder);
+                row.createCell(10).setCellValue("学历情况");row.getCell(10).setCellStyle(setBorder);
+                row.createCell(11).setCellValue("参加工作日期");row.getCell(11).setCellStyle(setBorder);
+                row.createCell(12).setCellValue("职务岗位");row.getCell(12).setCellStyle(setBorder);
+                row.createCell(13).setCellValue("职级");row.getCell(13).setCellStyle(setBorder);
+                row.createCell(14).setCellValue("现任职级日期");row.getCell(14).setCellStyle(setBorder);
+                row.createCell(15).setCellValue("编制");row.getCell(15).setCellStyle(setBorder);
+                row.createCell(16).setCellValue("党组织关系转入日期");row.getCell(16).setCellStyle(setBorder);
+                row.createCell(17).setCellValue("党组织关系转出日期");row.getCell(17).setCellStyle(setBorder);
+                row.createCell(18).setCellValue("备注");row.getCell(18).setCellStyle(setBorder);
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
                     PeoplePartyVo p=(PeoplePartyVo)list.get(i);
-                    row.createCell(0).setCellValue(i+1);                row.getCell(0).setCellStyle(setBorder);
-                    row.createCell(1).setCellValue(p.getPeopleType());  row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getPeopleName());  row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getBranchName());  row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getDepartmentName());row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getNationalName());row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getBirthday());    row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getNativeName());  row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getPartyStatusName());row.getCell(9).setCellStyle(setBorder);
-                    row.createCell(10).setCellValue(p.getPartyDate());row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getDegreeName());row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getWorkDate());row.getCell(12).setCellStyle(setBorder);
-                    row.createCell(13).setCellValue(p.getJobName());row.getCell(13).setCellStyle(setBorder);
-                    row.createCell(14).setCellValue(p.getJobLevelName());row.getCell(14).setCellStyle(setBorder);
-                    row.createCell(15).setCellValue(p.getJobDate());row.getCell(15).setCellStyle(setBorder);
-                    row.createCell(16).setCellValue(p.getFormation());row.getCell(16).setCellStyle(setBorder);
-                    row.createCell(17).setCellValue(p.getPartyInDate());row.getCell(17).setCellStyle(setBorder);
-                    row.createCell(18).setCellValue(p.getPartyOutDate());row.getCell(18).setCellStyle(setBorder);
-                    row.createCell(19).setCellValue(p.getComment());row.getCell(19).setCellStyle(setBorder);
+                    row.createCell(0).setCellValue(i+1);                    row.getCell(0).setCellStyle(setBorder);
+                    row.createCell(1).setCellValue(p.getPeopleName());      row.getCell(1).setCellStyle(setBorder);
+                    row.createCell(2).setCellValue(p.getBranchName());      row.getCell(2).setCellStyle(setBorder);
+                    row.createCell(3).setCellValue(p.getDepartmentName());  row.getCell(3).setCellStyle(setBorder);
+                    row.createCell(4).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(4).setCellStyle(setBorder);
+                    row.createCell(5).setCellValue(p.getNationalName());    row.getCell(5).setCellStyle(setBorder);
+                    row.createCell(6).setCellValue(p.getBirthday());        row.getCell(6).setCellStyle(setBorder);
+                    row.createCell(7).setCellValue(p.getNativeName());      row.getCell(7).setCellStyle(setBorder);
+                    row.createCell(8).setCellValue(p.getPartyStatusName()); row.getCell(8).setCellStyle(setBorder);
+                    row.createCell(9).setCellValue(p.getPartyDate());       row.getCell(9).setCellStyle(setBorder);
+                    row.createCell(10).setCellValue(p.getDegreeName());     row.getCell(10).setCellStyle(setBorder);
+                    row.createCell(11).setCellValue(p.getWorkDate());       row.getCell(11).setCellStyle(setBorder);
+                    row.createCell(12).setCellValue(p.getJobName());        row.getCell(12).setCellStyle(setBorder);
+                    row.createCell(13).setCellValue(p.getJobLevelName());   row.getCell(13).setCellStyle(setBorder);
+                    row.createCell(14).setCellValue(p.getJobDate());        row.getCell(14).setCellStyle(setBorder);
+                    row.createCell(15).setCellValue(p.getFormation());      row.getCell(15).setCellStyle(setBorder);
+                    row.createCell(16).setCellValue(p.getPartyInDate());    row.getCell(16).setCellStyle(setBorder);
+                    row.createCell(17).setCellValue(p.getPartyOutDate());   row.getCell(17).setCellStyle(setBorder);
+                    row.createCell(18).setCellValue(p.getComment());        row.getCell(18).setCellStyle(setBorder);
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);
@@ -541,6 +531,124 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
         ids = ids.substring(0, ids.lastIndexOf(','));
 
         return ids;
+    }
+
+    @Override
+    public void exportPartyByEducation(HttpServletResponse response) {
+        List peoplePartyVoList = peoplePartyMapper.selectAllPeoplePartyVo();
+
+        List dictDegreeList = dictMapper.findDegreeDict();
+
+        List dictBranchList = dictMapper.findBranchDict();
+
+        int result[][] = new int[dictDegreeList.size()][dictBranchList.size()];
+
+        for(int i=0; i<dictDegreeList.size(); i++){
+            for(int j=0; j<dictBranchList.size(); j++){
+                result[i][j] = 0;
+            }
+        }
+
+        for(int i=0; i<dictDegreeList.size(); i++){
+
+            Dict degreeDict = (Dict) dictDegreeList.get(i);
+
+            if (degreeDict == null)
+                continue;
+
+            Integer degreeId = degreeDict.getId();
+
+            for(int j=0; j<dictBranchList.size(); j++){
+
+                Dict branchDict = (Dict) dictBranchList.get(j);
+
+                if (branchDict == null)
+                    continue;
+
+                Integer branchId = branchDict.getId();
+
+
+                for(int k=0; k<peoplePartyVoList.size(); k++){
+                    PeoplePartyVo peoplePartyVo = (PeoplePartyVo) peoplePartyVoList.get(k);
+
+                    if (peoplePartyVo == null)
+                        continue;
+
+                    if (peoplePartyVo.getDegreeId() == degreeId && peoplePartyVo.getBranchId() == branchId){
+                        result[i][j] = result[i][j] +1;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        XSSFWorkbook workBook;
+        OutputStream os;
+        String newFileName="党员学历情况统计.xlsx";
+        try {
+            workBook = new XSSFWorkbook();
+            XSSFSheet sheet= workBook.createSheet("党员学历情况统计");
+            XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+
+            //创建表头
+            XSSFRow row=sheet.createRow(0);
+            row.createCell(0).setCellValue("项目");
+            row.getCell(0).setCellStyle(setBorder);
+
+            row.createCell(1).setCellValue("总计");
+            row.getCell(1).setCellStyle(setBorder);
+            sheet.autoSizeColumn(1);
+
+            for(int i=0; i<dictDegreeList.size();i++){
+
+                Dict degreeDict = (Dict) dictDegreeList.get(i);
+
+                if (degreeDict == null)
+                    continue;
+
+                String dictName = degreeDict.getName();
+                row.createCell(i+2).setCellValue(dictName);
+                row.getCell(i+2).setCellStyle(setBorder);
+
+                sheet.autoSizeColumn(i+2);
+
+            }
+
+            //创建列表内容
+            for(int j=0; j<dictBranchList.size(); j++){
+
+                Dict branch = (Dict) dictBranchList.get(j);
+
+                row=sheet.createRow(j+1);
+                row.createCell(0).setCellValue(branch.getName());
+                row.getCell(0).setCellStyle(setBorder);
+
+
+                row.createCell(1).setCellValue(0);
+                row.getCell(1).setCellStyle(setBorder);
+
+                for(int i=0; i<dictDegreeList.size(); i++){
+                    row.createCell(i+2).setCellValue(result[i][j]);
+                    row.getCell(i+2).setCellStyle(setBorder);
+                }
+
+                row.setHeight((short) 400);
+            }
+
+            sheet.setDefaultRowHeightInPoints(21);
+            sheet.autoSizeColumn(0);
+
+            response.reset();
+            os = response.getOutputStream();
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+            workBook.write(os);
+            os.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+
+        }
     }
 }
 

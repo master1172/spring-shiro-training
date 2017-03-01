@@ -265,6 +265,13 @@
             }
         }
 
+        function exportPartyByEducation(){
+            var form=$("#downLoadForm");
+            form.find("input[name='ids']").val('');
+            form.attr("action",'${path}'+"/peopleParty/exportPartyByEducation");
+            $("#downLoadForm").submit();
+        }
+
         function sexFormatter(value,row,index){
             switch (value) {
                 case 0:
@@ -328,7 +335,6 @@
         <thead>
         <tr>
             <th field="ck"       data-options="checkbox:true"></th>
-            <th field="peopleType"     data-options="sortable:true" width="80">人员类别</th>
             <th field="peopleName"  data-options="sortable:true" width="80">人员姓名</th>
             <th field="branchName"     data-options="sortable:true" width="80">所在支部</th>
             <th field="departmentName"     data-options="sortable:true" width="80">部门</th>
@@ -382,6 +388,8 @@
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">查询导出</a>
     </shiro:hasPermission>
+    <a onclick="exportPartyByEducation();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导出党员学历统计表</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
