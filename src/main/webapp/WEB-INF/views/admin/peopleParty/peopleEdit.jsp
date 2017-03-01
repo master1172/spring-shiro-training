@@ -46,7 +46,7 @@
                 <tr>
                     <td>部门</td>
                     <td>
-                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="name" textField="name" editable="false">
+                        <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
                     <td>性别</td>
