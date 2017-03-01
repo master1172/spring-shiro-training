@@ -542,6 +542,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
         List dictBranchList = dictMapper.findBranchDict();
 
         int result[][] = new int[dictDegreeList.size()][dictBranchList.size()];
+        int sum[] = new int[dictBranchList.size()];
 
         for(int i=0; i<dictDegreeList.size(); i++){
             for(int j=0; j<dictBranchList.size(); j++){
@@ -576,6 +577,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
 
                     if (peoplePartyVo.getDegreeId() == degreeId && peoplePartyVo.getBranchId() == branchId){
                         result[i][j] = result[i][j] +1;
+                        sum[j] = sum[j] + 1;
                         break;
                     }
                 }
@@ -625,7 +627,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 row.getCell(0).setCellStyle(setBorder);
 
 
-                row.createCell(1).setCellValue(0);
+                row.createCell(1).setCellValue(sum[j]);
                 row.getCell(1).setCellStyle(setBorder);
 
                 for(int i=0; i<dictDegreeList.size(); i++){
