@@ -36,8 +36,6 @@
                         <input class="easyui-combobox" id="departmentId" name="departmentId" url="${path}/dict/department" valueField="id" textField="name" editable="false">
                         </input>
                     </td>
-                </tr>
-                <tr>
                     <td>职级</td>
                     <td>
                         <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false">
@@ -45,11 +43,72 @@
                     </td>
                     <td>出国境日期</td>
                     <td>
-                        <input type="text" name="abroadDate" value="${abroad.abroadDate}">
+                        <input id="abroadDate" name="abroadDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d'})"
+                               readonly="readonly" value="${abroad.abroadDate}"/>
                     </td>
+                </tr>
+                <tr>
                     <td>所赴国家</td>
                     <td>
                         <input type="text" name="country" value="${abroad.country}">
+                    </td>
+                    <td>返回日期</td>
+                    <td>
+                        <input id="returnDate" name="returnDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd',
+                                maxDate:'%y-%M-%d'})"
+                               readonly="readonly" value="${abroad.returnDate}"/>
+                    </td>
+                    <td>停留时间</td>
+                    <td>
+                        <input type="text" name="stayPeriod" value="${abroad.stayPeriod}">
+                    </td>
+                    <td>所用假期</td>
+                    <td>
+                        <input type="text" name="vacation" value="${abroad.vacation}">
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>证件类型</td>
+                    <td>
+                        <input type="text" name="passportType" value="${abroad.passportType}">
+                    </td>
+                    <td>身份证号码</td>
+                    <td>
+                        <input type="text" name="photoId" value="${abroad.photoId}">
+                    </td>
+                    <td>证件号码</td>
+                    <td>
+                        <input type="text" name="passportNumber" value="${abroad.passportNumber}">
+                    </td>
+                    <td>探望者姓名</td>
+                    <td>
+                        <input type="text" name="visitPeople" value="${abroad.visitPeople}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>与本人关系</td>
+                    <td>
+                        <input type="text" name="relationship" value="${abroad.relationship}">
+                    </td>
+                    <td>居住城市</td>
+                    <td>
+                        <input type="text" name="city" value="${abroad.city}">
+                    </td>
+                    <td>工作单位</td>
+                    <td>
+                        <input type="text" name="office" value="${abroad.office}">
+                    </td>
+                    <td>处理个人事务具体说明</td>
+                    <td>
+                        <input type="text" name="personalIssue" value="${abroad.personalIssue}">
                     </td>
                 </tr>
                 <tr>
@@ -75,6 +134,12 @@
                             <option value="其它">其它</option>
                         </select>
                     </td>
+                    <td>经费来源</td>
+                    <td>
+                        <input type="text" name="fundingSource" value="${abroad.fundingSource}">
+                    </td>
+                    </tr>
+                <tr>
                     <td>办理日期</td>
                     <td>
                         <input id="issueDate" name="issueDate" placeholder="点击选择时间"
@@ -103,7 +168,30 @@
                                 maxDate:'%y-%M-%d'})"
                                readonly="readonly" value="${abroad.returnPassportDate}"/>
                     </td>
+                    <td>登记备案人员类型</td>
+                    <td>
+                        <input type="text" name="recordType" value="${abroad.recordType}">
+                    </td>
+                </tr>
+                 <tr>
+                    <td>报备情况</td>
+                    <td>
+                        <input type="text" name="recordStatus" value="${abroad.recordStatus}">
+                    </td>
+                    <td>登记证件类型</td>
+                    <td>
+                        <input type="text" name="recordIdType" value="${abroad.recordIdType}">
+                    </td>
+                    <td>登记证件号码</td>
+                    <td>
+                        <input type="text" name="recordIdNumber" value="${abroad.recordIdNumber}">
+                    </td>
+                 </tr>
                 <tr>
+                    <td>登记证件有效期</td>
+                    <td>
+                        <input type="text" name="recordIdExpire" value="${abroad.recordIdExpire}">
+                    </td>
                     <td>备注</td>
                     <td>
                         <input type="text" id="comment" name="comment" value="${abroad.comment}">
