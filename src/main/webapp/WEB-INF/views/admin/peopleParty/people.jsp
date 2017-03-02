@@ -279,6 +279,13 @@
             $("#downLoadForm").submit();
         }
 
+        function exportPartyByPartyDate(){
+            var form=$("#downLoadForm");
+            form.find("input[name='ids']").val('');
+            form.attr("action",'${path}'+"/peopleParty/exportPartyByPartyDate");
+            $("#downLoadForm").submit();
+        }
+
         function sexFormatter(value,row,index){
             switch (value) {
                 case 0:
@@ -399,6 +406,8 @@
        data-options="plain:true,iconCls:'icon-add'">导出党员学历统计表</a>
     <a onclick="exportPartyByAge();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">导出党员基本情况表</a>
+    <a onclick="exportPartyByPartyDate();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导出党员入党日期情况表</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
