@@ -116,4 +116,10 @@ public class ConstUtil {
         };
     }
 
+    public static String[] getPartyExportHeaders() {
+        return new String[]{
+                "分类","预备党员","男性","女性","少数民族","台湾省籍","30岁及以下","31至35岁","36至40岁","41至45岁",
+                "46至50岁","51至55岁","56至60岁","61至65岁","66至70岁","71岁及以上"
+        };
+    }
 }

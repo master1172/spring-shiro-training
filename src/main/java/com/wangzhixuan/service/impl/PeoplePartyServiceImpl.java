@@ -5,10 +5,7 @@ import com.wangzhixuan.mapper.PeoplePartyMapper;
 import com.wangzhixuan.model.Dict;
 import com.wangzhixuan.model.PeopleParty;
 import com.wangzhixuan.service.PeoplePartyService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeoplePartyVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
@@ -595,7 +592,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
 
             //创建表头
             XSSFRow row=sheet.createRow(0);
-            row.createCell(0).setCellValue("项目");
+            row.createCell(0).setCellValue("分类");
             row.getCell(0).setCellStyle(setBorder);
 
             row.createCell(1).setCellValue("总计");
@@ -640,6 +637,209 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
 
             sheet.setDefaultRowHeightInPoints(21);
             sheet.autoSizeColumn(0);
+
+            response.reset();
+            os = response.getOutputStream();
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+            workBook.write(os);
+            os.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+
+        }
+    }
+
+    @Override
+    public void exportPartyByAge(HttpServletResponse response) {
+
+        List peoplePartyVoList = peoplePartyMapper.selectAllPeoplePartyVo();
+
+        List dictBranchList = dictMapper.findBranchDict();
+
+        int sexResult[][] = new int[dictBranchList.size()][2];
+
+        int preparePartyResult[] = new int[dictBranchList.size()];
+
+        int minorNationResult[] = new int[dictBranchList.size()];
+
+        int taiwanNationResult[] = new int[dictBranchList.size()];
+
+        int ageResult[][] = new int[dictBranchList.size()][10];
+
+        for(int i=0; i<dictBranchList.size(); i++){
+            Dict branch = (Dict) dictBranchList.get(i);
+            if (branch == null)
+                continue;
+
+            Integer branchId = branch.getId();
+
+            for(int j=0; j<peoplePartyVoList.size(); j++){
+                PeoplePartyVo peoplePartyVo = (PeoplePartyVo) peoplePartyVoList.get(j);
+                if (peoplePartyVo == null)
+                    continue;
+
+                if (peoplePartyVo.getBranchId() != branchId)
+                    continue;
+
+                //性别统计
+                if (peoplePartyVo.getBranchId() == branchId){
+                    if (peoplePartyVo.getSex() == 0){
+                        sexResult[i][0] = sexResult[i][0]+1;
+                    }
+                    if (peoplePartyVo.getSex() == 1){
+                        sexResult[i][1] = sexResult[i][1]+1;
+                    }
+                }
+
+                //预备党员统计
+                if (StringUtils.isNoneBlank(peoplePartyVo.getPartyStatusName())){
+                    if (peoplePartyVo.getPartyStatusName().contains("预备")){
+                        preparePartyResult[i] = preparePartyResult[i] + 1;
+                    }
+                }
+
+                //少数民族统计
+                if (StringUtils.isNoneBlank(peoplePartyVo.getNationalName())){
+                    if (!peoplePartyVo.getNationalName().contains("汉")){
+                        minorNationResult[i] = minorNationResult[i] + 1;
+                    }
+                }
+
+                //台湾统计
+                if (StringUtils.isNoneBlank(peoplePartyVo.getNativeName())){
+                    if (peoplePartyVo.getNativeName().contains("台湾")){
+                        taiwanNationResult[i] = taiwanNationResult[i] + 1;
+                    }
+                }
+
+                //年龄统计
+                if (StringUtils.isNoneBlank(peoplePartyVo.getBirthday())){
+                    String birthday = peoplePartyVo.getBirthday();
+                    Integer age = DateUtil.GetAgeByBirthday(birthday);
+
+
+                    if (age <= 30){
+                        ageResult[i][0] = ageResult[i][0] + 1;
+                    }
+
+                    if (age>30 && age <=35){
+                        ageResult[i][1] = ageResult[i][1] + 1;
+                    }
+
+                    if (age>35 && age <=40){
+                        ageResult[i][2] = ageResult[i][2] + 1;
+                    }
+
+                    if (age>40 && age <=45){
+                        ageResult[i][3] = ageResult[i][3] + 1;
+                    }
+
+                    if (age>45 && age <=50){
+                        ageResult[i][4] = ageResult[i][4] + 1;
+                    }
+
+                    if (age>50 && age <=55){
+                        ageResult[i][5] = ageResult[i][5] + 1;
+                    }
+
+                    if (age>55 && age <=60){
+                        ageResult[i][6] = ageResult[i][6] + 1;
+                    }
+
+                    if (age>60 && age <=65){
+                        ageResult[i][7] = ageResult[i][7] + 1;
+                    }
+
+                    if (age>65 && age <=70){
+                        ageResult[i][8] = ageResult[i][8] + 1;
+                    }
+
+                    if (age>70){
+                        ageResult[i][9] = ageResult[i][9] + 1;
+                    }
+                }
+
+            }
+        }
+
+
+        XSSFWorkbook workBook;
+        OutputStream os;
+        String newFileName="党员基本情况统计.xlsx";
+        try {
+            workBook = new XSSFWorkbook();
+            XSSFSheet sheet= workBook.createSheet("党员基本情况统计");
+            XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+
+            XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPartyExportHeaders());
+
+            sheet.autoSizeColumn(1);
+
+
+            //创建列表内容
+            for(int i=0; i<dictBranchList.size(); i++){
+
+                Dict branch = (Dict) dictBranchList.get(i);
+
+                row=sheet.createRow(i+1);
+                row.createCell(0).setCellValue(branch.getName());
+                row.getCell(0).setCellStyle(setBorder);
+
+                row.createCell(1).setCellValue(preparePartyResult[i]);
+                row.getCell(1).setCellStyle(setBorder);
+
+                row.createCell(2).setCellValue(sexResult[i][0]);
+                row.getCell(2).setCellStyle(setBorder);
+
+                row.createCell(3).setCellValue(sexResult[i][1]);
+                row.getCell(3).setCellStyle(setBorder);
+
+                row.createCell(4).setCellValue(minorNationResult[i]);
+                row.getCell(4).setCellStyle(setBorder);
+
+                row.createCell(5).setCellValue(taiwanNationResult[i]);
+                row.getCell(5).setCellStyle(setBorder);
+
+                row.createCell(6).setCellValue(ageResult[i][0]);
+                row.getCell(6).setCellStyle(setBorder);
+
+                row.createCell(7).setCellValue(ageResult[i][1]);
+                row.getCell(7).setCellStyle(setBorder);
+
+                row.createCell(8).setCellValue(ageResult[i][2]);
+                row.getCell(8).setCellStyle(setBorder);
+
+                row.createCell(9).setCellValue(ageResult[i][3]);
+                row.getCell(9).setCellStyle(setBorder);
+
+                row.createCell(10).setCellValue(ageResult[i][4]);
+                row.getCell(10).setCellStyle(setBorder);
+
+                row.createCell(11).setCellValue(ageResult[i][5]);
+                row.getCell(11).setCellStyle(setBorder);
+
+                row.createCell(12).setCellValue(ageResult[i][6]);
+                row.getCell(12).setCellStyle(setBorder);
+
+                row.createCell(13).setCellValue(ageResult[i][7]);
+                row.getCell(13).setCellStyle(setBorder);
+
+                row.createCell(14).setCellValue(ageResult[i][8]);
+                row.getCell(14).setCellStyle(setBorder);
+
+                row.createCell(15).setCellValue(ageResult[i][9]);
+                row.getCell(15).setCellStyle(setBorder);
+
+                row.setHeight((short) 400);
+            }
+
+            sheet.setDefaultRowHeightInPoints(21);
+
+            for(int j=0; j<16; j++){
+                sheet.autoSizeColumn(j);
+            }
+
 
             response.reset();
             os = response.getOutputStream();
