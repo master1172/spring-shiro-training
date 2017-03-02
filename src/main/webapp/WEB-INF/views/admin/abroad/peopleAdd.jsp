@@ -124,8 +124,8 @@
                         <input id="returnPassportDate" name="returnPassportDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d'})"
+                                dateFmt:'yyyy-MM-dd'
+                                })"
                                readonly="readonly"/>
                     </td>
 
@@ -182,7 +182,12 @@
                     </td>
                     <td>登记证件有效期</td>
                     <td>
-                        <input type="text" name="recordIdExpire">
+                        <input id="recordIdExpire" name="recordIdExpire" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd'
+                                })"
+                               readonly="readonly"/>
                     </td>
                 </tr>
                 <tr>

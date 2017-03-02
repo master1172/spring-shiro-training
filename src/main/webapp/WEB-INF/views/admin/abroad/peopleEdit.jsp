@@ -61,8 +61,8 @@
                         <input id="returnDate" name="returnDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d'})"
+                                dateFmt:'yyyy-MM-dd'
+                                })"
                                readonly="readonly" value="${abroad.returnDate}"/>
                     </td>
                     <td>停留时间</td>
@@ -161,12 +161,14 @@
 
                     <td>还证日期</td>
                     <td>
+                    <td>
                         <input id="returnPassportDate" name="returnPassportDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d'})"
+                                dateFmt:'yyyy-MM-dd'
+                                })"
                                readonly="readonly" value="${abroad.returnPassportDate}"/>
+                    </td>
                     </td>
                     <td>登记备案人员类型</td>
                     <td>
@@ -188,9 +190,13 @@
                     </td>
                  </tr>
                 <tr>
-                    <td>登记证件有效期</td>
                     <td>
-                        <input type="text" name="recordIdExpire" value="${abroad.recordIdExpire}">
+                        <input id="recordIdExpire" name="recordIdExpire" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM-dd'
+                                })"
+                               readonly="readonly" value="${abroad.recordIdExpire}"/>
                     </td>
                     <td>备注</td>
                     <td>
