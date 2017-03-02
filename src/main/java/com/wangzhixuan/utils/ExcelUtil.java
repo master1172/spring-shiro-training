@@ -22,8 +22,13 @@ public class ExcelUtil {
         return row;
     }
 
-    public static void exportExcel(){
-        XSSFWorkbook workbook = new XSSFWorkbook();
-
+    public static XSSFRow insertRow(XSSFSheet sheet, Integer rowIndex){
+        XSSFRow row = null;
+        if (sheet.getRow(rowIndex) != null) {
+            int lastRowNo = sheet.getLastRowNum();
+            sheet.shiftRows(rowIndex,lastRowNo,1);
+        }
+        row = sheet.createRow(rowIndex);
+        return row;
     }
 }

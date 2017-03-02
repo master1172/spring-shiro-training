@@ -304,12 +304,29 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 			List<People> peopleList = peopleMapper.findAllPeople();
 
 			int count = 0;
+			XSSFRow row;
+			XSSFSheet sheet= workBook.getSheetAt(0);
+			XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
 
 			if (peopleList != null && peopleList.size() > 0){
-				
-				for(int i=0; i<peopleList.size(); i++){
 
+				for(int i=0; i<peopleList.size(); i++){
+					People people = peopleList.get(i);
+
+					if (people == null || StringUtils.isBlank(people.getCode()) || StringUtils.isBlank(people.getName()))
+						continue;
+
+					String name = people.getName();
+					String code = people.getCode();
+
+					row = ExcelUtil.insertRow(sheet,i+5);
+					row.createCell(0).setCellValue(name);
+					row.getCell(0).setCellStyle(setBorder);
+
+					row.setHeight((short) 400);
 				}
+
+				sheet.setDefaultRowHeightInPoints(21);
 			}
 
 			response.reset();
