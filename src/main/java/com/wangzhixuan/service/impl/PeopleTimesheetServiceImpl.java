@@ -1,5 +1,6 @@
 package com.wangzhixuan.service.impl;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -290,6 +292,35 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 	@Override
 	public void exportVacationResult(HttpServletResponse response, String checkDate) {
-		
+
+
+		XSSFWorkbook workBook;
+		OutputStream os;
+		String newFileName = "考勤统计信息.xlsx";
+		try {
+			String filePath=this.getClass().getResource("/template/vacationResult.xlsx").getPath();
+			workBook = new XSSFWorkbook(filePath);
+
+			List<People> peopleList = peopleMapper.findAllPeople();
+
+			int count = 0;
+
+			if (peopleList != null && peopleList.size() > 0){
+				
+				for(int i=0; i<peopleList.size(); i++){
+
+				}
+			}
+
+			response.reset();
+			os = response.getOutputStream();
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+			workBook.write(os);
+			os.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

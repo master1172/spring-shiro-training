@@ -130,6 +130,13 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
+    <select id="findAllPeople" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from people_total
+        where status = 0
+    </select>
+
     <select id="findPeopleVoById" resultMap="peopleVoResultMap" parameterType="java.lang.Integer">
         SELECT
           t.id,

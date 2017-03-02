@@ -111,4 +111,6 @@ public interface PeopleMapper {
     List findPeoplePageCondition2(PageInfo pageInfo);
 
     int findPeoplePageCount2(PageInfo pageInfo);
+
+    List<People> findAllPeople();
 }

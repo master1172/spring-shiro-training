@@ -120,7 +120,7 @@
                     text: '导出',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
-                        var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                        var f = parent.$.modalDialog.handler.find("#timesheetQueryForm");
                         if (parent.checkForm()) {
                             parent.SYS_SUBMIT_FORM(f, "/peopleTimesheet/exportVacationSum", function (data) {
                                 if (!data["success"]) {
@@ -133,7 +133,7 @@
                                     var ids = data["obj"];
                                     var form = $("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action", '${path}' + "/people/exportVacationResult");
+                                    form.attr("action", '${path}' + "/peopleTimesheet/exportVacationResult");
                                     $("#downLoadForm").submit();
                                 }
                             });
