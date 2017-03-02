@@ -49,8 +49,8 @@
                         <input id="returnDate" name="returnDate" placeholder="点击选择时间"
                                onclick="WdatePicker({
                                 readOnly:true,
-                                dateFmt:'yyyy-MM-dd',
-                                maxDate:'%y-%M-%d'})"
+                                dateFmt:'yyyy-MM-dd'
+                                })"
                                readonly="readonly"/>
                     </td>
                     <td>停留时间</td>
