@@ -255,6 +255,79 @@
             }
         }
 
+        //处级及以下人员因私临时出国（境）审批表
+        function exportJuniorOfficalReview() {
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if (checkedItems.length > 0) {
+                var ids = "";
+                $.each(checkedItems, function (index, item) {
+                    if (ids.length > 0)ids += ",";
+                    ids += item["id"];
+                });
+                var form = $("#downLoadForm");
+                form.find("input[name='ids']").val(ids);
+                form.attr("action", '${path}' + "/abroad/exportJuniorOfficalReview");
+                $("#downLoadForm").submit();
+            } else {
+                parent.$.messager.alert("提示", "请选择有效数据", "warning");
+            }
+        }
+
+        //国家民委在职司局级干部因私临时出国（境）申请表
+        function exportSeniorOfficalReview() {
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if (checkedItems.length > 0) {
+                var ids = "";
+                $.each(checkedItems, function (index, item) {
+                    if (ids.length > 0)ids += ",";
+                    ids += item["id"];
+                });
+                var form = $("#downLoadForm");
+                form.find("input[name='ids']").val(ids);
+                form.attr("action", '${path}' + "/abroad/exportSeniorOfficalReview");
+                $("#downLoadForm").submit();
+            } else {
+                parent.$.messager.alert("提示", "请选择有效数据", "warning");
+            }
+        }
+
+        //离退休司局级干部因私临时出国（境）审批表
+        function exportRetireOfficalReview() {
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if (checkedItems.length > 0) {
+                var ids = "";
+                $.each(checkedItems, function (index, item) {
+                    if (ids.length > 0)ids += ",";
+                    ids += item["id"];
+                });
+                var form = $("#downLoadForm");
+                form.find("input[name='ids']").val(ids);
+                form.attr("action", '${path}' + "/abroad/exportRetireOfficalReview");
+                $("#downLoadForm").submit();
+            } else {
+                parent.$.messager.alert("提示", "请选择有效数据", "warning");
+            }
+        }
+
+        //生成报备人员信息表
+        function exportRecordExcel() {
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if (checkedItems.length > 0) {
+                var ids = "";
+                $.each(checkedItems, function (index, item) {
+                    if (ids.length > 0)ids += ",";
+                    ids += item["id"];
+                });
+                var form = $("#downLoadForm");
+                form.find("input[name='ids']").val(ids);
+                form.attr("action", '${path}' + "/abroad/exportRecordExcel");
+                $("#downLoadForm").submit();
+            } else {
+                parent.$.messager.alert("提示", "请选择有效数据", "warning");
+            }
+        }
+
+
         function sexFormatter(value, row, index) {
             switch (value) {
                 case 0:
@@ -331,6 +404,15 @@
 
     <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">查询导出</a>
+
+    <a onclick="exportJuniorOfficalReview();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">处级及以下人员因私临时出国（境）审批表</a>
+    <a onclick="exportSeniorOfficalReview();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">国家民委在职司局级干部因私临时出国（境）申请表</a>
+    <a onclick="exportRetireOfficalReview();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">离退休司局级干部因私临时出国（境）审批表</a>
+    <a onclick="exportRecordExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">生成报备人员信息表</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
