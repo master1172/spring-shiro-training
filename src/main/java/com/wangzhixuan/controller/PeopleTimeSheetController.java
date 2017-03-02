@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.service.PeopleService;
+import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -211,5 +212,37 @@ public class PeopleTimeSheetController extends BaseController {
 			result.setMsg("请选择附件！");
 		}
 		return result;
+	}
+
+	@RequestMapping(value = "/dateRangePage")
+	public String dateRangePage(){
+		return "/admin/peopleTimesheet/dateRange";
+	}
+
+	@RequestMapping(value = "/exportVacationSum")
+	@ResponseBody
+	public Result exportVacationSum(PeopleTimesheet peopleTimesheet){
+		String checkDate = "";
+		if (peopleTimesheet == null || StringUtils.isBlank(peopleTimesheet.getCheckDate())){
+			checkDate = DateUtil.GetCurrnetYearAndMonth();
+		}else{
+			checkDate = peopleTimesheet.getCheckDate();
+		}
+
+		Result result = new Result();
+		result.setSuccess(true);
+		result.setObj(checkDate);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/exportVacationResult")
+	public void exportVacationResult(HttpServletResponse response, String ids){
+		String checkDate = ids;
+		if (StringUtils.isBlank(ids)){
+			checkDate = DateUtil.GetCurrnetYearAndMonth();
+		}
+
+		timesheetService.exportVacationResult(response,checkDate);
 	}
 }

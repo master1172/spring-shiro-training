@@ -37,5 +37,7 @@ public interface PeopleTimesheetService {
     List<PeopleTimesheet> findPeopleTimesheetListByCodeAndDate(String code, String checkDateMin, String checkDateMax);
 
     BigDecimal findVacationSumByCodeAndDate(String code, String checkDateMin, String checkDateMax);
+
+    void exportVacationResult(HttpServletResponse response, String checkDate);
 }
 

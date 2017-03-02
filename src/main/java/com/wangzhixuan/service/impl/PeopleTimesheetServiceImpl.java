@@ -287,4 +287,9 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 		return sumVacationPeriod;
 	}
+
+	@Override
+	public void exportVacationResult(HttpServletResponse response, String checkDate) {
+		
+	}
 }

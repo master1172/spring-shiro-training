@@ -110,6 +110,39 @@
             }
         }
 
+        function vacationSum(){
+            parent.$.modalDialog({
+                title: '导出',
+                width: 600,
+                height: 400,
+                href: '${path}/peopleTimesheet/dateRangePage',
+                buttons: [{
+                    text: '导出',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;
+                        var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                        if (parent.checkForm()) {
+                            parent.SYS_SUBMIT_FORM(f, "/peopleTimesheet/exportVacationSum", function (data) {
+                                if (!data["success"]) {
+                                    parent.progressClose();
+                                    parent.$.modalDialog.handler.dialog("close");
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                } else {
+                                    parent.progressClose();
+                                    parent.$.modalDialog.handler.dialog("close");
+                                    var ids = data["obj"];
+                                    var form = $("#downLoadForm");
+                                    form.find("input[name='ids']").val(ids);
+                                    form.attr("action", '${path}' + "/people/exportVacationResult");
+                                    $("#downLoadForm").submit();
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
         function timesheetList(id) {
             parent.$.modalDialog({
                 title:'考勤列表',
