@@ -8,14 +8,31 @@
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="job_id" property="jobId" jdbcType="INTEGER" />
     <result column="abroad_date" property="abroadDate" jdbcType="DATE" />
+    <result column="return_date" property="returnDate" jdbcType="DATE" />
+    <result column="stay_period" property="stayPeriod" jdbcType="INTEGER" />
+    <result column="vacation" property="vacation" jdbcType="VARCHAR" />
     <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="passport_type" property="passportType" jdbcType="VARCHAR" />
     <result column="passport_status" property="passportStatus" jdbcType="VARCHAR" />
+    <result column="photo_id" property="photoId" jdbcType="VARCHAR" />
+    <result column="passport_number" property="passportNumber" jdbcType="VARCHAR" />
     <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="visit_people" property="visitPeople" jdbcType="VARCHAR" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="office" property="office" jdbcType="VARCHAR" />
+    <result column="personal_issue" property="personalIssue" jdbcType="VARCHAR" />
     <result column="funding" property="funding" jdbcType="VARCHAR" />
+    <result column="funding_source" property="fundingSource" />
     <result column="issue_date" property="issueDate" jdbcType="DATE" />
     <result column="pick_passport_date" property="pickPassportDate" jdbcType="DATE" />
     <result column="return_passport_date" property="returnPassportDate" jdbcType="DATE" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="record_type" property="recordType" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="record_id_type" property="recordIdType" jdbcType="VARCHAR" />
+    <result column="record_id_number" property="recordIdNumber" jdbcType="VARCHAR" />
+    <result column="record_id_expire" property="recordIdExpire" jdbcType="VARCHAR" />
   </resultMap>
 
   <resultMap id="abroadVoResultMap" type="com.wangzhixuan.vo.AbroadVo">
@@ -27,19 +44,37 @@
     <result column="job_id" property="jobId" jdbcType="INTEGER" />
     <result column="job_name" property="jobName" jdbcType="VARCHAR" />
     <result column="abroad_date" property="abroadDate" jdbcType="DATE" />
+    <result column="return_date" property="returnDate" jdbcType="DATE" />
+    <result column="stay_period" property="stayPeriod" jdbcType="INTEGER" />
+    <result column="vacation" property="vacation" jdbcType="VARCHAR" />
     <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="passport_type" property="passportType" jdbcType="VARCHAR" />
     <result column="passport_status" property="passportStatus" jdbcType="VARCHAR" />
+    <result column="photo_id" property="photoId" jdbcType="VARCHAR" />
+    <result column="passport_number" property="passportNumber" jdbcType="VARCHAR" />
     <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="visit_people" property="visitPeople" jdbcType="VARCHAR" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="office" property="office" jdbcType="VARCHAR" />
+    <result column="personal_issue" property="personalIssue" jdbcType="VARCHAR" />
     <result column="funding" property="funding" jdbcType="VARCHAR" />
+    <result column="funding_source" property="fundingSource" />
     <result column="issue_date" property="issueDate" jdbcType="DATE" />
     <result column="pick_passport_date" property="pickPassportDate" jdbcType="DATE" />
     <result column="return_passport_date" property="returnPassportDate" jdbcType="DATE" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="record_type" property="recordType" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="record_id_type" property="recordIdType" jdbcType="VARCHAR" />
+    <result column="record_id_number" property="recordIdNumber" jdbcType="VARCHAR" />
+    <result column="record_id_expire" property="recordIdExpire" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, code, name, department_id, job_id,abroad_date, country, passport_status, reason, funding,
-    issue_date, pick_passport_date, return_passport_date, comment
+    id, code, name, department_id, job_id,abroad_date, return_date, stay_period,vacation,country,passport_type, passport_status, photo_id,passport_number,reason, visit_people,
+    relationship,city,office,personal_issue,funding, funding_source, issue_date, pick_passport_date, return_passport_date, comment,record_type, record_status,
+    record_id_type,record_id_number,record_id_expire
   </sql>
 
   <select id="findPeoplePageCondition" resultMap="abroadVoResultMap" parameterType="PageInfo">
@@ -52,14 +87,31 @@
        t.job_id,
        j.job_level as job_name,
        t.abroad_date,
+       t.return_date,
+       t.stay_period,
+       t.vacation,
        t.country,
+       t.passport_type,
        t.passport_status,
+       t.photo_id,
+       t.passport_number,
        t.reason,
+       t.visit_people,
+       t.relationship,
+       t.city,
+       t.office,
+       t.personal_issue,
        t.funding,
+       t.funding_source,
        t.issue_date,
        t.pick_passport_date,
        t.return_passport_date,
-       t.comment
+       t.comment,
+       t.record_type,
+       t.record_status,
+       t.record_id_type,
+       t.record_id_number,
+       t.record_id_expire
     FROM
        abroad t
     LEFT JOIN
@@ -122,9 +174,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
       INSERT INTO abroad (code, name, department_id, job_id,
-      abroad_date, country, passport_status, 
-      reason, funding, issue_date, 
-      pick_passport_date, return_passport_date, comment
+      abroad_date, return_date,stay_period, vacation, country, passport_type, passport_status, photo_id, passport_number,
+      reason, visit_people, relationship, city,office,personal_issue,funding, funding_source,issue_date,
+      pick_passport_date, return_passport_date, comment, record_type,record_status,record_id_type,record_id_number,record_id_expire
       )
       VALUES (
       #{code,           jdbcType=VARCHAR},
@@ -132,29 +184,49 @@
       #{departmentId,   jdbcType=INTEGER},
       #{jobId,          jdbcType=INTEGER},
       #{abroadDate,     jdbcType=DATE},
+      #{returnDate,      jdbcType=DATE},
+      #{stayPeriod,    jdbcType=INTEGER},
+      #{vacation,     jdbcType=VARCHAR},
       #{country,        jdbcType=VARCHAR},
-     #{passportStatus, jdbcType=VARCHAR},
+      #{passportType,   jdbcType=VARCHAR},
+      #{passportStatus, jdbcType=VARCHAR},
+      #{photoId,        jdbcType=VARCHAR},
+      #{passportNumber, jdbcType=VARCHAR},
       #{reason,         jdbcType=VARCHAR},
+      #{visitPeople,    jdbcType=VARCHAR},
+      #{relationship,   jdbcType=VARCHAR},
+      #{city,           jdbcType=VARCHAR},
+      #{office,         jdbcType=VARCHAR},
+      #{personalIssue,  jdbcType=VARCHAR},
       #{funding,        jdbcType=VARCHAR},
+      #{fundingSource,  jdbcType=VARCHAR},
       #{issueDate,       jdbcType=DATE},
       #{pickPassportDate,jdbcType=DATE},
       #{returnPassportDate,jdbcType=DATE},
-      #{comment,         jdbcType=VARCHAR}
+      #{comment,         jdbcType=VARCHAR},
+      #{recordType,      jdbcType=VARCHAR},
+      #{recordStatus,      jdbcType=VARCHAR},
+      #{recordIdType,      jdbcType=VARCHAR},
+      #{recordIdNumber,      jdbcType=VARCHAR},
+      #{recordIdExpire,      jdbcType=VARCHAR}
       )
   </insert>
 
   <insert id="insertByImport" parameterType="java.util.List">
     INSERT INTO abroad(code, name, department_id, job_id,
-      abroad_date, country, passport_status,
-      reason, funding, issue_date,
-      pick_passport_date, return_passport_date, comment
+      abroad_date, return_date,stay_period, vacation, country, passport_type, passport_status, photo_id, passport_number,
+    reason, visit_people, relationship, city,office,personal_issue,funding, funding_source,issue_date,
+    pick_passport_date, return_passport_date, comment, record_type,record_status,record_id_type,record_id_number,record_id_expire
     )
     values
     <foreach item="item" index="index" collection="list" separator=",">
     (#{item.code,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.departmentId,jdbcType=INTEGER}, #{item.jobId,jdbcType=INTEGER},
-    #{item.abroadDate,jdbcType=DATE}, #{item.country,jdbcType=VARCHAR}, #{item.passportStatus,jdbcType=VARCHAR},
-    #{item.reason,jdbcType=VARCHAR}, #{item.unding,jdbcType=VARCHAR}, #{item.issueDate,jdbcType=DATE},
-    #{item.pickPassportDate,jdbcType=DATE}, #{item.returnPassportDate,jdbcType=DATE}, #{item.comment,jdbcType=VARCHAR}
+    #{item.abroadDate,jdbcType=DATE},#{returnDate, jdbcType=DATE},#{stayPeriod, jdbcType=INTEGER},#{vacation, jdbcType=VARCHAR},
+    #{item.country,jdbcType=VARCHAR}, #{passportType,jdbcType=VARCHAR},#{item.passportStatus,jdbcType=VARCHAR},#{photoId, jdbcType=VARCHAR}, #{passportNumber,jdbcType=VARCHAR},
+    #{item.reason,jdbcType=VARCHAR},#{visitPeople,jdbcType=VARCHAR},#{relationship,jdbcType=VARCHAR},#{city, jdbcType=VARCHAR},#{office, jdbcType=VARCHAR},
+    #{personalIssue, jdbcType=VARCHAR}, #{item.funding,jdbcType=VARCHAR}, #{fundingSource,  jdbcType=VARCHAR},#{item.issueDate,jdbcType=DATE},
+    #{item.pickPassportDate,jdbcType=DATE}, #{item.returnPassportDate,jdbcType=DATE}, #{item.comment,jdbcType=VARCHAR},#{recordType,jdbcType=VARCHAR},#{recordStatus,jdbcType=VARCHAR},
+    #{recordIdType,jdbcType=VARCHAR},#{recordIdNumber,jdbcType=VARCHAR},#{recordIdExpire,jdbcType=VARCHAR}
     )
     </foreach>
   </insert>
@@ -167,14 +239,31 @@
       department_id = #{departmentId,jdbcType=INTEGER},
       job_id = #{jobId,jdbcType=INTEGER},
       abroad_date = #{abroadDate,jdbcType=DATE},
+      return_date = #{returnDate, jdbcType=DATE},
+      stay_period = #{stayPeriod, jdbcType=INTEGER},
+      vacation = #{vacation,     jdbcType=VARCHAR},
       country = #{country,jdbcType=VARCHAR},
+      passport_type = #{passportType, jdbcType=VARCHAR},
       passport_status = #{passportStatus,jdbcType=VARCHAR},
+      photo_id = #{photoId, jdbcType=VARCHAR},
+      passport_number = #{passportNumber, jdbcType=VARCHAR},
       reason = #{reason,jdbcType=VARCHAR},
+      visit_people = #{visitPeople,    jdbcType=VARCHAR},
+      relationship = #{relationship,   jdbcType=VARCHAR},
+      city = #{city, jdbcType=VARCHAR},
+      office = #{office, jdbcType=VARCHAR},
+      personal_issue = #{personalIssue,  jdbcType=VARCHAR},
       funding = #{funding,jdbcType=VARCHAR},
+      funding_source = #{fundingSource,  jdbcType=VARCHAR},
       issue_date = #{issueDate,jdbcType=DATE},
       pick_passport_date = #{pickPassportDate,jdbcType=DATE},
       return_passport_date = #{returnPassportDate,jdbcType=DATE},
-      comment = #{comment,jdbcType=VARCHAR}
+      comment = #{comment,jdbcType=VARCHAR},
+      record_type = #{recordType,jdbcType=VARCHAR},
+      record_status = #{recordStatus,jdbcType=VARCHAR},
+      record_id_type = #{recordIdType,jdbcType=VARCHAR},
+      record_id_number = #{recordIdNumber,jdbcType=VARCHAR},
+      record_id_expire = #{recordIdExpire,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
    </update>
 
@@ -188,14 +277,31 @@
         t.job_id,
         j.job_level as job_name,
         t.abroad_date,
+        t.return_date,
+        t.stay_period,
+        t.vacation,
         t.country,
+        t.passport_type,
         t.passport_status,
+        t.photo_id,
+        t.passport_number,
         t.reason,
+        t.visit_people,
+        t.relationship,
+        t.city,
+        t.office,
+        t.personal_issue,
         t.funding,
+        t.funding_source,
         t.issue_date,
         t.pick_passport_date,
         t.return_passport_date,
-        t.comment
+        t.comment,
+        t.record_type,
+        t.record_status,
+        t.record_id_type,
+        t.record_id_number,
+        t.record_id_expire
         FROM
           abroad t
         LEFT JOIN
