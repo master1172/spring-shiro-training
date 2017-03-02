@@ -91,6 +91,8 @@ public interface PeoplePartyService {
     String findPeoplePartyIDsByCondition(PageInfo pageInfo);
 
     void exportPartyByEducation(HttpServletResponse response);
+
+    void exportPartyByAge(HttpServletResponse response);
 }
 
 
