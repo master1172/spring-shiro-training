@@ -272,6 +272,13 @@
             $("#downLoadForm").submit();
         }
 
+        function exportPartyByAge(){
+            var form=$("#downLoadForm");
+            form.find("input[name='ids']").val('');
+            form.attr("action",'${path}'+"/peopleParty/exportPartyByAge");
+            $("#downLoadForm").submit();
+        }
+
         function sexFormatter(value,row,index){
             switch (value) {
                 case 0:
@@ -390,6 +397,8 @@
     </shiro:hasPermission>
     <a onclick="exportPartyByEducation();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">导出党员学历统计表</a>
+    <a onclick="exportPartyByAge();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导出党员基本情况表</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

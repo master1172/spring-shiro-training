@@ -679,6 +679,9 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 if (peoplePartyVo == null)
                     continue;
 
+                if (peoplePartyVo.getBranchId() != branchId)
+                    continue;
+
                 //性别统计
                 if (peoplePartyVo.getBranchId() == branchId){
                     if (peoplePartyVo.getSex() == 0){
@@ -789,13 +792,54 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 row.createCell(2).setCellValue(sexResult[i][0]);
                 row.getCell(2).setCellStyle(setBorder);
 
+                row.createCell(3).setCellValue(sexResult[i][1]);
+                row.getCell(3).setCellStyle(setBorder);
 
+                row.createCell(4).setCellValue(minorNationResult[i]);
+                row.getCell(4).setCellStyle(setBorder);
+
+                row.createCell(5).setCellValue(taiwanNationResult[i]);
+                row.getCell(5).setCellStyle(setBorder);
+
+                row.createCell(6).setCellValue(ageResult[i][0]);
+                row.getCell(6).setCellStyle(setBorder);
+
+                row.createCell(7).setCellValue(ageResult[i][1]);
+                row.getCell(7).setCellStyle(setBorder);
+
+                row.createCell(8).setCellValue(ageResult[i][2]);
+                row.getCell(8).setCellStyle(setBorder);
+
+                row.createCell(9).setCellValue(ageResult[i][3]);
+                row.getCell(9).setCellStyle(setBorder);
+
+                row.createCell(10).setCellValue(ageResult[i][4]);
+                row.getCell(10).setCellStyle(setBorder);
+
+                row.createCell(11).setCellValue(ageResult[i][5]);
+                row.getCell(11).setCellStyle(setBorder);
+
+                row.createCell(12).setCellValue(ageResult[i][6]);
+                row.getCell(12).setCellStyle(setBorder);
+
+                row.createCell(13).setCellValue(ageResult[i][7]);
+                row.getCell(13).setCellStyle(setBorder);
+
+                row.createCell(14).setCellValue(ageResult[i][8]);
+                row.getCell(14).setCellStyle(setBorder);
+
+                row.createCell(15).setCellValue(ageResult[i][9]);
+                row.getCell(15).setCellStyle(setBorder);
 
                 row.setHeight((short) 400);
             }
 
             sheet.setDefaultRowHeightInPoints(21);
-            sheet.autoSizeColumn(0);
+
+            for(int j=0; j<16; j++){
+                sheet.autoSizeColumn(j);
+            }
+
 
             response.reset();
             os = response.getOutputStream();
