@@ -789,7 +789,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 row.createCell(2).setCellValue(sexResult[i][0]);
                 row.getCell(2).setCellStyle(setBorder);
 
-                
+
 
                 row.setHeight((short) 400);
             }
