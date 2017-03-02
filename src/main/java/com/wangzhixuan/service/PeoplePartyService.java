@@ -93,6 +93,8 @@ public interface PeoplePartyService {
     void exportPartyByEducation(HttpServletResponse response);
 
     void exportPartyByAge(HttpServletResponse response);
+
+    void exportPartyByPartyDate(HttpServletResponse response);
 }
 
 

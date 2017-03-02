@@ -261,6 +261,15 @@ public class PeoplePartyController extends BaseController{
         }
     }
 
+    @RequestMapping("/exportPartyByPartyDate")
+    public void exportPartyByPartyDate(HttpServletResponse response){
+        try{
+            peoplePartyService.exportPartyByPartyDate(response);
+        }catch (Exception exp){
+
+        }
+    }
+
 }
 
 

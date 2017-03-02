@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -130,5 +132,67 @@ public class DateUtil {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
         Calendar today = Calendar.getInstance().getInstance();
         return format.format(today.getTime());
+    }
+
+    //
+    public static boolean lessThan(String partyDate, String secondDate){
+        if (StringUtils.isBlank(partyDate))
+            return false;
+        if (StringUtils.isBlank(secondDate))
+            return false;
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try{
+            Date party = dateFormat.parse(partyDate);
+            Date second = dateFormat.parse(secondDate);
+
+            return party.getTime() <= second.getTime();
+
+        }catch (Exception exp){
+            return false;
+        }
+
+    }
+
+    public static boolean greaterThan(String partyDate, String secondDate){
+        if (StringUtils.isBlank(partyDate))
+            return false;
+        if (StringUtils.isBlank(secondDate))
+            return false;
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try{
+            Date party = dateFormat.parse(partyDate);
+            Date second = dateFormat.parse(secondDate);
+
+            return party.getTime() >= second.getTime();
+
+        }catch (Exception exp){
+            return false;
+        }
+    }
+
+    public static boolean inRange(String partyDate, String firstDate, String secondDate) {
+        if (StringUtils.isBlank(partyDate))
+            return false;
+        if (StringUtils.isBlank(secondDate))
+            return false;
+        if (StringUtils.isBlank(firstDate))
+            return false;
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try{
+            Date party = dateFormat.parse(partyDate);
+            Date first  = dateFormat.parse(firstDate);
+            Date second = dateFormat.parse(secondDate);
+
+            return (party.getTime() >= first.getTime()) && (party.getTime() <= second.getTime());
+
+        }catch (Exception exp){
+            return false;
+        }
     }
 }

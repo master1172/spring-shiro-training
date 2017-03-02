@@ -852,6 +852,155 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
 
         }
     }
+
+    @Override
+    public void exportPartyByPartyDate(HttpServletResponse response) {
+        List peoplePartyVoList = peoplePartyMapper.selectAllPeoplePartyVo();
+
+        List dictBranchList = dictMapper.findBranchDict();
+
+        int partyDateResult[][] = new int[dictBranchList.size()][9];
+        int sum[] = new int[dictBranchList.size()];
+
+        for(int i=0; i<dictBranchList.size(); i++){
+            Dict branch = (Dict) dictBranchList.get(i);
+            if (branch == null)
+                continue;
+
+            Integer branchId = branch.getId();
+
+            for(int j=0; j<peoplePartyVoList.size(); j++){
+
+                PeoplePartyVo peoplePartyVo = (PeoplePartyVo) peoplePartyVoList.get(j);
+                if (peoplePartyVo == null)
+                    continue;
+
+                if (peoplePartyVo.getBranchId() != branchId)
+                    continue;
+
+
+                //入党日期统计
+                if (StringUtils.isNoneBlank(peoplePartyVo.getBirthday())){
+
+                    String partyDate = peoplePartyVo.getPartyDate();
+
+                    sum[i] = sum[i] + 1;
+
+                    if (DateUtil.lessThan(partyDate,"1937-07-06")){
+                        partyDateResult[i][0] = partyDateResult[i][0] + 1;
+                    }
+
+                    if (DateUtil.inRange(partyDate,"1937-07-07","1945-09-02")){
+                        partyDateResult[i][1] = partyDateResult[i][1] + 1;
+                    }
+
+                    if (DateUtil.inRange(partyDate, "1945-09-03","1949-09-30")){
+                        partyDateResult[i][2] = partyDateResult[i][2] + 1;
+                    }
+
+                    if (DateUtil.inRange(partyDate, "1949-10-01","1966-04-30")){
+                        partyDateResult[i][3] = partyDateResult[i][3] + 1;
+                    }
+
+                    if (DateUtil.inRange(partyDate, "1966-05-01","1976-10-31")){
+                        partyDateResult[i][4] = partyDateResult[i][4] + 1;
+                    }
+
+                    if (DateUtil.inRange(partyDate, "1976-11-01","1978-12-31")){
+                        partyDateResult[i][5] = partyDateResult[i][5] + 1;
+                    }
+
+                    if (DateUtil.inRange(partyDate, "1979-01-01","2002-10-31")){
+                        partyDateResult[i][6] = partyDateResult[i][6] + 1;
+                    }
+
+                    if (DateUtil.inRange(partyDate, "2002-11-01","2012-10-31")){
+                        partyDateResult[i][7] = partyDateResult[i][7] + 1;
+                    }
+
+                    if (DateUtil.greaterThan(partyDate, "2002-11-01")){
+                        partyDateResult[i][8] = partyDateResult[i][8] + 1;
+                    }
+                }
+
+
+            }
+        }
+
+        //导出表头
+        XSSFWorkbook workBook;
+        OutputStream os;
+        String newFileName="入党日期统计.xlsx";
+        try {
+            workBook = new XSSFWorkbook();
+            XSSFSheet sheet= workBook.createSheet("入党日期统计");
+            XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+
+            XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPartyDateHeaders());
+
+            sheet.autoSizeColumn(1);
+
+
+            //创建列表内容
+            for(int i=0; i<dictBranchList.size(); i++){
+
+                Dict branch = (Dict) dictBranchList.get(i);
+
+                row=sheet.createRow(i+1);
+                row.createCell(0).setCellValue(branch.getName());
+                row.getCell(0).setCellStyle(setBorder);
+
+                row.createCell(1).setCellValue(sum[i]);
+                row.getCell(1).setCellStyle(setBorder);
+
+                row.createCell(2).setCellValue(partyDateResult[i][0]);
+                row.getCell(2).setCellStyle(setBorder);
+
+                row.createCell(3).setCellValue(partyDateResult[i][1]);
+                row.getCell(3).setCellStyle(setBorder);
+
+                row.createCell(4).setCellValue(partyDateResult[i][2]);
+                row.getCell(4).setCellStyle(setBorder);
+
+                row.createCell(5).setCellValue(partyDateResult[i][3]);
+                row.getCell(5).setCellStyle(setBorder);
+
+                row.createCell(6).setCellValue(partyDateResult[i][4]);
+                row.getCell(6).setCellStyle(setBorder);
+
+                row.createCell(7).setCellValue(partyDateResult[i][5]);
+                row.getCell(7).setCellStyle(setBorder);
+
+                row.createCell(8).setCellValue(partyDateResult[i][6]);
+                row.getCell(8).setCellStyle(setBorder);
+
+                row.createCell(10).setCellValue(partyDateResult[i][7]);
+                row.getCell(10).setCellStyle(setBorder);
+
+                row.createCell(11).setCellValue(partyDateResult[i][8]);
+                row.getCell(11).setCellStyle(setBorder);
+
+                row.setHeight((short) 400);
+            }
+
+            sheet.setDefaultRowHeightInPoints(21);
+
+            for(int j=0; j<12; j++){
+                sheet.autoSizeColumn(j);
+            }
+
+
+            response.reset();
+            os = response.getOutputStream();
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+            workBook.write(os);
+            os.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+
+        }
+    }
 }
 
 
