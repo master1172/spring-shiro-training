@@ -293,7 +293,6 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	@Override
 	public void exportVacationResult(HttpServletResponse response, String checkDate) {
 
-
 		XSSFWorkbook workBook;
 		OutputStream os;
 		String newFileName = "考勤统计信息.xlsx";
@@ -321,7 +320,25 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 					row = ExcelUtil.insertRow(sheet,i+5);
 					row.createCell(0).setCellValue(name);
-					row.getCell(0).setCellStyle(setBorder);
+
+					List<PeopleTimesheetVo> peopleTimesheetVoList = peopleTimesheetMapper.findTimesheetVoByPeopleCode(code);
+
+					for(int j=0; j<31;j++){
+						row.createCell(j+1).setCellValue("√");
+						if (peopleTimesheetVoList == null)
+							continue;
+						for(int k=0; k<peopleTimesheetVoList.size(); k++){
+							PeopleTimesheetVo peopleTimesheetVo = peopleTimesheetVoList.get(k);
+							if (peopleTimesheetVo == null)
+								continue;
+							//比较两个日期
+							if (DateUtil.CompareTwoDate(checkDate, j, peopleTimesheetVo.getCheckDate())){
+								row.createCell(j+1).setCellValue("×");
+							}else{
+								row.createCell(j+1).setCellValue("√");
+							}
+						}
+					}
 
 					row.setHeight((short) 400);
 				}

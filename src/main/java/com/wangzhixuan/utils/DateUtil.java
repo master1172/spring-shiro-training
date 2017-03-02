@@ -195,4 +195,30 @@ public class DateUtil {
             return false;
         }
     }
+
+    public static boolean CompareTwoDate(String checkYearAndMonth, int date, String resultDate) {
+        if (StringUtils.isBlank(checkYearAndMonth))
+            return false;
+
+        if (StringUtils.isBlank(resultDate))
+            return false;
+
+        String resultYear = GetYear(resultDate);
+        String resultMonth = GetMonth(resultDate);
+        String resultDay   = GetDay(resultDate);
+
+        String checkYear = GetYear(checkYearAndMonth);
+        String checkMonth = GetMonth(checkYearAndMonth);
+
+        if (resultYear != checkYear)
+            return false;
+
+        if (resultMonth != checkMonth)
+            return false;
+
+        if (Integer.valueOf(resultDay).intValue() !=  date)
+            return false;
+
+        return true;
+    }
 }
