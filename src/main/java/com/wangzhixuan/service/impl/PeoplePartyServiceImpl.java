@@ -974,18 +974,18 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 row.createCell(8).setCellValue(partyDateResult[i][6]);
                 row.getCell(8).setCellStyle(setBorder);
 
-                row.createCell(10).setCellValue(partyDateResult[i][7]);
-                row.getCell(10).setCellStyle(setBorder);
+                row.createCell(9).setCellValue(partyDateResult[i][7]);
+                row.getCell(9).setCellStyle(setBorder);
 
-                row.createCell(11).setCellValue(partyDateResult[i][8]);
-                row.getCell(11).setCellStyle(setBorder);
+                row.createCell(10).setCellValue(partyDateResult[i][8]);
+                row.getCell(10).setCellStyle(setBorder);
 
                 row.setHeight((short) 400);
             }
 
             sheet.setDefaultRowHeightInPoints(21);
 
-            for(int j=0; j<12; j++){
+            for(int j=0; j<11; j++){
                 sheet.autoSizeColumn(j);
             }
 
