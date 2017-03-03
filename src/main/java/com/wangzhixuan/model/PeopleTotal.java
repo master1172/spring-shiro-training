@@ -367,6 +367,8 @@ public class PeopleTotal implements Serializable {
     //抚恤金
     private BigDecimal deathFee;
 
+    private BigDecimal retireSalaryRatio;
+
     public Integer getId() {
         return id;
     }
@@ -1293,6 +1295,14 @@ public class PeopleTotal implements Serializable {
 
     public void setDeathFee(BigDecimal deathFee) {
         this.deathFee = deathFee;
+    }
+
+    public BigDecimal getRetireSalaryRatio() {
+        return retireSalaryRatio;
+    }
+
+    public void setRetireSalaryRatio(BigDecimal retireSalaryRatio) {
+        this.retireSalaryRatio = retireSalaryRatio;
     }
 
     public String toString(){

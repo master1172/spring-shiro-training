@@ -118,6 +118,7 @@
         <result column="annuity_base" jdbcType="DECIMAL" property="annuityBase"/>
         <result column="funeral_fee"  jdbcType="DECIMAL" property="funeralFee"/>
         <result column="death_fee"    jdbcType="DECIMAL" property="deathFee"/>
+        <result column="retire_salary_ratio" jdbcType="DECIMAL" property="retireSalaryRatio"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -140,7 +141,7 @@
         base_salary, retire_allowance, retire_fee_increase, food_allowance, health_allowance, heating_fee,
         handicap_allowance, rent_fee, last_update_date, life_insurance_base, job_insurance_base,
         wound_insurance_base, birth_insurance_base, health_insurance_base, annuity_base,
-        funeral_fee, death_fee
+        funeral_fee, death_fee, retire_salary_ratio
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -207,7 +208,7 @@
         health_allowance, heating_fee, handicap_allowance,
         rent_fee, last_update_date,life_insurance_base, job_insurance_base,
         wound_insurance_base, birth_insurance_base, health_insurance_base, annuity_base,
-        funeral_fee, death_fee
+        funeral_fee, death_fee, retire_salary_ratio
         )
         values
         (
@@ -252,7 +253,8 @@
         #{lifeInsuranceBase, jdbcType=DECIMAL},#{jobInsuranceBase, jdbcType=DECIMAL},
         #{woundInsuranceBase, jdbcType=DECIMAL},#{birthInsuranceBase, jdbcType=DECIMAL},
         #{healthInsuranceBase, jdbcType=DECIMAL}, #{annuityBase, jdbcType=DECIMAL},
-        #{funeralFee, jdbcType=DECIMAL}, #{deathFee, jdbcType=DECIMAL}
+        #{funeralFee, jdbcType=DECIMAL}, #{deathFee, jdbcType=DECIMAL},
+        #{retireSalaryRatio, jdbcType=DECIMAL}
         )
     </insert>
 
@@ -607,6 +609,9 @@
             <if test="deathFee != null">
                 death_fee,
             </if>
+            <if test="retireSalaryRatio != null">
+                retire_salary_ratio,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -956,6 +961,9 @@
             </if>
             <if test="deathFee != null">
                 #{deathFee, jdbcType=DECIMAL},
+            </if>
+            <if test="retireSalaryRatio != null">
+                #{retireSalaryRatio, jdbcType=DECIMAL},
             </if>
         </trim>
     </insert>
@@ -1308,6 +1316,9 @@
             <if test="deathFee != null">
                 death_fee = #{deathFee, jdbcType=DECIMAL},
             </if>
+            <if test="retireSalaryRatio != null">
+                retire_salary_ratio = #{retireSalaryRatio, jdbcType=DECIMAL},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -1428,7 +1439,8 @@
         health_insurance_base = #{healthInsuranceBase, jdbcType=DECIMAL},
         annuity_base = #{annuityBase, jdbcType=DECIMAL},
         funeral_fee = #{funeralFee, jdbcType=DECIMAL},
-        death_fee   = #{deathFee, jdbcType=DECIMAL}
+        death_fee   = #{deathFee, jdbcType=DECIMAL},
+        retire_salary_ratio = #{retireSalaryRatio,jdbcType=DECIMAL}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>
