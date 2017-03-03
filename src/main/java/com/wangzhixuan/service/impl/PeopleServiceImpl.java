@@ -690,6 +690,7 @@ public class PeopleServiceImpl implements PeopleService{
 
 					for(int j=0; j<38; j++){
 						row.getCell(j).setCellStyle(setBorder);
+						sheet.autoSizeColumn(j);
 					}
         			row.setHeight((short) 400);
         		}
@@ -713,6 +714,9 @@ public class PeopleServiceImpl implements PeopleService{
     public void exportWord(HttpServletResponse response,String id){
 		PeopleVo p= peopleMapper.findPeopleVoById(Integer.valueOf(id));
     	if(p!=null){
+
+			SplitFamilyInfo(p);
+
         	XWPFDocument doc;
     		OutputStream os;
         	String filePath=this.getClass().getResource("/template/custInfo.docx").getPath();
@@ -751,25 +755,30 @@ public class PeopleServiceImpl implements PeopleService{
 			params.put("${relationship}",p.getRelationship());
 			params.put("${number}",p.getContactNumber());
 
-			params.put("${familyInfo1Title}",p.getFamilyInfo1Title());
-			params.put("${familyInfo1Name}",p.getFamilyInfo1Name());
-			params.put("${familyInfo1Job}",p.getFamilyInfo1Job());
-			params.put("${familyInfo1Contact}",p.getFamilyInfo1Contact());
 
-			params.put("${familyInfo2Title}",p.getFamilyInfo2Title());
-			params.put("${familyInfo2Name}",p.getFamilyInfo2Name());
-			params.put("${familyInfo2Job}",p.getFamilyInfo2Job());
-			params.put("${familyInfo2Contact}",p.getFamilyInfo2Contact());
+			params.put("t1",p.getFamilyInfo1Title()==null?"":p.getFamilyInfo1Title());
+			params.put("n1",p.getFamilyInfo1Name()==null?"":p.getFamilyInfo1Name());
+			params.put("${w1}",p.getFamilyInfo1WorkAddress());
+			params.put("j1",p.getFamilyInfo1Job());
+			params.put("c1",p.getFamilyInfo1Contact());
 
-			params.put("${familyInfo3Title}",p.getFamilyInfo3Title());
-			params.put("${familyInfo3Name}",p.getFamilyInfo3Name());
-			params.put("${familyInfo3Job}",p.getFamilyInfo3Job());
-			params.put("${familyInfo3Contact}",p.getFamilyInfo3Contact());
+			params.put("t2",p.getFamilyInfo2Title());
+			params.put("n2",p.getFamilyInfo2Name());
+			params.put("${w2}",p.getFamilyInfo2WorkAddress());
+			params.put("j2",p.getFamilyInfo2Job());
+			params.put("c2",p.getFamilyInfo2Contact());
 
-			params.put("${familyInfo4Title}",p.getFamilyInfo4Title());
-			params.put("${familyInfo4Name}",p.getFamilyInfo4Name());
-			params.put("${familyInfo4Job}",p.getFamilyInfo4Job());
-			params.put("${familyInfo4Contact}",p.getFamilyInfo4Contact());
+			params.put("t3",p.getFamilyInfo3Title());
+			params.put("n3",p.getFamilyInfo3Name());
+			params.put("${w3}",p.getFamilyInfo3WorkAddress());
+			params.put("j3",p.getFamilyInfo3Job());
+			params.put("c3",p.getFamilyInfo3Contact());
+
+			params.put("t4",p.getFamilyInfo4Title());
+			params.put("n4",p.getFamilyInfo4Name());
+			params.put("${w4}",p.getFamilyInfo4WorkAddress());
+			params.put("j4",p.getFamilyInfo4Job());
+			params.put("c4",p.getFamilyInfo4Contact());
 
 			params.put("${identityName}",p.getIdentityName());
 

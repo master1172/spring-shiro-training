@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -20,7 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sterm on 2017/2/14.
@@ -153,6 +156,103 @@ public class AbroadImpl implements AbroadService {
 
                     for(int j=0; j<13; j++){
                         row.getCell(j).setCellStyle(setBorder);
+                    }
+                    row.setHeight((short)400);
+                }
+
+                sheet.setDefaultRowHeightInPoints(21);
+                response.reset();
+                os = response.getOutputStream();
+                response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+                workBook.write(os);
+                os.close();
+
+            }catch (Exception exp){
+                exp.printStackTrace();
+            }finally{
+
+            }
+        }
+    }
+
+    @Override
+    public void exportJuniorOfficalReview(HttpServletResponse response, String ids) {
+        Abroad abroad = abroadMapper.findAbroadById(Integer.valueOf(ids));
+        if (abroad != null){
+            String filePath=this.getClass().getResource("/template/juniorOfficalReview.docx").getPath();
+            String newFileName="处级及以下人员因私临时出国审批表.docx";
+            Integer departmentId = abroad.getDepartmentId();
+            String departmentName = (departmentId == null)? "" : dictMapper.findDepartmentNameById(departmentId);
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("${name}",abroad.getName());
+            params.put("dep",departmentName);
+            WordUtil.OutputWord(response, filePath, newFileName, params);
+        }
+    }
+
+    @Override
+    public void exportSeniorOfficalReview(HttpServletResponse response, String ids) {
+        Abroad abroad = abroadMapper.findAbroadById(Integer.valueOf(ids));
+        if (abroad != null){
+            String filePath=this.getClass().getResource("/template/seniorOfficalReview.docx").getPath();
+            String newFileName="国家民委在职司局级干部因私临时出国申请表.docx";
+            Integer departmentId = abroad.getDepartmentId();
+            String departmentName = (departmentId == null)? "" : dictMapper.findDepartmentNameById(departmentId);
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("${name}",abroad.getName());
+            params.put("dep",departmentName);
+            WordUtil.OutputWord(response, filePath, newFileName, params);
+        }
+    }
+
+    @Override
+    public void exportRetireOfficalReview(HttpServletResponse response, String ids) {
+        Abroad abroad = abroadMapper.findAbroadById(Integer.valueOf(ids));
+        if (abroad != null){
+            String filePath=this.getClass().getResource("/template/retireOfficalReview.docx").getPath();
+            String newFileName="离退休司局级干部因私临时出国境审批表.docx";
+            Integer departmentId = abroad.getDepartmentId();
+            String departmentName = (departmentId == null)? "" : dictMapper.findDepartmentNameById(departmentId);
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("${name}",abroad.getName());
+            params.put("dep",departmentName);
+            WordUtil.OutputWord(response, filePath, newFileName, params);
+        }
+    }
+
+    @Override
+    public void exportRecordExcel(HttpServletResponse response, String[] idList) {
+        List list=abroadMapper.selectAbroadVoByIds(idList);
+        if(list != null && list.size()>0){
+            XSSFWorkbook workBook;
+            OutputStream os;
+            String newFileName="报备人员信息表.xlsx";
+
+            try{
+                workBook = new XSSFWorkbook();
+                XSSFSheet sheet= workBook.createSheet("报备人员信息表");
+                XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+
+                //创建表头
+                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getAbroadRecordHeaders());
+                setBorder=WordUtil.setCellStyle(workBook,false);
+
+                for(int i=0; i<list.size(); i++){
+                    row=sheet.createRow(i+1);
+                    AbroadVo p = (AbroadVo)list.get(i);
+                    row.createCell(0).setCellValue(i+1);
+                    row.createCell(1).setCellValue(p.getName());
+                    row.createCell(2).setCellValue(p.getDepartmentName());
+                    row.createCell(3).setCellValue(p.getJobName());
+                    row.createCell(4).setCellValue(p.getRecordType());
+                    row.createCell(5).setCellValue(p.getRecordStatus());
+                    row.createCell(6).setCellValue(p.getRecordIdType());
+                    row.createCell(7).setCellValue(p.getRecordIdNumber());
+                    row.createCell(8).setCellValue(p.getRecordIdExpire());
+
+                    for(int j=0; j<9; j++){
+                        row.getCell(j).setCellStyle(setBorder);
+                        sheet.autoSizeColumn(j);
                     }
                     row.setHeight((short)400);
                 }

@@ -212,4 +212,52 @@ public class AbroadController {
             LOGGER.error("导出Excel失败:{}",exp);
         }
     }
+
+    @RequestMapping("/exportJuniorOfficalReview")
+    public void exportJuniorOfficalReview(HttpServletResponse response, String ids){
+        if (StringUtils.isEmpty(ids)){
+            LOGGER.error("导出Word:{}","请选择一条有效数据!");
+        }
+        try{
+            abroadService.exportJuniorOfficalReview(response,ids);
+        }catch(Exception exp){
+            LOGGER.error("导出Word:{}",exp);
+        }
+    }
+
+    @RequestMapping("/exportSeniorOfficalReview")
+    public void exportSeniorOfficalReview(HttpServletResponse response, String ids){
+        if (StringUtils.isEmpty(ids)){
+            LOGGER.error("导出Word:{}","请选择一条有效数据!");
+        }
+        try{
+            abroadService.exportSeniorOfficalReview(response,ids);
+        }catch(Exception exp){
+            LOGGER.error("导出Word:{}",exp);
+        }
+    }
+
+    @RequestMapping("/exportRetireOfficalReview")
+    public void exportRetireOfficalReview(HttpServletResponse response, String ids){
+        if (StringUtils.isEmpty(ids)){
+            LOGGER.error("导出Word:{}","请选择一条有效数据!");
+        }
+        try{
+            abroadService.exportRetireOfficalReview(response,ids);
+        }catch(Exception exp){
+            LOGGER.error("导出Word:{}",exp);
+        }
+    }
+
+    @RequestMapping("/exportRecordExcel")
+    public void exportRecordExcel(HttpServletResponse response, String ids){
+        if (StringUtils.isBlank(ids)){
+            LOGGER.error("Excel:{}","请选择有效数据!");
+        }
+        try{
+            abroadService.exportRecordExcel(response,ids.split(","));
+        }catch(Exception exp){
+            LOGGER.error("导出Excel失败:{}",exp);
+        }
+    }
 }

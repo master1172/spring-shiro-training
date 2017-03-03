@@ -72,6 +72,12 @@ public class ConstUtil {
         };
     }
 
+    public static String[] getAbroadRecordHeaders(){
+        return new String[]{
+               "序号","姓名","所在部门","现任职务","登记备案人员类型","报备情况","证件类型","证件号","有效期"
+        };
+    }
+
     public static int PEOPLE_NORMAL = 0;
        //退休人员
     public static int PEOPLE_RETIRE = 1;

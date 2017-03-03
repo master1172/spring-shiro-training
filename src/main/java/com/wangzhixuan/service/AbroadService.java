@@ -30,4 +30,12 @@ public interface AbroadService {
     boolean insertByImport(CommonsMultipartFile[] files);
 
     void exportExcel(HttpServletResponse response, String[] split);
+
+    void exportJuniorOfficalReview(HttpServletResponse response, String ids);
+
+    void exportSeniorOfficalReview(HttpServletResponse response, String ids);
+
+    void exportRetireOfficalReview(HttpServletResponse response, String ids);
+
+    void exportRecordExcel(HttpServletResponse response, String[] split);
 }
