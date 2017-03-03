@@ -14,6 +14,7 @@ import com.wangzhixuan.mapper.PeopleRehireMapper;
 import com.wangzhixuan.mapper.PeopleTotalMapper;
 import com.wangzhixuan.model.PeopleRehire;
 import com.wangzhixuan.model.PeopleTotal;
+import com.wangzhixuan.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFChart;
@@ -34,11 +35,6 @@ import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleRetireMapper;
 import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.service.PeopleRetireService;
-import com.wangzhixuan.utils.ConstUtil;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleRetireVo;
 
 /**
@@ -530,6 +526,60 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
 
             HSSFCell cell6 = sheet.getRow(2).getCell(6);
             cell6.setCellValue(retireVo.getEducationName());
+
+            Integer departmentId = peopleTotal.getDepartmentId();
+            String departmentName = "";
+            if (departmentId != null){
+                departmentName = dictMapper.findDepartmentNameById(departmentId);
+            }
+            HSSFCell cell7 = sheet.getRow(3).getCell(2);
+            cell7.setCellValue(departmentName);
+
+            HSSFCell cell8 = sheet.getRow(3).getCell(4);
+            cell8.setCellValue(retireVo.getRetireJobLevelName());
+
+            HSSFCell cell9 = sheet.getRow(3).getCell(6);
+            cell9.setCellValue(peopleTotal.getWorkDate());
+
+            HSSFCell cell10 = sheet.getRow(4).getCell(3);
+            cell10.setCellValue(peopleTotal.getJobName());
+
+            HSSFCell cell11 = sheet.getRow(5).getCell(3);
+            cell11.setCellValue(peopleTotal.getAddress());
+
+            HSSFCell cell12 = sheet.getRow(6).getCell(2);
+            cell12.setCellValue(peopleTotal.getWorkAge());
+
+            HSSFCell cell13 = sheet.getRow(9).getCell(0);
+            cell13.setCellValue(peopleTotal.getBaseSalary()==null?"":peopleTotal.getBaseSalary().toString());
+
+            HSSFCell cell14 = sheet.getRow(10).getCell(3);
+            cell14.setCellValue(peopleTotal.getBaseSalary()==null?"":peopleTotal.getBaseSalary().toString());
+
+            HSSFCell cell15 = sheet.getRow(11).getCell(4);
+            cell15.setCellValue(peopleTotal.getExtraAllowance()==null?"":peopleTotal.getExtraAllowance().toString());
+
+            HSSFCell cell16 = sheet.getRow(12).getCell(4);
+            cell16.setCellValue(peopleTotal.getRentAllowance()==null?"":peopleTotal.getRentAllowance().toString());
+
+            HSSFCell cell17 = sheet.getRow(13).getCell(4);
+            cell17.setCellValue(peopleTotal.getFoodAllowance()==null?"":peopleTotal.getFoodAllowance().toString());
+
+            HSSFCell cell18 = sheet.getRow(14).getCell(4);
+            cell18.setCellValue(peopleTotal.getHealthAllowance()==null?"":peopleTotal.getHealthAllowance().toString());
+
+            HSSFCell cell19 = sheet.getRow(15).getCell(4);
+            cell19.setCellValue(peopleTotal.getRetireAllowance()==null?"":peopleTotal.getRetireAllowance().toString());
+
+            HSSFCell cell20 = sheet.getRow(16).getCell(4);
+            cell20.setCellValue(peopleTotal.getPropertyAllowance()==null?"":peopleTotal.getPropertyAllowance().toString());
+
+            HSSFCell cell21 = sheet.getRow(17).getCell(4);
+            cell21.setCellValue(peopleTotal.getRetireFeeIncrease()==null?"":peopleTotal.getRetireFeeIncrease().toString());
+
+            HSSFCell cell22 = sheet.getRow(19).getCell(3);
+            cell22.setCellValue(DateUtil.GetTodayInWord());
+
 
 
             OutputStream os;

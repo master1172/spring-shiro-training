@@ -16,6 +16,16 @@ import java.util.Date;
 public class DateUtil {
 
 
+    public static String GetTodayInWord(){
+        String today = GetToday();
+        String year = GetYear(today);
+        String month = GetMonth(today);
+        String day = GetDay(today);
+
+        return year + " 年 " + month + " 月 " + day + " 日";
+    }
+
+
     public static String GetToday(){
         return GetDate(new Date());
     }
