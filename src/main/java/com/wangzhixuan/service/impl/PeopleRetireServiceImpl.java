@@ -10,10 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.wangzhixuan.mapper.PeopleRehireMapper;
-import com.wangzhixuan.mapper.PeopleTotalMapper;
-import com.wangzhixuan.model.PeopleRehire;
-import com.wangzhixuan.model.PeopleTotal;
+import com.wangzhixuan.mapper.*;
+import com.wangzhixuan.model.*;
 import com.wangzhixuan.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -31,9 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleRetireMapper;
-import com.wangzhixuan.model.PeopleRetire;
 import com.wangzhixuan.service.PeopleRetireService;
 import com.wangzhixuan.vo.PeopleRetireVo;
 
@@ -51,6 +46,12 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
 
     @Autowired
     private DictMapper dictMapper;
+
+    @Autowired
+    private PeopleJobMapper peopleJobMapper;
+
+    @Autowired
+    private PeopleRankMapper peopleRankMapper;
 
     @Override
     public PeopleRetire findPeopleRetireById(Integer id) {
@@ -548,9 +549,40 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
             cell11.setCellValue(peopleTotal.getAddress());
 
             HSSFCell cell12 = sheet.getRow(6).getCell(2);
-            cell12.setCellValue(peopleTotal.getWorkAge());
+            cell12.setCellValue(peopleTotal.getWorkAge()==null?"":peopleTotal.getWorkAge().toString());
 
-            HSSFCell cell13 = sheet.getRow(9).getCell(0);
+            HSSFCell cell12_1 = sheet.getRow(8).getCell(0);
+            HSSFCell cell12_2 = sheet.getRow(8).getCell(2);
+            Integer jobId = peopleTotal.getJobId();
+            String jobLevelName = "";
+            String jobSalary = "";
+            if (jobId != null){
+                PeopleJob peopleJob =  peopleJobMapper.findPeopleJobById(Long.valueOf(jobId));
+                if (peopleJob != null){
+                    jobLevelName = peopleJob.getJobLevel();
+                    jobSalary = peopleJob.getSalary().toString();
+                }
+            }
+            cell12_1.setCellValue(jobLevelName);
+            cell12_2.setCellValue(jobSalary);
+
+            HSSFCell cell12_3 = sheet.getRow(8).getCell(3);
+            HSSFCell cell12_4 = sheet.getRow(8).getCell(4);
+            Integer rankId = peopleTotal.getRankId();
+            String rankLevelName = "";
+            String rankSalary = "";
+            if (rankId != null){
+                PeopleRank peopleRank = peopleRankMapper.findPeopleRankById(Long.valueOf(rankId));
+                if (peopleRank != null){
+                    rankLevelName = peopleRank.getRank_level();
+                    rankSalary    = peopleRank.getSalary().toString();
+                }
+            }
+            cell12_3.setCellValue(rankLevelName);
+            cell12_4.setCellValue(rankSalary);
+
+
+            HSSFCell cell13 = sheet.getRow(9).getCell(1);
             cell13.setCellValue(peopleTotal.getBaseSalary()==null?"":peopleTotal.getBaseSalary().toString());
 
             HSSFCell cell14 = sheet.getRow(10).getCell(3);
