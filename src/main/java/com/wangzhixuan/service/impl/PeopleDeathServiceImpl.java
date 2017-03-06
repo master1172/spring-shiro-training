@@ -78,6 +78,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                people.setPhoto(uploadPath);
                 peopleDeathMapper.insert(people);
             }
         }else{
@@ -105,6 +106,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                people.setPhoto(uploadPath);
                 peopleDeathMapper.updatePeople(people);
             }
         }else{

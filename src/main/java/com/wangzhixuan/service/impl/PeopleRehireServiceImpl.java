@@ -88,6 +88,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                peopleRehire.setPhoto(uploadPath);
                 peopleRehireMapper.insert(peopleRehire);
             }
         }else{
@@ -124,6 +125,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleRehire.setPhoto(uploadPath);
                 peopleRehireMapper.updatePeopleRehire(peopleRehire);
             }
         }else{

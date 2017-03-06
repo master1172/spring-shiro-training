@@ -217,8 +217,6 @@
                 <td>
                     <input name="name" placeholder="请输入人员姓名"/>
                 </td>
-            </tr>
-            <tr>
                 <a href="javascript:void(0);" class="easyui-linkbutton"
                    data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
                 <a href="javascript:void(0);" class="easyui-linkbutton"

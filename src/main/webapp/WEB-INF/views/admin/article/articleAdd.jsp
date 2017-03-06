@@ -5,7 +5,7 @@
 <script type="text/javascript" charset="utf-8" src="${staticPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 
 <script type="text/javascript">
-   /*  $(function() {
+     $(function() {
         $('#categoryId').combotree({
             url : '${path}/category/tree',
             parentField : 'pid',
@@ -35,7 +35,7 @@
             }
         });
 
-    }); */
+    });
     
 </script>
 

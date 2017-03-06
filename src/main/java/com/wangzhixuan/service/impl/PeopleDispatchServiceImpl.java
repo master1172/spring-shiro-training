@@ -82,6 +82,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                peopleDispatch.setPhoto(uploadPath);
                 peopleDispatchMapper.insert(peopleDispatch);
             }
         }else{
@@ -112,6 +113,7 @@ public class PeopleDispatchServiceImpl implements PeopleDispatchService {
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleDispatch.setPhoto(uploadPath);
                 peopleDispatchMapper.updatePeopleDispatch(peopleDispatch);
             }
         }else{

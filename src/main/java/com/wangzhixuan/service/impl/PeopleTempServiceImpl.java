@@ -78,6 +78,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath) ){
+                peopleTemp.setPhoto(uploadPath);
                 peopleTempMapper.insert(peopleTemp);
             }
         }else{
@@ -108,6 +109,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
             String filePath = StringUtilExtra.getPictureUploadPath();
             String uploadPath = UploadUtil.pictureUpLoad(filePath,file);
             if(StringUtils.isNotEmpty(uploadPath)){
+                peopleTemp.setPhoto(uploadPath);
                 peopleTempMapper.updatePeopleTemp(peopleTemp);
             }
         }else{
