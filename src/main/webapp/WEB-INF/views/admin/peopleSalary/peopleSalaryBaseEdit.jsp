@@ -29,6 +29,46 @@
             }
         });
 
+        $("#lifeInsuranceBase").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                   return;
+                var lifeInsurance = newValue * 0.08;
+
+                $("#lifeInsurance").numberbox('setValue',lifeInsurance.toFixed(2));
+            }
+        });
+
+        $("#jobInsuranceBase").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var jobInsurance = newValue * 0.02;
+
+                $("#jobInsurance").numberbox('setValue',jobInsurance.toFixed(2));
+            }
+        });
+
+        $("#healthInsuranceBase").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var healthInsurance = newValue * 0.02;
+
+                $("#healthInsurance").numberbox('setValue',healthInsurance.toFixed(2));
+            }
+        });
+
+        $("#annuityBase").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var annuity = newValue * 0.04;
+
+                $("#annuity").numberbox('setValue',annuity.toFixed(2));
+            }
+        });
+
     });
 
     function checkForm(){
@@ -169,6 +209,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>工伤保险基数</td>
+                    <td>
+                        <input name="woundInsuranceBase" id="woundInsuranceBase" type="text" value="${peopleSalaryBase.woundInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>生育保险基数</td>
+                    <td>
+                        <input name="birthInsuranceBase" id="birthInsuranceBase" type="text" value="${peopleSalaryBase.birthInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
                     <td>职业年金基数</td>
                     <td>
                         <input name="annuityBase" id="annuityBase" type="text" value="${peopleSalaryBase.annuityBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>

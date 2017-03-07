@@ -405,7 +405,7 @@
                 wound_insurance_base = #{woundInsuranceBase, jdbcType=DECIMAL},
             </if>
             <if test="birthInsuranceBase != null">
-                birth_insurance_base = #{birthInsuranceBAse, jdbcType=DECIMAL},
+                birth_insurance_base = #{birthInsuranceBase, jdbcType=DECIMAL},
             </if>
             <if test="healthInsuranceBase != null">
                 health_insurance_base = #{healthInsuranceBase, jdbcType=DECIMAL},
