@@ -125,8 +125,6 @@ public class PeopleSalaryController extends BaseController{
         if (peopleSalaryBase == null)
             peopleSalaryBase = new PeopleSalaryBase();
 
-
-
         String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfCurrentMonth();
         String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfCurrentMonth();
 
@@ -157,8 +155,33 @@ public class PeopleSalaryController extends BaseController{
                 lastDayOfCurrentMonth
         );
 
-        model.addAttribute("examResult",examResult);
+        BigDecimal performanceAllowanceTotal = new BigDecimal(0.00);
 
+        if (StringUtils.isNoneBlank(examResult) && peopleSalaryBase.getPerformanceAllowance() != null){
+            if (examResult.equals("A")){
+                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance();
+            }
+            if (examResult.equals("B")){
+                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.8));
+            }
+            if (examResult.equals("C")){
+                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.5));
+            }
+            if (examResult.equals("D")){
+                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.2));
+            }
+            if (examResult.equals("E")){
+                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.0));
+            }
+
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            model.addAttribute("performanceAllowanceTotal", decimalFormat.format(performanceAllowanceTotal));
+        }else{
+            model.addAttribute("performanceAllowanceTotal", "0.00");
+        }
+
+
+        model.addAttribute("examResult",examResult);
         return "/admin/peopleSalary/peopleSalaryAdd";
     }
 

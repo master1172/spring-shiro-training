@@ -31,6 +31,8 @@ public class PeopleSalary implements Serializable {
 
     private BigDecimal performanceAllowance;
 
+    private BigDecimal performanceAllowanceTotal;
+
     private BigDecimal rentAllowance;
 
     private BigDecimal houseAllowance;
@@ -381,6 +383,14 @@ public class PeopleSalary implements Serializable {
 
     public void setPayDate(String payDate) {
         this.payDate = payDate;
+    }
+
+    public BigDecimal getPerformanceAllowanceTotal() {
+        return performanceAllowanceTotal;
+    }
+
+    public void setPerformanceAllowanceTotal(BigDecimal performanceAllowanceTotal) {
+        this.performanceAllowanceTotal = performanceAllowanceTotal;
     }
 
     @Override

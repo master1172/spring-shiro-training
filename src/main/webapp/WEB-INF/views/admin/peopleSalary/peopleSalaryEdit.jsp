@@ -6,6 +6,7 @@
         $("#jobId").val('${peopleSalary.jobId}');
         $("#rankId").val('${peopleSalary.rankId}');
         $("#payDate").val('${peopleSalary.payDate}');
+        $("#examResult").val("${peopleSalary.examResult}");
 
         $("#jobId").combobox({
             onChange:function(newValue,oldValue){
@@ -27,6 +28,57 @@
                         function(data){
                             $("#rankSalary").numberbox('setValue',data);
                         });
+            }
+        });
+
+        $("#examResult").combobox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var performanceAllowance = $("#performanceAllowance").numberbox('getValue');
+                var performanceAllowanceTotal = 0.00;
+                if (newValue == 'A'){
+                    performanceAllowanceTotal = performanceAllowanceTotal;
+                }
+                if (newValue == 'B'){
+                    performanceAllowanceTotal = performanceAllowanceTotal * 0.8;
+                }
+                if (newValue == 'C'){
+                    performanceAllowanceTotal = performanceAllowanceTotal * 0.5;
+                }
+                if (newValue == 'D'){
+                    performanceAllowanceTotal = performanceAllowanceTotal * 0.2;
+                }
+                if (newValue == 'E'){
+                    performanceAllowanceTotal = performanceAllowanceTotal * 0.0;
+                }
+                $("#performanceAllowanceTotal").numberbox("setValue",performanceAllowanceTotal.toFixed(2));
+            }
+        });
+
+        $("#performanceAllowance").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var examResult = $("#examResult").combobox("getValue");
+
+                var performanceAllowanceTotal = 0.00;
+                if (examResult == 'A'){
+                    performanceAllowanceTotal = newValue;
+                }
+                if (examResult == 'B'){
+                    performanceAllowanceTotal = newValue * 0.8;
+                }
+                if (examResult == 'C'){
+                    performanceAllowanceTotal = newValue * 0.5;
+                }
+                if (examResult == 'D'){
+                    performanceAllowanceTotal = newValue * 0.2;
+                }
+                if (examResult == 'E'){
+                    performanceAllowanceTotal = newValue * 0.0;
+                }
+                $("#performanceAllowanceTotal").numberbox("setValue",performanceAllowanceTotal.toFixed(2));
             }
         });
 
@@ -108,17 +160,30 @@
                     <td>
                         <input name="reserveSalary" id="reserveSalary" type="text" value="${peopleSalary.reserveSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>岗位考核结果</td>
-                    <td>
-                        <input type="text" name="examResult" value="${peopleSalary.examResult}">
-                    </td>
                     <td>岗位津贴</td>
                     <td>
                         <input name="jobAllowance" id="jobAllowance" type="text" value="${peopleSalary.jobAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>绩效津贴</td>
+
+                </tr>
+                <tr>
+                    <td>岗位考核结果</td>
+                    <td>
+                        <select id="examResult" name="examResult" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
+                    </td>
+                    <td>绩效津贴基数</td>
                     <td>
                         <input name="performanceAllowance" id="performanceAllowance" type="text" value="${peopleSalary.performanceAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>绩效津贴</td>
+                    <td>
+                        <input name="performanceAllowanceTotal" id="performanceAllowanceTotal" type="text" value="${peopleSalary.performanceAllowanceTotal}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>

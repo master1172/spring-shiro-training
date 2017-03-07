@@ -12,6 +12,7 @@
         <result column="exam_result"    jdbcType="VARCHAR" property="examResult" />
         <result column="job_allowance"  jdbcType="DECIMAL" property="jobAllowance" />
         <result column="performance_allowance"  jdbcType="DECIMAL" property="performanceAllowance" />
+        <result column="performance_allowance_total" jdbcType="DECIMAL" property="performanceAllowanceTotal"/>
         <result column="rent_allowance"         jdbcType="DECIMAL" property="rentAllowance" />
         <result column="house_allowance"        jdbcType="DECIMAL" property="houseAllowance" />
         <result column="work_date"              jdbcType="DATE"    property="workDate" />
@@ -57,6 +58,7 @@
         <result column="exam_result"    jdbcType="VARCHAR" property="examResult" />
         <result column="job_allowance"  jdbcType="DECIMAL" property="jobAllowance" />
         <result column="performance_allowance"  jdbcType="DECIMAL" property="performanceAllowance" />
+        <result column="performance_allowance_total" jdbcType="DECIMAL" property="performanceAllowanceTotal"/>
         <result column="rent_allowance"         jdbcType="DECIMAL" property="rentAllowance" />
         <result column="house_allowance"        jdbcType="DECIMAL" property="houseAllowance" />
         <result column="work_date"              jdbcType="DATE"    property="workDate" />
@@ -168,7 +170,7 @@
 
     <sql id="Base_Column_List">
         id, people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result,
-        job_allowance, performance_allowance, rent_allowance, house_allowance, work_date,
+        job_allowance, performance_allowance, performance_allowance, rent_allowance, house_allowance, work_date,
         timesheet_status, duty_allowance, extra_allowance, telephone_allowance, traffic_allowance,
         on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
         temperature_allowance, reissue_fee, medicare, yearly_bonus, gross_salary, life_insurance,
@@ -505,7 +507,7 @@
     <insert id="insert" parameterType="com.wangzhixuan.model.PeopleSalary">
         insert into people_salary (
           people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result, job_allowance,
-          performance_allowance, rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance,
+          performance_allowance, performance_allowance_total, rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance,
           extra_allowance, telephone_allowance, traffic_allowance, on_duty_fee, on_duty_date, on_duty_fee_total,
           property_allowance, extra_job_allowance, temperature_allowance, reissue_fee, medicare, yearly_bonus,
           gross_salary, life_insurance, job_insurance, health_insurance, annuity, house_fund, expense, tax,
@@ -521,6 +523,7 @@
             #{examResult,jdbcType=VARCHAR},
             #{jobAllowance,jdbcType=DECIMAL},
             #{performanceAllowance,jdbcType=DECIMAL},
+            #{performanceAllowanceTotal, jdbcType=DECIMAL},
             #{rentAllowance,jdbcType=DECIMAL},
             #{houseAllowance,jdbcType=DECIMAL},
             #{workDate,jdbcType=DATE},
@@ -570,6 +573,7 @@
         exam_result         = #{examResult,jdbcType=VARCHAR},
         job_allowance       = #{jobAllowance,jdbcType=DECIMAL},
         performance_allowance = #{performanceAllowance,jdbcType=DECIMAL},
+        performance_allowance_total = #{performanceAllowanceTotal, jdbcType=DECIMAL},
         rent_allowance      = #{rentAllowance,jdbcType=DECIMAL},
         house_allowance     = #{houseAllowance,jdbcType=DECIMAL},
         work_date           = #{workDate,jdbcType=DATE},
@@ -622,6 +626,7 @@
             t.exam_result,
             t.job_allowance,
             t.performance_allowance,
+            t.performance_allowance_total,
             t.rent_allowance,
             t.house_allowance,
             t.work_date,
@@ -667,6 +672,7 @@
     <insert id="insertByImport" parameterType="java.util.List">
         insert into people_salary (
           people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result, job_allowance, performance_allowance,
+          performance_allowance_total,
           rent_allowance, house_allowance, work_date, timesheet_status, duty_allowance, extra_allowance, telephone_allowance,
           traffic_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
           temperature_allowance, reissue_fee, medicare, yearly_bonus, gross_salary, life_insurance, job_insurance,
@@ -683,6 +689,7 @@
             #{item.examResult,jdbcType=VARCHAR},
             #{item.jobAllowance,jdbcType=DECIMAL},
             #{item.performanceAllowance,jdbcType=DECIMAL},
+            #{item.performanceAllowanceTotal, jdbcType=DECIMAL},
             #{item.rentAllowance,jdbcType=DECIMAL},
             #{item.houseAllowance,jdbcType=DECIMAL},
             #{item.workDate,jdbcType=DATE},

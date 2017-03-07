@@ -5,6 +5,7 @@
     $(function(){
         $("#jobId").val('${peopleSalaryBase.jobId}');
         $("#rankId").val('${peopleSalaryBase.rankId}');
+        $("#examResult").val('${examResult}');
 
         $("#jobId").combobox({
             onChange:function(newValue,oldValue){
@@ -29,6 +30,58 @@
            }
         });
 
+        $("#examResult").combobox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var performanceAllowance = $("#performanceAllowance").numberbox('getValue');
+                var performanceAllowanceTotal = 0.00;
+
+                if (newValue == 'A'){
+                    performanceAllowanceTotal = performanceAllowance;
+                }
+                if (newValue == 'B'){
+                    performanceAllowanceTotal = performanceAllowance * 0.8;
+                }
+                if (newValue == 'C'){
+                    performanceAllowanceTotal = performanceAllowance * 0.5;
+                }
+                if (newValue == 'D'){
+                    performanceAllowanceTotal = performanceAllowance * 0.2;
+                }
+                if (newValue == 'E'){
+                    performanceAllowanceTotal = performanceAllowance * 0.0;
+                }
+                $("#performanceAllowanceTotal").numberbox("setValue",performanceAllowanceTotal.toFixed(2));
+            }
+        });
+
+        $("#performanceAllowance").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var examResult = $("#examResult").combobox("getValue");
+
+                var performanceAllowanceTotal = 0.00;
+                if (examResult == 'A'){
+                    performanceAllowanceTotal = newValue;
+                }
+                if (examResult == 'B'){
+                    performanceAllowanceTotal = newValue * 0.8;
+                }
+                if (examResult == 'C'){
+                    performanceAllowanceTotal = newValue * 0.5;
+                }
+                if (examResult == 'D'){
+                    performanceAllowanceTotal = newValue * 0.2;
+                }
+                if (examResult == 'E'){
+                    performanceAllowanceTotal = newValue * 0.0;
+                }
+                $("#performanceAllowanceTotal").numberbox("setValue",performanceAllowanceTotal.toFixed(2));
+            }
+        });
+
         $("#timesheetStatus").numberbox({
             "onChange" : function(newValue, oldValue){
                 if(newValue == oldValue)
@@ -43,6 +96,35 @@
 
                 $("#trafficAllowance").numberbox('setValue',trafficAllowance.toFixed(2));
                 $("#temperatureAllowance").numberbox('setValue',temperatureAllowance.toFixed(2));
+            }
+        });
+
+        $("#onDutyFee").numberbox({
+            "onChange" : function(newValue, oldValue){
+                if (newValue == oldValue)
+                   return;
+
+                var onDutyDate = $("#onDutyDate").numberbox("getValue");
+
+                if (isNaN(onDutyDate)){
+                    $("#onDutyDate").numberbox('setValue',0.00);
+                    $("#onDutyFeeTotal").numberbox('setValue',0.00);
+                    return;
+                }
+
+                var onDutyFeeTotal = onDutyDate * newValue;
+                $("#onDutyFeeTotal").numberbox('setValue',onDutyFeeTotal.toFixed(2));
+            }
+        });
+
+        $("#onDutyDate").numberbox({
+            "onChange" : function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+
+                var onDutyFee = $("#onDutyFee").numberbox("getValue");
+                var onDutyFeeTotal = newValue * onDutyFee;
+                $("#onDutyFeeTotal").numberbox('setValue',onDutyFeeTotal.toFixed(2));
             }
         })
     });
@@ -108,17 +190,31 @@
                     <td>
                         <input name="reserveSalary" id="reserveSalary" type="text" value="${peopleSalaryBase.reserveSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>岗位考核结果</td>
-                    <td>
-                        <input type="text" name="examResult" value="${examResult}">
-                    </td>
+
                     <td>岗位津贴</td>
                     <td>
                         <input name="jobAllowance" id="jobAllowance" type="text" value="${peopleSalaryBase.jobAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>绩效津贴</td>
+
+                </tr>
+                <tr>
+                    <td>岗位考核结果</td>
+                    <td>
+                        <select id="examResult" name="examResult" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
+                    </td>
+                    <td>绩效津贴基数</td>
                     <td>
                         <input name="performanceAllowance" id="performanceAllowance" type="text" value="${peopleSalaryBase.performanceAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>绩效津贴</td>
+                    <td>
+                        <input name="performanceAllowanceTotal" id="performanceAllowanceTotal" type="text" value="0.00" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
@@ -160,11 +256,11 @@
                     </td>
                     <td>值班天数</td>
                     <td>
-                        <input name="onDutyDate" id="onDutyDate" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="onDutyDate" id="onDutyDate" type="text" value="0.00" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>值班费合计</td>
                     <td>
-                        <input name="onDutyFeeTotal" id="onDutyFeeTotal" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="onDutyFeeTotal" id="onDutyFeeTotal" type="text" value="0.00" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>物业补贴</td>
                     <td>
