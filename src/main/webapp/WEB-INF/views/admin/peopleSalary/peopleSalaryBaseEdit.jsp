@@ -155,6 +155,26 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>养老保险基数</td>
+                    <td>
+                        <input name="lifeInsuranceBase" id="lifeInsuranceBase" type="text" value="${peopleSalaryBase.lifeInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>失业保险基数</td>
+                    <td>
+                        <input name="jobInsuranceBase" id="jobInsuranceBase" type="text" value="${peopleSalaryBase.jobInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>医疗保险基数</td>
+                    <td>
+                        <input name="healthInsuranceBase" id="healthInsuranceBase" type="text" value="${peopleSalaryBase.healthInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>职业年金基数</td>
+                    <td>
+                        <input name="annuityBase" id="annuityBase" type="text" value="${peopleSalaryBase.annuityBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
                     <td>养老保险</td>
                     <td>
                         <input name="lifeInsurance" id="lifeInsurance" type="text" value="${peopleSalaryBase.lifeInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>

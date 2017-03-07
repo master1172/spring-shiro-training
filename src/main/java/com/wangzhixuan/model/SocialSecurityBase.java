@@ -26,6 +26,8 @@ public class SocialSecurityBase implements Serializable {
 
     private BigDecimal annuityBase;
 
+
+
     private Integer status;
 
     public Integer getId() {

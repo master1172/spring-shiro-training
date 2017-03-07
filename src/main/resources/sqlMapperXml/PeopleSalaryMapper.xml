@@ -116,6 +116,12 @@
         <result column="annuity"                jdbcType="DECIMAL" property="annuity" />
         <result column="house_fund"             jdbcType="DECIMAL" property="houseFund" />
         <result column="last_update_date"       jdbcType="VARCHAR" property="lastUpdateDate"/>
+        <result column="life_insurance_base"    jdbcType="DECIMAL" property="lifeInsuranceBase"/>
+        <result column="job_insurance_base"     jdbcType="DECIMAL" property="jobInsuranceBase"/>
+        <result column="wound_insurance_base"   jdbcType="DECIMAL" property="woundInsuranceBase"/>
+        <result column="birth_insurance_base"   jdbcType="DECIMAL" property="birthInsuranceBase"/>
+        <result column="health_insurance_base"  jdbcType="DECIMAL" property="healthInsuranceBase"/>
+        <result column="annuity_base"           jdbcType="DECIMAL" property="annuityBase"/>
     </resultMap>
 
     <resultMap id="peopleSalaryBaseVoResultMap" type="com.wangzhixuan.vo.PeopleSalaryBaseVo">
@@ -152,6 +158,12 @@
         <result column="annuity"                jdbcType="DECIMAL" property="annuity" />
         <result column="house_fund"             jdbcType="DECIMAL" property="houseFund" />
         <result column="last_update_date"       jdbcType="VARCHAR" property="lastUpdateDate" />
+        <result column="life_insurance_base"    jdbcType="DECIMAL" property="lifeInsuranceBase"/>
+        <result column="job_insurance_base"     jdbcType="DECIMAL" property="jobInsuranceBase"/>
+        <result column="wound_insurance_base"   jdbcType="DECIMAL" property="woundInsuranceBase"/>
+        <result column="birth_insurance_base"   jdbcType="DECIMAL" property="birthInsuranceBase"/>
+        <result column="health_insurance_base"  jdbcType="DECIMAL" property="healthInsuranceBase"/>
+        <result column="annuity_base"           jdbcType="DECIMAL" property="annuityBase"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -169,7 +181,9 @@
         duty_allowance, extra_allowance, telephone_allowance, traffic_allowance,
         on_duty_fee, property_allowance, extra_job_allowance,
         temperature_allowance, reissue_fee, medicare, yearly_bonus, life_insurance,
-        job_insurance, health_insurance, annuity, house_fund, last_update_date
+        job_insurance, health_insurance, annuity, house_fund, last_update_date,
+        life_insurance_base, job_insurance_base, wound_insurance_base, birth_insurance_base,
+        health_insurance_base, annuity_base
     </sql>
 
     <select id="findPeopleSalaryBasePageCondition" resultMap="peopleSalaryBaseVoResultMap" parameterType="PageInfo">
@@ -205,7 +219,13 @@
         t.job_insurance,
         t.health_insurance,
         t.annuity,
-        t.house_fund
+        t.house_fund,
+        t.life_insurance_base,
+        t.job_insurance_base,
+        t.wound_insurance_base,
+        t.birth_insurance_base,
+        t.health_insurance_base,
+        t.annuity_base
         FROM people_total t
         LEFT JOIN
         job j ON j.id = t.job_id
@@ -374,6 +394,24 @@
             </if>
             <if test="lastUpdateDate != null">
                 last_update_date = #{lastUpdateDate, jdbcType=VARCHAR},
+            </if>
+            <if test="lifeInsuranceBase != null">
+                life_insurance_base = #{lifeInsuranceBase, jdbcType=DECIMAL},
+            </if>
+            <if test="jobInsuranceBase != null">
+                job_insurance_base = #{jobInsuranceBase, jdbcType=DECIMAL},
+            </if>
+            <if test="woundInsuranceBase != null">
+                wound_insurance_base = #{woundInsuranceBase, jdbcType=DECIMAL},
+            </if>
+            <if test="birthInsuranceBase != null">
+                birth_insurance_base = #{birthInsuranceBAse, jdbcType=DECIMAL},
+            </if>
+            <if test="healthInsuranceBase != null">
+                health_insurance_base = #{healthInsuranceBase, jdbcType=DECIMAL},
+            </if>
+            <if test="annuityBase != null">
+                annuity_base = #{annuityBase, jdbcType=DECIMAL},
             </if>
         </set>
         where id=#{id,jdbcType=INTEGER}
