@@ -36,6 +36,17 @@ public class PeopleContract2SalaryBase implements Serializable {
     private BigDecimal netIncome;
     @JsonFormat(pattern = "yyyy-MM")
     private String lastChangeDate;
+    private BigDecimal lifeInsuranceBase;
+
+    private BigDecimal jobInsuranceBase;
+
+    private BigDecimal woundInsuranceBase;
+
+    private BigDecimal birthInsuranceBase;
+
+    private BigDecimal healthInsuranceBase;
+
+    private BigDecimal annuityBase;
 
     public Long getId() {
         return id;
@@ -239,6 +250,54 @@ public class PeopleContract2SalaryBase implements Serializable {
 
     public void setLastChangeDate(String lastChangeDate) {
         this.lastChangeDate = lastChangeDate;
+    }
+
+    public BigDecimal getLifeInsuranceBase() {
+        return lifeInsuranceBase;
+    }
+
+    public void setLifeInsuranceBase(BigDecimal lifeInsuranceBase) {
+        this.lifeInsuranceBase = lifeInsuranceBase;
+    }
+
+    public BigDecimal getJobInsuranceBase() {
+        return jobInsuranceBase;
+    }
+
+    public void setJobInsuranceBase(BigDecimal jobInsuranceBase) {
+        this.jobInsuranceBase = jobInsuranceBase;
+    }
+
+    public BigDecimal getWoundInsuranceBase() {
+        return woundInsuranceBase;
+    }
+
+    public void setWoundInsuranceBase(BigDecimal woundInsuranceBase) {
+        this.woundInsuranceBase = woundInsuranceBase;
+    }
+
+    public BigDecimal getBirthInsuranceBase() {
+        return birthInsuranceBase;
+    }
+
+    public void setBirthInsuranceBase(BigDecimal birthInsuranceBase) {
+        this.birthInsuranceBase = birthInsuranceBase;
+    }
+
+    public BigDecimal getHealthInsuranceBase() {
+        return healthInsuranceBase;
+    }
+
+    public void setHealthInsuranceBase(BigDecimal healthInsuranceBase) {
+        this.healthInsuranceBase = healthInsuranceBase;
+    }
+
+    public BigDecimal getAnnuityBase() {
+        return annuityBase;
+    }
+
+    public void setAnnuityBase(BigDecimal annuityBase) {
+        this.annuityBase = annuityBase;
     }
 
     @Override

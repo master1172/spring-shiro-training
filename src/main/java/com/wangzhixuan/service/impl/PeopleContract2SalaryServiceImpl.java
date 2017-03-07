@@ -288,6 +288,10 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 			peopleContractSalaryBase.setLastUpdateDate(DateUtil.GetToday());
 		}
 
+		if(peopleContractSalaryBase.getAnnuityBase() == null){
+			peopleContractSalaryBase.setAnnuityBase(new BigDecimal(0.00));
+		}
+
 		peopleContractSalaryMapper.updateSalaryBase(peopleContractSalaryBase);
 	}
 }

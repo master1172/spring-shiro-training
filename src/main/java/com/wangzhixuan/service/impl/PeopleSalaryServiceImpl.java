@@ -192,6 +192,10 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
             peopleSalaryBase.setLastUpdateDate(DateUtil.GetToday());
         }
 
+        if(peopleSalaryBase.getAnnuityBase() == null){
+            peopleSalaryBase.setAnnuityBase(new BigDecimal(0.00));
+        }
+
         peopleSalaryMapper.updateSalaryBase(peopleSalaryBase);
     }
 

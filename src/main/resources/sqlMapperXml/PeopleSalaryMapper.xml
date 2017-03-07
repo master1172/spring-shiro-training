@@ -411,7 +411,7 @@
                 health_insurance_base = #{healthInsuranceBase, jdbcType=DECIMAL},
             </if>
             <if test="annuityBase != null">
-                annuity_base = #{annuityBase, jdbcType=DECIMAL},
+                annuity_base = #{annuityBase, jdbcType=DECIMAL}
             </if>
         </set>
         where id=#{id,jdbcType=INTEGER}

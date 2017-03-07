@@ -17,6 +17,36 @@
             }
         });
 
+        $("#lifeInsuranceBase").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var lifeInsurance = newValue * 0.08;
+
+                $("#lifeInsurance").numberbox('setValue',lifeInsurance.toFixed(2));
+            }
+        });
+
+        $("#jobInsuranceBase").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var jobInsurance = newValue * 0.02;
+
+                $("#jobInsurance").numberbox('setValue',jobInsurance.toFixed(2));
+            }
+        });
+
+        $("#healthInsuranceBase").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var healthInsurance = newValue * 0.02;
+
+                $("#healthInsurance").numberbox('setValue',healthInsurance.toFixed(2));
+            }
+        });
+
     });
 
     function checkForm(){
@@ -96,6 +126,30 @@
                     <td>降温补贴</td>
                     <td>
                         <input name="temperatureAllowance" id="temperatureAllowance" type="text"  value="${peopleContractSalaryBase.temperatureAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>养老保险基数</td>
+                    <td>
+                        <input name="lifeInsuranceBase" id="lifeInsuranceBase" type="text" value="${peopleContractSalaryBase.lifeInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>失业保险基数</td>
+                    <td>
+                        <input name="jobInsuranceBase" id="jobInsuranceBase" type="text" value="${peopleContractSalaryBase.jobInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>医疗保险基数</td>
+                    <td>
+                        <input name="healthInsuranceBase" id="healthInsuranceBase" type="text" value="${peopleContractSalaryBase.healthInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>工伤保险基数</td>
+                    <td>
+                        <input name="woundInsuranceBase" id="woundInsuranceBase" type="text" value="${peopleContractSalaryBase.woundInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                    </td>
+                    <td>生育保险基数</td>
+                    <td>
+                        <input name="birthInsuranceBase" id="birthInsuranceBase" type="text" value="${peopleContractSalaryBase.birthInsuranceBase}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
