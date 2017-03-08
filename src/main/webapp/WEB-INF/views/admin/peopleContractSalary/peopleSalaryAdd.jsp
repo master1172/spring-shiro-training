@@ -4,6 +4,8 @@
 
     $(function(){
         $('#jobId').val('${people.jobId}');
+        $("#examResult").val('${examResult}');
+
         $("#jobId").combobox({
             onChange:function(newValue,oldValue){
                 if (newValue == oldValue)
@@ -28,6 +30,58 @@
 
                 var temperatureAllowance = 100.00-((100.00/21.75)*newValue);
                 $("#temperatureAllowance").numberbox('setValue',temperatureAllowance.toFixed(2));
+            }
+        });
+
+        $("#examResult").combobox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var jobExamSalary = $("#jobExamSalary").numberbox('getValue');
+                var jobExamSalaryTotal = 0.00;
+
+                if (newValue == 'A'){
+                    jobExamSalaryTotal = jobExamSalary * 1.0;
+                }
+                if (newValue == 'B'){
+                    jobExamSalaryTotal = jobExamSalary * 0.8;
+                }
+                if (newValue == 'C'){
+                    jobExamSalaryTotal = jobExamSalary * 0.5;
+                }
+                if (newValue == 'D'){
+                    jobExamSalaryTotal = jobExamSalary * 0.2;
+                }
+                if (newValue == 'E'){
+                    jobExamSalaryTotal = jobExamSalary * 0.0;
+                }
+                $("#jobExamSalaryTotal").numberbox("setValue",jobExamSalaryTotal.toFixed(2));
+            }
+        });
+
+        $("#jobExamSalary").numberbox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+                var examResult = $("#examResult").combobox("getValue");
+
+                var jobExamSalaryTotal = 0.00;
+                if (examResult == 'A'){
+                    jobExamSalaryTotal = newValue * 1.0;
+                }
+                if (examResult == 'B'){
+                    jobExamSalaryTotal = newValue * 0.8;
+                }
+                if (examResult == 'C'){
+                    jobExamSalaryTotal = newValue * 0.5;
+                }
+                if (examResult == 'D'){
+                    jobExamSalaryTotal = newValue * 0.2;
+                }
+                if (examResult == 'E'){
+                    jobExamSalaryTotal = newValue * 0.0;
+                }
+                $("#jobExamSalaryTotal").numberbox("setValue",jobExamSalaryTotal.toFixed(2));
             }
         });
 
@@ -82,15 +136,21 @@
                  <tr>
                      <td>岗位考核结果</td>
                     <td>
-                        <input type="text" name="examResult" value="${examResult}">
+                        <select id="examResult" name="examResult" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
                     </td>
-                    <td>岗位考核工资</td>
+                    <td>岗位考核工资基数</td>
                     <td>
                         <input name="jobExamSalary" id="jobExamSalary" value="${people.jobExamSalary}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>通讯补贴</td>
+                    <td>岗位考核工资</td>
                     <td>
-                        <input name="telephoneAllowance" id="telephoneAllowance" type="text" value="${people.telephoneAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobExamSalaryTotal" id="jobExamSalaryTotal" value="${jobExamSalaryTotal}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                  </tr>
                  <tr>
@@ -108,10 +168,20 @@
                      </td>
 				 </tr>
                  <tr>
+                     <td>通讯补贴</td>
+                     <td>
+                         <input name="telephoneAllowance" id="telephoneAllowance" type="text" value="${people.telephoneAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                     </td>
                      <td>考勤结果</td>
                      <td>
                          <input name="timesheetStatus" id="timesheetStatus" type="text" value="${sumVacationPeriod}" class="easyui-numberbox" precision="1" style="text-align:right;"/>
                      </td>
+                     <td>降温补贴</td>
+                     <td>
+                         <input name="temperatureAllowance" id="temperatureAllowance" type="text" value="${people.temperatureAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                     </td>
+                 </tr>
+                 <tr>
                      <td>每日加班费</td>
                      <td>
                          <input name="onDutyFee" id="onDutyFee" type="text" value="${people.onDutyFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
@@ -134,10 +204,7 @@
                     <td>
                         <input name="reissueFee" id="reissueFee" type="text" value="${people.reissueFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
-                    <td>降温补贴</td>
-                    <td>
-                        <input name="temperatureAllowance" id="temperatureAllowance" type="text" value="${people.temperatureAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
-                    </td>
+
                  </tr>
                  <tr>
                     <td>应发工资</td>

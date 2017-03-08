@@ -19,6 +19,13 @@
         var layout_west_tree;
 
         $(function () {
+
+            $.messager.show({
+                title:'提示',
+                msg:'<div class="light-info"><div class="light-tip icon-tip"></div><div>'+'目前系统中有${retirePeopleCount}名将要退休的人员'+'</div></div>',
+                showType:'show'
+            });
+
             index_layout = $('#index_layout').layout({
                 fit: true
             });

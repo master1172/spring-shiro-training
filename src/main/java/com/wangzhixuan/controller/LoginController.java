@@ -1,6 +1,9 @@
 package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
+import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.service.PeopleService;
+import com.wangzhixuan.utils.PageInfo;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -11,6 +14,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+
+    @Autowired
+    private PeopleMapper peopleMapper;
 
     /**
      * 首页
@@ -47,6 +54,9 @@ public class LoginController {
      */
     @RequestMapping(value = "/index")
     public String index(Model model) {
+        PageInfo pageInfo = new PageInfo();
+        Integer retirePeopleCount = peopleMapper.findPeopleNearRetirePageCount(pageInfo);
+        model.addAttribute("retirePeopleCount", retirePeopleCount);
         return "/index";
     }
 

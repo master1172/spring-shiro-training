@@ -17,6 +17,7 @@ public class PeopleContractSalary implements Serializable {
 	private String     examResult;
 	private BigDecimal baseSalary;
 	private BigDecimal jobExamSalary;
+	private BigDecimal jobExamSalaryTotal;
 	private BigDecimal telephoneAllowance;
 	private BigDecimal trafficAllowance;
 	private BigDecimal specialAllowance;
@@ -248,6 +249,14 @@ public class PeopleContractSalary implements Serializable {
 
 	public void setTimesheetStatus(BigDecimal timesheetStatus) {
 		this.timesheetStatus = timesheetStatus;
+	}
+
+	public BigDecimal getJobExamSalaryTotal() {
+		return jobExamSalaryTotal;
+	}
+
+	public void setJobExamSalaryTotal(BigDecimal jobExamSalaryTotal) {
+		this.jobExamSalaryTotal = jobExamSalaryTotal;
 	}
 
 	@Override

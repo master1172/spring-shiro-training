@@ -28,6 +28,7 @@
 		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
 		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
 		<result column="timesheet_status" property="timesheetStatus" jdbcType="DECIMAL"/>
+		<result column="job_exam_salary_total" property="jobExamSalaryTotal" jdbcType="DECIMAL"/>
 	</resultMap>
 
 	<resultMap id="peopleContractSalaryVoResultMap" type="com.wangzhixuan.vo.PeopleContractSalaryVo">
@@ -60,6 +61,7 @@
 		<result column="net_income" property="netIncome" jdbcType="DECIMAL" />
 		<result column="pay_date" property="payDate" jdbcType="VARCHAR" />
 		<result column="timesheetStatus" property="timesheetStatus" jdbcType="DECIMAL"/>
+		<result column="job_exam_salary_total" property="jobExamSalaryTotal" jdbcType="DECIMAL"/>
 	</resultMap>
 
 	<resultMap id="peopleContractSalaryBaseMap" type="com.wangzhixuan.model.PeopleContractSalaryBase">
@@ -123,7 +125,7 @@
 
 	<sql id="Base_Column_List">
 		id, people_code, job_id, job_salary, school_salary, exam_result,
-		job_exam_salary, telephone_allowance, traffic_allowance, special_allowance, head_allowance, on_duty_fee,
+		job_exam_salary, job_exam_salary_total, telephone_allowance, traffic_allowance, special_allowance, head_allowance, on_duty_fee,
 		on_duty_date, on_duty_fee_total, bonus, reissue_fee, temperature_allowance,
 		gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income,
 		pay_date, timesheet_status
@@ -378,7 +380,7 @@
 
 	<insert id="insert" parameterType="java.util.List">
 		insert into people_contract_2_salary (
-		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
+		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, job_exam_salary_total, telephone_allowance, traffic_allowance,
 		special_allowance, head_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, bonus, reissue_fee,
 		temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income,
 		pay_date,timesheet_status
@@ -391,6 +393,7 @@
 		#{schoolSalary,jdbcType=DECIMAL},
 		#{examResult,jdbcType=VARCHAR},
 		#{jobExamSalary,jdbcType=DECIMAL},
+		#{jobExamSalaryTotal, jdbcType=DECIMAL},
 		#{telephoneAllowance,jdbcType=DECIMAL},
 		#{trafficAllowance,jdbcType=DECIMAL},
 		#{specialAllowance,jdbcType=DECIMAL},
@@ -441,6 +444,8 @@
 		#{examResult,jdbcType=VARCHAR},
 		job_exam_salary =
 		#{jobExamSalary,jdbcType=DECIMAL},
+		job_exam_salary_total =
+		#{jobExamSalaryTotal, jdbcType=DECIMAL},
 		telephone_allowance =
 		#{telephoneAllowance,jdbcType=DECIMAL},
 		traffic_allowance =
@@ -492,6 +497,7 @@
 		t.school_salary,
 		t.exam_result,
 		t.job_exam_salary,
+		t.job_exam_salary_total,
 		t.telephone_allowance,
 		t.traffic_allowance,
 		t.special_allowance,
@@ -521,7 +527,7 @@
 
 	<insert id="insertByImport" parameterType="java.util.List">
 		insert into people_contract_2_salary (
-		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, telephone_allowance, traffic_allowance,
+		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, job_exam_salary_total, telephone_allowance, traffic_allowance,
 		special_allowance, head_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, bonus, reissue_fee,
 		temperature_allowance, gross_income, life_insurance, job_insurance, health_insurance, house_fund, expense, net_income,
 		pay_date,timesheet_status
@@ -535,6 +541,7 @@
 			#{item.schoolSalary,jdbcType=DECIMAL},
 			#{item.examResult,jdbcType=VARCHAR},
 			#{item.jobExamSalary,jdbcType=DECIMAL},
+			#{item.jobExamSalaryTotal, jdbcType=DECIMAL},
 			#{item.telephoneAllowance,jdbcType=DECIMAL},
 			#{item.trafficAllowance,jdbcType=DECIMAL},
 			#{item.specialAllowance,jdbcType=DECIMAL},

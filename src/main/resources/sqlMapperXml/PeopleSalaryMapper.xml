@@ -170,7 +170,7 @@
 
     <sql id="Base_Column_List">
         id, people_code, job_id, job_salary, rank_id, rank_salary, reserve_salary, exam_result,
-        job_allowance, performance_allowance, performance_allowance, rent_allowance, house_allowance, work_date,
+        job_allowance, performance_allowance, performance_allowance_total, rent_allowance, house_allowance, work_date,
         timesheet_status, duty_allowance, extra_allowance, telephone_allowance, traffic_allowance,
         on_duty_fee, on_duty_date, on_duty_fee_total, property_allowance, extra_job_allowance,
         temperature_allowance, reissue_fee, medicare, yearly_bonus, gross_salary, life_insurance,
@@ -311,6 +311,15 @@
         <include refid="PeopleSalaryBase_Column_List"/>
         from people_total
         where code=#{code, jdbcType=VARCHAR}
+    </select>
+
+    <select id="findLatestPeopleSalaryByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from people_salary
+        where people_code = #{peopleCode, jdbcType=VARCHAR}
+        order by pay_date desc
+        limit 0,1
     </select>
 
     <update id="updateSalaryBase" parameterType="com.wangzhixuan.model.PeopleSalaryBase">

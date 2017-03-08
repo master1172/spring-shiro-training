@@ -38,19 +38,19 @@
                 var performanceAllowance = $("#performanceAllowance").numberbox('getValue');
                 var performanceAllowanceTotal = 0.00;
                 if (newValue == 'A'){
-                    performanceAllowanceTotal = performanceAllowanceTotal;
+                    performanceAllowanceTotal = performanceAllowance * 1.0;
                 }
                 if (newValue == 'B'){
-                    performanceAllowanceTotal = performanceAllowanceTotal * 0.8;
+                    performanceAllowanceTotal = performanceAllowance * 0.8;
                 }
                 if (newValue == 'C'){
-                    performanceAllowanceTotal = performanceAllowanceTotal * 0.5;
+                    performanceAllowanceTotal = performanceAllowance * 0.5;
                 }
                 if (newValue == 'D'){
-                    performanceAllowanceTotal = performanceAllowanceTotal * 0.2;
+                    performanceAllowanceTotal = performanceAllowance * 0.2;
                 }
                 if (newValue == 'E'){
-                    performanceAllowanceTotal = performanceAllowanceTotal * 0.0;
+                    performanceAllowanceTotal = performanceAllowance * 0.0;
                 }
                 $("#performanceAllowanceTotal").numberbox("setValue",performanceAllowanceTotal.toFixed(2));
             }
@@ -64,7 +64,7 @@
 
                 var performanceAllowanceTotal = 0.00;
                 if (examResult == 'A'){
-                    performanceAllowanceTotal = newValue;
+                    performanceAllowanceTotal = newValue * 1.0;
                 }
                 if (examResult == 'B'){
                     performanceAllowanceTotal = newValue * 0.8;

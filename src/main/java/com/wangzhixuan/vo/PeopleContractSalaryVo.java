@@ -21,6 +21,7 @@ public class PeopleContractSalaryVo implements Serializable{
 	private BigDecimal schoolSalary;
 	private String examResult;
 	private BigDecimal jobExamSalary;
+	private BigDecimal jobExamSalaryTotal;
 	private BigDecimal telephoneAllowance;
 	private BigDecimal trafficAllowance;
 	private BigDecimal specialAllowance;
@@ -281,5 +282,13 @@ public class PeopleContractSalaryVo implements Serializable{
 
 	public void setTimesheetStatus(BigDecimal timesheetStatus) {
 		this.timesheetStatus = timesheetStatus;
+	}
+
+	public BigDecimal getJobExamSalaryTotal() {
+		return jobExamSalaryTotal;
+	}
+
+	public void setJobExamSalaryTotal(BigDecimal jobExamSalaryTotal) {
+		this.jobExamSalaryTotal = jobExamSalaryTotal;
 	}
 }

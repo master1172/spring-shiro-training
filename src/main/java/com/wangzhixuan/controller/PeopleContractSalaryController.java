@@ -173,6 +173,31 @@ public class PeopleContractSalaryController extends BaseController {
 
 		model.addAttribute("examResult",examResult);
 
+		BigDecimal jobExamSalaryTotal = new BigDecimal(0.00);
+
+		if (StringUtils.isNoneBlank(examResult) && peopleContractSalaryBase.getJobExamSalary() != null){
+			if (examResult.equals("A")){
+				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary();
+			}
+			if (examResult.equals("B")){
+				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.8));
+			}
+			if (examResult.equals("C")){
+				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.5));
+			}
+			if (examResult.equals("D")){
+				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.2));
+			}
+			if (examResult.equals("E")){
+				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.0));
+			}
+
+			DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			model.addAttribute("jobExamSalaryTotal", decimalFormat.format(jobExamSalaryTotal));
+		}else{
+			model.addAttribute("jobExamSalaryTotal", "0.00");
+		}
+
 		return "/admin/peopleContractSalary/peopleSalaryAdd";
 	}
 

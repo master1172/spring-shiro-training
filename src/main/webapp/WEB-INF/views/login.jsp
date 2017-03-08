@@ -164,7 +164,7 @@
                     progressClose();
                     result = $.parseJSON(result);
                     if (result.success) {
-                        window.location.href='${path }/index';
+                        window.location.href='${path}/index';
                     }else{
                          $.messager.show({
                             title:'提示',

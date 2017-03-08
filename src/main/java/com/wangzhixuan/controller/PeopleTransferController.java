@@ -330,7 +330,6 @@ public class PeopleTransferController extends BaseController{
     public void exportSalaryLetter(HttpServletResponse response, String ids){
         if(StringUtils.isEmpty(ids))
             return;
-
         try{
             peopleTransferService.exportSalaryLetter(response,ids);
         }catch (Exception exp){

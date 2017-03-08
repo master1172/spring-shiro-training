@@ -38,7 +38,7 @@
                 var performanceAllowanceTotal = 0.00;
 
                 if (newValue == 'A'){
-                    performanceAllowanceTotal = performanceAllowance;
+                    performanceAllowanceTotal = performanceAllowance * 1.0;
                 }
                 if (newValue == 'B'){
                     performanceAllowanceTotal = performanceAllowance * 0.8;
@@ -64,7 +64,7 @@
 
                 var performanceAllowanceTotal = 0.00;
                 if (examResult == 'A'){
-                    performanceAllowanceTotal = newValue;
+                    performanceAllowanceTotal = newValue * 1.0;
                 }
                 if (examResult == 'B'){
                     performanceAllowanceTotal = newValue * 0.8;
@@ -214,7 +214,7 @@
                     </td>
                     <td>绩效津贴</td>
                     <td>
-                        <input name="performanceAllowanceTotal" id="performanceAllowanceTotal" type="text" value="0.00" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="performanceAllowanceTotal" id="performanceAllowanceTotal" type="text" value="${performanceAllowanceTotal}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
