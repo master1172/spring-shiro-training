@@ -19,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +36,24 @@ public class AbroadController {
 
 
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
-    public String manager(){
+    public String manager(Model model){
+
+        List<Abroad> abroadList = abroadService.findPeopleReturnedWithoutReturnPassport();
+
+        String passportReturnPeopleNameList = "目前无人需要提醒";
+
+        if (abroadList != null && abroadList.size()>0){
+            passportReturnPeopleNameList = "请如下人员尽快归还护照：";
+            for(int i=0; i<abroadList.size(); i++){
+                Abroad abroad = abroadList.get(i);
+                if (abroad == null || StringUtils.isBlank(abroad.getName()))
+                    continue;
+                passportReturnPeopleNameList = passportReturnPeopleNameList + abroad.getName() + ",";
+            }
+        }
+
+        model.addAttribute("peopleNames",passportReturnPeopleNameList);
+
         return "/admin/abroad/people";
     }
 

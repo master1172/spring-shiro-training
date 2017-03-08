@@ -7,6 +7,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by sterm on 2017/2/14.
@@ -38,4 +39,6 @@ public interface AbroadService {
     void exportRetireOfficalReview(HttpServletResponse response, String ids);
 
     void exportRecordExcel(HttpServletResponse response, String[] split);
+
+    List<Abroad> findPeopleReturnedWithoutReturnPassport();
 }

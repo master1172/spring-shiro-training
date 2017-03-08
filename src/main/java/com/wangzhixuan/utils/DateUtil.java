@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by sterm on 2016/12/2.
@@ -25,6 +26,21 @@ public class DateUtil {
         return year + " 年 " + month + " 月 " + day + " 日";
     }
 
+    public static String GetDayMinus(String date, Integer shift){
+
+        if (StringUtils.isBlank(date) || shift == null)
+            return GetToday();
+
+        try{
+            Date date1 = new Date(date);
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.setTime(date1);
+            gc.add(5,shift);
+            return gc.toString();
+        }catch (Exception exp){
+            return GetToday();
+        }
+    }
 
     public static String GetToday(){
         return GetDate(new Date());

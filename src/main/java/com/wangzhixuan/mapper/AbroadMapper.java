@@ -22,4 +22,6 @@ public interface AbroadMapper {
     int insertByImport(List<Abroad> list);
 
     List selectAbroadVoByIds(String[] idList);
+
+    List<Abroad> findByReturnDateAndNoPassportReturn(String returnDate);
 }

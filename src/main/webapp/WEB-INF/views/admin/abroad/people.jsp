@@ -32,6 +32,16 @@
                 },
                 toolbar: '#toolbar'
             });
+
+            $.messager.show({
+                title:'提示',
+                msg: '<div class="light-info">' +
+                '       <div class="light-tip icon-tip"></div>' +
+                '     <div>'+
+                     '${peopleNames}'+
+                     '</div></div>',
+                showType:'show'
+            });
         });
 
         function advSearch() {

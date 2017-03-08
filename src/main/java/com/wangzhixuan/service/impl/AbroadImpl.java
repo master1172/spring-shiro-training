@@ -272,6 +272,19 @@ public class AbroadImpl implements AbroadService {
         }
     }
 
+    @Override
+    public List<Abroad> findPeopleReturnedWithoutReturnPassport() {
+        String today = DateUtil.GetToday();
+        String lastDayToReturn = DateUtil.GetDayMinus(today,-6);
+        List<Abroad> abroadList = abroadMapper.findByReturnDateAndNoPassportReturn(lastDayToReturn);
+
+        if (abroadList == null || abroadList.size() < 1){
+            return null;
+        }
+
+        return abroadList;
+    }
+
     private void UpdateDate(Abroad abroad) {
         if (StringUtils.isBlank(abroad.getAbroadDate()))
             abroad.setAbroadDate(null);

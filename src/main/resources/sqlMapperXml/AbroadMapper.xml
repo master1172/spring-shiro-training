@@ -156,6 +156,14 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="findByReturnDateAndNoPassportReturn" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    from abroad
+    where return_passport_date is null
+    <![CDATA[ and return_date <= #{returnDate} ]]>
+  </select>
+
   <delete id="delete" parameterType="java.lang.Integer" >
     delete from abroad
     where id = #{id,jdbcType=INTEGER}
