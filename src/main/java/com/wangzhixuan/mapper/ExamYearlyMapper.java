@@ -23,4 +23,6 @@ public interface ExamYearlyMapper {
     int batchDeleteByIds(String[] ids);
 
     List findExamYearlyVoListByCode(String code);
+
+    List findExamYearlyByCodeAndYear(String code, Integer year);
 }

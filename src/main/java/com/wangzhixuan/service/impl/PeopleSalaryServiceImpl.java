@@ -5,6 +5,7 @@ import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.PeopleSalaryService;
 import com.wangzhixuan.utils.*;
+import com.wangzhixuan.vo.ExamYearlyVo;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
@@ -42,6 +43,8 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     @Autowired
     private PeopleJobMapper peopleJobMapper;
 
+    @Autowired
+    private ExamYearlyMapper examYearlyMapper;
 
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -155,6 +158,27 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         return new BigDecimal(decimalFormat.format(grossIncome));
     }
 
+    @Override
+    public String findPeopleIDsByCondition(PageInfo pageInfo) {
+        String ids = "";
+        pageInfo.setFrom(0);
+        pageInfo.setSize(100000);
+
+        List<PeopleSalaryBaseVo> peopleSalaryBaseVoList = peopleSalaryMapper.findPeopleSalaryBasePageCondition(pageInfo);
+
+        if (peopleSalaryBaseVoList == null || peopleSalaryBaseVoList.size() < 1)
+            return ids;
+
+        for(int i=0; i<peopleSalaryBaseVoList.size(); i++){
+            ids = ids + peopleSalaryBaseVoList.get(i).getId().toString() + ",";
+        }
+
+        ids = ids.substring(0,ids.lastIndexOf(','));
+
+        return ids;
+    }
+
+
 
     @Override
     public void addSalary(PeopleSalary peopleSalary){
@@ -200,6 +224,96 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     }
 
     @Override
+    public void exportExcel2(HttpServletResponse response, String[] idList){
+        List list = peopleMapper.selectPeopleVoByIds(idList);
+        if (list != null && list.size() > 0){
+            XSSFWorkbook workBook;
+            OutputStream os;
+            String newFileName = "在编人员工资.xlsx";
+            try{
+                workBook = new XSSFWorkbook();
+                XSSFSheet sheet= workBook.createSheet("编制内人员工资表");
+                XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+                //创建表头
+                XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleSalaryHeaders2());
+
+                int count = 0;
+
+                setBorder = WordUtil.setCellStyle(workBook, false);
+                for(int i=0; i<list.size(); i++){
+                    PeopleVo peopleVo = (PeopleVo) list.get(i);
+                    if (peopleVo == null || StringUtils.isBlank(peopleVo.getCode()))
+                        continue;
+                    String peopleCode = peopleVo.getCode();
+                    List<PeopleSalaryVo> peopleSalaryVoList = peopleSalaryMapper.findPeopleSalaryVoListByCode(peopleCode);
+
+                    List<ExamYearly> examYearlyList = examYearlyMapper.findExamYearlyVoListByCode(peopleCode);
+
+                    if (peopleSalaryVoList == null || peopleSalaryVoList.size() < 1)
+                        continue;
+
+                    String examYearlyResult = "";
+                    if (examYearlyList == null || examYearlyList.size() < 1){
+
+                    }else{
+                        ExamYearly examYearly = examYearlyList.get(0);
+                        if (examYearly != null){
+                            examYearlyResult = examYearly.getExamResult();
+                        }
+                    }
+
+                    for(int j=0; j<peopleSalaryVoList.size(); j++){
+
+                        row = sheet.createRow(count+1);
+                        PeopleSalaryVo peopleSalaryVo = peopleSalaryVoList.get(j);
+
+                        row.createCell(0).setCellValue(count+1);
+                        row.createCell(1).setCellValue(peopleSalaryVo.getPeopleName());
+                        row.createCell(2).setCellValue(peopleSalaryVo.getJobSalary()==null?"":peopleSalaryVo.getJobSalary().toString());
+                        row.createCell(3).setCellValue(peopleSalaryVo.getRankSalary()==null?"":peopleSalaryVo.getRankSalary().toString());
+                        row.createCell(4).setCellValue(peopleSalaryVo.getReserveSalary()==null?"":peopleSalaryVo.getReserveSalary().toString());
+                        row.createCell(5).setCellValue(peopleSalaryVo.getExamResult());
+                        row.createCell(6).setCellValue(peopleSalaryVo.getJobAllowance()==null?"":peopleSalaryVo.getJobAllowance().toString());
+                        row.createCell(7).setCellValue(peopleSalaryVo.getPerformanceAllowance()==null?"":peopleSalaryVo.getPerformanceAllowance().toString());
+                        row.createCell(8).setCellValue(peopleSalaryVo.getRentAllowance()==null?"":peopleSalaryVo.getRentAllowance().toString());
+                        row.createCell(9).setCellValue(peopleSalaryVo.getHouseAllowance()==null?"":peopleSalaryVo.getHouseAllowance().toString());
+                        row.createCell(10).setCellValue(peopleSalaryVo.getDutyAllowance()==null?"":peopleSalaryVo.getDutyAllowance().toString());
+                        row.createCell(11).setCellValue(peopleSalaryVo.getExtraAllowance()==null?"":peopleSalaryVo.getExtraAllowance().toString());
+                        row.createCell(12).setCellValue(peopleSalaryVo.getTelephoneAllowance()==null?"":peopleSalaryVo.getTelephoneAllowance().toString());
+                        row.createCell(13).setCellValue(peopleSalaryVo.getTrafficAllowance()==null?"":peopleSalaryVo.getTrafficAllowance().toString());
+                        row.createCell(14).setCellValue(peopleSalaryVo.getOnDutyFeeTotal()==null?"":peopleSalaryVo.getOnDutyFeeTotal().toString());
+                        row.createCell(15).setCellValue(peopleSalaryVo.getPropertyAllowance()==null?"":peopleSalaryVo.getPropertyAllowance().toString());
+                        row.createCell(16).setCellValue(peopleSalaryVo.getExtraJobAllowance()==null?"":peopleSalaryVo.getExtraJobAllowance().toString());
+                        row.createCell(17).setCellValue(peopleSalaryVo.getTemperatureAllowance()==null?"":peopleSalaryVo.getTemperatureAllowance().toString());
+                        row.createCell(18).setCellValue(peopleSalaryVo.getReissueFee()==null?"":peopleSalaryVo.getReissueFee().toString());
+                        row.createCell(19).setCellValue(peopleSalaryVo.getMedicare()==null?"":peopleSalaryVo.getMedicare().toString());
+                        row.createCell(20).setCellValue(peopleSalaryVo.getYearlyBonus()==null?"":peopleSalaryVo.getYearlyBonus().toString());
+                        row.createCell(21).setCellValue(examYearlyResult == null?"":examYearlyResult);
+                        row.createCell(22).setCellValue(peopleSalaryVo.getGrossSalary()==null?"":peopleSalaryVo.getGrossSalary().toString());
+
+                        count++;
+
+                        for(int k=0; k<23; k++){
+                            row.getCell(k).setCellStyle(setBorder);
+                        }
+                        row.setHeight((short) 400);
+                    }
+                }
+
+                sheet.setDefaultRowHeightInPoints(21);
+                response.reset();
+                os = response.getOutputStream();
+                response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+                workBook.write(os);
+                os.close();
+
+            }catch (Exception exp){
+                exp.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public void exportExcel(HttpServletResponse response, String[] idList) {
 
         List list = peopleMapper.selectPeopleVoByIds(idList);
@@ -210,7 +324,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
             String newFileName = "在编人员工资.xlsx";
             try{
                 workBook = new XSSFWorkbook();
-                XSSFSheet sheet= workBook.createSheet("在编人员工资信息");
+                XSSFSheet sheet= workBook.createSheet("编制内人员工资表");
                 XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
                 //创建表头
                 XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleSalaryHeaders());
@@ -342,7 +456,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
             peopleSalary.setWorkDate(null);
         }
         if(StringUtils.isBlank(peopleSalary.getPayDate())){
-            peopleSalary.setPayDate(DateUtil.GetCurrentYear() + "-" + DateUtil.GetCurrentMonth());
+            peopleSalary.setPayDate(DateUtil.GetCurrentYearAndMonth());
         }
     }
 

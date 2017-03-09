@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by liushaoyang on 2016/9/27.
  */
@@ -89,5 +91,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void batchDeleteArticleByIds(String[] ids){
         articleMapper.batchDeleteByIds(ids);
+    }
+
+    @Override
+    public List<ArticleVo> findTop5Articles() {
+        return articleMapper.findTop5Articles();
     }
 }

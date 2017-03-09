@@ -450,7 +450,7 @@
     <a onclick="deathFeeReview();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">丧抚费审批表</a>
     <a onclick="deathFeeReceive();" href="javascript:void(0);" class="easyui-linkbutton"
-       data-options="plain:true,iconCls:'icon-add'">丧抚费审批表</a>
+       data-options="plain:true,iconCls:'icon-add'">丧抚费领取凭单</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

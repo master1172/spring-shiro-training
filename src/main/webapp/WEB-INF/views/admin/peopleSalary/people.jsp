@@ -102,7 +102,7 @@
                     text:'导出',
                     handler: function(){
                         parent.$.modalDialog.openner_dataGrid = dataGrid;
-                        var f = parent.$.modalDialog.handler.find("#peopleSearchForm");
+                        var f = parent.$.modalDialog.handler.find("#salarySearchForm");
                         if(parent.checkForm()){
                             parent.SYS_SUBMIT_FORM(f, "/peopleSalary/exportSearch",function(data){
                                 if(!data["success"]){
@@ -115,7 +115,7 @@
                                     var ids = data["obj"];
                                     var form=$("#downLoadForm");
                                     form.find("input[name='ids']").val(ids);
-                                    form.attr("action",'${path}'+"/peopleSalary/exportExcel");
+                                    form.attr("action",'${path}'+"/peopleSalary/exportSalaryBaseExcel");
                                     $("#downLoadForm").submit();
                                 }
                             });
@@ -278,6 +278,8 @@
            data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+        <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">工资汇总表格</a>
         <!-- 附件下载使用 -->
         <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

@@ -77,7 +77,7 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 
 		// 设置默认日期今天
 		if (peopleSalary != null && StringUtils.isBlank(peopleSalary.getPayDate())) {
-			peopleSalary.setPayDate(DateUtil.GetCurrentYear()+"-"+DateUtil.GetCurrentMonth());
+			peopleSalary.setPayDate(DateUtil.GetCurrentYearAndMonth());
 		}
 
 		peopleContractSalaryMapper.insert(peopleSalary);

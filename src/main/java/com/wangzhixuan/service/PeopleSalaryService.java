@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sterm on 2017/1/13.
@@ -38,6 +39,8 @@ public interface PeopleSalaryService {
 
     void exportExcel(HttpServletResponse response, String[] idList);
 
+    void exportExcel2(HttpServletResponse response, String[] idList);
+
     boolean insertByImport(CommonsMultipartFile[] files);
 
     void updateSalaryJobLevel(PeopleVo peopleVo);
@@ -50,4 +53,6 @@ public interface PeopleSalaryService {
 
 
     BigDecimal CalculateGrossIncome(PeopleSalary peopleSalary);
+
+    String findPeopleIDsByCondition(PageInfo pageInfo);
 }

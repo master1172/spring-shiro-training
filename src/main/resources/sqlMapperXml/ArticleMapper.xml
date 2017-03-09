@@ -47,6 +47,23 @@
         where title LIKE concat('%',#{title},'%')
     </select>
 
+    <select id="findTop5Articles" resultMap="articleVoResultMap">
+        SELECT
+        t.id,
+        title,
+        author,
+        content,
+        category_id,
+        publish_time,
+        attachment,
+        s.`name` as categoryName
+        FROM
+        article t
+        LEFT JOIN article_category s ON s.id = t.category_id
+        order by publish_time DESC
+        limit 0,5
+    </select>
+
     <select id="findArticlePageCondition" resultMap="articleVoResultMap" parameterType="PageInfo">
         SELECT
         t.id,

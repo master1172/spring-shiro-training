@@ -17,6 +17,16 @@ import java.util.GregorianCalendar;
 public class DateUtil {
 
 
+    public static String GetCurrentYearAndMonth(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String today = format.format(new Date());
+        try{
+            return today.substring(0,7);
+        }catch (Exception exp){
+            return "2017-01";
+        }
+    }
+
     public static String GetTodayInWord(){
         String today = GetToday();
         String year = GetYear(today);

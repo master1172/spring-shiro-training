@@ -36,6 +36,15 @@ public class ConstUtil {
         };
     }
 
+
+    public static String[] getPeopleSalaryHeaders2(){
+        return new String[]{
+                "序号","姓名","岗位工资","薪级工资","工改保留工资","岗位考核结果","岗位津贴","绩效津贴","提租补贴",
+                "购房补贴","职务补贴","适当补贴","通讯补贴","交通补贴","值班费合计",
+                "物业补贴","挂职补贴","降温补贴","补发","药费报销","一次性年终奖励","年终考核结果","应发合计"
+        };
+    }
+
     public static String[] getPeopleSalaryHeaders(){
         return new String[]{
                 "序号","姓名","岗位","岗位工资","薪级","薪级工资","工改保留工资","岗位考核结果","岗位津贴","绩效津贴","提租补贴",

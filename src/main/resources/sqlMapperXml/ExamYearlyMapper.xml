@@ -72,6 +72,7 @@
       </if>
     </where>
   </select>
+
   <select id="findExamYearlyVoListByCode" resultMap="ExamYearlyVoMap" parameterType="java.lang.String">
     SELECT
     t.id,
@@ -88,6 +89,22 @@
       t.people_code = #{code,jdbcType=VARCHAR}
     </where>
   </select>
+
+  <select id="findExamYearlyByCodeAndYear" parameterType="PageInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_yearly t
+    <where>
+      <if test=" condition.peopleCode != null and condition.peopleCode != ''">
+        and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
+      </if>
+      <if test=" condition.year != null">
+        and t.year = #{condition.year}
+      </if>
+    </where>
+    LIMIT 0, 1
+  </select>
+
   <insert id="insertByImport" parameterType="java.util.List">
         insert into exam_yearly (people_code, year, exam_result, exam_operation
         )

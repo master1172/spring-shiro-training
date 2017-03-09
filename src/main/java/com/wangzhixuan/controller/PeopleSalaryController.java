@@ -13,6 +13,8 @@ import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.service.PeopleTimesheetService;
 import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
+import com.wangzhixuan.vo.PeopleSalaryVo;
+import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.beanutils.converters.DoubleConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -239,6 +241,18 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
+    @RequestMapping("/exportSalaryBaseExcel")
+    public void exportSalaryBaseExcel(HttpServletResponse response, String ids){
+        if(StringUtils.isBlank(ids)){
+            return;
+        }
+        try{
+            peopleSalaryService.exportExcel2(response, ids.split(","));
+        }catch (Exception exp){
+
+        }
+    }
+
     @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
     public String importExcelPage(){
         return "admin/peopleSalary/importExcelPage";
@@ -306,5 +320,38 @@ public class PeopleSalaryController extends BaseController{
     public String calculateSalary(PeopleSalary peopleSalary){
         BigDecimal grossIncome = peopleSalaryService.CalculateGrossIncome(peopleSalary);
         return grossIncome.toString();
+    }
+
+    @RequestMapping("/exportSearchPage")
+    public String exportSearchPage(){
+        return "/admin/peopleSalary/salarySearch";
+    }
+
+    @RequestMapping("/exportSearch")
+    @ResponseBody
+    public Result exportSearch(HttpServletResponse response, PeopleSalaryBaseVo peopleSalaryBaseVo){
+        Result result = new Result();
+        Map<String,Object> condition = PeopleSalaryBaseVo.CreateCondition(peopleSalaryBaseVo);
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setCondition(condition);
+        String ids = peopleSalaryService.findPeopleIDsByCondition(pageInfo);
+        if (StringUtils.isBlank(ids)){
+            result.setSuccess(false);
+            result.setMsg("未找到有效数据");
+            LOGGER.error("Excel:{}","无有效数据");
+            return result;
+        }
+        try{
+            result.setSuccess(true);
+            result.setObj(ids);
+        }catch(Exception exp){
+            result.setSuccess(false);
+            result.setMsg("导出Excel失败");
+            LOGGER.error("导出Excel失败:{}",exp);
+        }
+
+        return result;
+
+
     }
 }

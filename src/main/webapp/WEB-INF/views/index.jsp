@@ -6,6 +6,9 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>主页</title>
+
+    <link href="/static/style/css/global.css" rel="stylesheet"/>
+
     <style type="text/css">
     	.panel.window{z-index: 999 !important;}
     	.window-shadow{z-index: 998 !important;}
@@ -179,6 +182,21 @@
     <div data-options="region:'center'" style="overflow: hidden;">
         <div id="index_tabs" style="overflow: hidden;">
             <div title="首页" data-options="border:false" style="overflow: hidden;">
+                <ul class="txtlist">
+                    <c:forEach items="${articleVoList}" var="articleVo" varStatus="status">
+                        <li>
+                            <h3>
+                                <a href="/article/displayPage?id=${articleVo.id}" title="${articleVo.title}" aria-label="${articleVo.title}" data-pjax="0" target="_blank">
+                                    ${articleVo.title}
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span>作者:${articleVo.author}</span>
+                                <span>分类:${articleVo.categoryName}</span>
+                            </h3>
+                        </li>
+
+                    </c:forEach>
+                </ul>
             </div>
         </div>
     </div>

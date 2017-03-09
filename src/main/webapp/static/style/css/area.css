@@ -1,0 +1,14 @@
+.maincnt{padding:0 0 0px; min-height: 200px; overflow:hidden;}
+.maincnt .cnt{color:#666; line-height: 26px;}
+.maincnt .moreClass{line-height: 30px;}
+.maincnt .moreClass ul{list-style: none; padding:20px 0 0; width:100%; overflow:hidden;}
+.maincnt .moreClass li{float:left; width:30.3%; padding:0 1.5%;}
+.maincnt .moreClass .clearfix li{float:left; width:24.5%; padding:0 1.5%;}
+.maincnt .moreClass .clearfix-vertical li{float:left; width:95%; padding:0 0.5%;}
+.maincnt .imgCnt{margin-top:20px;}
+.maincnt .imgCnt li{float:left; width:25%;}
+.othercnt{padding-top:5px; padding-bottom:5px; padding-left:0px; padding-right:0px;}
+.othercnt ul{list-style: none; margin:0; padding:0;}
+.othercnt ul li{position:relative; width:24.3%; padding:0 2% 0 7%; overflow: hidden;line-height: 25px; float:left; box-sizing: content-box;}
+.othercnt ul li img{position: absolute; top:0; left:0;}
+.othercnt ul li p{height:50px; overflow: hidden; text-overflow:ellipsis; margin-bottom:0;}

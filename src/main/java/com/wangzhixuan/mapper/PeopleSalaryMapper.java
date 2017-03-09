@@ -65,4 +65,6 @@ public interface PeopleSalaryMapper {
     PeopleSalaryBase findPeopleSalaryBaseByCode(String code);
 
     PeopleSalary findPeopleSalaryById(Integer id);
+
+    List findPeopleSalaryBaseVoByIdList(String[] ids);
 }

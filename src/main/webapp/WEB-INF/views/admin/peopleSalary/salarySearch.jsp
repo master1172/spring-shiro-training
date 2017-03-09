@@ -33,7 +33,7 @@
                     </td>
                     <td>薪级</td>
                     <td>
-                        <input class="easyui-combobox" id="rankIdList" name="rankIdList" url="${path}/dict/rank" valueField="id" textField="name" editable="false" data-options="required:true" multiple="true">
+                        <input class="easyui-combobox" id="rankIdList" name="rankIdList" url="${path}/dict/rank" valueField="id" textField="name" editable="false" multiple="true">
                         </input>
                     </td>
                 </tr>

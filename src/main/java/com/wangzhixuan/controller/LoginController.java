@@ -2,8 +2,11 @@ package com.wangzhixuan.controller;
 
 import com.wangzhixuan.code.Result;
 import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.model.Article;
+import com.wangzhixuan.service.ArticleService;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.ArticleVo;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @description：登录退出
@@ -35,6 +39,9 @@ public class LoginController {
 
     @Autowired
     private PeopleMapper peopleMapper;
+
+    @Autowired
+    private ArticleService articleService;
 
     /**
      * 首页
@@ -57,6 +64,10 @@ public class LoginController {
         PageInfo pageInfo = new PageInfo();
         Integer retirePeopleCount = peopleMapper.findPeopleNearRetirePageCount(pageInfo);
         model.addAttribute("retirePeopleCount", retirePeopleCount);
+
+        List<ArticleVo> articleVoList = articleService.findTop5Articles();
+        model.addAttribute("articleVoList", articleVoList);
+
         return "/index";
     }
 

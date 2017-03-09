@@ -4,6 +4,8 @@ import com.wangzhixuan.model.Article;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.ArticleVo;
 
+import java.util.List;
+
 /**
  * Created by liushaoyang on 2016/9/27.
  */
@@ -25,4 +27,6 @@ public interface ArticleService {
     void deleteArticleById(Long id);
 
     void batchDeleteArticleByIds(String[] ids);
+
+    List<ArticleVo> findTop5Articles();
 }

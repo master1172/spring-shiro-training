@@ -2,6 +2,7 @@ package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.Article;
 import com.wangzhixuan.utils.PageInfo;
+import com.wangzhixuan.vo.ArticleVo;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface ArticleMapper {
     List findArticlePageCondition(PageInfo pageInfo);
 
     int findArticlePageCount(PageInfo pageInfo);
+
+    List<ArticleVo> findTop5Articles();
 }
