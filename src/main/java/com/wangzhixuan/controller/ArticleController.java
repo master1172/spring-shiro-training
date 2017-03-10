@@ -163,4 +163,11 @@ public class ArticleController extends BaseController{
         }
     }
 
+    @RequestMapping("/displayPage")
+    public String displayPage(Long id, Model model){
+        Article article = articleService.findArticleById(id);
+        model.addAttribute("article", article);
+        return "/admin/article/displayPage";
+    }
+
 }

@@ -43,4 +43,6 @@ public interface PeopleContractSalaryService {
     PeopleContractSalary findPeopleContractSalaryById(Integer id);
 
     BigDecimal CalculateGrossIncome(PeopleContractSalary peopleContractSalary);
+
+    void exportCert(HttpServletResponse response, String ids);
 }

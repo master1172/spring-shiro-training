@@ -11,6 +11,7 @@ import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -22,6 +23,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -178,6 +180,30 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         return ids;
     }
 
+    @Override
+    public void exportCert(HttpServletResponse response, String ids) {
+        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryMapper.findPeopleSalaryBaseVoById(Integer.valueOf(ids));
+        People people = peopleMapper.findPeopleById(Integer.valueOf(ids));
+
+        if(peopleSalaryBaseVo != null && people != null){
+            XWPFDocument doc;
+            OutputStream os;
+            peopleSalaryMapper.findLatestPeopleSalaryByCode(peopleSalaryBaseVo.getPeopleCode());
+            String filePath=this.getClass().getResource("/template/salaryCert.docx").getPath();
+            String newFileName="工资收入证明.docx";
+
+            Map<String,Object> params = new HashMap<String,Object>();
+            params.put("${name}", peopleSalaryBaseVo.getPeopleName());
+            params.put("${jobName}", people.getJobName());
+            params.put("${jobLevel}",peopleSalaryBaseVo.getJobLevel());
+            params.put("${workAge}", people.getWorkAge());
+            params.put("${photoId}", people.getPhotoId());
+            params.put("${date}", DateUtil.GetTodayInWord());
+
+            WordUtil.OutputWord(response, filePath, newFileName, params);
+        }
+
+    }
 
 
     @Override

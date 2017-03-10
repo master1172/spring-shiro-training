@@ -351,7 +351,17 @@ public class PeopleSalaryController extends BaseController{
         }
 
         return result;
+    }
 
-
+    @RequestMapping("/exportCert")
+    public void exportCert(HttpServletResponse response,String ids){
+        if (StringUtils.isEmpty(ids)){
+            LOGGER.error("导出Word:{}","请选择一条有效数据!");
+        }
+        try{
+            peopleSalaryService.exportCert(response,ids);
+        }catch(Exception exp){
+            LOGGER.error("导出Word:{}",exp);
+        }
     }
 }

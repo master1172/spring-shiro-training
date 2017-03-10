@@ -55,4 +55,6 @@ public interface PeopleSalaryService {
     BigDecimal CalculateGrossIncome(PeopleSalary peopleSalary);
 
     String findPeopleIDsByCondition(PageInfo pageInfo);
+
+    void exportCert(HttpServletResponse response, String ids);
 }

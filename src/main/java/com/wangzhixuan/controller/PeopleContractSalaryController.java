@@ -324,4 +324,16 @@ public class PeopleContractSalaryController extends BaseController {
 		BigDecimal grossIncome = peopleContractSalaryService.CalculateGrossIncome(peopleContractSalary);
 		return grossIncome.toString();
 	}
+
+	@RequestMapping("/exportCert")
+	public void exportCert(HttpServletResponse response,String ids){
+		if (StringUtils.isEmpty(ids)){
+
+		}
+		try{
+			peopleContractSalaryService.exportCert(response,ids);
+		}catch(Exception exp){
+
+		}
+	}
 }

@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +17,7 @@ import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleContractVo;
+import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -26,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -356,5 +356,48 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 		}
 
 		peopleContractSalaryMapper.updateSalaryBase(peopleContractSalaryBase);
+	}
+
+	@Override
+	public void exportCert(HttpServletResponse response, String ids) {
+
+		String currentYearAndMonth = DateUtil.GetCurrentYearAndMonth();
+
+		PeopleContractVo peopleContractVo = peopleContractMapper.findPeopleContractVoById(Integer.valueOf(ids));
+
+		List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContractSalaryMapper.findPeopleContractSalaryVoListByCode(peopleContractVo.getCode());
+
+		PeopleContractSalaryVo peopleContractSalaryVo = new PeopleContractSalaryVo();
+
+		if(peopleContractSalaryVoList != null && peopleContractVo != null){
+
+			for(int i=0; i<peopleContractSalaryVoList.size(); i++){
+				peopleContractSalaryVo = peopleContractSalaryVoList.get(i);
+				if (peopleContractSalaryVo == null)
+					continue;
+				if (StringUtils.isBlank(peopleContractSalaryVo.getPayDate()))
+					continue;
+				if (peopleContractSalaryVo.getPayDate().equals(currentYearAndMonth))
+					break;
+			}
+
+			XWPFDocument doc;
+			OutputStream os;
+
+			String filePath=this.getClass().getResource("/template/salaryCert.docx").getPath();
+			String newFileName="工资收入证明.docx";
+
+			Map<String,Object> params = new HashMap<String,Object>();
+			params.put("${name}", peopleContractSalaryVo.getPeopleName());
+			params.put("${department}",peopleContractVo.getDepartmentName()==null?"":peopleContractVo.getDepartmentName());
+			params.put("${jobName}",peopleContractVo.getJobName()==null?"":peopleContractVo.getJobName());
+			params.put("${jobLevel}", peopleContractSalaryVo.getJobLevel()==null?"":peopleContractSalaryVo.getJobLevel());
+			params.put("${schoolDate}", peopleContractVo.getSchoolDate()==null?"":peopleContractVo.getSchoolDate());
+			params.put("${grossIncome}", peopleContractSalaryVo.getGrossIncome()==null?"":peopleContractSalaryVo.getGrossIncome().toString());
+			params.put("${date}", DateUtil.GetTodayInWord());
+
+			WordUtil.OutputWord(response, filePath, newFileName, params);
+		}
+
 	}
 }
