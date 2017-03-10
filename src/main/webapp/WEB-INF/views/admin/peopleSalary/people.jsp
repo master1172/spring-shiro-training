@@ -35,6 +35,20 @@
             });
         });
 
+        //导出Word
+        function exportCert() {
+            var checkedItems = $("#dataGrid").datagrid("getChecked");
+            if (checkedItems.length == 1) {
+                var id = checkedItems[0]["id"];
+                var form = $("#downLoadForm");
+                form.find("input[name='ids']").val(id);
+                form.attr("action", '${path}' + "/peopleSalary/exportCert");
+                $("#downLoadForm").submit();
+            } else {
+                parent.$.messager.alert("提示", "请选择一条有效数据", "warning");
+            }
+        }
+
         function editFun(id) {
             if (id == undefined) {
                 var rows = dataGrid.datagrid('getSelections');
@@ -280,6 +294,8 @@
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
         <a onclick="exportSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">工资汇总表格</a>
+        <a onclick="exportCert();" href="javascript:void(0);" class="easyui-linkbutton"
+            data-options="plain:true,iconCls:'icon-add'">生成收入证明</a>
         <!-- 附件下载使用 -->
         <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
