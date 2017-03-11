@@ -188,17 +188,18 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         if(peopleSalaryBaseVo != null && people != null){
             XWPFDocument doc;
             OutputStream os;
-            peopleSalaryMapper.findLatestPeopleSalaryByCode(peopleSalaryBaseVo.getPeopleCode());
+            PeopleSalary peopleSalary = peopleSalaryMapper.findLatestPeopleSalaryByCode(peopleSalaryBaseVo.getPeopleCode());
             String filePath=this.getClass().getResource("/template/salaryCert.docx").getPath();
             String newFileName="工资收入证明.docx";
 
             Map<String,Object> params = new HashMap<String,Object>();
-            params.put("${name}", peopleSalaryBaseVo.getPeopleName());
-            params.put("${jobName}", people.getJobName());
-            params.put("${jobLevel}",peopleSalaryBaseVo.getJobLevel());
+            params.put("${name}", peopleSalaryBaseVo.getPeopleName() == null ?"":peopleSalaryBaseVo.getPeopleName());
+            params.put("${jobName}", people.getJobName() == null?"":people.getJobName());
+            params.put("${jobLevel}",peopleSalaryBaseVo.getJobLevel() == null? "":peopleSalaryBaseVo.getJobLevel());
             params.put("${workAge}", people.getWorkAge());
-            params.put("${photoId}", people.getPhotoId());
-            params.put("${date}", DateUtil.GetTodayInWord());
+            params.put("${photoId}", people.getPhotoId() == null? "":people.getPhotoId());
+            params.put("${grossIncome}", peopleSalaryBaseVo.getGrossSalary() == null?"":peopleSalaryBaseVo.getGrossSalary().toString());
+            params.put("${d}", DateUtil.GetTodayInWord());
 
             WordUtil.OutputWord(response, filePath, newFileName, params);
         }

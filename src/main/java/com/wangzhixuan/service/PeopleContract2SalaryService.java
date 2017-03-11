@@ -38,4 +38,6 @@ public interface PeopleContract2SalaryService {
     void findSalaryDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
     PeopleContractSalary findPeopleContractSalaryById(Integer id);
+
+    void exportCert(HttpServletResponse response, String ids);
 }

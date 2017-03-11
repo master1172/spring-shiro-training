@@ -76,6 +76,11 @@ public class PeopleContractVo implements Serializable {
 
     private String comment;
 
+    private String photoId;
+
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private String jobDate;
+
     private String photo;
 
     public Integer getId() {
@@ -272,6 +277,22 @@ public class PeopleContractVo implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
+    }
+
+    public String getJobDate() {
+        return jobDate;
+    }
+
+    public void setJobDate(String jobDate) {
+        this.jobDate = jobDate;
     }
 
     public static Map<String,Object> CreateCondition(PeopleContractVo peopleContractvo){

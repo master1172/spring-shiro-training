@@ -49,6 +49,11 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     private Integer departmentId;
 
+    private String photoId;
+
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private String jobDate;
+
     private Integer jobId;
 
     private String comment;
@@ -228,5 +233,21 @@ public class PeopleContract extends PeopleBase implements Serializable {
 
     public void setSchoolDate(String schoolDate) {
         this.schoolDate = schoolDate;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
+    }
+
+    public String getJobDate() {
+        return jobDate;
+    }
+
+    public void setJobDate(String jobDate) {
+        this.jobDate = jobDate;
     }
 }

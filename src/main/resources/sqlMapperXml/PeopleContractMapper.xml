@@ -23,6 +23,8 @@
         <result column="job_id" property="jobId" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="photo_id" property="photoId" jdbcType="VARCHAR"/>
+        <result column="job_date" property="jobDate" jdbcType="DATE"/>
     </resultMap>
 
     <resultMap id="peopleContractVoResultMap" type="com.wangzhixuan.vo.PeopleContractVo">
@@ -51,10 +53,12 @@
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="comment" property="comment" jdbcType="VARCHAR" />
         <result column="photo" property="photo" jdbcType="VARCHAR" />
+        <result column="photo_id" property="photoId" jdbcType="VARCHAR"/>
+        <result column="job_date" property="jobDate" jdbcType="DATE"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_id, job_id, comment, photo
+        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_id, job_id, comment, photo, photo_id, job_date
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -71,12 +75,14 @@
         where name = #{name, jdbcType=VARCHAR}
         LIMIT 0,1
     </select>
+
     <select id="findPeopleContractByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
         from people_total
         where code = #{code, jdbcType=BIGINT}
     </select>
+
     <select id="findPeopleContractVoById" resultMap="peopleContractVoResultMap" parameterType="java.lang.Integer">
         SELECT
         t.id,
@@ -103,7 +109,9 @@
         t.job_id,
         j.job_level as job_name,
         t.comment,
-        t.photo
+        t.photo,
+        t.photo_id,
+        t.job_date
         FROM
         people_total t
         LEFT JOIN
@@ -159,7 +167,9 @@
         t.job_id,
         j.job_level as job_name,
         t.comment,
-        t.photo
+        t.photo,
+        t.photo_id,
+        t.job_date
         FROM
         people_total t
         LEFT JOIN
@@ -335,7 +345,7 @@
         insert into people_total (
           code, name, sex, national_id, province, city, birthday, education_name, political_name,
           speciality, height, marriage_id, hukou, school_date, mobile, address, department_id,
-          job_id, comment, photo, status)
+          job_id, comment, photo, photo_id, job_date, status)
         values (
             #{code,       jdbcType=VARCHAR},
             #{name,       jdbcType=VARCHAR},
@@ -357,6 +367,8 @@
             #{jobId,      jdbcType=INTEGER},
             #{comment,    jdbcType=VARCHAR},
             #{photo,      jdbcType=VARCHAR},
+            #{photoId,    jdbcType=VARCHAR},
+            #{jobDate,    jdbcType=DATE},
             4
         )
     </insert>
@@ -364,7 +376,7 @@
         insert into people_total (
           code, name, sex, national_id, province, city, birthday, education_name, political_name,
           speciality, height, marriage_id, hukou, school_date, mobile, address, department_id,
-          job_id, comment, photo, status
+          job_id, comment, photo, photo_id, job_date, status
         )
         values
         <foreach item="item" index="index" collection="list" separator=",">
@@ -389,6 +401,8 @@
             #{item.jobId,         jdbcType=INTEGER},
             #{item.comment,       jdbcType=VARCHAR},
             #{item.photo,         jdbcType=VARCHAR},
+            #{item.photoId,       jdbcType=VARCHAR},
+            #{item.jobDate,       jdbcType=DATE},
             4
         )
         </foreach>
@@ -456,6 +470,12 @@
             <if test="photo != null">
                 photo = #{photo,jdbcType=VARCHAR},
             </if>
+            <if test="photoId != null">
+                photo_id = #{photoId, jdbcType=VARCHAR},
+            </if>
+            <if test="jobDate != null">
+                job_date = #{jobDate, jdbcType=DATE},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
@@ -481,7 +501,9 @@
             t.department_id,
             t.job_id,
             t.comment,
-            t.photo
+            t.photo,
+            t.photo_id,
+            t.job_date
         from people_total t
         where id in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
@@ -515,7 +537,9 @@
             t.job_id,
             j.job_level as job_name,
             t.comment,
-            t.photo
+            t.photo,
+            t.photo_id,
+            t.job_date
         FROM
           people_total t
         LEFT JOIN

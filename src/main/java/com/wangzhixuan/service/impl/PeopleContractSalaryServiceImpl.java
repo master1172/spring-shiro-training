@@ -388,13 +388,13 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 			String newFileName="工资收入证明.docx";
 
 			Map<String,Object> params = new HashMap<String,Object>();
-			params.put("${name}", peopleContractSalaryVo.getPeopleName());
+			params.put("${name}", peopleContractVo.getName());
 			params.put("${department}",peopleContractVo.getDepartmentName()==null?"":peopleContractVo.getDepartmentName());
 			params.put("${jobName}",peopleContractVo.getJobName()==null?"":peopleContractVo.getJobName());
 			params.put("${jobLevel}", peopleContractSalaryVo.getJobLevel()==null?"":peopleContractSalaryVo.getJobLevel());
 			params.put("${schoolDate}", peopleContractVo.getSchoolDate()==null?"":peopleContractVo.getSchoolDate());
 			params.put("${grossIncome}", peopleContractSalaryVo.getGrossIncome()==null?"":peopleContractSalaryVo.getGrossIncome().toString());
-			params.put("${date}", DateUtil.GetTodayInWord());
+			params.put("${d}", DateUtil.GetTodayInWord());
 
 			WordUtil.OutputWord(response, filePath, newFileName, params);
 		}

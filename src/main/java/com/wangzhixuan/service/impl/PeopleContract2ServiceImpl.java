@@ -304,9 +304,21 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
                     p.setJobId(jobId);
                 }
 
-                //备注
+                //身份证号码
                 if(row.getCell(18)!=null&&!row.getCell(18).toString().trim().equals("")){
-                    String comment=row.getCell(18).toString().trim();
+                    String photoId=row.getCell(18).toString().trim();
+                    p.setPhotoId(photoId);
+                }
+
+                //当前职务日期
+                if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")){
+                    String jobDate=row.getCell(19).toString().trim();
+                    p.setJobDate(jobDate);
+                }
+
+                //备注
+                if(row.getCell(20)!=null&&!row.getCell(20).toString().trim().equals("")){
+                    String comment=row.getCell(20).toString().trim();
                     p.setComment(comment);
                 }
 
@@ -350,30 +362,40 @@ public class PeopleContract2ServiceImpl implements PeopleContract2Service {
                 row.createCell(15).setCellValue("现住址");row.getCell(15).setCellStyle(setBorder);
                 row.createCell(16).setCellValue("部门");row.getCell(16).setCellStyle(setBorder);
                 row.createCell(17).setCellValue("职级");row.getCell(17).setCellStyle(setBorder);
-                row.createCell(18).setCellValue("备注");row.getCell(18).setCellStyle(setBorder);
+                row.createCell(18).setCellValue("身份证号码"); row.getCell(18).setCellStyle(setBorder);
+                row.createCell(19).setCellValue("任现职务日期"); row.getCell(19).setCellStyle(setBorder);
+                row.createCell(20).setCellValue("备注");row.getCell(18).setCellStyle(setBorder);
+
                 setBorder=WordUtil.setCellStyle(workBook,false);
                 for(int i=0;i<list.size();i++){
                     row=sheet.createRow(i+1);
                     PeopleContractVo p=(PeopleContractVo)list.get(i);
-                    row.createCell(0).setCellValue(i+1);row.getCell(0).setCellStyle(setBorder);
-                    row.createCell(1).setCellValue(p.getName());row.getCell(1).setCellStyle(setBorder);
-                    row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));row.getCell(2).setCellStyle(setBorder);
-                    row.createCell(3).setCellValue(p.getNationalName());row.getCell(3).setCellStyle(setBorder);
-                    row.createCell(4).setCellValue(p.getProvince());row.getCell(4).setCellStyle(setBorder);
-                    row.createCell(5).setCellValue(p.getCity());row.getCell(5).setCellStyle(setBorder);
-                    row.createCell(6).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));row.getCell(6).setCellStyle(setBorder);
-                    row.createCell(7).setCellValue(p.getEducationName());row.getCell(7).setCellStyle(setBorder);
-                    row.createCell(8).setCellValue(p.getPoliticalName());row.getCell(8).setCellStyle(setBorder);
-                    row.createCell(9).setCellValue(p.getSpeciality());row.getCell(9).setCellStyle(setBorder);
-                    row.createCell(10).setCellValue(p.getHeight());row.getCell(10).setCellStyle(setBorder);
-                    row.createCell(11).setCellValue(p.getMarriageName());row.getCell(11).setCellStyle(setBorder);
-                    row.createCell(12).setCellValue(p.getHukou()==null?"":(p.getHukou()==0?"非农业":"农业"));row.getCell(12).setCellStyle(setBorder);
-                    row.createCell(13).setCellValue(p.getSchoolDate()==null?"":(p.getBirthday().toString()));row.getCell(13).setCellStyle(setBorder);
-                    row.createCell(14).setCellValue(p.getMobile());row.getCell(14).setCellStyle(setBorder);
-                    row.createCell(15).setCellValue(p.getAddress());row.getCell(15).setCellStyle(setBorder);
-                    row.createCell(16).setCellValue(p.getDepartmentName());row.getCell(16).setCellStyle(setBorder);
-                    row.createCell(17).setCellValue(p.getJobName());row.getCell(17).setCellStyle(setBorder);
-                    row.createCell(18).setCellValue(p.getComment());row.getCell(18).setCellStyle(setBorder);
+                    row.createCell(0).setCellValue(i+1);
+                    row.createCell(1).setCellValue(p.getName());
+                    row.createCell(2).setCellValue(p.getSex()==null?"":(p.getSex()==0?"男":"女"));
+                    row.createCell(3).setCellValue(p.getNationalName());
+                    row.createCell(4).setCellValue(p.getProvince());
+                    row.createCell(5).setCellValue(p.getCity());
+                    row.createCell(6).setCellValue(p.getBirthday()==null?"":(p.getBirthday().toString()));
+                    row.createCell(7).setCellValue(p.getEducationName());
+                    row.createCell(8).setCellValue(p.getPoliticalName());
+                    row.createCell(9).setCellValue(p.getSpeciality());
+                    row.createCell(10).setCellValue(p.getHeight());
+                    row.createCell(11).setCellValue(p.getMarriageName());
+                    row.createCell(12).setCellValue(p.getHukou()==null?"":(p.getHukou()==0?"非农业":"农业"));
+                    row.createCell(13).setCellValue(p.getSchoolDate()==null?"":(p.getBirthday().toString()));
+                    row.createCell(14).setCellValue(p.getMobile());
+                    row.createCell(15).setCellValue(p.getAddress());
+                    row.createCell(16).setCellValue(p.getDepartmentName());
+                    row.createCell(17).setCellValue(p.getJobName());
+                    row.createCell(18).setCellValue(p.getPhotoId());
+                    row.createCell(19).setCellValue(p.getJobDate()==null?"":p.getJobDate());
+                    row.createCell(20).setCellValue(p.getComment());
+
+                    for(int j=0; j<21; j++){
+                        row.getCell(j).setCellStyle(setBorder);
+                    }
+
                     row.setHeight((short) 400);
                 }
                 sheet.setDefaultRowHeightInPoints(21);

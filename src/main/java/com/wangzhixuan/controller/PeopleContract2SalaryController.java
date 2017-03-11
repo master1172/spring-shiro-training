@@ -314,4 +314,16 @@ public class PeopleContract2SalaryController extends BaseController {
 	public String advSearchPage(){
 		return "/admin/peopleContract2Salary/salarySearch";
 	}
+
+	@RequestMapping("/exportCert")
+	public void exportCert(HttpServletResponse response,String ids){
+		if (StringUtils.isEmpty(ids)){
+
+		}
+		try{
+			peopleContract2SalaryService.exportCert(response,ids);
+		}catch(Exception exp){
+
+		}
+	}
 }

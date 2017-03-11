@@ -142,6 +142,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>身份证号码</td>
+                    <td>
+                        <input type="text" name="photoId" value="${peopleContract.photoId}"/>
+                    </td>
+                    <td>任现职务日期</td>
+                    <td>
+                        <input name="jobDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-%d'})"
+                               readonly="readonly" value="${peopleContract.jobDate}"/>
+                    </td>
+                </tr>
+                <tr>
                     <td>头像上传</td>
                     <td colspan="3">
                         <div id="imgdiv" style="height:100px;width:100px;">
