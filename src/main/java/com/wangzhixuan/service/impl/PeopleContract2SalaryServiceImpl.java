@@ -297,28 +297,16 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 	@Override
 	public void exportCert(HttpServletResponse response, String ids) {
 
-		String currentYearAndMonth = DateUtil.GetCurrentYearAndMonth();
-
 		PeopleContractVo peopleContractVo = peopleContractMapper.findPeopleContractVoById(Integer.valueOf(ids));
 
-		List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContractSalaryMapper.findPeopleContractSalaryVoListByCode(peopleContractVo.getCode());
+		if (peopleContractVo != null){
+			PeopleContractSalary peopleContractSalary = peopleContractSalaryMapper.findLatestPeopleSalaryByCode(peopleContractVo.getCode());
 
-		PeopleContractSalaryVo peopleContractSalaryVo = new PeopleContractSalaryVo();
+			BigDecimal grossIncome = new BigDecimal("0.00");
 
-		if(peopleContractSalaryVoList != null && peopleContractVo != null){
-
-			for(int i=0; i<peopleContractSalaryVoList.size(); i++){
-				peopleContractSalaryVo = peopleContractSalaryVoList.get(i);
-				if (peopleContractSalaryVo == null)
-					continue;
-				if (StringUtils.isBlank(peopleContractSalaryVo.getPayDate()))
-					continue;
-				if (peopleContractSalaryVo.getPayDate().equals(currentYearAndMonth))
-					break;
+			if (peopleContractSalary != null){
+				grossIncome = peopleContractSalary.getGrossIncome();
 			}
-
-			XWPFDocument doc;
-			OutputStream os;
 
 			String filePath=this.getClass().getResource("/template/salaryCert.docx").getPath();
 			String newFileName="工资收入证明.docx";
@@ -326,10 +314,10 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 			Map<String,Object> params = new HashMap<String,Object>();
 			params.put("${name}", peopleContractVo.getName());
 			params.put("${department}",peopleContractVo.getDepartmentName()==null?"":peopleContractVo.getDepartmentName());
-			params.put("${jobName}",peopleContractVo.getJobName()==null?"":peopleContractVo.getJobName());
-			params.put("${jobLevel}", peopleContractSalaryVo.getJobLevel()==null?"":peopleContractSalaryVo.getJobLevel());
-			params.put("${schoolDate}", peopleContractVo.getSchoolDate()==null?"":peopleContractVo.getSchoolDate());
-			params.put("${grossIncome}", peopleContractSalaryVo.getGrossIncome()==null?"":peopleContractSalaryVo.getGrossIncome().toString());
+			params.put("jobname",peopleContractVo.getJobName()==null?"":peopleContractVo.getJobName());
+			params.put("${photoId}", peopleContractVo.getPhotoId() == null? "": peopleContractVo.getPhotoId());
+			params.put("${jobDate}", peopleContractVo.getJobDate()==null?"":peopleContractVo.getJobDate());
+			params.put("${grossIncome}", grossIncome == null?"0.00":grossIncome.toString());
 			params.put("${d}", DateUtil.GetTodayInWord());
 
 			WordUtil.OutputWord(response, filePath, newFileName, params);

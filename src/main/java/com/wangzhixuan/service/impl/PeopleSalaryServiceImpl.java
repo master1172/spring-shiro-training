@@ -182,23 +182,28 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Override
     public void exportCert(HttpServletResponse response, String ids) {
-        PeopleSalaryBaseVo peopleSalaryBaseVo = peopleSalaryMapper.findPeopleSalaryBaseVoById(Integer.valueOf(ids));
-        People people = peopleMapper.findPeopleById(Integer.valueOf(ids));
 
-        if(peopleSalaryBaseVo != null && people != null){
-            XWPFDocument doc;
-            OutputStream os;
-            PeopleSalary peopleSalary = peopleSalaryMapper.findLatestPeopleSalaryByCode(peopleSalaryBaseVo.getPeopleCode());
-            String filePath=this.getClass().getResource("/template/salaryCert.docx").getPath();
+        PeopleVo peopleVo = peopleMapper.findPeopleVoById(Integer.valueOf(ids));
+
+        if(peopleVo != null){
+            PeopleSalary peopleSalary = peopleSalaryMapper.findLatestPeopleSalaryByCode(peopleVo.getCode());
+            BigDecimal grossIncome = new BigDecimal(0.00);
+
+            if (peopleSalary != null){
+                grossIncome = peopleSalary.getGrossSalary();
+            }
+
+            String filePath=this.getClass().getResource("/template/peopleSalaryCert.docx").getPath();
             String newFileName="工资收入证明.docx";
 
             Map<String,Object> params = new HashMap<String,Object>();
-            params.put("${name}", peopleSalaryBaseVo.getPeopleName() == null ?"":peopleSalaryBaseVo.getPeopleName());
-            params.put("${jobName}", people.getJobName() == null?"":people.getJobName());
-            params.put("${jobLevel}",peopleSalaryBaseVo.getJobLevel() == null? "":peopleSalaryBaseVo.getJobLevel());
-            params.put("${workAge}", people.getWorkAge());
-            params.put("${photoId}", people.getPhotoId() == null? "":people.getPhotoId());
-            params.put("${grossIncome}", peopleSalaryBaseVo.getGrossSalary() == null?"":peopleSalaryBaseVo.getGrossSalary().toString());
+            params.put("${name}", peopleVo.getName() == null ?"":peopleVo.getName());
+            params.put("${department}", "");
+            params.put("${jobName}", peopleVo.getJobName() == null?"":peopleVo.getJobName());
+            params.put("${jobLevel}",peopleVo.getJobLevelName() == null? "":peopleVo.getJobLevelName());
+            params.put("${photoId}", peopleVo.getPhotoId() == null? "":peopleVo.getPhotoId());
+            params.put("${jobDate}", peopleVo.getJobLevelDate() == null? "": peopleVo.getJobLevelDate());
+            params.put("${grossIncome}",grossIncome == null?"0.00":grossIncome.toString());
             params.put("${d}", DateUtil.GetTodayInWord());
 
             WordUtil.OutputWord(response, filePath, newFileName, params);

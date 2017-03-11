@@ -49,4 +49,5 @@ public interface PeopleContract2SalaryMapper {
 
     PeopleContractSalary findPeopleContractSalaryById(Integer id);
 
+    PeopleContractSalary findLatestPeopleSalaryByCode(String code);
 }

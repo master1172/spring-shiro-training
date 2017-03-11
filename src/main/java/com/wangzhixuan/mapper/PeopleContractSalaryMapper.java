@@ -48,4 +48,6 @@ public interface PeopleContractSalaryMapper {
     PeopleContractSalaryBase findPeopleContractSalaryBaseById(Integer id);
 
     PeopleContractSalary findPeopleContractSalaryById(Integer id);
+
+    PeopleContractSalary findLatestPeopleSalaryByCode(String code);
 }
