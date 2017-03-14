@@ -198,5 +198,48 @@
         from dict_party_status
         where name = #{name}
     </select>
+
+    <select id="findByCondition" resultMap="DictResultMap" parameterType="PageInfo">
+        SELECT
+        id,
+        name
+        FROM
+        ${condition.tableName}
+        LIMIT #{from},#{size}
+    </select>
+
+    <select id="findCount" resultType="java.lang.Integer" parameterType="PageInfo">
+        select count(*) count
+        from ${condition.tableName}
+    </select>
+
+    <select id="findById" resultMap="DictResultMap" parameterType="com.wangzhixuan.model.Dict">
+        select
+        id,name
+        from ${tableName}
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="add" parameterType="com.wangzhixuan.model.Dict">
+        insert INTO
+        ${tableName}
+        (name)
+        VALUES (
+        #{name,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.wangzhixuan.model.Dict">
+        update ${tableName}
+        <set>
+            name = #{name,jdbcType=VARCHAR}
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <delete id="delete" parameterType="com.wangzhixuan.model.Dict">
+        delete from ${tableName}
+        where id = #{id, jdbcType=INTEGER}
+    </delete>
 </mapper>
 

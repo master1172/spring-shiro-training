@@ -1,6 +1,8 @@
 package com.wangzhixuan.mapper;
 
 import com.wangzhixuan.model.Dict;
+import com.wangzhixuan.utils.PageInfo;
+
 import java.util.List;
 
 /**
@@ -54,4 +56,16 @@ public interface DictMapper {
     List<Dict> findPartyStatusDict();
 
     Integer findPartyStatusIdByName(String partyStatusName);
+
+    public List findByCondition(PageInfo pageInfo);
+
+    public int findCount(PageInfo pageInfo);
+
+    public Dict findById(Dict dict);
+
+    public void add(Dict dict);
+
+    public void delete(Dict dict);
+
+    public void  update(Dict dict);
 }

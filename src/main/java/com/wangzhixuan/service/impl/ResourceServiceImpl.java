@@ -154,7 +154,8 @@ public class ResourceServiceImpl implements ResourceService {
         for(Resource rootResource: rootResourceList){
 
             if (rootResource.getIcon().equals(ICON_COMPANY)  || rootResource.getIcon().equals(ICON_FOLDER)){
-
+                if (rootResource.getStatus() == 1)
+                    continue;
                 Tree rootTree = new Tree();
                 rootTree.setId(rootResource.getId());
                 rootTree.setText(rootResource.getName());

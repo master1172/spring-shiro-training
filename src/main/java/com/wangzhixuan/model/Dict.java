@@ -12,6 +12,8 @@ public class Dict implements Serializable {
 
     private String name;
 
+    private String tableName;
+
     public Integer getId() {
         return id;
     }
@@ -26,6 +28,14 @@ public class Dict implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     public Dict(Integer id, String name){
