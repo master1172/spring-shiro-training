@@ -139,6 +139,7 @@ public class RecruitImpl implements RecruitService {
     @Override
     public boolean insertByImport(CommonsMultipartFile[] files) {
         boolean flag = false;
+
         if (files != null && files.length > 0) {
 
             List<Recruit> list = new ArrayList<Recruit>();
@@ -150,9 +151,14 @@ public class RecruitImpl implements RecruitService {
                 String path = UploadUtil.fileUpload(filePath, files[i]);
 
                 if (StringUtils.isNotBlank(path)) {
-                    list = getPeopleInfoByExcel(list, path);
+                    Recruit recruit = getPeopleInfoByExcel(path);
+
+                    if (recruit != null && StringUtils.isNoneBlank(recruit.getName()){
+                        list.add(recruit);
+                    }
                 }
             }
+            
             if (list.size() > 0) {
                 flag = recruitMapper.insertByImport(list) > 0;
             }
@@ -233,191 +239,182 @@ public class RecruitImpl implements RecruitService {
             recruitVo.setBirthday(null);
     }
 
-    private List<Recruit> getPeopleInfoByExcel(List<Recruit> list, String path) {
+    private Recruit getPeopleInfoByExcel(String path) {
+        Recruit p = new Recruit();
+
         try {
             XSSFWorkbook xwb = new XSSFWorkbook(path);
             XSSFSheet sheet = xwb.getSheetAt(0);
             //
             List<XSSFPictureData> pictureList = xwb.getAllPictures();
-            XSSFRow row;
-            for (int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-                row = sheet.getRow(i);
-                Recruit p = new Recruit();
 
-//                p.setCode(StringUtilExtra.generateUUID());
-             //将Excel中的图片插入到数据库中
-                if (pictureList != null && pictureList.size() > 0){
-                    XSSFPictureData picture = pictureList.get(0);
-                    String filePath = StringUtilExtra.getPictureUploadPath();
-                    String uploadPath = UploadUtil.pictureUpLoad(filePath,picture);
+            if (pictureList != null && pictureList.size() > 0){
+                XSSFPictureData picture = pictureList.get(0);
+                String filePath = StringUtilExtra.getPictureUploadPath();
+                String uploadPath = UploadUtil.pictureUpLoad(filePath,picture);
 
-                    if (StringUtils.isNotBlank(uploadPath)){
-                        p.setPhoto(uploadPath);
-                    }
+                if (StringUtils.isNotBlank(uploadPath)){
+                    p.setPhoto(uploadPath);
                 }
-                //姓名
-                if (row.getCell(1) == null || row.getCell(1).toString().trim().equals("")) {
-                    continue;
-                }
-                String name=row.getCell(1).toString().trim();
-                p.setName(name);
+            }//照片
 
-                //性别
-                if (row.getCell(2) != null && !row.getCell(2).toString().trim().equals("")) {
-                    String sex = row.getCell(2).toString().trim();
-                    p.setSex(sex.equals("女") ? 1 : 0);
-                }
+            XSSFRow row = sheet.getRow(1);
+            //姓名
+            String name = row.getCell(1).toString().trim();
+            p.setName(name);
 
-                //年龄
-                if (row.getCell(3) != null && !row.getCell(3).toString().trim().equals("")) {
-                    String age = row.getCell(3).toString().trim();
-                    try {
-                        p.setAge(Integer.valueOf(age));
-                    } catch (Exception exp) {
+            //性别
+            String sex = row.getCell(3).toString().trim();
+            p.setSex(sex.equals("女") ? 1 : 0);
 
-                    }
-                } else {
-                    Integer age = DateUtil.GetAgeByBirthday(p.getBirthday());
-                    p.setAge(age);
-                }
+            //年龄
+            String age = row.getCell(5).toString().trim();
+            try {
+                p.setAge(Integer.valueOf(age));
+            } catch (Exception exp) {
 
-                //专业
-                if (row.getCell(4) != null && !row.getCell(4).toString().trim().equals("")) {
-                    String major = row.getCell(4).toString().trim();
-                    p.setMajor(major);
-                }
-
-                //应聘岗位
-                if (row.getCell(5) != null && !row.getCell(5).toString().trim().equals("")) {
-                    String applyJob = row.getCell(5).toString().trim();
-                    p.setApplyJob(applyJob);
-                }
-                //生源地
-                if (row.getCell(6) != null && !row.getCell(6).toString().trim().equals("")) {
-                    String origin = row.getCell(6).toString().trim();
-                    p.setOrigin(origin);
-                }
-
-                //民族
-                if (row.getCell(7) != null && !row.getCell(7).toString().trim().equals("")) {
-                    String nationalName = row.getCell(7).toString().trim();
-                    try {
-                        Integer nationalId = dictMapper.findNationalIdByName(nationalName);
-                        if (nationalId != null) {
-                            p.setNationalId(nationalId);
-                        }
-                    } catch (Exception exp) {
-
-                    }
-                }
-
-                //出生日期
-                if (row.getCell(8) != null && !row.getCell(8).toString().trim().equals("")) {
-                    String birthday = row.getCell(8).toString().trim();
-                    p.setBirthday(birthday);
-                }
-                //政治面貌
-                if (row.getCell(9) != null && !row.getCell(9).toString().trim().equals("")) {
-                    String politicalName = row.getCell(9).toString().trim();
-                    p.setPoliticalName(politicalName);
-                }
-                //身体状况
-                if (row.getCell(10) != null && !row.getCell(10).toString().trim().equals("")) {
-                    String health = row.getCell(10).toString().trim();
-                    p.setHealth(health);
-                }
-                //毕业院校
-                if (row.getCell(11) != null && !row.getCell(11).toString().trim().equals("")) {
-                    String graduateSchool = row.getCell(11).toString().trim();
-                    p.setGraduateSchool(graduateSchool);
-                }
-                //学历
-                if (row.getCell(12) != null && !row.getCell(12).toString().trim().equals("")) {
-                    String degree = row.getCell(12).toString().trim();
-                    p.setDegree(degree);
-                }
-                //是否能按期获得学位
-                if (row.getCell(13) != null && !row.getCell(13).toString().trim().equals("")) {
-                    String degreeOnTime = row.getCell(13).toString().trim();
-                    p.setDegreeOnTime(degreeOnTime.equals("否") ? 1 : 0);
-                }
-                //院校所在地
-                if (row.getCell(14) != null && !row.getCell(14).toString().trim().equals("")) {
-                    String schoolAddress = row.getCell(14).toString().trim();
-                    p.setSchoolAddress(schoolAddress);
-                }
-                //毕业生性质
-                if (row.getCell(15) != null && !row.getCell(15).toString().trim().equals("")) {
-                    String graduateStatus = row.getCell(15).toString().trim();
-                    p.setGraduateStatus(graduateStatus);
-                }
-                //外语水平
-                if (row.getCell(16) != null && !row.getCell(16).toString().trim().equals("")) {
-                    String foreignLanguageLevel = row.getCell(16).toString().trim();
-                    p.setForeignLanguageLevel(foreignLanguageLevel);
-                }
-                //婚姻状况
-                if(row.getCell(17) != null && !row.getCell(17).toString().trim().equals("")){
-                    String marriageName = row.getCell(17).toString().trim();
-                    Integer marriageId = dictMapper.findMarriageIdByName(marriageName);
-                    if (marriageId != null){
-                        p.setMarriageId(marriageId);
-                    }
-                }
-
-                //联系电话
-                if (row.getCell(18) != null && !row.getCell(18).toString().trim().equals("")) {
-                    String cellphone = row.getCell(18).toString().trim();
-                    p.setCellphone(cellphone);
-
-                }
-
-                //身份证号码
-                if(row.getCell(19) != null && !row.getCell(19).toString().trim().equals("")){
-                    String photoId = row.getCell(19).toString().trim();
-                    p.setPhotoId(photoId);
-                }
-                //邮箱
-                if(row.getCell(20) != null && !row.getCell(20).toString().trim().equals("")){
-                    String email = row.getCell(20).toString().trim();
-                    p.setEmail(email);
-                }
-                //联系地址
-                if(row.getCell(21) != null && !row.getCell(21).toString().trim().equals("")){
-                    String address = row.getCell(21).toString().trim();
-                    p.setAddress(address);
-                }
-                //邮政编码
-                if(row.getCell(22) != null && !row.getCell(22).toString().trim().equals("")){
-                    String zipcode = row.getCell(22).toString().trim();
-                    p.setZipcode(zipcode);
-                }
-                //主要学习工作经历
-                if(row.getCell(23) != null && !row.getCell(23).toString().trim().equals("")){
-                    String studyExperience = row.getCell(23).toString().trim();
-                    p.setStudyExperience(studyExperience);
-                }
-                //特长及能力
-                if(row.getCell(24) != null && !row.getCell(24).toString().trim().equals("")){
-                    String specialityAndAbility = row.getCell(24).toString().trim();
-                    p.setSpecialityAndAbility(specialityAndAbility);
-                }
-                //主要社会实践
-                if(row.getCell(25) != null && !row.getCell(25).toString().trim().equals("")){
-                    String socialExperience = row.getCell(25).toString().trim();
-                    p.setSocialExperience(socialExperience);
-                }
-                //获奖情况
-                if(row.getCell(26) != null && !row.getCell(26).toString().trim().equals("")){
-                    String award = row.getCell(26).toString().trim();
-                    p.setAward(award);
-                }
-                list.add(p);
             }
+
+            //专业
+            String major = row.getCell(7).toString().trim();
+            p.setMajor(major);
+
+            //应聘岗位
+            row = sheet.getRow(2);
+            String applyJob = row.getCell(1).toString().trim();
+            p.setApplyJob(applyJob);
+
+            //生源地
+            String origin = row.getCell(3).toString().trim();
+            p.setOrigin(origin);
+
+            //民族
+            String nationalName = row.getCell(5).toString().trim();
+            try {
+                Integer nationalId = dictMapper.findNationalIdByName(nationalName);
+                if (nationalId != null) {
+                    p.setNationalId(nationalId);
+                }
+            } catch (Exception exp) {
+
+            }
+
+            //出生日期
+            row = sheet.getRow(3);
+            String birthday = row.getCell(1).toString().trim();
+            p.setBirthday(birthday);
+
+            //政治面貌
+            String politicalName = row.getCell(3).toString().trim();
+            p.setPoliticalName(politicalName);
+
+            //身体状况
+            String health = row.getCell(5).toString().trim();
+            p.setHealth(health);
+
+            row = sheet.getRow(4);
+
+            //毕业院校
+            String graduateSchool = row.getCell(1).toString().trim();
+            p.setGraduateSchool(graduateSchool);
+
+            //学历
+            String degree = row.getCell(3).toString().trim();
+            p.setDegree(degree);
+
+            //是否能按期获得学位
+            String degreeOnTime = row.getCell(13).toString().trim();
+            p.setDegreeOnTime(degreeOnTime.equals("否") ? 1 : 0);
+
+            row = sheet.getRow(5);
+
+            //院校所在地
+            String schoolAddress = row.getCell(14).toString().trim();
+            p.setSchoolAddress(schoolAddress);
+
+            //毕业生性质
+            String graduateStatus = row.getCell(15).toString().trim();
+            p.setGraduateStatus(graduateStatus);
+
+            row = sheet.getRow(6);
+            //外语水平
+            String foreignLanguageLevel = row.getCell(16).toString().trim();
+            p.setForeignLanguageLevel(foreignLanguageLevel);
+
+            //婚姻状况
+            String marriageName = row.getCell(17).toString().trim();
+            Integer marriageId = dictMapper.findMarriageIdByName(marriageName);
+            if (marriageId != null){
+                p.setMarriageId(marriageId);
+            }
+
+            //联系电话
+            String cellphone = row.getCell(18).toString().trim();
+            p.setCellphone(cellphone);
+
+
+            row = sheet.getRow(7);
+
+
+            //身份证号码
+            if(row.getCell(19) != null && !row.getCell(19).toString().trim().equals("")){
+                String photoId = row.getCell(19).toString().trim();
+                p.setPhotoId(photoId);
+            }
+
+            //邮箱
+            if(row.getCell(20) != null && !row.getCell(20).toString().trim().equals("")){
+                String email = row.getCell(20).toString().trim();
+                p.setEmail(email);
+            }
+
+            row = sheet.getRow(8);
+
+            //联系地址
+            if(row.getCell(21) != null && !row.getCell(21).toString().trim().equals("")){
+                String address = row.getCell(21).toString().trim();
+                p.setAddress(address);
+            }
+            //邮政编码
+            if(row.getCell(22) != null && !row.getCell(22).toString().trim().equals("")){
+                String zipcode = row.getCell(22).toString().trim();
+                p.setZipcode(zipcode);
+            }
+
+            row = sheet.getRow(10);
+
+            //主要学习工作经历
+            if(row.getCell(23) != null && !row.getCell(23).toString().trim().equals("")){
+                String studyExperience = row.getCell(23).toString().trim();
+                p.setStudyExperience(studyExperience);
+            }
+
+            row = sheet.getRow(15);
+            //特长及能力
+            if(row.getCell(24) != null && !row.getCell(24).toString().trim().equals("")){
+                String specialityAndAbility = row.getCell(24).toString().trim();
+                p.setSpecialityAndAbility(specialityAndAbility);
+            }
+
+            row = sheet.getRow(20);
+            //主要社会实践
+            if(row.getCell(25) != null && !row.getCell(25).toString().trim().equals("")){
+                String socialExperience = row.getCell(25).toString().trim();
+                p.setSocialExperience(socialExperience);
+            }
+
+            row = sheet.getRow(23);
+            //获奖情况
+            if(row.getCell(26) != null && !row.getCell(26).toString().trim().equals("")){
+                String award = row.getCell(26).toString().trim();
+                p.setAward(award);
+            }
+
+
         } catch (IOException e1) {
             e1.printStackTrace();
 
         }
-        return list;
+        return p;
     }
 }
