@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.model.*;
-import com.wangzhixuan.service.ExamMonthlyService;
-import com.wangzhixuan.service.PeopleTimesheetService;
+import com.wangzhixuan.service.*;
 import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleContractSalaryBaseVo;
@@ -28,8 +27,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.service.PeopleContractSalaryService;
-import com.wangzhixuan.service.PeopleContractService;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 import com.wangzhixuan.vo.PeopleContractVo;
@@ -52,6 +49,9 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@Autowired
 	private ExamMonthlyService examMonthlyService;
+
+	@Autowired
+	private ExamYearlyService examYearlyService;
 
 	@RequestMapping(value = "/manager", method = RequestMethod.GET)
 	public String manager() {
@@ -197,6 +197,24 @@ public class PeopleContractSalaryController extends BaseController {
 		}else{
 			model.addAttribute("jobExamSalaryTotal", "0.00");
 		}
+
+		//如果是春节之前的一个月，还需要根据年度表现来计算是否发放奖金。优秀和合格发放奖金，不合格不发奖金
+		String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
+				peopleContractSalaryBase.getPeopleCode(),
+				DateUtil.GetCurrentYear()
+		);
+		String bonus = "0.00";
+
+		if (StringUtils.isNoneBlank(examYearlyResult)){
+			if (DateUtil.IsSprintFestivalPrevMonth()){
+				if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
+					if (peopleContractSalaryBase.getBonus() != null){
+						bonus = peopleContractSalaryBase.getBonus().toString();
+					}
+				}
+			}
+		}
+		model.addAttribute("bonus",bonus);
 
 		return "/admin/peopleContractSalary/peopleSalaryAdd";
 	}

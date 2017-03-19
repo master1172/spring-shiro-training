@@ -50,6 +50,9 @@ public class PeopleContract2SalaryController extends BaseController {
 	@Autowired
 	private ExamMonthlyService examMonthlyService;
 
+	@Autowired
+	private ExamYearlyService examYearlyService;
+
 	@RequestMapping(value = "/manager", method = RequestMethod.GET)
 	public String manager() {
 		return "/admin/peopleContract2Salary/people";
@@ -193,6 +196,24 @@ public class PeopleContract2SalaryController extends BaseController {
 		}else{
 			model.addAttribute("jobExamSalaryTotal", "0.00");
 		}
+
+		//如果是春节之前的一个月，还需要根据年度表现来计算是否发放奖金。优秀和合格发放奖金，不合格不发奖金
+		String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
+				peopleContractSalaryBase.getPeopleCode(),
+				DateUtil.GetCurrentYear()
+		);
+		String bonus = "0.00";
+
+		if (StringUtils.isNoneBlank(examYearlyResult)){
+			if (DateUtil.IsSprintFestivalPrevMonth()){
+				if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
+					if (peopleContractSalaryBase.getBonus() != null){
+						bonus = peopleContractSalaryBase.getBonus().toString();
+					}
+				}
+			}
+		}
+		model.addAttribute("bonus",bonus);
 
 		model.addAttribute("people", peopleContractSalaryBase);
 		return "/admin/peopleContract2Salary/peopleSalaryAdd";

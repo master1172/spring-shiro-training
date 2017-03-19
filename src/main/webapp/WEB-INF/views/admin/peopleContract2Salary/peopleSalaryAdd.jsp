@@ -198,7 +198,7 @@
                 <tr>
                     <td>奖金</td>
                     <td>
-                        <input name="bonus" id="bonus" type="text" value="${people.bonus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="bonus" id="bonus" type="text" value="${bonus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>补发</td>
                     <td>
