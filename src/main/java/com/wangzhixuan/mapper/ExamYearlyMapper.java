@@ -4,6 +4,7 @@ import com.wangzhixuan.model.ExamYearly;
 import com.wangzhixuan.utils.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ExamYearlyMapper {
     void deleteByPrimaryKey(Integer id);
@@ -24,5 +25,5 @@ public interface ExamYearlyMapper {
 
     List findExamYearlyVoListByCode(String code);
 
-    List findExamYearlyByCodeAndYear(String code, Integer year);
+    List findExamYearlyByCodeAndYear(Map<String, Object> condition);
 }

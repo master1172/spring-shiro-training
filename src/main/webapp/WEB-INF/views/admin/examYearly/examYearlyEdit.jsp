@@ -37,6 +37,7 @@
                         <select id="examResult" name="examResult" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value="优秀" >优秀</option>
                             <option value="合格" >合格</option>
+                            <option value="不合格">不合格</option>
                         </select>
                     </td>
                     <td>考核运用</td>

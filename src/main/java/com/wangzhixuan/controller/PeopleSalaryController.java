@@ -8,9 +8,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.tools.internal.jxc.ap.Const;
 import com.wangzhixuan.model.*;
-import com.wangzhixuan.service.ExamMonthlyService;
-import com.wangzhixuan.service.PeopleTimesheetService;
+import com.wangzhixuan.service.*;
+import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.DateUtil;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
@@ -30,8 +31,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.code.Result;
-import com.wangzhixuan.service.PeopleSalaryService;
-import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.PageInfo;
 
 /**
@@ -53,6 +52,9 @@ public class PeopleSalaryController extends BaseController{
 
     @Autowired
     private ExamMonthlyService examMonthlyService;
+
+    @Autowired
+    private ExamYearlyService examYearlyService;
 
     @RequestMapping(value="/manager", method = RequestMethod.GET)
     public String manager(){
@@ -181,6 +183,25 @@ public class PeopleSalaryController extends BaseController{
         }else{
             model.addAttribute("performanceAllowanceTotal", "0.00");
         }
+
+        //如果是春节之前的一个月，还需要根据年度表现来计算是否发放奖金。优秀和合格发放奖金，不合格不发奖金
+        String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
+                peopleSalaryBase.getPeopleCode(),
+                DateUtil.GetCurrentYear()
+        );
+
+        String yearlyBonus = "0.00";
+
+        if (StringUtils.isNoneBlank(examYearlyResult)){
+            if (DateUtil.IsSprintFestivalPrevMonth()){
+                if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
+                    if (peopleSalaryBase.getYearlyBonus() != null){
+                        yearlyBonus = peopleSalaryBase.getYearlyBonus().toString();
+                    }
+                }
+            }
+        }
+        model.addAttribute("yearlyBonus",yearlyBonus);
 
 
         model.addAttribute("examResult",examResult);

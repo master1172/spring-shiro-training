@@ -17,6 +17,12 @@ import java.util.GregorianCalendar;
 public class DateUtil {
 
 
+    public static boolean IsSprintFestivalPrevMonth(){
+        if (GetCurrentMonth() == 1)
+            return true;
+        return false;
+    }
+
     public static String GetCurrentYearAndMonth(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String today = format.format(new Date());

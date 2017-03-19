@@ -58,10 +58,10 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
     ExamMonthly examMonthly =  examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(condition);
 
     if (examMonthly == null)
-      return "A";
+      return "E";
 
     if (StringUtils.isBlank(examMonthly.getExamResult()))
-      return "A";
+      return "E";
 
     return examMonthly.getExamResult();
 

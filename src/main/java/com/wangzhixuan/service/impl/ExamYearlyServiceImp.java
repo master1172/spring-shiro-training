@@ -1,5 +1,6 @@
 package com.wangzhixuan.service.impl;
 
+import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.ExamYearlyMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
@@ -43,6 +44,23 @@ public class ExamYearlyServiceImp implements ExamYearlyService {
 	@Override
 	public ExamYearly findExamYearlyById(Long id) {
 		return examYearlyMapper.selectByPrimaryKey(id.intValue());
+	}
+
+	@Override
+	public String findPeopleExamYearlyResultByCodeAndYear(String peopleCode, Integer year) {
+		if (StringUtils.isBlank(peopleCode) || year == null)
+			return null;
+
+		Map<String, Object> condition = Maps.newHashMap();
+		condition.put("peopleCode",peopleCode);
+		condition.put("year", year);
+
+		List<ExamYearly> examYearlyList = examYearlyMapper.findExamYearlyByCodeAndYear(condition);
+
+		if (examYearlyList == null || examYearlyList.size() < 1)
+			return null;
+
+		return examYearlyList.get(0).getExamResult();
 	}
 
 	@Override

@@ -27,4 +27,6 @@ public interface ExamYearlyService {
   void batchDeletePeopleByIds(String[] idList);
 
   ExamYearly findExamYearlyById(Long id);
+
+  String findPeopleExamYearlyResultByCodeAndYear(String peopleCode, Integer year);
 }

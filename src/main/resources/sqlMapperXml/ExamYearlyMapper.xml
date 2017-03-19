@@ -90,16 +90,16 @@
     </where>
   </select>
 
-  <select id="findExamYearlyByCodeAndYear" parameterType="PageInfo" resultMap="BaseResultMap">
+  <select id="findExamYearlyByCodeAndYear" parameterType="java.util.Map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from exam_yearly t
     <where>
-      <if test=" condition.peopleCode != null and condition.peopleCode != ''">
-        and t.people_code LIKE concat('%',#{condition.peopleCode},'%')
+      <if test=" peopleCode != null and peopleCode != ''">
+        and t.people_code LIKE concat('%',#{peopleCode},'%')
       </if>
-      <if test=" condition.year != null">
-        and t.year = #{condition.year}
+      <if test="year != null">
+        and t.year = #{year}
       </if>
     </where>
     LIMIT 0, 1

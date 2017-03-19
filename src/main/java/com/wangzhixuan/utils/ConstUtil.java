@@ -111,6 +111,10 @@ public class ConstUtil {
     public static int PEOPLE_RETIRE_RETIRE = 0;
     public static int PEOPLE_RETIRE_REHIRE = 1;
 
+    public static String EXCELENT = "优秀";
+
+    public static String AVERAGE = "合格";
+
     public static String[] getExamMonthlyHeaders(){
         return new String[]{
                 "序号","姓名","考核结果","考核运用","考核日期"
@@ -145,4 +149,6 @@ public class ConstUtil {
                 "2002年11月至2012年10月","2012年11月及以后"
         };
     }
+
+
 }
