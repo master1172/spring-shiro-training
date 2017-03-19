@@ -196,7 +196,7 @@ public class RecruitController {
                 }
             }catch (Exception exp){
                 result.setSuccess(false);
-                result.setMsg(exp.toString());
+                result.setMsg("导入失败, 具体原因可参见:"+ exp.getMessage());
                 return result;
             }
         }else{
