@@ -8,7 +8,6 @@
         $("#sex").val('${recruit.sex}');
         $('#nationalId').val('${recruit.nationalId}');
         $("#degreeOnTime").val('${recruit.degreeOnTime}');
-        $("#graduateStatus").val('${recruit.graduateStatus}');
         $('#marriageId').val('${recruit.marriageId}');
         $('#imgShow').attr('src','${staticPath}/${recruit.photo}');
     });
@@ -112,11 +111,7 @@
                     </td>
                     <td>毕业生性质</td>
                     <td>
-                        <select name="graduateStatus" id="graduateStatus" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="统分" >统分</option>
-                            <option value="委培">委培</option>
-                            <option value="定向">定向</option>
-                        </select>
+                        <input type="text" id="graduateStatus" name="graduateStatus" value="${recruit.graduateStatus}">
                     </td>
                     <td>外语水平</td>
                     <td>

@@ -92,11 +92,7 @@
                     </td>
                     <td>毕业生性质</td>
                     <td>
-                        <select name="graduateStatus" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="统分" selected="selected">统分</option>
-                            <option value="委培">委培</option>
-                            <option value="定向">定向</option>
-                        </select>
+                        <input type="text" id="graduateStatus" name="graduateStatus" value="">
                     </td>
                     <td>外语水平</td>
                     <td>
