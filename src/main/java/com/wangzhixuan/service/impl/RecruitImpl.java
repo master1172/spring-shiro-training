@@ -158,7 +158,7 @@ public class RecruitImpl implements RecruitService {
                     }
                 }
             }
-            
+
             if (list.size() > 0) {
                 flag = recruitMapper.insertByImport(list) > 0;
             }

@@ -187,11 +187,17 @@ public class RecruitController {
     public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files){
         Result result = new Result();
         if(files!=null&&files.length>0){
-            boolean flag = recruitService.insertByImport(files);
-            result.setSuccess(flag);
-            if(!flag){
-                result.setMsg("系统繁忙，请稍后再试！");
+            try{
+                boolean flag = recruitService.insertByImport(files);
+                result.setSuccess(flag);
+                if(!flag){
+                    result.setMsg("系统繁忙，请稍后再试！");
+                    result.setSuccess(false);
+                }
+            }catch (Exception exp){
                 result.setSuccess(false);
+                result.setMsg(exp.toString());
+                return result;
             }
         }else{
             result.setSuccess(false);
