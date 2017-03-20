@@ -159,7 +159,7 @@
                     <td>
                         <select name="formation" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value="">请选择</option>
-                            <option value="学校" >学校</option>
+                            <option value="学院" >学院</option>
                             <option value="招待所" >招待所</option>
                         </select>
                     </td>

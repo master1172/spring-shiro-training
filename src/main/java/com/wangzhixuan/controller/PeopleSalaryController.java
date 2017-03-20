@@ -247,6 +247,18 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
+    @RequestMapping("/exportExcelForMonth")
+    public void exportExcelForMonth(HttpServletResponse response, String ids){
+        String payDate = ids;
+        if(StringUtils.isBlank(payDate)){
+            return;
+        }
+        try{
+            peopleSalaryService.exportExcelForMonth(response, payDate);
+        }catch (Exception exp){
+            return;
+        }
+    }
 
     @RequestMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response, String ids){

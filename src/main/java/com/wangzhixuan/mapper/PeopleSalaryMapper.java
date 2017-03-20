@@ -67,4 +67,6 @@ public interface PeopleSalaryMapper {
     PeopleSalary findPeopleSalaryById(Integer id);
 
     List findPeopleSalaryBaseVoByIdList(String[] ids);
+
+    List<PeopleSalaryVo> findPeopleSalaryVoListByCodeAndPayDate(Map<String,Object> condition);
 }

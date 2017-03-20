@@ -4,6 +4,22 @@
 <script type="text/javascript">
     $(function() {
         new uploadPreview({UpBtn:"up_img",DivShow:"imgdiv",ImgShow: "imgShow"});
+
+        $("#nationalId").combobox({
+           editable:true,
+            filter:function(q,row){
+                var opts = $(this).combobox('options');
+                return row[opts.textField].indexOf(q) == 0;
+            }
+        });
+
+        $("#nativeId").combobox({
+            editable:true,
+            filter:function(q,row){
+                var opts = $(this).combobox('options');
+                return row[opts.textField].indexOf(q) == 0;
+            }
+        });
     });
     function checkForm(){
     	progressLoad();

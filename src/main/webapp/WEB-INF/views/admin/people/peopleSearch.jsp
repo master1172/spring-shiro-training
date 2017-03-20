@@ -1,6 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript">
+
+    $(function(){
+        $("#nationalIdList").combobox({
+            editable:true,
+            filter:function(q,row){
+                var opts = $(this).combobox('options');
+                return row[opts.textField].indexOf(q) == 0;
+            }
+        });
+
+        $("#nativeIdList").combobox({
+            editable:true,
+            filter:function(q,row){
+                var opts = $(this).combobox('options');
+                return row[opts.textField].indexOf(q) == 0;
+            }
+        });
+    });
+
     function checkForm(){
         progressLoad();
         var isValid = $("#peopleQueryForm").form("validate");

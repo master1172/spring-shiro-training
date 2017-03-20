@@ -57,4 +57,6 @@ public interface PeopleSalaryService {
     String findPeopleIDsByCondition(PageInfo pageInfo);
 
     void exportCert(HttpServletResponse response, String ids);
+
+    void exportExcelForMonth(HttpServletResponse response, String payDate);
 }

@@ -195,6 +195,14 @@
             }
         }
 
+        function exportExcelForMonth(){
+            var payDate = $("#payDate").val();
+            var form=$("#downLoadForm");
+            form.find("input[name='ids']").val(payDate);
+            form.attr("action",'${path}'+"/peopleSalary/exportExcelForMonth");
+            $("#downLoadForm").submit();
+        }
+
         function salaryList(id) {
             parent.$.modalDialog({
                 title:'工资列表',
@@ -296,6 +304,15 @@
            data-options="plain:true,iconCls:'icon-add'">工资汇总表格</a>
         <a onclick="exportCert();" href="javascript:void(0);" class="easyui-linkbutton"
             data-options="plain:true,iconCls:'icon-add'">生成收入证明</a>
+        <a onclick="exportExcelForMonth();" href="javascript:void(0);" class="easyui-linkbutton"
+            data-options="plain:true,iconCls:'icon-add'">导出所选月份所有人工资信息</a>
+        <input id="payDate" name="payDate" placeholder="点击选择时间"
+           onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM',
+                                maxDate:'%y-%M-%d',
+                                })"
+           readonly="readonly"/>
         <!-- 附件下载使用 -->
         <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
