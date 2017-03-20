@@ -148,6 +148,33 @@
             dataGrid.datagrid('load', {});
         }
 
+        function autoCalculateSalary(){
+            parent.$.modalDialog({
+                title: '选择计算工资月份',
+                width: 500,
+                height: 300,
+                href: '${path}/peopleSalary/selectPayDate',
+                buttons: [{
+                    text: '调出',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid; //因为调出成功后，需要刷新这个datagrid
+                        var f = parent.$.modalDialog.handler.find("#selectDateForm");
+                        if (parent.checkForm()) {
+                            parent.SYS_SUBMIT_FORM(f, "/people/autoCalculateSalary", function (data) {
+                                if (!data["success"]) {
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                } else {
+                                    parent.progressClose();
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
         //导入Excel
         function importExcel(){
             parent.$.modalDialog({
@@ -283,10 +310,17 @@
         <tr>
             <th field="ck"            data-options="checkbox:true"></th>
             <th field="peopleName"    data-options="sortable:true" width="80">姓名</th>
-            <th field="jobLevel"      data-options="sortable:true" width="80">职级</th>
             <th field="jobSalary"     data-options="sortable:true" width="80">职级工资</th>
-            <th field="rankLevel"     data-options="sortable:true" width="80">薪级</th>
             <th field="rankSalary"    data-options="sortable:true" width="80">薪级工资</th>
+            <th field="reserveSalary"   data-options="sortable:false" width="80">工改保留工资</th>
+            <th field="jobAllowance"    data-options="sortable:false" width="80">岗位津贴</th>
+            <th field="rentAllowance"   data-options="sortable:false" width="80">提租补贴</th>
+            <th field="houseAllowance"  data-options="sortable:false" width="80">购房补贴</th>
+            <th field="dutyAllowance"   data-options="sortable:false" width="80">职务补贴</th>
+            <th field="extraAllowance"  data-options="sortable:false" width="80">适当补贴</th>
+            <th field="telephoneAllowance" data-options="sortable:false" width="80">通讯补贴</th>
+            <th field="propertyAllowance" data-options="sortable:false" width="80">物业补贴</th>
+            <th field="extraJobAllowance" data-options="sortable:false" width="80">挂职补贴</th>
             <th field="id"            data-options="sortable:true,formatter:operateFormatter" width="300">操作</th>
         </tr>
         </thead>
@@ -304,6 +338,8 @@
            data-options="plain:true,iconCls:'icon-add'">工资汇总表格</a>
         <a onclick="exportCert();" href="javascript:void(0);" class="easyui-linkbutton"
             data-options="plain:true,iconCls:'icon-add'">生成收入证明</a>
+        <a onclick="autoCalculateSalary();" href="javascript:void(0);" class="easyui-linkbutton"
+            data-options="plain:true,iconCls:'icon-add'">工资自动计算</a>
         <a onclick="exportExcelForMonth();" href="javascript:void(0);" class="easyui-linkbutton"
             data-options="plain:true,iconCls:'icon-add'">导出所选月份所有人工资信息</a>
         <input id="payDate" name="payDate" placeholder="点击选择时间"

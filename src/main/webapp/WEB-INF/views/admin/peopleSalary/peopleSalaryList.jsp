@@ -143,11 +143,17 @@
             <tr>
                 <th field="ck"              data-options="checkbox:true"></th>
                 <th field="payDate"         data-options="sortable:false" width="80">发放日期</th>
-                <th field="jobCategory"     data-options="sortable:false" width="80">岗位分类</th>
-                <th field="jobLevel"        data-options="sortable:false" width="80">职级</th>
                 <th field="jobSalary"       data-options="sortable:false" width="80">岗位工资</th>
-                <th field="rankLevel"       data-options="sortable:false" width="80">薪级</th>
                 <th field="rankSalary"      data-options="sortable:false" width="80">薪级工资</th>
+                <th field="reserveSalary"   data-options="sortable:false" width="80">工改保留工资</th>
+                <th field="jobAllowance"    data-options="sortable:false" width="80">岗位津贴</th>
+                <th field="rentAllowance"   data-options="sortable:false" width="80">提租补贴</th>
+                <th field="houseAllowance"  data-options="sortable:false" width="80">购房补贴</th>
+                <th field="dutyAllowance"   data-options="sortable:false" width="80">职务补贴</th>
+                <th field="extraAllowance"  data-options="sortable:false" width="80">适当补贴</th>
+                <th field="telephoneAllowance" data-options="sortable:false" width="80">通讯补贴</th>
+                <th field="propertyAllowance" data-options="sortable:false" width="80">物业补贴</th>
+                <th field="extraJobAllowance" data-options="sortable:false" width="80">挂职补贴</th>
                 <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
             </tr>
             </thead>

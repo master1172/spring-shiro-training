@@ -286,6 +286,11 @@ public class PeopleSalaryController extends BaseController{
         }
     }
 
+    @RequestMapping("/selectPayDate")
+    public String selectPayDate(){
+        return "/admin/peopleSalary/selectPayDate";
+    }
+
     @RequestMapping(value="/importExcelPage", method=RequestMethod.GET)
     public String importExcelPage(){
         return "admin/peopleSalary/importExcelPage";
