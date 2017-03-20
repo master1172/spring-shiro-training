@@ -37,7 +37,7 @@
         function advSearch() {
             parent.$.modalDialog({
                 title: '高级查询',
-                width: 1000,
+                width: 600,
                 height: 600,
                 href: '${path}/people/advSearchPage',
                 buttons: [{
@@ -58,7 +58,7 @@
         function exportSearch() {
             parent.$.modalDialog({
                 title: '导出',
-                width: 1000,
+                width: 600,
                 height: 600,
                 href: '${path}/people/exportSearchPage',
                 buttons: [{
