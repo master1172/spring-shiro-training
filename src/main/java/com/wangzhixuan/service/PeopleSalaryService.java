@@ -59,4 +59,6 @@ public interface PeopleSalaryService {
     void exportCert(HttpServletResponse response, String ids);
 
     void exportExcelForMonth(HttpServletResponse response, String payDate);
+
+    boolean autoCalculateSalary(String payDate, StringBuilder result);
 }

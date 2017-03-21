@@ -3,12 +3,16 @@ package com.wangzhixuan.service.impl;
 import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.*;
+import com.wangzhixuan.service.ExamMonthlyService;
+import com.wangzhixuan.service.ExamYearlyService;
 import com.wangzhixuan.service.PeopleSalaryService;
+import com.wangzhixuan.service.PeopleTimesheetService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.ExamYearlyVo;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -47,6 +51,15 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
     @Autowired
     private ExamYearlyMapper examYearlyMapper;
+
+    @Autowired
+    private PeopleTimesheetService peopleTimesheetService;
+
+    @Autowired
+    private ExamMonthlyService examMonthlyService;
+
+    @Autowired
+    private ExamYearlyService examYearlyService;
 
     @Override
     public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -529,6 +542,140 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                 exp.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean autoCalculateSalary(String payDate, StringBuilder processResult) {
+        boolean result = false;
+        try{
+            List<People> peopleList = peopleMapper.findAllPeople();
+
+            if (peopleList == null || peopleList.size() < 1){
+                result = true;
+                processResult.append("目前无在编人员");
+                return result;
+            }
+
+            for(int i=0; i<peopleList.size(); i++){
+                People people = peopleList.get(i);
+                if (people == null || StringUtils.isBlank(people.getCode()))
+                    continue;
+
+                String peopleCode = people.getCode();
+                Map<String, Object> condition = Maps.newHashMap();
+                condition.put("code", peopleCode);
+                condition.put("payDate", payDate);
+                List<PeopleSalaryVo> peopleSalaryVoList = peopleSalaryMapper.findPeopleSalaryVoListByCodeAndPayDate(condition);
+
+                //每人每个月只能有一条薪水记录，因此要删除掉其他薪水
+                if (peopleSalaryVoList != null && peopleSalaryVoList.size() > 0){
+                    for(int j=0; j<peopleSalaryVoList.size(); j++){
+                        PeopleSalaryVo peopleSalaryVo = peopleSalaryVoList.get(j);
+                        if (peopleSalaryVo == null || peopleSalaryVo.getId() == null)
+                            continue;
+                        peopleSalaryMapper.deleteSalaryById(peopleSalaryVo.getId().intValue());
+                    }
+                }
+
+                PeopleSalaryBase peopleSalaryBase = peopleSalaryMapper.findPeopleSalaryBaseByCode(people.getCode());
+
+                PeopleSalary peopleSalary = new PeopleSalary();
+                BeanUtils.copyProperties(peopleSalary, peopleSalaryBase);
+
+                peopleSalary.setId(null);
+                peopleSalary.setPeopleCode(people.getCode());
+                peopleSalary.setPayDate(payDate);
+
+
+                //根据当月考勤情况计算交通补贴和降温补贴
+                String firstDayOfSelectMonth = DateUtil.GetFirstDayOfSelectMonth(payDate);
+                String lastDayOfSelectMonth  = DateUtil.GetLastDayOfSelectMonth(payDate);
+
+                BigDecimal sumVacationPeriod = peopleTimesheetService.findVacationSumByCodeAndDate(
+                        people.getCode(),
+                        firstDayOfSelectMonth,
+                        lastDayOfSelectMonth);
+
+                peopleSalary.setTimesheetStatus(sumVacationPeriod);
+
+                if (sumVacationPeriod != null){
+                    Double trafficAllowance = 300.0 - 300 / 21.75 * sumVacationPeriod.doubleValue();
+                    Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
+
+                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+                    peopleSalary.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
+                    peopleSalary.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
+                }else{
+                    peopleSalary.setTrafficAllowance(new BigDecimal(300.00));
+                    peopleSalary.setTemperatureAllowance(new BigDecimal(100.00));
+                }
+
+                //根据月度考评计算绩效工资
+                String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
+                        peopleSalaryBase.getPeopleCode(),
+                        firstDayOfSelectMonth,
+                        lastDayOfSelectMonth
+                );
+
+                peopleSalary.setExamResult(examResult);
+
+                BigDecimal performanceAllowanceTotal = new BigDecimal(0.00);
+
+                if (StringUtils.isNoneBlank(examResult) && peopleSalary.getPerformanceAllowance() != null){
+                    if (examResult.equals("A")){
+                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance();
+                    }
+                    if (examResult.equals("B")){
+                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.8));
+                    }
+                    if (examResult.equals("C")){
+                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.5));
+                    }
+                    if (examResult.equals("D")){
+                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.2));
+                    }
+                    if (examResult.equals("E")){
+                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.0));
+                    }
+
+                    peopleSalary.setPerformanceAllowanceTotal(performanceAllowanceTotal);
+                }else{
+                    peopleSalary.setPerformanceAllowanceTotal(new BigDecimal(0.00));
+                }
+
+                //根据年度考评计算奖金
+                String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
+                        peopleSalary.getPeopleCode(),
+                        DateUtil.GetCurrentYear()
+                );
+
+                BigDecimal yearlyBonus = new BigDecimal(0.00);
+                if (StringUtils.isNoneBlank(examYearlyResult)){
+                    if (DateUtil.IsSprintFestivalPrevMonth()){
+                        if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
+                            if (peopleSalaryBase.getYearlyBonus() != null){
+                                yearlyBonus = peopleSalaryBase.getYearlyBonus();
+                            }
+                        }
+                    }
+                }
+                peopleSalary.setYearlyBonus(yearlyBonus);
+
+                BigDecimal grossIncome = CalculateGrossIncome(peopleSalary);
+                peopleSalary.setGrossSalary(grossIncome);
+
+                peopleSalaryMapper.insert(peopleSalary);
+            }
+
+            result = true;
+            processResult.append("工资自动计算完成");
+        }catch (Exception exp){
+            result  = false;
+            processResult.append(exp.getMessage());
+        }
+
+        return result;
     }
 
 

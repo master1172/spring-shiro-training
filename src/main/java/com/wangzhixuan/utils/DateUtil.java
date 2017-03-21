@@ -155,6 +155,15 @@ public class DateUtil {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
+
+    public static String GetFirstDayOfSelectMonth(String date){
+        return date + "-01";
+    }
+
+    public static String GetLastDayOfSelectMonth(String date){
+        return date + "-31";
+    }
+
     public static String GetFirstDayOfCurrentMonth(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Calendar   today = Calendar.getInstance();//获取当前日期
