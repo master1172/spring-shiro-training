@@ -577,7 +577,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                     }
                 }
 
-                PeopleSalaryBase peopleSalaryBase = peopleSalaryMapper.findPeopleSalaryBaseByCode(people.getCode());
+                PeopleSalaryBase peopleSalaryBase = peopleSalaryMapper.selectPeopleSalaryBaseByCode(people.getCode());
 
                 PeopleSalary peopleSalary = new PeopleSalary();
                 BeanUtils.copyProperties(peopleSalary, peopleSalaryBase);
