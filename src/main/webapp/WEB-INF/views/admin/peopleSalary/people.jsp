@@ -160,7 +160,7 @@
                         parent.$.modalDialog.openner_dataGrid = dataGrid; //因为调出成功后，需要刷新这个datagrid
                         var f = parent.$.modalDialog.handler.find("#selectDateForm");
                         if (parent.checkForm()) {
-                            parent.SYS_SUBMIT_FORM(f, "/people/autoCalculateSalary", function (data) {
+                            parent.SYS_SUBMIT_FORM(f, "/peopleSalary/autoCalculateSalary", function (data) {
                                 if (!data["success"]) {
                                     parent.progressClose();
                                     parent.$.messager.alert("提示", data["msg"], "warning");

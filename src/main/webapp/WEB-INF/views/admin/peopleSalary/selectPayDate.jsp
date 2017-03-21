@@ -20,7 +20,7 @@
                     <td>选择发工资日期</td>
                     <td colspan="3">
                         <input name="payDate" placeholder="点击选择起始时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
+                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM'})"
                                readonly="readonly"/>
                     </td>
 
