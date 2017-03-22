@@ -14,6 +14,19 @@
         $('#identityId').val('${peopleVo.identityId}');
         $('#imgShow').attr('src','${staticPath}/${peopleVo.photo}');
 
+        $('#jobCategory').combobox({
+            onChange:function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+
+                $('#jobId').combobox({
+                    url:'${path}/dict/job?jobCategory='+newValue,
+                    valueField:'id',
+                    textField:'name'
+                }).combobox('clear');
+            }
+        });
+
         $("#nationalId").combobox({
             editable:true,
             filter:function(q,row){
@@ -104,11 +117,11 @@
                     <td>
                         <input type="text" name="politicalName" value="${peopleVo.politicalName}">
                     </td>
-                    <td>学历</td>
+                    <td>学位</td>
                     <td>
                         <input type="text" name="educationName" value="${peopleVo.educationName}">
                     </td>
-                    <td>学位</td>
+                    <td>学历</td>
                     <td>
                         <input class="easyui-combobox" id="degreeId" name="degreeId" url="${path}/dict/degree" valueField="id" textField="name" editable="false">
                         </input>
@@ -144,6 +157,7 @@
                     <td>人员类别</td>
                     <td>
                         <select id="jobCategory" name="jobCategory" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option value=""> </option>
                             <option value="管理类">管理类</option>
                             <option value="专业类">专业类</option>
                             <option value="工勤类">工勤类</option>

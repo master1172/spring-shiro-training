@@ -3,6 +3,7 @@ package com.wangzhixuan.controller;
 import com.google.common.collect.Lists;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.model.Dict;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,15 @@ public class DictController {
 
     @RequestMapping(value="/job", method = RequestMethod.POST)
     @ResponseBody
-    public List<Dict> JobLevelDict(){
-        List<Dict> jobLevelList = dictMapper.findJobLevelDict();
+    public List<Dict> JobLevelDict(String jobCategory){
+        if (StringUtils.isBlank(jobCategory)){
+            List<Dict> jobLevelList = dictMapper.findJobLevelDict();
+            return jobLevelList;
+        }
+
+        List<Dict> jobLevelList = dictMapper.findJobLevelDictByCategory(jobCategory);
         return jobLevelList;
+
     }
 
     @RequestMapping(value="/marriage", method = RequestMethod.POST)

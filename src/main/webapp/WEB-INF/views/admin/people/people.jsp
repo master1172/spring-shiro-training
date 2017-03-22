@@ -420,8 +420,8 @@
             <th field="nationalName" data-options="sortable:true" width="80">民族</th>
             <th field="birthday" data-options="sortable:true" width="130">生日</th>
             <th field="nativeName" data-options="sortable:true" width="80">籍贯</th>
-            <th field="educationName" data-options="sortable:true" width="80">学历</th>
-            <th field="degreeName" data-options="sortable:true" width="80">学位</th>
+            <th field="educationName" data-options="sortable:true" width="80">学位</th>
+            <th field="degreeName" data-options="sortable:true" width="80">学历</th>
             <th field="jobName" data-options="sortable:true" width="80">职务</th>
             <th field="jobCategory" data-options="sortable:true" width="80">人员类别</th>
             <th field="jobLevelName" data-options="sortable:true" width="80">职级</th>

@@ -81,6 +81,14 @@
         order by id
     </select>
 
+    <select id="findJobLevelDictByCategory" resultMap="JobResultMap" parameterType="java.lang.String">
+        select
+        id, job_level
+        from job
+        where job_category = #{jobCategory, jdbcType=VARCHAR}
+        order by id
+    </select>
+
     <select id="findJobLevelIdByName" resultType="java.lang.Integer" parameterType="java.lang.String">
         select
         id

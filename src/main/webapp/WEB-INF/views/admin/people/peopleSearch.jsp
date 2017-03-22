@@ -78,11 +78,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>学历</td>
+                    <td>学位</td>
                     <td>
                         <input type="text" name="educationName">
                     </td>
-                    <td>学位</td>
+                    <td>学历</td>
                     <td>
                         <input class="easyui-combobox" id="degreeIdList" name="degreeIdList" url="${path}/dict/degree" valueField="id" textField="name" editable="false" multiple="true">
                         </input>

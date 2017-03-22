@@ -68,4 +68,6 @@ public interface DictMapper {
     public void delete(Dict dict);
 
     public void  update(Dict dict);
+
+    List<Dict> findJobLevelDictByCategory(String jobCategory);
 }
