@@ -35,4 +35,15 @@ public interface PeopleTimesheetMapper {
 
 	List findTimesheetListByCodeAndDate(Map<String, Object> condition);
 
+	List findPeopleTimesheetSumPageCondition(PageInfo pageInfo);
+
+	int findPeopleTimesheetSumPageCount(PageInfo pageInfo);
+
+	List findPeopleContractTimesheetSumPageCondition(PageInfo pageInfo);
+
+	int findPeopleContractTimesheetSumPageCount(PageInfo pageInfo);
+
+	List findPeopleContract2TimesheetSumPageCondition(PageInfo pageInfo);
+
+	int findPeopleContract2TimesheetSumPageCount(PageInfo pageInfo);
 }

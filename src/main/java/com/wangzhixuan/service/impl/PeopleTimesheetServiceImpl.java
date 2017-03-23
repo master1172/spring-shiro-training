@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
@@ -356,5 +357,23 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void findPeopleDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleTimesheetMapper.findPeopleTimesheetSumPageCondition(pageInfo));
+		pageInfo.setTotal(peopleTimesheetMapper.findPeopleTimesheetSumPageCount(pageInfo));
+	}
+
+	@Override
+	public void findPeopleContractDataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleTimesheetMapper.findPeopleContractTimesheetSumPageCondition(pageInfo));
+		pageInfo.setTotal(peopleTimesheetMapper.findPeopleContractTimesheetSumPageCount(pageInfo));
+	}
+
+	@Override
+	public void findPeopleContract2DataGrid(PageInfo pageInfo, HttpServletRequest request) {
+		pageInfo.setRows(peopleTimesheetMapper.findPeopleContract2TimesheetSumPageCondition(pageInfo));
+		pageInfo.setTotal(peopleTimesheetMapper.findPeopleContract2TimesheetSumPageCount(pageInfo));
 	}
 }

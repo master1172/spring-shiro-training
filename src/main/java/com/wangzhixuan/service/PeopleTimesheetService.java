@@ -1,5 +1,6 @@
 package com.wangzhixuan.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wangzhixuan.vo.PeopleTimesheetVo;
@@ -39,5 +40,11 @@ public interface PeopleTimesheetService {
     BigDecimal findVacationSumByCodeAndDate(String code, String checkDateMin, String checkDateMax);
 
     void exportVacationResult(HttpServletResponse response, String checkDate);
+
+    void findPeopleDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+    void findPeopleContractDataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+    void findPeopleContract2DataGrid(PageInfo pageInfo, HttpServletRequest request);
 }
 

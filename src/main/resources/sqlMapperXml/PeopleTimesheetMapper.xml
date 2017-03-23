@@ -20,6 +20,13 @@
 		<result column="vacation_period" jdbcType="DECIMAL" property="vacationPeriod" />
 	</resultMap>
 
+	<resultMap id="PeopleTimesheetSumResultMap" type="com.wangzhixuan.vo.PeopleTimesheetSumVo">
+		<id     column="id" 		 	jdbcType="INTEGER" property="id" />
+		<result column="code" 			jdbcType="VARCHAR" property="code" />
+		<result column="name" 			jdbcType="VARCHAR" property="name" />
+		<result column="vacation_sum"  	jdbcType="DECIMAL" property="vacationSum" />
+	</resultMap>
+
 	<sql id="Base_Column_List">
 		id, people_code, check_date, status, status_extra, vacation_period
 	</sql>
@@ -77,6 +84,115 @@
 			vacation_period = #{vacationPeriod,jdbcType=DECIMAL}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+
+	<select id="findPeopleTimesheetSumPageCondition" resultMap="PeopleTimesheetSumResultMap" parameterType="PageInfo">
+		select t.id, t.code, t.name,  COALESCE(SUM(p.vacation_period),0) as vacation_sum
+		from
+			people_total t left join people_timesheet p
+		on t.code = p.people_code
+		<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.status != null">
+				and t.status = 0
+			</if>
+		</where>
+		group by t.code
+		LIMIT #{from}, #{size}
+	</select>
+
+	<select id="findPeopleTimesheetSumPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+		SELECT count(t.id) count
+		FROM people_total t
+		<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.status != null">
+				and t.status = 0
+			</if>
+		</where>
+	</select>
+
+	<select id="findPeopleContractTimesheetSumPageCondition" resultMap="PeopleTimesheetSumResultMap" parameterType="PageInfo">
+		select t.id, t.code, t.name,  COALESCE(SUM(p.vacation_period),0) as vacation_sum
+		from
+		people_total t left join people_timesheet p
+		on t.code = p.people_code
+		<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.status != null">
+				and t.status = 4
+			</if>
+		</where>
+		group by t.code
+		LIMIT #{from}, #{size}
+	</select>
+
+	<select id="findPeopleContractTimesheetSumPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+		SELECT count(t.id) count
+		FROM people_total t
+		<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.status != null">
+				and t.status = 4
+			</if>
+		</where>
+	</select>
+
+	<select id="findPeopleContract2TimesheetSumPageCondition" resultMap="PeopleTimesheetSumResultMap" parameterType="PageInfo">
+		select t.id, t.code, t.name,  COALESCE(SUM(p.vacation_period),0) as vacation_sum
+		from
+		people_total t left join people_timesheet p
+		on t.code = p.people_code
+		<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.status != null">
+				and t.status = 5
+			</if>
+		</where>
+		group by t.code
+		LIMIT #{from}, #{size}
+	</select>
+
+	<select id="findPeopleContract2TimesheetSumPageCount" resultType="java.lang.Integer" parameterType="PageInfo">
+		SELECT count(t.id) count
+		FROM people_total t
+		<where>
+			<if test=" condition.name != null and condition.name != ''">
+				and t.name LIKE concat('%',#{condition.name},'%')
+			</if>
+			<if test=" condition.sex != null">
+				and t.sex = #{condition.sex}
+			</if>
+			<if test=" condition.status != null">
+				and t.status = 5
+			</if>
+		</where>
+	</select>
+
 
 	<select id="findPeopleTimesheetPageCondition" resultMap="BaseResultMap" parameterType="PageInfo">
 		SELECT

@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.DateUtil;
+import com.wangzhixuan.vo.PeopleContractVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -82,9 +84,34 @@ public class PeopleTimeSheetController extends BaseController {
 	public PageInfo dataGrid(HttpServletRequest request, PeopleVo peopleVo, Integer page, Integer rows, String sort, String order){
 		PageInfo pageInfo = new PageInfo(page, rows);
 		Map<String,Object> condition = PeopleVo.CreateCondition(peopleVo);
+		condition.put("checkDateMin", DateUtil.GetFirstDayOfCurrentMonth());
+		condition.put("checkDateMax", DateUtil.GetLastDayOfCurrentMonth());
 		pageInfo.setCondition(condition);
-		peopleService.findDataGrid(pageInfo,request);
+		timesheetService.findPeopleDataGrid(pageInfo,request);
+		return pageInfo;
+	}
 
+	@RequestMapping(value="/peopleContractdataGrid", method = RequestMethod.POST)
+	@ResponseBody
+	public PageInfo peopleContractdataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows, String sort, String order){
+		PageInfo pageInfo = new PageInfo(page, rows);
+		Map<String,Object> condition = PeopleContractVo.CreateCondition(peopleVo);
+		condition.put("checkDateMin", DateUtil.GetFirstDayOfCurrentMonth());
+		condition.put("checkDateMax", DateUtil.GetLastDayOfCurrentMonth());
+		pageInfo.setCondition(condition);
+		timesheetService.findPeopleContractDataGrid(pageInfo,request);
+		return pageInfo;
+	}
+
+	@RequestMapping(value="/peopleContract2dataGrid", method = RequestMethod.POST)
+	@ResponseBody
+	public PageInfo peopleContract2dataGrid(HttpServletRequest request, PeopleContractVo peopleVo, Integer page, Integer rows, String sort, String order){
+		PageInfo pageInfo = new PageInfo(page, rows);
+		Map<String,Object> condition = PeopleContractVo.CreateCondition(peopleVo);
+		condition.put("checkDateMin", DateUtil.GetFirstDayOfCurrentMonth());
+		condition.put("checkDateMax", DateUtil.GetLastDayOfCurrentMonth());
+		pageInfo.setCondition(condition);
+		timesheetService.findPeopleContract2DataGrid(pageInfo,request);
 		return pageInfo;
 	}
 

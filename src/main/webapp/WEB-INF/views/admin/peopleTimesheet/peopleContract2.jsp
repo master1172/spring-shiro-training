@@ -12,7 +12,7 @@
 
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${path}/peopleContract2/dataGrid',
+                url: '${path}/peopleTimesheet/peopleContract2dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -180,15 +180,7 @@
         <tr>
             <th field="ck"            data-options="checkbox:true"></th>
             <th field="name"          data-options="sortable:true" width="80">姓名</th>
-            <th field="sex"           data-options="sortable:true,formatter:sexFormatter" width="40">性别</th>
-            <th field="nationalName"  data-options="sortable:true" width="80">民族</th>
-            <th field="birthday"      data-options="sortable:true" width="130">生日</th>
-            <th field="nativeName"    data-options="sortable:true" width="80">籍贯</th>
-            <th field="educationName" data-options="sortable:true" width="80">学历</th>
-            <th field="degreeName"    data-options="sortable:true" width="80">学位</th>
-            <th field="jobName"       data-options="sortable:true" width="80">职务</th>
-            <th field="jobCategory"   data-options="sortable:true" width="80">人员类别</th>
-            <th field="jobLevelName"  data-options="sortable:true" width="80">职级</th>
+            <th field="vacationSum"  data-options="sortable:true" width="80">请假累计</th>
             <th field="code"          data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>
         </tr>
         </thead>
