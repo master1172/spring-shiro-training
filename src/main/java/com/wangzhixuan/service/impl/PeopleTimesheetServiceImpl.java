@@ -93,6 +93,31 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	}
 
 	@Override
+	public boolean insertTimesheetByImport(CommonsMultipartFile[] files) {
+		boolean flag = false;
+
+		if(files != null && files.length > 0){
+
+			List<PeopleTimesheet> list = new ArrayList<PeopleTimesheet>();
+
+			String filePath = this.getClass().getResource("/").getPath();
+
+			for(int i=0; i<files.length; i++){
+				try{
+					String path = UploadUtil.fileUpload(filePath, files[i]);
+					if (StringUtils.isNotBlank(path)) {
+						getTimesheetInfoByExcel(list, path);
+					}
+				}catch (Exception exp){
+					continue;
+				}
+			}
+		}
+		return false;
+	}
+
+
+	@Override
 	public boolean insertByImport(CommonsMultipartFile[] files) {
 
 		boolean flag = false;
@@ -123,6 +148,26 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 		return flag;
 	}
 
+	private void getTimesheetInfoByExcel(List<PeopleTimesheet> list, String path) throws IOException {
+		XSSFWorkbook xwb = new XSSFWorkbook(path);
+		XSSFSheet sheet = xwb.getSheetAt(0);
+		XSSFRow row;
+		for (int i = sheet.getFirstRowNum() + 5; i < sheet.getPhysicalNumberOfRows()-2; i++) {
+			try{
+				PeopleTimesheet timesheet = new PeopleTimesheet();
+				row = sheet.getRow(i);
+
+				if (row.getCell(0) == null || row.getCell(0).toString().trim().equals(""))
+					continue;
+
+				String peopleName = row.getCell(0).toString().trim();
+				People people = peopleMapper.findFirstPeopleByName(peopleName);
+				
+			}catch (Exception exp){
+				continue;
+			}
+		}
+	}
 
 	/**
 	 * 文件读取
