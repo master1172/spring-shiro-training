@@ -112,6 +112,8 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					continue;
 				}
 			}
+
+			peopleTimesheetMapper.insertByImport(list);
 		}
 		return false;
 	}
@@ -157,7 +159,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 		for (int i = sheet.getFirstRowNum() + 5; i < sheet.getPhysicalNumberOfRows()-2; i++) {
 			try{
-				PeopleTimesheet timesheet = new PeopleTimesheet();
+
 				row = sheet.getRow(i);
 
 				if (row.getCell(0) == null || row.getCell(0).toString().trim().equals(""))
@@ -169,9 +171,13 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				if (people == null || StringUtils.isBlank(people.getCode()))
 					continue;
 
-				timesheet.setPeopleCode(people.getCode());
+
 
 				for(int j=1; j<=31; j++){
+
+					PeopleTimesheet timesheet = new PeopleTimesheet();
+					timesheet.setPeopleCode(people.getCode());
+
 					if (row.getCell(j) == null || row.getCell(j).toString().trim().equals(""))
 						continue;
 
@@ -189,23 +195,55 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					//加班
 					if (timesheetStatus.equals(ConstUtil.TIMESHEET_EXTRAWORK)){
 						timesheet.setStatus("加班");
-						timesheet.setCheckDate(checkDate);
 					}
 
-					if (timesheetStatus.equals(ConstUtil.TIMESHEET_LATE){
+					if (timesheetStatus.equals(ConstUtil.TIMESHEET_LATE)){
 						timesheet.setStatus("迟到早退");
-						timesheet.setCheckDate(checkDate);
 					}
 
 					if (timesheetStatus.equals(ConstUtil.TIMESHEET_SICK_LEAVE)){
 						timesheet.setStatus("病假");
-						timesheet.setCheckDate(checkDate);
 					}
 
-					if (timesheetStatus.equals("")){
-						
+					if (timesheetStatus.equals(ConstUtil.TIMESHEET_PERSONAL_LEAVE)){
+						timesheet.setStatus("事假");
 					}
+
+					if(timesheetStatus.equals(ConstUtil.TIMESHEET_ABSENT)){
+						timesheet.setStatus("旷工");
+					}
+
+					if(timesheetStatus.equals(ConstUtil.TIMESHEET_COMPENSATE_REST)){
+						timesheet.setStatus("补休");
+					}
+
+					if(timesheetStatus.equals(ConstUtil.TIMESHEET_ADJUST_REST)){
+						timesheet.setStatus("调休");
+					}
+
+					if(timesheetStatus.equals(ConstUtil.TIMESHEET_ANNUAL_LEAVE)){
+						timesheet.setStatus("年休假");
+					}
+
+					if(timesheetStatus.equals(ConstUtil.TIMESHEET_MARRIAGE_LEAVE)){
+						timesheet.setStatus("婚假");
+					}
+
+					if(timesheetStatus.equals(ConstUtil.TIMESHEET_BIRTH_LEAVE)){
+						timesheet.setStatus("产假");
+					}
+
+					if(timesheetStatus.equals(ConstUtil.TIMESHEET_DEATH_LEAVE)){
+						timesheet.setStatus("丧假");
+					}
+
+					timesheet.setStatus("公休假");
+
+					timesheet.setCheckDate(checkDate);
+
+					list.add(timesheet);
 				}
+
 
 			}catch (Exception exp){
 				continue;

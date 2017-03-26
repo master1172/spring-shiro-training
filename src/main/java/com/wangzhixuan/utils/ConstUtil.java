@@ -161,6 +161,5 @@ public class ConstUtil {
     public static String TIMESHEET_ANNUAL_LEAVE = "S年";
     public static String TIMESHEET_MARRIAGE_LEAVE = "S婚";
     public static String TIMESHEET_BIRTH_LEAVE = "S产";
-    public static String TIMESHEET_LOST_LEAVE = "S丧";
-
+    public static String TIMESHEET_DEATH_LEAVE = "S丧";
 }

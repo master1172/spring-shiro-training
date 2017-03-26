@@ -224,12 +224,14 @@ public class PeopleTimeSheetController extends BaseController {
 		return "admin/peopleTimesheet/importExcelPage";
 	}
 
+
+
 	@RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
 	public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files){
 		Result result = new Result();
 		if(files!=null&&files.length>0){
-			boolean flag=timesheetService.insertByImport(files);
+			boolean flag=timesheetService.insertTimesheetByImport(files);
 			result.setSuccess(flag);
 			if(!flag){
 				result.setMsg("系统繁忙，请稍后再试！");
@@ -240,6 +242,7 @@ public class PeopleTimeSheetController extends BaseController {
 		}
 		return result;
 	}
+
 
 	@RequestMapping(value = "/dateRangePage")
 	public String dateRangePage(){
