@@ -150,5 +150,17 @@ public class ConstUtil {
         };
     }
 
+    public static String TIMESHEET_NORMAL = "√";
+    public static String TIMESHEET_EXTRAWORK = "＋";
+    public static String TIMESHEET_LATE = "∧";
+    public static String TIMESHEET_SICK_LEAVE = "△";
+    public static String TIMESHEET_PERSONAL_LEAVE = "×";
+    public static String TIMESHEET_ABSENT = "○";
+    public static String TIMESHEET_COMPENSATE_REST = "□";
+    public static String TIMESHEET_ADJUST_REST = "◇";
+    public static String TIMESHEET_ANNUAL_LEAVE = "S年";
+    public static String TIMESHEET_MARRIAGE_LEAVE = "S婚";
+    public static String TIMESHEET_BIRTH_LEAVE = "S产";
+    public static String TIMESHEET_LOST_LEAVE = "S丧";
 
 }

@@ -273,13 +273,13 @@ public class DateUtil {
         return true;
     }
 
-    public static String GetDateByDay(Integer j) {
+    public static String GetDateByDay(String yearAndMonth, Integer j) {
         if (j == null)
-            return null;
+            return yearAndMonth + "-01";
 
         if (j < 10)
-            return "0" + j.toString();
+            return yearAndMonth + "-0" + j.toString();
 
-        return j.toString();
+        return yearAndMonth + "-" + j.toString();
     }
 }

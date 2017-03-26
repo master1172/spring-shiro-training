@@ -152,6 +152,9 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 		XSSFWorkbook xwb = new XSSFWorkbook(path);
 		XSSFSheet sheet = xwb.getSheetAt(0);
 		XSSFRow row;
+
+		String yearAndMonth = DateUtil.GetCurrentYearAndMonth();
+
 		for (int i = sheet.getFirstRowNum() + 5; i < sheet.getPhysicalNumberOfRows()-2; i++) {
 			try{
 				PeopleTimesheet timesheet = new PeopleTimesheet();
@@ -172,17 +175,35 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					if (row.getCell(j) == null || row.getCell(j).toString().trim().equals(""))
 						continue;
 
-					DateUtil.GetDateByDay(j);
+					String checkDate = DateUtil.GetDateByDay(yearAndMonth,j);
 
 					String timesheetStatus = row.getCell(j).toString().trim();
 
+					if (StringUtils.isBlank(timesheetStatus))
+						continue;
+
 					//出勤
-					if (timesheetStatus == "√")
+					if (timesheetStatus.equals(ConstUtil.TIMESHEET_NORMAL))
 						continue;
 
 					//加班
-					if (timesheetStatus == "＋"){
+					if (timesheetStatus.equals(ConstUtil.TIMESHEET_EXTRAWORK)){
 						timesheet.setStatus("加班");
+						timesheet.setCheckDate(checkDate);
+					}
+
+					if (timesheetStatus.equals(ConstUtil.TIMESHEET_LATE){
+						timesheet.setStatus("迟到早退");
+						timesheet.setCheckDate(checkDate);
+					}
+
+					if (timesheetStatus.equals(ConstUtil.TIMESHEET_SICK_LEAVE)){
+						timesheet.setStatus("病假");
+						timesheet.setCheckDate(checkDate);
+					}
+
+					if (timesheetStatus.equals("")){
+						
 					}
 				}
 
