@@ -240,6 +240,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					timesheet.setStatus("公休假");
 
 					timesheet.setCheckDate(checkDate);
+					timesheet.setVacationPeriod(new BigDecimal(1.0));
 
 					list.add(timesheet);
 				}

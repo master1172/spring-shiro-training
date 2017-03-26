@@ -253,7 +253,7 @@
 	
     <insert id="insertByImport" parameterType="java.util.List">
         insert into people_timesheet
-	  		(people_code, check_date, status, vacation_period)
+	  		(people_code, check_date, status, status_extra, vacation_period)
         values
         <foreach item="item" index="index" collection="list" separator=",">
           (

@@ -231,10 +231,13 @@ public class PeopleTimeSheetController extends BaseController {
 	public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files){
 		Result result = new Result();
 		if(files!=null&&files.length>0){
-			boolean flag=timesheetService.insertTimesheetByImport(files);
-			result.setSuccess(flag);
-			if(!flag){
-				result.setMsg("系统繁忙，请稍后再试！");
+			try{
+				timesheetService.insertTimesheetByImport(files);
+				result.setMsg("导入成功");
+				result.setSuccess(true);
+			}catch (Exception exp){
+				result.setSuccess(false);
+				result.setMsg(exp.getMessage());
 			}
 		}else{
 			result.setSuccess(false);
