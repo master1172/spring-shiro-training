@@ -272,4 +272,14 @@ public class DateUtil {
 
         return true;
     }
+
+    public static String GetDateByDay(Integer j) {
+        if (j == null)
+            return null;
+
+        if (j < 10)
+            return "0" + j.toString();
+
+        return j.toString();
+    }
 }

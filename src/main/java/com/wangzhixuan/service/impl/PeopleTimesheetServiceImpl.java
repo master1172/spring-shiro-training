@@ -162,7 +162,30 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 				String peopleName = row.getCell(0).toString().trim();
 				People people = peopleMapper.findFirstPeopleByName(peopleName);
-				
+
+				if (people == null || StringUtils.isBlank(people.getCode()))
+					continue;
+
+				timesheet.setPeopleCode(people.getCode());
+
+				for(int j=1; j<=31; j++){
+					if (row.getCell(j) == null || row.getCell(j).toString().trim().equals(""))
+						continue;
+
+					DateUtil.GetDateByDay(j);
+
+					String timesheetStatus = row.getCell(j).toString().trim();
+
+					//出勤
+					if (timesheetStatus == "√")
+						continue;
+
+					//加班
+					if (timesheetStatus == "＋"){
+						timesheet.setStatus("加班");
+					}
+				}
+
 			}catch (Exception exp){
 				continue;
 			}

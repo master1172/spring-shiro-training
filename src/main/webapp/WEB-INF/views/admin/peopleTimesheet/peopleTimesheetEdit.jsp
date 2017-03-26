@@ -54,6 +54,10 @@
                             <option value="婚假" >婚假</option>
                             <option value="丧假" >丧假</option>
                             <option value="探亲假" >探亲假</option>
+                            <option value="旷工" >旷工</option>
+                            <option value="迟到早退">迟到早退</option>
+                            <option value="补休" >补休</option>
+                            <option value="调休" >调休</option>
                             <option value="其他" >其他</option>
                         </select>
                     </td>
