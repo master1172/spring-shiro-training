@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +94,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	}
 
 	@Override
-	public boolean insertTimesheetByImport(CommonsMultipartFile[] files) {
+	public boolean insertTimesheetByImport(CommonsMultipartFile[] files, String importDate) {
 		boolean flag = false;
 
 		if(files != null && files.length > 0){
@@ -106,14 +107,15 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				try{
 					String path = UploadUtil.fileUpload(filePath, files[i]);
 					if (StringUtils.isNotBlank(path)) {
-						getTimesheetInfoByExcel(list, path);
+						getTimesheetInfoByExcel(list, path, importDate);
 					}
 				}catch (Exception exp){
 					continue;
 				}
 			}
 
-			peopleTimesheetMapper.insertByImport(list);
+			if ((list != null) && (list.size() > 0))
+				peopleTimesheetMapper.insertByImport(list);
 		}
 		return false;
 	}
@@ -150,12 +152,12 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 		return flag;
 	}
 
-	private void getTimesheetInfoByExcel(List<PeopleTimesheet> list, String path) throws IOException {
+	private void getTimesheetInfoByExcel(List<PeopleTimesheet> list, String path, String importDate) throws IOException {
 		XSSFWorkbook xwb = new XSSFWorkbook(path);
 		XSSFSheet sheet = xwb.getSheetAt(0);
 		XSSFRow row;
 
-		String yearAndMonth = DateUtil.GetCurrentYearAndMonth();
+		String yearAndMonth = importDate;
 
 		for (int i = sheet.getFirstRowNum() + 5; i < sheet.getPhysicalNumberOfRows()-2; i++) {
 			try{
@@ -171,11 +173,16 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				if (people == null || StringUtils.isBlank(people.getCode()))
 					continue;
 
-
+				Map<String, Object> condition = Maps.newHashMap();
+				condition.put("peopleCode",people.getCode());
+				condition.put("checkDateMin", DateUtil.GetFirstDayOfSelectMonth(importDate));
+				condition.put("checkDateMax", DateUtil.GetLastDayOfSelectMonth(importDate));
+				peopleTimesheetMapper.deleteByPeopleCodeAndDate(condition);
 
 				for(int j=1; j<=31; j++){
 
 					PeopleTimesheet timesheet = new PeopleTimesheet();
+
 					timesheet.setPeopleCode(people.getCode());
 
 					if (row.getCell(j) == null || row.getCell(j).toString().trim().equals(""))
@@ -235,16 +242,15 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 					if(timesheetStatus.equals(ConstUtil.TIMESHEET_DEATH_LEAVE)){
 						timesheet.setStatus("丧假");
+					}else{
+						timesheet.setStatus("公休假");
 					}
-
-					timesheet.setStatus("公休假");
 
 					timesheet.setCheckDate(checkDate);
 					timesheet.setVacationPeriod(new BigDecimal(1.0));
 
 					list.add(timesheet);
 				}
-
 
 			}catch (Exception exp){
 				continue;

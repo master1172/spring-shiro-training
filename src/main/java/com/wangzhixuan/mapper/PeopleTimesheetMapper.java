@@ -46,4 +46,6 @@ public interface PeopleTimesheetMapper {
 	List findPeopleContract2TimesheetSumPageCondition(PageInfo pageInfo);
 
 	int findPeopleContract2TimesheetSumPageCount(PageInfo pageInfo);
+
+	void deleteByPeopleCodeAndDate(Map<String, Object> condition);
 }

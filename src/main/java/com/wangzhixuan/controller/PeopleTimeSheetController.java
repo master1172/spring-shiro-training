@@ -228,11 +228,11 @@ public class PeopleTimeSheetController extends BaseController {
 
 	@RequestMapping(value = "/importExcel", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
-	public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files){
+	public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files, String checkDate){
 		Result result = new Result();
 		if(files!=null&&files.length>0){
 			try{
-				timesheetService.insertTimesheetByImport(files);
+				timesheetService.insertTimesheetByImport(files, checkDate);
 				result.setMsg("导入成功");
 				result.setSuccess(true);
 			}catch (Exception exp){

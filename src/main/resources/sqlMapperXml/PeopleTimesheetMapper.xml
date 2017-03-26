@@ -308,4 +308,12 @@
 			<![CDATA[ and t.check_date >= #{checkDateMin} ]]>
 			<![CDATA[ and t.check_date <= #{checkDateMax} ]]>
 	</select>
+
+	<delete id="deleteByPeopleCodeAndDate" parameterType="java.util.Map">
+		delete from people_timesheet
+		WHERE
+			people_code = #{peopleCode}
+			<![CDATA[ and check_date >= #{checkDateMin} ]]>
+			<![CDATA[ and check_date <= #{checkDateMax} ]]>
+	</delete>
 </mapper>

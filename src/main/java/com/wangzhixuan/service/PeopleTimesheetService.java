@@ -31,7 +31,7 @@ public interface PeopleTimesheetService {
 
 	boolean insertByImport(CommonsMultipartFile[] files);
 
-    boolean insertTimesheetByImport(CommonsMultipartFile[] files);
+    boolean insertTimesheetByImport(CommonsMultipartFile[] files, String checkDate);
 
 	void exportExcel(HttpServletResponse response, String[] idList);
 

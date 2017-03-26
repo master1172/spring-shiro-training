@@ -21,6 +21,16 @@
                     <td>
                         <input type="file" name="fileName" multiple="multiple" placeholder="请选择文件" class="easyui-validatebox" data-options="required:true">
                     </td>
+                    <td>考勤月份</td>
+                    <td>
+                        <input id="checkDate" name="checkDate" placeholder="点击选择时间"
+                               onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM',
+                                maxDate:'%y-%M',
+                                })"
+                               readonly="readonly"/>
+                    </td>
                 </tr>
             </table>
         </form>
