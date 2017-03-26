@@ -167,8 +167,7 @@ public class PeopleContractSalaryController extends BaseController {
 
 		String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
 				peopleContractSalaryBase.getPeopleCode(),
-				firstDayOfCurrentMonth,
-				lastDayOfCurrentMonth
+				DateUtil.GetCurrentYearAndMonth()
 		);
 
 		model.addAttribute("examResult",examResult);

@@ -155,8 +155,7 @@ public class PeopleSalaryController extends BaseController{
 
         String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
                 peopleSalaryBase.getPeopleCode(),
-                firstDayOfCurrentMonth,
-                lastDayOfCurrentMonth
+                DateUtil.GetCurrentYearAndMonth()
         );
 
         BigDecimal performanceAllowanceTotal = new BigDecimal(0.00);

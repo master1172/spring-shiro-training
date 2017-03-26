@@ -614,8 +614,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                 //根据月度考评计算绩效工资
                 String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
                         peopleSalaryBase.getPeopleCode(),
-                        firstDayOfSelectMonth,
-                        lastDayOfSelectMonth
+                        payDate
                 );
 
                 peopleSalary.setExamResult(examResult);

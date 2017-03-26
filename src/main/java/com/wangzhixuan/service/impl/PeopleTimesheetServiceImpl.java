@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
+import com.wangzhixuan.mapper.ExamMonthlyMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleVo;
@@ -52,6 +54,9 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 	@Autowired
 	private PeopleMapper peopleMapper;
+
+	@Autowired
+	private ExamMonthlyMapper examMonthlyMapper;
 
 	@Override
 	public PeopleTimesheet selectByPrimaryKey(Integer id) {
@@ -251,6 +256,31 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 					list.add(timesheet);
 				}
+
+				//月度考核情况导入
+				if (row.getCell(32) != null){
+
+					String examResult = row.getCell(32).toString().trim();
+					if (StringUtils.isNoneBlank(examResult)){
+
+						Map<String, Object> examCondition = Maps.newHashMap();
+						examCondition.put("peopleCode",people.getCode());
+						examCondition.put("examDate", importDate);
+						ExamMonthly examMonthly = examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(condition);
+
+						if (examMonthly != null){
+							examMonthly.setExamResult(examResult);
+							examMonthlyMapper.updateByPrimaryKey(examMonthly);
+						}else{
+							examMonthly = new ExamMonthly();
+							examMonthly.setExamResult(examResult);
+							examMonthly.setExamDate(importDate);
+							examMonthly.setPeopleCode(people.getCode());
+							examMonthlyMapper.insert(examMonthly);
+						}
+					}
+				}
+
 
 			}catch (Exception exp){
 				continue;

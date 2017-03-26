@@ -128,10 +128,7 @@
     WHERE
       t.people_code = #{peopleCode}
       <if test=" startDate != null and startDate != ''">
-          <![CDATA[ and t.exam_date >= #{startDate} ]]>
-      </if>
-      <if test=" endDate != null and endDate != ''">
-        <![CDATA[ and t.exam_date <= #{endDate} ]]>
+          <![CDATA[ and t.exam_date = #{examDate} ]]>
       </if>
       LIMIT 0,1
   </select>
