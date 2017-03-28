@@ -45,4 +45,6 @@ public interface PeopleContractSalaryService {
     BigDecimal CalculateGrossIncome(PeopleContractSalary peopleContractSalary);
 
     void exportCert(HttpServletResponse response, String ids);
+
+    boolean autoCalculateSalary(String payDate, StringBuilder processResult);
 }

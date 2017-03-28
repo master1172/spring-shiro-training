@@ -155,7 +155,7 @@
                 height: 300,
                 href: '${path}/peopleSalary/selectPayDate',
                 buttons: [{
-                    text: '调出',
+                    text: '计算',
                     handler: function () {
                         parent.$.modalDialog.openner_dataGrid = dataGrid; //因为调出成功后，需要刷新这个datagrid
                         var f = parent.$.modalDialog.handler.find("#selectDateForm");
@@ -166,6 +166,7 @@
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 } else {
                                     parent.progressClose();
+                                    parent.$.message.alert("提示","计算完成","info");
                                     dataGrid.datagrid("reload");
                                     parent.$.modalDialog.handler.dialog("close");
                                 }

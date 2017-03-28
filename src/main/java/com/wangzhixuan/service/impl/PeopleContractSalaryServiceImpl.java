@@ -9,16 +9,21 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleContractMapper;
 import com.wangzhixuan.mapper.PeopleMapper;
 import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.model.PeopleContractSalaryBase;
+import com.wangzhixuan.service.ExamMonthlyService;
+import com.wangzhixuan.service.ExamYearlyService;
+import com.wangzhixuan.service.PeopleTimesheetService;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleContractVo;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -26,6 +31,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +59,15 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	private PeopleContractMapper peopleContractMapper;
 	@Autowired
 	private DictMapper dictMapper;
+
+	@Autowired
+	private ExamMonthlyService examMonthlyService;
+
+	@Autowired
+	private ExamYearlyService examYearlyService;
+
+	@Autowired
+	private PeopleTimesheetService peopleTimesheetService;
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -386,5 +401,140 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 			WordUtil.OutputWord(response, filePath, newFileName, params);
 		}
+	}
+
+	@Override
+	public boolean autoCalculateSalary(String payDate, StringBuilder processResult) {
+		boolean result = false;
+		try{
+			List<PeopleContract> peopleContractList = peopleContractMapper.findAllPeople();
+
+			if(peopleContractList == null || peopleContractList.size() < 1){
+				result = true;
+				processResult.append("目前无合同制人员");
+				return result;
+			}
+
+			for(int i=0; i<peopleContractList.size(); i++){
+				PeopleContract peopleContract = peopleContractList.get(i);
+				if (peopleContract == null || StringUtils.isBlank(peopleContract.getCode()))
+					continue;
+
+
+				String peopleCode = peopleContract.getCode();
+				Map<String, Object> condition = Maps.newHashMap();
+				condition.put("code", peopleCode);
+				condition.put("payDate", payDate);
+				List<PeopleContractSalary> peopleContractSalaryList = peopleContractSalaryMapper.findPeopleContractSalaryListByCodeAndPayDate(condition);
+
+				//每人每个月只能有一条薪水记录，因此要删除掉其他薪水
+				if (peopleContractSalaryList != null && peopleContractSalaryList.size() > 0){
+					for(int j=0; j<peopleContractSalaryList.size(); j++){
+						PeopleContractSalary peopleContractSalary = peopleContractSalaryList.get(j);
+						if (peopleContractSalary == null || peopleContractSalary.getId() == null)
+							continue;
+
+						peopleContractSalaryMapper.deleteByPrimaryKey(peopleContractSalary.getId());
+					}
+				}
+
+				PeopleContractSalaryBase peopleContractSalaryBase = peopleContractSalaryMapper.findPeopleContractSalaryBaseByCode(peopleContract.getCode());
+
+				PeopleContractSalary peopleContractSalary = new PeopleContractSalary();
+				BeanUtils.copyProperties(peopleContractSalary, peopleContractSalaryBase);
+
+				peopleContractSalary.setId(null);
+				peopleContractSalary.setPeopleCode(peopleContract.getCode());
+				peopleContractSalary.setPayDate(payDate);
+
+
+				//根据当月考勤情况计算交通补贴和降温补贴
+				String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfSelectMonth(payDate);
+				String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfSelectMonth(payDate);
+
+				BigDecimal sumVacationPeriod = peopleTimesheetService.findVacationSumByCodeAndDate(
+						peopleContractSalaryBase.getPeopleCode(),
+						firstDayOfCurrentMonth,
+						lastDayOfCurrentMonth);
+
+				if (sumVacationPeriod != null){
+					peopleContractSalary.setTimesheetStatus(sumVacationPeriod);
+				}
+
+				if (sumVacationPeriod != null){
+					Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
+					DecimalFormat decimalFormat = new DecimalFormat("0.00");
+					peopleContractSalary.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
+				}else{
+					peopleContractSalary.setTemperatureAllowance(new BigDecimal(100.00));
+				}
+
+				//根据月度考评计算绩效工资
+				String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
+						peopleContractSalary.getPeopleCode(),
+						payDate
+				);
+
+				peopleContractSalary.setExamResult(examResult);
+
+				BigDecimal jobExamSalaryTotal = new BigDecimal(0.00);
+
+				if (StringUtils.isNoneBlank(examResult) && peopleContractSalary.getJobExamSalary() != null){
+					if (examResult.equals("A")){
+						jobExamSalaryTotal = peopleContractSalary.getJobExamSalary();
+					}
+					if (examResult.equals("B")){
+						jobExamSalaryTotal = peopleContractSalary.getJobExamSalary().multiply(new BigDecimal(0.8));
+					}
+					if (examResult.equals("C")){
+						jobExamSalaryTotal = peopleContractSalary.getJobExamSalary().multiply(new BigDecimal(0.5));
+					}
+					if (examResult.equals("D")){
+						jobExamSalaryTotal = peopleContractSalary.getJobExamSalary().multiply(new BigDecimal(0.2));
+					}
+					if (examResult.equals("E")){
+						jobExamSalaryTotal = peopleContractSalary.getJobExamSalary().multiply(new BigDecimal(0.0));
+					}
+
+					peopleContractSalary.setJobExamSalaryTotal(jobExamSalaryTotal);
+				}else{
+					peopleContractSalary.setJobExamSalaryTotal(jobExamSalaryTotal);
+				}
+
+				//根据年度考评计算奖金
+				String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
+						peopleContractSalary.getPeopleCode(),
+						DateUtil.GetCurrentYear()
+				);
+
+				BigDecimal bonus = new BigDecimal(0.00);
+				if (StringUtils.isNoneBlank(examYearlyResult)){
+					if (DateUtil.IsSprintFestivalPrevMonth()){
+						if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
+							if (peopleContractSalary.getBonus() != null){
+								bonus = peopleContractSalaryBase.getBonus();
+							}
+						}
+					}
+				}
+
+				peopleContractSalary.setBonus(bonus);
+
+				BigDecimal grossIncome = CalculateGrossIncome(peopleContractSalary);
+				peopleContractSalary.setGrossIncome(grossIncome);
+
+				peopleContractSalaryMapper.insert(peopleContractSalary);
+
+			}
+
+			result = true;
+			processResult.append("工资自动计算完成");
+
+		}catch (Exception exp){
+			result  = false;
+			processResult.append(exp.getMessage());
+		}
+
+		return result;
 	}
 }

@@ -572,4 +572,14 @@
 		order by pay_date desc
 		limit 0,1
 	</select>
+
+	<select id="findPeopleContractSalaryListByCodeAndPayDate" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT
+		<include refid="Base_Column_List"/>
+		from people_contract_salary
+		where
+			people_code = #{peopleCode, jdbcType=VARCHAR}
+		AND
+			pay_date = #{payDate, jdbcType=VARCHAR}
+	</select>
 </mapper>

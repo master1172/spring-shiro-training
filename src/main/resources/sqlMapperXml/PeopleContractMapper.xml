@@ -61,6 +61,13 @@
         id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_id, job_id, comment, photo, photo_id, job_date
     </sql>
 
+    <select id="findAllPeople" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from people_total
+        where status = 4
+    </select>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
