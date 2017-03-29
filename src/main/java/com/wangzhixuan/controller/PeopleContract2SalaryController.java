@@ -139,6 +139,29 @@ public class PeopleContract2SalaryController extends BaseController {
 		}
 	}
 
+	@RequestMapping("/autoCalculateSalary")
+	@ResponseBody
+	public Result autoCalculateSalary(String payDate){
+		Result result = new Result();
+		if (StringUtils.isBlank(payDate)){
+			result.setSuccess(false);
+			result.setMsg("请选择正确的日期");
+			return result;
+		}
+
+		try{
+			StringBuilder processResult = new StringBuilder();
+			boolean process = peopleContract2SalaryService.autoCalculateSalary(payDate,processResult);
+			result.setSuccess(process);
+			result.setMsg(processResult.toString());
+		}catch (Exception exp){
+			result.setSuccess(false);
+			result.setMsg(exp.getMessage());
+		}
+
+		return result;
+	}
+
 	@RequestMapping("/addPage")
 	public String addPage(String peopleCode, Model model) {
 		PeopleContractSalaryBase peopleContractSalaryBase = peopleContract2SalaryService.findPeopleContractSalaryBaseByCode(peopleCode);

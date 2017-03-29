@@ -7,6 +7,7 @@ import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PeopleContract2SalaryMapper {
     int deleteByPrimaryKey(Integer id);
@@ -50,4 +51,6 @@ public interface PeopleContract2SalaryMapper {
     PeopleContractSalary findPeopleContractSalaryById(Integer id);
 
     PeopleContractSalary findLatestPeopleSalaryByCode(String code);
+
+    List<PeopleContractSalary> findPeopleContractSalaryListByCodeAndPayDate(Map<String, Object> condition);
 }

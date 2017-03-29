@@ -97,4 +97,6 @@ public interface PeopleContract2Mapper {
 
     PeopleContract findFirstPeopleByName(String name);
     PeopleContract findPeopleContractByCode(String code);
+
+    List<PeopleContract> findAllPeople();
 }

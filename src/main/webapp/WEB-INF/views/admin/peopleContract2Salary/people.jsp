@@ -35,6 +35,35 @@
             });
         });
 
+        function autoCalculateSalary(){
+            parent.$.modalDialog({
+                title: '选择计算工资月份',
+                width: 500,
+                height: 300,
+                href: '${path}/peopleSalary/selectPayDate',
+                buttons: [{
+                    text: '计算',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid; //因为调出成功后，需要刷新这个datagrid
+                        var f = parent.$.modalDialog.handler.find("#selectDateForm");
+                        if (parent.checkForm()) {
+                            parent.SYS_SUBMIT_FORM(f, "/peopleContract2Salary/autoCalculateSalary", function (data) {
+                                if (!data["success"]) {
+                                    parent.progressClose();
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                } else {
+                                    parent.progressClose();
+                                    parent.$.message.alert("提示","计算完成","info");
+                                    dataGrid.datagrid("reload");
+                                    parent.$.modalDialog.handler.dialog("close");
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
         function editFun(id) {
             if (id == undefined) {
                 var rows = dataGrid.datagrid('getSelections');
@@ -291,6 +320,17 @@
        data-options="plain:true,iconCls:'icon-add'">高级查询</a>
     <a onclick="exportCert();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">生成收入证明</a>
+    <a onclick="autoCalculateSalary();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">工资自动计算</a>
+    <a onclick="exportExcelForMonth();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导出所选月份所有人工资信息</a>
+    <input id="payDate" name="payDate" placeholder="点击选择时间"
+           onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM',
+                                maxDate:'%y-%M-%d',
+                                })"
+           readonly="readonly"/>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>
