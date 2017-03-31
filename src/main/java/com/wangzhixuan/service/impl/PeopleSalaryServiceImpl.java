@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -508,50 +509,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                     }
                 }
 
-                PeopleSalaryBase peopleSalaryBase = peopleSalaryMapper.selectPeopleSalaryBaseByCode(people.getCode());
-
-                PeopleSalary peopleSalary = new PeopleSalary();
-                BeanUtils.copyProperties(peopleSalary, peopleSalaryBase);
-
-                peopleSalary.setId(null);
-                peopleSalary.setPeopleCode(people.getCode());
-                peopleSalary.setPayDate(payDate);
-
-
-                //根据当月考勤情况计算交通补贴和降温补贴
-                String firstDayOfSelectMonth = DateUtil.GetFirstDayOfSelectMonth(payDate);
-                String lastDayOfSelectMonth  = DateUtil.GetLastDayOfSelectMonth(payDate);
-
-                BigDecimal sumVacationPeriod = peopleTimesheetService.findVacationSumByCodeAndDate(
-                        people.getCode(),
-                        firstDayOfSelectMonth,
-                        lastDayOfSelectMonth);
-
-                peopleSalary.setTimesheetStatus(sumVacationPeriod);
-
-                SalaryCalculator.PeopleSalaryCalculateTemperatureAllowance(peopleSalary);
-                SalaryCalculator.PeopleSalaryCalculateTrafficAllowance(peopleSalary);
-
-                //根据月度考评计算绩效工资
-                String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
-                        peopleSalaryBase.getPeopleCode(),
-                        payDate
-                );
-
-                peopleSalary.setExamResult(examResult);
-
-                SalaryCalculator.GetPerformanceTotalByMonthlyExamResult(peopleSalary);
-
-                //根据年度考评计算奖金
-                String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
-                        peopleSalary.getPeopleCode(),
-                        DateUtil.GetCurrentYear()
-                );
-
-                BigDecimal yearlyBonus = SalaryCalculator.GetBonusByYearlyExamResult(examYearlyResult, peopleSalaryBase);
-                peopleSalary.setYearlyBonus(yearlyBonus);
-
-                SalaryCalculator.PeopleSalaryCalculator(peopleSalary);
+                PeopleSalary peopleSalary = getPeopleSalary(payDate, people.getCode());
 
                 peopleSalaryMapper.insert(peopleSalary);
             }
@@ -564,6 +522,62 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         }
 
         return result;
+    }
+
+    private PeopleSalary getPeopleSalary(String payDate, String peopleCode){
+        try{
+            PeopleSalaryBase peopleSalaryBase = peopleSalaryMapper.selectPeopleSalaryBaseByCode(peopleCode);
+
+            PeopleSalary peopleSalary = new PeopleSalary();
+            BeanUtils.copyProperties(peopleSalary, peopleSalaryBase);
+
+            peopleSalary.setId(null);
+            peopleSalary.setPeopleCode(peopleCode);
+            peopleSalary.setPayDate(payDate);
+
+
+            //根据当月考勤情况计算交通补贴和降温补贴
+            String firstDayOfSelectMonth = DateUtil.GetFirstDayOfSelectMonth(payDate);
+            String lastDayOfSelectMonth  = DateUtil.GetLastDayOfSelectMonth(payDate);
+
+            BigDecimal sumVacationPeriod = peopleTimesheetService.findVacationSumByCodeAndDate(
+                    peopleCode,
+                    firstDayOfSelectMonth,
+                    lastDayOfSelectMonth);
+
+            peopleSalary.setTimesheetStatus(sumVacationPeriod);
+
+            SalaryCalculator.PeopleSalaryCalculateTemperatureAllowance(peopleSalary);
+            SalaryCalculator.PeopleSalaryCalculateTrafficAllowance(peopleSalary);
+
+            //根据月度考评计算绩效工资
+            String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
+                    peopleSalaryBase.getPeopleCode(),
+                    payDate
+            );
+
+            peopleSalary.setExamResult(examResult);
+
+            SalaryCalculator.GetPerformanceTotalByMonthlyExamResult(peopleSalary);
+
+            //根据年度考评计算奖金
+            String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
+                    peopleSalary.getPeopleCode(),
+                    DateUtil.GetCurrentYear()
+            );
+
+            BigDecimal yearlyBonus = SalaryCalculator.GetBonusByYearlyExamResult(examYearlyResult, peopleSalaryBase);
+            peopleSalary.setYearlyBonus(yearlyBonus);
+
+            SalaryCalculator.PeopleSalaryCalculator(peopleSalary);
+            return peopleSalary;
+        }catch (Exception exp){
+            PeopleSalary peopleSalary = new PeopleSalary();
+            peopleSalary.setPayDate(payDate);
+            peopleSalary.setPeopleCode(peopleCode);
+
+            return peopleSalary;
+        }
     }
 
 
