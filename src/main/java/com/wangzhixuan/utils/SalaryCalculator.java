@@ -1,6 +1,7 @@
 package com.wangzhixuan.utils;
 
 import com.wangzhixuan.model.PeopleSalary;
+import com.wangzhixuan.model.PeopleSalaryBase;
 import com.wangzhixuan.model.PeopleTimesheet;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,11 +13,101 @@ import java.text.DecimalFormat;
  */
 public class SalaryCalculator {
 
+    public static BigDecimal PeopleSalaryCalculateTrafficAllowance(PeopleSalary peopleSalary){
+        if (peopleSalary == null)
+            return new BigDecimal(0.00);
+
+        BigDecimal sumVacationPeriod = peopleSalary.getTimesheetStatus();
+
+        if (sumVacationPeriod != null){
+            Double trafficAllowance = 300.0 - 300 / 21.75 * sumVacationPeriod.doubleValue();
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            peopleSalary.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
+        }else{
+            peopleSalary.setTrafficAllowance(new BigDecimal(300.00));
+        }
+
+        return peopleSalary.getTrafficAllowance();
+    }
+
+    public static BigDecimal PeopleSalaryCalculateTemperatureAllowance(PeopleSalary peopleSalary){
+
+        if (peopleSalary == null)
+            return new BigDecimal(0.00);
+
+        BigDecimal sumVacationPeriod = peopleSalary.getTimesheetStatus();
+
+        if (sumVacationPeriod != null){
+            Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            peopleSalary.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
+        }else{
+            peopleSalary.setTemperatureAllowance(new BigDecimal(100.00));
+        }
+
+        return peopleSalary.getTemperatureAllowance();
+    }
+
+
+    public static BigDecimal GetBonusByYearlyExamResult(String examYearlyResult, PeopleSalaryBase peopleSalaryBase){
+
+        BigDecimal yearlyBonus = new BigDecimal(0.00);
+
+        if (peopleSalaryBase == null)
+            return yearlyBonus;
+
+        if (StringUtils.isNoneBlank(examYearlyResult)){
+            if (DateUtil.IsSprintFestivalPrevMonth()){
+                if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
+                    if (peopleSalaryBase.getYearlyBonus() != null){
+                        yearlyBonus = peopleSalaryBase.getYearlyBonus();
+                    }
+                }
+            }
+        }
+
+        return yearlyBonus;
+    }
+
+    public static BigDecimal GetPerformanceTotalByMonthlyExamResult(PeopleSalary peopleSalary){
+
+        if (peopleSalary == null){
+            return new BigDecimal(0.00);
+        }
+
+        BigDecimal performanceAllowance = peopleSalary.getPerformanceAllowance();
+
+        String examResult = peopleSalary.getExamResult();
+
+        BigDecimal performanceAllowanceTotal = new BigDecimal(0.00);
+
+        if (StringUtils.isNoneBlank(examResult) && performanceAllowance != null){
+            if (examResult.equals("A")){
+                performanceAllowanceTotal = performanceAllowance;
+            }
+            if (examResult.equals("B")){
+                performanceAllowanceTotal = performanceAllowance.multiply(new BigDecimal(0.8));
+            }
+            if (examResult.equals("C")){
+                performanceAllowanceTotal = performanceAllowance.multiply(new BigDecimal(0.5));
+            }
+            if (examResult.equals("D")){
+                performanceAllowanceTotal = performanceAllowance.multiply(new BigDecimal(0.2));
+            }
+            if (examResult.equals("E")){
+                performanceAllowanceTotal = performanceAllowance.multiply(new BigDecimal(0.0));
+            }
+        }
+
+        peopleSalary.setPerformanceAllowanceTotal(performanceAllowanceTotal);
+
+        return performanceAllowanceTotal;
+    }
+
     public static boolean PeopleSalaryCalculator(PeopleSalary peopleSalary){
         if (peopleSalary == null){
             return false;
         }
-
 
         BigDecimal grossIncome = new BigDecimal(0.00);
 
@@ -30,24 +121,11 @@ public class SalaryCalculator {
             if (peopleSalary.getReserveSalary() != null)
                 grossIncome = grossIncome.add(peopleSalary.getReserveSalary());
 
-            if (peopleSalary.getPerformanceAllowance() != null){
-                if (StringUtils.isNoneBlank(peopleSalary.getExamResult())){
-                    BigDecimal performanceTotal = peopleSalary.getPerformanceAllowance();
-                    if (peopleSalary.getExamResult().equals("A")){
-                        performanceTotal = performanceTotal.multiply(new BigDecimal(1.0));
-                    }else if (peopleSalary.getExamResult().equals("B")){
-                        performanceTotal = performanceTotal.multiply(new BigDecimal(0.8));
-                    }else if (peopleSalary.getExamResult().equals("C")){
-                        performanceTotal = performanceTotal.multiply(new BigDecimal(0.5));
-                    }else if (peopleSalary.getExamResult().equals("C")){
-                        performanceTotal = performanceTotal.multiply(new BigDecimal(0.2));
-                    }else if (peopleSalary.getExamResult().equals("C")){
-                        performanceTotal = new BigDecimal(0.00);
-                    }else{
-                        performanceTotal = new BigDecimal(0.00);
-                    }
-                    grossIncome = grossIncome.add(performanceTotal);
-                }
+            if (peopleSalary.getPerformanceAllowanceTotal() != null){
+                grossIncome = grossIncome.add(peopleSalary.getPerformanceAllowanceTotal());
+            }else{
+                BigDecimal performanceAllowanceTotal = GetPerformanceTotalByMonthlyExamResult(peopleSalary);
+                grossIncome = grossIncome.add(performanceAllowanceTotal);
             }
 
             if (peopleSalary.getJobAllowance() != null)

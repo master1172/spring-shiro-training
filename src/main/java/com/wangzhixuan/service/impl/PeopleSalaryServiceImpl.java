@@ -498,7 +498,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                 condition.put("payDate", payDate);
                 List<PeopleSalaryVo> peopleSalaryVoList = peopleSalaryMapper.findPeopleSalaryVoListByCodeAndPayDate(condition);
 
-                //每人每个月只能有一条薪水记录，因此要删除掉其他薪水
+                //每人每个月只能有一条薪水记录，因此要检查并删除掉重复的薪水记录
                 if (peopleSalaryVoList != null && peopleSalaryVoList.size() > 0){
                     for(int j=0; j<peopleSalaryVoList.size(); j++){
                         PeopleSalaryVo peopleSalaryVo = peopleSalaryVoList.get(j);
@@ -529,18 +529,8 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
                 peopleSalary.setTimesheetStatus(sumVacationPeriod);
 
-                if (sumVacationPeriod != null){
-                    Double trafficAllowance = 300.0 - 300 / 21.75 * sumVacationPeriod.doubleValue();
-                    Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
-
-                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
-                    peopleSalary.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
-                    peopleSalary.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
-                }else{
-                    peopleSalary.setTrafficAllowance(new BigDecimal(300.00));
-                    peopleSalary.setTemperatureAllowance(new BigDecimal(100.00));
-                }
+                SalaryCalculator.PeopleSalaryCalculateTemperatureAllowance(peopleSalary);
+                SalaryCalculator.PeopleSalaryCalculateTrafficAllowance(peopleSalary);
 
                 //根据月度考评计算绩效工资
                 String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
@@ -550,29 +540,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
 
                 peopleSalary.setExamResult(examResult);
 
-                BigDecimal performanceAllowanceTotal = new BigDecimal(0.00);
-
-                if (StringUtils.isNoneBlank(examResult) && peopleSalary.getPerformanceAllowance() != null){
-                    if (examResult.equals("A")){
-                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance();
-                    }
-                    if (examResult.equals("B")){
-                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.8));
-                    }
-                    if (examResult.equals("C")){
-                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.5));
-                    }
-                    if (examResult.equals("D")){
-                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.2));
-                    }
-                    if (examResult.equals("E")){
-                        performanceAllowanceTotal = peopleSalary.getPerformanceAllowance().multiply(new BigDecimal(0.0));
-                    }
-
-                    peopleSalary.setPerformanceAllowanceTotal(performanceAllowanceTotal);
-                }else{
-                    peopleSalary.setPerformanceAllowanceTotal(new BigDecimal(0.00));
-                }
+                SalaryCalculator.GetPerformanceTotalByMonthlyExamResult(peopleSalary);
 
                 //根据年度考评计算奖金
                 String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
@@ -580,20 +548,10 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                         DateUtil.GetCurrentYear()
                 );
 
-                BigDecimal yearlyBonus = new BigDecimal(0.00);
-                if (StringUtils.isNoneBlank(examYearlyResult)){
-                    if (DateUtil.IsSprintFestivalPrevMonth()){
-                        if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
-                            if (peopleSalaryBase.getYearlyBonus() != null){
-                                yearlyBonus = peopleSalaryBase.getYearlyBonus();
-                            }
-                        }
-                    }
-                }
+                BigDecimal yearlyBonus = SalaryCalculator.GetBonusByYearlyExamResult(examYearlyResult, peopleSalaryBase);
                 peopleSalary.setYearlyBonus(yearlyBonus);
 
-                BigDecimal grossIncome = CalculateGrossIncome(peopleSalary);
-                peopleSalary.setGrossSalary(grossIncome);
+                SalaryCalculator.PeopleSalaryCalculator(peopleSalary);
 
                 peopleSalaryMapper.insert(peopleSalary);
             }
