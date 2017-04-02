@@ -187,7 +187,7 @@ public class PeopleSalaryController extends BaseController{
 
         model.addAttribute("examResult",examResult);
         model.addAttribute("peopleSalary", peopleSalary);
-        
+
         return "/admin/peopleSalary/peopleSalaryAdd";
     }
 
@@ -234,7 +234,7 @@ public class PeopleSalaryController extends BaseController{
     public void exportExcelForMonth(HttpServletResponse response, String ids){
         String payDate = ids;
         if(StringUtils.isBlank(payDate)){
-            return;
+            payDate = DateUtil.GetCurrentYearAndMonth();
         }
         try{
             peopleSalaryService.exportExcelForMonth(response, payDate);
