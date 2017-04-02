@@ -3,8 +3,8 @@
 <script type="text/javascript">
 
     $(function(){
-        $("#jobId").val('${peopleSalaryBase.jobId}');
-        $("#rankId").val('${peopleSalaryBase.rankId}');
+        $("#jobId").val('${peopleSalary.jobId}');
+        $("#rankId").val('${peopleSalary.rankId}');
         $("#examResult").val('${examResult}');
 
         $("#jobId").combobox({
@@ -32,9 +32,12 @@
 
         $("#examResult").combobox({
             onChange:function(newValue, oldValue){
+
                 if (newValue == oldValue)
                     return;
+
                 var performanceAllowance = $("#performanceAllowance").numberbox('getValue');
+
                 var performanceAllowanceTotal = 0.00;
 
                 if (newValue == 'A'){
@@ -154,12 +157,8 @@
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="salaryAddForm" method="post">
             <table class="grid" border=1>
-                <input type="hidden" name="peopleCode" value="${peopleSalaryBase.peopleCode}">
+                <input type="hidden" name="peopleCode" value="${peopleSalary.peopleCode}">
                 <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input name="name" type="text" value="${peopleSalaryBase.peopleName}" class="easyui-validatebox" data-options="required:true">
-                    </td>
                     <td colspan="3">
                         <a href="javascript:void(0);" class="easyui-linkbutton"
                            data-options="iconCls:'icon-cancel',plain:true" onclick="calculateSalary();">自动计算工资</a>
@@ -173,7 +172,7 @@
                     </td>
                     <td>岗位工资</td>
                     <td>
-                        <input name="jobSalary" id="jobSalary" type="text" value="${peopleSalaryBase.jobSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobSalary" id="jobSalary" type="text" value="${peopleSalary.jobSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>薪级</td>
                     <td>
@@ -182,18 +181,18 @@
                     </td>
                     <td>薪级工资</td>
                     <td>
-                        <input name="rankSalary" id="rankSalary" type="text" value="${peopleSalaryBase.rankSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="rankSalary" id="rankSalary" type="text" value="${peopleSalary.rankSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
                     <td>工改保留工资</td>
                     <td>
-                        <input name="reserveSalary" id="reserveSalary" type="text" value="${peopleSalaryBase.reserveSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="reserveSalary" id="reserveSalary" type="text" value="${peopleSalary.reserveSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
 
                     <td>岗位津贴</td>
                     <td>
-                        <input name="jobAllowance" id="jobAllowance" type="text" value="${peopleSalaryBase.jobAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobAllowance" id="jobAllowance" type="text" value="${peopleSalary.jobAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
 
                 </tr>
@@ -210,21 +209,21 @@
                     </td>
                     <td>绩效津贴基数</td>
                     <td>
-                        <input name="performanceAllowance" id="performanceAllowance" type="text" value="${peopleSalaryBase.performanceAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="performanceAllowance" id="performanceAllowance" type="text" value="${peopleSalary.performanceAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>绩效津贴</td>
                     <td>
-                        <input name="performanceAllowanceTotal" id="performanceAllowanceTotal" type="text" value="${performanceAllowanceTotal}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="performanceAllowanceTotal" id="performanceAllowanceTotal" type="text" value="${peopleSalary.performanceAllowanceTotal}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
                     <td>提租补贴</td>
                     <td>
-                        <input name="rentAllowance" id="rentAllowance" value="${peopleSalaryBase.rentAllowance}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="rentAllowance" id="rentAllowance" value="${peopleSalary.rentAllowance}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>购房补贴</td>
                     <td>
-                        <input name="houseAllowance" id="houseAllowance" value="${peopleSalaryBase.houseAllowance}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="houseAllowance" id="houseAllowance" value="${peopleSalary.houseAllowance}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>考勤情况</td>
                     <td>
@@ -234,25 +233,25 @@
                 <tr>
                     <td>职务补贴</td>
                     <td>
-                        <input name="dutyAllowance" id="dutyAllowance" type="text" value="${peopleSalaryBase.dutyAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="dutyAllowance" id="dutyAllowance" type="text" value="${peopleSalary.dutyAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>适当补贴</td>
                     <td>
-                        <input name="extraAllowance" id="extraAllowance" type="text" value="${peopleSalaryBase.extraAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="extraAllowance" id="extraAllowance" type="text" value="${peopleSalary.extraAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>通讯补贴</td>
                     <td>
-                        <input name="telephoneAllowance" id="telephoneAllowance" type="text" value="${peopleSalaryBase.telephoneAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="telephoneAllowance" id="telephoneAllowance" type="text" value="${peopleSalary.telephoneAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>交通补贴</td>
                     <td>
-                        <input name="trafficAllowance" id="trafficAllowance" type="text" value="${peopleSalaryBase.trafficAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="trafficAllowance" id="trafficAllowance" type="text" value="${peopleSalary.trafficAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
                     <td>单日值班费</td>
                     <td>
-                        <input name="onDutyFee" id="onDutyFee" type="text" value="${peopleSalaryBase.onDutyFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="onDutyFee" id="onDutyFee" type="text" value="${peopleSalary.onDutyFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>值班天数</td>
                     <td>
@@ -264,31 +263,31 @@
                     </td>
                     <td>物业补贴</td>
                     <td>
-                        <input name="propertyAllowance" id="propertyAllowance" type="text" value="${peopleSalaryBase.propertyAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="propertyAllowance" id="propertyAllowance" type="text" value="${peopleSalary.propertyAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
                     <td>挂职补贴</td>
                     <td>
-                        <input name="extraJobAllowance" id="extraJobAllowance" type="text" value="${peopleSalaryBase.extraJobAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="extraJobAllowance" id="extraJobAllowance" type="text" value="${peopleSalary.extraJobAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>降温补贴</td>
                     <td>
-                        <input name="temperatureAllowance" id="temperatureAllowance" type="text" value="${peopleSalaryBase.temperatureAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="temperatureAllowance" id="temperatureAllowance" type="text" value="${peopleSalary.temperatureAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>补发</td>
                     <td>
-                        <input name="reissueFee" id="reissueFee" type="text" value="${peopleSalaryBase.reissueFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="reissueFee" id="reissueFee" type="text" value="${peopleSalary.reissueFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>药费报销</td>
                     <td>
-                        <input name="medicare" id="medicare" type="text" value="${peopleSalaryBase.medicare}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="medicare" id="medicare" type="text" value="${peopleSalary.medicare}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
                     <td>一次性年终奖励</td>
                     <td>
-                        <input name="yearlyBonus" id="yearlyBonus" type="text" value="${yearlyBonus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="yearlyBonus" id="yearlyBonus" type="text" value="${peopleSalary.yearlyBonus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>应发合计</td>
                     <td>
@@ -298,25 +297,25 @@
                 <tr>
                     <td>养老保险</td>
                     <td>
-                        <input name="lifeInsurance" id="lifeInsurance" type="text" value="${peopleSalaryBase.lifeInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="lifeInsurance" id="lifeInsurance" type="text" value="${peopleSalary.lifeInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>失业保险</td>
                     <td>
-                        <input name="jobInsurance" id="jobInsurance" type="text" value="${peopleSalaryBase.jobInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobInsurance" id="jobInsurance" type="text" value="${peopleSalary.jobInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>医疗保险</td>
                     <td>
-                        <input name="healthInsurance" id="healthInsurance" type="text" value="${peopleSalaryBase.healthInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="healthInsurance" id="healthInsurance" type="text" value="${peopleSalary.healthInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>职业年金</td>
                     <td>
-                        <input name="annuity" id="annuity" type="text" value="${peopleSalaryBase.annuity}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="annuity" id="annuity" type="text" value="${peopleSalary.annuity}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
                     <td>住房公积金</td>
                     <td>
-                        <input name="houseFund" id="houseFund" type="text" value="${peopleSalaryBase.houseFund}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="houseFund" id="houseFund" type="text" value="${peopleSalary.houseFund}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>扣款</td>
                     <td>

@@ -13,9 +13,11 @@ import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.*;
 import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.DateUtil;
+import com.wangzhixuan.utils.SalaryCalculator;
 import com.wangzhixuan.vo.PeopleSalaryBaseVo;
 import com.wangzhixuan.vo.PeopleSalaryVo;
 import com.wangzhixuan.vo.PeopleVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.converters.DoubleConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -124,10 +126,19 @@ public class PeopleSalaryController extends BaseController{
 
     @RequestMapping("/addPage")
     public String addPage(String peopleCode, Model model){
+
         PeopleSalaryBase peopleSalaryBase = peopleSalaryService.findPeopleSalaryBaseByCode(peopleCode);
 
         if (peopleSalaryBase == null)
             peopleSalaryBase = new PeopleSalaryBase();
+
+        PeopleSalary peopleSalary = new PeopleSalary();
+
+        try{
+            BeanUtils.copyProperties(peopleSalary, peopleSalaryBase);
+        }catch (Exception exp){
+
+        }
 
         String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfCurrentMonth();
         String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfCurrentMonth();
@@ -137,20 +148,23 @@ public class PeopleSalaryController extends BaseController{
                 firstDayOfCurrentMonth,
                 lastDayOfCurrentMonth);
 
+        SalaryCalculator.PeopleSalaryCalculateTrafficAllowance(peopleSalary);
+
+
+
         if (sumVacationPeriod != null){
             Double trafficAllowance = 300.0 - 300 / 21.75 * sumVacationPeriod.doubleValue();
             Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
 
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-            peopleSalaryBase.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
-            peopleSalaryBase.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
+            peopleSalary.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
+            peopleSalary.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
         }else{
-            peopleSalaryBase.setTrafficAllowance(new BigDecimal(300.00));
-            peopleSalaryBase.setTemperatureAllowance(new BigDecimal(100.00));
+            peopleSalary.setTrafficAllowance(new BigDecimal(300.00));
+            peopleSalary.setTemperatureAllowance(new BigDecimal(100.00));
         }
 
-        model.addAttribute("peopleSalaryBase", peopleSalaryBase);
         model.addAttribute("sumVacationPeriod",sumVacationPeriod);
 
         String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
@@ -158,30 +172,8 @@ public class PeopleSalaryController extends BaseController{
                 DateUtil.GetCurrentYearAndMonth()
         );
 
-        BigDecimal performanceAllowanceTotal = new BigDecimal(0.00);
-
-        if (StringUtils.isNoneBlank(examResult) && peopleSalaryBase.getPerformanceAllowance() != null){
-            if (examResult.equals("A")){
-                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance();
-            }
-            if (examResult.equals("B")){
-                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.8));
-            }
-            if (examResult.equals("C")){
-                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.5));
-            }
-            if (examResult.equals("D")){
-                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.2));
-            }
-            if (examResult.equals("E")){
-                performanceAllowanceTotal = peopleSalaryBase.getPerformanceAllowance().multiply(new BigDecimal(0.0));
-            }
-
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            model.addAttribute("performanceAllowanceTotal", decimalFormat.format(performanceAllowanceTotal));
-        }else{
-            model.addAttribute("performanceAllowanceTotal", "0.00");
-        }
+        peopleSalary.setExamResult(examResult);
+        SalaryCalculator.GetPerformanceTotalByMonthlyExamResult(peopleSalary);
 
         //如果是春节之前的一个月，还需要根据年度表现来计算是否发放奖金。优秀和合格发放奖金，不合格不发奖金
         String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
@@ -189,21 +181,13 @@ public class PeopleSalaryController extends BaseController{
                 DateUtil.GetCurrentYear()
         );
 
-        String yearlyBonus = "0.00";
-
-        if (StringUtils.isNoneBlank(examYearlyResult)){
-            if (DateUtil.IsSprintFestivalPrevMonth()){
-                if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
-                    if (peopleSalaryBase.getYearlyBonus() != null){
-                        yearlyBonus = peopleSalaryBase.getYearlyBonus().toString();
-                    }
-                }
-            }
-        }
-        model.addAttribute("yearlyBonus",yearlyBonus);
+        BigDecimal yearlyBonus = SalaryCalculator.GetBonusByYearlyExamResult(examYearlyResult, peopleSalaryBase);
+        peopleSalary.setYearlyBonus(yearlyBonus);
 
 
         model.addAttribute("examResult",examResult);
+        model.addAttribute("peopleSalary", peopleSalary);
+        
         return "/admin/peopleSalary/peopleSalaryAdd";
     }
 
