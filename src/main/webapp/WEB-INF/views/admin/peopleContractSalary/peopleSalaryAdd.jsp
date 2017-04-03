@@ -122,15 +122,16 @@
                 <tr>
                     <td>职级</td>
                     <td>
-                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false" data-options="required:true"></input>
+                        <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false" data-options="required:true">
+                        </input>
                     </td>
                     <td>岗位工资</td>
                     <td>
-                        <input name="jobSalary" id="jobSalary" type="text" value="${people.jobSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobSalary" id="jobSalary" type="text" value="${peopleContractSalary.jobSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>院龄工资</td>
                     <td>
-                        <input name="schoolSalary" id="schoolSalary" type="text" value="${people.schoolSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="schoolSalary" id="schoolSalary" type="text" value="${peopleContractSalary.schoolSalary}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                  </tr>
                  <tr>
@@ -146,45 +147,45 @@
                     </td>
                     <td>岗位考核工资基数</td>
                     <td>
-                        <input name="jobExamSalary" id="jobExamSalary" value="${people.jobExamSalary}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobExamSalary" id="jobExamSalary" value="${peopleContractSalary.jobExamSalary}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>岗位考核工资</td>
                     <td>
-                        <input name="jobExamSalaryTotal" id="jobExamSalaryTotal" value="${jobExamSalaryTotal}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobExamSalaryTotal" id="jobExamSalaryTotal" value="${peopleContractSalary.jobExamSalaryTotal}" type="text" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                  </tr>
                  <tr>
                      <td>交通补贴</td>
                      <td>
-                        <input name="trafficAllowance" id="trafficAllowance" type="text" value="${people.trafficAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="trafficAllowance" id="trafficAllowance" type="text" value="${peopleContractSalary.trafficAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                      </td>
                      <td>特殊补贴</td>
                      <td>
-                        <input name="specialAllowance" id="specialAllowance" type="text" value="${people.specialAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="specialAllowance" id="specialAllowance" type="text" value="${peopleContractSalary.specialAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                      </td>
                      <td>领班补贴</td>
                      <td>
-                        <input name="headAllowance" id="headAllowance" type="text" value="${people.headAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="headAllowance" id="headAllowance" type="text" value="${peopleContractSalary.headAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                      </td>
 				 </tr>
                  <tr>
                      <td>通讯补贴</td>
                      <td>
-                         <input name="telephoneAllowance" id="telephoneAllowance" type="text" value="${people.telephoneAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                         <input name="telephoneAllowance" id="telephoneAllowance" type="text" value="${peopleContractSalary.telephoneAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                      </td>
                      <td>考勤结果</td>
                      <td>
-                         <input name="timesheetStatus" id="timesheetStatus" type="text" value="${sumVacationPeriod}" class="easyui-numberbox" precision="1" style="text-align:right;"/>
+                         <input name="timesheetStatus" id="timesheetStatus" type="text" value="${peopleContractSalary.timesheetStatus}" class="easyui-numberbox" precision="1" style="text-align:right;"/>
                      </td>
                      <td>降温补贴</td>
                      <td>
-                         <input name="temperatureAllowance" id="temperatureAllowance" type="text" value="${people.temperatureAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                         <input name="temperatureAllowance" id="temperatureAllowance" type="text" value="${peopleContractSalary.temperatureAllowance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                      </td>
                  </tr>
                  <tr>
                      <td>每日加班费</td>
                      <td>
-                         <input name="onDutyFee" id="onDutyFee" type="text" value="${people.onDutyFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                         <input name="onDutyFee" id="onDutyFee" type="text" value="${peopleContractSalary.onDutyFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                      </td>
                      <td>加班天数</td>
                      <td>
@@ -198,11 +199,11 @@
                  <tr>
                     <td>奖金</td>
                     <td>
-                        <input name="bonus" id="bonus" type="text" value="${bonus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="bonus" id="bonus" type="text" value="${peopleContractSalary.bonus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                      <td>补发</td>
                     <td>
-                        <input name="reissueFee" id="reissueFee" type="text" value="${people.reissueFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="reissueFee" id="reissueFee" type="text" value="${peopleContractSalary.reissueFee}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
 
                  </tr>
@@ -213,21 +214,21 @@
                     </td>
                     <td>养老保险</td>
                     <td>
-                        <input name="lifeInsurance" id="lifeInsurance" type="text" value="${people.lifeInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="lifeInsurance" id="lifeInsurance" type="text" value="${peopleContractSalary.lifeInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>失业保险</td>
                     <td>
-                        <input name="jobInsurance" id="jobInsurance" type="text" value="${people.jobInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="jobInsurance" id="jobInsurance" type="text" value="${peopleContractSalary.jobInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                  </tr>
                  <tr>
                     <td>医疗保险</td>
                     <td>
-                        <input name="healthInsurance" id="healthInsurance" type="text" value="${people.healthInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="healthInsurance" id="healthInsurance" type="text" value="${peopleContractSalary.healthInsurance}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>住房公积金</td>
                     <td>
-                        <input name="houseFund" id="houseFund" type="text" value="${people.houseFund}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="houseFund" id="houseFund" type="text" value="${peopleContractSalary.houseFund}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                     <td>扣款</td>
                     <td>
