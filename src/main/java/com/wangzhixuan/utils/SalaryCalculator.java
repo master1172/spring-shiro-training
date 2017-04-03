@@ -1,5 +1,6 @@
 package com.wangzhixuan.utils;
 
+import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.model.PeopleSalary;
 import com.wangzhixuan.model.PeopleSalaryBase;
 import com.wangzhixuan.model.PeopleTimesheet;
@@ -172,5 +173,73 @@ public class SalaryCalculator {
         }
 
         return true;
+    }
+
+    public static boolean PeopleContractSalaryCalculator(PeopleContractSalary peopleContractSalary){
+
+        if (peopleContractSalary == null)
+            return false;
+
+        BigDecimal grossIncome = new BigDecimal(0.00);
+
+        try{
+            if (peopleContractSalary.getJobSalary() != null)
+                grossIncome = grossIncome.add(peopleContractSalary.getJobSalary());
+
+            if (peopleContractSalary.getSchoolSalary() != null){
+                grossIncome = grossIncome.add(peopleContractSalary.getSchoolSalary());
+            }
+
+            if (peopleContractSalary.getJobExamSalary() != null){
+                if (StringUtils.isNoneBlank(peopleContractSalary.getExamResult())){
+                    BigDecimal jobExamSalary = peopleContractSalary.getJobExamSalary();
+                    if (peopleContractSalary.getExamResult().equals("A")){
+                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(1.0));
+                    }else if (peopleContractSalary.getExamResult().equals("B")){
+                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.8));
+                    }else if (peopleContractSalary.getExamResult().equals("C")){
+                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.5));
+                    }else if (peopleContractSalary.getExamResult().equals("C")){
+                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.2));
+                    }else if (peopleContractSalary.getExamResult().equals("C")){
+                        jobExamSalary = new BigDecimal(0.00);
+                    }else{
+                        jobExamSalary = new BigDecimal(0.00);
+                    }
+                    grossIncome = grossIncome.add(jobExamSalary);
+                }
+            }
+
+            if (peopleContractSalary.getTelephoneAllowance() != null)
+                grossIncome = grossIncome.add(peopleContractSalary.getTelephoneAllowance());
+
+            if (peopleContractSalary.getSpecialAllowance() != null)
+                grossIncome = grossIncome.add(peopleContractSalary.getSpecialAllowance());
+
+            if (peopleContractSalary.getOnDutyDate() != null && peopleContractSalary.getOnDutyFee() != null){
+                grossIncome = grossIncome.add(peopleContractSalary.getOnDutyDate().multiply(peopleContractSalary.getOnDutyFee()));
+            }
+
+            if (peopleContractSalary.getBonus() != null){
+                grossIncome = grossIncome.add(peopleContractSalary.getBonus());
+            }
+
+            if (peopleContractSalary.getReissueFee() != null){
+                grossIncome = grossIncome.add(peopleContractSalary.getReissueFee());
+            }
+
+            if (peopleContractSalary.getTemperatureAllowance() != null){
+                grossIncome = grossIncome.add(peopleContractSalary.getTemperatureAllowance());
+            }
+
+            peopleContractSalary.setGrossIncome(grossIncome);
+
+        }catch (Exception exp){
+            peopleContractSalary.setGrossIncome(new BigDecimal(0.00));
+            return false;
+        }
+
+        return true;
+
     }
 }
