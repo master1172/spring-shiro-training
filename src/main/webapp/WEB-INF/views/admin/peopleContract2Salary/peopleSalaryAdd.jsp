@@ -31,8 +31,7 @@
                 var temperatureAllowance = 100.00-((100.00/21.75)*newValue);
                 $("#temperatureAllowance").numberbox('setValue',temperatureAllowance.toFixed(2));
 
-                var trafficAllowance = 300 - ((300/21.75)*newValue);
-                $("#trafficAllowance").numberbox('setValue',trafficAllowance.toFixed(2));
+
             }
         });
 
