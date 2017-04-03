@@ -137,9 +137,10 @@ public class PeopleSalaryController extends BaseController{
         try{
             BeanUtils.copyProperties(peopleSalary, peopleSalaryBase);
         }catch (Exception exp){
-
+            peopleSalary.setPeopleCode(peopleSalaryBase.getPeopleCode());;
         }
 
+        //自动计算当月请假天数
         String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfCurrentMonth();
         String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfCurrentMonth();
 
@@ -148,25 +149,12 @@ public class PeopleSalaryController extends BaseController{
                 firstDayOfCurrentMonth,
                 lastDayOfCurrentMonth);
 
+        //根据请假天数计算交通补贴和高温补贴
+        peopleSalary.setTimesheetStatus(sumVacationPeriod);
         SalaryCalculator.PeopleSalaryCalculateTrafficAllowance(peopleSalary);
+        SalaryCalculator.PeopleSalaryCalculateTemperatureAllowance(peopleSalary);
 
-
-
-        if (sumVacationPeriod != null){
-            Double trafficAllowance = 300.0 - 300 / 21.75 * sumVacationPeriod.doubleValue();
-            Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
-
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
-            peopleSalary.setTrafficAllowance(new BigDecimal(decimalFormat.format(trafficAllowance)));
-            peopleSalary.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
-        }else{
-            peopleSalary.setTrafficAllowance(new BigDecimal(300.00));
-            peopleSalary.setTemperatureAllowance(new BigDecimal(100.00));
-        }
-
-        model.addAttribute("sumVacationPeriod",sumVacationPeriod);
-
+        //计算当月考核情况
         String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
                 peopleSalaryBase.getPeopleCode(),
                 DateUtil.GetCurrentYearAndMonth()

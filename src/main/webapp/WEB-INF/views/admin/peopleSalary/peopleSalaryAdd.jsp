@@ -227,7 +227,7 @@
                     </td>
                     <td>考勤情况</td>
                     <td>
-                        <input name="timesheetStatus" id="timesheetStatus" type="text" value="${sumVacationPeriod}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
+                        <input name="timesheetStatus" id="timesheetStatus" type="text" value="${peopleSalary.timesheetStatus}" class="easyui-numberbox" precision="2" style="text-align:right;"/>
                     </td>
                 </tr>
                 <tr>
