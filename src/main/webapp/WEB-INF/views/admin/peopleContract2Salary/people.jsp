@@ -74,7 +74,7 @@
 
             parent.$.modalDialog({
                 title: '修改',
-                width: 1500,
+                width: 1000,
                 height: 600,
                 href: '${path}/peopleContract2Salary/editPage?id=' + id,
                 buttons: [{

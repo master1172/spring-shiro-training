@@ -91,12 +91,7 @@
             <table class="grid" border=1>
                 <input type="hidden" name="id" value="${peopleSalaryBase.id}">
                 <input type="hidden" name="peopleCode" value="${peopleSalaryBase.peopleCode}">
-                <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input name="name" type="text" value="${peopleSalaryBase.peopleName}" class="easyui-validatebox" data-options="required:true">
-                    </td>
-                </tr>
+                <input type="hidden" name="name" typeof="text" value="${peopleSalaryBase.peopleName}">
                 <tr>
                     <td>职级</td>
                     <td>

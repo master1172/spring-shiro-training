@@ -67,11 +67,8 @@
             <table class="grid" border=1>
                 <input type="hidden" name="id" value="${peopleContractSalaryBase.id}">
                 <input type="hidden" name="peopleCode" value="${peopleContractSalaryBase.peopleCode}">
+                <input type="hidden" name="name" value="${peopleContractSalaryBase.peopleName}">
                 <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input name="name" type="text" value="${peopleContractSalaryBase.peopleName}" class="easyui-validatebox" data-options="required:true">
-                    </td>
                     <td>职级</td>
                     <td>
                         <input class="easyui-combobox" id="jobId" name="jobId" url="${path}/dict/job" valueField="id" textField="name" editable="false" data-options="required:true">
