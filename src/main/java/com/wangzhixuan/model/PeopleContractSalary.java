@@ -59,7 +59,7 @@ public class PeopleContractSalary implements Serializable {
 
 	public void setBaseSalary(BigDecimal baseSalary) {this.baseSalary = baseSalary;}
 
-	public int getJobId() {
+	public Integer getJobId() {
 		return jobId;
 	}
 
