@@ -455,7 +455,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 			return peopleContractSalary;
 		}catch (Exception exp){
 			PeopleContractSalary peopleContractSalary = new PeopleContractSalary();
-			
+
 			peopleContractSalary.setPeopleCode(peopleCode);
 			peopleContractSalary.setPayDate(payDate);
 			return peopleContractSalary;
