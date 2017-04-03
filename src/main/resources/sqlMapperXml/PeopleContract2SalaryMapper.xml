@@ -378,7 +378,7 @@
 		where code=#{peopleCode, jdbcType=VARCHAR}
 	</select>
 
-	<insert id="insert" parameterType="java.util.List">
+	<insert id="insert" parameterType="com.wangzhixuan.model.PeopleContractSalary">
 		insert into people_contract_2_salary (
 		people_code, job_id, job_salary, school_salary, exam_result, job_exam_salary, job_exam_salary_total, telephone_allowance, traffic_allowance,
 		special_allowance, head_allowance, on_duty_fee, on_duty_date, on_duty_fee_total, bonus, reissue_fee,
