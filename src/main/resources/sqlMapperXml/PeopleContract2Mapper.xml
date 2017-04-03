@@ -58,7 +58,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_id, job_id, comment, photo,, photo_id, job_date
+        id, code, name, sex, national_id, province, city, birthday, education_name, political_name, speciality, height, marriage_id, hukou, school_date, mobile, address, department_id, job_id, comment, photo, photo_id, job_date
     </sql>
 
     <select id="findAllPeople" resultMap="BaseResultMap">
