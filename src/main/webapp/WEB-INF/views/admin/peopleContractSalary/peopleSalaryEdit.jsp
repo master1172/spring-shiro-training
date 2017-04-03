@@ -85,6 +85,35 @@
                 $("#jobExamSalaryTotal").numberbox("setValue",jobExamSalaryTotal.toFixed(2));
             }
         });
+
+        $("#onDutyFee").numberbox({
+            "onChange" : function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+
+                var onDutyDate = $("#onDutyDate").numberbox("getValue");
+
+                if (isNaN(onDutyDate)){
+                    $("#onDutyDate").numberbox('setValue',0.00);
+                    $("#onDutyFeeTotal").numberbox('setValue',0.00);
+                    return;
+                }
+
+                var onDutyFeeTotal = onDutyDate * newValue;
+                $("#onDutyFeeTotal").numberbox('setValue',onDutyFeeTotal.toFixed(2));
+            }
+        });
+
+        $("#onDutyDate").numberbox({
+            "onChange" : function(newValue, oldValue){
+                if (newValue == oldValue)
+                    return;
+
+                var onDutyFee = $("#onDutyFee").numberbox("getValue");
+                var onDutyFeeTotal = newValue * onDutyFee;
+                $("#onDutyFeeTotal").numberbox('setValue',onDutyFeeTotal.toFixed(2));
+            }
+        });
     });
 
     function checkForm(){

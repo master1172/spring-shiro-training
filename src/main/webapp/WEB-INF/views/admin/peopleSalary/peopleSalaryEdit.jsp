@@ -126,7 +126,7 @@
                 var onDutyFeeTotal = newValue * onDutyFee;
                 $("#onDutyFeeTotal").numberbox('setValue',onDutyFeeTotal.toFixed(2));
             }
-        })
+        });
 
     });
 
