@@ -175,6 +175,41 @@ public class SalaryCalculator {
         return true;
     }
 
+
+    public static BigDecimal GetPerformanceTotalByMonthlyExamResult(PeopleContractSalary peopleContractSalary){
+
+        if (peopleContractSalary == null)
+            return new BigDecimal(0.00);
+
+        if (peopleContractSalary.getJobExamSalary() != null){
+
+            if (StringUtils.isNoneBlank(peopleContractSalary.getExamResult())){
+
+                BigDecimal jobExamSalary = peopleContractSalary.getJobExamSalary();
+
+                if (peopleContractSalary.getExamResult().equals("A")){
+                    jobExamSalary = jobExamSalary.multiply(new BigDecimal(1.0));
+                }else if (peopleContractSalary.getExamResult().equals("B")){
+                    jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.8));
+                }else if (peopleContractSalary.getExamResult().equals("C")){
+                    jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.5));
+                }else if (peopleContractSalary.getExamResult().equals("C")){
+                    jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.2));
+                }else if (peopleContractSalary.getExamResult().equals("C")){
+                    jobExamSalary = new BigDecimal(0.00);
+                }else{
+                    jobExamSalary = new BigDecimal(0.00);
+                }
+
+                peopleContractSalary.setJobExamSalaryTotal(jobExamSalary);
+
+                return jobExamSalary;
+            }
+        }
+
+        return new BigDecimal(0.00);
+    }
+
     public static boolean PeopleContractSalaryCalculator(PeopleContractSalary peopleContractSalary){
 
         if (peopleContractSalary == null)
@@ -190,24 +225,9 @@ public class SalaryCalculator {
                 grossIncome = grossIncome.add(peopleContractSalary.getSchoolSalary());
             }
 
-            if (peopleContractSalary.getJobExamSalary() != null){
-                if (StringUtils.isNoneBlank(peopleContractSalary.getExamResult())){
-                    BigDecimal jobExamSalary = peopleContractSalary.getJobExamSalary();
-                    if (peopleContractSalary.getExamResult().equals("A")){
-                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(1.0));
-                    }else if (peopleContractSalary.getExamResult().equals("B")){
-                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.8));
-                    }else if (peopleContractSalary.getExamResult().equals("C")){
-                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.5));
-                    }else if (peopleContractSalary.getExamResult().equals("C")){
-                        jobExamSalary = jobExamSalary.multiply(new BigDecimal(0.2));
-                    }else if (peopleContractSalary.getExamResult().equals("C")){
-                        jobExamSalary = new BigDecimal(0.00);
-                    }else{
-                        jobExamSalary = new BigDecimal(0.00);
-                    }
-                    grossIncome = grossIncome.add(jobExamSalary);
-                }
+            if (peopleContractSalary.getExamResult() != null){
+                BigDecimal jobExamSalary = GetPerformanceTotalByMonthlyExamResult(peopleContractSalary);
+                grossIncome = grossIncome.add(jobExamSalary);
             }
 
             if (peopleContractSalary.getTelephoneAllowance() != null)
