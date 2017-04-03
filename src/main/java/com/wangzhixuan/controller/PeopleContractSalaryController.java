@@ -11,7 +11,9 @@ import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.*;
 import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.DateUtil;
+import com.wangzhixuan.utils.SalaryCalculator;
 import com.wangzhixuan.vo.PeopleContractSalaryBaseVo;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -165,11 +167,23 @@ public class PeopleContractSalaryController extends BaseController {
 
 	@RequestMapping("/addPage")
 	public String addPage(String peopleCode, Model model) {
+
 		PeopleContractSalaryBase peopleContractSalaryBase = peopleContractSalaryService.findPeopleContractSalaryBaseByCode(peopleCode);
+
 		if (peopleContractSalaryBase == null) {
 			peopleContractSalaryBase = new PeopleContractSalaryBase();
 		}
 
+		PeopleContractSalary peopleContractSalary = new PeopleContractSalary();
+
+		try{
+			BeanUtils.copyProperties(peopleContractSalary, peopleContractSalaryBase);
+		}catch (Exception exp){
+			peopleContractSalary.setPeopleCode(peopleContractSalaryBase.getPeopleCode());;
+		}
+
+
+		//自动计算当月请假天数
 		String firstDayOfCurrentMonth = DateUtil.GetFirstDayOfCurrentMonth();
 		String lastDayOfCurrentMonth  = DateUtil.GetLastDayOfCurrentMonth();
 
@@ -178,66 +192,29 @@ public class PeopleContractSalaryController extends BaseController {
 				firstDayOfCurrentMonth,
 				lastDayOfCurrentMonth);
 
-		if (sumVacationPeriod != null){
-			Double temperatureAllowance = 100 - 100 / 21.75 * sumVacationPeriod.doubleValue();
-			DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			peopleContractSalaryBase.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
-		}else{
-			peopleContractSalaryBase.setTemperatureAllowance(new BigDecimal(100.00));
-		}
+		//根据请假天数计算高温补贴
+		peopleContractSalary.setTimesheetStatus(sumVacationPeriod);
+		SalaryCalculator.PeopleContractSalaryCalculateTemperatureAllowance(peopleContractSalary);
 
-		model.addAttribute("people", peopleContractSalaryBase);
-		model.addAttribute("sumVacationPeriod",sumVacationPeriod);
-
+		//计算当月考核情况
 		String examResult = examMonthlyService.findPeopleExamMonthlyResultByCodeAndDate(
 				peopleContractSalaryBase.getPeopleCode(),
 				DateUtil.GetCurrentYearAndMonth()
 		);
 
-		model.addAttribute("examResult",examResult);
+		peopleContractSalary.setExamResult(examResult);
+		SalaryCalculator.GetPerformanceTotalByMonthlyExamResult(peopleContractSalary);
 
-		BigDecimal jobExamSalaryTotal = new BigDecimal(0.00);
-
-		if (StringUtils.isNoneBlank(examResult) && peopleContractSalaryBase.getJobExamSalary() != null){
-			if (examResult.equals("A")){
-				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary();
-			}
-			if (examResult.equals("B")){
-				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.8));
-			}
-			if (examResult.equals("C")){
-				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.5));
-			}
-			if (examResult.equals("D")){
-				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.2));
-			}
-			if (examResult.equals("E")){
-				jobExamSalaryTotal = peopleContractSalaryBase.getJobExamSalary().multiply(new BigDecimal(0.0));
-			}
-
-			DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			model.addAttribute("jobExamSalaryTotal", decimalFormat.format(jobExamSalaryTotal));
-		}else{
-			model.addAttribute("jobExamSalaryTotal", "0.00");
-		}
 
 		//如果是春节之前的一个月，还需要根据年度表现来计算是否发放奖金。优秀和合格发放奖金，不合格不发奖金
 		String examYearlyResult = examYearlyService.findPeopleExamYearlyResultByCodeAndYear(
 				peopleContractSalaryBase.getPeopleCode(),
 				DateUtil.GetCurrentYear()
 		);
-		String bonus = "0.00";
+		BigDecimal bonus = SalaryCalculator.GetBonusByYearlyExamResult(examYearlyResult, peopleContractSalaryBase);
+		peopleContractSalary.setBonus(bonus);
 
-		if (StringUtils.isNoneBlank(examYearlyResult)){
-			if (DateUtil.IsSprintFestivalPrevMonth()){
-				if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
-					if (peopleContractSalaryBase.getBonus() != null){
-						bonus = peopleContractSalaryBase.getBonus().toString();
-					}
-				}
-			}
-		}
-		model.addAttribute("bonus",bonus);
+		model.addAttribute("peopleContractSalary", peopleContractSalary);
 
 		return "/admin/peopleContractSalary/peopleSalaryAdd";
 	}

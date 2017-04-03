@@ -3,8 +3,8 @@
 <script type="text/javascript">
 
     $(function(){
-        $('#jobId').val('${people.jobId}');
-        $("#examResult").val('${examResult}');
+        $('#jobId').val('${peopleContractSalary.jobId}');
+        $("#examResult").val('${peopleContractSalary.examResult}');
 
         $("#jobId").combobox({
             onChange:function(newValue,oldValue){
@@ -112,7 +112,7 @@
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
         <form id="salaryAddForm" method="post">
             <table class="grid" border=1>
-                <input type="hidden" name="peopleCode" value="${people.peopleCode}">
+                <input type="hidden" name="peopleCode" value="${peopleContractSalary.peopleCode}">
                 <tr>
                     <td colspan="3">
                         <a href="javascript:void(0);" class="easyui-linkbutton"

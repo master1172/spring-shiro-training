@@ -175,8 +175,11 @@ public class SalaryCalculator {
 
     public static BigDecimal GetPerformanceTotalByMonthlyExamResult(PeopleContractSalary peopleContractSalary){
 
-        if (peopleContractSalary == null)
+        if (peopleContractSalary == null){
+            peopleContractSalary.setJobExamSalaryTotal(new BigDecimal(0.00));
             return new BigDecimal(0.00);
+        }
+
 
         if (peopleContractSalary.getJobExamSalary() != null){
 
@@ -204,6 +207,7 @@ public class SalaryCalculator {
             }
         }
 
+        peopleContractSalary.setJobExamSalaryTotal(new BigDecimal(0.00));
         return new BigDecimal(0.00);
     }
 
@@ -226,8 +230,11 @@ public class SalaryCalculator {
 
     public static BigDecimal PeopleContractSalaryCalculateTemperatureAllowance(PeopleContractSalary peopleContractSalary){
 
-        if (peopleContractSalary == null)
+        if (peopleContractSalary == null){
+            peopleContractSalary.setTemperatureAllowance(new BigDecimal(0.00));
             return new BigDecimal(0.00);
+        }
+
 
         if (peopleContractSalary.getTimesheetStatus() != null){
             Double temperatureAllowance = 100 - 100 / 21.75 * peopleContractSalary.getTimesheetStatus().doubleValue();
