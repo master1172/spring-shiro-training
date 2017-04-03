@@ -1,9 +1,6 @@
 package com.wangzhixuan.utils;
 
-import com.wangzhixuan.model.PeopleContractSalary;
-import com.wangzhixuan.model.PeopleSalary;
-import com.wangzhixuan.model.PeopleSalaryBase;
-import com.wangzhixuan.model.PeopleTimesheet;
+import com.wangzhixuan.model.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
@@ -208,6 +205,40 @@ public class SalaryCalculator {
         }
 
         return new BigDecimal(0.00);
+    }
+
+    public static BigDecimal GetBonusByYearlyExamResult(String examYearlyResult, PeopleContractSalaryBase peopleContractSalaryBase){
+
+        BigDecimal bonus = new BigDecimal(0.00);
+
+        if (StringUtils.isNoneBlank(examYearlyResult)){
+            if (DateUtil.IsSprintFestivalPrevMonth()){
+                if (examYearlyResult.equals(ConstUtil.EXCELENT) || examYearlyResult.equals(ConstUtil.AVERAGE)){
+                    if (peopleContractSalaryBase.getBonus() != null){
+                        return peopleContractSalaryBase.getBonus();
+                    }
+                }
+            }
+        }
+
+        return bonus;
+    }
+
+    public static BigDecimal PeopleContractSalaryCalculateTemperatureAllowance(PeopleContractSalary peopleContractSalary){
+
+        if (peopleContractSalary == null)
+            return new BigDecimal(0.00);
+
+        if (peopleContractSalary.getTimesheetStatus() != null){
+            Double temperatureAllowance = 100 - 100 / 21.75 * peopleContractSalary.getTimesheetStatus().doubleValue();
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            peopleContractSalary.setTemperatureAllowance(new BigDecimal(decimalFormat.format(temperatureAllowance)));
+        }else{
+            peopleContractSalary.setTemperatureAllowance(new BigDecimal(100.00));
+        }
+
+        return peopleContractSalary.getTemperatureAllowance();
+
     }
 
     public static boolean PeopleContractSalaryCalculator(PeopleContractSalary peopleContractSalary){
