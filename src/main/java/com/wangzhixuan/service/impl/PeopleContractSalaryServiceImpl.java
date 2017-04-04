@@ -188,6 +188,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
                         count ++;
 						for (int k = 0; k < 26; k++) {
 							row.getCell(k).setCellStyle(setBorder);
+							sheet.autoSizeColumn(k);
 						}
 						row.setHeight((short) 400);
 					}
@@ -476,6 +477,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 						for(int k=0; k<26; k++){
 							row.getCell(k).setCellStyle(setBorder);
+							sheet.autoSizeColumn(k);
 						}
 						row.setHeight((short)400);
 					}
