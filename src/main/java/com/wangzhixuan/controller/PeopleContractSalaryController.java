@@ -225,6 +225,12 @@ public class PeopleContractSalaryController extends BaseController {
 		if(StringUtils.isBlank(payDate)){
 			payDate = DateUtil.GetCurrentYearAndMonth();
 		}
+
+		try{
+			peopleContractSalaryService.exportExcelForMonth(response, payDate);
+		}catch (Exception exp){
+			return;
+		}
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")

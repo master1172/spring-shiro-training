@@ -406,6 +406,74 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 		return result;
 	}
 
+	@Override
+	public void exportExcelForMonth(HttpServletResponse response, String payDate) {
+		List list = peopleContractMapper.findAllPeople();
+
+		if (list != null && list.size() > 0){
+			XSSFWorkbook workBook;
+			OutputStream os;
+
+			String newFileName = "固定期合同制人员工资.xlsx";
+
+			try{
+				workBook = new XSSFWorkbook();
+				XSSFSheet sheet= workBook.createSheet("固定期合同制人员工资表");
+				XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+				//创建表头
+				XSSFRow row = ExcelUtil.CreateExcelHeader(sheet, setBorder, ConstUtil.getPeopleContractSalaryHeaders());
+
+				int count = 0;
+
+				setBorder = WordUtil.setCellStyle(workBook, false);
+
+				for(int i=0; i<list.size(); i++){
+					PeopleContract peopleContract = (PeopleContract) list.get(i);
+
+					if (peopleContract == null || StringUtils.isBlank(peopleContract.getCode()))
+						continue;
+					String peopleCode = peopleContract.getCode();
+					Map<String, Object> condition = Maps.newHashMap();
+					condition.put("code", peopleCode);
+					condition.put("payDate", payDate);
+
+					List<PeopleContractSalaryVo> peopleContractSalaryVoList = peopleContractSalaryMapper.findPeopleContractSalaryVoListByCodeAndPayDate(condition);
+
+					if (peopleContractSalaryVoList == null || peopleContractSalaryVoList.size() < 1)
+						continue;
+
+					for(int j=0; j<peopleContractSalaryVoList.size(); j++){
+						row = sheet.createRow(count+1);
+
+						PeopleContractSalaryVo peopleContractSalaryVo = peopleContractSalaryVoList.get(j);
+						row.createCell(0).setCellValue(count+1);
+						row.createCell(1).setCellValue(peopleContractSalaryVo.getPeopleName());
+						row.createCell(2).setCellValue(peopleContractSalaryVo.getJobLevel());
+						row.createCell(3).setCellValue(peopleContractSalaryVo.getJobSalary() == null?"":peopleContractSalaryVo.getJobSalary().toString());
+
+
+						count++;
+
+						for(int k=0; k<4; k++){
+							row.getCell(k).setCellStyle(setBorder);
+						}
+						row.setHeight((short)400);
+					}
+				}
+
+				sheet.setDefaultRowHeightInPoints(21);
+				response.reset();
+				os = response.getOutputStream();
+				response.setHeader("Content-disposition", "attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+				workBook.write(os);
+				os.close();
+
+			}catch (Exception exp){
+				exp.printStackTrace();
+			}
+		}
+	}
+
 	private PeopleContractSalary getPeopleContractSalary(String payDate, String peopleCode) {
 		try{
 			PeopleContractSalaryBase peopleContractSalaryBase = peopleContractSalaryMapper.findPeopleContractSalaryBaseByCode(peopleCode);
