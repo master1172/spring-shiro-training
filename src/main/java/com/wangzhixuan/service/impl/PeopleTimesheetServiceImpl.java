@@ -41,6 +41,9 @@ import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.service.PeopleTimesheetService;
 import com.wangzhixuan.vo.PeopleTimesheetVo;
 
+import static com.wangzhixuan.utils.ConstUtil.TIMESHEET_STATUS_PERSONAL_LEAVE;
+import static com.wangzhixuan.utils.ConstUtil.TIMESHEET_STATUS_SICK_LEAVE;
+
 /**
  * Created by administrator_cernet on 2016/11/27.
  */
@@ -449,7 +452,12 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 			            continue;
 			if (peopleTimesheet.getVacationPeriod() == null)
 				continue;
-			sumVacationPeriod = sumVacationPeriod.add(peopleTimesheet.getVacationPeriod());
+
+			if (StringUtils.isBlank(peopleTimesheet.getStatus()))
+				continue;
+
+			if (peopleTimesheet.getStatus().equals(TIMESHEET_STATUS_SICK_LEAVE) || peopleTimesheet.getStatus().equals(TIMESHEET_STATUS_PERSONAL_LEAVE))
+				sumVacationPeriod = sumVacationPeriod.add(peopleTimesheet.getVacationPeriod());
 		}
 
 		return sumVacationPeriod;
