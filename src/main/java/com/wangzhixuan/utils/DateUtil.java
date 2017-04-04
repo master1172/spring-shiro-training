@@ -261,10 +261,10 @@ public class DateUtil {
         String checkYear = GetYear(checkYearAndMonth);
         String checkMonth = GetMonth(checkYearAndMonth);
 
-        if (resultYear != checkYear)
+        if (!resultYear.equals(checkYear))
             return false;
 
-        if (resultMonth != checkMonth)
+        if (!resultMonth.equals(checkMonth))
             return false;
 
         if (Integer.valueOf(resultDay).intValue() !=  date)
