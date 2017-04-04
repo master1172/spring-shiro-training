@@ -241,6 +241,14 @@
             }
         }
 
+        function exportExcelForMonth(){
+            var payDate = $("#payDate").val();
+            var form=$("#downLoadForm");
+            form.find("input[name='ids']").val(payDate);
+            form.attr("action",'${path}'+"/peopleContractSalary/exportExcelForMonth");
+            $("#downLoadForm").submit();
+        }
+
         function sexFormatter(value,row,index){
             switch (value) {
                 case 0:
