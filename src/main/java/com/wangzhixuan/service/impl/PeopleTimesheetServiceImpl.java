@@ -210,45 +210,25 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					//加班
 					if (timesheetStatus.equals(ConstUtil.TIMESHEET_EXTRAWORK)){
 						timesheet.setStatus("加班");
-					}
-
-					if (timesheetStatus.equals(ConstUtil.TIMESHEET_LATE)){
+					}else if (timesheetStatus.equals(ConstUtil.TIMESHEET_LATE)){
 						timesheet.setStatus("迟到早退");
-					}
-
-					if (timesheetStatus.equals(ConstUtil.TIMESHEET_SICK_LEAVE)){
+					}else if (timesheetStatus.equals(ConstUtil.TIMESHEET_SICK_LEAVE)){
 						timesheet.setStatus("病假");
-					}
-
-					if (timesheetStatus.equals(ConstUtil.TIMESHEET_PERSONAL_LEAVE)){
+					}else if (timesheetStatus.equals(ConstUtil.TIMESHEET_PERSONAL_LEAVE)){
 						timesheet.setStatus("事假");
-					}
-
-					if(timesheetStatus.equals(ConstUtil.TIMESHEET_ABSENT)){
+					}else if(timesheetStatus.equals(ConstUtil.TIMESHEET_ABSENT)){
 						timesheet.setStatus("旷工");
-					}
-
-					if(timesheetStatus.equals(ConstUtil.TIMESHEET_COMPENSATE_REST)){
+					}else if(timesheetStatus.equals(ConstUtil.TIMESHEET_COMPENSATE_REST)){
 						timesheet.setStatus("补休");
-					}
-
-					if(timesheetStatus.equals(ConstUtil.TIMESHEET_ADJUST_REST)){
+					}else if(timesheetStatus.equals(ConstUtil.TIMESHEET_ADJUST_REST)){
 						timesheet.setStatus("调休");
-					}
-
-					if(timesheetStatus.equals(ConstUtil.TIMESHEET_ANNUAL_LEAVE)){
+					}else if(timesheetStatus.equals(ConstUtil.TIMESHEET_ANNUAL_LEAVE)){
 						timesheet.setStatus("年休假");
-					}
-
-					if(timesheetStatus.equals(ConstUtil.TIMESHEET_MARRIAGE_LEAVE)){
+					}else if(timesheetStatus.equals(ConstUtil.TIMESHEET_MARRIAGE_LEAVE)){
 						timesheet.setStatus("婚假");
-					}
-
-					if(timesheetStatus.equals(ConstUtil.TIMESHEET_BIRTH_LEAVE)){
+					}else if(timesheetStatus.equals(ConstUtil.TIMESHEET_BIRTH_LEAVE)){
 						timesheet.setStatus("产假");
-					}
-
-					if(timesheetStatus.equals(ConstUtil.TIMESHEET_DEATH_LEAVE)){
+					}else if(timesheetStatus.equals(ConstUtil.TIMESHEET_DEATH_LEAVE)){
 						timesheet.setStatus("丧假");
 					}else{
 						timesheet.setStatus("公休假");
