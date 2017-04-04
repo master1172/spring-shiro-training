@@ -111,6 +111,40 @@
             }
         }
 
+        function vacationSum(){
+            parent.$.modalDialog({
+                title: '导出',
+                width: 600,
+                height: 400,
+                href: '${path}/peopleTimesheet/dateRangePage',
+                buttons: [{
+                    text: '导出',
+                    handler: function () {
+                        parent.$.modalDialog.openner_dataGrid = dataGrid;
+                        var f = parent.$.modalDialog.handler.find("#timesheetQueryForm");
+                        if (parent.checkForm()) {
+                            parent.SYS_SUBMIT_FORM(f, "/peopleTimesheet/exportVacationSum", function (data) {
+                                if (!data["success"]) {
+                                    parent.progressClose();
+                                    parent.$.modalDialog.handler.dialog("close");
+                                    parent.$.messager.alert("提示", data["msg"], "warning");
+                                } else {
+                                    parent.progressClose();
+                                    parent.$.modalDialog.handler.dialog("close");
+                                    var ids = data["obj"];
+                                    var form = $("#downLoadForm");
+                                    form.find("input[name='ids']").val(ids);
+                                    form.attr("action", '${path}' + "/peopleTimesheet/peopleContractExportVacationResult");
+                                    $("#downLoadForm").submit();
+                                }
+                            });
+                        }
+                    }
+                }]
+            });
+        }
+
+
         function timesheetList(id) {
             parent.$.modalDialog({
                 title:'考勤列表',
@@ -194,6 +228,8 @@
        data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
     <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">高级查询</a>
+    <a onclick="vacationSum();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">假期使用和剩余统计</a>
     <!-- 附件下载使用 -->
     <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
 </div>

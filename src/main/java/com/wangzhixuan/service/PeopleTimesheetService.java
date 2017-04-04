@@ -43,10 +43,16 @@ public interface PeopleTimesheetService {
 
     void exportVacationResult(HttpServletResponse response, String checkDate);
 
+    void peopleContractExportVacationResult(HttpServletResponse response, String checkDate);
+
+    void peopleContract2ExportVacationResult(HttpServletResponse response, String checkDate);
+
     void findPeopleDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
     void findPeopleContractDataGrid(PageInfo pageInfo, HttpServletRequest request);
 
     void findPeopleContract2DataGrid(PageInfo pageInfo, HttpServletRequest request);
+
+
 }
 

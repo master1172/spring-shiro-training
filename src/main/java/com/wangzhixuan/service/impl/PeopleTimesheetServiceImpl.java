@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
-import com.wangzhixuan.mapper.ExamMonthlyMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
+import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.model.People;
+import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.mapper.PeopleTimesheetMapper;
 import com.wangzhixuan.model.PeopleTimesheet;
 import com.wangzhixuan.service.PeopleContractService;
 import com.wangzhixuan.service.PeopleRehireService;
@@ -57,6 +56,12 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 	@Autowired
 	private PeopleMapper peopleMapper;
+
+	@Autowired
+	private PeopleContractMapper peopleContractMapper;
+
+	@Autowired
+	private PeopleContract2Mapper peopleContract2Mapper;
 
 	@Autowired
 	private ExamMonthlyMapper examMonthlyMapper;
@@ -464,6 +469,142 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 				for(int i=0; i<peopleList.size(); i++){
 					People people = peopleList.get(i);
+
+					if (people == null || StringUtils.isBlank(people.getCode()) || StringUtils.isBlank(people.getName()))
+						continue;
+
+					String name = people.getName();
+					String code = people.getCode();
+
+					row = ExcelUtil.insertRow(sheet,i+5);
+					row.createCell(0).setCellValue(name);
+
+					List<PeopleTimesheetVo> peopleTimesheetVoList = peopleTimesheetMapper.findTimesheetVoByPeopleCode(code);
+
+					for(int j=0; j<31;j++){
+						row.createCell(j+1).setCellValue("√");
+						if (peopleTimesheetVoList == null)
+							continue;
+						for(int k=0; k<peopleTimesheetVoList.size(); k++){
+							PeopleTimesheetVo peopleTimesheetVo = peopleTimesheetVoList.get(k);
+							if (peopleTimesheetVo == null)
+								continue;
+							//比较两个日期
+							if (DateUtil.CompareTwoDate(checkDate, j, peopleTimesheetVo.getCheckDate())){
+								String vacationSymbol = getVacationSymbol(peopleTimesheetVo.getStatus());
+								row.createCell(j+1).setCellValue(vacationSymbol);
+							}else{
+								row.createCell(j+1).setCellValue("√");
+							}
+						}
+					}
+
+					row.setHeight((short) 400);
+				}
+
+				sheet.setDefaultRowHeightInPoints(21);
+			}
+
+			response.reset();
+			os = response.getOutputStream();
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+			workBook.write(os);
+			os.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void peopleContractExportVacationResult(HttpServletResponse response, String checkDate) {
+		XSSFWorkbook workBook;
+		OutputStream os;
+		String newFileName = "考勤统计信息.xlsx";
+		try {
+			String filePath=this.getClass().getResource("/template/vacationResult.xlsx").getPath();
+			workBook = new XSSFWorkbook(filePath);
+
+			List<PeopleContract> peopleList = peopleContractMapper.findAllPeople();
+
+			int count = 0;
+			XSSFRow row;
+			XSSFSheet sheet= workBook.getSheetAt(0);
+			XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+
+			if (peopleList != null && peopleList.size() > 0){
+
+				for(int i=0; i<peopleList.size(); i++){
+					PeopleContract people = peopleList.get(i);
+
+					if (people == null || StringUtils.isBlank(people.getCode()) || StringUtils.isBlank(people.getName()))
+						continue;
+
+					String name = people.getName();
+					String code = people.getCode();
+
+					row = ExcelUtil.insertRow(sheet,i+5);
+					row.createCell(0).setCellValue(name);
+
+					List<PeopleTimesheetVo> peopleTimesheetVoList = peopleTimesheetMapper.findTimesheetVoByPeopleCode(code);
+
+					for(int j=0; j<31;j++){
+						row.createCell(j+1).setCellValue("√");
+						if (peopleTimesheetVoList == null)
+							continue;
+						for(int k=0; k<peopleTimesheetVoList.size(); k++){
+							PeopleTimesheetVo peopleTimesheetVo = peopleTimesheetVoList.get(k);
+							if (peopleTimesheetVo == null)
+								continue;
+							//比较两个日期
+							if (DateUtil.CompareTwoDate(checkDate, j, peopleTimesheetVo.getCheckDate())){
+								String vacationSymbol = getVacationSymbol(peopleTimesheetVo.getStatus());
+								row.createCell(j+1).setCellValue(vacationSymbol);
+							}else{
+								row.createCell(j+1).setCellValue("√");
+							}
+						}
+					}
+
+					row.setHeight((short) 400);
+				}
+
+				sheet.setDefaultRowHeightInPoints(21);
+			}
+
+			response.reset();
+			os = response.getOutputStream();
+			response.setHeader("Content-disposition",
+					"attachment; filename=" + new String(newFileName.getBytes("GBK"), "ISO-8859-1"));
+			workBook.write(os);
+			os.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void peopleContract2ExportVacationResult(HttpServletResponse response, String checkDate) {
+		XSSFWorkbook workBook;
+		OutputStream os;
+		String newFileName = "考勤统计信息.xlsx";
+		try {
+			String filePath=this.getClass().getResource("/template/vacationResult.xlsx").getPath();
+			workBook = new XSSFWorkbook(filePath);
+
+			List<PeopleContract> peopleList = peopleContract2Mapper.findAllPeople();
+
+			int count = 0;
+			XSSFRow row;
+			XSSFSheet sheet= workBook.getSheetAt(0);
+			XSSFCellStyle setBorder= WordUtil.setCellStyle(workBook,true);
+
+			if (peopleList != null && peopleList.size() > 0){
+
+				for(int i=0; i<peopleList.size(); i++){
+					PeopleContract people = peopleList.get(i);
 
 					if (people == null || StringUtils.isBlank(people.getCode()) || StringUtils.isBlank(people.getName()))
 						continue;

@@ -278,4 +278,24 @@ public class PeopleTimeSheetController extends BaseController {
 
 		timesheetService.exportVacationResult(response,checkDate);
 	}
+
+	@RequestMapping(value = "/peopleContractExportVacationResult")
+	public void peopleContractExportVacationResult(HttpServletResponse response, String ids){
+		String checkDate = ids;
+		if (StringUtils.isBlank(ids)){
+			checkDate = DateUtil.GetCurrnetYearAndMonth();
+		}
+
+		timesheetService.peopleContractExportVacationResult(response,checkDate);
+	}
+
+	@RequestMapping(value = "/peopleContract2ExportVacationResult")
+	public void peopleContract2ExportVacationResult(HttpServletResponse response, String ids){
+		String checkDate = ids;
+		if (StringUtils.isBlank(ids)){
+			checkDate = DateUtil.GetCurrnetYearAndMonth();
+		}
+
+		timesheetService.peopleContract2ExportVacationResult(response,checkDate);
+	}
 }
