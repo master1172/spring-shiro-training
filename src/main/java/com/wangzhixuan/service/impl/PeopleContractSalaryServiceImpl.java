@@ -450,11 +450,31 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 						row.createCell(1).setCellValue(peopleContractSalaryVo.getPeopleName());
 						row.createCell(2).setCellValue(peopleContractSalaryVo.getJobLevel());
 						row.createCell(3).setCellValue(peopleContractSalaryVo.getJobSalary() == null?"":peopleContractSalaryVo.getJobSalary().toString());
-
-
+						row.createCell(4).setCellValue(peopleContractSalaryVo.getSchoolSalary() == null? "": peopleContractSalaryVo.getSchoolSalary().toString());
+						row.createCell(5).setCellValue(peopleContractSalaryVo.getExamResult() == null ?  "": peopleContractSalaryVo.getExamResult());
+						row.createCell(6).setCellValue(peopleContractSalaryVo.getJobExamSalaryTotal() == null ? "": peopleContractSalaryVo.getJobExamSalaryTotal().toString());
+						row.createCell(7).setCellValue(peopleContractSalaryVo.getTelephoneAllowance() == null ? "": peopleContractSalaryVo.getTelephoneAllowance().toString());
+						row.createCell(8).setCellValue(peopleContractSalaryVo.getTrafficAllowance() == null? "": peopleContractSalaryVo.getTrafficAllowance().toString());
+						row.createCell(9).setCellValue(peopleContractSalaryVo.getSpecialAllowance() == null ? "" : peopleContractSalaryVo.getSpecialAllowance().toString());
+						row.createCell(10).setCellValue(peopleContractSalaryVo.getHeadAllowance() == null ? "" : peopleContractSalaryVo.getHeadAllowance().toString());
+						row.createCell(11).setCellValue(peopleContractSalaryVo.getTemperatureAllowance() == null ? "" : peopleContractSalaryVo.getTemperatureAllowance().toString());
+						row.createCell(12).setCellValue(peopleContractSalaryVo.getTimesheetStatus() == null? "" : peopleContractSalaryVo.getTimesheetStatus().toString());
+						row.createCell(13).setCellValue(peopleContractSalaryVo.getOnDutyFee() == null? "" : peopleContractSalaryVo.getOnDutyFee().toString());
+						row.createCell(14).setCellValue(peopleContractSalaryVo.getOnDutyDate() == null ? "" : peopleContractSalaryVo.getOnDutyDate().toString());
+						row.createCell(15).setCellValue(peopleContractSalaryVo.getOnDutyFeeTotal() == null ? "" : peopleContractSalaryVo.getOnDutyFeeTotal().toString());
+						row.createCell(16).setCellValue(peopleContractSalaryVo.getBonus() == null ? "" : peopleContractSalaryVo.getBonus().toString());
+						row.createCell(17).setCellValue(peopleContractSalaryVo.getReissueFee() == null ? "" : peopleContractSalaryVo.getReissueFee().toString());
+						row.createCell(18).setCellValue(peopleContractSalaryVo.getGrossIncome() == null ? "" : peopleContractSalaryVo.getGrossIncome().toString());
+						row.createCell(19).setCellValue(peopleContractSalaryVo.getLifeInsurance() == null ? "" : peopleContractSalaryVo.getLifeInsurance().toString());
+						row.createCell(20).setCellValue(peopleContractSalaryVo.getJobInsurance() == null ? "" : peopleContractSalaryVo.getJobInsurance().toString());
+						row.createCell(21).setCellValue(peopleContractSalaryVo.getHealthInsurance() == null ? "" : peopleContractSalaryVo.getHealthInsurance().toString());
+						row.createCell(22).setCellValue(peopleContractSalaryVo.getHouseFund() == null ? "" : peopleContractSalaryVo.getHouseFund().toString());
+						row.createCell(23).setCellValue(peopleContractSalaryVo.getExpense() == null ? "" : peopleContractSalaryVo.getExpense().toString());
+						row.createCell(24).setCellValue(peopleContractSalaryVo.getNetIncome() == null ? "" : peopleContractSalaryVo.getNetIncome().toString());
+						row.createCell(25).setCellValue(peopleContractSalaryVo.getPayDate() == null ? "" : peopleContractSalaryVo.getPayDate().toString());
 						count++;
 
-						for(int k=0; k<4; k++){
+						for(int k=0; k<26; k++){
 							row.getCell(k).setCellStyle(setBorder);
 						}
 						row.setHeight((short)400);
