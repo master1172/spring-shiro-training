@@ -486,7 +486,8 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 								continue;
 							//比较两个日期
 							if (DateUtil.CompareTwoDate(checkDate, j, peopleTimesheetVo.getCheckDate())){
-								row.createCell(j+1).setCellValue("×");
+								String vacationSymbol = getVacationSymbol(peopleTimesheetVo.getStatus());
+								row.createCell(j+1).setCellValue(vacationSymbol);
 							}else{
 								row.createCell(j+1).setCellValue("√");
 							}
@@ -527,5 +528,12 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	public void findPeopleContract2DataGrid(PageInfo pageInfo, HttpServletRequest request) {
 		pageInfo.setRows(peopleTimesheetMapper.findPeopleContract2TimesheetSumPageCondition(pageInfo));
 		pageInfo.setTotal(peopleTimesheetMapper.findPeopleContract2TimesheetSumPageCount(pageInfo));
+	}
+
+	private String getVacationSymbol(String vacationStatus){
+		if (StringUtils.isBlank(vacationStatus))
+			return ConstUtil.TIMESHEET_NORMAL;
+
+		return ConstUtil.TIMESHEET_SICK_LEAVE;
 	}
 }
