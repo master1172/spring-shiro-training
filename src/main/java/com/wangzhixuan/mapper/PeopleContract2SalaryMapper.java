@@ -53,4 +53,6 @@ public interface PeopleContract2SalaryMapper {
     PeopleContractSalary findLatestPeopleSalaryByCode(String code);
 
     List<PeopleContractSalary> findPeopleContractSalaryListByCodeAndPayDate(Map<String, Object> condition);
+
+    List<PeopleContractSalaryVo> findPeopleContractSalaryVoListByCodeAndPayDate(Map<String, Object> condition);
 }

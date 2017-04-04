@@ -213,6 +213,20 @@ public class PeopleContract2SalaryController extends BaseController {
 		return "/admin/peopleContract2Salary/peopleSalaryAdd";
 	}
 
+	@RequestMapping("/exportExcelForMonth")
+	public void exportExcelForMonth(HttpServletResponse response, String ids){
+		String payDate = ids;
+		if(StringUtils.isBlank(payDate)){
+			payDate = DateUtil.GetCurrentYearAndMonth();
+		}
+
+		try{
+			peopleContract2SalaryService.exportExcelForMonth(response, payDate);
+		}catch (Exception exp){
+			return;
+		}
+	}
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	@ResponseBody
 	public Result add(PeopleContractSalary peopleContractSalary ,@RequestParam(value="fileName",required=false)CommonsMultipartFile file) {
