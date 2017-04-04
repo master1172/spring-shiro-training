@@ -534,6 +534,45 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 		if (StringUtils.isBlank(vacationStatus))
 			return ConstUtil.TIMESHEET_NORMAL;
 
-		return ConstUtil.TIMESHEET_SICK_LEAVE;
+		if (vacationStatus.equals("事假"))
+			return ConstUtil.TIMESHEET_PERSONAL_LEAVE;
+
+		if (vacationStatus.equals("病假"))
+			return ConstUtil.TIMESHEET_SICK_LEAVE;
+
+		if (vacationStatus.equals("年休假"))
+			return ConstUtil.TIMESHEET_ANNUAL_LEAVE;
+
+		if (vacationStatus.equals("公休假"))
+			return ConstUtil.TIMESHEET_NORMAL;
+
+		if (vacationStatus.equals("法定节假日"))
+			return ConstUtil.TIMESHEET_NORMAL;
+
+		if (vacationStatus.equals("产假"))
+			return ConstUtil.TIMESHEET_BIRTH_LEAVE;
+
+		if (vacationStatus.equals("婚假"))
+			return ConstUtil.TIMESHEET_MARRIAGE_LEAVE;
+
+		if (vacationStatus.equals("丧假"))
+			return ConstUtil.TIMESHEET_DEATH_LEAVE;
+
+		if (vacationStatus.equals("探亲假"))
+			return ConstUtil.TIMESHEET_NORMAL;
+
+		if (vacationStatus.equals("旷工"))
+			return ConstUtil.TIMESHEET_ABSENT;
+
+		if (vacationStatus.equals("迟到早退"))
+			return ConstUtil.TIMESHEET_LATE;
+
+		if (vacationStatus.equals("补休"))
+			return ConstUtil.TIMESHEET_COMPENSATE_REST;
+
+		if (vacationStatus.equals("调休"))
+			return ConstUtil.TIMESHEET_ADJUST_REST;
+
+		return ConstUtil.TIMESHEET_NORMAL;
 	}
 }
