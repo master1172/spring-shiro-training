@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
+import com.sun.tools.internal.jxc.ap.Const;
 import com.wangzhixuan.mapper.*;
 import com.wangzhixuan.model.ExamMonthly;
 import com.wangzhixuan.model.People;
@@ -107,7 +108,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 	}
 
 	@Override
-	public boolean insertTimesheetByImport(CommonsMultipartFile[] files, String importDate) {
+	public boolean insertTimesheetByImport(CommonsMultipartFile[] files, String importDate, StringBuilder examResultCheck) {
 		boolean flag = false;
 
 		if(files != null && files.length > 0){
@@ -120,7 +121,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				try{
 					String path = UploadUtil.fileUpload(filePath, files[i]);
 					if (StringUtils.isNotBlank(path)) {
-						getTimesheetInfoByExcel(list, path, importDate);
+						examResultCheck.append(getTimesheetInfoByExcel(list, path, importDate));
 					}
 				}catch (Exception exp){
 					continue;
@@ -183,18 +184,39 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 			if (timesheetStatus.equals(ConstUtil.TIMESHEET_PERSONAL_LEAVE)){
 				personalLeave = personalLeave + 1;
+				sickAndpersonalLeave = sickAndpersonalLeave + 1;
+			}else if (timesheetStatus.equals(ConstUtil.TIMESHEET_SICK_LEAVE)){
+				sickAndpersonalLeave = sickAndpersonalLeave + 1;
+			}else if (timesheetStatus.equals(ConstUtil.TIMESHEET_ABSENT)){
+				absent = absent + 1;
+			}else if (timesheetStatus.equals(ConstUtil.TIMESHEET_LATE)){
+				late = late + 1;
 			}
 		}
 
-		return "";
+		if(absent>=1 || personalLeave>8 || sickAndpersonalLeave>12 && late>10){
+			return "E";
+		}
+
+		if(personalLeave <= 2 && sickAndpersonalLeave <=5 && late<=5 && absent<1){
+			return "B";
+		}else if(personalLeave <=4 && sickAndpersonalLeave<=10 && late <= 5 && absent < 1){
+			return "C";
+		}else if(personalLeave<=8 && sickAndpersonalLeave<=12 && late<=10 && absent < 1){
+			return "D";
+		}
+
+		return "A";
 	}
 
-	private void getTimesheetInfoByExcel(List<PeopleTimesheet> list, String path, String importDate) throws IOException {
+	private String getTimesheetInfoByExcel(List<PeopleTimesheet> list, String path, String importDate) throws IOException {
 		XSSFWorkbook xwb = new XSSFWorkbook(path);
 		XSSFSheet sheet = xwb.getSheetAt(0);
 		XSSFRow row;
 
 		String yearAndMonth = importDate;
+
+		StringBuilder examResultCheckResult = new StringBuilder();
 
 		for (int i = sheet.getFirstRowNum() + 5; i < sheet.getPhysicalNumberOfRows()-2; i++) {
 			try{
@@ -215,8 +237,6 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				condition.put("checkDateMin", DateUtil.GetFirstDayOfSelectMonth(importDate));
 				condition.put("checkDateMax", DateUtil.GetLastDayOfSelectMonth(importDate));
 				peopleTimesheetMapper.deleteByPeopleCodeAndDate(condition);
-
-				String expectedExamResult = getExpectedExamResult(row);
 
 				for(int j=1; j<=31; j++){
 
@@ -271,10 +291,26 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					list.add(timesheet);
 				}
 
+				String expectedExamResult = getExpectedExamResult(row);
+
 				//月度考核情况导入
 				if (row.getCell(32) != null){
 
 					String examResult = row.getCell(32).toString().trim();
+
+					//查看导入的excel中的exam result和期望的exam result是否一致
+					if (StringUtils.isBlank(examResult)){
+						if (!StringUtils.isBlank(expectedExamResult)){
+							examResultCheckResult.append(people.getName());
+							examResultCheckResult.append(",");
+						}
+					}else{
+						if (!examResult.equals(expectedExamResult)){
+							examResultCheckResult.append(people.getName());
+							examResultCheckResult.append(",");
+						}
+					}
+
 					if (StringUtils.isNoneBlank(examResult)){
 
 						Map<String, Object> examCondition = Maps.newHashMap();
@@ -300,6 +336,8 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				continue;
 			}
 		}
+
+		return examResultCheckResult.toString();
 	}
 
 

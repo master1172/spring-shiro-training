@@ -230,10 +230,17 @@ public class PeopleTimeSheetController extends BaseController {
 	@ResponseBody
 	public Result importExcel(@RequestParam(value="fileName",required=false)CommonsMultipartFile[] files, String checkDate){
 		Result result = new Result();
+		StringBuilder examResultCheck = new StringBuilder();
 		if(files!=null&&files.length>0){
 			try{
-				timesheetService.insertTimesheetByImport(files, checkDate);
-				result.setMsg("导入成功");
+				timesheetService.insertTimesheetByImport(files, checkDate, examResultCheck);
+				String examResult = examResultCheck.toString();
+				if (StringUtils.isBlank(examResult)){
+					examResult = "导入成功，考核结果正确";
+				}else{
+					examResult = "导入成功，下列人员考核结果可能不正确: " + examResult;
+				}
+				result.setMsg(examResult);
 				result.setSuccess(true);
 			}catch (Exception exp){
 				result.setSuccess(false);

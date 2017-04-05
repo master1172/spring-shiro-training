@@ -83,6 +83,7 @@
                                     parent.$.messager.alert("提示", data["msg"], "warning");
                                 }else{
                                     parent.progressClose();
+                                    parent.$.messager.alert('提示', data["msg"], 'info');
                                     dataGrid.datagrid("reload");
                                     parent.$.modalDialog.handler.dialog("close");
                                 }
