@@ -127,7 +127,7 @@
     FROM exam_monthly t
     WHERE
       t.people_code = #{peopleCode}
-      <if test=" startDate != null and startDate != ''">
+      <if test=" examDate != null and examDate != ''">
           <![CDATA[ and t.exam_date = #{examDate} ]]>
       </if>
       LIMIT 0,1

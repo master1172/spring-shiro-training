@@ -198,7 +198,9 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 			return "E";
 		}
 
-		if(personalLeave <= 2 && sickAndpersonalLeave <=5 && late<=5 && absent<1){
+		if (personalLeave < 1 && sickAndpersonalLeave < 1 && late < 1 && absent < 1){
+			return "A";
+		} else if(personalLeave <= 2 && sickAndpersonalLeave <=5 && late<=5 && absent<1){
 			return "B";
 		}else if(personalLeave <=4 && sickAndpersonalLeave<=10 && late <= 5 && absent < 1){
 			return "C";
@@ -206,7 +208,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 			return "D";
 		}
 
-		return "A";
+		return "E";
 	}
 
 	private String getTimesheetInfoByExcel(List<PeopleTimesheet> list, String path, String importDate) throws IOException {
@@ -311,17 +313,17 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 						}
 					}
 
-					if (StringUtils.isNoneBlank(examResult)){
+					if (StringUtils.isNoneBlank(examResult)) {
 
 						Map<String, Object> examCondition = Maps.newHashMap();
-						examCondition.put("peopleCode",people.getCode());
+						examCondition.put("peopleCode", people.getCode());
 						examCondition.put("examDate", importDate);
-						ExamMonthly examMonthly = examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(condition);
+						ExamMonthly examMonthly = examMonthlyMapper.findPeopleExamMonthlyResultByCodeAndDate(examCondition);
 
-						if (examMonthly != null){
+						if (examMonthly != null) {
 							examMonthly.setExamResult(examResult);
 							examMonthlyMapper.updateByPrimaryKey(examMonthly);
-						}else{
+						} else {
 							examMonthly = new ExamMonthly();
 							examMonthly.setExamResult(examResult);
 							examMonthly.setExamDate(importDate);
