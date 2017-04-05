@@ -165,6 +165,30 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 		return flag;
 	}
 
+	private String getExpectedExamResult(XSSFRow row) {
+		if (row == null)
+			return "";
+
+		int personalLeave = 0;
+		int sickAndpersonalLeave = 0;
+		int late = 0;
+		int absent = 0;
+
+		for(int j=1; j<31; j++){
+
+			if (row.getCell(j) == null || row.getCell(j).toString().trim().equals(""))
+				continue;
+
+			String timesheetStatus = row.getCell(j).toString().trim();
+
+			if (timesheetStatus.equals(ConstUtil.TIMESHEET_PERSONAL_LEAVE)){
+				personalLeave = personalLeave + 1;
+			}
+		}
+
+		return "";
+	}
+
 	private void getTimesheetInfoByExcel(List<PeopleTimesheet> list, String path, String importDate) throws IOException {
 		XSSFWorkbook xwb = new XSSFWorkbook(path);
 		XSSFSheet sheet = xwb.getSheetAt(0);
@@ -191,6 +215,8 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				condition.put("checkDateMin", DateUtil.GetFirstDayOfSelectMonth(importDate));
 				condition.put("checkDateMax", DateUtil.GetLastDayOfSelectMonth(importDate));
 				peopleTimesheetMapper.deleteByPeopleCodeAndDate(condition);
+
+				String expectedExamResult = getExpectedExamResult(row);
 
 				for(int j=1; j<=31; j++){
 
@@ -275,6 +301,8 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 			}
 		}
 	}
+
+
 
 	/**
 	 * 文件读取
