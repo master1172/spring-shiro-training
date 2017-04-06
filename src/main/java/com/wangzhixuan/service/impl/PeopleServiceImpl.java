@@ -53,6 +53,12 @@ public class PeopleServiceImpl implements PeopleService{
 	@Autowired
 	private PeopleTransferMapper peopleTransferMapper;
 
+	@Autowired
+	private PeopleRankMapper peopleRankMapper;
+
+	@Autowired
+	private PeopleJobMapper peopleJobMapper;
+
 
     @Override
     public People findPeopleById(Integer id) {
@@ -117,7 +123,7 @@ public class PeopleServiceImpl implements PeopleService{
     	}
     }
 
-    @Override
+	@Override
     public void updatePeople(PeopleVo peoplevo, CommonsMultipartFile file) throws InvocationTargetException, IllegalAccessException {
 
 		//当日期不为空，而是""的时候，需要修改为null，否则插入会有错误

@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
 import com.wangzhixuan.mapper.*;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleContract;
-import com.wangzhixuan.model.PeopleContractSalaryBase;
+import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.service.ExamYearlyService;
 import com.wangzhixuan.service.PeopleContract2SalaryService;
@@ -35,7 +33,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
 import static com.wangzhixuan.utils.WordUtil.getCellString;
@@ -54,6 +51,8 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 	private PeopleContract2Mapper peopleContractMapper;
 	@Autowired
 	private DictMapper dictMapper;
+	@Autowired
+	private PeopleJobMapper peopleJobMapper;
 
 	@Autowired
 	private ExamMonthlyService examMonthlyService;
@@ -488,6 +487,22 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 			}catch (Exception exp){
 				exp.printStackTrace();
 			}
+		}
+	}
+
+	@Override
+	public void updateJobAndRankSalary(PeopleContractSalaryBase peopleContractSalaryBase) {
+		
+		if (peopleContractSalaryBase == null)
+			return;
+
+		Integer jobId = peopleContractSalaryBase.getJobId();
+
+		if (jobId != null){
+			PeopleJob peopleJob = peopleJobMapper.findPeopleJobById(Long.valueOf(jobId));
+
+			if (peopleJob != null)
+				peopleContractSalaryBase.setJobSalary(peopleJob.getSalary());
 		}
 	}
 

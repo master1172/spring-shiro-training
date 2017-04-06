@@ -51,6 +51,9 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     private PeopleJobMapper peopleJobMapper;
 
     @Autowired
+    private PeopleRankMapper peopleRankMapper;
+
+    @Autowired
     private ExamYearlyMapper examYearlyMapper;
 
     @Autowired
@@ -522,6 +525,30 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
         }
 
         return result;
+    }
+
+    @Override
+    public void updateJobSalaryAndRankSalary(PeopleSalaryBase peopleSalaryBase) {
+        if (peopleSalaryBase == null)
+            return;
+
+        Integer jobId = peopleSalaryBase.getJobId();
+
+        if (jobId != null){
+            PeopleJob peopleJob = peopleJobMapper.findPeopleJobById(Long.valueOf(jobId));
+
+            if (peopleJob != null)
+                peopleSalaryBase.setJobSalary(peopleJob.getSalary());
+        }
+
+        Integer rankId = peopleSalaryBase.getRankId();
+
+        if (rankId != null){
+            PeopleRank peopleRank = peopleRankMapper.findPeopleRankById(Long.valueOf(rankId));
+
+            if (peopleRank != null)
+                peopleSalaryBase.setRankSalary(peopleRank.getSalary());
+        }
     }
 
     private PeopleSalary getPeopleSalary(String payDate, String peopleCode){

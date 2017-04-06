@@ -11,12 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
-import com.wangzhixuan.mapper.DictMapper;
-import com.wangzhixuan.mapper.PeopleContractMapper;
-import com.wangzhixuan.mapper.PeopleMapper;
-import com.wangzhixuan.model.People;
-import com.wangzhixuan.model.PeopleContract;
-import com.wangzhixuan.model.PeopleContractSalaryBase;
+import com.wangzhixuan.mapper.*;
+import com.wangzhixuan.model.*;
 import com.wangzhixuan.service.ExamMonthlyService;
 import com.wangzhixuan.service.ExamYearlyService;
 import com.wangzhixuan.service.PeopleTimesheetService;
@@ -39,8 +35,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.wangzhixuan.mapper.PeopleContractSalaryMapper;
-import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.service.PeopleContractSalaryService;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
 
@@ -69,6 +63,9 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 
 	@Autowired
 	private PeopleTimesheetService peopleTimesheetService;
+
+	@Autowired
+	private PeopleJobMapper peopleJobMapper;
 
 	@Override
 	public void findDataGrid(PageInfo pageInfo, HttpServletRequest request) {
@@ -494,6 +491,22 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 			}catch (Exception exp){
 				exp.printStackTrace();
 			}
+		}
+	}
+
+	@Override
+	public void updateJobAndRankSalary(PeopleContractSalaryBase peopleContractSalaryBase) {
+
+		if (peopleContractSalaryBase == null)
+			return;
+
+		Integer jobId = peopleContractSalaryBase.getJobId();
+
+		if (jobId != null){
+			PeopleJob peopleJob = peopleJobMapper.findPeopleJobById(Long.valueOf(jobId));
+
+			if (peopleJob != null)
+				peopleContractSalaryBase.setJobSalary(peopleJob.getSalary());
 		}
 	}
 

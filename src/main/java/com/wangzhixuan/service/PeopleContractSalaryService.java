@@ -49,4 +49,6 @@ public interface PeopleContractSalaryService {
     boolean autoCalculateSalary(String payDate, StringBuilder processResult);
 
     void exportExcelForMonth(HttpServletResponse response, String payDate);
+
+    void updateJobAndRankSalary(PeopleContractSalaryBase peopleContractBase);
 }

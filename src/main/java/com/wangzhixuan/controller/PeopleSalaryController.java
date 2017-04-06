@@ -77,6 +77,7 @@ public class PeopleSalaryController extends BaseController{
     @RequestMapping("/editPage")
     public String editPage(Integer id, Model model){
         PeopleSalaryBase peopleSalaryBase = peopleSalaryService.findPeopleSalaryBaseById(id);
+        peopleSalaryService.updateJobSalaryAndRankSalary(peopleSalaryBase);
         model.addAttribute("peopleSalaryBase",peopleSalaryBase);
         return "/admin/peopleSalary/peopleSalaryBaseEdit";
     }
