@@ -37,7 +37,7 @@
             <table class="grid" border=1>
                 <input type="hidden" name="id" value="${peopleContractSalaryBase.id}">
                 <input type="hidden" name="peopleCode" value="${peopleContractSalaryBase.peopleCode}">
-                <input type="hidden" name="name" value="${peopleContractSalaryBase.peopleNameo}">
+                <input type="hidden" name="name" value="${peopleContractSalaryBase.peopleName}">
                 <tr>
                     <td>职级</td>
                     <td>

@@ -492,7 +492,7 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 
 	@Override
 	public void updateJobAndRankSalary(PeopleContractSalaryBase peopleContractSalaryBase) {
-		
+
 		if (peopleContractSalaryBase == null)
 			return;
 
