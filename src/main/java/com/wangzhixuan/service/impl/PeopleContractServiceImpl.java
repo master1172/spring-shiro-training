@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.wangzhixuan.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFPictureData;
@@ -26,10 +27,6 @@ import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleContractMapper;
 import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.service.PeopleContractService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
 import com.wangzhixuan.vo.PeopleContractVo;
 
 /**
@@ -229,7 +226,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
                 //出生日期
                 if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
                     String birthday=row.getCell(6).toString().trim();
-                    p.setBirthday(birthday);
+                    p.setBirthday(DateUtil.GetDate(birthday));
                 }
 
                 //文化程度
@@ -279,7 +276,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
                 //来院日期
                 if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
                     String schoolDate=row.getCell(13).toString().trim();
-                    p.setSchoolDate(schoolDate);
+                    p.setSchoolDate(DateUtil.GetDate(schoolDate));
                 }
 
                 //联系电话
@@ -318,7 +315,7 @@ public class PeopleContractServiceImpl implements PeopleContractService{
                 //当前职务日期
                 if(row.getCell(19)!=null&&!row.getCell(19).toString().trim().equals("")){
                     String jobDate=row.getCell(19).toString().trim();
-                    p.setJobDate(jobDate);
+                    p.setJobDate(DateUtil.GetDate(jobDate));
                 }
 
                 //备注

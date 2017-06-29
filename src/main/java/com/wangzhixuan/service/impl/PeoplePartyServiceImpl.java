@@ -287,7 +287,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 //出生日期
                 if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
                     String birthday=row.getCell(6).toString().trim();
-                    p.setBirthday(birthday);
+                    p.setBirthday(DateUtil.GetDate(birthday));
                 }
 
                 //籍贯
@@ -313,7 +313,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 //入党日期
                 if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
                     String partyDate=row.getCell(9).toString().trim();
-                    p.setPartyDate(partyDate);
+                    p.setPartyDate(DateUtil.GetDate(partyDate));
                 }
 
                 //学历情况
@@ -333,7 +333,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 //参加工作日期
                 if(row.getCell(11)!=null&&!row.getCell(11).toString().trim().equals("")){
                     String workDate=row.getCell(11).toString().trim();
-                    p.setWorkDate(workDate);
+                    p.setWorkDate(DateUtil.GetDate(workDate));
                 }
 
                 //职务岗位
@@ -359,7 +359,7 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 //现任职级日期
                 if(row.getCell(14)!=null&&!row.getCell(14).toString().trim().equals("")){
                     String jobDate=row.getCell(14).toString().trim();
-                    p.setJobDate(jobDate);
+                    p.setJobDate(DateUtil.GetDate(jobDate));
                 }
 
                 //编制
@@ -371,13 +371,13 @@ public class PeoplePartyServiceImpl implements PeoplePartyService{
                 //党组织关系转入日期
                 if(row.getCell(16) != null && !row.getCell(16).toString().trim().equals("")){
                     String partyInDate=row.getCell(16).toString().trim();
-                    p.setPartyInDate(partyInDate);
+                    p.setPartyInDate(DateUtil.GetDate(partyInDate));
                 }
 
                 //党组织关系转出日期
                 if(row.getCell(17) != null && !row.getCell(17).toString().trim().equals("")){
                     String partyOutDate=row.getCell(17).toString().trim();
-                    p.setPartyOutDate(partyOutDate);
+                    p.setPartyOutDate(DateUtil.GetDate(partyOutDate));
                 }
 
                 //备注

@@ -1,9 +1,31 @@
 package com.wangzhixuan.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by sterm on 2016/12/5.
  */
 public class ConstUtil {
+
+    public static Map<String,String> getMonthDict(){
+        Map<String, String> monthDict = new HashMap<>();
+
+        monthDict.put("一月","01");
+        monthDict.put("二月","02");
+        monthDict.put("三月","03");
+        monthDict.put("四月","04");
+        monthDict.put("五月","05");
+        monthDict.put("六月","06");
+        monthDict.put("七月","07");
+        monthDict.put("八月","08");
+        monthDict.put("九月","09");
+        monthDict.put("十月","10");
+        monthDict.put("十一月","11");
+        monthDict.put("十二月","12");
+
+        return monthDict;
+    }
 	
 	public static String[] getSocialSecurityHeader(){
         return new String[]{

@@ -202,13 +202,13 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 //生日
                 if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
                     String birthday=row.getCell(4).toString().trim();
-                    p.setBirthday(birthday);
+                    p.setBirthday(DateUtil.GetDate(birthday));
                 }
 
                 //到院工作日期
                 if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
                     String school_date=row.getCell(5).toString().trim();
-                    p.setSchool_date(school_date);
+                    p.setSchool_date(DateUtil.GetDate(school_date));
                 }
 
                 //职务
@@ -241,7 +241,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 //死亡日期
                 if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
                     String death_date=row.getCell(9).toString().trim();
-                    p.setDeath_date(death_date);
+                    p.setDeath_date(DateUtil.GetDate(death_date));
                 }
 
                 //死亡原因
@@ -259,7 +259,7 @@ public class PeopleDeathServiceImpl implements PeopleDeathService {
                 //丧葬费
                 if(row.getCell(12)!=null&&!row.getCell(12).toString().trim().equals("")){
                     String deathFee = row.getCell(12).toString().trim();
-                    p.setFuneralFee(StringUtilExtra.StringToDecimal(deathFee));
+                    p.setDeathFee(StringUtilExtra.StringToDecimal(deathFee));
                 }
 
                 //备注

@@ -282,4 +282,27 @@ public class DateUtil {
 
         return yearAndMonth + "-" + j.toString();
     }
+
+    public static String GetDate(String date){
+
+        if (date == null)
+            return null;
+
+        if (date.contains("月")){
+            try{
+               String[] dateSplit =  date.split("-");
+               if (dateSplit.length > 2){
+                   String day = dateSplit[0];
+                   String month = ConstUtil.getMonthDict().get(dateSplit[1]);
+                   String year = dateSplit[2];
+
+                   return year+"-"+month+"-"+day;
+               }
+            }catch (Exception exp){
+
+            }
+        }
+        return date;
+    }
+
 }

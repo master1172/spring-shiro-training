@@ -220,7 +220,7 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
                 //调入调出日期
                 if(row.getCell(5)!=null&&!row.getCell(5).toString().trim().equals("")){
                     String transferDate=row.getCell(5).toString().trim();
-                    p.setTransferDate(transferDate);
+                    p.setTransferDate(DateUtil.GetDate(transferDate));
                 }
 
                 //干部介绍信编号
@@ -232,13 +232,13 @@ public class PeopleTransferServiceImpl implements PeopleTransferService{
                 //工资止薪日期
                 if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
                     String salaryEndDate=row.getCell(7).toString().trim();
-                    p.setSalaryEndDate(salaryEndDate);
+                    p.setSalaryEndDate(DateUtil.GetDate(salaryEndDate));
                 }
 
                 //党组织转接日期
                 if(row.getCell(8)!=null&&!row.getCell(8).toString().trim().equals("")){
                     String partyTransferDate=row.getCell(8).toString().trim();
-                    p.setPartyTransferDate(partyTransferDate);
+                    p.setPartyTransferDate(DateUtil.GetDate(partyTransferDate));
                 }
 
                 list.add(p);

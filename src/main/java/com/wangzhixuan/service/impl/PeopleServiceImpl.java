@@ -384,7 +384,7 @@ public class PeopleServiceImpl implements PeopleService{
 				//生日
 	    		if(row.getCell(4)!=null&&!row.getCell(4).toString().trim().equals("")){
 	    			String birthday=row.getCell(4).toString().trim();
-	    			p.setBirthday(birthday);
+	    			p.setBirthday(DateUtil.GetDate(birthday));
 	    		}
 
 				//籍贯
@@ -429,19 +429,19 @@ public class PeopleServiceImpl implements PeopleService{
 				//入党日期
 				if(row.getCell(9) != null && !row.getCell(9).toString().trim().equals("")){
 					String partyDate = row.getCell(9).toString().trim();
-					p.setPartyDate(partyDate);
+					p.setPartyDate(DateUtil.GetDate(partyDate));
 				}
 
 				//参加工作日期
 				if(row.getCell(10) != null && !row.getCell(10).toString().trim().equals("")){
 					String workDate = row.getCell(10).toString().trim();
-					p.setWorkDate(workDate);
+					p.setWorkDate(DateUtil.GetDate(workDate));
 				}
 
 				//来院日期
 				if(row.getCell(11) != null && !row.getCell(11).toString().trim().equals("")){
 					String schoolDate = row.getCell(11).toString().trim();
-					p.setSchoolDate(schoolDate);
+					p.setSchoolDate(DateUtil.GetDate(schoolDate));
 				}
 
 				//职务
@@ -468,13 +468,13 @@ public class PeopleServiceImpl implements PeopleService{
 				//现职务时间
 				if(row.getCell(15) != null && !row.getCell(15).toString().trim().equals("")){
 					String jobDate = row.getCell(15).toString().trim();
-					p.setJobDate(jobDate);
+					p.setJobDate(DateUtil.GetDate(jobDate));
 				}
 
 				//现职级时间
 				if(row.getCell(16) != null && !row.getCell(16).toString().trim().equals("")){
 					String jobLevelDate = row.getCell(16).toString().trim();
-					p.setJobLevelDate(jobLevelDate);
+					p.setJobLevelDate(DateUtil.GetDate(jobLevelDate));
 				}
 
 				//年龄

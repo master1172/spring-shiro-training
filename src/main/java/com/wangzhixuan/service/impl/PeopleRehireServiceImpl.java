@@ -239,7 +239,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 //出生日期
                 if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
                     String birthday=row.getCell(6).toString().trim();
-                    p.setBirthday(birthday);
+                    p.setBirthday(DateUtil.GetDate(birthday));
                 }
 
                 //文化程度
@@ -263,7 +263,7 @@ public class PeopleRehireServiceImpl implements PeopleRehireService{
                 //退休日期
                 if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
                     String retireDate=row.getCell(10).toString().trim();
-                    p.setRetireDate(retireDate);
+                    p.setRetireDate(DateUtil.GetDate(retireDate));
                 }
 
                 //专业技术及专长

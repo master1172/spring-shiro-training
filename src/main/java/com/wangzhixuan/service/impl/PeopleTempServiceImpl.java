@@ -4,10 +4,7 @@ import com.wangzhixuan.mapper.DictMapper;
 import com.wangzhixuan.mapper.PeopleTempMapper;
 import com.wangzhixuan.model.PeopleTemp;
 import com.wangzhixuan.service.PeopleTempService;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.utils.StringUtilExtra;
-import com.wangzhixuan.utils.UploadUtil;
-import com.wangzhixuan.utils.WordUtil;
+import com.wangzhixuan.utils.*;
 import com.wangzhixuan.vo.PeopleTempVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.*;
@@ -222,7 +219,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
                 //出生日期
                 if(row.getCell(6)!=null&&!row.getCell(6).toString().trim().equals("")){
                     String birthday=row.getCell(6).toString().trim();
-                    p.setBirthday(birthday);
+                    p.setBirthday(DateUtil.GetDate(birthday));
                 }
 
                 //文化程度
@@ -272,7 +269,7 @@ public class PeopleTempServiceImpl implements PeopleTempService{
                 //来院日期
                 if(row.getCell(13)!=null&&!row.getCell(13).toString().trim().equals("")){
                     String schoolDate=row.getCell(13).toString().trim();
-                    p.setSchoolDate(schoolDate);
+                    p.setSchoolDate(DateUtil.GetDate(schoolDate));
                 }
 
                 //联系电话

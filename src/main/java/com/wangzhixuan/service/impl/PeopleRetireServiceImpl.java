@@ -282,7 +282,7 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                 //出生日期
                 if(row.getCell(7)!=null&&!row.getCell(7).toString().trim().equals("")){
                     String birthday=row.getCell(7).toString().trim();
-                    p.setBirthday(birthday);
+                    p.setBirthday(DateUtil.GetDate(birthday));
                 }
 
                 //政治面貌
@@ -294,13 +294,13 @@ public class PeopleRetireServiceImpl implements PeopleRetireService{
                 //工作日期
                 if(row.getCell(9)!=null&&!row.getCell(9).toString().trim().equals("")){
                     String workDate=row.getCell(9).toString().trim();
-                    p.setWorkDate(workDate);
+                    p.setWorkDate(DateUtil.GetDate(workDate));
                 }
 
                 //退休日期
                 if(row.getCell(10)!=null&&!row.getCell(10).toString().trim().equals("")){
                     String retireDate=row.getCell(10).toString().trim();
-                    p.setRetireDate(retireDate);
+                    p.setRetireDate(DateUtil.GetDate(retireDate));
                 }
 
                 //家庭住址

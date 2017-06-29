@@ -207,7 +207,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                 //生日
                 if(!StringUtilExtra.isBlank(row.getCell(8))){
                     String birthday=row.getCell(8).toString().trim();
-                    p.setBirthday(birthday);
+                    p.setBirthday(DateUtil.GetDate(birthday));
                 }
 
                 //学历信息/文化程度
@@ -225,7 +225,7 @@ public class PeopleDailyServiceImpl implements PeopleDailyService {
                 //到院时间
                 if(!StringUtilExtra.isBlank(row.getCell(11))){
                     String schoolDate=row.getCell(11).toString().trim();
-                    p.setSchoolDate(schoolDate);
+                    p.setSchoolDate(DateUtil.GetDate(schoolDate));
                 }
 
                 //联系电话
