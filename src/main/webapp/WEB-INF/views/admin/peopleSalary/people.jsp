@@ -237,6 +237,7 @@
                 title:'工资列表',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/peopleSalary/salaryListPage?id='+id,
             });
         }
@@ -246,6 +247,7 @@
                 title:'工资变动记录',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/salaryChangeRecord/changeListPage?id='+id,
             });
         }
@@ -316,6 +318,7 @@
             <th field="rankSalary"    data-options="sortable:true" width="80">薪级工资</th>
             <th field="reserveSalary"   data-options="sortable:false" width="80">工改保留工资</th>
             <th field="jobAllowance"    data-options="sortable:false" width="80">岗位津贴</th>
+            <th field="performanceAllowance" data-options="sortable:false" width="80">绩效津贴</th>
             <th field="rentAllowance"   data-options="sortable:false" width="80">提租补贴</th>
             <th field="houseAllowance"  data-options="sortable:false" width="80">购房补贴</th>
             <th field="dutyAllowance"   data-options="sortable:false" width="80">职务补贴</th>
