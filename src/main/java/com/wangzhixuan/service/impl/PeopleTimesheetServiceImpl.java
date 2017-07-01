@@ -401,7 +401,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 	// 导出excel
 	@Override
-	public void exportExcel(HttpServletResponse response, String[] idList) {
+	public void exportExcel(HttpServletResponse response, String[] idList, String selectDate) {
 
 		List list = peopleMapper.selectPeopleVoByIds(idList);
 
@@ -432,8 +432,21 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 						continue;
 
 					for(int j=0; j<timesheetList.size(); j++){
-						row = sheet.createRow(count + 1);
 						PeopleTimesheetVo timesheetVo = timesheetList.get(j);
+
+						//如果输入了check日期，那么只有check日期的记录会被导出excel。
+						if (StringUtils.isNoneBlank(selectDate)){
+							if (timesheetVo == null)
+								continue;
+
+							String originCheckDate = timesheetVo.getCheckDate();
+							if (StringUtils.isBlank(originCheckDate))
+								continue;
+							if (!originCheckDate.contains(selectDate))
+								continue;
+						}
+
+						row = sheet.createRow(count + 1);
 
 						row.createCell(0).setCellValue(count+1);
 						row.createCell(1).setCellValue(timesheetVo.getPeopleName());
@@ -464,7 +477,6 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 
 		}
 	}

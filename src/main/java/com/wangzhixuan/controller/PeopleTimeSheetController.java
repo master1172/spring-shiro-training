@@ -223,13 +223,13 @@ public class PeopleTimeSheetController extends BaseController {
 	}
 
 	@RequestMapping("/exportExcel")
-	public void exportExcel(HttpServletResponse response, String ids){
+	public void exportExcel(HttpServletResponse response, String ids, String selectDate){
 
 		if (StringUtils.isBlank(ids)){
 			LOGGER.error("Excel:{}","请选择有效数据!");
 		}
 		try{
-			timesheetService.exportExcel(response,ids.split(","));
+			timesheetService.exportExcel(response,ids.split(","), selectDate);
 		}catch(Exception exp){
 			LOGGER.error("导出Excel失败:{}",exp);
 		}

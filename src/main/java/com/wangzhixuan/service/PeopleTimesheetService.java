@@ -33,7 +33,7 @@ public interface PeopleTimesheetService {
 
     boolean insertTimesheetByImport(CommonsMultipartFile[] files, String checkDate, StringBuilder examResultCheck);
 
-	void exportExcel(HttpServletResponse response, String[] idList);
+	void exportExcel(HttpServletResponse response, String[] idList, String selectDate);
 
     PeopleTimesheetVo findPeopleTimesheetVoById(Integer id);
 
