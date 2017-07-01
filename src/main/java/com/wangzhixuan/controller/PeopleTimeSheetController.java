@@ -10,6 +10,7 @@ import com.wangzhixuan.model.People;
 import com.wangzhixuan.model.PeopleContract;
 import com.wangzhixuan.service.PeopleService;
 import com.wangzhixuan.utils.DateUtil;
+import com.wangzhixuan.utils.StringUtilExtra;
 import com.wangzhixuan.vo.PeopleContractVo;
 import com.wangzhixuan.vo.PeopleVo;
 import org.apache.commons.lang3.StringUtils;
@@ -136,6 +137,21 @@ public class PeopleTimeSheetController extends BaseController {
 		String peopleCode = request.getParameter("code");
 		Map<String,Object> condition = Maps.newHashMap();
 		condition.put("peopleCode",peopleCode);
+
+		if (StringUtils.isNoneBlank(sort)){
+			if (sort.equalsIgnoreCase("checkDate")){
+				pageInfo.setSort("t.check_date");
+			}else if (sort.equalsIgnoreCase("status")){
+				pageInfo.setSort("t.status");
+			}else{
+				pageInfo.setSort("id");
+			}
+		}else{
+			pageInfo.setSort("id");
+		}
+
+		pageInfo.setOrder(order);
+
 		pageInfo.setCondition(condition);
 		timesheetService.findDataGrid(pageInfo);
 

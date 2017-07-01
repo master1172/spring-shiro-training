@@ -142,8 +142,8 @@
             <thead>
             <tr>
                 <th field="ck"              data-options="checkbox:true"></th>
-                <th field="checkDate"       data-options="sortable:false" width="80">请假日期</th>
-                <th field="status"          data-options="sortable:false" width="80">请假原因</th>
+                <th field="checkDate"       data-options="sortable:true" width="80">请假日期</th>
+                <th field="status"          data-options="sortable:true" width="80">请假原因</th>
                 <th field="statusExtra"     data-options="sortable:false" width="80">其他原因</th>
                 <th field="vacationPeriod"  data-options="sortable:false" width="80">假期长度</th>
                 <th field="id"              data-options="sortable:true,formatter:operateFormatter" width="200">操作</th>

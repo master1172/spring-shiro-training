@@ -223,6 +223,7 @@
 				<![CDATA[ and t.vacation_period <= #{condition.vacationPeriodMax} ]]>
 			</if>
 		</where>
+		order by ${sort} ${order}
 		LIMIT #{from}, #{size}
 	</select>
 
