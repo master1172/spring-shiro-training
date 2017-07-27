@@ -47,6 +47,7 @@
                 title: '修改',
                 width: 1500,
                 height: 600,
+                maximizable:true,
                 href: '${path}/peopleRetireSalary/editPage?id=' + id,
                 buttons: [{
                     text: '修改',
@@ -76,6 +77,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -107,6 +109,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/peopleRetireSalary/importExcelPage',
                 buttons: [{
                     text: '导入',
@@ -154,6 +157,7 @@
                 title:'工资列表',
                 width:1200,
                 height:600,
+                maximizable:true,
                 href:'${path}/peopleRetireSalary/salaryListPage?id='+id,
             });
         }
@@ -163,6 +167,7 @@
                 title:'工资变动记录',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/salaryChangeRecord/changeListPage?id='+id,
             });
         }

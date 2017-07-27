@@ -74,6 +74,7 @@
             title: '修改',
             width: 800,
             height: 600,
+            maximizable:true,
             href: '${path}/peopleTransfer/editPage?id='+id,
             buttons: [{
                 text: '修改',
@@ -103,6 +104,7 @@
                 title: '人员调动',
                 width: 700,
                 height: 250,
+                maximizable:true,
                 href: '${path}/peopleTransfer/transferPage?code=${code}',
                 buttons: [{
                     text: '调动',

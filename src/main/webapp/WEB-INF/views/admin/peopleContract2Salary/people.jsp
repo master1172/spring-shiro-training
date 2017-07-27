@@ -215,6 +215,7 @@
                 title:'工资列表',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/peopleContract2Salary/salaryListPage?id='+id,
             });
         }
@@ -224,6 +225,7 @@
                 title:'工资变动记录',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/salaryChangeRecord/changeListPage?id='+id,
             });
         }

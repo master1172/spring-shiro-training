@@ -39,6 +39,7 @@
                 title: '高级查询',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleDaily/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -93,6 +94,7 @@
                 title: '添加',
                 width: 500,
                 height: 450,
+                maximizable:true,
                 href: '${path}/peopleDaily/addPage',
                 buttons: [{
                     text: '添加',
@@ -127,6 +129,7 @@
                 title: '修改',
                 width: 500,
                 height: 450,
+                maximizable:true,
                 href: '${path}/peopleDaily/editPage?id='+id,
                 buttons: [{
                     text: '修改',

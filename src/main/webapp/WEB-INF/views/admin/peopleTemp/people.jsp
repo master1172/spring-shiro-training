@@ -39,6 +39,7 @@
                 title: '高级查询',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleTemp/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -60,6 +61,7 @@
                 title: '导出',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleTemp/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -93,6 +95,7 @@
                 title: '添加',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleTemp/addPage',
                 buttons: [{
                     text: '添加',
@@ -128,6 +131,7 @@
                 title: '修改',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleTemp/editPage?id='+id,
                 buttons: [{
                     text: '修改',
@@ -211,6 +215,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/peopleTemp/importExcelPage',
                 buttons: [{
                     text: '导入',

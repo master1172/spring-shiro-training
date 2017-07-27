@@ -61,6 +61,7 @@
                 title: '修改',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/peopleSalary/editPage?id=' + id,
                 buttons: [{
                     text: '修改',
@@ -90,6 +91,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/peopleSalary/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -111,6 +113,7 @@
                 title: '导出',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/peopleSalary/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -153,6 +156,7 @@
                 title: '选择计算工资月份',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/peopleSalary/selectPayDate',
                 buttons: [{
                     text: '计算',
@@ -183,6 +187,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/peopleSalary/importExcelPage',
                 buttons: [{
                     text: '导入',

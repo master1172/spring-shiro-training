@@ -38,6 +38,7 @@
                 title: '高级查询',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleTransfer/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -59,6 +60,7 @@
                 title: '导出',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleTransfer/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -119,6 +121,7 @@
                     title: '人员调动',
                     width: 700,
                     height: 250,
+                    maximizable:true,
                     href: '${path}/peopleTransfer/transferPage?id='+id,
                     buttons: [{
                         text: '调动',
@@ -151,6 +154,7 @@
                 title:'调动列表',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/peopleTransfer/transferListPage?id='+id,
             });
         }

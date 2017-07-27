@@ -46,6 +46,7 @@
                 title: '修改',
                 width: 600,
                 height: 300,
+                maximizable:true,
                 href: "${path}/socialSecurity/editBasePage?id="+id,
                 buttons: [{
                     text: '修改',
@@ -74,6 +75,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -95,6 +97,7 @@
                 title: '导出',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/examMonthly/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -138,6 +141,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/examMonthly/importExcelPage',
                 buttons: [{
                     text: '导入',
@@ -185,6 +189,7 @@
                 title:'社保列表',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/socialSecurity/socialSecurityListPage?id='+id,
             });
         }

@@ -39,6 +39,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 700,
+                maximizable:true,
                 href: '${path}/peopleContract2/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -60,6 +61,7 @@
                 title: '导出',
                 width: 1000,
                 height: 700,
+                maximizable:true,
                 href: '${path}/peopleContract2/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -93,6 +95,7 @@
                 title: '添加',
                 width: 1000,
                 height: 700,
+                maximizable:true,
                 href: '${path}/peopleContract2/addPage',
                 buttons: [{
                     text: '添加',
@@ -129,6 +132,7 @@
                 title: '修改',
                 width: 1000,
                 height: 700,
+                maximizable:true,
                 href: '${path}/peopleContract2/editPage?id='+id,
                 buttons: [{
                     text: '修改',

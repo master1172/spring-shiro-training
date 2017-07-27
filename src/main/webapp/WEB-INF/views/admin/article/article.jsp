@@ -91,6 +91,7 @@
                 title: '添加',
                 width: 1000,
                 height: 450,
+                maximizable:true,
                 href: '${path}/article/addPage',
                 buttons: [{
                     text: '添加',
@@ -137,6 +138,7 @@
                 title: '编辑',
                 width: 1000,
                 height: 450,
+                maximizable:true,
                 href: '${path}/article/editPage?id=' + id,
                 buttons: [{
                     text: '确定',

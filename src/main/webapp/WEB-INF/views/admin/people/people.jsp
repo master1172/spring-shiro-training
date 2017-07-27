@@ -39,6 +39,7 @@
                 title: '高级查询',
                 width: 600,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/advSearchPage',
                 buttons: [{
                     text: '提交',
@@ -60,6 +61,7 @@
                 title: '导出',
                 width: 600,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/exportSearchPage',
                 buttons: [{
                     text: '导出',
@@ -100,6 +102,7 @@
                 title: '调出本单位',
                 width: 800,
                 height: 400,
+                maximizable:true,
                 href: '${path}/people/transferPage?id=' + checkedItems[0]["id"],
                 buttons: [{
                     text: '调出',
@@ -127,6 +130,7 @@
                 title: '添加',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/addPage',
                 buttons: [{
                     text: '添加',
@@ -162,6 +166,7 @@
                 title: '修改',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/editPage?id=' + id,
                 buttons: [{
                     text: '修改',

@@ -38,6 +38,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -69,6 +70,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/peopleTimesheet/importExcelPage',
                 buttons: [{
                     text: '导入',
@@ -120,6 +122,7 @@
                 title: '导出',
                 width: 600,
                 height: 400,
+                maximizable:true,
                 href: '${path}/peopleTimesheet/dateRangePage',
                 buttons: [{
                     text: '导出',
@@ -153,6 +156,7 @@
                 title:'考勤列表',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/peopleTimesheet/timesheetListPage?id='+id,
             });
         }

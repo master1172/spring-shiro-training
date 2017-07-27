@@ -44,6 +44,7 @@
             title: '添加',
             width: 800,
             height: 600,
+            maximizable:true,
             href: '${path}/examYearly/addPage?peopleCode=${code}',
             buttons: [{
                 text: '添加',
@@ -79,6 +80,7 @@
             title: '修改',
             width: 800,
             height: 600,
+            maximizable:true,
             href: '${path}/examYearly/editPage?id='+id,
             buttons: [{
                 text: '修改',

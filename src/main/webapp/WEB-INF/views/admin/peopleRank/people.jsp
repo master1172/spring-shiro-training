@@ -41,6 +41,7 @@
                 title: '添加',
                 width: 800,
                 height: 400,
+                maximizable:true,
                 href: '${path}/peopleRank/addPage',
                 buttons: [{
                     text: '添加',
@@ -76,6 +77,7 @@
                 title: '修改',
                 width: 800,
                 height: 400,
+                maximizable:true,
                 href: '${path}/peopleRank/editPage?id='+id,
                 buttons: [{
                     text: '修改',

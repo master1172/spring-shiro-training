@@ -39,6 +39,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/recruit/advSearchPage',
                 buttons: [{
                     text: '提交',
@@ -60,6 +61,7 @@
                 title: '导出',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/recruit/exportSearchPage',
                 buttons: [{
                     text: '导出',
@@ -93,6 +95,7 @@
                 title: '添加',
                 width: 1500,
                 height: 600,
+                maximizable:true,
                 href: '${path}/recruit/addPage',
                 buttons: [{
                     text: '添加',
@@ -128,6 +131,7 @@
                 title: '修改',
                 width: 1500,
                 height: 600,
+                maximizable:true,
                 href: '${path}/recruit/editPage?id=' + id,
                 buttons: [{
                     text: '修改',
@@ -213,6 +217,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/recruit/importExcelPage',
                 buttons: [{
                     text: '导入',

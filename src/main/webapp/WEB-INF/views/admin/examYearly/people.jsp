@@ -38,6 +38,7 @@
                 title: '高级查询',
                 width: 800,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -59,6 +60,7 @@
                 title: '导出',
                 width: 800,
                 height: 600,
+                maximizable:true,
                 href: '${path}/examYearly/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -92,6 +94,7 @@
                 title: '添加',
                 width: 1200,
                 height: 500,
+                maximizable:true,
                 href: '${path}/examYearly/addPage',
                 buttons: [{
                     text: '添加',
@@ -127,6 +130,7 @@
                 title: '修改',
                 width: 1200,
                 height: 500,
+                maximizable:true,
                 href: '${path}/examYearly/editPage?id='+id,
                 buttons: [{
                     text: '修改',
@@ -212,6 +216,7 @@
                 title:'年考核列表',
                 width:800,
                 height:600,
+                maximizable:true,
                 href:'${path}/examYearly/examYearlyListPage?id='+id,
             });
         }

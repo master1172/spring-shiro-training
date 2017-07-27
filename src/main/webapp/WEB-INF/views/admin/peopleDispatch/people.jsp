@@ -39,6 +39,7 @@
                 title: '高级查询',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleDispatch/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -60,6 +61,7 @@
                 title: '导出',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleDispatch/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -93,6 +95,7 @@
                 title: '添加',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleDispatch/addPage',
                 buttons: [{
                     text: '添加',
@@ -128,6 +131,7 @@
                 title: '修改',
                 width: 500,
                 height: 350,
+                maximizable:true,
                 href: '${path}/peopleDispatch/editPage?id='+id,
                 buttons: [{
                     text: '修改',

@@ -44,6 +44,7 @@
             title: '添加',
             width: 1000,
             height: 600,
+            maximizable:true,
             href: '${path}/peopleSalary/addPage?peopleCode=${code}',
             buttons: [{
                 text: '添加',
@@ -80,6 +81,7 @@
             title: '修改',
             width: 1000,
             height: 600,
+            maximizable:true,
             href: '${path}/peopleSalary/editSalaryPage?id='+id,
             buttons: [{
                 text: '修改',

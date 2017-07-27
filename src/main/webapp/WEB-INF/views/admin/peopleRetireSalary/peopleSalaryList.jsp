@@ -44,6 +44,7 @@
             title: '添加',
             width: 1200,
             height: 600,
+            maximizable:true,
             href: '${path}/peopleRetireSalary/addPage?peopleCode=${code}',
             buttons: [{
                 text: '添加',
@@ -79,6 +80,7 @@
             title: '修改',
             width: 1200,
             height: 600,
+            maximizable:true,
             href: '${path}/peopleRetireSalary/editSalaryPage?id='+id,
             buttons: [{
                 text: '修改',
@@ -131,6 +133,7 @@
             title: '修改工资基数',
             width: 1000,
             height: 600,
+            maximizable:true,
             href: '${path}/peopleRetireSalary/salaryBasePage?peopleCode=${code}',
             buttons:[{
                 text: '修改',

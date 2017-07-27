@@ -42,6 +42,7 @@
             title: '修改',
             width: 1500,
             height: 600,
+            maximizable:true,
             href: '${path}/peopleRank/editPage?id='+id,
             buttons: [{
                 text: '修改',

@@ -38,6 +38,7 @@
                 title: '高级查询',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/people/advSearchPage',
                 buttons:[{
                     text: '提交',
@@ -59,6 +60,7 @@
                 title: '导出',
                 width: 1000,
                 height: 600,
+                maximizable:true,
                 href: '${path}/examMonthly/exportSearchPage',
                 buttons:[{
                     text:'导出',
@@ -102,6 +104,7 @@
                 title: '数据导入',
                 width: 500,
                 height: 300,
+                maximizable:true,
                 href: '${path}/examMonthly/importExcelPage',
                 buttons: [{
                     text: '导入',
@@ -149,6 +152,7 @@
                 title:'工资列表',
                 width:1000,
                 height:600,
+                maximizable:true,
                 href:'${path}/examMonthly/examMonthlyListPage?id='+id,
             });
         }

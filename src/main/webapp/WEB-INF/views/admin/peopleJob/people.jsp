@@ -40,6 +40,7 @@
                 title: '添加',
                 width: 1500,
                 height: 600,
+                maximizable:true,
                 href: '${path}/peopleJob/addPage',
                 buttons: [{
                     text: '添加',
@@ -75,6 +76,7 @@
                 title: '修改',
                 width: 800,
                 height: 400,
+                maximizable:true,
                 href: '${path}/peopleJob/editPage?id='+id,
                 buttons: [{
                     text: '修改',
