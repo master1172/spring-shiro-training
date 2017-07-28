@@ -138,7 +138,9 @@
                     ids+=item["id"];
                 });
                 var form=$("#downLoadForm");
+                var selectDate = $("#selectDate").val();
                 form.find("input[name='ids']").val(ids);
+                form.find("input[name='selectDate']").val(selectDate);
                 form.attr("action",'${path}'+"/examMonthly/exportExcel");
                 $("#downLoadForm").submit();
             }else{
@@ -258,8 +260,18 @@
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">高级查询</a>
     </shiro:hasPermission>
+    <input id="selectDate" name="selectDate" placeholder="点击选择时间"
+           onclick="WdatePicker({
+                                readOnly:true,
+                                dateFmt:'yyyy-MM',
+                                maxDate:'%y-%M-%d',
+                                })"
+           readonly="readonly"/>
     <!-- 附件下载使用 -->
-    <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+    <form id="downLoadForm" method="GET" action="">
+        <input type="hidden" name="ids"/>
+        <input type="hidden" name="selectDate"/>
+    </form>
 </div>
 </body>
 </html>
