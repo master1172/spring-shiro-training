@@ -149,7 +149,7 @@ public class PeopleContract2SalaryServiceImpl implements PeopleContract2SalarySe
 						row.createCell(3).setCellValue(peopleContractSalaryVo.getJobSalary() == null ? "" : peopleContractSalaryVo.getJobSalary().toString());
 						row.createCell(4).setCellValue(peopleContractSalaryVo.getSchoolSalary() == null ? "" : peopleContractSalaryVo.getSchoolSalary().toString());
 						row.createCell(5).setCellValue(peopleContractSalaryVo.getExamResult() == null ? "" : peopleContractSalaryVo.getExamResult().toString());
-						row.createCell(6).setCellValue(peopleContractSalaryVo.getJobExamSalary() == null ? "" : peopleContractSalaryVo.getJobExamSalary().toString());
+						row.createCell(6).setCellValue(peopleContractSalaryVo.getJobExamSalaryTotal() == null ? "" : peopleContractSalaryVo.getJobExamSalaryTotal().toString());
 						row.createCell(7).setCellValue(peopleContractSalaryVo.getTelephoneAllowance() == null ? "" : peopleContractSalaryVo.getTelephoneAllowance().toString());
 						row.createCell(8).setCellValue(peopleContractSalaryVo.getTrafficAllowance() == null ? "" : peopleContractSalaryVo.getTrafficAllowance().toString());
 						row.createCell(9).setCellValue(peopleContractSalaryVo.getSpecialAllowance() == null ? "" : peopleContractSalaryVo.getSpecialAllowance().toString());

@@ -69,7 +69,7 @@ public class DictController {
             return jobLevelList;
         }
 
-        List<Dict> jobLevelList = dictMapper.findJobLevelDictByCategory(jobCategory);
+        List<Dict> jobLevelList = dictMapper.findJobLevelDictByCategory(jobCategory.trim());
         return jobLevelList;
 
     }

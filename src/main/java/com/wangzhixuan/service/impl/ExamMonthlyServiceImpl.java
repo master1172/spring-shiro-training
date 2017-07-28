@@ -95,7 +95,7 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
   }
 
   @Override
-  public void exportExcel(HttpServletResponse response, String[] ids) {
+  public void exportExcel(HttpServletResponse response, String[] ids, String selectDate) {
     List<PeopleVo> list = peopleMapper.selectPeopleVoByIds(ids);
 
     if(CollectionUtils.isEmpty(list)){
@@ -127,8 +127,19 @@ public class ExamMonthlyServiceImpl implements ExamMonthlyService {
             continue;
 
         for(int j=0; j<examMonthlyVoList.size(); j++){
-          row = sheet.createRow(count+1);
           ExamMonthlyVo examMonthlyVo = examMonthlyVoList.get(j);
+          if (examMonthlyVo == null)
+            continue;
+
+          //如果选择了导出excel的日期，那么只有该日期的excel会被导出
+          if (StringUtils.isNoneBlank(selectDate)){
+            if (StringUtils.isBlank(examMonthlyVo.getExamDate()))
+              continue;
+            if (!selectDate.equalsIgnoreCase(examMonthlyVo.getExamDate()))
+              continue;
+          }
+
+          row = sheet.createRow(count+1);
           row.createCell(0).setCellValue(count+1);
           row.createCell(1).setCellValue(examMonthlyVo.getName());
           row.createCell(2).setCellValue(examMonthlyVo.getExamResult());

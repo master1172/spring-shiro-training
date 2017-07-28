@@ -334,7 +334,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                         row.createCell(6).setCellValue(peopleSalaryVo.getReserveSalary()==null?"":peopleSalaryVo.getReserveSalary().toString());
                         row.createCell(7).setCellValue(peopleSalaryVo.getExamResult());
                         row.createCell(8).setCellValue(peopleSalaryVo.getJobAllowance()==null?"":peopleSalaryVo.getJobAllowance().toString());
-                        row.createCell(9).setCellValue(peopleSalaryVo.getPerformanceAllowance()==null?"":peopleSalaryVo.getPerformanceAllowance().toString());
+                        row.createCell(9).setCellValue(peopleSalaryVo.getPerformanceAllowanceTotal()==null?"":peopleSalaryVo.getPerformanceAllowanceTotal().toString());
                         row.createCell(10).setCellValue(peopleSalaryVo.getRentAllowance()==null?"":peopleSalaryVo.getRentAllowance().toString());
                         row.createCell(11).setCellValue(peopleSalaryVo.getHouseAllowance()==null?"":peopleSalaryVo.getHouseAllowance().toString());
                         row.createCell(12).setCellValue(peopleSalaryVo.getWorkDate());
@@ -428,7 +428,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                         row.createCell(6).setCellValue(peopleSalaryVo.getReserveSalary()==null?"":peopleSalaryVo.getReserveSalary().toString());
                         row.createCell(7).setCellValue(peopleSalaryVo.getExamResult());
                         row.createCell(8).setCellValue(peopleSalaryVo.getJobAllowance()==null?"":peopleSalaryVo.getJobAllowance().toString());
-                        row.createCell(9).setCellValue(peopleSalaryVo.getPerformanceAllowance()==null?"":peopleSalaryVo.getPerformanceAllowance().toString());
+                        row.createCell(9).setCellValue(peopleSalaryVo.getPerformanceAllowanceTotal()==null?"":peopleSalaryVo.getPerformanceAllowanceTotal().toString());
                         row.createCell(10).setCellValue(peopleSalaryVo.getRentAllowance()==null?"":peopleSalaryVo.getRentAllowance().toString());
                         row.createCell(11).setCellValue(peopleSalaryVo.getHouseAllowance()==null?"":peopleSalaryVo.getHouseAllowance().toString());
                         row.createCell(12).setCellValue(peopleSalaryVo.getWorkDate());

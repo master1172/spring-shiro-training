@@ -1,9 +1,7 @@
 package com.wangzhixuan.service;
 
 import com.wangzhixuan.model.ExamMonthly;
-import com.wangzhixuan.model.ExamYearly;
 import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.ExamMonthlyVo;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +19,7 @@ public interface ExamMonthlyService {
 
   void update(ExamMonthly examMonthly);
 
-  void exportExcel(HttpServletResponse response, String[] ids);
+  void exportExcel(HttpServletResponse response, String[] ids, String selectDate);
 
   boolean insertByImport(CommonsMultipartFile[] files);
 
