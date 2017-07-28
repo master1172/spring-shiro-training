@@ -54,6 +54,7 @@ public class ExamMonthlyController extends BaseController {
 
 	@RequestMapping(value="/contract2manager", method = RequestMethod.GET)
 	public String contract2Manager(){
+
 		return "/admin/examMonthly/peopleContract2";
 	}
 

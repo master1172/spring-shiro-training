@@ -254,7 +254,7 @@
     </shiro:hasPermission>
     <shiro:hasPermission name="/peopleContract/exportExcel">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
+           data-options="plain:true,iconCls:'icon-add'">导出所选月份Excel</a>
     </shiro:hasPermission>
     <shiro:hasPermission name="/peopleContract/advSearch">
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
