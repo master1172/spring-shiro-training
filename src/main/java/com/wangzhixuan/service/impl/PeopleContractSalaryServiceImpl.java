@@ -157,12 +157,10 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 						PeopleContractSalaryVo peopleContractSalaryVo = peopleContractSalaryVoList.get(j);
 
 						if (peopleContractSalaryVo != null && StringUtils.isNoneBlank(payDate)){
-							String contractPayDate = peopleContractSalaryVo.getPayDate();
-
-							if (StringUtils.isBlank(contractPayDate))
+							String peopleContractPayDate = peopleContractSalaryVo.getPayDate();
+							if (StringUtils.isBlank(peopleContractPayDate))
 								continue;
-
-							if (!contractPayDate.equalsIgnoreCase(payDate))
+							if (!peopleContractPayDate.equalsIgnoreCase(payDate))
 								continue;
 						}
 

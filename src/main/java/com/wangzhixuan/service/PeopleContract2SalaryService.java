@@ -1,6 +1,5 @@
 package com.wangzhixuan.service;
 
-import com.wangzhixuan.model.PeopleContract2SalaryBase;
 import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.utils.PageInfo;
@@ -28,7 +27,7 @@ public interface PeopleContract2SalaryService {
 
     boolean insertByImport(CommonsMultipartFile[] files);
 
-    void exportExcel(HttpServletResponse response, String[] idList);
+    void exportExcel(HttpServletResponse response, String[] idList, String payDate);
 
     PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
 

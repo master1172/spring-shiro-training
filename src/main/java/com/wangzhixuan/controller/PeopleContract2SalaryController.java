@@ -1,16 +1,15 @@
 package com.wangzhixuan.controller;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.wangzhixuan.model.*;
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
+import com.wangzhixuan.code.Result;
+import com.wangzhixuan.model.PeopleContract;
+import com.wangzhixuan.model.PeopleContractSalary;
+import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.service.*;
 import com.wangzhixuan.utils.ConstUtil;
 import com.wangzhixuan.utils.DateUtil;
+import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.utils.SalaryCalculator;
 import com.wangzhixuan.vo.PeopleContractSalaryBaseVo;
 import org.apache.commons.beanutils.BeanUtils;
@@ -26,12 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
-import com.wangzhixuan.code.Result;
-import com.wangzhixuan.utils.PageInfo;
-import com.wangzhixuan.vo.PeopleContractSalaryVo;
-import com.wangzhixuan.vo.PeopleContractVo;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  */
@@ -215,8 +212,8 @@ public class PeopleContract2SalaryController extends BaseController {
 	}
 
 	@RequestMapping("/exportExcelForMonth")
-	public void exportExcelForMonth(HttpServletResponse response, String ids){
-		String payDate = ids;
+	public void exportExcelForMonth(HttpServletResponse response, String ids, String payDate){
+
 		if(StringUtils.isBlank(payDate)){
 			payDate = DateUtil.GetCurrentYearAndMonth();
 		}
@@ -296,13 +293,13 @@ public class PeopleContract2SalaryController extends BaseController {
 	 * 导出Excel
 	 */
 	@RequestMapping("/exportExcel")
-	public void exportExcel(HttpServletResponse response, String ids) {
+	public void exportExcel(HttpServletResponse response, String ids, String payDate) {
 
 		if (StringUtils.isBlank(ids)) {
 			logger.error("Excel:{}", "请选择有效数据!");
 		}
 		try {
-			peopleContract2SalaryService.exportExcel(response, ids.split(","));
+			peopleContract2SalaryService.exportExcel(response, ids.split(","), payDate);
 		} catch (Exception exp) {
 			logger.error("导出Excel失败:{}", exp);
 		}
