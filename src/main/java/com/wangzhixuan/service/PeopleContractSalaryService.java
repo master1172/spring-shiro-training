@@ -4,12 +4,10 @@ import com.wangzhixuan.model.PeopleContractSalary;
 import com.wangzhixuan.model.PeopleContractSalaryBase;
 import com.wangzhixuan.utils.PageInfo;
 import com.wangzhixuan.vo.PeopleContractSalaryVo;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import java.math.BigDecimal;
 
 /**
@@ -30,7 +28,7 @@ public interface PeopleContractSalaryService {
     
     public boolean insertByImport(CommonsMultipartFile[] files);
     
-    void exportExcel(HttpServletResponse response, String[] idList);
+    void exportExcel(HttpServletResponse response, String[] idList, String payDate);
 
     PeopleContractSalaryBase findPeopleContractSalaryBaseByCode(String peopleCode);
 

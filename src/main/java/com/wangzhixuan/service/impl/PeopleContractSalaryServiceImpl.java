@@ -126,7 +126,7 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 	}
 
 	@Override
-	public void exportExcel(HttpServletResponse response, String[] idList) {
+	public void exportExcel(HttpServletResponse response, String[] idList, String payDate) {
 		// TODO Auto-generated method stub
 		List list = peopleContractMapper.selectPeopleContractVoByIds(idList);
 		if (list != null && list.size() > 0) {
@@ -154,8 +154,19 @@ public class PeopleContractSalaryServiceImpl implements PeopleContractSalaryServ
 						continue;
 					for(int j=0; j<peopleContractSalaryVoList.size();j++) {
 
-						row = sheet.createRow(count+1);
 						PeopleContractSalaryVo peopleContractSalaryVo = peopleContractSalaryVoList.get(j);
+
+						if (peopleContractSalaryVo != null && StringUtils.isNoneBlank(payDate)){
+							String contractPayDate = peopleContractSalaryVo.getPayDate();
+
+							if (StringUtils.isBlank(contractPayDate))
+								continue;
+
+							if (!contractPayDate.equalsIgnoreCase(payDate))
+								continue;
+						}
+
+						row = sheet.createRow(count+1);
 						row.createCell(0).setCellValue(count + 1);
 						row.createCell(1).setCellValue(peopleContractSalaryVo.getPeopleName());
 						row.createCell(2).setCellValue(peopleContractSalaryVo.getJobLevel());
