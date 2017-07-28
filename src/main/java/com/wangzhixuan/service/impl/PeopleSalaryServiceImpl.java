@@ -295,7 +295,7 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
     }
 
     @Override
-    public void exportExcel(HttpServletResponse response, String[] idList) {
+    public void exportExcel(HttpServletResponse response, String[] idList, String payDate) {
 
         List list = peopleMapper.selectPeopleVoByIds(idList);
 
@@ -323,8 +323,18 @@ public class PeopleSalaryServiceImpl implements PeopleSalaryService {
                         continue;
                     for(int j=0; j<peopleSalaryVoList.size(); j++){
 
-                        row = sheet.createRow(count+1);
                         PeopleSalaryVo peopleSalaryVo = peopleSalaryVoList.get(j);
+
+                        if (peopleSalaryVo != null && StringUtils.isNoneBlank(payDate)){
+                            String peoplePayDate = peopleSalaryVo.getPayDate();
+                            if (StringUtils.isBlank(peoplePayDate))
+                                continue;
+                            if (!peoplePayDate.equalsIgnoreCase(payDate))
+                                continue;
+                        }
+
+                        row = sheet.createRow(count+1);
+
                         row.createCell(0).setCellValue(count+1);
                         row.createCell(1).setCellValue(peopleSalaryVo.getPeopleName());
                         row.createCell(2).setCellValue(peopleSalaryVo.getJobLevel());

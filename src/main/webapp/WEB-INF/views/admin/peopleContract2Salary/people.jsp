@@ -327,10 +327,10 @@
 </div>
 
 <div id="toolbar" style="display: none;">
-    <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-       data-options="plain:true,iconCls:'icon-add'">导入</a>
     <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">导出所选日期的Excel</a>
+    <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
+       data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
     <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
        data-options="plain:true,iconCls:'icon-add'">高级查询</a>
     <a onclick="exportCert();" href="javascript:void(0);" class="easyui-linkbutton"

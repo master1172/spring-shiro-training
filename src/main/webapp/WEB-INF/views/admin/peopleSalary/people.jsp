@@ -220,8 +220,12 @@
                     if(ids.length>0)ids+=",";
                     ids+=item["id"];
                 });
+
+                var payDate = $("#payDate").val();
+
                 var form=$("#downLoadForm");
                 form.find("input[name='ids']").val(ids);
+                form.find("input[name='payDate']").val(payDate);
                 form.attr("action",'${path}'+"/peopleSalary/exportExcel");
                 $("#downLoadForm").submit();
             }else{
@@ -232,7 +236,8 @@
         function exportExcelForMonth(){
             var payDate = $("#payDate").val();
             var form=$("#downLoadForm");
-            form.find("input[name='ids']").val(payDate);
+            form.find("input[name='ids']").val("");
+            form.find("input[name='payDate']").val(payDate);
             form.attr("action",'${path}'+"/peopleSalary/exportExcelForMonth");
             $("#downLoadForm").submit();
         }
@@ -339,7 +344,7 @@
 
 <div id="toolbar" style="display: none;">
         <a onclick="exportExcel();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">导出Excel</a>
+           data-options="plain:true,iconCls:'icon-add'">导出所选月份的Excel</a>
         <a onclick="importExcel();" href="javascript:void(0);" class="easyui-linkbutton"
            data-options="plain:true,iconCls:'icon-add'">导入Excel</a>
         <a onclick="advSearch();" href="javascript:void(0);" class="easyui-linkbutton"
@@ -360,7 +365,10 @@
                                 })"
            readonly="readonly"/>
         <!-- 附件下载使用 -->
-        <form id="downLoadForm" method="GET" action=""><input type="hidden" name="ids"/></form>
+        <form id="downLoadForm" method="GET" action="">
+            <input type="hidden" name="ids"/>
+            <input type="hidden" name="payDate"/>
+        </form>
 </div>
 </body>
 </html>
