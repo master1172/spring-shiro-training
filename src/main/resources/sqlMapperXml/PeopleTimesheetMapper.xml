@@ -259,7 +259,7 @@
         <foreach item="item" index="index" collection="list" separator=",">
           (
             #{item.peopleCode, 	jdbcType=VARCHAR},
-            #{item.checkDate, 	jdbcType=VARCHAR},
+            #{item.checkDate, 	jdbcType=DATE},
             #{item.status, 		jdbcType=VARCHAR},
 			#{item.statusExtra, jdbcType=VARCHAR},
             #{item.vacationPeriod, jdbcType=DECIMAL}

@@ -79,10 +79,18 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 
 	@Override
 	public Integer insert(PeopleTimesheet record) {
+		//添加一条
 		if (StringUtils.isBlank(record.getCheckDate())){
 			record.setCheckDate(null);
 		}
-		return peopleTimesheetMapper.insert(record);
+
+		String peopleCode = record.getPeopleCode();
+
+
+
+		peopleTimesheetMapper.insert(record);
+
+		return 0;
 	}
 
 	@Override
@@ -234,13 +242,23 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 				if (people == null || StringUtils.isBlank(people.getCode()))
 					continue;
 
+				//先删除此人之前导入的当月所有考勤记录
 				Map<String, Object> condition = Maps.newHashMap();
 				condition.put("peopleCode",people.getCode());
 				condition.put("checkDateMin", DateUtil.GetFirstDayOfSelectMonth(importDate));
 				condition.put("checkDateMax", DateUtil.GetLastDayOfSelectMonth(importDate));
 				peopleTimesheetMapper.deleteByPeopleCodeAndDate(condition);
 
+				//计算此人当月的请假记录
 				for(int j=1; j<=31; j++){
+
+					//根据年月和j(日)计算出yyyy-mm-dd日期
+					String checkDate = DateUtil.GetDateByDay(yearAndMonth,j);
+
+					//如果有时候这个日期不合法（比如6月31日）这样的，则计算出来的checkDate
+					//为null，不予以导入
+					if (checkDate == null)
+						continue;
 
 					PeopleTimesheet timesheet = new PeopleTimesheet();
 
@@ -249,7 +267,7 @@ public class PeopleTimesheetServiceImpl implements PeopleTimesheetService {
 					if (row.getCell(j) == null || row.getCell(j).toString().trim().equals(""))
 						continue;
 
-					String checkDate = DateUtil.GetDateByDay(yearAndMonth,j);
+
 
 					String timesheetStatus = row.getCell(j).toString().trim();
 

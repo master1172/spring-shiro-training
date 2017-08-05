@@ -5,7 +5,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.Years;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -273,14 +272,37 @@ public class DateUtil {
         return true;
     }
 
+    //根据年月和j(日)自动生成日期
     public static String GetDateByDay(String yearAndMonth, Integer j) {
+
+        String result;
+
         if (j == null)
-            return yearAndMonth + "-01";
+            result = yearAndMonth + "-01";
+        else if (j < 10)
+            result = yearAndMonth + "-0" + j.toString();
+        else
+            result = yearAndMonth + "-" + j.toString();
 
-        if (j < 10)
-            return yearAndMonth + "-0" + j.toString();
+        if (DateIsValid(result)){
+            return result;
+        }else{
+            return null;
+        }
+    }
 
-        return yearAndMonth + "-" + j.toString();
+    public static boolean DateIsValid(String dateStr){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try{
+            dateFormat.setLenient(false);
+            dateFormat.parse(dateStr);
+            return true;
+        }catch (Exception exp){
+            return false;
+        }
+
     }
 
     public static String GetDate(String date){
